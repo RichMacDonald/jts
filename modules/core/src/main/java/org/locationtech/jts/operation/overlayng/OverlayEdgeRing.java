@@ -35,7 +35,7 @@ class OverlayEdgeRing {
   private Coordinate[] ringPts;
   private IndexedPointInAreaLocator locator;
   private OverlayEdgeRing shell;
-  private List<OverlayEdgeRing> holes = new ArrayList<OverlayEdgeRing>(); // a list of EdgeRings which are holes in this EdgeRing
+  private List<OverlayEdgeRing> holes = new ArrayList<>(); // a list of EdgeRings which are holes in this EdgeRing
 
   public OverlayEdgeRing(OverlayEdge start, GeometryFactory geometryFactory) {
     startEdge = start;

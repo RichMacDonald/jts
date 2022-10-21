@@ -79,7 +79,7 @@ public class GeometryMapper
    */
   public static Geometry flatMap(Geometry geom, int emptyDim, MapOp op)
   {
-    List<Geometry> mapped = new ArrayList<Geometry>();
+    List<Geometry> mapped = new ArrayList<>();
     flatMap(geom, op, mapped);
 
     if (mapped.size() == 0) {

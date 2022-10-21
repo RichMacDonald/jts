@@ -130,7 +130,7 @@ public abstract class PackedCoordinateSequence
     for (int i = 0; i < coords.length; i++) {
       coords[i] = getCoordinateInternal(i);
     }
-    coordRef = new SoftReference<Coordinate[]>(coords);
+    coordRef = new SoftReference<>(coords);
 
     return coords;
   }

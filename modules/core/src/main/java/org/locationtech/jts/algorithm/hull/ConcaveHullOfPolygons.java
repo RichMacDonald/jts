@@ -187,7 +187,7 @@ public class ConcaveHullOfPolygons {
    * Records the edge index of the longest border edge for border tris,
    * so it can be tested for length and possible removal.
    */
-  private Map<Tri, Integer> borderEdgeMap = new HashMap<Tri, Integer>();
+  private Map<Tri, Integer> borderEdgeMap = new HashMap<>();
   
   /**
    * Creates a new instance for a given geometry.
@@ -351,8 +351,8 @@ public class ConcaveHullOfPolygons {
   }
   
   private Set<Tri> removeFrameCornerTris(List<Tri> tris, Coordinate[] frameCorners) {
-    Set<Tri> hullTris = new HashSet<Tri>();
-    borderTriQue = new ArrayDeque<Tri>();
+    Set<Tri> hullTris = new HashSet<>();
+    borderTriQue = new ArrayDeque<>();
     for (Tri tri : tris) {
       int index = vertexIndex(tri, frameCorners);
       boolean isFrameTri = index != NOT_FOUND;

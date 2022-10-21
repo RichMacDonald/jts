@@ -63,9 +63,9 @@ class InputExtracter implements GeometryFilter
   }
   
   private GeometryFactory geomFactory = null;
-  private List<Polygon> polygons = new ArrayList<Polygon>();
-  private List<LineString> lines = new ArrayList<LineString>();
-  private List<Point> points = new ArrayList<Point>();
+  private List<Polygon> polygons = new ArrayList<>();
+  private List<LineString> lines = new ArrayList<>();
+  private List<Point> points = new ArrayList<>();
   
   /**
    * The default dimension for an empty GeometryCollection

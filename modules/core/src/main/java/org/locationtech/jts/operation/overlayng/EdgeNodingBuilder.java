@@ -87,7 +87,7 @@ class EdgeNodingBuilder {
   }
   
   private PrecisionModel pm;
-  List<NodedSegmentString> inputEdges = new ArrayList<NodedSegmentString>();
+  List<NodedSegmentString> inputEdges = new ArrayList<>();
   private Noder customNoder;
   
   private Envelope clipEnv = null;
@@ -196,7 +196,7 @@ class EdgeNodingBuilder {
   }
 
   private List<Edge> createEdges(Collection<SegmentString> segStrings) {
-    List<Edge> edges = new ArrayList<Edge>();
+    List<Edge> edges = new ArrayList<>();
     for (SegmentString ss : segStrings) {
       Coordinate[] pts = ss.getCoordinates();
       

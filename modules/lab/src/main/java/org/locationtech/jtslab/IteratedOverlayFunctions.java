@@ -40,7 +40,7 @@ public class IteratedOverlayFunctions {
   }
   
   private static Geometry overlay(Geometry coll, boolean useNG, PrecisionModel pm) {
-    List<Geometry> result = new ArrayList<Geometry>();
+    List<Geometry> result = new ArrayList<>();
     for (int i = 0; i < coll.getNumGeometries(); i++) {
       Geometry inGeom = coll.getGeometryN(i);
       
@@ -139,7 +139,7 @@ public class IteratedOverlayFunctions {
   }
   
   private static List<Polygon> extractPolygonsNonEmpty(List<Geometry> geoms) {
-    List<Polygon> exPolys = new ArrayList<Polygon>();
+    List<Polygon> exPolys = new ArrayList<>();
     for (Geometry geom : geoms) {
       if (! geom.isEmpty()) {
         if (geom instanceof Polygon) {

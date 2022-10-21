@@ -192,7 +192,7 @@ public class PolygonOverlayFunctions
     }
     
     public List<Polygon> findParents(List<Polygon> resultants) {
-      List<Polygon> polys = new ArrayList<Polygon>();
+      List<Polygon> polys = new ArrayList<>();
       for (Polygon res : resultants) {
         Point intPt = res.getInteriorPoint();
         Coordinate intCoord = intPt.getCoordinate();

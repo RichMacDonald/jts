@@ -89,7 +89,7 @@ public class SnappingNoder
     //Stopwatch sw = new Stopwatch(); sw.start();
     seedSnapIndex(segStrings);
     
-    List<NodedSegmentString> nodedStrings = new ArrayList<NodedSegmentString>();
+    List<NodedSegmentString> nodedStrings = new ArrayList<>();
     for (SegmentString ss : segStrings) {
       nodedStrings.add( snapVertices(ss) );
     }

@@ -96,7 +96,7 @@ public class TestBuilderModel
   
   
   public List<Layer> getLayersLegend() {
-    List<Layer> layers = new ArrayList<Layer>();
+    List<Layer> layers = new ArrayList<>();
     addLegendLayers(layerList, layers);
     addLegendLayers(layerListTop, layers);
     addLegendLayers(layerListBase, layers);

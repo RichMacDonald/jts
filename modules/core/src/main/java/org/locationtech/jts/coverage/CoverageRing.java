@@ -33,7 +33,7 @@ class CoverageRing extends BasicSegmentString {
   }
 
   public static List<CoverageRing> createRings(List<Polygon> polygons) {
-    List<CoverageRing> rings = new ArrayList<CoverageRing>();
+    List<CoverageRing> rings = new ArrayList<>();
     for (Polygon poly : polygons) {
       createRings(poly, rings);
     }

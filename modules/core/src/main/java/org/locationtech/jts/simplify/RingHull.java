@@ -104,7 +104,7 @@ class RingHull {
     //-- remove duplicate final vertex
     vertexIndex.remove(ring.length-1);
     
-    cornerQueue = new PriorityQueue<Corner>();
+    cornerQueue = new PriorityQueue<>();
     for (int i = 0; i < vertexRing.size(); i++) {
       addCorner(i, cornerQueue);
     }

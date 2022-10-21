@@ -43,7 +43,7 @@ public class LayerList
   public static final int LYR_B = 1;
   public static final int LYR_RESULT = 2;
   
-  private List<Layer> layers = new ArrayList<Layer>();
+  private List<Layer> layers = new ArrayList<>();
   
   public LayerList() 
   {

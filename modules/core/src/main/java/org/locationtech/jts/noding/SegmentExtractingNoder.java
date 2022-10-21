@@ -49,7 +49,7 @@ public class SegmentExtractingNoder implements Noder {
   }
 
   private static List<SegmentString> extractSegments(Collection<SegmentString> segStrings) {
-    List<SegmentString> segList = new ArrayList<SegmentString>();
+    List<SegmentString> segList = new ArrayList<>();
     for (SegmentString ss : segStrings) {
       extractSegments( ss, segList );
     }

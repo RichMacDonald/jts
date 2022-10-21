@@ -68,7 +68,7 @@ public class HPRtree
 
   private static int DEFAULT_NODE_CAPACITY = 16;
   
-  private List<Item> items = new ArrayList<Item>();
+  private List<Item> items = new ArrayList<>();
   
   private int nodeCapacity = DEFAULT_NODE_CAPACITY;
 
@@ -331,7 +331,7 @@ public class HPRtree
   }
   
   private static int[] computeLayerIndices(int itemSize, int nodeCapacity) {
-    List<Integer> layerIndexList = new ArrayList<Integer>();
+    List<Integer> layerIndexList = new ArrayList<>();
     int layerSize = itemSize;
     int index = 0;
     do {

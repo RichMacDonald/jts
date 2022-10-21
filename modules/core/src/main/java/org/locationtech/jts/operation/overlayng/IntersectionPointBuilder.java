@@ -39,7 +39,7 @@ class IntersectionPointBuilder {
 
   private GeometryFactory geometryFactory;
   private OverlayGraph graph;
-  private List<Point> points = new ArrayList<Point>();
+  private List<Point> points = new ArrayList<>();
   
   /**
    * Controls whether lines created by area topology collapses

@@ -116,7 +116,7 @@ public class Shapefile
         if(mainHeader.getVersion() > VERSION){System.err.println("Sf-->Warning, Shapefile format ("+mainHeader.getVersion()+") newer that supported ("+VERSION+"), attempting to read anyway");}
 
         Geometry body;
-        ArrayList<Geometry> list = new ArrayList<Geometry>();
+        ArrayList<Geometry> list = new ArrayList<>();
         int type=mainHeader.getShapeType();
         ShapeHandler handler = getShapeHandler(type);
         if(handler==null)throw new ShapeTypeNotSupportedException("Unsuported shape type:"+type);

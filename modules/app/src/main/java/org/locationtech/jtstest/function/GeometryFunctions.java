@@ -118,7 +118,7 @@ public class GeometryFunctions
 	  //TODO: support adding to MultiPolygon
 	  Polygon poly = (Polygon) g;
 	  LinearRing shell = poly.getExteriorRing();
-	  List<LinearRing> holes = new ArrayList<LinearRing>();
+	  List<LinearRing> holes = new ArrayList<>();
 	  
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
       holes.add(poly.getInteriorRingN(i));

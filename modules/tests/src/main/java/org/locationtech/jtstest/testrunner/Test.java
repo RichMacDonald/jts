@@ -56,7 +56,7 @@ public class Test implements Runnable
     this.expectedResult = expectedResult;
     this.testIndex = testIndex;
     this.geometryIndex = geometryIndex;
-    this.arguments = new ArrayList<String>(arguments);
+    this.arguments = new ArrayList<>(arguments);
     this.testCase = testCase;
   }
 

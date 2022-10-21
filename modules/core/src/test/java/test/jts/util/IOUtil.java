@@ -39,7 +39,7 @@ public class IOUtil {
     public static List<Geometry> readWKT(String[] inputWKT)
     throws ParseException
     {
-      List<Geometry> geometries = new ArrayList<Geometry>();
+      List<Geometry> geometries = new ArrayList<>();
       for (String element : inputWKT) {
           geometries.add(IOUtil.reader.read(element));
       }

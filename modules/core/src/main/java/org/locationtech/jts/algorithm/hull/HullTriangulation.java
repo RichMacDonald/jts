@@ -56,7 +56,7 @@ class HullTriangulation
   }
   
   private static class HullTriVisitor implements TriangleVisitor {
-    private List<HullTri> triList = new ArrayList<HullTri>();
+    private List<HullTri> triList = new ArrayList<>();
 
     public HullTriVisitor() {
     }
@@ -89,7 +89,7 @@ class HullTriangulation
    * @return the area polygonal geometry
    */
   public static Geometry union(List<? extends Tri> triList, GeometryFactory geomFactory) {
-    List<Polygon> polys = new ArrayList<Polygon>();
+    List<Polygon> polys = new ArrayList<>();
     for (Tri tri : triList) {
       Polygon poly = tri.toPolygon(geomFactory);
       polys.add(poly);

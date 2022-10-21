@@ -23,8 +23,8 @@ import org.locationtech.jts.util.Assert;
 class PolygonBuilder {
 
   private GeometryFactory geometryFactory;
-  private List<OverlayEdgeRing> shellList = new ArrayList<OverlayEdgeRing>();
-  private List<OverlayEdgeRing> freeHoleList = new ArrayList<OverlayEdgeRing>();
+  private List<OverlayEdgeRing> shellList = new ArrayList<>();
+  private List<OverlayEdgeRing> freeHoleList = new ArrayList<>();
   private boolean isEnforcePolygonal = true;
 
   public PolygonBuilder(List<OverlayEdge> resultAreaEdges, GeometryFactory geomFact) {
@@ -47,7 +47,7 @@ class PolygonBuilder {
 
   private List<Polygon> computePolygons(List<OverlayEdgeRing> shellList)
   {
-    List<Polygon> resultPolyList = new ArrayList<Polygon>();
+    List<Polygon> resultPolyList = new ArrayList<>();
     // add Polygons for all shells
     for (OverlayEdgeRing er : shellList ) {
       Polygon poly = er.toPolygon(geometryFactory);
@@ -78,7 +78,7 @@ class PolygonBuilder {
    */
   private static List<MaximalEdgeRing> buildMaximalRings(Collection<OverlayEdge> edges)
   {
-    List<MaximalEdgeRing> edgeRings = new ArrayList<MaximalEdgeRing>();
+    List<MaximalEdgeRing> edgeRings = new ArrayList<>();
     for (OverlayEdge e : edges) {
       if (e.isInResultArea() && e.getLabel().isBoundaryEither() ) {
         // if this edge has not yet been processed

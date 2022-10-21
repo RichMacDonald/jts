@@ -132,7 +132,7 @@ class PolygonEarClipper {
   }
   
   public List<Tri> compute() {
-    List<Tri> triList = new ArrayList<Tri>();
+    List<Tri> triList = new ArrayList<>();
 
     /**
      * Count scanned corners, to catch infinite loops

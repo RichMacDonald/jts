@@ -177,7 +177,7 @@ public class SnapRoundingNoder
    */
   private List<NodedSegmentString> computeSnaps(Collection<NodedSegmentString> segStrings)
   {
-    List<NodedSegmentString> snapped = new ArrayList<NodedSegmentString>();
+    List<NodedSegmentString> snapped = new ArrayList<>();
     for (NodedSegmentString ss : segStrings ) {
       NodedSegmentString snappedSS = computeSegmentSnaps(ss);
       if (snappedSS != null)

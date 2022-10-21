@@ -50,8 +50,8 @@ class EdgeMerger {
  
   public static List<Edge> merge(List<Edge> edges) {
     // use a list to collect the final edges, to preserve order
-    List<Edge> mergedEdges = new ArrayList<Edge>();
-    Map<EdgeKey, Edge> edgeMap = new HashMap<EdgeKey, Edge>();
+    List<Edge> mergedEdges = new ArrayList<>();
+    Map<EdgeKey, Edge> edgeMap = new HashMap<>();
 
     for (Edge edge : edges) {
       EdgeKey edgeKey = EdgeKey.create(edge);

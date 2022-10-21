@@ -32,7 +32,7 @@ public class TestRunBuilder
   private Geometry b = null;
   private String description = "";
   private String operation  = "no-op";
-  private List<String> args = new ArrayList<String>();
+  private List<String> args = new ArrayList<>();
   private File aFile = null;
   private File bFile = null;
   

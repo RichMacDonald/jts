@@ -125,7 +125,7 @@ public class TestReader
         TestCase testCase,
         double tolerance)
         throws TestParseException {
-        List<Test> tests = new ArrayList<Test>();
+        List<Test> tests = new ArrayList<>();
         int testIndex = 0;
         for (Object testElement2 : testElements) {
             Element testElement = (Element) testElement2;
@@ -161,7 +161,7 @@ public class TestReader
                             ? null
                             : opElement.getAttribute("pattern").getValue().trim();
                 }
-                List<String> arguments = new ArrayList<String>();
+                List<String> arguments = new ArrayList<>();
                 if (arg2 != null) {
                     arguments.add(arg2);
                 }

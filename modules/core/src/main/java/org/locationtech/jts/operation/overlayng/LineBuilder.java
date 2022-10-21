@@ -73,7 +73,7 @@ class LineBuilder {
   private boolean isAllowCollapseLines = ! OverlayNG.STRICT_MODE_DEFAULT;
 
   
-  private List<LineString> lines = new ArrayList<LineString>();
+  private List<LineString> lines = new ArrayList<>();
   
   /**
    * Creates a builder for linear elements which may be present 

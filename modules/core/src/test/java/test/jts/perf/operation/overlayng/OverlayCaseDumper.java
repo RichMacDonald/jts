@@ -105,7 +105,7 @@ public class OverlayCaseDumper {
 
 
   private List<Geometry> flatten(List<Geometry> geoms) {
-    List<Geometry> flat = new ArrayList<Geometry>();
+    List<Geometry> flat = new ArrayList<>();
     for (Geometry geom : geoms) {
       if (geom.getNumGeometries() == 1) {
         flat.add(geom);
@@ -177,7 +177,7 @@ public class OverlayCaseDumper {
   }
 
   private List<Geometry> filter(List<Geometry> geoms) {
-    List<Geometry> filt = new ArrayList<Geometry>();
+    List<Geometry> filt = new ArrayList<>();
     for (Geometry geom : geoms) {
       if (geom.getNumPoints() > MAX_POINTS) continue;
       filt.add(geom);

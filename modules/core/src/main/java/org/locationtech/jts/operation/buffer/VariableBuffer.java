@@ -226,7 +226,7 @@ public class VariableBuffer {
    * @return a buffer polygon
    */
   public Geometry getResult() {
-    List<Geometry> parts = new ArrayList<Geometry>();
+    List<Geometry> parts = new ArrayList<>();
 
     Coordinate[] pts = line.getCoordinates();
     // construct segment buffers

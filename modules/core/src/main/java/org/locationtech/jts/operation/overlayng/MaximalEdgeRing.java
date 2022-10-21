@@ -131,7 +131,7 @@ class MaximalEdgeRing {
   {
     linkMinimalRings();
     
-    List<OverlayEdgeRing> minEdgeRings = new ArrayList<OverlayEdgeRing>();
+    List<OverlayEdgeRing> minEdgeRings = new ArrayList<>();
     OverlayEdge e = startEdge;
     do {
       if (e.getEdgeRing() == null) {

@@ -58,7 +58,7 @@ public class SparsePolygonUnion {
   private Collection<Geometry> inputPolys;
   private STRtree index;
   private int count;
-  private List<PolygonNode> nodes = new ArrayList<PolygonNode>();
+  private List<PolygonNode> nodes = new ArrayList<>();
   private GeometryFactory geomFactory;
 
   public SparsePolygonUnion(Collection<Geometry> polys)
@@ -96,7 +96,7 @@ public class SparsePolygonUnion {
     }
     
     //--- compute union of each cluster
-    List<Geometry> clusterGeom = new ArrayList<Geometry>();
+    List<Geometry> clusterGeom = new ArrayList<>();
     for (PolygonNode node : nodes) {
       Geometry geom = node.union();
       if (geom == null) continue;
@@ -166,7 +166,7 @@ public class SparsePolygonUnion {
     private void initCluster() {
       isFree = false;
       root = this;
-      nodes = new ArrayList<PolygonNode>();
+      nodes = new ArrayList<>();
       nodes.add(this);
    }
     
@@ -216,7 +216,7 @@ public class SparsePolygonUnion {
     }
 
     private static List<Geometry> toPolygons(List<PolygonNode> nodes) {
-      List<Geometry> polys = new ArrayList<Geometry>();
+      List<Geometry> polys = new ArrayList<>();
       for (PolygonNode node : nodes) {
         polys.add(node.poly);
       }

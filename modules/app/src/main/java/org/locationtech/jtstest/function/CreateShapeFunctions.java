@@ -263,7 +263,7 @@ public class CreateShapeFunctions {
     Coordinate[] pts = ptsGeom.getCoordinates();
     Coordinate centre = centrePt.getCoordinate();
     
-    List<OrderedPoint> orderedPts = new ArrayList<OrderedPoint>();
+    List<OrderedPoint> orderedPts = new ArrayList<>();
     for (Coordinate p : pts) {
       double ang = Angle.angle(centre, p);
       orderedPts.add(new OrderedPoint(p, ang));

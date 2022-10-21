@@ -127,7 +127,7 @@ extends JPanel implements FunctionPanel
   
   private GeometryFunction currentFunc = null;
   private Stopwatch timer;
-  private Map<GeometryFunction, String> funcParamMap = new HashMap<GeometryFunction, String>();
+  private Map<GeometryFunction, String> funcParamMap = new HashMap<>();
   
   public SpatialFunctionPanel() {
     try {

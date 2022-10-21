@@ -304,7 +304,7 @@ public class KdTree {
    */
   public void query(Envelope queryEnv, KdNodeVisitor visitor) {
     //-- Deque is faster than Stack
-    Deque<QueryStackFrame> queryStack = new ArrayDeque<QueryStackFrame>();
+    Deque<QueryStackFrame> queryStack = new ArrayDeque<>();
     KdNode currentNode = root;
     boolean isXLevel = true;
 

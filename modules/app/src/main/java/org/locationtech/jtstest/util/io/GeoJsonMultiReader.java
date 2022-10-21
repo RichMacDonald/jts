@@ -56,7 +56,7 @@ public class GeoJsonMultiReader {
   private List<Geometry> readGeometryList(String s) throws ParseException {
     // TODO: trim string to include only Geometry object
     Geometry geom = rdr.read(s);
-    List<Geometry> geomList = new ArrayList<Geometry>();
+    List<Geometry> geomList = new ArrayList<>();
     geomList.add(geom);
     return geomList;
   }
@@ -64,7 +64,7 @@ public class GeoJsonMultiReader {
   private List<Geometry> readFeatureCollectionList(String s) throws ParseException {
     Pattern p = Pattern.compile("\\{[^\\{\\}]+?\\}");
     Matcher m = p.matcher(s);
-    List<Geometry> geoms = new ArrayList<Geometry>();
+    List<Geometry> geoms = new ArrayList<>();
     while (true) {
       boolean isFound = m.find();
       if (! isFound) break;

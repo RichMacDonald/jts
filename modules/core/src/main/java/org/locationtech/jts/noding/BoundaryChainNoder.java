@@ -50,7 +50,7 @@ public class BoundaryChainNoder implements Noder {
 
   @Override
   public void computeNodes(Collection segStrings) {
-    HashSet<Segment> segSet = new HashSet<Segment>();
+    HashSet<Segment> segSet = new HashSet<>();
     BoundaryChainMap[] boundaryChains = new BoundaryChainMap[segStrings.size()];
     addSegments(segStrings, segSet, boundaryChains);
     markBoundarySegments(segSet);
@@ -88,7 +88,7 @@ public class BoundaryChainNoder implements Noder {
   }
 
   private static List<SegmentString> extractChains(BoundaryChainMap[] boundaryChains) {
-    List<SegmentString> chainList = new ArrayList<SegmentString>();
+    List<SegmentString> chainList = new ArrayList<>();
     for (BoundaryChainMap chainMap : boundaryChains) {
       chainMap.createChains(chainList);
     }

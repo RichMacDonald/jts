@@ -38,7 +38,7 @@ public class NodingTestUtil {
   }
 
   public static List<NodedSegmentString> toSegmentStrings(List<LineString> lines) {
-    List<NodedSegmentString> nssList = new ArrayList<NodedSegmentString>();
+    List<NodedSegmentString> nssList = new ArrayList<>();
     for (LineString line : lines) {
       NodedSegmentString nss = new NodedSegmentString(line.getCoordinates(), line);
       nssList.add(nss);
@@ -47,7 +47,7 @@ public class NodingTestUtil {
   }
   
   public static List<NodedSegmentString> getNodedSubstrings(NodedSegmentString nss) {
-    List<NodedSegmentString> resultEdgelist = new ArrayList<NodedSegmentString>();
+    List<NodedSegmentString> resultEdgelist = new ArrayList<>();
     nss.getNodeList().addSplitEdges(resultEdgelist);
     return resultEdgelist;
   }

@@ -74,7 +74,7 @@ public class CoverageGapFinder {
     Geometry union = CoverageUnion.union(coverage);
     List<Polygon> polygons = PolygonExtracter.getPolygons(union);
     
-    List<LineString> gapLines = new ArrayList<LineString>();
+    List<LineString> gapLines = new ArrayList<>();
     for (Polygon poly : polygons) {
       for (int i = 0; i < poly.getNumInteriorRing(); i++) {
         LinearRing hole = poly.getInteriorRingN(i);

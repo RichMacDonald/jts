@@ -97,7 +97,7 @@ public class FilesUtil {
 	}
 
 	public static List<File> toFile(List<String> filenames) {
-		List<File> files = new ArrayList<File>();
+		List<File> files = new ArrayList<>();
 		for (String filename : filenames) {
 			files.add(new File(filename));
 		}

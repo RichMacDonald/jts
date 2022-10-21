@@ -67,7 +67,7 @@ public class SpreaderGeometryFunction implements GeometryFunction {
     return fun.isRequiredB();
   }
   public Object invoke(Geometry geom, Object[] args) {
-    List<Geometry> result = new ArrayList<Geometry>();
+    List<Geometry> result = new ArrayList<>();
     if (isEachA) {
       invokeEachA(geom, args, result);
     }

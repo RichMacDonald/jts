@@ -40,7 +40,7 @@ public class ConstrainedInteriorPoint {
   
   private Polygon poly;
   private double scanY;
-  private List<Double> crossings = new ArrayList<Double>();
+  private List<Double> crossings = new ArrayList<>();
   private Envelope constraint;
 
   public ConstrainedInteriorPoint(Polygon poly) {

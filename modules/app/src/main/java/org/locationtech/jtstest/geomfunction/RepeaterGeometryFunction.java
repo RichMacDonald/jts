@@ -122,7 +122,7 @@ public class RepeaterGeometryFunction implements GeometryFunction {
   }
   
   private Object invokeRepeated(Geometry geom, Object[] args, double argStart) {
-    List<Geometry> results = new ArrayList<Geometry>();
+    List<Geometry> results = new ArrayList<>();
     int repeatArgIndex = repeatableArgIndex(fun);
     for (int i = 1; i <= count; i++) {
       double val = argStart * i;

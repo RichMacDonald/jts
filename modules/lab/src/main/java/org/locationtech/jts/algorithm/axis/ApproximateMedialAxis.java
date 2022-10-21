@@ -58,8 +58,8 @@ public class ApproximateMedialAxis {
   private Polygon inputPolygon;
   private GeometryFactory geomFact;
 
-  private Map<Tri, AxisNode> nodeMap = new HashMap<Tri, AxisNode>();
-  private Deque<AxisNode> nodeQue = new ArrayDeque<AxisNode>();
+  private Map<Tri, AxisNode> nodeMap = new HashMap<>();
+  private Deque<AxisNode> nodeQue = new ArrayDeque<>();
 
   public ApproximateMedialAxis(Polygon polygon) {
     this.inputPolygon = polygon;
@@ -76,7 +76,7 @@ public class ApproximateMedialAxis {
   
   private List<LineString> constructLines(List<Tri> tris)
   {
-    List<LineString> lines = new ArrayList<LineString>();
+    List<LineString> lines = new ArrayList<>();
     for (Tri tri : tris) {
       if (tri.numAdjacent() == 1) {
         lines.add( constructLeafLine(tri) );
@@ -131,7 +131,7 @@ public class ApproximateMedialAxis {
   private LineString constructPath(Tri triStart, int eStart, 
       Coordinate p0, Coordinate p1)
   {
-    ArrayList<Coordinate> pts = new ArrayList<Coordinate>();
+    ArrayList<Coordinate> pts = new ArrayList<>();
     if (p0 != null) pts.add(p0);
     if (p1 != null) pts.add(p1);
     

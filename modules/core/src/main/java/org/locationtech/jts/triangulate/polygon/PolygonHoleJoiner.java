@@ -84,7 +84,7 @@ public class PolygonHoleJoiner {
 
   private static List<Coordinate> ringCoordinates(LinearRing ring) {
     Coordinate[] coords = ring.getCoordinates();
-    List<Coordinate> coordList = new ArrayList<Coordinate>();
+    List<Coordinate> coordList = new ArrayList<>();
     for (Coordinate p : coords) {
       coordList.add(p);
     }
@@ -92,9 +92,9 @@ public class PolygonHoleJoiner {
   }
   
   private void joinHoles() {
-    shellCoordsSorted = new TreeSet<Coordinate>();
+    shellCoordsSorted = new TreeSet<>();
     shellCoordsSorted.addAll(shellCoords);
-    cutMap = new HashMap<Coordinate, ArrayList<Coordinate>>();
+    cutMap = new HashMap<>();
     List<LinearRing> orderedHoles = sortHoles(inputPolygon);
     for (LinearRing orderedHole : orderedHoles) {
       joinHole(orderedHole);
@@ -149,7 +149,7 @@ public class PolygonHoleJoiner {
    */
   private int getShellCoordIndex(Coordinate shellVertex, Coordinate holeVertex) {
     int numSkip = 0;
-    ArrayList<Coordinate> newValueList = new ArrayList<Coordinate>();
+    ArrayList<Coordinate> newValueList = new ArrayList<>();
     newValueList.add(holeVertex);
     if ( cutMap.containsKey(shellVertex) ) {
       for (Coordinate coord : cutMap.get(shellVertex)) {
@@ -162,7 +162,7 @@ public class PolygonHoleJoiner {
       cutMap.put(shellVertex, newValueList);
     }
     if ( !cutMap.containsKey(holeVertex) ) {
-      cutMap.put(holeVertex, new ArrayList<Coordinate>(newValueList));
+      cutMap.put(holeVertex, new ArrayList<>(newValueList));
     }
     return getShellCoordIndexSkip(shellVertex, numSkip);
   }
@@ -194,7 +194,7 @@ public class PolygonHoleJoiner {
    * @return a list of candidate join vertices
    */
   private List<Coordinate> findLeftShellVertices(Coordinate holeCoord) {
-    ArrayList<Coordinate> list = new ArrayList<Coordinate>();
+    ArrayList<Coordinate> list = new ArrayList<>();
     Coordinate closest = shellCoordsSorted.higher(holeCoord);
     while (closest.x == holeCoord.x) {
       closest = shellCoordsSorted.higher(closest);
@@ -252,7 +252,7 @@ public class PolygonHoleJoiner {
   private boolean crossesPolygon(Coordinate p0, Coordinate p1) {
     SegmentString segString = new BasicSegmentString(
         new Coordinate[] { p0, p1 }, null);
-    List<SegmentString> segStrings = new ArrayList<SegmentString>();
+    List<SegmentString> segStrings = new ArrayList<>();
     segStrings.add(segString);
     
     SegmentIntersectionDetector segInt = new SegmentIntersectionDetector();
@@ -279,7 +279,7 @@ public class PolygonHoleJoiner {
     boolean isJoinTouching = shellJoinPt.equals2D(holeJoinPt);
     
     //-- create new section of vertices to insert in shell
-    List<Coordinate> newSection = new ArrayList<Coordinate>();
+    List<Coordinate> newSection = new ArrayList<>();
     if (! isJoinTouching) {
       newSection.add(new Coordinate(shellJoinPt));
     }
@@ -304,7 +304,7 @@ public class PolygonHoleJoiner {
    * @return a list of sorted hole rings
    */
   private static List<LinearRing> sortHoles(final Polygon poly) {
-    List<LinearRing> holes = new ArrayList<LinearRing>();
+    List<LinearRing> holes = new ArrayList<>();
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
       holes.add(poly.getInteriorRingN(i));
     }
@@ -320,7 +320,7 @@ public class PolygonHoleJoiner {
    */
   private static List<Integer> findLeftVertices(LinearRing ring) {
     Coordinate[] coords = ring.getCoordinates();
-    ArrayList<Integer> leftmostIndex = new ArrayList<Integer>();
+    ArrayList<Integer> leftmostIndex = new ArrayList<>();
     double leftX = ring.getEnvelopeInternal().getMinX();
     for (int i = 0; i < coords.length - 1; i++) {
       //TODO: can this be strict equality?

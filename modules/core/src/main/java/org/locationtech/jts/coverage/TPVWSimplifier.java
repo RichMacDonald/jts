@@ -108,7 +108,7 @@ class TPVWSimplifier {
   }
 
   private List<Edge> createEdges(MultiLineString lines) {
-    List<Edge> edges = new ArrayList<Edge>();
+    List<Edge> edges = new ArrayList<>();
     if (lines == null)
       return edges;
     for (int i = 0 ; i < lines.getNumGeometries(); i++) {
@@ -173,7 +173,7 @@ class TPVWSimplifier {
     }
 
     private PriorityQueue<Corner> createQueue() {
-      PriorityQueue<Corner> cornerQueue = new PriorityQueue<Corner>();
+      PriorityQueue<Corner> cornerQueue = new PriorityQueue<>();
       for (int i = 1; i < linkedLine.size() - 1; i++) {
         addCorner(i, cornerQueue);
       }

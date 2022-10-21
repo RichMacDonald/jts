@@ -176,7 +176,7 @@ class OverlayMixedPoints {
   }
 
   private List<Point> findPoints(boolean isCovered, Coordinate[] coords) {
-    Set<Coordinate> resultCoords = new HashSet<Coordinate>();
+    Set<Coordinate> resultCoords = new HashSet<>();
     // keep only points contained
     for (Coordinate coord : coords) {
       if (hasLocation(isCovered, coord)) {
@@ -188,7 +188,7 @@ class OverlayMixedPoints {
   }
   
   private List<Point> createPoints(Set<Coordinate> coords) {
-    List<Point> points = new ArrayList<Point>();
+    List<Point> points = new ArrayList<>();
     for (Coordinate coord : coords) {
       Point point = geometryFactory.createPoint(coord); 
       points.add(point);
@@ -231,7 +231,7 @@ class OverlayMixedPoints {
   }
   
   private static List<Polygon> extractPolygons(Geometry geom) {
-    List<Polygon> list = new ArrayList<Polygon>();
+    List<Polygon> list = new ArrayList<>();
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       Polygon poly = (Polygon) geom.getGeometryN(i);
       if(! poly.isEmpty()) {
@@ -242,7 +242,7 @@ class OverlayMixedPoints {
   }
 
   private static List<LineString> extractLines(Geometry geom) {
-    List<LineString> list = new ArrayList<LineString>();
+    List<LineString> list = new ArrayList<>();
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       LineString line = (LineString) geom.getGeometryN(i);
       if (! line.isEmpty()) {

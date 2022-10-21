@@ -33,7 +33,7 @@ public class TestCase implements Runnable {
   private String description;
   private Geometry a;
   private Geometry b;
-  private List<Test> tests = new ArrayList<Test>();
+  private List<Test> tests = new ArrayList<>();
   private TestRun testRun;
   private int caseIndex;
   private int lineNumber;

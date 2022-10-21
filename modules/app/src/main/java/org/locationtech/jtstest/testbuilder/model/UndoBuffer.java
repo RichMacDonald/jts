@@ -17,7 +17,7 @@ import org.locationtech.jts.geom.Geometry;
 
 public class UndoBuffer {
 
-  Stack<Geometry> buffer = new Stack<Geometry>();
+  Stack<Geometry> buffer = new Stack<>();
   
   public void save(Geometry g) {
     if (g == null) return;

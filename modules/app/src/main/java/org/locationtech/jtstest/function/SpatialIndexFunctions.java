@@ -86,7 +86,7 @@ public class SpatialIndexFunctions
   
   private static Geometry kdTreeGraph(Geometry geom, KdTree index) {
     KdNode root = index.getRoot();
-    List<Geometry> edges = new ArrayList<Geometry>();
+    List<Geometry> edges = new ArrayList<>();
     
     double x = geom.getEnvelopeInternal().centre().getX();
     double xInc = geom.getEnvelopeInternal().getWidth() / 2;
@@ -129,7 +129,7 @@ public class SpatialIndexFunctions
   private static Geometry kdTreeSplits(Geometry geom, KdTree index) {
     Envelope extent = geom.getEnvelopeInternal();
     KdNode root = index.getRoot();
-    List<Geometry> splits = new ArrayList<Geometry>();
+    List<Geometry> splits = new ArrayList<>();
     
     addSplits(root, true, extent, splits, geom.getFactory());
     return geom.getFactory().buildGeometry(splits);
@@ -372,7 +372,7 @@ public class SpatialIndexFunctions
   public static Geometry monotoneChains(Geometry geom) {
     Coordinate[] pts = geom.getCoordinates();
     List<MonotoneChain> chains = MonotoneChainBuilder.getChains(pts);
-    List<LineString> lines = new ArrayList<LineString>();
+    List<LineString> lines = new ArrayList<>();
     for (MonotoneChain mc : chains) {
       Coordinate[] mcPts = mc.getCoordinates();
       LineString line = geom.getFactory().createLineString(mcPts);

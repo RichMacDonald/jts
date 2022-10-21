@@ -21,7 +21,7 @@ import org.locationtech.jtstest.testbuilder.model.TestCaseEdit;
  * @version 1.7
  */
 public class TestCaseList {
-  ArrayList<Object> tests = new ArrayList<Object>();
+  ArrayList<Object> tests = new ArrayList<>();
 
   public TestCaseList() { }
 

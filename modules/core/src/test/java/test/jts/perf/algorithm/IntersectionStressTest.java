@@ -55,7 +55,7 @@ public class IntersectionStressTest {
   // make results reproducible
   static Random randGen = new Random(123456);
   
-  Map<String, Double> distMap = new HashMap<String, Double>();
+  Map<String, Double> distMap = new HashMap<>();
 
   private boolean verbose = false;
 

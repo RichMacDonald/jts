@@ -55,7 +55,7 @@ public class PolygonizerPerfTest extends PerformanceTestCase {
   }
   
   private List<Polygon> createCircleGrid(int num, double size, int bufferSegs) {
-    List<Polygon> polys = new ArrayList<Polygon>();
+    List<Polygon> polys = new ArrayList<>();
 
     int nOnSide = (int) Math.sqrt(num) + 1; 
     double radius = size / nOnSide / 4;

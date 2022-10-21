@@ -118,8 +118,8 @@ public class PolygonHandler implements ShapeHandler{
         }
         
         //LinearRing[] rings = new LinearRing[numParts];
-        ArrayList<LinearRing> shells = new ArrayList<LinearRing>();
-        ArrayList<LinearRing> holes = new ArrayList<LinearRing>();
+        ArrayList<LinearRing> shells = new ArrayList<>();
+        ArrayList<LinearRing> holes = new ArrayList<>();
         Coordinate[] coords = new Coordinate[numPoints];
         
         for(int t=0;t<numPoints;t++)
@@ -230,7 +230,7 @@ public class PolygonHandler implements ShapeHandler{
       private ArrayList<ArrayList<LinearRing>> assignHolesToShells(ArrayList<LinearRing> shells, ArrayList<LinearRing> holes)
       {
         // now we have a list of all shells and all holes
-        ArrayList<ArrayList<LinearRing>> holesForShells = new ArrayList<ArrayList<LinearRing>>(shells.size());
+        ArrayList<ArrayList<LinearRing>> holesForShells = new ArrayList<>(shells.size());
         for (int i = 0; i < shells.size(); i++) {
           holesForShells.add(new ArrayList<LinearRing>());
         }

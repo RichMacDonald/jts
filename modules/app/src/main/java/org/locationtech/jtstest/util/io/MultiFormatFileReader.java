@@ -152,7 +152,7 @@ public class MultiFormatFileReader
     Shapefile shpfile = new Shapefile(new FileInputStream(filename));
     shpfile.readStream(geomFact);
     int count = 0;
-    List<Geometry> geomList = new ArrayList<Geometry>();
+    List<Geometry> geomList = new ArrayList<>();
     do {
       Geometry geom = shpfile.next();
       boolean isOverLimit = limit >= 0 && geomList.size() > limit;

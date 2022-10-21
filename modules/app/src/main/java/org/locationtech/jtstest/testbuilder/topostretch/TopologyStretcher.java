@@ -127,7 +127,7 @@ public class TopologyStretcher
   
   private Coordinate[] extractPoints(Geometry[] geom, Envelope mask)
   {
-    List<Coordinate> ptsList = new ArrayList<Coordinate>();
+    List<Coordinate> ptsList = new ArrayList<>();
     for (Geometry element : geom) {
       if (element == null) continue;
       if (mask != null && ! mask.intersects(element.getEnvelopeInternal()))
