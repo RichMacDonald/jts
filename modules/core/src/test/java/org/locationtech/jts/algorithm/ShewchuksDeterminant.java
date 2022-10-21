@@ -213,18 +213,12 @@ public class ShewchuksDeterminant
       else {
         detsum = detleft + detright;
       }
-    }
-    else if (detleft < 0.0) {
-      if (detright >= 0.0) {
+    } else if ((detleft >= 0.0) || (detright >= 0.0)) {
         return signum(det);
       }
       else {
         detsum = -detleft - detright;
       }
-    }
-    else {
-      return signum(det);
-    }
 
     double ERR_BOUND = 1e-15;
     double errbound = ERR_BOUND * detsum;
@@ -281,18 +275,12 @@ public class ShewchuksDeterminant
       else {
         detsum = detleft + detright;
       }
-    }
-    else if (detleft < 0.0) {
-      if (detright >= 0.0) {
+    } else if ((detleft >= 0.0) || (detright >= 0.0)) {
         return det;
       }
       else {
         detsum = -detleft - detright;
       }
-    }
-    else {
-      return det;
-    }
 
     double errbound = ccwerrboundA * detsum;
     if ((det >= errbound) || (-det >= errbound)) {

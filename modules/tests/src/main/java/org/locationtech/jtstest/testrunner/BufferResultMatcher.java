@@ -69,10 +69,7 @@ public class BufferResultMatcher
 		 * that every point of the actual buffer is at least a certain distance away from the 
 		 * geometry boundary.  
 		*/
-		if (! isSymDiffAreaInTolerance(actualBuffer, expectedBuffer))
-			return false;
-		
-		if (! isBoundaryHausdorffDistanceInTolerance(actualBuffer, expectedBuffer, distance))
+		if (! isSymDiffAreaInTolerance(actualBuffer, expectedBuffer) || ! isBoundaryHausdorffDistanceInTolerance(actualBuffer, expectedBuffer, distance))
 			return false;
 		
 		return true;

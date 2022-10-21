@@ -164,8 +164,7 @@ class StretchedVertexFinder
 	
   private static boolean contains(Envelope env, Coordinate p0, Coordinate p1)
   {
-    if (! env.contains(p0)) return false;
-    if (! env.contains(p1)) return false;
+    if (! env.contains(p0) || ! env.contains(p1)) return false;
     return true;
   }
   

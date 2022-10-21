@@ -83,8 +83,7 @@ public int compareTo(Object obj)
 
   public boolean isEndPoint(int maxSegmentIndex)
   {
-    if (segmentIndex == 0 && dist == 0.0) return true;
-    if (segmentIndex == maxSegmentIndex) return true;
+    if ((segmentIndex == 0 && dist == 0.0) || (segmentIndex == maxSegmentIndex)) return true;
     return false;
   }
 

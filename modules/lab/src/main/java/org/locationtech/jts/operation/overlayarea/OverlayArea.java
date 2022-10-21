@@ -191,9 +191,8 @@ public class OverlayArea {
     Coordinate pt = geom.getCoordinate();
     
     // fast check for disjoint
-    if (! env.covers(pt)) return 0.0;
     // full check for contained
-    if (Location.INTERIOR != locator.locate(pt)) return 0.0;
+    if (! env.covers(pt) || (Location.INTERIOR != locator.locate(pt))) return 0.0;
     
     return area(geom);
   }

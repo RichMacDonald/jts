@@ -90,8 +90,7 @@ public class MathUtil
   public static double log10(double x)
   {
     double ln = Math.log(x);
-    if (Double.isInfinite(ln)) return ln;
-    if (Double.isNaN(ln)) return ln;
+    if (Double.isInfinite(ln) || Double.isNaN(ln)) return ln;
     return ln / LOG_10;
   }
   

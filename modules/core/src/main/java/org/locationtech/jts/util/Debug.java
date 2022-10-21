@@ -114,8 +114,7 @@ public class Debug {
   }
 
   public static void print(boolean isTrue, Object obj) {
-    if (! debugOn) return;
-    if (! isTrue) return;
+    if (! debugOn || ! isTrue) return;
     debug.instancePrint(obj);
   }
 
@@ -266,8 +265,7 @@ public class Debug {
   }
 
   public void instancePrintIfWatch(Object obj) {
-    if (obj != watchObj) return;
-    if (watchObj == null) return;
+    if ((obj != watchObj) || (watchObj == null)) return;
     instancePrint(watchObj);
   }
 

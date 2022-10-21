@@ -324,8 +324,7 @@ public class ConcaveHull
    * @param queue the priority queue to add to
    */
   private void addBorderTri(HullTri tri, PriorityQueue<HullTri> queue) {
-    if (tri == null) return;
-    if (tri.numAdjacent() != 2) return;
+    if ((tri == null) || (tri.numAdjacent() != 2)) return;
     tri.setSizeToBoundary();
     queue.add(tri);
   }

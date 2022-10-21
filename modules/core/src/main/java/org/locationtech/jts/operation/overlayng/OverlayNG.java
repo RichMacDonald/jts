@@ -188,8 +188,7 @@ public class OverlayNG
       return loc0 == Location.INTERIOR
           && loc1 != Location.INTERIOR;
     case SYMDIFFERENCE:
-      return   (     loc0 == Location.INTERIOR &&  loc1 != Location.INTERIOR)
-            || (     loc0 != Location.INTERIOR &&  loc1 == Location.INTERIOR);
+      return   (loc0 == Location.INTERIOR) == (loc1 != Location.INTERIOR);
     }
     return false;
   }

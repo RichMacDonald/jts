@@ -140,7 +140,7 @@ class LineBuilder {
      * These are only included if part of a result area.
      * This is a short-circuit for the most common area edge case
      */
-    if (lbl.isBoundarySingleton()) return false;
+    
     
     /**
      * Omit edge which is a collapse along a boundary.
@@ -149,14 +149,12 @@ class LineBuilder {
      * 
      * This logic is only used if not including collapse lines in result.
      */
-    if (! isAllowCollapseLines 
-        && lbl.isBoundaryCollapse()) return false;
-
     /**
      * Omit edge which is a collapse interior to its parent area.
      * (E.g. a narrow gore, or spike off a hole)
      */
-    if (lbl.isInteriorCollapse()) return false;
+    if (lbl.isBoundarySingleton() || (! isAllowCollapseLines 
+        && lbl.isBoundaryCollapse()) || lbl.isInteriorCollapse()) return false;
     
     /**
      * For ops other than Intersection, omit a line edge
@@ -215,9 +213,7 @@ class LineBuilder {
    * @return the effective location of the line
    */
   private static int effectiveLocation(OverlayLabel lbl, int geomIndex) {
-    if (lbl.isCollapse(geomIndex))
-      return Location.INTERIOR;
-    if (lbl.isLine(geomIndex))
+    if (lbl.isCollapse(geomIndex) || lbl.isLine(geomIndex))
       return Location.INTERIOR;
     return lbl.getLineLocation(geomIndex);
   }
@@ -225,8 +221,7 @@ class LineBuilder {
   private void addResultLines() {
     Collection<OverlayEdge> edges = graph.getEdges();
     for (OverlayEdge edge : edges) {
-      if (! edge.isInResultLine()) continue;
-      if (edge.isVisited()) continue;
+      if (! edge.isInResultLine() || edge.isVisited()) continue;
       
       lines.add( toLine( edge ));
       edge.markVisitedBoth();
@@ -263,8 +258,7 @@ class LineBuilder {
   private void addResultLinesForNodes() {
     Collection<OverlayEdge> edges = graph.getEdges();
     for (OverlayEdge edge : edges) {
-      if (! edge.isInResultLine()) continue;
-      if (edge.isVisited()) continue;
+      if (! edge.isInResultLine() || edge.isVisited()) continue;
       
       /**
        * Choose line start point as a node.
@@ -288,8 +282,7 @@ class LineBuilder {
     // TODO: preserve input LinearRings if possible?  Would require marking them as such
     Collection<OverlayEdge> edges = graph.getEdges();
     for (OverlayEdge edge : edges) {
-      if (! edge.isInResultLine()) continue;
-      if (edge.isVisited()) continue;
+      if (! edge.isInResultLine() || edge.isVisited()) continue;
       
       lines.add( buildLine( edge ));
       //Debug.println(edge);

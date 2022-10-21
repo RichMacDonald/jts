@@ -239,13 +239,12 @@ implements SegmentIntersector
    */
   private static boolean isAdjacentInRing(SegmentString ringSS, int segIndex0, int segIndex1) {
     int delta = Math.abs(segIndex1 - segIndex0);
-    if (delta <= 1) return true;
     /**
      * A string with N vertices has maximum segment index of N-2.
      * If the delta is at least N-2, the segments must be
      * at the start and end of the string and thus adjacent.
      */
-    if (delta >= ringSS.size() - 2) return true;
+    if ((delta <= 1) || (delta >= ringSS.size() - 2)) return true;
     return false;
   }
 }

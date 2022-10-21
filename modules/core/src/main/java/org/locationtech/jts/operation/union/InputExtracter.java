@@ -140,13 +140,10 @@ class InputExtracter implements GeometryFilter
   public void filter(Geometry geom) {
     recordDimension( geom.getDimension() );
     
-    if (geom instanceof GeometryCollection) {
-      return;
-    }
     /**
      * Don't keep empty geometries
      */
-    if (geom.isEmpty()) 
+    if ((geom instanceof GeometryCollection) || geom.isEmpty()) 
       return;
     
     if (geom instanceof Polygon) {

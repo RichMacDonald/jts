@@ -204,8 +204,7 @@ protected boolean indexOfAfterCheck(Geometry linearGeom, Coordinate testPt)
     // check extracted points are the same as the input
     Coordinate pt1 = indexedLine.extractPoint(loc1);
     Coordinate pt2 = indexedLine.extractPoint(loc2);
-    if (! pt1.equals2D(testPt)) return false;
-    if (! pt2.equals2D(testPt)) return false;
+    if (! pt1.equals2D(testPt) || ! pt2.equals2D(testPt)) return false;
 
     return true;
   }

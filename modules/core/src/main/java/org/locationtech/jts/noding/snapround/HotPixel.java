@@ -154,13 +154,12 @@ public class HotPixel
   public boolean intersects(Coordinate p) {
     double x = scale(p.x);
     double y = scale(p.y);
-    if (x >= hpx + TOLERANCE) return false;
+    
     // check Left side
-    if (x < hpx - TOLERANCE) return false;
+    
     // check Top side
-    if (y >= hpy + TOLERANCE) return false;
     // check Bottom side
-    if (y < hpy - TOLERANCE) return false;
+    if ((x >= hpx + TOLERANCE) || (x < hpx - TOLERANCE) || (y >= hpy + TOLERANCE) || (y < hpy - TOLERANCE)) return false;
     return true;
   }
 
@@ -224,11 +223,8 @@ public class HotPixel
      * the segment interior or Left or Bottom sides.
      */
     //---- check vertical segment
-    if (px == qx) {
-      return true;
-    }
     //---- check horizontal segment
-    if (py == qy) {
+    if ((px == qx) || (py == qy)) {
       return true;
     }
 

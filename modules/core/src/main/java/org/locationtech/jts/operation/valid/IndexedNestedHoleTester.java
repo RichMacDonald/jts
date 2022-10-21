@@ -79,13 +79,10 @@ class IndexedNestedHoleTester
 
       List<LinearRing> results = index.query(hole.getEnvelopeInternal());
       for (LinearRing testHole : results) {
-        if (hole == testHole)
-          continue;
-
         /**
          * Hole is not fully covered by test hole, so cannot be nested
          */
-        if (! testHole.getEnvelopeInternal().covers( hole.getEnvelopeInternal()) )
+        if ((hole == testHole) || ! testHole.getEnvelopeInternal().covers( hole.getEnvelopeInternal()) )
           continue;
 
         if (PolygonTopologyAnalyzer.isRingNested(hole, testHole)) {

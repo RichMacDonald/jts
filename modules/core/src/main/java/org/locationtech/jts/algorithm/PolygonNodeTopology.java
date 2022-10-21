@@ -75,8 +75,7 @@ public class PolygonNodeTopology
       isInteriorBetween = false;
     }
     boolean isBetween = isBetween(nodePt, b, aLo, aHi);
-    boolean isInterior = (isBetween && isInteriorBetween)
-        || (! isBetween && ! isInteriorBetween);
+    boolean isInterior = isBetween == isInteriorBetween;
     return isInterior;
   }
   

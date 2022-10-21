@@ -83,8 +83,7 @@ public class OverlayNGTestFunctions {
   }
 
   private static Geometry extractPoly(Geometry g) {
-    if (g instanceof Polygon) return g;
-    if (g instanceof MultiPolygon) return g;
+    if ((g instanceof Polygon) || (g instanceof MultiPolygon)) return g;
     return ConversionFunctions.toMultiPolygon(g, null);
   }
   

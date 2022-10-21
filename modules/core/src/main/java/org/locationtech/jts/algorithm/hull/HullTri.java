@@ -206,8 +206,7 @@ class HullTri extends Tri
   
   private boolean isBoundaryTouch(int index) {
     //-- If vertex is in a boundary edge it is not a touch
-    if (isBoundary(index)) return false;
-    if (isBoundary(prev(index))) return false;
+    if (isBoundary(index) || isBoundary(prev(index))) return false;
     //-- if vertex is not in interior it is on boundary
     return ! isInteriorVertex(index);
   }

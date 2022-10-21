@@ -176,8 +176,7 @@ public class SnapRoundingTest  extends TestCase {
 
   private boolean isSnapped(Coordinate v, Coordinate p0, Coordinate p1)
   {
-    if (v.equals2D(p0)) return true;
-    if (v.equals2D(p1)) return true;
+    if (v.equals2D(p0) || v.equals2D(p1)) return true;
     LineSegment seg = new LineSegment(p0, p1);
     double dist = seg.distance(v);
     if (dist < SNAP_TOLERANCE / 2.05) return false;

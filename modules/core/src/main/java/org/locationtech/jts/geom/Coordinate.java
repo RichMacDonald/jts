@@ -274,8 +274,7 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    * @see Double#isFinite(double)
    */
   public boolean isValid() {
-    if (! Double.isFinite(x)) return false;
-    if (! Double.isFinite(y)) return false;
+    if (! Double.isFinite(x) || ! Double.isFinite(y)) return false;
     return true;
   }
   
@@ -288,10 +287,7 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *      z-coordinates do not have to be equal.
    */
   public boolean equals2D(Coordinate other) {
-    if (x != other.x) {
-      return false;
-    }
-    if (y != other.y) {
+    if ((x != other.x) || (y != other.y)) {
       return false;
     }
     return true;
@@ -308,10 +304,7 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *      with the same values for X and Y.
    */
   public boolean equals2D(Coordinate c, double tolerance){
-    if (! NumberUtil.equalsWithTolerance(this.x, c.x, tolerance)) {
-      return false;
-    }
-    if (! NumberUtil.equalsWithTolerance(this.y, c.y, tolerance)) {
+    if (! NumberUtil.equalsWithTolerance(this.x, c.x, tolerance) || ! NumberUtil.equalsWithTolerance(this.y, c.y, tolerance)) {
       return false;
     }
     return true;

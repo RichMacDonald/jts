@@ -444,11 +444,7 @@ public class QuadEdgeSubdivision {
 	 * @return true if the vertex is an outer triangle vertex
 	 */
 	public boolean isFrameVertex(Vertex v) {
-		if (v.equals(frameVertex[0]))
-			return true;
-		if (v.equals(frameVertex[1]))
-			return true;
-		if (v.equals(frameVertex[2]))
+		if (v.equals(frameVertex[0]) || v.equals(frameVertex[1]) || v.equals(frameVertex[2]))
 			return true;
 		return false;
 	}

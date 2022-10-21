@@ -361,9 +361,7 @@ public void transform(Coordinate modelCoordinate, Point2D point)
 
   public boolean contains(Point2D p)
   {
-    if (p.getX() < 0 || p.getY() < 0) return false;
-    if (p.getX() > viewSize.getWidth()) return false;
-    if (p.getY() > viewSize.getHeight()) return false;
+    if (p.getX() < 0 || p.getY() < 0 || (p.getX() > viewSize.getWidth()) || (p.getY() > viewSize.getHeight())) return false;
     return true;
   }
 

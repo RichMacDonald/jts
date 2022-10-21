@@ -281,9 +281,7 @@ public class WKBReaderTest  extends TestCase
     Geometry g2 = wkbReader.read(wkb);
 
     WKTReader useRdr = rdr;
-    if (expectedWKT.contains("ZM"))
-      useRdr = rdrM;
-    else if (expectedWKT.contains("M(") || expectedWKT.contains("M ("))
+    if (expectedWKT.contains("ZM") || (expectedWKT.contains("M(") || expectedWKT.contains("M (")))
       useRdr = rdrM;
 
     Geometry expected = useRdr.read(expectedWKT);

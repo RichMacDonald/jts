@@ -142,9 +142,8 @@ public GeometryExtracter(Class clz, List comps)
   }
   
   protected static boolean isOfType(Geometry geom, String geometryType) {
-    if (geom.getGeometryType() == geometryType) return true;
-    if (geometryType == Geometry.TYPENAME_LINESTRING
-      && geom.getGeometryType() == Geometry.TYPENAME_LINEARRING) return true;
+    if ((geom.getGeometryType() == geometryType) || (geometryType == Geometry.TYPENAME_LINESTRING
+      && geom.getGeometryType() == Geometry.TYPENAME_LINEARRING)) return true;
     return false;
   }
 

@@ -224,10 +224,7 @@ public void startRun(int size)
     }
     
     public boolean envelopesOverlap(LineSegment seg1, LineSegment seg2) {
-      if (seg1.maxX() <= seg2.minX()) return false;
-      if (seg2.maxX() <= seg1.minX()) return false;
-      if (seg1.maxY() <= seg2.minY()) return false;
-      if (seg2.maxY() <= seg1.minY()) return false;
+      if ((seg1.maxX() <= seg2.minX()) || (seg2.maxX() <= seg1.minX()) || (seg1.maxY() <= seg2.minY()) || (seg2.maxY() <= seg1.minY())) return false;
       return true;
     }
     /**

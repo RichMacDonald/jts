@@ -461,8 +461,7 @@ class OverlayLabel {
    * @return true if the edge is a boundary singleton
    */
   public boolean isBoundarySingleton() {
-    if (aDim == DIM_BOUNDARY && bDim == DIM_NOT_PART) return true;
-    if (bDim == DIM_BOUNDARY && aDim == DIM_NOT_PART) return true;
+    if ((aDim == DIM_BOUNDARY && bDim == DIM_NOT_PART) || (bDim == DIM_BOUNDARY && aDim == DIM_NOT_PART)) return true;
     return false;
   }
   
@@ -527,8 +526,7 @@ class OverlayLabel {
    * @return true if the label is an Interior Collapse to a source geometry
    */
   public boolean isInteriorCollapse() {
-    if (aDim == DIM_COLLAPSE && aLocLine == Location.INTERIOR) return true;
-    if (bDim == DIM_COLLAPSE && bLocLine == Location.INTERIOR) return true;
+    if ((aDim == DIM_COLLAPSE && aLocLine == Location.INTERIOR) || (bDim == DIM_COLLAPSE && bLocLine == Location.INTERIOR)) return true;
     return false;
   }
   

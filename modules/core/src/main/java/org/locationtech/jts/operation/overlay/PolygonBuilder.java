@@ -244,9 +244,8 @@ public class PolygonBuilder {
       Envelope tryShellEnv = tryShellRing.getEnvelopeInternal();
       // the hole envelope cannot equal the shell envelope
       // (also guards against testing rings against themselves)
-      if (tryShellEnv.equals(testEnv)) continue;
       // hole must be contained in shell
-      if (! tryShellEnv.contains(testEnv)) continue;
+      if (tryShellEnv.equals(testEnv) || ! tryShellEnv.contains(testEnv)) continue;
       
       testPt = CoordinateArrays.ptNotInList(testRing.getCoordinates(), tryShellRing.getCoordinates());
       boolean isContained = false;

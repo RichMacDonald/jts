@@ -584,8 +584,7 @@ public class OraReader
     
     private static void checkETYPE(int eType, int val1, int val2, int val3, String geomType)
     {
-    	if (eType == val1) return;
-    	if (val2 >= 0 && eType == val2) return;
+    	if ((eType == val1) || (val2 >= 0 && eType == val2)) return;
     	if (val3 >= 0 && eType == val3) return;
     	throw new IllegalArgumentException("SDO_ETYPE "+ eType +" is not supported when reading a " + geomType);
     }
@@ -595,8 +594,7 @@ public class OraReader
     }
     
     private static void checkInterpretation(int interpretation, int val1, int val2, String geomType) {
-		if (interpretation == val1) return;
-	   	if (val2 >= 0 && interpretation == val2) return;
+		if ((interpretation == val1) || (val2 >= 0 && interpretation == val2)) return;
 	   	errorInterpretation(interpretation, geomType);
     }
 

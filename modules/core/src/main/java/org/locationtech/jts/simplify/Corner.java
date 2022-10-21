@@ -79,17 +79,14 @@ public class Corner implements Comparable<Corner> {
   }
   
   public boolean isVertex(Coordinate v) {
-    if (v.equals2D(edge.getCoordinate(prev))) return true;
-    if (v.equals2D(edge.getCoordinate(index))) return true;
-    if (v.equals2D(edge.getCoordinate(next))) return true;
+    if (v.equals2D(edge.getCoordinate(prev)) || v.equals2D(edge.getCoordinate(index)) || v.equals2D(edge.getCoordinate(next))) return true;
     return false;
   }
 
   public boolean isBaseline(Coordinate p0, Coordinate p1) {
     Coordinate prev = prev();
     Coordinate next = next();
-    if (prev.equals2D( p0 ) && next.equals2D( p1 )) return true;
-    if (prev.equals2D( p1 ) && next.equals2D( p0 )) return true;
+    if ((prev.equals2D( p0 ) && next.equals2D( p1 )) || (prev.equals2D( p1 ) && next.equals2D( p0 ))) return true;
     return false;
   }
   

@@ -95,7 +95,9 @@ public Class getReturnType(String opName)
 		distance = Double.parseDouble((String) args[0]);
 		if (argCount >= 2) 
 			quadSegments = Integer.parseInt((String) args[1]);
-		if (argCount >= 3)int endCapStyle = Integer.parseInt((String) args[2]);
+		int endCapStyleUnused;
+		if (argCount >= 3)
+			endCapStyleUnused = Integer.parseInt((String) args[2]);
 	}
 	private Result invokeBufferOpValidated(Geometry geometry)
 	{

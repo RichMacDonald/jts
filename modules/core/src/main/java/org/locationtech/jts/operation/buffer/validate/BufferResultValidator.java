@@ -142,9 +142,8 @@ public class BufferResultValidator
   private void checkExpectedEmpty()
   {
   	// can't check areal features
-  	if (input.getDimension() >= 2) return;
   	// can't check positive distances
-  	if (distance > 0.0) return;
+  	if ((input.getDimension() >= 2) || (distance > 0.0)) return;
   		
   	// at this point can expect an empty result
   	if (! result.isEmpty()) {

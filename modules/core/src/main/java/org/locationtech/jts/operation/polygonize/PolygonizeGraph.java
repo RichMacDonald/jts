@@ -204,8 +204,7 @@ class PolygonizeGraph
     List edgeRingList = new ArrayList();
     for (Object dirEdge : dirEdges) {
       PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) dirEdge;
-      if (de.isMarked()) continue;
-      if (de.isInRing()) continue;
+      if (de.isMarked() || de.isInRing()) continue;
 
       EdgeRing er = findEdgeRing(de);
       edgeRingList.add(er);
@@ -228,8 +227,7 @@ class PolygonizeGraph
     long currLabel = 1;
     for (Object dirEdge : dirEdges) {
       PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) dirEdge;
-      if (de.isMarked()) continue;
-      if (de.getLabel() >= 0) continue;
+      if (de.isMarked() || (de.getLabel() >= 0)) continue;
 
       edgeRingStarts.add(de);
       List edges = EdgeRing.findDirEdgesInRing(de);

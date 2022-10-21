@@ -142,11 +142,8 @@ public class IntersectionMatrix implements Cloneable {
    *      the dimension value
    */
   public static boolean matches(int actualDimensionValue, char requiredDimensionSymbol) {
-    if (requiredDimensionSymbol == Dimension.SYM_DONTCARE) {
-      return true;
-    }
-    if (requiredDimensionSymbol == Dimension.SYM_TRUE && (actualDimensionValue >= 0 || actualDimensionValue
-         == Dimension.TRUE)) {
+    if ((requiredDimensionSymbol == Dimension.SYM_DONTCARE) || (requiredDimensionSymbol == Dimension.SYM_TRUE && (actualDimensionValue >= 0 || actualDimensionValue
+         == Dimension.TRUE))) {
       return true;
     }
     if (requiredDimensionSymbol == Dimension.SYM_FALSE && actualDimensionValue == Dimension.FALSE) {

@@ -121,15 +121,11 @@ class SubgraphDepthLocater
 
       // skip segment if it is left of the stabbing line
       double maxx = Math.max(seg.p0.x, seg.p1.x);
-      if (maxx < stabbingRayLeftPt.x)
-        continue;
+      
 
       // skip horizontal segments (there will be a non-horizontal one carrying the same depth info
-      if (seg.isHorizontal())
-        continue;
-
       // skip if segment is above or below stabbing line
-      if (stabbingRayLeftPt.y < seg.p0.y || stabbingRayLeftPt.y > seg.p1.y)
+      if ((maxx < stabbingRayLeftPt.x) || seg.isHorizontal() || stabbingRayLeftPt.y < seg.p0.y || stabbingRayLeftPt.y > seg.p1.y)
         continue;
 
       // skip if stabbing ray is right of the segment

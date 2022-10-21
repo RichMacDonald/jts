@@ -322,7 +322,6 @@ public Geometry getFarthestPoints() {
 			if (Angle.isObtuse(P, R, Q)) {
 				// if PRQ is obtuse, then MBC is determined by P and Q
 				extremalPts = new Coordinate[] { new Coordinate(P), new Coordinate(Q) };
-				return;
 			}
 			else if (Angle.isObtuse(R, P, Q)) {
 				// if RPQ is obtuse, update baseline and iterate
@@ -337,8 +336,8 @@ public Geometry getFarthestPoints() {
 			else {
 				// otherwise all angles are acute, and the MBC is determined by the triangle PQR
 				extremalPts = new Coordinate[] { new Coordinate(P), new Coordinate(Q), new Coordinate(R) };
-				return;
 			}
+			return;
 		}
 		Assert.shouldNeverReachHere("Logic failure in Minimum Bounding Circle algorithm!"); 
 	}
@@ -384,8 +383,7 @@ public Geometry getFarthestPoints() {
 		Coordinate minAngPt = null;
 		for (Coordinate p : pts) {
 			
-			if (p == P) continue;
-			if (p == Q) continue;
+			if ((p == P) || (p == Q)) continue;
 			
 			double ang = Angle.angleBetween(P, p, Q);
 			if (ang < minAng) {

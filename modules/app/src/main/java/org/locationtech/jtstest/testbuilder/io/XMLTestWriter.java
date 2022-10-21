@@ -67,10 +67,7 @@ public class XMLTestWriter
   }
 
   private boolean isGdbcTestCase(TestCase testCase) {
-    if (testCase.getName() == null || testCase.getDescription() == null) {
-      return false;
-    }
-    if (testCase.getName().equalsIgnoreCase(testCase.getDescription())) {
+    if (testCase.getName() == null || testCase.getDescription() == null || testCase.getName().equalsIgnoreCase(testCase.getDescription())) {
       return false;
     }
     int nameColonIndex = testCase.getName().indexOf(":");

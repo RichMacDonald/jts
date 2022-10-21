@@ -421,10 +421,7 @@ protected int computeIntersect(
     if (Double.isNaN(p1z)) {
       return p2z; // may be NaN
     }
-    if (Double.isNaN(p2z)) {
-      return p1z; // may be NaN
-    }
-    if (p.equals2D(p1)) {
+    if (Double.isNaN(p2z) || p.equals2D(p1)) {
       return p1z; // not NaN
     }
     if (p.equals2D(p2)) {

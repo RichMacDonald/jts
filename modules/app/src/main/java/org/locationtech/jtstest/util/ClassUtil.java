@@ -68,10 +68,7 @@ public class ClassUtil
   }
 
   public static boolean isNumber(Class clz) {
-    if (clz == Double.class) return true;
-    if (clz == double.class) return true;
-    if (clz == Integer.class) return true;
-    if (clz == int.class) return true;
+    if ((clz == Double.class) || (clz == double.class) || (clz == Integer.class) || (clz == int.class)) return true;
     return false;
   }
   
@@ -95,8 +92,7 @@ public class ClassUtil
   }
 
   public static boolean isDouble(Class clz) {
-    if (clz == Double.class) return true;
-    if (clz == double.class) return true;
+    if ((clz == Double.class) || (clz == double.class)) return true;
     return false;
   }
 

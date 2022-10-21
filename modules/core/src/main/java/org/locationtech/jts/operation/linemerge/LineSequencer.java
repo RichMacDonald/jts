@@ -115,8 +115,7 @@ public class LineSequencer
       /**
        * If this linestring is connected to a previous subgraph, geom is not sequenced
        */
-      if (prevSubgraphNodes.contains(startNode)) return false;
-      if (prevSubgraphNodes.contains(endNode)) return false;
+      if (prevSubgraphNodes.contains(startNode) || prevSubgraphNodes.contains(endNode)) return false;
 
       if (lastNode != null) {
         if (! startNode.equals(lastNode)) {

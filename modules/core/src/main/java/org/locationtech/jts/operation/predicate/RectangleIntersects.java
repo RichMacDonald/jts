@@ -154,10 +154,6 @@ protected void visit(Geometry element)
       return;
     }
     // rectangle contains target env => must intersect
-    if (rectEnv.contains(elementEnv)) {
-      intersects = true;
-      return;
-    }
     /**
      * Since the envelopes intersect and the test element is connected, if the
      * test envelope is completely bisected by an edge of the rectangle the
@@ -167,8 +163,8 @@ protected void visit(Geometry element)
      * completely bisected. In this case it is not possible to make a conclusion
      * about the presence of an intersection.
      */
-    if (elementEnv.getMinX() >= rectEnv.getMinX()
-        && elementEnv.getMaxX() <= rectEnv.getMaxX()) {
+    if (rectEnv.contains(elementEnv) || (elementEnv.getMinX() >= rectEnv.getMinX()
+        && elementEnv.getMaxX() <= rectEnv.getMaxX())) {
       intersects = true;
       return;
     }

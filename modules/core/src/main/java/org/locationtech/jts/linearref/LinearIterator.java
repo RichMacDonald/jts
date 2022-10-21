@@ -115,9 +115,8 @@ public class LinearIterator
    */
   public boolean hasNext()
   {
-    if (componentIndex >= numLines) return false;
-    if (componentIndex == numLines - 1
-        && vertexIndex >= currentLine.getNumPoints())
+    if ((componentIndex >= numLines) || (componentIndex == numLines - 1
+        && vertexIndex >= currentLine.getNumPoints()))
       return false;
     return true;
   }
@@ -144,9 +143,8 @@ public class LinearIterator
    * @return <code>true</code> if the iterator is at an endpoint
    */
   public boolean isEndOfLine() {
-    if (componentIndex >= numLines) return false;
     //LineString currentLine = (LineString) linear.getGeometryN(componentIndex);
-    if (vertexIndex < currentLine.getNumPoints() - 1)
+    if ((componentIndex >= numLines) || (vertexIndex < currentLine.getNumPoints() - 1))
       return false;
     return true;
   }

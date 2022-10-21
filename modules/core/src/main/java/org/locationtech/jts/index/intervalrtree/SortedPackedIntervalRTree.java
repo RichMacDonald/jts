@@ -69,13 +69,11 @@ public class SortedPackedIntervalRTree
   private synchronized void init()
   {
     // already built
-    if (root != null) return;
-    
     /**
      * if leaves is empty then nothing has been inserted.
      * In this case it is safe to leave the tree in an open state
      */
-    if (leaves.size() == 0) return;
+    if ((root != null) || (leaves.size() == 0)) return;
     
     buildRoot();
   }

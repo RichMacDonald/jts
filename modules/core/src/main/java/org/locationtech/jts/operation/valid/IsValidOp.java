@@ -54,10 +54,7 @@ public class IsValidOp
    */
   public static boolean isValid(Coordinate coord)
   {
-    if (Double.isNaN(coord.x)) return false;
-    if (Double.isInfinite(coord.x)) return false;
-    if (Double.isNaN(coord.y)) return false;
-    if (Double.isInfinite(coord.y)) return false;
+    if (Double.isNaN(coord.x) || Double.isInfinite(coord.x) || Double.isNaN(coord.y) || Double.isInfinite(coord.y)) return false;
     return true;
   }
   

@@ -158,9 +158,7 @@ class OverlayPoints {
   private HashMap<Coordinate, Point> buildPointMap(Geometry geoms) {
     HashMap<Coordinate, Point> map = new HashMap<>();
     geoms.apply((GeometryComponentFilter) geom -> {
-        if (! (geom instanceof Point))
-          return;
-        if (geom.isEmpty())
+        if (! (geom instanceof Point) || geom.isEmpty())
           return;
         
         Point pt = (Point) geom;

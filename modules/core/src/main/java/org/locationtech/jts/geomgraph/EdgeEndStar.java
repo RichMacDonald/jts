@@ -240,12 +240,9 @@ abstract public class EdgeEndStar
 //System.out.println(leftLoc + " " + rightLoc);
 //Debug.print(this);
       // check that edge is really a boundary between inside and outside!
-      if (leftLoc == rightLoc) {
-        return false;
-      }
       // check side location conflict
       //Assert.isTrue(rightLoc == currLoc, "side location conflict " + locStr);
-      if (rightLoc != currLoc) {
+      if ((leftLoc == rightLoc) || (rightLoc != currLoc)) {
 //Debug.print(this);
         return false;
       }

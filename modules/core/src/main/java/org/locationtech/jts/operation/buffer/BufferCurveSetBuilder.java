@@ -217,10 +217,8 @@ public class BufferCurveSetBuilder {
     Coordinate[] shellCoord = clean(shell.getCoordinates());
     // optimization - don't bother computing buffer
     // if the polygon would be completely eroded
-    if (distance < 0.0 && isErodedCompletely(shell, distance))
-        return;
     // don't attempt to buffer a polygon with too few distinct vertices
-    if (distance <= 0.0 && shellCoord.length < 3)
+    if ((distance < 0.0 && isErodedCompletely(shell, distance)) || (distance <= 0.0 && shellCoord.length < 3))
     	return;
 
     addRingSide(
@@ -333,23 +331,21 @@ public class BufferCurveSetBuilder {
    * @return true if the offset curve is inverted
    */
   private static boolean isRingCurveInverted(Coordinate[] inputPts, double distance, Coordinate[] curvePts) {
-    if (distance == 0.0) return false;
+    
     /**
      * Only proper rings can invert.
      */
-    if (inputPts.length <= 3) return false;
+    
    /**
      * Heuristic based on low chance that a ring with many vertices will invert.
      * This low limit ensures this test is fairly efficient.
      */
-    if (inputPts.length >= MAX_INVERTED_RING_SIZE) return false;
-    
     /**
      * Don't check curves which are much larger than the input.
      * This improves performance by avoiding checking some concave inputs 
      * (which can produce fillet arcs with many more vertices)
      */
-    if (curvePts.length > INVERTED_CURVE_VERTEX_FACTOR * inputPts.length) return false;
+    if ((distance == 0.0) || (inputPts.length <= 3) || (inputPts.length >= MAX_INVERTED_RING_SIZE) || (curvePts.length > INVERTED_CURVE_VERTEX_FACTOR * inputPts.length)) return false;
     
     /**
      * Check if the curve vertices are all closer to the input ring

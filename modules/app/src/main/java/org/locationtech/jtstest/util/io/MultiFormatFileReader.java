@@ -93,9 +93,7 @@ public class MultiFormatFileReader
     if (ext.equalsIgnoreCase(".shp"))
       return toGeometry(readShapefile(filename));
     
-    if (ext.equalsIgnoreCase(".gml"))
-      return IOUtil.readFile(filename, geomFact);
-    if (ext.equalsIgnoreCase(".geojson"))
+    if (ext.equalsIgnoreCase(".gml") || ext.equalsIgnoreCase(".geojson"))
       return IOUtil.readFile(filename, geomFact);
     
     return toGeometry(readWKTFile(filename));

@@ -62,8 +62,7 @@ public class RtreeStressTest {
   }
 
   private void checkResults(List hprResult, List strResult) {
-    if (hprResult == null) return;
-    if (strResult == null) return;
+    if ((hprResult == null) || (strResult == null)) return;
     
     System.out.println("Result size: HPR = " + hprResult.size() 
     + " - STR = " + strResult.size());

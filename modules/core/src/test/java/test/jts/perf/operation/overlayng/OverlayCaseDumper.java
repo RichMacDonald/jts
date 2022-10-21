@@ -123,11 +123,8 @@ public class OverlayCaseDumper {
       for (int j = i + 1; j < geoms.size(); j++) {
         Geometry geom1 = geoms.get(j);
 
-        if (! geom.getEnvelopeInternal().intersects(geom1.getEnvelopeInternal()))
-          continue;
-        
         // skip duplicates to avoid repetition
-        if (prevGeom0 != null && prevGeom0.equalsExact(geom))
+        if (! geom.getEnvelopeInternal().intersects(geom1.getEnvelopeInternal()) || (prevGeom0 != null && prevGeom0.equalsExact(geom)))
           continue;
         if (prevGeom1 != null && prevGeom1.equalsExact(geom1)) 
           continue;

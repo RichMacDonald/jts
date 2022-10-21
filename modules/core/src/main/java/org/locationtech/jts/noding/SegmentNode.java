@@ -51,8 +51,7 @@ public class SegmentNode
 
   public boolean isEndPoint(int maxSegmentIndex)
   {
-    if (segmentIndex == 0 && ! isInterior) return true;
-    if (segmentIndex == maxSegmentIndex) return true;
+    if ((segmentIndex == 0 && ! isInterior) || (segmentIndex == maxSegmentIndex)) return true;
     return false;
   }
 

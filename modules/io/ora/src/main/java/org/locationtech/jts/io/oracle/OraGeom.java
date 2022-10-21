@@ -93,14 +93,11 @@ class OraGeom
   
   public boolean isEqual(OraGeom og)
   {
-    if (gType != og.gType) return false;
+    
 //    if (srid != og.srid) return false;
-    if (! isEqual(point, og.point))
-        return false;
+    
     // assume is defined by elemInfo and ordinates
-    if (! isEqual(elemInfo, og.elemInfo)) 
-      return false;
-    if (! isEqual(ordinates, og.ordinates)) 
+    if ((gType != og.gType) || ! isEqual(point, og.point) || ! isEqual(elemInfo, og.elemInfo) || ! isEqual(ordinates, og.ordinates)) 
       return false;
     return true;
   }
@@ -308,8 +305,7 @@ public int startingOffset(int elemIndex)
    * @return geom type code, if known, or UNKNOWN
    */
   static int geomType(Geometry geom) {
-    if (geom == null) {
-        return OraGeom.GEOM_TYPE.UNKNOWN_GEOMETRY; 
+    if (geom == null) { 
     } else if (geom instanceof Point) {
         return OraGeom.GEOM_TYPE.POINT;
     } else if (geom instanceof LineString) {

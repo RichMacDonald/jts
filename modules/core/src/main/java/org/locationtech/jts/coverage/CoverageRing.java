@@ -50,7 +50,7 @@ class CoverageRing extends BasicSegmentString {
   private static CoverageRing createRing(LinearRing ring, boolean isShell) {
     Coordinate[] pts = ring.getCoordinates();
     boolean isCCW = Orientation.isCCW(pts);
-    boolean isInteriorOnRight = isShell ? ! isCCW : isCCW;
+    boolean isInteriorOnRight = isShell ^ isCCW;
     return new CoverageRing(pts, isInteriorOnRight);
   }
   

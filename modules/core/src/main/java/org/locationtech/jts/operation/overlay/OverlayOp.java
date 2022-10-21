@@ -132,8 +132,7 @@ public class OverlayOp
       return loc0 == Location.INTERIOR
           && loc1 != Location.INTERIOR;
     case SYMDIFFERENCE:
-      return   (     loc0 == Location.INTERIOR &&  loc1 != Location.INTERIOR)
-            || (     loc0 != Location.INTERIOR &&  loc1 == Location.INTERIOR);
+      return   (loc0 == Location.INTERIOR) == (loc1 != Location.INTERIOR);
     }
     return false;
   }
@@ -565,8 +564,7 @@ public class OverlayOp
    */
   public boolean isCoveredByLA(Coordinate coord)
   {
-    if (isCovered(coord, resultLineList)) return true;
-    if (isCovered(coord, resultPolyList)) return true;
+    if (isCovered(coord, resultLineList) || isCovered(coord, resultPolyList)) return true;
     return false;
   }
   /**

@@ -178,8 +178,7 @@ public class BufferInputLineSimplifier
   	Coordinate p1 = inputLine[i1];
   	Coordinate p2 = inputLine[i2];
   	
-  	if (! isConcave(p0, p1, p2)) return false;
-  	if (! isShallow(p0, p1, p2, distanceTol)) return false;
+  	if (! isConcave(p0, p1, p2) || ! isShallow(p0, p1, p2, distanceTol)) return false;
   	
   	// MD - don't use this heuristic - it's too restricting 
 //  	if (p0.distance(p2) > distanceTol) return false;

@@ -127,8 +127,7 @@ public void processIntersections(
      * (since the vertex could actually be outside the segment envelope).
      * Also, this should have already been snapped.
      */
-    if (p.distance(p0) < snapTolerance) return;
-    if (p.distance(p1) < snapTolerance) return;
+    if ((p.distance(p0) < snapTolerance) || (p.distance(p1) < snapTolerance)) return;
     
     double distSeg = Distance.pointToSegment(p, p0, p1);
     if (distSeg < snapTolerance) {

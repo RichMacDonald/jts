@@ -60,10 +60,7 @@ public Class getReturnType(String opName)
   
   private static boolean isPreparedOp(String opName)
   {
-  	if (opName.equals("intersects")) return true;
-  	if (opName.equals("contains")) return true;
-  	if (opName.equals("containsProperly")) return true;
-  	if (opName.equals("covers")) return true;
+  	if (opName.equals("intersects") || opName.equals("contains") || opName.equals("containsProperly") || opName.equals("covers")) return true;
   	return false;
   }
   

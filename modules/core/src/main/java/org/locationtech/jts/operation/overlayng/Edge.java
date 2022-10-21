@@ -48,9 +48,8 @@ class Edge {
    * @return true if the points form a collapsed line
    */
   public static boolean isCollapsed(Coordinate[] pts) {
-    if (pts.length < 2) return true;
     // zero-length line
-    if (pts[0].equals2D(pts[1])) return true;
+    if ((pts.length < 2) || pts[0].equals2D(pts[1])) return true;
     // TODO: is pts > 2 with equal points ever expected?
     if (pts.length > 2) {
       if ( pts[ pts.length-1 ].equals2D(pts[ pts.length - 2 ])) return true;
@@ -122,9 +121,7 @@ class Edge {
    */
   public boolean relativeDirection(Edge edge2) {
     // assert: the edges match (have the same coordinates up to direction)
-    if (! getCoordinate(0).equals2D(edge2.getCoordinate(0)))
-      return false;
-    if (! getCoordinate(1).equals2D(edge2.getCoordinate(1)))
+    if (! getCoordinate(0).equals2D(edge2.getCoordinate(0)) || ! getCoordinate(1).equals2D(edge2.getCoordinate(1)))
       return false;
     return true;
   }

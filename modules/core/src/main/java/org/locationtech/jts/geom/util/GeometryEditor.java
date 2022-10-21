@@ -151,11 +151,7 @@ public class GeometryEditor
       return editPolygon((Polygon) geometry, operation);
     }
 
-    if (geometry instanceof Point) {
-      return operation.edit(geometry, factory);
-    }
-
-    if (geometry instanceof LineString) {
+    if ((geometry instanceof Point) || (geometry instanceof LineString)) {
       return operation.edit(geometry, factory);
     }
 

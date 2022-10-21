@@ -1056,8 +1056,7 @@ public boolean isDone()
   @Override
 public boolean equals(Object obj)
   {
-    if (obj == null) return false;
-    if (! (obj instanceof AffineTransformation))
+    if ((obj == null) || ! (obj instanceof AffineTransformation))
       return false;
     
     AffineTransformation trans = (AffineTransformation) obj;

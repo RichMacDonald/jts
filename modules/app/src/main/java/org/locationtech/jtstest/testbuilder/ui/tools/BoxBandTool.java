@@ -91,11 +91,7 @@ protected Shape getShape()
   
   private boolean isSignificantMouseMove()
   {
-    if (zoomBoxEnd == null) return false;
-
-    if (Math.abs(zoomBoxStart.x - zoomBoxEnd.x) < MIN_MOVEMENT)
-      return false;
-    if (Math.abs(zoomBoxStart.y - zoomBoxEnd.y) < MIN_MOVEMENT)
+    if ((zoomBoxEnd == null) || (Math.abs(zoomBoxStart.x - zoomBoxEnd.x) < MIN_MOVEMENT) || (Math.abs(zoomBoxStart.y - zoomBoxEnd.y) < MIN_MOVEMENT))
       return false;
     return true;
   }  

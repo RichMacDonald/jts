@@ -106,9 +106,7 @@ public class TopologyStretcher
     List lines = new ArrayList();
     LinearComponentExtracter lineExtracter = new LinearComponentExtracter(lines);
     for (Geometry element : geom) {
-      if (element == null) continue;
-      
-      if (mask != null && ! mask.intersects(element.getEnvelopeInternal()))
+      if ((element == null) || (mask != null && ! mask.intersects(element.getEnvelopeInternal())))
         continue;
       
       element.apply(lineExtracter);
@@ -129,8 +127,7 @@ public class TopologyStretcher
   {
     List<Coordinate> ptsList = new ArrayList<>();
     for (Geometry element : geom) {
-      if (element == null) continue;
-      if (mask != null && ! mask.intersects(element.getEnvelopeInternal()))
+      if ((element == null) || (mask != null && ! mask.intersects(element.getEnvelopeInternal())))
         continue;
       
       Coordinate[] geomPts = element.getCoordinates();

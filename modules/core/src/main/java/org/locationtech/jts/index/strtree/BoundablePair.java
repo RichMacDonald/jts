@@ -169,12 +169,11 @@ public int compareTo(Object o)
     if (isComp1 && isComp2) {
       if (area(boundable1) > area(boundable2)) {
         expand(boundable1, boundable2, false, priQ, minDistance);
-        return;
       }
       else {
         expand(boundable2, boundable1, true, priQ, minDistance);
-        return;
       }
+	return;
     }
     else if (isComp1) {
       expand(boundable1, boundable2, false, priQ, minDistance);

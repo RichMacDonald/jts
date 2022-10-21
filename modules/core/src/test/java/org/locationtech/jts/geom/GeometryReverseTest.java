@@ -80,11 +80,7 @@ public class GeometryReverseTest  extends GeometryTestCase {
 
   private boolean checkSequences(CoordinateSequence c1, CoordinateSequence c2) {
 
-    if (c1.size() != c2.size())
-      return false;
-    if (c1.getDimension() != c2.getDimension())
-      return false;
-    if (c1.getMeasures() != c2.getMeasures())
+    if ((c1.size() != c2.size()) || (c1.getDimension() != c2.getDimension()) || (c1.getMeasures() != c2.getMeasures()))
       return false;
 
     for (int i = 0; i < c1.size(); i++)

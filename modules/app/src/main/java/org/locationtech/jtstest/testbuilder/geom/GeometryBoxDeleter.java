@@ -150,8 +150,7 @@ public class GeometryBoxDeleter
 	public Coordinate[] edit(Coordinate[] coords,
         Geometry geometry)
     {
-      if (isEdited) return coords;
-      if (! hasVertexInBox(coords))
+      if (isEdited || ! hasVertexInBox(coords))
         return coords;
       // only delete vertices of first component found
       

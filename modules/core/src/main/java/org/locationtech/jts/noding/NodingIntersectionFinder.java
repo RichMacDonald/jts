@@ -331,10 +331,7 @@ public void processIntersections(
       Coordinate p10, Coordinate p11,
       boolean isEnd00, boolean isEnd01,
       boolean isEnd10, boolean isEnd11) {
-    if (isInteriorVertexIntersection(p00, p10, isEnd00, isEnd10)) return true;
-    if (isInteriorVertexIntersection(p00, p11, isEnd00, isEnd11)) return true;
-    if (isInteriorVertexIntersection(p01, p10, isEnd01, isEnd10)) return true;
-    if (isInteriorVertexIntersection(p01, p11, isEnd01, isEnd11)) return true;
+    if (isInteriorVertexIntersection(p00, p10, isEnd00, isEnd10) || isInteriorVertexIntersection(p00, p11, isEnd00, isEnd11) || isInteriorVertexIntersection(p01, p10, isEnd01, isEnd10) || isInteriorVertexIntersection(p01, p11, isEnd01, isEnd11)) return true;
     return false;
   }
   
@@ -371,8 +368,7 @@ public void processIntersections(
    */
   private static boolean isEndSegment(SegmentString segStr, int index)
   {
-  	if (index == 0) return true;
-  	if (index >= segStr.size() - 2) return true;
+  	if ((index == 0) || (index >= segStr.size() - 2)) return true;
   	return false;
   }
   

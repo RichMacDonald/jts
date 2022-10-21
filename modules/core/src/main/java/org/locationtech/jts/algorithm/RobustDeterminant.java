@@ -225,33 +225,22 @@ public class RobustDeterminant {
      *  if |x2| < |x1| one can conclude
      */
     if (0.0 < x1) {
-      if (0.0 < x2) {
-        if (x1 <= x2) {
-          
-        }
-        else {
-          return sign;
-        }
-      }
-      else {
-        return sign;
-      }
+      if ((0.0 < x2) && (x1 <= x2)) {
+	  
+	}
+	else {
+	  return sign;
+	}
     }
     else {
-      if (0.0 < x2) {
+      if ((0.0 < x2) || (x1 < x2)) {
         return -sign;
-      }
-      else {
-        if (x1 >= x2) {
-          sign = -sign;
-          x1 = -x1;
-          x2 = -x2;
-          
-        }
-        else {
-          return -sign;
-        }
-      }
+      } else {
+	  sign = -sign;
+	  x1 = -x1;
+	  x2 = -x2;
+	  
+	}
     }
 
     /*

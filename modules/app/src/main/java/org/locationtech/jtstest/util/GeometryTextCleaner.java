@@ -42,9 +42,7 @@ public class GeometryTextCleaner
 	
 	private static boolean isAllowed(char c, String allowedSymbols)
 	{
-		if (Character.isWhitespace(c)) return true;
-		if (Character.isLetterOrDigit(c)) return true;
-		if (allowedSymbols.indexOf(c) >= 0) return true;
+		if (Character.isWhitespace(c) || Character.isLetterOrDigit(c) || (allowedSymbols.indexOf(c) >= 0)) return true;
 		return false;		
 	}
 	

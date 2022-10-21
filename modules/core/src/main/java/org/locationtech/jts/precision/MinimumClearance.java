@@ -249,8 +249,7 @@ public class MinimumClearance
       // compute MinClearance distance metric
 
       vertexDistance(fs1, fs2);
-      if (fs1.size() == 1 && fs2.size() == 1) return minDist;
-      if (minDist <= 0.0) return minDist;
+      if ((fs1.size() == 1 && fs2.size() == 1) || (minDist <= 0.0)) return minDist;
       segmentDistance(fs1, fs2);
       if (minDist <= 0.0) return minDist;
       segmentDistance(fs2, fs1);

@@ -631,9 +631,7 @@ public STRUCT write(Geometry geom) throws SQLException
    * @return <code>true</code> if polygon is SRID==NULL and a rectangle
    */
   private boolean isWriteAsRectangle(Polygon polygon) {
-    if (! isOptimizeRectangle) return false;
-
-    if (lrsDim(polygon) != 0) {
+    if (! isOptimizeRectangle || (lrsDim(polygon) != 0)) {
         // cannot support LRS on a rectangle
         return false;
     }

@@ -94,12 +94,11 @@ class OverlayLabeller {
     /**
      * Only propagate for area geometries
      */
-    if (! inputGeometry.isArea(geomIndex)) return;
     /**
      * No need to propagate if node has only one edge.
      * This handles dangling edges created by overlap limiting.
      */
-    if (nodeEdge.degree() == 1) return;
+    if (! inputGeometry.isArea(geomIndex) || (nodeEdge.degree() == 1)) return;
     
     OverlayEdge eStart = findPropagationStartEdge(nodeEdge, geomIndex);
     // no labelled edge found, so nothing to propagate

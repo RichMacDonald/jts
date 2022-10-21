@@ -184,9 +184,7 @@ public boolean isEmpty() {
   @Override
 public boolean isRectangle()
   {
-    if (getNumInteriorRing() != 0) return false;
-    if (shell == null) return false;
-    if (shell.getNumPoints() != 5) return false;
+    if ((getNumInteriorRing() != 0) || (shell == null) || (shell.getNumPoints() != 5)) return false;
 
     CoordinateSequence seq = shell.getCoordinateSequence();
 
@@ -299,10 +297,7 @@ public boolean equalsExact(Geometry other, double tolerance) {
     Polygon otherPolygon = (Polygon) other;
     Geometry thisShell = shell;
     Geometry otherPolygonShell = otherPolygon.shell;
-    if (!thisShell.equalsExact(otherPolygonShell, tolerance)) {
-      return false;
-    }
-    if (holes.length != otherPolygon.holes.length) {
+    if (!thisShell.equalsExact(otherPolygonShell, tolerance) || (holes.length != otherPolygon.holes.length)) {
       return false;
     }
     for (int i = 0; i < holes.length; i++) {

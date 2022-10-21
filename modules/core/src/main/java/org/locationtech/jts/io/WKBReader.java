@@ -408,16 +408,14 @@ public class WKBReader
   private CoordinateSequence readCoordinateSequenceLineString(int size) throws IOException, ParseException
   {
     CoordinateSequence seq = readCoordinateSequence(size);
-    if (isStrict) return seq;
-    if (seq.size() == 0 || seq.size() >= 2) return seq;
+    if (isStrict || seq.size() == 0 || seq.size() >= 2) return seq;
     return CoordinateSequences.extend(csFactory, seq, 2);
   }
   
   private CoordinateSequence readCoordinateSequenceRing(int size) throws IOException, ParseException
   {
     CoordinateSequence seq = readCoordinateSequence(size);
-    if (isStrict) return seq;
-    if (CoordinateSequences.isRing(seq)) return seq;
+    if (isStrict || CoordinateSequences.isRing(seq)) return seq;
     return CoordinateSequences.ensureValidRing(csFactory, seq);
   }
 

@@ -368,9 +368,7 @@ public class QuadEdge
      * @return true if the quadedges are based on the same line segment regardless of orientation
      */
     public boolean equalsNonOriented(QuadEdge qe) {
-        if (equalsOriented(qe))
-            return true;
-        if (equalsOriented(qe.sym()))
+        if (equalsOriented(qe) || equalsOriented(qe.sym()))
             return true;
         return false;
     }

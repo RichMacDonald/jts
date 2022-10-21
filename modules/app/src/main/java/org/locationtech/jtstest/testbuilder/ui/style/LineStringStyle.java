@@ -49,9 +49,7 @@ public void paint(Geometry geom, Viewport viewport, Graphics2D g)
       paintLineString(lineString, LINE, viewport, g);
     }
     
-    if (geom instanceof Point)
-      return;
-    if (geom instanceof MultiPoint)
+    if ((geom instanceof Point) || (geom instanceof MultiPoint))
       return;
 
     if (geom instanceof GeometryCollection) {

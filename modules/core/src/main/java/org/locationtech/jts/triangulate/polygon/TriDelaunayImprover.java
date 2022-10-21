@@ -164,8 +164,7 @@ class TriDelaunayImprover {
    * @return true if the triangles are Delaunay
    */
   private static boolean isDelaunay(Coordinate adj0, Coordinate adj1, Coordinate opp0, Coordinate opp1) {
-    if (isInCircle(adj0, adj1, opp0, opp1)) return false; 
-    if (isInCircle(adj1, adj0, opp1, opp0)) return false;
+    if (isInCircle(adj0, adj1, opp0, opp1) || isInCircle(adj1, adj0, opp1, opp0)) return false;
     return true;
   }
 

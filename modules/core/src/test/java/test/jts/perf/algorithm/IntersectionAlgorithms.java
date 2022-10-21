@@ -59,11 +59,7 @@ public class IntersectionAlgorithms {
   private static Coordinate intersectionDDFilter(Coordinate p1, Coordinate p2, Coordinate q1, Coordinate q2) {
     // Compute using DP math
     Coordinate intPt = intersectionBasic(p1, p2, q1, q2);
-    if (intPt == null)
-      return null;
-    if (Distance.pointToLinePerpendicular(intPt, p1, p2) > FILTER_TOL)
-      return null;
-    if (Distance.pointToLinePerpendicular(intPt, q1, q2) > FILTER_TOL)
+    if ((intPt == null) || (Distance.pointToLinePerpendicular(intPt, p1, p2) > FILTER_TOL) || (Distance.pointToLinePerpendicular(intPt, q1, q2) > FILTER_TOL))
       return null;
     return intPt;
   }

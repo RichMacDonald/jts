@@ -301,9 +301,7 @@ public class LinearLocation
       return false;
 
     LineString lineComp = (LineString) linearGeom.getGeometryN(componentIndex);
-    if (segmentIndex < 0 || segmentIndex > lineComp.getNumPoints())
-      return false;
-    if (segmentIndex == lineComp.getNumPoints() && segmentFraction != 0.0)
+    if (segmentIndex < 0 || segmentIndex > lineComp.getNumPoints() || (segmentIndex == lineComp.getNumPoints() && segmentFraction != 0.0))
       return false;
 
     if (segmentFraction < 0.0 || segmentFraction > 1.0)
@@ -398,9 +396,8 @@ public int compareTo(Object o) {
   public boolean isOnSameSegment(LinearLocation loc)
   {
   	if (componentIndex != loc.componentIndex) return false;
-  	if (segmentIndex == loc.segmentIndex) return true;
-  	if (loc.segmentIndex - segmentIndex == 1 
-  			&& loc.segmentFraction == 0.0) 
+  	if ((segmentIndex == loc.segmentIndex) || (loc.segmentIndex - segmentIndex == 1 
+  			&& loc.segmentFraction == 0.0)) 
   		return true;
   	if (segmentIndex - loc.segmentIndex == 1 
   			&& segmentFraction == 0.0) 

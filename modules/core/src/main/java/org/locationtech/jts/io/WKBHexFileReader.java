@@ -141,8 +141,7 @@ public class WKBHexFileReader
 	
 	private boolean isAtLimit(List geoms)
 	{
-		if (limit < 0) return false;
-		if (geoms.size() < limit) return false;
+		if ((limit < 0) || (geoms.size() < limit)) return false;
 		return true;
 	}
 	

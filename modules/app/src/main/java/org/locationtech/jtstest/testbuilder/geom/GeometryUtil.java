@@ -49,8 +49,7 @@ public class GeometryUtil {
   }
 
   public static boolean hasArea(Geometry geom) {
-    if (geom.getDimension() >= 2) return true;
-    if (geom instanceof LinearRing) return true;
+    if ((geom.getDimension() >= 2) || (geom instanceof LinearRing)) return true;
     return false;
   }
 

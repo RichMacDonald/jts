@@ -78,8 +78,7 @@ public class IntArrayList {
    * @param values an array of values
    */
   public void addAll(final int[] values) {
-    if (values == null) return;
-    if (values.length == 0) return;
+    if ((values == null) || (values.length == 0)) return;
     ensureCapacity(size + values.length);
     System.arraycopy(values, 0, data, size, values.length);
     size += values.length;

@@ -230,9 +230,7 @@ public class InteriorPointArea {
 
     private void addEdgeCrossing(Coordinate p0, Coordinate p1, double scanY, List<Double> crossings) {
       // skip non-crossing segments
-      if ( !intersectsHorizontalLine(p0, p1, scanY) )
-        return;
-      if (! isEdgeCrossingCounted(p0, p1, scanY) )
+      if (!intersectsHorizontalLine(p0, p1, scanY) || ! isEdgeCrossingCounted(p0, p1, scanY) )
         return;
         
       // edge intersects scan line, so add a crossing
@@ -289,11 +287,9 @@ public class InteriorPointArea {
       double y0 = p0.getY();
       double y1 = p1.getY();
       // skip horizontal lines
-      if ( y0 == y1 )
-        return false;
       // handle cases where vertices lie on scan-line
       // downward segment does not include start point
-      if ( y0 == scanY && y1 < scanY )
+      if ( (y0 == y1) || (y0 == scanY && y1 < scanY) )
         return false;
       // upward segment does not include endpoint
       if ( y1 == scanY && y0 < scanY )
@@ -336,9 +332,7 @@ public class InteriorPointArea {
      * @return true if the envelope and line intersect
      */
     private static boolean intersectsHorizontalLine(Envelope env, double y) {
-      if ( y < env.getMinY() )
-        return false;
-      if ( y > env.getMaxY() )
+      if ( (y < env.getMinY()) || (y > env.getMaxY()) )
         return false;
       return true;
     }
@@ -353,10 +347,8 @@ public class InteriorPointArea {
      */
     private static boolean intersectsHorizontalLine(Coordinate p0, Coordinate p1, double y) {
       // both ends above?
-      if ( p0.getY() > y && p1.getY() > y )
-        return false;
       // both ends below?
-      if ( p0.getY() < y && p1.getY() < y )
+      if ( (p0.getY() > y && p1.getY() > y) || (p0.getY() < y && p1.getY() < y) )
         return false;
       // segment must intersect line
       return true;
@@ -448,7 +440,7 @@ public class InteriorPointArea {
       if ( y <= centreY ) {
         if ( y > loY )
           loY = y;
-      } else if ( y > centreY ) {
+      } else {
         if ( y < hiY ) {
           hiY = y;
         }

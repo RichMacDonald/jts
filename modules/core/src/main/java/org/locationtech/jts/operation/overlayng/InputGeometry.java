@@ -116,15 +116,14 @@ class InputGeometry {
   public int locatePointInArea(int geomIndex, Coordinate pt) {
     // Assert: only called if dimension(geomIndex) = 2
     
-    if ( isCollapsed[geomIndex]) 
-      return Location.EXTERIOR;
+    
 
     
     //return ptLocator.locate(pt, geom[geomIndex]);
     
     //*
     // this check is required because IndexedPointInAreaLocator can't handle empty polygons
-    if (getGeometry(geomIndex).isEmpty()  
+    if (isCollapsed[geomIndex] || getGeometry(geomIndex).isEmpty()  
         || isCollapsed[geomIndex]) 
       return Location.EXTERIOR;
     

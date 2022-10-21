@@ -38,7 +38,6 @@ public class Coordinates {
     if (dimension == 2) {
       return new CoordinateXY();
     } else if (dimension == 3 && measures == 0) {
-      return new Coordinate();
     } else if (dimension == 3 && measures == 1) {
       return new CoordinateXYM();
     } else if (dimension == 4 && measures == 1) {
@@ -58,11 +57,9 @@ public class Coordinates {
     if (coordinate instanceof CoordinateXY) {
       return 2;
     } else if (coordinate instanceof CoordinateXYM) {
-      return 3;
     } else if (coordinate instanceof CoordinateXYZM) {
       return 4;      
     } else if (coordinate instanceof Coordinate) {
-      return 3;
     } 
     return 3;
   }
@@ -76,13 +73,9 @@ public class Coordinates {
   public static int measures(Coordinate coordinate)
   {
     if (coordinate instanceof CoordinateXY) {
-      return 0;
-    } else if (coordinate instanceof CoordinateXYM) {
-      return 1;
-    } else if (coordinate instanceof CoordinateXYZM) {
+    } else if ((coordinate instanceof CoordinateXYM) || (coordinate instanceof CoordinateXYZM)) {
       return 1;
     } else if (coordinate instanceof Coordinate) {
-      return 0;
     } 
     return 0;
   }

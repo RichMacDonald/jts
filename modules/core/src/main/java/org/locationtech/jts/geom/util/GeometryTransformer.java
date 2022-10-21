@@ -183,8 +183,7 @@ public class GeometryTransformer
     List transGeomList = new ArrayList();
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       Geometry transformGeom = transformPoint((Point) geom.getGeometryN(i), geom);
-      if (transformGeom == null) continue;
-      if (transformGeom.isEmpty()) continue;
+      if ((transformGeom == null) || transformGeom.isEmpty()) continue;
       transGeomList.add(transformGeom);
     }
     if (transGeomList.isEmpty()) {
@@ -234,8 +233,7 @@ public class GeometryTransformer
     List transGeomList = new ArrayList();
     for (int i = 0; i < geom.getNumGeometries(); i++) {  
       Geometry transformGeom = transformLineString((LineString) geom.getGeometryN(i), geom);
-      if (transformGeom == null) continue;
-      if (transformGeom.isEmpty()) continue;
+      if ((transformGeom == null) || transformGeom.isEmpty()) continue;
       transGeomList.add(transformGeom);
     }
     if (transGeomList.isEmpty()) {
@@ -284,8 +282,7 @@ public class GeometryTransformer
     List transGeomList = new ArrayList();
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       Geometry transformGeom = transformPolygon((Polygon) geom.getGeometryN(i), geom);
-      if (transformGeom == null) continue;
-      if (transformGeom.isEmpty()) continue;
+      if ((transformGeom == null) || transformGeom.isEmpty()) continue;
       transGeomList.add(transformGeom);
     }
     if (transGeomList.isEmpty()) {
@@ -298,8 +295,7 @@ public class GeometryTransformer
     List transGeomList = new ArrayList();
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       Geometry transformGeom = transform(geom.getGeometryN(i));
-      if (transformGeom == null) continue;
-      if (pruneEmptyGeometry && transformGeom.isEmpty()) continue;
+      if ((transformGeom == null) || (pruneEmptyGeometry && transformGeom.isEmpty())) continue;
       transGeomList.add(transformGeom);
     }
     if (preserveGeometryCollectionType)

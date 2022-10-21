@@ -52,7 +52,6 @@ public class GeometryLocationsWriter
 
   public void setHtml(boolean isHtmlFormatted) 
   {
-    boolean isHtmlFormatted = isHtmlFormatted;
     if (isHtmlFormatted) {
       eol = "<br>";
       highlightStart = "<b>";

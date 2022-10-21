@@ -103,10 +103,9 @@ public class OffsetCurveBuilder
    */
   public boolean isLineOffsetEmpty(double distance) {
     // a zero width buffer of a line or point is empty
-    if (distance == 0.0) return true;
     // a negative width buffer of a line or point is empty,
     // except for single-sided buffers, where the sign indicates the side
-    if (distance < 0.0 && ! bufParams.isSingleSided()) return true;
+    if ((distance == 0.0) || (distance < 0.0 && ! bufParams.isSingleSided())) return true;
     return false;
   }
 

@@ -42,8 +42,7 @@ public class PreparedGeometryTeeOperation
 	@Override
 	protected void runTeeOp(String opName, Geometry geometry, Object[] args)
 	{
-		if (args.length < 1) return;
-		if (! (args[0] instanceof Geometry)) return;
+		if ((args.length < 1) || ! (args[0] instanceof Geometry)) return;
 		Geometry g2 = (Geometry) args[0];
 		
 		if (! geometry.isValid())

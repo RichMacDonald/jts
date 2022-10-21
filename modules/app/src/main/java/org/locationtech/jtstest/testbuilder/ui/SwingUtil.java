@@ -119,8 +119,7 @@ public class SwingUtil {
   }
   
   public static Object coerce(Object val, Class clz) {
-    if (val == null) return val;
-    if (val.getClass() == clz) return val;
+    if ((val == null) || (val.getClass() == clz)) return val;
     if (val instanceof String && (clz == Double.class || clz == double.class))
       return convertDouble((String) val);
     if (val instanceof String && (clz == Integer.class || clz == int.class))

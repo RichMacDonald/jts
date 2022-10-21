@@ -51,8 +51,7 @@ public class NonRobustCGAlgorithms
 		x2 = p2.x - p.x;
 		y2 = p2.y - p.y;
 
-		if( ( ( y1 > 0 ) && ( y2 <= 0 ) ) ||
-		    ( ( y2 > 0 ) && ( y1 <= 0 ) ) ) {
+		if( ( y1 > 0 ) == ( y2 <= 0 ) ) {
 			/* e straddles x axis, so compute intersection. */
 			xInt = (x1 * y2 - x2 * y1) / (y2 - y1);
 			//xsave = xInt;

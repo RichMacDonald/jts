@@ -211,10 +211,7 @@ class OverlayUtil {
    * @return true if the envelopes are disjoint
    */
   private static boolean isDisjoint(Envelope envA, Envelope envB, PrecisionModel pm) {
-    if (pm.makePrecise(envB.getMinX()) > pm.makePrecise(envA.getMaxX())) return true;
-    if (pm.makePrecise(envB.getMaxX()) < pm.makePrecise(envA.getMinX())) return true;
-    if (pm.makePrecise(envB.getMinY()) > pm.makePrecise(envA.getMaxY())) return true;
-    if (pm.makePrecise(envB.getMaxY()) < pm.makePrecise(envA.getMinY())) return true;
+    if ((pm.makePrecise(envB.getMinX()) > pm.makePrecise(envA.getMaxX())) || (pm.makePrecise(envB.getMaxX()) < pm.makePrecise(envA.getMinX())) || (pm.makePrecise(envB.getMinY()) > pm.makePrecise(envA.getMaxY())) || (pm.makePrecise(envB.getMaxY()) < pm.makePrecise(envA.getMinY()))) return true;
     return false;
   }
 

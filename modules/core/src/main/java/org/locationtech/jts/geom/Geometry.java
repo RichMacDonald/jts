@@ -861,11 +861,8 @@ public abstract class Geometry
     // optimization - P cannot contain a non-zero-length L
     // Note that a point can contain a zero-length lineal geometry,
     // since the line has no boundary due to Mod-2 Boundary Rule
-    if (g.getDimension() == 1 && getDimension() < 1 && g.getLength() > 0.0) {
-      return false;
-    }
     // optimization - envelope test
-    if (! getEnvelopeInternal().contains(g.getEnvelopeInternal()))
+    if ((g.getDimension() == 1 && getDimension() < 1 && g.getLength() > 0.0) || ! getEnvelopeInternal().contains(g.getEnvelopeInternal()))
       return false;
     // optimization for rectangle arguments
     if (isRectangle()) {
@@ -944,11 +941,8 @@ public abstract class Geometry
     }
     // optimization - P cannot cover a non-zero-length L
     // Note that a point can cover a zero-length lineal geometry
-    if (g.getDimension() == 1 && getDimension() < 1 && g.getLength() > 0.0) {
-      return false;
-    }
     // optimization - envelope test
-    if (! getEnvelopeInternal().covers(g.getEnvelopeInternal()))
+    if ((g.getDimension() == 1 && getDimension() < 1 && g.getLength() > 0.0) || ! getEnvelopeInternal().covers(g.getEnvelopeInternal()))
       return false;
     // optimization for rectangle arguments
     if (isRectangle()) {

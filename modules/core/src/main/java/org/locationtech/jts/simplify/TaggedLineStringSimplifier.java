@@ -159,8 +159,7 @@ public class TaggedLineStringSimplifier
                        int[] sectionIndex,
                        LineSegment candidateSeg)
   {
-    if (hasBadOutputIntersection(candidateSeg)) return true;
-    if (hasBadInputIntersection(parentLine, sectionIndex, candidateSeg)) return true;
+    if (hasBadOutputIntersection(candidateSeg) || hasBadInputIntersection(parentLine, sectionIndex, candidateSeg)) return true;
     return false;
   }
 

@@ -286,10 +286,7 @@ class PolygonEarClipper {
         //TODO: for robustness use segment orientation instead
         double aOut = Angle.angleBetweenOriented(corner[0], corner[1], vNext);
         double aIn = Angle.angleBetweenOriented(corner[0], corner[1], vPrev);
-        if ( aOut > 0 && aOut < cornerAngle ) {
-          return false;
-        }
-        if ( aIn > 0 && aIn < cornerAngle ) {
+        if ( (aOut > 0 && aOut < cornerAngle) || (aIn > 0 && aIn < cornerAngle) ) {
           return false;
         }
         if ( aOut == 0 && aIn == cornerAngle ) {

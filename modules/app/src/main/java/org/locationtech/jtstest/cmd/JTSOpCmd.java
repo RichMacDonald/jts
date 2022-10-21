@@ -248,9 +248,7 @@ public class JTSOpCmd {
   }
   
   public static boolean isFilename(String arg) {
-    if (arg == null) return false;
-    if (MultiFormatReader.isWKB(arg)) return false;
-    if (isWKT(arg)) return false;
+    if ((arg == null) || MultiFormatReader.isWKB(arg) || isWKT(arg)) return false;
     /*
     if (arg.indexOf("/") > 0
         || arg.indexOf("\\") > 0
@@ -263,8 +261,7 @@ public class JTSOpCmd {
   private static boolean isWKT(String arg) {
     // TODO: make this smarter?
     boolean hasParen = (arg.indexOf("(") > 0) && arg.indexOf(")") > 0;
-    if (hasParen) return true;
-    if (arg.toUpperCase().endsWith(" " + WKTConstants.EMPTY)) return true;
+    if (hasParen || arg.toUpperCase().endsWith(" " + WKTConstants.EMPTY)) return true;
     return false;
   }
   
@@ -422,8 +419,7 @@ public class JTSOpCmd {
    */
   private boolean isArgMultiValues(String arg) {
     
-    if (arg.startsWith("(")) return true;
-    if (arg.startsWith(MACRO_VAL + "(")) return true;
+    if (arg.startsWith("(") || arg.startsWith(MACRO_VAL + "(")) return true;
     
     boolean hasParen = arg.indexOf('(') >= 0;
     boolean hasComma = arg.indexOf(',') >= 0;

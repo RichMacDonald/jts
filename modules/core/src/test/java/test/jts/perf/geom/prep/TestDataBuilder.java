@@ -47,7 +47,7 @@ public class TestDataBuilder
 	
 	public void setTestDimension(int testDim)
 	{
-		int testDim = testDim;
+		int testDimUnused = testDim;
 	}
 	
 	public Geometry createCircle(int nPts) {

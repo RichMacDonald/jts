@@ -64,11 +64,10 @@ public class SimplePointInAreaLocator
    */
   public static int locate(Coordinate p, Geometry geom)
   {
-    if (geom.isEmpty()) return Location.EXTERIOR;
     /**
      * Do a fast check against the geometry envelope first
      */
-    if (! geom.getEnvelopeInternal().intersects(p))
+    if (geom.isEmpty() || ! geom.getEnvelopeInternal().intersects(p))
       return Location.EXTERIOR;
     
     return locateInGeometry(p, geom);

@@ -87,8 +87,7 @@ public class RectangleLineIntersector
      * If either segment endpoint lies in the rectangle,
      * there is an intersection.
      */
-    if (rectEnv.intersects(p0)) return true;
-    if (rectEnv.intersects(p1)) return true;
+    if (rectEnv.intersects(p0) || rectEnv.intersects(p1)) return true;
     
     /**
      * Normalize segment.

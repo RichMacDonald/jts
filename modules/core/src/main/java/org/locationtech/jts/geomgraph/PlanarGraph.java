@@ -204,10 +204,7 @@ public class PlanarGraph
       Edge e = (Edge) edge;
 
       Coordinate[] eCoord = e.getCoordinates();
-      if (matchInSameDirection(p0, p1, eCoord[0], eCoord[1]) )
-        return e;
-
-      if (matchInSameDirection(p0, p1, eCoord[eCoord.length - 1], eCoord[eCoord.length - 2]) )
+      if (matchInSameDirection(p0, p1, eCoord[0], eCoord[1]) || matchInSameDirection(p0, p1, eCoord[eCoord.length - 1], eCoord[eCoord.length - 2]) )
         return e;
     }
     return null;

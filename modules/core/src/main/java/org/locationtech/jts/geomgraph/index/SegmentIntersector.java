@@ -192,8 +192,7 @@ public class SegmentIntersector
   private boolean isBoundaryPoint(LineIntersector li, Collection[] bdyNodes)
   {
     if (bdyNodes == null) return false;
-    if (isBoundaryPointInternal(li, bdyNodes[0])) return true;
-    if (isBoundaryPointInternal(li, bdyNodes[1])) return true;
+    if (isBoundaryPointInternal(li, bdyNodes[0]) || isBoundaryPointInternal(li, bdyNodes[1])) return true;
     return false;
   }
 

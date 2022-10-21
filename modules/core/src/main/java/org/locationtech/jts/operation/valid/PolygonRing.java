@@ -75,11 +75,8 @@ class PolygonRing {
    */
   public static boolean addTouch(PolygonRing ring0, PolygonRing ring1, Coordinate pt) {
     //--- skip if either polygon does not have holes
-    if (ring0 == null || ring1 == null) 
-      return false;
-    
     //--- only record touches within a polygon
-    if (! ring0.isSamePolygon(ring1)) return false;
+    if (ring0 == null || ring1 == null || ! ring0.isSamePolygon(ring1)) return false;
     
     if (! ring0.isOnlyTouch(ring1, pt)) return true;
     if (! ring1.isOnlyTouch(ring0, pt)) return true;
@@ -447,7 +444,7 @@ class PolygonRingSelfNode {
      * The situation is fully symmetrical.
      */
     boolean isInteriorSeg = PolygonNodeTopology.isInteriorSegment(nodePt, e00, e01, e10);
-    boolean isExterior = isInteriorOnRight ? ! isInteriorSeg : isInteriorSeg;
+    boolean isExterior = isInteriorOnRight ^ isInteriorSeg;
     return isExterior;
   }
 }

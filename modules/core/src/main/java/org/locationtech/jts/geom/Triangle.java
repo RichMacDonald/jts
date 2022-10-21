@@ -40,11 +40,7 @@ public class Triangle
    */
   public static boolean isAcute(Coordinate a, Coordinate b, Coordinate c)
   {
-    if (!Angle.isAcute(a, b, c))
-      return false;
-    if (!Angle.isAcute(b, c, a))
-      return false;
-    if (!Angle.isAcute(c, a, b))
+    if (!Angle.isAcute(a, b, c) || !Angle.isAcute(b, c, a) || !Angle.isAcute(c, a, b))
       return false;
     return true;
   }
@@ -75,9 +71,7 @@ public class Triangle
   {
     int exteriorIndex = isCCW(a, b, c) ? 
         Orientation.CLOCKWISE : Orientation.COUNTERCLOCKWISE;
-    if (exteriorIndex == Orientation.index(a, b, p)) return false;
-    if (exteriorIndex == Orientation.index(b, c, p)) return false;
-    if (exteriorIndex == Orientation.index(c, a, p)) return false;
+    if ((exteriorIndex == Orientation.index(a, b, p)) || (exteriorIndex == Orientation.index(b, c, p)) || (exteriorIndex == Orientation.index(c, a, p))) return false;
     return true;
   }
 

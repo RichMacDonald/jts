@@ -81,11 +81,9 @@ public class SparsePolygonUnion {
     for (PolygonNode queryNode : nodes) {
       index.query(queryNode.getEnvelope(), (ItemVisitor) item -> {
 	  PolygonNode node = (PolygonNode) item;
-	  if (item == queryNode) return;
+	  
 	  // avoid duplicate intersections
-	  if (node.id() > queryNode.id()) return;
-	  if (queryNode.isInSameCluster(node)) return;
-	  if (! queryNode.intersects(node)) return;
+	  if ((item == queryNode) || (node.id() > queryNode.id()) || queryNode.isInSameCluster(node) || ! queryNode.intersects(node)) return;
 	  queryNode.merge((PolygonNode) item);
 	});
     }

@@ -38,11 +38,8 @@ public class GeometryPainter
   public static void paint(Graphics2D g, Viewport viewport, Geometry geometry, Style style)
   throws Exception
   {
-    if (geometry == null)
-      return;
-
     // cull non-visible geometries
-    if (! viewport.intersectsInModel(geometry.getEnvelopeInternal())) 
+    if ((geometry == null) || ! viewport.intersectsInModel(geometry.getEnvelopeInternal())) 
       return;
 
     if (geometry instanceof GeometryCollection) {

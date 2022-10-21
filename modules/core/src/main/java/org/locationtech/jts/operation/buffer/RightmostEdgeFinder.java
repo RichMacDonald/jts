@@ -155,8 +155,7 @@ class RightmostEdgeFinder {
     Edge e = de.getEdge();
     Coordinate coord[] = e.getCoordinates();
 
-    if (i < 0 || i + 1 >= coord.length) return -1;
-    if (coord[i].y == coord[i + 1].y) return -1;    // indicates edge is parallel to x-axis
+    if (i < 0 || i + 1 >= coord.length || (coord[i].y == coord[i + 1].y)) return -1;    // indicates edge is parallel to x-axis
 
     int pos = Position.LEFT;
     if (coord[i].y < coord[i + 1].y) pos = Position.RIGHT;

@@ -168,8 +168,7 @@ public class CoordinateArrays {
    * @return true if the coordinate form a ring.
    */
   public static boolean isRing(Coordinate[] pts) {
-    if (pts.length < 4) return false;
-    if (!pts[0].equals2D(pts[pts.length - 1])) return false;
+    if ((pts.length < 4) || !pts[0].equals2D(pts[pts.length - 1])) return false;
     return true;
   }
 
@@ -415,9 +414,7 @@ public class CoordinateArrays {
    */
   public static boolean hasRepeatedOrInvalidPoints(Coordinate[] coord) {
     for (int i = 1; i < coord.length; i++) {
-      if (! coord[i].isValid())
-        return true;
-      if (coord[i - 1].equals(coord[i])) {
+      if (! coord[i].isValid() || coord[i - 1].equals(coord[i])) {
         return true;
       }
     }
@@ -492,8 +489,7 @@ public class CoordinateArrays {
     Coordinate[] coord1,
     Coordinate[] coord2) {
     if (coord1 == coord2) return true;
-    if (coord1 == null || coord2 == null) return false;
-    if (coord1.length != coord2.length) return false;
+    if (coord1 == null || coord2 == null || (coord1.length != coord2.length)) return false;
     for (int i = 0; i < coord1.length; i++) {
       if (!coord1[i].equals(coord2[i])) return false;
     }
@@ -513,8 +509,7 @@ public class CoordinateArrays {
     Coordinate[] coord2,
     Comparator coordinateComparator) {
     if (coord1 == coord2) return true;
-    if (coord1 == null || coord2 == null) return false;
-    if (coord1.length != coord2.length) return false;
+    if (coord1 == null || coord2 == null || (coord1.length != coord2.length)) return false;
     for (int i = 0; i < coord1.length; i++) {
       if (coordinateComparator.compare(coord1[i], coord2[i]) != 0)
         return false;

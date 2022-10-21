@@ -216,9 +216,7 @@ class EdgeNodingBuilder {
   
   private void add(Geometry g, int geomIndex)
   {
-    if (g == null || g.isEmpty()) return;
-    
-    if (isClippedCompletely(g.getEnvelopeInternal())) 
+    if (g == null || g.isEmpty() || isClippedCompletely(g.getEnvelopeInternal())) 
       return;
 
     if (g instanceof Polygon)                 addPolygon((Polygon) g, geomIndex);
@@ -272,9 +270,7 @@ class EdgeNodingBuilder {
   private void addPolygonRing(LinearRing ring, boolean isHole, int index)
   {
     // don't add empty rings
-    if (ring.isEmpty()) return;
-    
-    if (isClippedCompletely(ring.getEnvelopeInternal())) 
+    if (ring.isEmpty() || isClippedCompletely(ring.getEnvelopeInternal())) 
       return;
     
     Coordinate[] pts = clip( ring );
@@ -386,9 +382,7 @@ class EdgeNodingBuilder {
   private void addLine(LineString line, int geomIndex)
   {
     // don't add empty lines
-    if (line.isEmpty()) return;
-    
-    if (isClippedCompletely(line.getEnvelopeInternal())) 
+    if (line.isEmpty() || isClippedCompletely(line.getEnvelopeInternal())) 
       return;
     
     if (isToBeLimited(line)) {

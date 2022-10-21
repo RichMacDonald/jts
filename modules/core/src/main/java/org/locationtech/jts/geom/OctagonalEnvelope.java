@@ -246,10 +246,7 @@ public class OctagonalEnvelope
 
   public boolean intersects(OctagonalEnvelope other)
   {
-    if (isNull() || other.isNull()) { return false; }
-
-    if (minX > other.maxX) return false;
-    if (maxX < other.minX) return false;
+    if (isNull() || other.isNull() || (minX > other.maxX) || (maxX < other.minX)) return false;
     if (minY > other.maxY) return false;
     if (maxY < other.minY) return false;
     if (minA > other.maxA) return false;
@@ -261,10 +258,7 @@ public class OctagonalEnvelope
 
   public boolean intersects(Coordinate p)
   {
-    if (minX > p.x) return false;
-    if (maxX < p.x) return false;
-    if (minY > p.y) return false;
-    if (maxY < p.y) return false;
+    if ((minX > p.x) || (maxX < p.x) || (minY > p.y) || (maxY < p.y)) return false;
     
     double A = computeA(p.x, p.y);
     double B = computeB(p.x, p.y);

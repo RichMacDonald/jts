@@ -130,8 +130,7 @@ public class LineSegmentTest extends TestCase {
   
   public static boolean equalsTolerance(Coordinate p0, Coordinate p1, double tolerance)
   {
-  	if (Math.abs(p0.x - p1.x) > tolerance) return false;
-  	if (Math.abs(p0.y - p1.y) > tolerance) return false;
+  	if ((Math.abs(p0.x - p1.x) > tolerance) || (Math.abs(p0.y - p1.y) > tolerance)) return false;
   	return true;
   }
   

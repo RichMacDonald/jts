@@ -152,15 +152,13 @@ public boolean isRequiredB() {
 	
   protected static Double getDoubleOrNull(Object[] args, int index)
   {
-  	if (args.length <= index) return null;
-  	if (args[index] == null) return null;
+  	if ((args.length <= index) || (args[index] == null)) return null;
   	return (Double) args[index];
   }
   
   protected static Integer getIntegerOrNull(Object[] args, int index)
   {
-  	if (args.length <= index) return null;
-  	if (args[index] == null) return null;
+  	if ((args.length <= index) || (args[index] == null)) return null;
   	return (Integer) args[index];
   }
   
@@ -179,8 +177,7 @@ public boolean isRequiredB() {
 	{
 		if (! (obj instanceof GeometryFunction)) return false;
 		GeometryFunction func = (GeometryFunction) obj;
-		if (! name.equals(func.getName())) return false;
-		if (! returnType.equals(func.getReturnType())) return false;
+		if (! name.equals(func.getName()) || ! returnType.equals(func.getReturnType())) return false;
 		
 		Class[] funcParamTypes = func.getParameterTypes();
 		if (parameterTypes.length != funcParamTypes.length) return false;

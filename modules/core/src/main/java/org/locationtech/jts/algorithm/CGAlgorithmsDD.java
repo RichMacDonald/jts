@@ -153,18 +153,12 @@ public class CGAlgorithmsDD
       else {
         detsum = detleft + detright;
       }
-    }
-    else if (detleft < 0.0) {
-      if (detright >= 0.0) {
+    } else if ((detleft >= 0.0) || (detright >= 0.0)) {
         return signum(det);
       }
       else {
         detsum = -detleft - detright;
       }
-    }
-    else {
-      return signum(det);
-    }
 
     double errbound = DP_SAFE_EPSILON * detsum;
     if ((det >= errbound) || (-det >= errbound)) {

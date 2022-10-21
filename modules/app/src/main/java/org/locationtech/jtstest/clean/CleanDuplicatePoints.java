@@ -54,10 +54,8 @@ public class CleanDuplicatePoints {
   {
     fact = g.getFactory();
     if (g.isEmpty()) return g;
-    if (g instanceof Point)                   return g;
-    else if (g instanceof MultiPoint)         return g;
-                        // LineString also handles LinearRings
-    else if (g instanceof LinearRing)         return clean((LinearRing) g);
+    if ((g instanceof Point) || (g instanceof MultiPoint))                   return g;
+	else if (g instanceof LinearRing)         return clean((LinearRing) g);
     else if (g instanceof LineString)         return clean((LineString) g);
     else if (g instanceof Polygon)            return clean((Polygon) g);
     else if (g instanceof MultiLineString)    return clean((MultiLineString) g);

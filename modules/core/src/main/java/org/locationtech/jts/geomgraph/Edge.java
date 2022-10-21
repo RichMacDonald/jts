@@ -120,8 +120,7 @@ public Coordinate getCoordinate()
    */
   public boolean isCollapsed()
   {
-    if (! label.isArea()) return false;
-    if (pts.length != 3) return false;
+    if (! label.isArea() || (pts.length != 3)) return false;
     if (pts[0].equals(pts[2]) ) return true;
     return false;
   }

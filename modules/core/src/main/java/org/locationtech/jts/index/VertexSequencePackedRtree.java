@@ -170,9 +170,7 @@ public class VertexSequencePackedRtree {
     int boundsIndex = levelOffset[level] + nodeIndex;
     Envelope nodeEnv = bounds[boundsIndex];
     //--- node is empty
-    if (nodeEnv == null)
-      return;
-    if (! queryEnv.intersects(nodeEnv))
+    if ((nodeEnv == null) || ! queryEnv.intersects(nodeEnv))
       return;
     
     int childNodeIndex = nodeIndex * nodeCapacity;

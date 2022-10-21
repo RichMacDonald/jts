@@ -91,12 +91,10 @@ class IndexedNestedPolygonTester
       for (Integer polyIndex : results) {
         Polygon possibleOuterPoly = (Polygon) multiPoly.getGeometryN(polyIndex);
         
-        if (poly == possibleOuterPoly)
-          continue;
         /**
          * If polygon is not fully covered by candidate polygon it cannot be nested
          */
-        if (! possibleOuterPoly.getEnvelopeInternal().covers( poly.getEnvelopeInternal()) )
+        if ((poly == possibleOuterPoly) || ! possibleOuterPoly.getEnvelopeInternal().covers( poly.getEnvelopeInternal()) )
           continue;
         
         nestedPt = findNestedPoint(shell, possibleOuterPoly, getLocator(polyIndex));
@@ -155,9 +153,7 @@ class IndexedNestedPolygonTester
   private static Coordinate findIncidentSegmentNestedPoint(LinearRing shell, Polygon poly)
   {
     LinearRing polyShell = poly.getExteriorRing();
-    if (polyShell.isEmpty()) return null;
-    
-    if (! PolygonTopologyAnalyzer.isRingNested(shell, polyShell))
+    if (polyShell.isEmpty() || ! PolygonTopologyAnalyzer.isRingNested(shell, polyShell))
       return null;
 
     /**

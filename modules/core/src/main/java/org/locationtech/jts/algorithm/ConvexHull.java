@@ -249,18 +249,12 @@ public class ConvexHull
       return false;
     }
     if (c1.x != c3.x) {
-      if (c1.x <= c2.x && c2.x <= c3.x) {
-        return true;
-      }
-      if (c3.x <= c2.x && c2.x <= c1.x) {
+      if ((c1.x <= c2.x && c2.x <= c3.x) || (c3.x <= c2.x && c2.x <= c1.x)) {
         return true;
       }
     }
     if (c1.y != c3.y) {
-      if (c1.y <= c2.y && c2.y <= c3.y) {
-        return true;
-      }
-      if (c3.y <= c2.y && c2.y <= c1.y) {
+      if ((c1.y <= c2.y && c2.y <= c3.y) || (c3.y <= c2.y && c2.y <= c1.y)) {
         return true;
       }
     }
@@ -408,11 +402,8 @@ public class ConvexHull
     for (int i = 0; i <= original.length - 2; i++) {
       Coordinate currentCoordinate = original[i];
       Coordinate nextCoordinate = original[i+1];
-      if (currentCoordinate.equals(nextCoordinate)) {
-        continue;
-      }
-      if (previousDistinctCoordinate != null
-          && isBetween(previousDistinctCoordinate, currentCoordinate, nextCoordinate)) {
+      if (currentCoordinate.equals(nextCoordinate) || (previousDistinctCoordinate != null
+          && isBetween(previousDistinctCoordinate, currentCoordinate, nextCoordinate))) {
         continue;
       }
       cleanedRing.add(currentCoordinate);

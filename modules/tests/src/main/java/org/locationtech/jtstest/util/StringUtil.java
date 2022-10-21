@@ -42,8 +42,7 @@ public class StringUtil
 
     public static String removeFromEnd(String s, String strToRemove)
     {
-    	if (s == null || strToRemove == null) return s;
-    	if (s.length() < strToRemove.length()) return s;
+    	if (s == null || strToRemove == null || (s.length() < strToRemove.length())) return s;
     	int subLoc = s.length() - strToRemove.length();
     	if (s.substring(subLoc).equalsIgnoreCase(strToRemove))
     		return s.substring(0, subLoc);

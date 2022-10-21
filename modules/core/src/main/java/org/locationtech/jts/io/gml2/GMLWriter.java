@@ -433,9 +433,7 @@ public class GMLWriter {
 	}
 
 	private void writeAttributes(Geometry geom, Writer writer) throws IOException {
-		if (geom == null)
-			return;
-		if (! isRootTag)
+		if ((geom == null) || ! isRootTag)
 			return;
 		
 		if (emitNamespace) {
@@ -451,9 +449,7 @@ public class GMLWriter {
 	}
 
 	private void writeCustomElements(Geometry geom, Writer writer) throws IOException {
-		if (geom == null)			return;
-		if (! isRootTag)			return;
-		if (customElements == null) return;
+		if ((geom == null) || ! isRootTag || (customElements == null)) return;
 		
 		for (String customElement : customElements) {
 			writer.write(customElement);

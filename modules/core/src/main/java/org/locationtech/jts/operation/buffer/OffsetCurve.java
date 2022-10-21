@@ -420,9 +420,7 @@ public class OffsetCurve {
   
   private static double subsegmentMatchFrac(Coordinate p0, Coordinate p1, 
       Coordinate seg0, Coordinate seg1, double matchDistance) {
-    if (matchDistance < Distance.pointToSegment(p0, seg0, seg1))
-      return -1;
-    if (matchDistance < Distance.pointToSegment(p1, seg0, seg1))
+    if ((matchDistance < Distance.pointToSegment(p0, seg0, seg1)) || (matchDistance < Distance.pointToSegment(p1, seg0, seg1)))
       return -1;
     //-- matched - determine position as fraction
     LineSegment seg = new LineSegment(seg0, seg1);

@@ -132,10 +132,10 @@ public class LineBuilder {
   private void collectBoundaryTouchEdge(DirectedEdge de, int opCode, List edges)
   {
     Label label = de.getLabel();
-    if (de.isLineEdge()) return;  // only interested in area edges
-    if (de.isVisited()) return;  // already processed
-    if (de.isInteriorAreaEdge()) return;  // added to handle dimensional collapses
-    if (de.getEdge().isInResult()) return;  // if the edge linework is already included, don't include it again
+      // only interested in area edges
+      // already processed
+      // added to handle dimensional collapses
+    if (de.isLineEdge() || de.isVisited() || de.isInteriorAreaEdge() || de.getEdge().isInResult()) return;  // if the edge linework is already included, don't include it again
 
     // sanity check for labelling of result edgerings
     Assert.isTrue((!de.isInResult() && !de.getSym().isInResult()) || ! de.getEdge().isInResult());

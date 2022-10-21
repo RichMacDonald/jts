@@ -174,8 +174,7 @@ public class LayerList
 
   public void moveDown(Layer lyr) {
     int i = layers.indexOf(lyr);
-    if (i < 0) return;
-    if (i >= layers.size() - 1) return;
+    if ((i < 0) || (i >= layers.size() - 1)) return;
     Layer tmp = layers.get(i+1);
     layers.set(i+1, lyr);
     layers.set(i, tmp);

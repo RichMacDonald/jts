@@ -323,8 +323,7 @@ public String toString() {
    */
   public boolean isInteriorIntersection()
   {
-    if (isInteriorIntersection(0)) return true;
-    if (isInteriorIntersection(1)) return true;
+    if (isInteriorIntersection(0) || isInteriorIntersection(1)) return true;
     return false;
   }
 

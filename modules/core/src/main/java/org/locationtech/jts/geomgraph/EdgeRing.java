@@ -218,8 +218,7 @@ public abstract class EdgeRing {
   {
     LinearRing shell = getLinearRing();
     Envelope env = shell.getEnvelopeInternal();
-    if (! env.contains(p)) return false;
-    if (! PointLocation.isInRing(p, shell.getCoordinates()) ) return false;
+    if (! env.contains(p) || ! PointLocation.isInRing(p, shell.getCoordinates()) ) return false;
 
     for (Object hole2 : holes) {
       EdgeRing hole = (EdgeRing) hole2;

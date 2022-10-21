@@ -515,17 +515,8 @@ S  */
    */
   private static String getNextEmptyOrOpener(StreamTokenizer tokenizer) throws IOException, ParseException {
     String nextWord = getNextWord(tokenizer);
-    if (nextWord.equalsIgnoreCase(WKTConstants.Z)) {
+    if (nextWord.equalsIgnoreCase(WKTConstants.Z) || nextWord.equalsIgnoreCase(WKTConstants.M) || nextWord.equalsIgnoreCase(WKTConstants.ZM)) {
       //z = true;
-      nextWord = getNextWord(tokenizer);
-    }
-    else if (nextWord.equalsIgnoreCase(WKTConstants.M)) {
-      //m = true;
-      nextWord = getNextWord(tokenizer);
-    }
-    else if (nextWord.equalsIgnoreCase(WKTConstants.ZM)) {
-      //z = true;
-      //m = true;
       nextWord = getNextWord(tokenizer);
     }
     if (nextWord.equals(WKTConstants.EMPTY) || nextWord.equals(L_PAREN)) {

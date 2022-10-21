@@ -32,8 +32,7 @@ public class GeometryPointLocater
   {
     GeometryPointLocater finder = new GeometryPointLocater(geom);
     GeometryLocation geomLoc = finder.getLocation(testPt, false, tolerance);
-    if (geomLoc == null) return null;
-    if (geomLoc.isVertex()) return null;
+    if ((geomLoc == null) || geomLoc.isVertex()) return null;
     return geomLoc;
   }
 
@@ -108,8 +107,7 @@ public class GeometryPointLocater
     @Override
 	public void filter(Geometry geom)
     {
-      if (! (geom instanceof LineString)) return;
-      if (nearestPt != null)
+      if (! (geom instanceof LineString) || (nearestPt != null))
         return;
 
       LineString lineStr = (LineString) geom;

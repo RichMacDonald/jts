@@ -92,12 +92,11 @@ public class ConstrainedInteriorPoint {
 
   private void scanSegment(Coordinate p0, Coordinate p1) {
     // skip non-crossing segments
-    if (! crosses(p0, p1, scanY)) return;
+    
     // skip horizontal lines
-    if (p0.getY() ==  p1.getY()) return;
     // handle vertices on scan-line
     // downward segment does not include start point
-    if (p0.y == scanY && p1.y < scanY) return;
+    if (! crosses(p0, p1, scanY) || (p0.getY() ==  p1.getY()) || (p0.y == scanY && p1.y < scanY)) return;
     // upward segment does not include endpoint
     if (p1.y == scanY && p0.y < scanY) return;
    
@@ -128,8 +127,7 @@ public class ConstrainedInteriorPoint {
       double x2 = crossings.get(i + 1);
       
       // skip if outside constraint region
-      if (x2 < xCon1) continue;
-      if (x1 > xCon2) continue;
+      if ((x2 < xCon1) || (x1 > xCon2)) continue;
 
       // clip to constraint 
       double xClip1 = Math.max(x1,  xCon1);
@@ -167,8 +165,7 @@ public class ConstrainedInteriorPoint {
   }
 
   private boolean crosses(Coordinate p0, Coordinate p1, double Y) {
-    if (p0.getY() > Y && p1.getY() > Y) return false;
-    if (p0.getY() < Y && p1.getY() < Y) return false;
+    if ((p0.getY() > Y && p1.getY() > Y) || (p0.getY() < Y && p1.getY() < Y)) return false;
     return true;
   }
   

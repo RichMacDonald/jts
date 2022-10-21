@@ -39,10 +39,8 @@ public class RepeatedPointTester {
   public boolean hasRepeatedPoint(Geometry g)
   {
     if (g.isEmpty()) return false;
-    if (g instanceof Point)                   return false;
-    else if (g instanceof MultiPoint)         return false;
-                        // LineString also handles LinearRings
-    else if (g instanceof LineString)         return hasRepeatedPoint(((LineString) g).getCoordinates());
+    if ((g instanceof Point) || (g instanceof MultiPoint))                   return false;
+	else if (g instanceof LineString)         return hasRepeatedPoint(((LineString) g).getCoordinates());
     else if (g instanceof Polygon)            return hasRepeatedPoint((Polygon) g);
     else if (g instanceof GeometryCollection) return hasRepeatedPoint((GeometryCollection) g);
     else  throw new UnsupportedOperationException(g.getClass().getName());

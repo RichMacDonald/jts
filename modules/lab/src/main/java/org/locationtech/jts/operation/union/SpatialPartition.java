@@ -103,10 +103,8 @@ public class SpatialPartition {
 	  int itemIndex = (Integer) item;
 	  
 	  // avoid reflexive and symmetric comparisons by comparing only lower to higher
-	  if (itemIndex <= queryIndex) return;
-	  
 	  // already in same partition
-	  if (dset.isInSameSubset(queryIndex,  itemIndex)) return;
+	  if ((itemIndex <= queryIndex) || dset.isInSameSubset(queryIndex,  itemIndex)) return;
 	  
 	  if (rel.isEquivalent(queryIndex, itemIndex)) {
 	    // geometries are in same partition

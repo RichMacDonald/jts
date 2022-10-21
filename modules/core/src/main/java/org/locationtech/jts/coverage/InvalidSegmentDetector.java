@@ -87,11 +87,8 @@ class InvalidSegmentDetector implements SegmentIntersector {
       Coordinate adj0, Coordinate adj1, CoverageRing adj, int indexAdj) {
 
     //-- segments that are collinear (but not matching) or are interior are invalid
-    if (isCollinearOrInterior(tgt0, tgt1, adj0, adj1, adj, indexAdj))
-      return true;
-
     //-- segments which are nearly parallel for a significant length are invalid
-    if (distanceTol > 0 && isNearlyParallel(tgt0, tgt1, adj0, adj1, distanceTol))
+    if (isCollinearOrInterior(tgt0, tgt1, adj0, adj1, adj, indexAdj) || (distanceTol > 0 && isNearlyParallel(tgt0, tgt1, adj0, adj1, distanceTol)))
       return true;
     
     return false;
@@ -120,13 +117,8 @@ class InvalidSegmentDetector implements SegmentIntersector {
       return false;
     
     //-- If the segments are collinear, they do not match, so are invalid.
-    if (li.getIntersectionNum() == 2) {
-      //TODO: assert segments are not equal?
-      return true;
-    }
-    
     //-- target segment crosses, or segments touch at non-endpoint
-    if (li.isProper() || li.isInteriorIntersection()) {
+    if ((li.getIntersectionNum() == 2) || li.isProper() || li.isInteriorIntersection()) {
       return true;
     }
     
@@ -168,10 +160,7 @@ class InvalidSegmentDetector implements SegmentIntersector {
     if (proj0 ==null)
       return false;
     LineSegment proj1 = line1.project(line0);
-    if (proj1 ==null)
-      return false;
-    
-    if (proj0.getLength() <= distanceTol
+    if ((proj1 ==null) || proj0.getLength() <= distanceTol
         || proj1.getLength() <= distanceTol)
       return false;
     

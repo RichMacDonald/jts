@@ -104,10 +104,7 @@ public class LineMergerTest extends TestCase {
   private static boolean contains(Collection geometries, Geometry g, boolean exact) {
     for (Object element2 : geometries) {
       Geometry element = (Geometry) element2;
-      if (exact && element.equalsExact(g)) {
-        return true;
-      }
-      if (!exact && element.equalsTopo(g)) {
+      if ((exact && element.equalsExact(g)) || (!exact && element.equalsTopo(g))) {
         return true;
       }      
     }

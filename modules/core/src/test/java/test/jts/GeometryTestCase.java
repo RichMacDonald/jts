@@ -131,8 +131,7 @@ public abstract class GeometryTestCase extends TestCase{
   }
   
   private boolean equalsExactXYZ(Geometry a, Geometry b) {
-    if (a.getClass() != b.getClass()) return false;
-    if (a.getNumGeometries() != b.getNumGeometries()) return false;
+    if ((a.getClass() != b.getClass()) || (a.getNumGeometries() != b.getNumGeometries())) return false;
     if (a instanceof Point) {
       return isEqualDim(((Point) a).getCoordinateSequence(), ((Point) b).getCoordinateSequence(), 3);
     }
@@ -155,9 +154,7 @@ public abstract class GeometryTestCase extends TestCase{
   private boolean equalsExactXYZPolygon(Polygon a, Polygon b) {
     LinearRing aShell = a.getExteriorRing();
     LinearRing bShell = b.getExteriorRing();
-    if (! isEqualDim(aShell.getCoordinateSequence(), bShell.getCoordinateSequence(), 3))
-      return false;
-    if (a.getNumInteriorRing() != b.getNumInteriorRing())
+    if (! isEqualDim(aShell.getCoordinateSequence(), bShell.getCoordinateSequence(), 3) || (a.getNumInteriorRing() != b.getNumInteriorRing()))
       return false;
     for (int i = 0; i < a.getNumInteriorRing(); i++) {
       LinearRing aHole = a.getInteriorRingN(i);
@@ -372,8 +369,7 @@ public abstract class GeometryTestCase extends TestCase{
    * @return {@code true} if both sequences are equal
    */
   public static boolean isEqual(CoordinateSequence seq1, CoordinateSequence seq2, int dimension, double tolerance) {
-    if (seq1 != null && seq2 == null) return false;
-    if (seq1 == null && seq2 != null) return false;
+    if ((seq1 != null && seq2 == null) || (seq1 == null && seq2 != null)) return false;
 
     if (seq1.size() != seq2.size()) return false;
 

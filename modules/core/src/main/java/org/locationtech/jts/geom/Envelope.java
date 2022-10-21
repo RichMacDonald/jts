@@ -79,9 +79,7 @@ public class Envelope
     double minp = Math.min(p1.x, p2.x);
     double maxp = Math.max(p1.x, p2.x);
 
-    if( minp > maxq )
-        return false;
-    if( maxp < minq )
+    if( (minp > maxq) || (maxp < minq) )
         return false;
 
     minq = Math.min(q1.y, q2.y);

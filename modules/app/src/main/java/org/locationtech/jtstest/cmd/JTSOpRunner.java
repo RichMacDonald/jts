@@ -471,8 +471,7 @@ public class JTSOpRunner {
   }
 
   private void outputResult(Object result, boolean isExplode, String outputFormat) {
-    if (result == null) return;
-    if (outputFormat == null) return;
+    if ((result == null) || (outputFormat == null)) return;
     
     if (! (result instanceof Geometry)) {
       out.println(result);
@@ -489,8 +488,7 @@ public class JTSOpRunner {
     }
   }
   private void outputList(List<Geometry> geoms, String outputFormat) {
-    if (geoms == null) return;
-    if (outputFormat == null) return;
+    if ((geoms == null) || (outputFormat == null)) return;
 
     for (Geometry geom : geoms) {
       outputResult(geom, param.isExplode, outputFormat);
@@ -498,8 +496,7 @@ public class JTSOpRunner {
   }
   
   private void printGeometry(Geometry geom, int srid, String outputFormat) {
-    if (geom == null) return;
-    if (outputFormat == null) return;
+    if ((geom == null) || (outputFormat == null)) return;
     
     if (captureGeometry) {
       resultGeoms.add(geom);
