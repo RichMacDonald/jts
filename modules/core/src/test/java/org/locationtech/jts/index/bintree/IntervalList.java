@@ -14,8 +14,6 @@ package org.locationtech.jts.index.bintree;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.locationtech.jts.index.bintree.Interval;
-
 
 
 /**

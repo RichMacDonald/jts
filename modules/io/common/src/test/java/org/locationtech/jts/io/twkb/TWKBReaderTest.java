@@ -13,12 +13,8 @@
 package org.locationtech.jts.io.twkb;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.locationtech.jts.geom.Geometry;
@@ -27,7 +23,6 @@ import org.locationtech.jts.geom.impl.PackedCoordinateSequenceFactory;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKBReader;
 import org.locationtech.jts.io.WKTReader;
-import org.locationtech.jts.io.twkb.TWKBReader;
 import org.locationtech.jts.io.twkb.TWKBTestSupport.TWKBTestData;
 
 /**

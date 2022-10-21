@@ -31,8 +31,6 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
-import org.locationtech.jts.io.oracle.OraGeom;
-import org.locationtech.jts.io.oracle.OraReader;
 
 
 /**

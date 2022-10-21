@@ -14,7 +14,6 @@ package org.locationtech.jts.operation.buffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;

@@ -1,6 +1,5 @@
 package org.locationtech.jts.noding.snapround;
 
-import org.locationtech.jts.algorithm.RobustLineIntersector;
 import org.locationtech.jts.geom.Coordinate;
 
 import junit.framework.TestCase;

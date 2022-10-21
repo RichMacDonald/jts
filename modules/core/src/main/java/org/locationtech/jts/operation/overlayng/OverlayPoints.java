@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.CoordinateFilter;
 import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryComponentFilter;

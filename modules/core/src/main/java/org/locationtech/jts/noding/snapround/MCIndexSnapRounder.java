@@ -22,7 +22,6 @@ import org.locationtech.jts.noding.InteriorIntersectionFinderAdder;
 import org.locationtech.jts.noding.MCIndexNoder;
 import org.locationtech.jts.noding.NodedSegmentString;
 import org.locationtech.jts.noding.Noder;
-import org.locationtech.jts.noding.NodingValidator;
 import org.locationtech.jts.noding.SegmentString;
 
 /**

@@ -12,8 +12,6 @@
 
 package org.locationtech.jts.io.oracle;
 
-import org.locationtech.jts.io.oracle.OraGeom;
-
 /**
  * Mimics Oracle MDSYS functions for building geometries.
  * Useful for creating test objects.

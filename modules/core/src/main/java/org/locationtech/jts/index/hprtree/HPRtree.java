@@ -17,7 +17,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Envelope;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.index.ArrayListVisitor;
 import org.locationtech.jts.index.ItemVisitor;
 import org.locationtech.jts.index.SpatialIndex;

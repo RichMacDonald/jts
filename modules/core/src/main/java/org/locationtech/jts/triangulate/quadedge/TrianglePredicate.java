@@ -14,8 +14,6 @@ package org.locationtech.jts.triangulate.quadedge;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Triangle;
-import org.locationtech.jts.geom.impl.CoordinateArraySequence;
-import org.locationtech.jts.io.WKTWriter;
 import org.locationtech.jts.math.DD;
 
 /**

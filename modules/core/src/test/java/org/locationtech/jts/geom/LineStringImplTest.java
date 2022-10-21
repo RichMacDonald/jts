@@ -16,7 +16,6 @@ package org.locationtech.jts.geom;
 import org.locationtech.jts.io.WKTReader;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;

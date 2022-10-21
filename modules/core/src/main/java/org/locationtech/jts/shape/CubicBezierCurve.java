@@ -20,7 +20,6 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.GeometryMapper;
-import org.locationtech.jts.io.WKTWriter;
 
 /**
  * Creates a curved geometry by replacing the segments

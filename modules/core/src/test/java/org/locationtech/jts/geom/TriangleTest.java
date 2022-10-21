@@ -13,7 +13,6 @@ package org.locationtech.jts.geom;
 
 import org.locationtech.jts.io.WKTReader;
 
-import junit.framework.TestCase;
 import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 

@@ -25,7 +25,6 @@ import org.locationtech.jts.operation.overlayarea.OverlayArea;
 
 import test.jts.perf.PerformanceTestCase;
 import test.jts.perf.PerformanceTestRunner;
-import test.jts.util.IOUtil;
 
 public class OverlayAreaStarsGridPerfTest extends PerformanceTestCase
 {

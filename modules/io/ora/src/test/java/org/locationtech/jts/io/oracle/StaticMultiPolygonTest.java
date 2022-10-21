@@ -15,9 +15,6 @@ import java.sql.SQLException;
 
 import org.locationtech.jts.generator.*;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.io.oracle.OraReader;
-import org.locationtech.jts.io.oracle.OraWriter;
-
 import oracle.sql.STRUCT;
 
 

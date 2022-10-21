@@ -12,12 +12,7 @@
 package org.locationtech.jts.algorithm;
 
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.io.ParseException;
-import org.locationtech.jts.io.WKTReader;
-
-import junit.framework.TestCase;
 import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 

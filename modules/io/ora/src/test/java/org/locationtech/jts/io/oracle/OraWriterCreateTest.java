@@ -23,8 +23,6 @@ package org.locationtech.jts.io.oracle;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
-import org.locationtech.jts.io.oracle.OraGeom;
-import org.locationtech.jts.io.oracle.OraWriter;
 
 /**
  * Tests OraWriter without requiring an Oracle connection.

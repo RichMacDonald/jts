@@ -11,7 +11,6 @@
  */
 package org.locationtech.jts.operation.overlayng;
 
-import static org.locationtech.jts.operation.overlayng.OverlayNG.INTERSECTION;
 import static org.locationtech.jts.operation.overlayng.OverlayNG.UNION;
 
 import org.locationtech.jts.geom.Geometry;
