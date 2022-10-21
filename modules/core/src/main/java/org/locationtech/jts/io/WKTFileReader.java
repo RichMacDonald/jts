@@ -128,11 +128,8 @@ public class WKTFileReader
     
 		count = 0;
 		try {
-			BufferedReader bufferedReader = new BufferedReader(reader);
-			try {
+			try (BufferedReader bufferedReader = new BufferedReader(reader)) {
 				return read(bufferedReader);
-			} finally {
-				bufferedReader.close();
 			}
 		} finally {
 			reader.close();
