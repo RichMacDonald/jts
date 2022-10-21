@@ -116,9 +116,7 @@ public class GeoJsonReader {
       geometryMap = (Map<String, Object>) obj;
     } catch (ClassCastException e) {
       throw new ParseException("Could not parse Geometry from Json string.");
-    }catch (org.json.simple.parser.ParseException e) {
-      throw new ParseException(e);
-    } catch (IOException e) {
+    }catch (org.json.simple.parser.ParseException | IOException e) {
       throw new ParseException(e);
     }
     

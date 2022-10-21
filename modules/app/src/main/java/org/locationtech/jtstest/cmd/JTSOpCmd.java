@@ -85,11 +85,7 @@ public class JTSOpCmd {
       cmd.execute(cmdArgs);
       rc = 0;
     } 
-    catch (CommandError e) {
-      // for command errors, just print the message
-      System.err.println(e.getMessage() );
-    }
-    catch (ParseException e) {
+    catch (CommandError | ParseException e) {
       System.err.println(e.getMessage() );
     }
     catch (Exception e) {

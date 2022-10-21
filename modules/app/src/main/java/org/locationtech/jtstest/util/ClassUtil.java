@@ -35,8 +35,7 @@ public class ClassUtil
   		String[] str = (String[]) field.get(null);
   		return str;
   	}
-  	catch (NoSuchFieldException ex) {  	}
-  	catch (IllegalAccessException ex) {  	}
+  	catch (NoSuchFieldException | IllegalAccessException ex) {  	}
 		return null;
   }
   
@@ -48,8 +47,7 @@ public class ClassUtil
   		String str = (String) field.get(null);
   		return str;
   	}
-  	catch (NoSuchFieldException ex) {  	}
-  	catch (IllegalAccessException ex) {  	}
+  	catch (NoSuchFieldException | IllegalAccessException ex) {  	}
 		return null;
   }
   
