@@ -66,9 +66,9 @@ public class OffsetPointGenerator
   public List getPoints(double offsetDistance)
   {
     List offsetPts = new ArrayList();
-    List lines = LinearComponentExtracter.getLines(g);
-    for (Iterator i = lines.iterator(); i.hasNext(); ) {
-      LineString line = (LineString) i.next();
+    List<LineString> lines = LinearComponentExtracter.getLines(g);
+    for (Iterator<LineString> i = lines.iterator(); i.hasNext(); ) {
+      LineString line = i.next();
       extractPoints(line, offsetDistance, offsetPts);
     }
     //System.out.println(toMultiPoint(offsetPts));

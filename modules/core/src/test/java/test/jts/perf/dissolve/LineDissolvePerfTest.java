@@ -21,6 +21,7 @@ import java.util.List;
 import org.locationtech.jts.dissolve.LineDissolver;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.util.LinearComponentExtracter;
 import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.operation.linemerge.LineMerger;
@@ -83,7 +84,7 @@ public class LineDissolvePerfTest  extends PerformanceTestCase
   Geometry extractLines(Collection geoms)
   {
     GeometryFactory factory = null;
-    List lines = new ArrayList();
+    List<LineString> lines = new ArrayList<>();
     for (Iterator i = geoms.iterator(); i.hasNext(); ) {
       Geometry g = (Geometry) i.next();
       if (factory == null)

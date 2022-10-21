@@ -40,16 +40,16 @@ public class ConnectedElementLocationFilter
    * not a GeometryCollection, an empty list will be returned. The elements of the list 
    * are {@link org.locationtech.jts.operation.distance.GeometryLocation}s.
    */  
-  public static List getLocations(Geometry geom)
+  public static List<GeometryLocation> getLocations(Geometry geom)
   {
-    List locations = new ArrayList();
+	List<GeometryLocation> locations = new ArrayList<>();
     geom.apply(new ConnectedElementLocationFilter(locations));
     return locations;
   }
 
-  private List locations;
+  private List<GeometryLocation> locations;
 
-  ConnectedElementLocationFilter(List locations)
+  ConnectedElementLocationFilter(List<GeometryLocation> locations)
   {
     this.locations = locations;
   }

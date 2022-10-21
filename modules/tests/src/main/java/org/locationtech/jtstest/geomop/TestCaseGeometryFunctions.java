@@ -12,9 +12,11 @@
 package org.locationtech.jtstest.geomop;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.locationtech.jts.densify.Densifier;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.LinearComponentExtracter;
 import org.locationtech.jts.operation.buffer.BufferOp;
@@ -65,7 +67,7 @@ public class TestCaseGeometryFunctions
   }
 
   private static Geometry polygonize(Geometry g, boolean extractOnlyPolygonal) {
-    Collection lines = LinearComponentExtracter.getLines(g);
+	List<LineString> lines = LinearComponentExtracter.getLines(g);
     Polygonizer polygonizer = new Polygonizer(extractOnlyPolygonal);
     polygonizer.add(lines);
     return polygonizer.getGeometry();

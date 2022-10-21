@@ -19,6 +19,7 @@ import org.locationtech.jts.algorithm.locate.SimplePointInAreaLocator;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.Polygonal;
@@ -80,7 +81,7 @@ public class PolygonOverlayFunctions
   {
     GeometryFactory geomFact = g1.getFactory();
 
-    List lines = LinearComponentExtracter.getLines(g1);
+    List<LineString> lines = LinearComponentExtracter.getLines(g1);
     // add second input's linework, if any
     if (g2 != null)
       LinearComponentExtracter.getLines(g2, lines);

@@ -212,8 +212,8 @@ public class IsSimpleOp
    */
   private boolean isSimplePolygonal(Geometry geom)
   {
-    List rings = LinearComponentExtracter.getLines(geom);
-    for (Iterator i = rings.iterator(); i.hasNext(); ) {
+    List<LineString> rings = LinearComponentExtracter.getLines(geom);
+    for (Iterator<LineString> i = rings.iterator(); i.hasNext(); ) {
       LinearRing ring = (LinearRing) i.next();
       if (! isSimpleLinearGeometry(ring))
         return false;

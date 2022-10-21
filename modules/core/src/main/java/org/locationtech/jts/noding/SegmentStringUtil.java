@@ -57,9 +57,9 @@ public class SegmentStringUtil
   public static List extractNodedSegmentStrings(Geometry geom)
   {
     List segStr = new ArrayList();
-    List lines = LinearComponentExtracter.getLines(geom);
-    for (Iterator i = lines.iterator(); i.hasNext(); ) {
-      LineString line = (LineString) i.next();
+    List<LineString> lines = LinearComponentExtracter.getLines(geom);
+    for (Iterator<LineString> i = lines.iterator(); i.hasNext(); ) {
+      LineString line = i.next();
       Coordinate[] pts = line.getCoordinates();
       segStr.add(new NodedSegmentString(pts, geom));
     }
@@ -77,9 +77,9 @@ public class SegmentStringUtil
   public static List extractBasicSegmentStrings(Geometry geom)
   {
     List segStr = new ArrayList();
-    List lines = LinearComponentExtracter.getLines(geom);
-    for (Iterator i = lines.iterator(); i.hasNext(); ) {
-      LineString line = (LineString) i.next();
+    List<LineString> lines = LinearComponentExtracter.getLines(geom);
+    for (Iterator<LineString> i = lines.iterator(); i.hasNext(); ) {
+      LineString line = i.next();
       Coordinate[] pts = line.getCoordinates();
       segStr.add(new BasicSegmentString(pts, geom));
     }

@@ -56,11 +56,11 @@ public class PointExtracter
    * 
    * @param geom the geometry from which to extract
    */
-  public static List getPoints(Geometry geom) {
+  public static List<Point> getPoints(Geometry geom) {
     if (geom instanceof Point) {
-      return Collections.singletonList(geom);
+      return Collections.singletonList((Point) geom);
     }
-    return getPoints(geom, new ArrayList());
+    return getPoints(geom, new ArrayList<>());
   }
 
   private List pts;

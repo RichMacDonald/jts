@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.util.LineStringExtracter;
 import org.locationtech.jts.geom.util.LinearComponentExtracter;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
@@ -25,7 +26,7 @@ import org.locationtech.jts.operation.polygonize.Polygonizer;
 public class PolygonizeFunctions {
 
   private static Geometry polygonize(Geometry g, boolean extractOnlyPolygonal) {
-    Collection lines = LinearComponentExtracter.getLines(g);
+	List<LineString> lines = LinearComponentExtracter.getLines(g);
     Polygonizer polygonizer = new Polygonizer(extractOnlyPolygonal);
     polygonizer.add(lines);
     return polygonizer.getGeometry();

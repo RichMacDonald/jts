@@ -111,7 +111,7 @@ public class LinearComponentExtracter
    * @param geom the geometry from which to extract linear components
    * @return the list of linear components
    */
-  public static List getLines(Geometry geom)
+  public static List<LineString> getLines(Geometry geom)
   {
     return getLines(geom, false);
   }
@@ -126,9 +126,9 @@ public class LinearComponentExtracter
    * @param forceToLineString true if LinearRings should be converted to LineStrings
    * @return the list of linear components
    */
-  public static List getLines(Geometry geom, boolean forceToLineString)
+  public static List<LineString> getLines(Geometry geom, boolean forceToLineString)
   {
-    List lines = new ArrayList();
+	List<LineString> lines = new ArrayList<>();
     geom.apply(new LinearComponentExtracter(lines, forceToLineString));
     return lines;
   }

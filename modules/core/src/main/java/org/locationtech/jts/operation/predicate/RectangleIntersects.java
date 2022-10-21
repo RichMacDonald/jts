@@ -304,7 +304,7 @@ class RectangleIntersectsSegmentVisitor extends ShortCircuitedGeometryVisitor
     // check segment intersections
     // get all lines from geometry component
     // (there may be more than one if it's a multi-ring polygon)
-    List lines = LinearComponentExtracter.getLines(geom);
+    List<LineString> lines = LinearComponentExtracter.getLines(geom);
     checkIntersectionWithLineStrings(lines);
   }
 

@@ -54,9 +54,9 @@ public class PolygonExtracter
    * 
    * @param geom the geometry from which to extract
    */
-  public static List getPolygons(Geometry geom)
+  public static List<Polygon> getPolygons(Geometry geom)
   {
-    return getPolygons(geom, new ArrayList());
+    return getPolygons(geom, new ArrayList<>());
   }
 
   private List comps;

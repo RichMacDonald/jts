@@ -140,10 +140,10 @@ public class ConformingDelaunayTriangulationBuilder
 	
 	private static List createConstraintSegments(Geometry geom)
 	{
-		List lines = LinearComponentExtracter.getLines(geom);
+		List<LineString> lines = LinearComponentExtracter.getLines(geom);
 		List constraintSegs = new ArrayList();
-		for (Iterator i = lines.iterator(); i.hasNext(); ) {
-			LineString line = (LineString) i.next();
+		for (Iterator<LineString> i = lines.iterator(); i.hasNext(); ) {
+			LineString line = i.next();
 			createConstraintSegments(line, constraintSegs);
 		}
 		return constraintSegs;
