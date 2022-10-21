@@ -160,7 +160,7 @@ public class StretchedVertex
     // if corner is nearly flat, just displace point
     // TODO: displace from vertex on appropriate side of flat line, with suitable angle
     if (isFlat(nearPt, p1, p2))
-      return displaceFromFlatCorner(nearPt, p1, p2, dist);
+      return displaceFromFlatCorner(p1, p2, dist);
 
     Coordinate[] corner = orientCorner(nearPt, p1, p2);
     
@@ -327,7 +327,7 @@ public class StretchedVertex
     return offset;
   }
   
-  private Coordinate displaceFromFlatCorner(Coordinate nearPt, Coordinate p1, Coordinate p2, double dist)
+  private Coordinate displaceFromFlatCorner(Coordinate p1, Coordinate p2, double dist)
   {
   	// compute perpendicular bisector of p1-p2
   	Vector2D bisecVec = Vector2D.create(p2, p1).rotateByQuarterCircle(1);

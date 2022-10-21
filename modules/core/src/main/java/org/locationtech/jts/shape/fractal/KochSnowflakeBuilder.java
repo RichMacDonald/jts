@@ -74,7 +74,7 @@ extends GeometricShapeBuilder
 
 	public void addSide(int level, Coordinate p0, Coordinate p1) {
 		if (level == 0)
-			addSegment(p0, p1);
+			addSegment(p1);
 		else {
 			Vector2D base = Vector2D.create(p0, p1);
 			Coordinate midPt = base.multiply(0.5).translate(p0);
@@ -95,7 +95,7 @@ extends GeometricShapeBuilder
 		}
 	}
 		
-	private void addSegment(Coordinate p0, Coordinate p1)
+	private void addSegment(Coordinate p1)
 	{
 		coordList.add(p1);
 	}

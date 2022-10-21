@@ -34,9 +34,9 @@ public class SameStructureTester {
     else if (g1 instanceof Polygon)
       return isSameStructurePolygon((Polygon) g1, (Polygon) g2);
     else if (g1 instanceof LineString)
-      return isSameStructureLineString((LineString) g1, (LineString) g2);
+      return isSameStructureLineString();
     else if (g1 instanceof Point)
-      return isSameStructurePoint((Point) g1, (Point) g2);
+      return isSameStructurePoint();
 
     Assert.shouldNeverReachHere(
         "Unsupported Geometry class: " + g1.getClass().getName());
@@ -62,13 +62,13 @@ public class SameStructureTester {
     return true;
   }
 
-  private static boolean isSameStructureLineString(LineString g1, LineString g2)
+  private static boolean isSameStructureLineString()
   {
     // could check for both empty or nonempty here
     return true;
   }
 
-  private static boolean isSameStructurePoint(Point g1, Point g2)
+  private static boolean isSameStructurePoint()
   {
     // could check for both empty or nonempty here
     return true;

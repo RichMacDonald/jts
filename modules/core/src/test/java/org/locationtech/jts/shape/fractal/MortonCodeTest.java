@@ -77,11 +77,11 @@ extends TestCase
   private void checkDecodeEncodeForLevel(int level) {
     int n = size(level);
     for (int i = 0; i < n; i++) {
-      checkDecodeEncode(level, i);
+      checkDecodeEncode(i);
     }
   }
 
-  private void checkDecodeEncode(int level, int index) {
+  private void checkDecodeEncode(int index) {
     Coordinate p = decode(index);
     int encode = encode((int) p.getX(), (int) p.getY() );
     assertEquals( index, encode);

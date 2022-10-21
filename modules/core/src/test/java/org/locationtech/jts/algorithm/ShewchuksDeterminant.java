@@ -340,7 +340,7 @@ public class ShewchuksDeterminant
     double B[] = new double[4];
     B[2] = Two_Two_Diff__x2(detleft, detlefttail, detright, detrighttail);
     B[1] = Two_Two_Diff__x1(detleft, detlefttail, detright, detrighttail);
-    B[0] = Two_Two_Diff__x0(detleft, detlefttail, detright, detrighttail);
+    B[0] = Two_Two_Diff__x0(detleft, detlefttail, detrighttail);
     B[3] = Two_Two_Diff__x3(detleft, detlefttail, detright, detrighttail);
 
     double det = B[0] + B[1] + B[2] + B[3];
@@ -376,7 +376,7 @@ public class ShewchuksDeterminant
     double u[] = new double[4];
     u[2] = Two_Two_Diff__x2(s1, s0, t1, t0);
     u[1] = Two_Two_Diff__x1(s1, s0, t1, t0);
-    u[0] = Two_Two_Diff__x0(s1, s0, t1, t0);
+    u[0] = Two_Two_Diff__x0(s1, s0, t0);
 
     u[3] = u3;
     double C1[] = new double[8];
@@ -391,7 +391,7 @@ public class ShewchuksDeterminant
     u3 = Two_Two_Diff__x3(s1, s0, t1, t0);
     u[2] = Two_Two_Diff__x2(s1, s0, t1, t0);
     u[1] = Two_Two_Diff__x1(s1, s0, t1, t0);
-    u[0] = Two_Two_Diff__x0(s1, s0, t1, t0);
+    u[0] = Two_Two_Diff__x0(s1, s0, t0);
 
     u[3] = u3;
     double C2[] = new double[12];
@@ -406,7 +406,7 @@ public class ShewchuksDeterminant
     u3 = Two_Two_Diff__x3(s1, s0, t1, t0);
     u[2] = Two_Two_Diff__x2(s1, s0, t1, t0);
     u[1] = Two_Two_Diff__x1(s1, s0, t1, t0);
-    u[0] = Two_Two_Diff__x0(s1, s0, t1, t0);
+    u[0] = Two_Two_Diff__x0(s1, s0, t0);
 
     u[3] = u3;
     double D[] = new double[16];
@@ -609,7 +609,7 @@ public class ShewchuksDeterminant
   }
 
   // #define Two_One_Diff(a1, a0, b, x2, x1, x0)
-  private static double Two_One_Diff__x0(double a1, double a0, double b)
+  private static double Two_One_Diff__x0(double a0, double b)
   {
     double _i = Two_Diff_Head(a0, b);
     double x0 = Two_Diff_Tail(a0, b, _i);
@@ -637,10 +637,9 @@ public class ShewchuksDeterminant
   }
 
   // #define Two_Two_Diff(a1, a0, b1, b0, x3, x2, x1, x0)
-  private static double Two_Two_Diff__x0(double a1, double a0, double b1,
-      double b0)
+  private static double Two_Two_Diff__x0(double a1, double a0, double b0)
   {
-    double x0 = Two_One_Diff__x0(a1, a0, b0);
+    double x0 = Two_One_Diff__x0(a0, b0);
 
     return x0;
   }
@@ -652,7 +651,7 @@ public class ShewchuksDeterminant
     double _j = Two_One_Diff__x2(a1, a0, b0);
     double _0 = Two_One_Diff__x1(a1, a0, b0);
 
-    double x1 = Two_One_Diff__x0(_j, _0, b1);
+    double x1 = Two_One_Diff__x0(_0, b1);
 
     return x1;
   }

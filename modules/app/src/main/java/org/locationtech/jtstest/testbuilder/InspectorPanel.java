@@ -68,10 +68,10 @@ public class InspectorPanel extends TestBuilderPanel  {
     geomTreePanel.setPreferredSize(new Dimension(300, 500));
     this.add(geomTreePanel, BorderLayout.CENTER);
     
-    JButton btnZoom = SwingUtil.createButton(AppIcons.ZOOM, "Zoom to component", (ActionListener) e -> btnZoom_actionPerformed(e));
+    JButton btnZoom = SwingUtil.createButton(AppIcons.ZOOM, "Zoom to component", (ActionListener) e -> btnZoom_actionPerformed());
     JButton btnCopy = SwingUtil.createButton(AppIcons.COPY, "Copy (Ctl-click to copy formatted", (ActionListener) e -> btnCopy_actionPerformed(e));
-    JButton btnNext = SwingUtil.createButton(AppIcons.DOWN, "Zoom to Next", (ActionListener) e -> btnZoomNext_actionPerformed(e, 1));
-    JButton btnPrev = SwingUtil.createButton(AppIcons.UP, "Zoom to Previous", (ActionListener) e -> btnZoomNext_actionPerformed(e, -1));
+    JButton btnNext = SwingUtil.createButton(AppIcons.DOWN, "Zoom to Next", (ActionListener) e -> btnZoomNext_actionPerformed(1));
+    JButton btnPrev = SwingUtil.createButton(AppIcons.UP, "Zoom to Previous", (ActionListener) e -> btnZoomNext_actionPerformed(-1));
     btnDelete = SwingUtil.createButton(AppIcons.DELETE, "Delete", (ActionListener) e -> deleteGeom());    
     
     lblGeom.setFont(new java.awt.Font("Dialog", 1, 16));
@@ -129,10 +129,10 @@ public class InspectorPanel extends TestBuilderPanel  {
   private void btnExpand_actionPerformed() {
     JTSTestBuilder.controller().inspectGeometryDialogForCurrentCase();
   }
-  private void btnZoom_actionPerformed(ActionEvent e) {
+  private void btnZoom_actionPerformed() {
     JTSTestBuilderFrame.getGeometryEditPanel().zoom(geomTreePanel.getSelectedGeometry());
   }
-  private void btnZoomNext_actionPerformed(ActionEvent e, int direction) {
+  private void btnZoomNext_actionPerformed(int direction) {
     geomTreePanel.moveToNextNode(direction);
     JTSTestBuilderFrame.getGeometryEditPanel().zoom(geomTreePanel.getSelectedGeometry());
   }

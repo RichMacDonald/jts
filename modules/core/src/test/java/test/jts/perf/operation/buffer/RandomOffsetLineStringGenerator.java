@@ -69,13 +69,13 @@ public class RandomOffsetLineStringGenerator
 		
 		int interval = numPts / 2;
 		while (interval >= 1) {
-			createRandomOffsets(interval);
+			createRandomOffsets();
 			interval /= 2;
 		}
 		return fact.createLineString(pts);
 	}
 	
-	private void createRandomOffsets(int interval)
+	private void createRandomOffsets()
 	{
 //		for (int i = 0; i )
 		int inc = pow2(exponent2);

@@ -513,7 +513,7 @@ class CoordinateNode extends GeometricObjectNode
 
   private static DecimalFormat fmt = new DecimalFormat("0.#################", new DecimalFormatSymbols());
   
-  private static String label(Coordinate coord, int i, double distPrev)
+  private static String label(Coordinate coord, double distPrev)
   {
     String lbl = fmt.format(coord.x) + "   " + fmt.format(coord.y);
     if (! Double.isNaN(distPrev)) {
@@ -532,7 +532,7 @@ class CoordinateNode extends GeometricObjectNode
 
   public CoordinateNode(Coordinate coord, int i, double distPrev)
   {
-    super(label(coord, i, distPrev));
+    super(label(coord, distPrev));
     this.coord = coord;
     this.index = i;
   }

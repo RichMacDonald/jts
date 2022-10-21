@@ -79,7 +79,7 @@ public class OrdinateFormatTest extends TestCase {
     assertEquals(expected, actual);
   }
   
-  private void checkFormatLocales(Locale locale, double d, int maxFractionDigits, String expected) {
+  private void checkFormatLocales(double d, int maxFractionDigits, String expected) {
     OrdinateFormat format = OrdinateFormat.create(maxFractionDigits);
     String actual = format.format(d);
     assertEquals(expected, actual);

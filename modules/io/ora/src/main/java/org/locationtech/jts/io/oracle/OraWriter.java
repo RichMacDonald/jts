@@ -537,7 +537,7 @@ public class OraWriter
         
       case OraGeom.ETYPE.POLYGON_EXTERIOR:
         if (interp == OraGeom.INTERP.RECTANGLE) {
-          ordIndex = writeRectangleOrds(geom, dim, ords, ordIndex);
+          ordIndex = writeRectangleOrds(geom, ords, ordIndex);
         }
         else {
           ordIndex = writeOrdsOriented(((LineString) geom).getCoordinateSequence(), dim, ords, ordIndex, true);
@@ -610,7 +610,7 @@ public class OraWriter
     return ordIndex;
   }
 
-  private int writeRectangleOrds(Geometry ring, int dim, double[] ordData, int ordIndex)
+  private int writeRectangleOrds(Geometry ring, double[] ordData, int ordIndex)
   {
     Envelope e = ring.getEnvelopeInternal();
     ordData[ordIndex++] = e.getMinX();

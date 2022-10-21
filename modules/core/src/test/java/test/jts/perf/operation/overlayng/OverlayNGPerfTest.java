@@ -69,7 +69,7 @@ extends PerformanceTestCase
     int nptsB = npts / NUM_CASES;
     if (nptsB < 10 ) nptsB = 10;
     
-    geomB =  createTestGeoms(NUM_CASES, nptsB);
+    geomB =  createTestGeoms(nptsB);
 
     System.out.println("\n-------  Running with A: # pts = " + npts + "   B # pts = " +  nptsB);
     
@@ -83,7 +83,7 @@ extends PerformanceTestCase
 
   }
   
-  private Geometry[] createTestGeoms(int nGeoms, int npts) {
+  private Geometry[] createTestGeoms(int npts) {
     Geometry[] geoms = new Geometry[ NUM_CASES ];
     int index = 0;
     for (int i = 0; i < GRID_SIZE; i++) {

@@ -227,7 +227,7 @@ public class KMLWriter
     } else if (g instanceof Polygon) {
       writePolygon((Polygon) g, attributes, level, buf);
     } else if (g instanceof GeometryCollection) {
-      writeGeometryCollection((GeometryCollection) g, attributes, level, buf);
+      writeGeometryCollection((GeometryCollection) g, level, buf);
     }
     else 
       throw new IllegalArgumentException("Geometry type not supported: " + g.getGeometryType());
@@ -312,7 +312,7 @@ public class KMLWriter
   }
 
   private void writeGeometryCollection(GeometryCollection gc,
-      String attributes, int level, StringBuffer buf) {
+      int level, StringBuffer buf) {
     startLine("<MultiGeometry>\n", level, buf);
     for (int t = 0; t < gc.getNumGeometries(); t++) {
       writeGeometry(gc.getGeometryN(t), level + 1, buf);

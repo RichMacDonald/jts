@@ -68,11 +68,11 @@ public class FacetLocater
   {
   	this.queryPt = queryPt;
   	this.tolerance = tolerance;
-    findLocations(parentGeom, locations);
+    findLocations(locations);
     return locations;
   }
   
-  private void findLocations(Geometry geom, List locations)
+  private void findLocations(List locations)
   {
     findLocations(new Stack(), parentGeom, locations);
   }

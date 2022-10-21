@@ -94,7 +94,7 @@ public class DiffFunctions {
 
   public static GeometryCollection singleSegments(Geometry a) {
     List<LineSegment> segsA = extractSegmentsNorm(a);    
-    Map<LineSegment, Integer> segCounts = countSegments( segsA, a.getFactory() );
+    Map<LineSegment, Integer> segCounts = countSegments( segsA );
     List<LineSegment> singleSegs = new ArrayList<>();
     for (LineSegment seg : segCounts.keySet()) {
       int count = segCounts.get(seg);
@@ -119,7 +119,7 @@ public class DiffFunctions {
     return toMultiLineString( segsDup,  factory);
   }
 
-  private static Map<LineSegment, Integer> countSegments(List<LineSegment> segs, GeometryFactory factory) {
+  private static Map<LineSegment, Integer> countSegments(List<LineSegment> segs) {
     Map<LineSegment, Integer> segsAll = new HashMap<>();
     for (LineSegment seg : segs) {
       int count = 1;

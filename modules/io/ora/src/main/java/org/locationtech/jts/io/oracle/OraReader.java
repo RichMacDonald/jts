@@ -608,10 +608,10 @@ public class OraReader
     {
       int startOffset = oraGeom.startingOffset(elemIndex);
       int ordLen = oraGeom.ordinateLen();
-      checkOrdinates(oraGeom.elemInfo, elemIndex, startOffset, ordLen, geomType);
+      checkOrdinates(oraGeom.elemInfo, elemIndex, startOffset, ordLen);
     }
 
-    private static void checkOrdinates(int[] elemInfo, int elemIndex, int startOffset, int ordLen, String geomType)
+    private static void checkOrdinates(int[] elemInfo, int elemIndex, int startOffset, int ordLen)
     {
       if (startOffset > ordLen)
 		    throw new IllegalArgumentException("STARTING_OFFSET " + startOffset + " inconsistent with ORDINATES length " + ordLen

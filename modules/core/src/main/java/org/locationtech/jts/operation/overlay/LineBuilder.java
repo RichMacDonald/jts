@@ -51,7 +51,7 @@ public class LineBuilder {
     findCoveredLineEdges();
     collectLines(opCode);
     //labelIsolatedLines(lineEdgesList);
-    buildLines(opCode);
+    buildLines();
     return resultLineList;
   }
   /**
@@ -149,7 +149,7 @@ public class LineBuilder {
     }
   }
 
-  private void buildLines(int opCode)
+  private void buildLines()
   {
     for (Object element : lineEdgesList) {
       Edge e = (Edge) element;

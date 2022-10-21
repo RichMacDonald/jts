@@ -366,31 +366,27 @@ public class GeometryImplTest extends TestCase {
                 });
         
         doTestEqualsExact(x, somethingExactlyEqual,
-            collectionFactory.createCollection(new Geometry[] { x }),
-            somethingNotEqualButSameClass);
+            collectionFactory.createCollection(new Geometry[] { x }));
         
         doTestEqualsExact(sameClassButEmpty, anotherSameClassButEmpty,
-            emptyDifferentClass, x);
+            emptyDifferentClass);
         
         /**
          * Test comparison of non-empty versus empty.
          */
         doTestEqualsExact(x, somethingExactlyEqual,
-            sameClassButEmpty, sameClassButEmpty);
+            sameClassButEmpty);
         
         doTestEqualsExact(collectionFactory.createCollection(
                 new Geometry[] { x, x }),
             collectionFactory.createCollection(
                 new Geometry[] { x, somethingExactlyEqual }),
-            somethingEqualButNotExactly,
-            collectionFactory.createCollection(
-                new Geometry[] { x, somethingNotEqualButSameClass }));
+            somethingEqualButNotExactly);
     }
 
     private void doTestEqualsExact(Geometry x, 
         Geometry somethingExactlyEqual,
-        Geometry somethingEqualButNotExactly,
-        Geometry somethingNotEqualButSameClass) throws Exception {
+        Geometry somethingEqualButNotExactly) throws Exception {
         Geometry differentClass;
 
         if (x instanceof Point) {

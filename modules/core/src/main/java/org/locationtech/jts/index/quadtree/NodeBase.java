@@ -178,7 +178,7 @@ public abstract class NodeBase implements Serializable {
 
     // this node may have items as well as subnodes (since items may not
     // be wholely contained in any single subnode
-    visitItems(searchEnv, visitor);
+    visitItems(visitor);
 
     for (int i = 0; i < 4; i++) {
       if (subnode[i] != null) {
@@ -187,7 +187,7 @@ public abstract class NodeBase implements Serializable {
     }
   }
 
-  private void visitItems(Envelope searchEnv, ItemVisitor visitor)
+  private void visitItems(ItemVisitor visitor)
   {
     // would be nice to filter items based on search envelope, but can't until they contain an envelope
     synchronized (items) {

@@ -115,9 +115,9 @@ public class GeometryPointLocater
       CoordinateSequence seq = lineStr.getCoordinateSequence();
       for (int i = 0; i < seq.size(); i++) {
         if (i != seq.size() - 1)
-          checkSegment(lineStr, seq, i);
+          checkSegment(seq, i);
         else
-          checkVertex(lineStr, seq, i);
+          checkVertex(seq, i);
         
         // check if done
         if (nearestPt != null) {
@@ -129,7 +129,7 @@ public class GeometryPointLocater
     }
       
     
-    private void checkSegment(LineString lineStr, CoordinateSequence seq, int i)
+    private void checkSegment(CoordinateSequence seq, int i)
     {
       Coordinate p0 = seq.getCoordinate(i);
       Coordinate p1 = seq.getCoordinate(i+1);
@@ -163,7 +163,7 @@ public class GeometryPointLocater
 			}
     }
     
-    private void checkVertex(LineString lineStr, CoordinateSequence seq, int i)
+    private void checkVertex(CoordinateSequence seq, int i)
     {
       Coordinate p0 = seq.getCoordinate(i);
       

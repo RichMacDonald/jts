@@ -120,7 +120,7 @@ public class HtmlWriter {
          + "<div class='testTitle'>" + StringUtil.escapeHTML(testName(testCaseEdit, caseSkey)) + "</div>" + StringUtil.newLine
          + "<P>" + StringUtil.newLine;
     html += htmlForAB(testCaseEdit, runSkey, caseSkey);
-    html += htmlForTests(testCaseEdit, runSkey, caseSkey);
+    html += htmlForTests(testCaseEdit, caseSkey);
     html += "</BODY>" + StringUtil.newLine + "</HTML>";
     return html;
   }
@@ -139,7 +139,7 @@ public class HtmlWriter {
     return html.substring(html.indexOf(">") + 1);
   }
 
-  private String htmlForTests(TestCaseEdit testCaseEdit, int runSkey, int caseSkey) throws IOException {
+  private String htmlForTests(TestCaseEdit testCaseEdit, int caseSkey) throws IOException {
     String html = htmlForBinaryPredicates(testCaseEdit, caseSkey);
     return html;
   }
@@ -158,8 +158,7 @@ public class HtmlWriter {
         filenameNoPath += second;
       }
       filenameNoPath += ".gif";
-      actualResultString = htmlImageHtmlTextTable(filenameNoPath, "<SPAN class=wktR>" + actualResult.toText() + "</SPAN>",
-          0);
+      actualResultString = htmlImageHtmlTextTable(filenameNoPath, "<SPAN class=wktR>" + actualResult.toText() + "</SPAN>");
       createGifFile(filenameNoPath, testCaseEdit.getGeometry(0),
           testCaseEdit.getGeometry(1), actualResult,
           showingABwithSpatialFunction, IMAGE_WIDTH, IMAGE_HEIGHT);
@@ -177,7 +176,7 @@ public class HtmlWriter {
     return html;
   }
 
-  private String htmlForRelateTest(TestCaseEdit testCaseEdit, int caseSkey) {
+  private String htmlForRelateTest(TestCaseEdit testCaseEdit) {
     String actualValue;
     try {
       actualValue = insertParagraphs(testCaseEdit.getGeometry(0).relate(testCaseEdit.getGeometry(1)).toString());
@@ -202,8 +201,7 @@ public class HtmlWriter {
     return buffer.toString();
   }
 
-  private String htmlForPredicateTest(TestCaseEdit testCaseEdit, int caseSkey,
-      String opName, String first, String second) {
+  private String htmlForPredicateTest(TestCaseEdit testCaseEdit, String opName, String first, String second) {
     String actualResultString;
     try {
       actualResultString = actualResult(testCaseEdit, opName, first, second).toString();
@@ -281,7 +279,7 @@ public class HtmlWriter {
     String html = StringUtil.newLine
          + "<TABLE BORDER=0>" + StringUtil.newLine
          + "  <TR>" + StringUtil.newLine
-         + htmlImageHtmlTextTable("Run" + runSkey + AppStrings.LABEL_TEST_CASE + caseSkey + ".gif", wktHtml, 0)
+         + htmlImageHtmlTextTable("Run" + runSkey + AppStrings.LABEL_TEST_CASE + caseSkey + ".gif", wktHtml)
          + "  </TR>" + StringUtil.newLine
          + "</TABLE>" + StringUtil.newLine;
     createGifFile("Run" + runSkey + AppStrings.LABEL_TEST_CASE + caseSkey + ".gif", testCaseEdit.getGeometry(0),
@@ -290,10 +288,10 @@ public class HtmlWriter {
   }
 
   private String htmlImageTextTable(String imageFilename, String text, int border) {
-    return htmlImageHtmlTextTable(imageFilename, StringUtil.escapeHTML(text), border);
+    return htmlImageHtmlTextTable(imageFilename, StringUtil.escapeHTML(text));
   }
 
-  private String htmlImageHtmlTextTable(String imageFilename, String html, int border) {
+  private String htmlImageHtmlTextTable(String imageFilename, String html) {
     return
         "    <TD>" + StringUtil.newLine
          + "      <IMG BORDER=\"1\" SRC=\"" + imageFilename + "\" WIDTH=" + IMAGE_WIDTH + " HEIGHT=" + IMAGE_HEIGHT + ">" + StringUtil.newLine
@@ -519,15 +517,15 @@ public class HtmlWriter {
   private String htmlForBinaryPredicates(TestCaseEdit testCaseEdit, int caseSkey) {
     String html = "";
     if (testCaseEdit.getGeometry(1) != null) {
-      html += htmlForRelateTest(testCaseEdit, caseSkey);
-      html += htmlForPredicateTest(testCaseEdit, caseSkey, "equals", "A", "B");
-      html += htmlForPredicateTest(testCaseEdit, caseSkey, "disjoint", "A", "B");
-      html += htmlForPredicateTest(testCaseEdit, caseSkey, "intersects", "A", "B");
-      html += htmlForPredicateTest(testCaseEdit, caseSkey, "touches", "A", "B");
-      html += htmlForPredicateTest(testCaseEdit, caseSkey, "crosses", "A", "B");
-      html += htmlForPredicateTest(testCaseEdit, caseSkey, "within", "A", "B");
-      html += htmlForPredicateTest(testCaseEdit, caseSkey, "contains", "A", "B");
-      html += htmlForPredicateTest(testCaseEdit, caseSkey, "overlaps", "A", "B");
+      html += htmlForRelateTest(testCaseEdit);
+      html += htmlForPredicateTest(testCaseEdit, "equals", "A", "B");
+      html += htmlForPredicateTest(testCaseEdit, "disjoint", "A", "B");
+      html += htmlForPredicateTest(testCaseEdit, "intersects", "A", "B");
+      html += htmlForPredicateTest(testCaseEdit, "touches", "A", "B");
+      html += htmlForPredicateTest(testCaseEdit, "crosses", "A", "B");
+      html += htmlForPredicateTest(testCaseEdit, "within", "A", "B");
+      html += htmlForPredicateTest(testCaseEdit, "contains", "A", "B");
+      html += htmlForPredicateTest(testCaseEdit, "overlaps", "A", "B");
 
       html = "<h2>Binary Predicates</h2>" + StringUtil.newLine
            + "<TABLE WIDTH=50% BORDER=1>" + StringUtil.newLine

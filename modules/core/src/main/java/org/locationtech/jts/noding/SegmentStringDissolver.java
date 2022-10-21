@@ -104,7 +104,7 @@ public class SegmentStringDissolver
   public void dissolve(SegmentString segString)
   {
     OrientedCoordinateArray oca = new OrientedCoordinateArray(segString.getCoordinates());
-    SegmentString existing = findMatching(oca, segString);
+    SegmentString existing = findMatching(oca);
     if (existing == null) {
       add(oca, segString);
     }
@@ -117,8 +117,7 @@ public class SegmentStringDissolver
     }
   }
 
-  private SegmentString findMatching(OrientedCoordinateArray oca,
-                                    SegmentString segString)
+  private SegmentString findMatching(OrientedCoordinateArray oca)
   {
     SegmentString matchSS = (SegmentString) ocaMap.get(oca);
     /*

@@ -89,7 +89,7 @@ public abstract class IndicatorTool extends BasicTool
     if (!isIndicatorVisible) {
       return;
     }
-    drawShapeXOR(graphics, lastShapeDrawn, lastLabelDrawn, lastLabelLoc);
+    drawShapeXOR(graphics, lastShapeDrawn);
     setIndicatorVisible(false);
   }
 
@@ -102,13 +102,13 @@ public abstract class IndicatorTool extends BasicTool
   private void drawShapeXOR(Graphics2D g) throws Exception {
     Shape newShape = getShape();
     String label = getLabel();
-    drawShapeXOR(g, newShape, label, mousePoint);
+    drawShapeXOR(g, newShape);
     lastShapeDrawn = newShape;
     lastLabelDrawn = label;
     lastLabelLoc = mousePoint;
   }
 
-  private void drawShapeXOR(Graphics2D graphics, Shape shape, String label, Point labelLoc) {
+  private void drawShapeXOR(Graphics2D graphics, Shape shape) {
     setup(graphics);
     try {
       if (shape != null) {

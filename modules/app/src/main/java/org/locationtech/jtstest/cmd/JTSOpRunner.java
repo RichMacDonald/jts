@@ -262,7 +262,7 @@ public class JTSOpRunner {
       throw new CommandError(ERR_FUNCTION_NOT_FOUND, param.operation);
     }
     String[] argList = param.argList;
-    checkFunctionArgs(func, geomB, argList);
+    checkFunctionArgs(func, argList);
 
     FunctionInvoker fun = new FunctionInvoker(func, argList);
     executeFunctionOverA(fun);
@@ -535,7 +535,7 @@ public class JTSOpRunner {
     return info;
   }
   
-  private void checkFunctionArgs(GeometryFunction func, List<Geometry> geomB, String[] argList) {
+  private void checkFunctionArgs(GeometryFunction func, String[] argList) {
     Class<?>[] paramTypes = func.getParameterTypes();
     int nParam = paramTypes.length;
     

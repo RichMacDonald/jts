@@ -53,7 +53,7 @@ public class PerformanceTestRunner
       PerformanceTestCase test = (PerformanceTestCase) ctor.newInstance("Name");
       int[] runSize = test.getRunSize();
       int runIter = test.getRunIterations();
-      Method[] runMethod = findMethods(clz, RUN_PREFIX);
+      Method[] runMethod = findMethods(clz);
       
       // do the run
       test.setUp();
@@ -84,7 +84,7 @@ public class PerformanceTestRunner
   }
   
   
-  private static Method[] findMethods(Class clz, String methodPrefix)
+  private static Method[] findMethods(Class clz)
   {
     List runMeths = new ArrayList();
     Method meth[] = clz.getDeclaredMethods();

@@ -148,12 +148,12 @@ public class OverlayResultValidator
     // MD use simpler: boolean isValid = (expectedInterior == resultInInterior);
     boolean isValid = ! (expectedInterior ^ resultInInterior);
     
-    if (! isValid) reportResult(overlayOp, location, expectedInterior);
+    if (! isValid) reportResult(location, expectedInterior);
     
     return isValid;
  }
 
-  private void reportResult(int overlayOp, int[] location, boolean expectedInterior)
+  private void reportResult(int[] location, boolean expectedInterior)
   {
   	Debug.println(
   			"Overlay result invalid - A:" + Location.toLocationSymbol(location[0])

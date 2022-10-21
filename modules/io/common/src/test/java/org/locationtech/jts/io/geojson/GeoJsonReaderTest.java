@@ -115,10 +115,10 @@ public class GeoJsonReaderTest extends GeometryTestCase {
   }
 
   private void runTest(String geojson, String expectedWkt) throws ParseException {
-    runTest(geojson, expectedWkt, 0, false);
+    runTest(geojson, expectedWkt, 0);
   }
 
-  private void runTest(String geojson, String expectedWkt, int srid, boolean encodeCRS) throws ParseException {
+  private void runTest(String geojson, String expectedWkt, int srid) throws ParseException {
     Geometry expectedGeom = read(expectedWkt);
     expectedGeom.setSRID(srid);
     Geometry geom = geoJsonRdr.read(geojson);

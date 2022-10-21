@@ -756,7 +756,7 @@ S  */
       return readMultiPolygonText(tokenizer, ordinateFlags);
     }
     else if (isTypeName(tokenizer, type, WKTConstants.GEOMETRYCOLLECTION)) {
-      return readGeometryCollectionText(tokenizer, ordinateFlags);
+      return readGeometryCollectionText(tokenizer);
     }
     throw parseErrorWithLine(tokenizer, "Unknown geometry type: " + type);
   }
@@ -962,7 +962,7 @@ S  */
    *      token was encountered
    *@throws  IOException     if an I/O error occurs
    */
-  private GeometryCollection readGeometryCollectionText(StreamTokenizer tokenizer, EnumSet<Ordinate> ordinateFlags) throws IOException, ParseException {
+  private GeometryCollection readGeometryCollectionText(StreamTokenizer tokenizer) throws IOException, ParseException {
     String nextToken = getNextEmptyOrOpener(tokenizer);
     if (nextToken.equals(WKTConstants.EMPTY)) {
       return geometryFactory.createGeometryCollection();

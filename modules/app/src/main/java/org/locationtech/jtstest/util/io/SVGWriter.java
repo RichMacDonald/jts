@@ -180,7 +180,7 @@ public class SVGWriter
 
     if (geometry instanceof Point) {
       Point point = (Point) geometry;
-      appendPoint(point.getCoordinate(), level, writer, point.getPrecisionModel());
+      appendPoint(point.getCoordinate(), writer, point.getPrecisionModel());
     }
     else if ((geometry instanceof LinearRing) 
       || (geometry instanceof LineString)) {
@@ -234,7 +234,7 @@ public class SVGWriter
    *@param  precisionModel  the <code>PrecisionModel</code> to use to convert
    *      from a precise coordinate to an external coordinate
    */
-  private void appendPoint(Coordinate coordinate, int level, Writer writer,
+  private void appendPoint(Coordinate coordinate, Writer writer,
       PrecisionModel precisionModel)
     throws IOException
   {
@@ -379,7 +379,7 @@ public class SVGWriter
         if (i > 0) {
           level2 = level + 1;
         }
-        appendPoint(multiPoint.getGeometryN(i).getCoordinate(), level2, writer, multiPoint.getPrecisionModel());
+        appendPoint(multiPoint.getGeometryN(i).getCoordinate(), writer, multiPoint.getPrecisionModel());
       }
     }
   }

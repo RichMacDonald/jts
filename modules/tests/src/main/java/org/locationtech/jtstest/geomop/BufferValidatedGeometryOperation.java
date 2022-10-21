@@ -86,7 +86,7 @@ implements GeometryOperation
 	    return chainOp.invoke(opName, geometry, args);
 	  } 
 	  parseArgs(args);
-	  return invokeBufferOpValidated(geometry, args);    
+	  return invokeBufferOpValidated(geometry);    
 	}
 
 	private void parseArgs(Object[] args)
@@ -98,7 +98,7 @@ implements GeometryOperation
 		if (argCount >= 3)
 			endCapStyle = Integer.parseInt((String) args[2]);
 	}
-	private Result invokeBufferOpValidated(Geometry geometry, Object[] args)
+	private Result invokeBufferOpValidated(Geometry geometry)
 	{
 	  Geometry result = null;
 
