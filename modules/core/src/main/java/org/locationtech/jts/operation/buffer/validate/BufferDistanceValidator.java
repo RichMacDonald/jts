@@ -137,10 +137,7 @@ public class BufferDistanceValidator
   	// Assert: only polygonal inputs can be checked for negative buffers
   	
   	// MD - could generalize this to handle GCs too
-  	if (! (input instanceof Polygon 
-  			|| input instanceof MultiPolygon
-  			|| input instanceof GeometryCollection
-  			)) {
+  	if ((!(input instanceof Polygon) && !(input instanceof MultiPolygon) && !(input instanceof GeometryCollection))) {
   		return;
   	}
   	Geometry inputCurve = getPolygonLines(input);

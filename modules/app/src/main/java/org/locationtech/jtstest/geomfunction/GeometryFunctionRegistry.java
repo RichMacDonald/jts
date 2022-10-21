@@ -223,8 +223,7 @@ public class GeometryFunctionRegistry
 	public void add(String geomFuncClassname)
 	 throws ClassNotFoundException
 	{
-		Class<?> geomFuncClass = null;
-		geomFuncClass = this.getClass().getClassLoader().loadClass(geomFuncClassname);
+		Class<?> geomFuncClass = this.getClass().getClassLoader().loadClass(geomFuncClassname);
 		add(geomFuncClass);
 	}
 	

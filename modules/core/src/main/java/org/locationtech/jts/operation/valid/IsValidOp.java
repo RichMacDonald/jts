@@ -336,7 +336,6 @@ public class IsValidOp
     if (! ring.isClosed() ) {
       Coordinate pt = ring.getNumPoints() >= 1 ? ring.getCoordinateN(0) : null;
       logInvalid( TopologyValidationError.RING_NOT_CLOSED, pt);
-      return;
     }
   }
   
@@ -403,7 +402,6 @@ public class IsValidOp
     if (areaAnalyzer.hasInvalidIntersection()) {
       logInvalid(areaAnalyzer.getInvalidCode(),
                  areaAnalyzer.getInvalidLocation());
-      return;
     }
   }
 

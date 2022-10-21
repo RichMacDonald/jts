@@ -362,7 +362,7 @@ public class OraReader
         checkOrdinates(oraGeom, elemIndex);
         checkETYPE(etype, OraGeom.ETYPE.POINT, "MultiPoint");
         // MultiPoints have a unique interpretation code
-        if (! (interpretation >= 1)){
+        if ((interpretation < 1)){
           errorInterpretation(interpretation, "MultiPoint");
         }
         seq = extractCoords(oraGeom, elemIndex);

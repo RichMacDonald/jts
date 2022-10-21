@@ -186,7 +186,6 @@ public abstract class EdgeRing {
     // if there is no current RHS value, set it
     if (label.getLocation(geomIndex) == Location.NONE) {
       label.setLocation(geomIndex, loc);
-      return;
     }
   }
   protected void addPoints(Edge edge, boolean isForward, boolean isFirstEdge)

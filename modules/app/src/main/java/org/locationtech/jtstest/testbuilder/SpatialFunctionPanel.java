@@ -63,14 +63,14 @@ extends JPanel implements FunctionPanel
 
   private static final String[] PARAM_DEFAULT = { "10", "0", "0", "0", "0" };
   
-  private static String[] capStyleItems = new String[] { "Round", "Flat", "Square" };
-  private static Object[] capStyleValues = new Object[] { 
+  private static String[] capStyleItems = { "Round", "Flat", "Square" };
+  private static Object[] capStyleValues = { 
   		BufferParameters.CAP_ROUND,
   		BufferParameters.CAP_FLAT,
   		BufferParameters.CAP_SQUARE
   		};
-  private static String[] joinStyleItems = new String[] { "Round", "Mitre", "Bevel" };
-  private static Object[] joinStyleValues = new Object[] { 
+  private static String[] joinStyleItems = { "Round", "Mitre", "Bevel" };
+  private static Object[] joinStyleValues = { 
   		BufferParameters.JOIN_ROUND,
   		BufferParameters.JOIN_MITRE,
   		BufferParameters.JOIN_BEVEL

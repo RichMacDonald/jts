@@ -95,7 +95,7 @@ public class RepeaterGeometryFunction implements GeometryFunction {
   }
 
   public static boolean isRepeatable(GeometryFunction fun) {
-    if (! (fun.getReturnType() ==  Geometry.class )) return false;
+    if ((fun.getReturnType() != Geometry.class)) return false;
     
     Class<?>[] paramType = fun.getParameterTypes();
     int repeatArgIndex = repeatableArgIndex(fun);

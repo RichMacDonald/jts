@@ -50,7 +50,7 @@ public class GeometryImplTest extends TestCase {
         Geometry mpolygon = reader.read("MULTIPOLYGON EMPTY");
         Geometry gc = reader.read("GEOMETRYCOLLECTION EMPTY");
 
-        Geometry[] geometries = new Geometry[] {
+        Geometry[] geometries = {
             gc,
             mpolygon,
             mlineString,
@@ -61,7 +61,7 @@ public class GeometryImplTest extends TestCase {
             point
         };
 
-        Geometry[] geometriesExpectedOrder = new Geometry[] {
+        Geometry[] geometriesExpectedOrder = {
             point,
             mpoint,
             lineString,

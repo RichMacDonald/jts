@@ -48,7 +48,7 @@ public class Interval {
   }
 
   public boolean intersects(Interval other) {
-    return !(other.min > max || other.max < min);
+    return ((other.min <= max) && (other.max >= min));
   }
   
   public boolean equals(Object o) {

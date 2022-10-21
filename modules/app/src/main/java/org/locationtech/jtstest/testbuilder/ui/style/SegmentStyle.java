@@ -26,7 +26,6 @@ extends LineStringStyle
 {
 
   public SegmentStyle() {
-    super();
   }
 
   protected void paintLineString(LineString lineString, int lineType, Viewport viewport, Graphics2D graphics) throws Exception {

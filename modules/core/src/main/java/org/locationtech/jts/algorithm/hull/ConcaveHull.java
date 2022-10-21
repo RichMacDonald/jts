@@ -12,6 +12,7 @@
 package org.locationtech.jts.algorithm.hull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -366,7 +367,7 @@ public class ConcaveHull
       }
     }
     // sort by HullTri comparator - longest edge length first
-    candidates.sort(null);
+    Collections.sort(candidates);
     return candidates;
   }
   

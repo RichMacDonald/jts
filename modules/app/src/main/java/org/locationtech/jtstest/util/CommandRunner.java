@@ -49,7 +49,7 @@ public class CommandRunner {
     /**
      * Always write something to stdin, otherwise process might hang
      */
-    byte[] stdinBytes = new byte[0];
+    byte[] stdinBytes = {};
     if (stdinData != null) {
       stdinBytes = stdinData.getBytes();
     }

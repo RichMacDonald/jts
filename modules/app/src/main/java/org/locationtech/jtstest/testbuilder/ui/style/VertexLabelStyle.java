@@ -77,7 +77,7 @@ public class VertexLabelStyle  implements Style
     // don't label duplicate closing point
     if (len > 1 && coordinates[0].equals2D(coordinates[len - 1])) len--;
     
-    Point2D lastDrawnPV = new Point2D.Double();;
+    Point2D lastDrawnPV = new Point2D.Double();
     for (int i = 0; i < len; i++) {
       Coordinate pt = coordinates[i];
       if (! viewport.containsInModel(pt)) {

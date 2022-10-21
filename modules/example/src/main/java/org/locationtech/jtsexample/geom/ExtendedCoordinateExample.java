@@ -27,7 +27,7 @@ public class ExtendedCoordinateExample
   {
     ExtendedCoordinateSequenceFactory seqFact = ExtendedCoordinateSequenceFactory.instance();
 
-    ExtendedCoordinate[] array1 = new ExtendedCoordinate[] {
+    ExtendedCoordinate[] array1 = {
       new ExtendedCoordinate(0, 0, 0, 91),
       new ExtendedCoordinate(10, 0, 0, 92),
       new ExtendedCoordinate(10, 10, 0, 93),

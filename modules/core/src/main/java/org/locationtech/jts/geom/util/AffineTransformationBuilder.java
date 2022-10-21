@@ -106,14 +106,14 @@ public class AffineTransformationBuilder
    */
   private boolean compute()
   {
-    double[] bx = new double[] { dest0.x, dest1.x, dest2.x };
+    double[] bx = { dest0.x, dest1.x, dest2.x };
     double[] row0 = solve(bx);
     if (row0 == null) return false;
     m00 = row0[0];
     m01 = row0[1];
     m02 = row0[2];
     
-    double[] by = new double[] { dest0.y, dest1.y, dest2.y };
+    double[] by = { dest0.y, dest1.y, dest2.y };
     double[] row1 = solve(by);
     if (row1 == null) return false;
     m10 = row1[0];
@@ -131,7 +131,7 @@ public class AffineTransformationBuilder
    */
   private double[] solve(double[] b)
   {
-    double[][] a = new double[][] {
+    double[][] a = {
         { src0.x, src0.y, 1 },
         { src1.x, src1.y, 1},
         { src2.x, src2.y, 1}

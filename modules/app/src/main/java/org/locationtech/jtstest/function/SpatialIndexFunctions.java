@@ -328,7 +328,7 @@ public class SpatialIndexFunctions
     STRtree index = new STRtree();
     loadIndex(geoms, index);
     Object[] result = index.nearestNeighbour(new GeometryItemDistance());
-    Geometry[] resultGeoms = new Geometry[] { (Geometry) result[0], (Geometry) result[1] };
+    Geometry[] resultGeoms = { (Geometry) result[0], (Geometry) result[1] };
     return geoms.getFactory().createGeometryCollection(resultGeoms);
   }
 

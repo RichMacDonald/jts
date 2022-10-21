@@ -44,7 +44,7 @@ public class FileUtil
     String name = name(path);
     int extIndex = name.lastIndexOf(EXTENSION_SEPARATOR.charAt(0));
     if (extIndex < 0) return "";
-    return name.substring(extIndex, name.length());
+    return name.substring(extIndex);
   }
 
     /**

@@ -405,7 +405,7 @@ public class IsSimpleOp
       boolean isIntersectionEndpt0 = isIntersectionEndpoint(ss0, segIndex0, li, 0);
       boolean isIntersectionEndpt1 = isIntersectionEndpoint(ss1, segIndex1, li, 1);
 
-      boolean hasInteriorVertexInt = ! (isIntersectionEndpt0 && isIntersectionEndpt1);
+      boolean hasInteriorVertexInt = (!isIntersectionEndpt0 || !isIntersectionEndpt1);
       if (hasInteriorVertexInt) return true;
 
       /**

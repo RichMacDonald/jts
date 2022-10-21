@@ -174,9 +174,7 @@ public class DisjointSets
 
   private static int[] arrayOfValue(int size, int val) {
     int[] arr = new int[size];
-    for (int i = 0; i < arr.length; i++) {
-      arr[i] = val;
-    }
+    Arrays.fill(arr, val);
     return arr;
   }
   

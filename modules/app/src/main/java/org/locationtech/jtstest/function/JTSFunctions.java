@@ -58,12 +58,12 @@ public class JTSFunctions
   {
     GeometryFactory gf = FunctionsUtil.getFactoryOrDefault(g);
     
-    Coordinate[] jTop = new Coordinate[] {
+    Coordinate[] jTop = {
         new Coordinate(0,HEIGHT),
         new Coordinate(J_WIDTH,HEIGHT),
         new Coordinate(J_WIDTH,J_RADIUS)
     };
-    Coordinate[] jBottom = new Coordinate[] {
+    Coordinate[] jBottom = {
         new Coordinate(J_WIDTH - J_RADIUS,0),
         new Coordinate(0,0)
     };
@@ -86,15 +86,15 @@ public class JTSFunctions
   {
     GeometryFactory gf = FunctionsUtil.getFactoryOrDefault(g);
     
-    Coordinate[] tTop = new Coordinate[] {
+    Coordinate[] tTop = {
         new Coordinate(J_WIDTH,HEIGHT),
         new Coordinate(WIDTH - S_RADIUS - 5, HEIGHT)
     };
-    Coordinate[] tBottom = new Coordinate[] {
+    Coordinate[] tBottom = {
         new Coordinate(J_WIDTH + 0.5 * T_WIDTH,HEIGHT),
         new Coordinate(J_WIDTH + 0.5 * T_WIDTH,0)
     };
-    LineString[] lines = new LineString[] {
+    LineString[] lines = {
         gf.createLineString(tTop),
         gf.createLineString(tBottom)
     };
@@ -107,11 +107,11 @@ public class JTSFunctions
     
     double centreX = WIDTH - S_RADIUS;
     
-    Coordinate[] top = new Coordinate[] {
+    Coordinate[] top = {
         new Coordinate(WIDTH, HEIGHT),
         new Coordinate(centreX, HEIGHT)
     };
-    Coordinate[] bottom = new Coordinate[] {
+    Coordinate[] bottom = {
         new Coordinate(centreX, 0),
         new Coordinate(WIDTH - 2 * S_RADIUS, 0)
     };

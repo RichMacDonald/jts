@@ -166,7 +166,7 @@ public class IndexedFacetDistance
   private static Coordinate[] toPoints(GeometryLocation[] locations) {
     if (locations == null) 
       return null;
-    Coordinate[] nearestPts = new Coordinate[] {
+    Coordinate[] nearestPts = {
         locations[0].getCoordinate(),
       locations[1].getCoordinate() };
     return nearestPts;

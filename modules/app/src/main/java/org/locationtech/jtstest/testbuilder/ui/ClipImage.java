@@ -49,6 +49,5 @@ public class ClipImage implements Transferable, ClipboardOwner {
 	java.awt.datatransfer.Transferable tr)
 
 	{
-		return;
 	}
 }

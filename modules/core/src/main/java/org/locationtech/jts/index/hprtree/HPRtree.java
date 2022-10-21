@@ -209,10 +209,7 @@ public class HPRtree
    * @return true if the envelopes intersect
    */
   private static boolean intersects(Envelope env1, Envelope env2) {
-    return !(env2.getMinX() > env1.getMaxX() ||
-        env2.getMaxX() < env1.getMinX() ||
-        env2.getMinY() > env1.getMaxY() ||
-        env2.getMaxY() < env1.getMinY());
+    return ((env2.getMinX() <= env1.getMaxX()) && (env2.getMaxX() >= env1.getMinX()) && (env2.getMinY() <= env1.getMaxY()) && (env2.getMaxY() >= env1.getMinY()));
   }
   
   private int layerSize(int layerIndex) {

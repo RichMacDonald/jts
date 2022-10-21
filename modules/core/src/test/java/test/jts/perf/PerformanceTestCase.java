@@ -31,7 +31,7 @@ package test.jts.perf;
 public abstract class PerformanceTestCase
 {
   private String name;
-  private int[] runSize = new int[] { 1 };
+  private int[] runSize = { 1 };
   private int runIter = 1;
   private long[] runTime;
   

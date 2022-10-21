@@ -60,7 +60,6 @@ public class NearestPointFinder
       if (nearestPt == null || basePt.distance(p) < dist) {
         nearestPt = p;
         dist = basePt.distance(nearestPt);
-        return;
       }
     }
     

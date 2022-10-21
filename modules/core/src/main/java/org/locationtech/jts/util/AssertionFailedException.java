@@ -23,7 +23,6 @@ public class AssertionFailedException extends RuntimeException {
    *  Creates an <code>AssertionFailedException</code>.
    */
   public AssertionFailedException() {
-    super();
   }
 
   /**

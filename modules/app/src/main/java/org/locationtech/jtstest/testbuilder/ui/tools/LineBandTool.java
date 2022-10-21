@@ -34,7 +34,6 @@ public abstract class LineBandTool extends IndicatorTool
   private boolean drawBandLines = true;
   
   public LineBandTool() {
-    super();
   }
 
   public LineBandTool(Cursor cursor) {

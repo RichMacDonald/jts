@@ -103,13 +103,13 @@ public class CommandController {
       cmd = cmd.replace(VAR_A, valueWKT(getGeometry(0)));
     }
     if (cmdLine.contains(VAR_A_WKB)) {
-      cmd = cmd.replace(VAR_A_WKB, valueWKB(getGeometry(0)));;
+      cmd = cmd.replace(VAR_A_WKB, valueWKB(getGeometry(0)));
     }
     if (cmdLine.contains(VAR_B_WKB)) {
-      cmd = cmd.replace(VAR_B_WKB, valueWKB(getGeometry(1)));;
+      cmd = cmd.replace(VAR_B_WKB, valueWKB(getGeometry(1)));
     }
     if (cmdLine.contains(VAR_B_WKB)) {
-      cmd = cmd.replace(VAR_B_WKB, valueWKB(getGeometry(1)));;
+      cmd = cmd.replace(VAR_B_WKB, valueWKB(getGeometry(1)));
     }
     return cmd;
   }

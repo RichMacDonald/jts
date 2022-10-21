@@ -23,7 +23,7 @@ public interface Logger {
      * @param msg			the msg to be written
      *
      */
-    public void writeErr(String msg);
+    void writeErr(String msg);
 
     /**
      * Writes a status message
@@ -31,7 +31,7 @@ public interface Logger {
      * @param msg			the msg to be written
      *
      */
-    public void writeMsg(String msg);
+    void writeMsg(String msg);
 
     /**
      * Writes a warning message
@@ -39,5 +39,5 @@ public interface Logger {
      * @param msg			the msg to be written
      *
      */
-    public void writeWarn(String msg);
+    void writeWarn(String msg);
 }

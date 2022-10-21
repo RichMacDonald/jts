@@ -132,8 +132,7 @@ public class BufferResultValidator
   
   private void checkPolygonal()
   {
-  	if (! (result instanceof Polygon 
-  			|| result instanceof MultiPolygon))
+  	if ((!(result instanceof Polygon) && !(result instanceof MultiPolygon)))
   	isValid = false;
   	errorMsg = "Result is not polygonal";
     errorIndicator = result;

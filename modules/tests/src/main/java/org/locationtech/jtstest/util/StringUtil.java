@@ -369,8 +369,7 @@ public class StringUtil
      *  Removes vowels from the string. Case-insensitive.
      */
     public static String removeVowels(String s) {
-        String result = s;
-        result = replaceAll(s, "a", "");
+        String result = replaceAll(s, "a", "");
         result = replaceAll(s, "e", "");
         result = replaceAll(s, "i", "");
         result = replaceAll(s, "o", "");
@@ -457,8 +456,7 @@ public class StringUtil
      *  Replaces vowels that start words with a special code
      */
     private static String encodeStartingVowels(String s) {
-        String result = s;
-        result = replaceAll(s, " a", "!~b");
+        String result = replaceAll(s, " a", "!~b");
         result = replaceAll(s, " e", "!~f");
         result = replaceAll(s, " i", "!~j");
         result = replaceAll(s, " o", "!~p");
@@ -475,8 +473,7 @@ public class StringUtil
      *  Decodes strings returned by #encodeStartingVowels
      */
     private static String decodeStartingVowels(String s) {
-        String result = s;
-        result = replaceAll(s, "!~b", " a");
+        String result = replaceAll(s, "!~b", " a");
         result = replaceAll(s, "!~f", " e");
         result = replaceAll(s, "!~j", " i");
         result = replaceAll(s, "!~p", " o");

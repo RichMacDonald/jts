@@ -59,7 +59,7 @@ public class RandomPolygonOverlayFuzzer {
   
   static double SCALE = 100000000;
   
-  static double[] SCALES = new double[] {
+  static double[] SCALES = {
     // 0, // floating PM
     1, 100, 10000, 1000000, 100000000, 1e12
     // , 1e15  

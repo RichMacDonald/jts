@@ -73,7 +73,7 @@ public class PointInRingRobustnessTest extends GeometryTestCase {
   private void checkRandomTriangles(int sideLen, int numTris, int numEdgePts) {
     for (int i = 0; i < numTris; i++) {
       Coordinate start = new Coordinate(randomInt(sideLen), randomInt(sideLen));
-      Coordinate[] triPts = new Coordinate[] {
+      Coordinate[] triPts = {
           start,
           new Coordinate(randomInt(sideLen), randomInt(sideLen)),
           new Coordinate(randomInt(sideLen), randomInt(sideLen)),
@@ -89,7 +89,7 @@ public class PointInRingRobustnessTest extends GeometryTestCase {
   
   private void checkRightTriangles(double maxHeight, double width, int numEdgePts) {
     for (int height = 0; height < maxHeight; height++) {
-      Coordinate[] triPts = new Coordinate[] {
+      Coordinate[] triPts = {
           new Coordinate(0,0),
           new Coordinate(0, height),
           new Coordinate(width, 0),

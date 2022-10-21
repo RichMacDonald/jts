@@ -204,9 +204,7 @@ public class Debug {
   }
   
   private static void doBreak()
-  {
-    // Put breakpoint on following statement to break here
-    return; 
+  { 
   }
   
   public static boolean hasSegment(Geometry geom, Coordinate p0, Coordinate p1)

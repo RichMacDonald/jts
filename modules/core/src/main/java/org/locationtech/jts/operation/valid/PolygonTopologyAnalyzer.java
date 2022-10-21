@@ -324,7 +324,6 @@ class PolygonTopologyAnalyzer {
     
     if (intFinder.hasDoubleTouch()) {
       disconnectionPt = intFinder.getDoubleTouchLocation();
-      return;
     }
   }
   

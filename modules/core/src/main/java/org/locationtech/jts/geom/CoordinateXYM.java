@@ -42,7 +42,6 @@ public class CoordinateXYM extends Coordinate {
 
   /** Default constructor */
   public CoordinateXYM() {
-    super();
     this.m = 0.0;
   }
 

@@ -285,7 +285,7 @@ public class MinimumClearance
             Coordinate seg0 = fs2.getCoordinate(i2-1);
             Coordinate seg1 = fs2.getCoordinate(i2);
             
-            if (! (p.equals2D(seg0) || p.equals2D(seg1))) {
+            if ((!p.equals2D(seg0) && !p.equals2D(seg1))) {
               double d = Distance.pointToSegment(p, seg0, seg1);
               if (d < minDist) {
                 minDist = d;

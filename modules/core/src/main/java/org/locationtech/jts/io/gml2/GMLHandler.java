@@ -211,7 +211,7 @@ public class GMLHandler extends DefaultHandler {
 		// create a handler
 		ParseStrategy ps = GeometryStrategies.findStrategy(uri, localName);
 		if (ps == null) {
-			String qn = qName.substring(qName.indexOf(':') + 1, qName.length());
+			String qn = qName.substring(qName.indexOf(':') + 1);
 			ps = GeometryStrategies.findStrategy(null, qn);
 		}
 		Handler h = new Handler(ps, attributes);

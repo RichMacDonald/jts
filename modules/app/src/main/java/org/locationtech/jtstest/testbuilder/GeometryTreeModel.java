@@ -169,7 +169,7 @@ abstract class GeometricObjectNode
 
   protected int index = -1;
 
-  protected String text = "";;
+  protected String text = "";
 
   public GeometricObjectNode(String text)
   {

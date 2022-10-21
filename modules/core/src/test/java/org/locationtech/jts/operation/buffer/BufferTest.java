@@ -498,7 +498,7 @@ public class BufferTest extends GeometryTestCase {
   public void testQuickPolygonUnion() {
     Geometry a = read("POLYGON((0 0, 100 0, 100 100, 0 100, 0 0))");
     Geometry b = read("POLYGON((50 50, 150 50, 150 150, 50 150, 50 50))");
-    Geometry[] polygons = new Geometry[] {a, b};
+    Geometry[] polygons = {a, b};
     GeometryCollection polygonCollection = new GeometryFactory().createGeometryCollection(polygons);
     Geometry union = polygonCollection.buffer(0);
     //System.out.println(union);

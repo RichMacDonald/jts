@@ -40,7 +40,6 @@ public abstract class IndicatorTool extends BasicTool
   private Font originalFont;
 
   public IndicatorTool() {
-    super();
   }
 
   public IndicatorTool(Cursor cursor) {

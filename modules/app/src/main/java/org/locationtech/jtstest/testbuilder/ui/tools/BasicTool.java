@@ -38,11 +38,9 @@ public abstract class BasicTool implements Tool
   private GeometryEditPanel panel;
   
   public BasicTool() {
-    super();
   }
 
   public BasicTool(Cursor cursor) {
-    super();
     this.cursor = cursor;
   }
 

@@ -169,7 +169,7 @@ class RotatedRectangleFactory
 		double widthOffsetx = (width / 2) * Math.cos(angle + PI_OVER_2);
 		double widthOffsety = (width / 2) * Math.sin(angle + PI_OVER_2);
 		
-		Coordinate[] pts = new Coordinate[] {
+		Coordinate[] pts = {
 				new Coordinate(base.x + posx + widthOffsetx, base.y + posy + widthOffsety),
 				new Coordinate(base.x + posx - widthOffsetx, base.y + posy - widthOffsety),
 				new Coordinate(base.x + negx - widthOffsetx, base.y + negy - widthOffsety),

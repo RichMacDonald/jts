@@ -79,7 +79,6 @@ public interface PointShapeFactory {
      * 
      */
     public Point() {
-      super();
     }
 
     /**
@@ -116,7 +115,6 @@ public interface PointShapeFactory {
      * 
      */
     public Square() {
-      super();
     }
 
     /**
@@ -156,7 +154,6 @@ public interface PointShapeFactory {
      * 
      */
     public Star() {
-      super();
     }
 
     /**
@@ -199,7 +196,6 @@ public interface PointShapeFactory {
      * 
      */
     public Triangle() {
-      super();
     }
 
     /**
@@ -237,7 +233,6 @@ public interface PointShapeFactory {
      * 
      */
     public Circle() {
-      super();
     }
 
     /**
@@ -277,7 +272,6 @@ public interface PointShapeFactory {
      * 
      */
     public Cross() {
-      super();
     }
 
     /**
@@ -334,7 +328,6 @@ public interface PointShapeFactory {
      * 
      */
     public X() {
-      super();
     }
 
     /**

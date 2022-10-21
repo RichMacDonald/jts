@@ -396,7 +396,7 @@ class AxisNode {
     switch (edgeIndex) {
     case 0: p0 = p; return;
     case 1: p1 = p; return;
-    case 2: p2 = p; return;
+    case 2: p2 = p;
     }
   }
   

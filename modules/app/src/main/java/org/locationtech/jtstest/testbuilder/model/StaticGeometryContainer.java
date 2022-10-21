@@ -28,7 +28,7 @@ public class StaticGeometryContainer implements GeometryContainer {
   }
   
   public void setGeometry(Geometry geom) {
-    geometry = geom;;
+    geometry = geom;
   }
 
 }

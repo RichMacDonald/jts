@@ -138,7 +138,7 @@ public class LineBuilder {
     if (de.getEdge().isInResult()) return;  // if the edge linework is already included, don't include it again
 
     // sanity check for labelling of result edgerings
-    Assert.isTrue(! (de.isInResult() || de.getSym().isInResult()) || ! de.getEdge().isInResult());
+    Assert.isTrue((!de.isInResult() && !de.getSym().isInResult()) || ! de.getEdge().isInResult());
 
     // include the linework if it's in the result of the operation
     if (OverlayOp.isResultOfOp(label, opCode)

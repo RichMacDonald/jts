@@ -369,11 +369,11 @@ public class OraReaderCreateTest extends BaseOraTestCase
     // A collection of a 'line' and a 'point'/
     // The 'line' is starting at ordinate offset 1.
     // The 'point' is starting at ordinate offset 5.
-    final int[] elemInfo = new int[] {1, 2, 1, 5, 1, 1};
+    final int[] elemInfo = {1, 2, 1, 5, 1, 1};
     // 6 ordinates.
     // 'line' (1, 1, 2, 2).
     // 'point' (3, 3).
-    final double[] ordinates = new double[] {1, 1, 2, 2, 3, 3};
+    final double[] ordinates = {1, 1, 2, 2, 3, 3};
     // Made 'create' method package private to enable test.
     final Geometry actual = oraReader.read(new OraGeom(gType, 0, elemInfo, ordinates));
 
@@ -399,8 +399,8 @@ public class OraReaderCreateTest extends BaseOraTestCase
     // Geometry type is a 3-dimensional measured line.
     final int gType = 3302;
     // The 'line' is starting at ordinate offset 1.
-    final int[] elemInfo = new int[] {1, 2, 1};
-    final double[] ordinates = new double[] {1, 1, 20, 2, 2, 30};
+    final int[] elemInfo = {1, 2, 1};
+    final double[] ordinates = {1, 1, 20, 2, 2, 30};
     // Made 'create' method package private to enable test.
     final Geometry actual = oraReader.read(new OraGeom(gType, 0, elemInfo, ordinates));
 

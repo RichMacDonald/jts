@@ -149,7 +149,7 @@ public class OverlayGraphTest extends GeometryTestCase {
   }
   
   private OverlayEdge addEdge(OverlayGraph graph, double x1, double y1, double x2, double y2) {
-    Coordinate[] pts = new Coordinate[] {
+    Coordinate[] pts = {
         new Coordinate(x1, y1), new Coordinate(x2, y2)
     };
     return graph.addEdge(pts, new OverlayLabel());
@@ -168,4 +168,3 @@ public class OverlayGraphTest extends GeometryTestCase {
     return pts;
   }
 }
-;

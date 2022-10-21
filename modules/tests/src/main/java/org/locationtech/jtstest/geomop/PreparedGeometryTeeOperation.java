@@ -26,7 +26,6 @@ public class PreparedGeometryTeeOperation
 	
 	public PreparedGeometryTeeOperation()
 	{
-		super();
 	}
 	
   /**

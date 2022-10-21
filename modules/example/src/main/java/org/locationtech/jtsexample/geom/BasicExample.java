@@ -31,7 +31,7 @@ public class BasicExample
     System.out.println("Geometry 1: " + g1);
 
     // create a geometry by specifying the coordinates directly
-    Coordinate[] coordinates = new Coordinate[]{new Coordinate(0, 0),
+    Coordinate[] coordinates = {new Coordinate(0, 0),
       new Coordinate(10, 10), new Coordinate(20, 20)};
     // use the default factory, which gives full double-precision
     Geometry g2 = new GeometryFactory().createLineString(coordinates);

@@ -13,6 +13,8 @@ package org.locationtech.jts.geomgraph;
 
 
 
+import java.util.Arrays;
+
 import org.locationtech.jts.geom.Location;
 import org.locationtech.jts.geom.Position;
 
@@ -122,9 +124,7 @@ public class TopologyLocation {
 
   public void setAllLocations(int locValue)
   {
-    for (int i = 0; i < location.length; i++) {
-      location[i]     = locValue;
-    }
+    Arrays.fill(location, locValue);
   }
   public void setAllLocationsIfNull(int locValue)
   {

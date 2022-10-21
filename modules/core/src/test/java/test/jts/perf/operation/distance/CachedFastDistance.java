@@ -21,7 +21,6 @@ public class CachedFastDistance
   private static IndexedFacetDistance fastDistanceOp;
   
   public CachedFastDistance() {
-    super();
   }
 
   static double getDistance(Geometry g1, Geometry g2)

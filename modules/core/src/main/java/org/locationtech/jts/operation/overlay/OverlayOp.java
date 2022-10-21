@@ -599,9 +599,7 @@ public class OverlayOp
                                         List resultPolyList,
                                         int opcode)
   {
-    List geomList = new ArrayList();
-    // element geometries of the result are always in the order P,L,A
-    geomList.addAll(resultPointList);
+    List geomList = new ArrayList(resultPointList);
     geomList.addAll(resultLineList);
     geomList.addAll(resultPolyList);
     

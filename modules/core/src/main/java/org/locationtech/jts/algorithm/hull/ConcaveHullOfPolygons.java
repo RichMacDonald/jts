@@ -195,7 +195,7 @@ public class ConcaveHullOfPolygons {
    * @param geom the input geometry
    */
   public ConcaveHullOfPolygons(Geometry polygons) {
-    if (! (polygons instanceof Polygon || polygons instanceof MultiPolygon)) {
+    if ((!(polygons instanceof Polygon) && !(polygons instanceof MultiPolygon))) {
       throw new IllegalArgumentException("Input must be polygonal");
     }
     this.inputPolygons = polygons;
@@ -560,7 +560,7 @@ public class ConcaveHullOfPolygons {
       return inputPolygons.copy();
     }
     //-- union with input polygons
-    Geometry[] geoms = new Geometry[] { fillGeometry, inputPolygons };
+    Geometry[] geoms = { fillGeometry, inputPolygons };
     GeometryCollection geomColl = geomFactory.createGeometryCollection(geoms);
     Geometry hull = CoverageUnion.union(geomColl);
     return hull;

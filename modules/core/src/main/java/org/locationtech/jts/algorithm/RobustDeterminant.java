@@ -154,7 +154,7 @@ public class RobustDeterminant {
     if (0.0 < y1) {
       if (0.0 < y2) {
         if (y1 <= y2) {
-          ;
+          
         }
         else {
           sign = -sign;
@@ -204,7 +204,7 @@ public class RobustDeterminant {
           y1 = -y1;
           x2 = -x2;
           y2 = -y2;
-          ;
+          
         }
         else {
           sign = -sign;
@@ -227,7 +227,7 @@ public class RobustDeterminant {
     if (0.0 < x1) {
       if (0.0 < x2) {
         if (x1 <= x2) {
-          ;
+          
         }
         else {
           return sign;
@@ -246,7 +246,7 @@ public class RobustDeterminant {
           sign = -sign;
           x1 = -x1;
           x2 = -x2;
-          ;
+          
         }
         else {
           return -sign;

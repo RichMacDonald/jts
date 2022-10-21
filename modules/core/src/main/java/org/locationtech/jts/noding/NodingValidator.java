@@ -126,7 +126,7 @@ public class NodingValidator {
   {
     for (int i = 0; i < li.getIntersectionNum(); i++) {
       Coordinate intPt = li.getIntersection(i);
-      if (! (intPt.equals(p0) || intPt.equals(p1)))
+      if ((!intPt.equals(p0) && !intPt.equals(p1)))
           return true;
     }
     return false;

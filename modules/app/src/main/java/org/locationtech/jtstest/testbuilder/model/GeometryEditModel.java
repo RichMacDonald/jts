@@ -52,7 +52,7 @@ public class GeometryEditModel
   
   private transient Vector geometryListeners;
 
-  private UndoBuffer[] undoBuffers = new UndoBuffer[] { new UndoBuffer(), new UndoBuffer() };
+  private UndoBuffer[] undoBuffers = { new UndoBuffer(), new UndoBuffer() };
 
   public GeometryEditModel()
   {
@@ -246,7 +246,7 @@ public class GeometryEditModel
      * Undo transactions are captured whenever the geometry
      * is modified.  So the current geometry
      * may be on the stack, in which case it needs to be discarded. 
-     */;
+     */
      undoBuf.pop(getGeometry());
     if (undoBuf.isEmpty()) return;
     

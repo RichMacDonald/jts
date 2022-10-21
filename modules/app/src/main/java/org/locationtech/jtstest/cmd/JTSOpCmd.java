@@ -123,7 +123,7 @@ public class JTSOpCmd {
     return commandLine;
   }
 
-  static final String[] helpDoc = new String[] {
+  static final String[] helpDoc = {
   "",
   "Usage: jtsop - CLI for JTS operations",
   "           [ -a  <wkt> | <wkb> | stdin | <filename.ext> ]",

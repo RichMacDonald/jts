@@ -154,7 +154,7 @@ public class Distance3DOp {
 	 */
 	public Coordinate[] nearestPoints() {
 		computeMinDistance();
-		Coordinate[] nearestPts = new Coordinate[] {
+		Coordinate[] nearestPts = {
 				minDistanceLocation[0].getCoordinate(),
 				minDistanceLocation[1].getCoordinate() };
 		return nearestPts;
@@ -272,7 +272,6 @@ public class Distance3DOp {
 			}
 			if (geom instanceof Polygon) {
 				computeMinDistancePolygonPolygon(poly, (Polygon) geom, flip);
-				return;
 			}
 		}
 	}
@@ -327,7 +326,6 @@ public class Distance3DOp {
 			}
 			if (g1 instanceof Polygon) {
 				computeMinDistancePolygonPolygon(polyPlane(g0), (Polygon) g1, flip);
-				return;
 			}
 		}
 	}

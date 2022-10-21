@@ -40,7 +40,7 @@ public class StaticMethodGeometryFunction
 		
 		String funcName = method.getName();
 		String description = "dummy";
-		String[] paramNames = new String[] { };
+		String[] paramNames = { };
 		Class[] paramTypes = extractParamTypes(method);
 		Class returnType = method.getReturnType();
 		
@@ -131,6 +131,6 @@ public class StaticMethodGeometryFunction
   {
     String jClassName = javaClass.getName();
     int lastDotPos = jClassName.lastIndexOf(".");
-    return jClassName.substring(lastDotPos + 1, jClassName.length());
+    return jClassName.substring(lastDotPos + 1);
   }
 }

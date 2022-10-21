@@ -31,7 +31,7 @@ import org.locationtech.jts.io.WKTReader;
  */
 public class CascadedPolygonUnionTester
 {
-	public static final double MIN_SIMILARITY_MEAURE = 0.999999;;
+	public static final double MIN_SIMILARITY_MEAURE = 0.999999;
 	
   static PrecisionModel pm = new PrecisionModel();
   static GeometryFactory fact = new GeometryFactory(pm, 0);

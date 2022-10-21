@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Stack;
 
 import org.locationtech.jts.planargraph.DirectedEdge;
-import org.locationtech.jts.planargraph.DirectedEdgeStar;
 import org.locationtech.jts.planargraph.Edge;
 import org.locationtech.jts.planargraph.GraphComponent;
 import org.locationtech.jts.planargraph.Node;

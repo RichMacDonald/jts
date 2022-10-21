@@ -23,7 +23,6 @@ public class CoordinateXYZM extends Coordinate {
 
   /** Default constructor */
   public CoordinateXYZM() {
-    super();
     this.m = 0.0;
   }
 

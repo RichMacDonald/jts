@@ -174,7 +174,7 @@ public class LengthIndexedLine
   public double[] indicesOf(Geometry subLine)
   {
     LinearLocation[] locIndex = LocationIndexOfLine.indicesOf(linearGeom, subLine);
-    double[] index = new double[] {
+    double[] index = {
       LengthLocationMap.getLength(linearGeom, locIndex[0]),
       LengthLocationMap.getLength(linearGeom, locIndex[1])
       };

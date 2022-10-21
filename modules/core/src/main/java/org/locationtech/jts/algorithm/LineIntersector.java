@@ -120,7 +120,7 @@ public abstract class LineIntersector
         dist = Math.max(pdx, pdy);
       }
     }
-    Assert.isTrue(! (dist == 0.0 && ! p.equals(p0)), "Bad distance calculation");
+    Assert.isTrue(((dist != 0.0) || p.equals(p0)), "Bad distance calculation");
     return dist;
   }
 
@@ -136,7 +136,7 @@ public abstract class LineIntersector
     double dx = p.x - p1.x;
     double dy = p.y - p1.y;
     double dist = Math.sqrt(dx * dx + dy * dy);   // dummy value
-    Assert.isTrue(! (dist == 0.0 && ! p.equals(p1)), "Invalid distance calculation");
+    Assert.isTrue(((dist != 0.0) || p.equals(p1)), "Invalid distance calculation");
     return dist;
   }
 
@@ -334,8 +334,7 @@ public abstract class LineIntersector
   public boolean isInteriorIntersection(int inputLineIndex)
   {
     for (int i = 0; i < result; i++) {
-      if (! (   intPt[i].equals2D(inputLines[inputLineIndex][0])
-             || intPt[i].equals2D(inputLines[inputLineIndex][1]) )) {
+      if ((!intPt[i].equals2D(inputLines[inputLineIndex][0]) && !intPt[i].equals2D(inputLines[inputLineIndex][1]))) {
         return true;
       }
     }

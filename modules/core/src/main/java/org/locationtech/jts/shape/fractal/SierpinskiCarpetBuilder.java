@@ -81,7 +81,7 @@ extends GeometricShapeBuilder
 
 	private LinearRing createSquareHole(double x, double y, double width)
 	{
-		Coordinate[] pts = new Coordinate[]{
+		Coordinate[] pts = {
         new Coordinate(x, y),
         new Coordinate(x + width, y),
         new Coordinate(x + width, y + width),

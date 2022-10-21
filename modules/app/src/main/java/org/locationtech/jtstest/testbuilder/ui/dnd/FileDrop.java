@@ -595,7 +595,7 @@ public class FileDrop
          * @param files An array of <tt>File</tt>s that were dropped.
          * @since 1.0
          */
-        public abstract void filesDropped( java.io.File[] files );
+        void filesDropped( java.io.File[] files );
     }   // end inner-interface Listener
     
 }   // end class FileDrop

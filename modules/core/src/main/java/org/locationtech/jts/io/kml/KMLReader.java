@@ -164,7 +164,7 @@ public class KMLReader {
         Coordinate[] coordinates = null;
         Map<String, String> attributes = null;
 
-        while (xmlStreamReader.hasNext() && !(xmlStreamReader.isEndElement() && xmlStreamReader.getLocalName().equals(objectNodeName))) {
+        while (xmlStreamReader.hasNext() && (!xmlStreamReader.isEndElement() || !xmlStreamReader.getLocalName().equals(objectNodeName))) {
             if (xmlStreamReader.isStartElement()) {
                 String elementName = xmlStreamReader.getLocalName();
 
@@ -212,7 +212,7 @@ public class KMLReader {
         ArrayList<LinearRing> holes = null;
         Map<String, String> attributes = null;
 
-        while (xmlStreamReader.hasNext() && !(xmlStreamReader.isEndElement() && xmlStreamReader.getLocalName().equals(POLYGON))) {
+        while (xmlStreamReader.hasNext() && (!xmlStreamReader.isEndElement() || !xmlStreamReader.getLocalName().equals(POLYGON))) {
             if (xmlStreamReader.isStartElement()) {
                 String elementName = xmlStreamReader.getLocalName();
 
@@ -336,7 +336,7 @@ public class KMLReader {
     private void moveToElement(XMLStreamReader xmlStreamReader, String elementName, String endElementName) throws XMLStreamException, ParseException {
         boolean elementFound = false;
 
-        while (xmlStreamReader.hasNext() && !(xmlStreamReader.isEndElement() && xmlStreamReader.getLocalName().equals(endElementName))) {
+        while (xmlStreamReader.hasNext() && (!xmlStreamReader.isEndElement() || !xmlStreamReader.getLocalName().equals(endElementName))) {
             if (xmlStreamReader.isStartElement() && xmlStreamReader.getLocalName().equals(elementName)) {
                 elementFound = true;
                 break;

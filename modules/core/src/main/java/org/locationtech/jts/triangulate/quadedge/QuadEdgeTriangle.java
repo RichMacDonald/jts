@@ -72,7 +72,7 @@ public class QuadEdgeTriangle
 	 * @return true if the point is contained in the triangle
 	 */
 	public static boolean contains(Vertex[] tri, Coordinate pt) {
-		Coordinate[] ring = new Coordinate[] { tri[0].getCoordinate(),
+		Coordinate[] ring = { tri[0].getCoordinate(),
 				tri[1].getCoordinate(), tri[2].getCoordinate(), tri[0].getCoordinate() };
 		return PointLocation.isInRing(pt, ring);
 	}
@@ -88,14 +88,14 @@ public class QuadEdgeTriangle
 	 * @return true if the point is contained in the triangle
 	 */
 	public static boolean contains(QuadEdge[] tri, Coordinate pt) {
-		Coordinate[] ring = new Coordinate[] { tri[0].orig().getCoordinate(),
+		Coordinate[] ring = { tri[0].orig().getCoordinate(),
 				tri[1].orig().getCoordinate(), tri[2].orig().getCoordinate(),
 				tri[0].orig().getCoordinate() };
 		return PointLocation.isInRing(pt, ring);
 	}
 
 	public static Geometry toPolygon(Vertex[] v) {
-		Coordinate[] ringPts = new Coordinate[] { v[0].getCoordinate(),
+		Coordinate[] ringPts = { v[0].getCoordinate(),
 				v[1].getCoordinate(), v[2].getCoordinate(), v[0].getCoordinate() };
 		GeometryFactory fact = new GeometryFactory();
 		LinearRing ring = fact.createLinearRing(ringPts);
@@ -104,7 +104,7 @@ public class QuadEdgeTriangle
 	}
 
 	public static Geometry toPolygon(QuadEdge[] e) {
-		Coordinate[] ringPts = new Coordinate[] { e[0].orig().getCoordinate(),
+		Coordinate[] ringPts = { e[0].orig().getCoordinate(),
 				e[1].orig().getCoordinate(), e[2].orig().getCoordinate(),
 				e[0].orig().getCoordinate() };
 		GeometryFactory fact = new GeometryFactory();

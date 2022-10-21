@@ -100,9 +100,7 @@ implements GeometryOperation
 	}
 	private Result invokeBufferOpValidated(Geometry geometry)
 	{
-	  Geometry result = null;
-
-	  result = invokeBuffer(geometry);
+	  Geometry result = invokeBuffer(geometry);
 	  
     // validate
 	  validate(geometry, result);

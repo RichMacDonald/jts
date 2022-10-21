@@ -49,7 +49,7 @@ public class BufferCorrectnessTest
   	Geometry g = rdr.read(wkt);
   	Geometry buf = g.buffer(15);
   	System.out.println(buf);
-  };
+  }
   
   void run6()
   throws Exception
@@ -62,7 +62,7 @@ public class BufferCorrectnessTest
   	Geometry buf = new BufferOp(g, params).getResultGeometry(-5);
     
   	System.out.println(buf);
-  };
+  }
   
   void run5()
   throws Exception
@@ -75,7 +75,7 @@ public class BufferCorrectnessTest
   	Geometry buf = new BufferOp(g, params).getResultGeometry(-5);
     
   	System.out.println(buf);
-  };
+  }
   
   void run4()
   throws Exception
@@ -90,7 +90,7 @@ public class BufferCorrectnessTest
     
 
   	System.out.println(buf);
-  };
+  }
   
   void run3()
   throws Exception
@@ -99,7 +99,7 @@ public class BufferCorrectnessTest
   	Geometry g = rdr.read(wkt);
   	Geometry buf = g.buffer(15);
   	System.out.println(buf);
-  };
+  }
   
   void run2()
   throws Exception
@@ -115,7 +115,7 @@ public class BufferCorrectnessTest
   {
   	doBuffer("LINESTRING (110 320, 280 290, 170 150)", 20.0, -1);
 //  	doBuffer("LINESTRING (10 0, 0 0, 10 1)");
-  };
+  }
   
   void doBuffer(String wkt, double dist)
   throws Exception
@@ -123,7 +123,7 @@ public class BufferCorrectnessTest
   	Geometry g = rdr.read(wkt);
   	Geometry buf = g.buffer(dist, -4);
   	System.out.println(buf);
-  };
+  }
   
   void doBuffer(String wkt, double dist, int quadSegs)
   throws Exception
@@ -131,7 +131,7 @@ public class BufferCorrectnessTest
   	Geometry g = rdr.read(wkt);
   	Geometry buf = g.buffer(dist, quadSegs);
   	System.out.println(buf);
-  };
+  }
   
   
 }

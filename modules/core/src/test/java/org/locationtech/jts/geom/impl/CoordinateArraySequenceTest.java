@@ -179,7 +179,7 @@ public class CoordinateArraySequenceTest
     CoordinateXY coord2 = new CoordinateXY(2.0,2.0);
     CoordinateXYM coord3 = new CoordinateXYM(3.0,3.0,3.0);
     
-    Coordinate[] array = new Coordinate[] {coord1, coord2, coord3, null};
+    Coordinate[] array = {coord1, coord2, coord3, null};
     CoordinateSequence seq = factory.create(array);
     assertEquals( 3, seq.getDimension());
     assertEquals( 1, seq.getMeasures());

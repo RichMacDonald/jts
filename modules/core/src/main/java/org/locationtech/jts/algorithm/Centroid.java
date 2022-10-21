@@ -201,7 +201,6 @@ public class Centroid
   {
     c.x = p1.x + p2.x + p3.x;
     c.y = p1.y + p2.y + p3.y;
-    return;
   }
 
   /**

@@ -92,7 +92,7 @@ public class GeometryReverseTest  extends GeometryTestCase {
       int j = c1.size() - i - 1;
       for (int k = 0; k < c1.getDimension(); k++)
         if (c1.getOrdinate(i, k) != c2.getOrdinate(j, k))
-          if (!(Double.isNaN(c1.getOrdinate(i, k)) && Double.isNaN(c2.getOrdinate(j, k))))
+          if ((!Double.isNaN(c1.getOrdinate(i, k)) || !Double.isNaN(c2.getOrdinate(j, k))))
             return false;
     }
     return true;

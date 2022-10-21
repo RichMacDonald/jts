@@ -261,12 +261,12 @@ class TWKBHeader {
         case 1:
             return xyPrecision;
         case 2:
-            if (!(hasZ || hasM)) {
+            if ((!hasZ && !hasM)) {
                 throw new IllegalArgumentException("Geometry only has XY dimensions.");
             }
             return hasZ ? zPrecision : mPrecision;
         case 3:
-            if (!(hasZ && hasM)) {
+            if ((!hasZ || !hasM)) {
                 throw new IllegalArgumentException("Geometry has no M dimension.");
             }
             return mPrecision;

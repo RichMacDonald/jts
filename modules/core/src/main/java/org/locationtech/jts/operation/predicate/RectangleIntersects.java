@@ -174,7 +174,6 @@ class EnvelopeIntersectsVisitor extends ShortCircuitedGeometryVisitor
     if (elementEnv.getMinY() >= rectEnv.getMinY()
         && elementEnv.getMaxY() <= rectEnv.getMaxY()) {
       intersects = true;
-      return;
     }
   }
 

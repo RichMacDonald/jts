@@ -138,8 +138,7 @@ public class Node
    */
   int computeMergedLocation(Label label2, int eltIndex)
   {
-    int loc = Location.NONE;
-    loc = label.getLocation(eltIndex);
+    int loc = label.getLocation(eltIndex);
     if (! label2.isNull(eltIndex)) {
         int nLoc = label2.getLocation(eltIndex);
         if (loc != Location.BOUNDARY) loc = nLoc;

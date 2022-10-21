@@ -113,7 +113,7 @@ public class MaximumInscribedCircle {
     if (tolerance <= 0) {
       throw new IllegalArgumentException("Tolerance must be positive");
     }
-    if (! (polygonal instanceof Polygon || polygonal instanceof MultiPolygon)) {
+    if ((!(polygonal instanceof Polygon) && !(polygonal instanceof MultiPolygon))) {
       throw new IllegalArgumentException("Input geometry must be a Polygon or MultiPolygon");
     }
     if (polygonal.isEmpty()) {

@@ -27,7 +27,7 @@ public class CoordinateList
   private static final long serialVersionUID = -1626110935756089896L;
 //With contributions from Markus Schaber [schabios@logi-track.com]
   //[Jon Aquino 2004-03-25]
-  private final static Coordinate[] coordArrayType = new Coordinate[0];
+  private final static Coordinate[] coordArrayType = {};
 
   /**
    * Constructs a new list without any coordinates

@@ -86,8 +86,7 @@ public class OverlayArea {
     this.geom0 = geom;
     
     //TODO: handle holes and multipolygons
-    if (! (geom0 instanceof Polygon
-        && ((Polygon) geom0).getNumInteriorRing() == 0))
+    if ((!(geom0 instanceof Polygon) || (((Polygon) geom0).getNumInteriorRing() != 0)))
       throw new IllegalArgumentException("Currently only Polygons with no holes supported");
     
     geomEnv0 = geom.getEnvelopeInternal();

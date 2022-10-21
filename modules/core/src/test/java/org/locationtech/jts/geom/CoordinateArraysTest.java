@@ -27,8 +27,8 @@ public class CoordinateArraysTest extends GeometryTestCase {
     TestRunner.run(CoordinateArraysTest.class);
   }
 
-  private static Coordinate[] COORDS_1 = new Coordinate[] { new Coordinate(1, 1), new Coordinate(2, 2), new Coordinate(3, 3) };
-  private static Coordinate[] COORDS_EMPTY = new Coordinate[0];
+  private static Coordinate[] COORDS_1 = { new Coordinate(1, 1), new Coordinate(2, 2), new Coordinate(3, 3) };
+  private static Coordinate[] COORDS_EMPTY = {};
 
   public CoordinateArraysTest(String name) { super(name); }
 
@@ -83,22 +83,22 @@ public class CoordinateArraysTest extends GeometryTestCase {
   }
 
   public void testReverseEmpty() {
-    Coordinate[] pts = new Coordinate[0];
+    Coordinate[] pts = {};
     checkReversed(pts);  }
   
   public void testReverseSingleElement() {
-    Coordinate[] pts = new Coordinate[] { new Coordinate(1, 1) };
+    Coordinate[] pts = { new Coordinate(1, 1) };
     checkReversed(pts);
   }
   
   public void testReverse2() {
-    Coordinate[] pts = new Coordinate[] { 
+    Coordinate[] pts = { 
         new Coordinate(1, 1), new Coordinate(2, 2) };
     checkReversed(pts);
   }
   
   public void testReverse3() {
-    Coordinate[] pts = new Coordinate[] { 
+    Coordinate[] pts = { 
         new Coordinate(1, 1), new Coordinate(2, 2), new Coordinate(3 ,3) };
     checkReversed(pts);
   }
@@ -135,7 +135,7 @@ public class CoordinateArraysTest extends GeometryTestCase {
     Coordinate[] sequence = createCircularString(new Coordinate(20, 20), 7d,
       0.1, 22);
     Coordinate[] scrolled = createCircularString(new Coordinate(20, 20), 7d,
-      0.1, 22);;
+      0.1, 22);
 
     // act
     CoordinateArrays.scroll(scrolled, 12);
@@ -150,11 +150,11 @@ public class CoordinateArraysTest extends GeometryTestCase {
   }
 
   public void testEnforceConsistency(){
-    Coordinate array[] = new Coordinate[]{
+    Coordinate array[] = {
         new Coordinate(1.0, 1.0, 0.0),
         new CoordinateXYM(2.0,2.0,1.0)
     };
-    Coordinate array2[] = new Coordinate[]{
+    Coordinate array2[] = {
             new CoordinateXY(1.0, 1.0),
             new CoordinateXY(2.0,2.0)
     };

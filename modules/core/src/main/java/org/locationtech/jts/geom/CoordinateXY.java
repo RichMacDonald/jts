@@ -37,7 +37,6 @@ public class CoordinateXY extends Coordinate {
 
   /** Default constructor */
   public CoordinateXY() {
-    super();
   }
 
   /**

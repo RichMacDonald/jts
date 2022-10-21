@@ -172,9 +172,9 @@ public class DistanceOp
   {
     computeMinDistance();
     Coordinate[] nearestPts
-        = new Coordinate[] {
-          minDistanceLocation[0].getCoordinate(),
-          minDistanceLocation[1].getCoordinate() };
+        = {
+	  minDistanceLocation[0].getCoordinate(),
+	  minDistanceLocation[1].getCoordinate() };
     return nearestPts;
   }
   
@@ -260,7 +260,6 @@ public class DistanceOp
       	// this assigment is determined by the order of the args in the computeInside call above
         minDistanceLocation[locationsIndex] = locPtPoly[0];
         minDistanceLocation[polyGeomIndex] 	= locPtPoly[1];
-        return;
       }
     }	
   }
@@ -285,8 +284,7 @@ public class DistanceOp
     if (Location.EXTERIOR != ptLocator.locate(pt, poly)) {
       minDistance = 0.0;
       locPtPoly[0] = ptLoc;
-      locPtPoly[1] = new GeometryLocation(poly, pt);;
-      return;
+      locPtPoly[1] = new GeometryLocation(poly, pt);
     }
   }
 

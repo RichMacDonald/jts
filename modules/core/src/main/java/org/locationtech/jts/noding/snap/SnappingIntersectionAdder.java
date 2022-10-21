@@ -28,7 +28,7 @@ import org.locationtech.jts.noding.SegmentString;
 public class SnappingIntersectionAdder
     implements SegmentIntersector
 {
-  private LineIntersector li = new RobustLineIntersector();;
+  private LineIntersector li = new RobustLineIntersector();
 
   private double snapTolerance;
 

@@ -75,7 +75,7 @@ public class DDOrientationIndexAccuracyTest extends GeometryTestCase {
 		return DD.valueOf(x);
 	}
 
-	static interface DDConverter {
+	interface DDConverter {
 		DD convert(double x);
 	}
 	static final DDConverter DD_STD = x -> DD.valueOf(x);

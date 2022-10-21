@@ -60,7 +60,7 @@ public class EdgeEnd
     dx = p1.x - p0.x;
     dy = p1.y - p0.y;
     quadrant = Quadrant.quadrant(dx, dy);
-    Assert.isTrue(! (dx == 0 && dy == 0), "EdgeEnd with identical endpoints found");
+    Assert.isTrue(((dx != 0) || (dy != 0)), "EdgeEnd with identical endpoints found");
   }
 
   public Edge getEdge() { return edge; }

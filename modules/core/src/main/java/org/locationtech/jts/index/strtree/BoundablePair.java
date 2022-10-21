@@ -124,7 +124,7 @@ class BoundablePair
    */
   public boolean isLeaves()
   {
-    return ! (isComposite(boundable1) || isComposite(boundable2));
+    return (!isComposite(boundable1) && !isComposite(boundable2));
   }
   
   public static boolean isComposite(Object item)

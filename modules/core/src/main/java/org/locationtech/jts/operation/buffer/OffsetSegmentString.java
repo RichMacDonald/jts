@@ -28,7 +28,7 @@ import org.locationtech.jts.geom.PrecisionModel;
  */
 class OffsetSegmentString 
 {
-  private static final Coordinate[] COORDINATE_ARRAY_TYPE = new Coordinate[0];
+  private static final Coordinate[] COORDINATE_ARRAY_TYPE = {};
 
   private ArrayList ptList;
   private PrecisionModel precisionModel = null;

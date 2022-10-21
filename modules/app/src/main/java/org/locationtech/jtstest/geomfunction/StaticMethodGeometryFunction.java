@@ -215,6 +215,6 @@ public class StaticMethodGeometryFunction
   {
     String jClassName = javaClass.getName();
     int lastDotPos = jClassName.lastIndexOf(".");
-    return jClassName.substring(lastDotPos + 1, jClassName.length());
+    return jClassName.substring(lastDotPos + 1);
   }
 }

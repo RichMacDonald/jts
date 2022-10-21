@@ -23,7 +23,6 @@ public class NoninvertibleTransformationException
 {
   public NoninvertibleTransformationException()
   {
-    super();
   }
   public NoninvertibleTransformationException(String msg)
   {

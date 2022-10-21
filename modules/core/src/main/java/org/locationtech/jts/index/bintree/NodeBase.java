@@ -120,7 +120,7 @@ public abstract class NodeBase {
 
   public boolean isPrunable()
   {
-    return ! (hasChildren() || hasItems());
+    return (!hasChildren() && !hasItems());
   }
 
   public boolean hasChildren()

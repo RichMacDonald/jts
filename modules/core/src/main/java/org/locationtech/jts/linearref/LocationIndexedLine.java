@@ -40,7 +40,7 @@ public class LocationIndexedLine
 
   private void checkGeometryType()
   {
-    if (! (linearGeom instanceof LineString || linearGeom instanceof MultiLineString))
+    if ((!(linearGeom instanceof LineString) && !(linearGeom instanceof MultiLineString)))
       throw new IllegalArgumentException("Input geometry must be linear");
   }
   /**

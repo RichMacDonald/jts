@@ -20,5 +20,5 @@ import java.util.EventListener;
  */
 public interface GeometryListener extends EventListener {
 
-    public void geometryChanged(GeometryEvent e);
+    void geometryChanged(GeometryEvent e);
 }

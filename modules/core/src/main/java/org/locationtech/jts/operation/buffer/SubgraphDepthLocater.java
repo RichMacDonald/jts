@@ -196,7 +196,7 @@ class SubgraphDepthLocater
           || upwardSeg.minY() >= other.upwardSeg.maxX()
           || upwardSeg.maxY() <= other.upwardSeg.minY()) {
         return upwardSeg.compareTo(other.upwardSeg);
-      };
+      }
       
       /**
        * Otherwise if envelopes overlap, use relative segment orientation.
@@ -212,14 +212,7 @@ class SubgraphDepthLocater
        * The sign of the result needs to be flipped.
        */
       orientIndex = -1 * other.upwardSeg.orientationIndex(upwardSeg);
-      if (orientIndex != 0) return orientIndex;
-
-      /**
-       * If segment envelopes overlap and they are collinear,
-       * since segments do not cross they must be equal.
-       */
-      // assert: segments are equal
-      return 0;
+      return orientIndex;
     }
     
     public int OLDcompareTo(Object obj)

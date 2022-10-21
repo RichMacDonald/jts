@@ -52,7 +52,7 @@ import org.locationtech.jtstest.util.StringUtil;
  */
 public class JTSTestRunnerCmd {
 
-  static final String[] help = new String[] {
+  static final String[] help = {
   "",
   "Usage: java org.locationtech.jtstest.testrunner.JTSTestRunnerCmd",
   "           [ -geomfunc <classpath>...]",

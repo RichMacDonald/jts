@@ -55,7 +55,7 @@ public class ColorUtil {
   {
     float[] hsb = new float[3];
     Color.RGBtoHSB(clr.getRed(), clr.getGreen(), clr.getBlue(), hsb);
-    hsb[1] = (float) MathUtil.clamp(saturation, 0, 1);;
+    hsb[1] = (float) MathUtil.clamp(saturation, 0, 1);
     return Color.getHSBColor(hsb[0], hsb[1], hsb[2]);
   }
 

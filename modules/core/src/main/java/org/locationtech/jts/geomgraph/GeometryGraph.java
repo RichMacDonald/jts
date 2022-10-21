@@ -408,9 +408,7 @@ Debug.print(e.getEdgeIntersectionList());
     Label lbl = n.getLabel();
     // the new point to insert is on a boundary
     int boundaryCount = 1;
-    // determine the current location for the point (if any)
-    int loc = Location.NONE;
-    loc = lbl.getLocation(argIndex, Position.ON);
+    int loc = lbl.getLocation(argIndex, Position.ON);
     if (loc == Location.BOUNDARY) boundaryCount++;
 
     // determine the boundary status of the point according to the Boundary Determination Rule

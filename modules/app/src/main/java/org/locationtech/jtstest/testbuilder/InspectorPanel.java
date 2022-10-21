@@ -56,7 +56,6 @@ public class InspectorPanel extends TestBuilderPanel  {
    }
 
   public InspectorPanel(boolean showExpand) {
-    super();
     this.showExpand  = showExpand;
     uiInit();
    }

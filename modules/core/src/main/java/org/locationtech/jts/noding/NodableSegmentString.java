@@ -29,5 +29,5 @@ public interface NodableSegmentString
    * @param intPt the location of the intersection
    * @param segmentIndex the index of the segment containing the intersection
    */
-  public void addIntersection(Coordinate intPt, int segmentIndex);
+  void addIntersection(Coordinate intPt, int segmentIndex);
 }

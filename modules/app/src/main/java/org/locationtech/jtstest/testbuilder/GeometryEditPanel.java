@@ -381,10 +381,10 @@ public class GeometryEditPanel extends JPanel
     int boxMinY = bottom - boxHgt;
     int boxMaxY = bottom;
     
-    int[] xpts = new int[] { 
+    int[] xpts = { 
         boxMinX, centreX - arrowWidth/2, (int) markX, centreX + arrowWidth/2,
         boxMaxX, boxMaxX,   boxMinX };
-    int[] ypts = new int[] {  
+    int[] ypts = {  
         boxMinY, boxMinY, (int) (markY + arrowOffset), boxMinY,
         boxMinY, boxMaxY, boxMaxY };
     

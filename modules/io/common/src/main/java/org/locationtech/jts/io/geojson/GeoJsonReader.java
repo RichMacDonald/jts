@@ -438,7 +438,6 @@ public class GeoJsonReader {
   private GeometryFactory getGeometryFactory(Map<String, Object> geometryMap)
       throws ParseException {
 
-    GeometryFactory result = null;
     @SuppressWarnings("unchecked")
     Map<String, Object> crsMap = (Map<String, Object>) geometryMap.get(GeoJsonConstants.NAME_CRS);
     Integer srid = null;
@@ -467,18 +466,17 @@ public class GeoJsonReader {
       srid = Integer.valueOf(4326);
     }
 
-    result = new GeometryFactory(new PrecisionModel(), srid.intValue());
+    GeometryFactory result = new GeometryFactory(new PrecisionModel(), srid.intValue());
     return result;
   }
 
   private CoordinateSequence createCoordinateSequence(
       List<List<Number>> coordinates) {
-    CoordinateSequence result = null;
     if (coordinates == null) {
       coordinates = Collections.EMPTY_LIST;
     }
 
-    result = new CoordinateArraySequence(coordinates.size());
+    CoordinateSequence result = new CoordinateArraySequence(coordinates.size());
 
     for (int i = 0; i < coordinates.size(); ++i) {
       List<Number> ordinates = coordinates.get(i);

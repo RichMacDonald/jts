@@ -42,7 +42,6 @@ public class OperationMonitorManager
   private Timer repaintTimer = new Timer(50, e -> {
   if (indicator != null) {
     paint();
-    return;
   }
 });
 

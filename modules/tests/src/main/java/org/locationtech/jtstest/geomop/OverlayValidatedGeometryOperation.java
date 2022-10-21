@@ -107,10 +107,9 @@ public class OverlayValidatedGeometryOperation
   public Result invokeValidatedOverlayOp(int opCode, Geometry g0, Object[] args)
   	throws Exception
   {
-	  Geometry result = null;
 	  Geometry g1 = (Geometry) args[0];
 
-	  result = invokeGeometryOverlayMethod(opCode, g0, g1);
+	  Geometry result = invokeGeometryOverlayMethod(opCode, g0, g1);
 	  
     // validate
 	  validate(opCode, g0, g1, result);

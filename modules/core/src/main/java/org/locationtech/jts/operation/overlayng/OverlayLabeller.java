@@ -364,7 +364,7 @@ class OverlayLabeller {
     if (! inputGeometry.isArea(geomIndex)) {
       label.setLocationAll(geomIndex, Location.EXTERIOR);
       return;
-    };
+    }
     
     //Debug.println("\n------  labelDisconnectedEdge - geomIndex= " + geomIndex);
     //Debug.print("BEFORE: " + edge.toStringNode());

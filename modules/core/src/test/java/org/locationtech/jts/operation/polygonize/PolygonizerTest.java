@@ -115,7 +115,7 @@ public class PolygonizerTest extends GeometryTestCase {
     });
   }
 
-  String[] LINES_CHECKERBOARD = new String[] {
+  String[] LINES_CHECKERBOARD = {
       "LINESTRING (10 20, 20 20)", 
       "LINESTRING (10 20, 10 30)",
       "LINESTRING (20 10, 10 10, 10 20)", 

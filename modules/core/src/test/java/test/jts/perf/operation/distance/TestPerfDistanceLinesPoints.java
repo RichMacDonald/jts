@@ -170,7 +170,7 @@ public class TestPerfDistanceLinesPoints
   Geometry createLine(double extent, int nSegs)
   {
     Coordinate[] pts = 
-      new Coordinate[] {
+      {
         new Coordinate(0,0),
         new Coordinate(0, extent),
         new Coordinate(extent, extent),

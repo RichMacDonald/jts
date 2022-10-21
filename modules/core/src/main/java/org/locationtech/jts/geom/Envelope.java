@@ -548,10 +548,8 @@ public class Envelope
    */
   public boolean intersects(Envelope other) {
       if (isNull() || other.isNull()) { return false; }
-    return !(other.minx > maxx ||
-        other.maxx < minx ||
-        other.miny > maxy ||
-        other.maxy < miny);
+    return ((other.minx <= maxx) && (other.maxx >= minx) && (other.miny <= maxy)
+			&& (other.maxy >= miny));
   }
   
   
@@ -633,10 +631,7 @@ public class Envelope
    */
   public boolean intersects(double x, double y) {
   	if (isNull()) return false;
-    return ! (x > maxx ||
-        x < minx ||
-        y > maxy ||
-        y < miny);
+    return ((x <= maxx) && (x >= minx) && (y <= maxy) && (y >= miny));
   }
   /**
    * @deprecated Use #intersects instead.

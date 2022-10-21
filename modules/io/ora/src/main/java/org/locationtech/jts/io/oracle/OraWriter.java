@@ -280,7 +280,7 @@ public class OraWriter
           connection);
     }
     else { // Point Optimization
-      Datum data[] = new Datum[] { 
+      Datum data[] = { 
           OraUtil.toNUMBER(oraGeom.point[0]),
           OraUtil.toNUMBER(oraGeom.point[1]), 
           OraUtil.toNUMBER(oraGeom.point[2]), };
@@ -290,7 +290,7 @@ public class OraWriter
     NUMBER SDO_GTYPE = new NUMBER(oraGeom.gType);
     NUMBER SDO_SRID = oraGeom.srid == OraGeom.SRID_NULL ? null : new NUMBER(oraGeom.srid);
     
-    Datum sdoGeometryComponents[] = new Datum[] { 
+    Datum sdoGeometryComponents[] = { 
         SDO_GTYPE, 
         SDO_SRID, 
         SDO_POINT,

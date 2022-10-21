@@ -76,7 +76,7 @@ public class WKTWriterStaticFnTest extends GeometryTestCase {
 
   public void testStaticToLineStringFromTwoCoords() throws ParseException {
     for (int i = 0; i < 1000; i++) {
-      Coordinate[] cs = new Coordinate[] {new CoordinateXY(100 * _rnd.nextDouble(), 100 * _rnd.nextDouble()),
+      Coordinate[] cs = {new CoordinateXY(100 * _rnd.nextDouble(), 100 * _rnd.nextDouble()),
               new CoordinateXY(100 * _rnd.nextDouble(), 100 * _rnd.nextDouble())};
       String toLineStringText = WKTWriter.toLineString(cs[0], cs[1]);
       Coordinate[] cd = _reader.read(toLineStringText).getCoordinates();

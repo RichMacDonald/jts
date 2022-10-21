@@ -120,7 +120,7 @@ public class HtmlWriter {
          + "<div class='testTitle'>" + StringUtil.escapeHTML(testName(testCaseEdit, caseSkey)) + "</div>" + StringUtil.newLine
          + "<P>" + StringUtil.newLine;
     html += htmlForAB(testCaseEdit, runSkey, caseSkey);
-    html += htmlForTests(testCaseEdit, caseSkey);
+    html += htmlForTests(testCaseEdit);
     html += "</BODY>" + StringUtil.newLine + "</HTML>";
     return html;
   }
@@ -139,7 +139,7 @@ public class HtmlWriter {
     return html.substring(html.indexOf(">") + 1);
   }
 
-  private String htmlForTests(TestCaseEdit testCaseEdit, int caseSkey) throws IOException {
+  private String htmlForTests(TestCaseEdit testCaseEdit) throws IOException {
     String html = htmlForBinaryPredicates(testCaseEdit);
     return html;
   }

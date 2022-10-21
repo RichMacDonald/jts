@@ -22,5 +22,5 @@ import java.util.EventListener;
  * @version 1.7
  */
 public interface ValidPanelListener extends EventListener {
-  public void setHighlightPerformed(ValidPanelEvent e);
+  void setHighlightPerformed(ValidPanelEvent e);
 }

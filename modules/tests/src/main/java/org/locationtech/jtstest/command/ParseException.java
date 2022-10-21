@@ -19,7 +19,6 @@ public class ParseException
 {
 
   public ParseException() {
-    super();
   }
 
   public ParseException(String msg) {

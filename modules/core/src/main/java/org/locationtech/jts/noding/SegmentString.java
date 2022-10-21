@@ -27,17 +27,17 @@ public interface SegmentString
    *
    * @return the user-defined data
    */
-  public Object getData();
+  Object getData();
 
   /**
    * Sets the user-defined data for this segment string.
    *
    * @param data an Object containing user-defined data
    */
-  public void setData(Object data);
+  void setData(Object data);
 
-  public int size();
-  public Coordinate getCoordinate(int i);
-  public Coordinate[] getCoordinates();
-  public boolean isClosed();
+  int size();
+  Coordinate getCoordinate(int i);
+  Coordinate[] getCoordinates();
+  boolean isClosed();
 }

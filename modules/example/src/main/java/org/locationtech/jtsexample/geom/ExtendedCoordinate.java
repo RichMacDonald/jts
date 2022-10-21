@@ -28,7 +28,6 @@ public class ExtendedCoordinate
    */
   public ExtendedCoordinate()
   {
-    super();
     this.m = 0.0;
   }
 

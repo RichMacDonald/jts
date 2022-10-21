@@ -67,8 +67,7 @@ public class PolygonizeFunctions {
     List lines = LineStringExtracter.getLines(g);
     Polygonizer polygonizer = new Polygonizer();
     polygonizer.add(lines);
-    List errs = new ArrayList();
-    errs.addAll(polygonizer.getDangles());
+    List errs = new ArrayList(polygonizer.getDangles());
     errs.addAll(polygonizer.getCutEdges());
     errs.addAll(polygonizer.getInvalidRingLines());
     return g.getFactory().buildGeometry(errs);

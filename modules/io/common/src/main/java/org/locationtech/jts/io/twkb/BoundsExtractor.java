@@ -21,7 +21,7 @@ class BoundsExtractor implements CoordinateSequenceFilter {
 
     private final int dimensions;
 
-    double[] ordinates = new double[]{
+    double[] ordinates = {
         Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY,
         Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY,
         Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY,

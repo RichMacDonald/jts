@@ -23,7 +23,7 @@ public class OverlayMiscTest extends GeometryTestCase
   public void testNoding() throws Exception {
     Geometry a = read("LINESTRING(0 0, 100 100)");
     Geometry b = read("LINESTRING(0 100, 100 0)");
-    List lineStrings = Arrays.asList(new Object[] {a, b});
+    List lineStrings = Arrays.asList(a, b);
     Geometry nodedLineStrings = (LineString) lineStrings.get(0);
     for (int i = 1; i < lineStrings.size(); i++) {
       nodedLineStrings = nodedLineStrings.union((LineString)lineStrings.get(i));

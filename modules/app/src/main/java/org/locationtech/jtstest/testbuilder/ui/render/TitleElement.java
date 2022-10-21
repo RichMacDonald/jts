@@ -37,7 +37,7 @@ public class TitleElement {
 
   private Color fillClr = Color.WHITE;
 
-  private Paint borderColor;;
+  private Paint borderColor;
 
   public TitleElement(Viewport viewport) {
     this.viewport = viewport;

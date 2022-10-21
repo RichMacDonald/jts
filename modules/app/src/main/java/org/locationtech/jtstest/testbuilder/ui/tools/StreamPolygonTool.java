@@ -29,7 +29,6 @@ public class StreamPolygonTool extends AbstractStreamDrawTool
 
     private StreamPolygonTool() 
     {
-      super();
     }
     
     protected int getGeometryType()

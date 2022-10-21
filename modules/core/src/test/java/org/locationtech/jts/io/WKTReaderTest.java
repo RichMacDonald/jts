@@ -77,7 +77,7 @@ public class WKTReaderTest extends GeometryTestCase {
   public void testPoint() throws Exception {
 
     // arrange
-    double[] coordinates = new double[] {10, 10};
+    double[] coordinates = {10, 10};
     CoordinateSequence seqPt2D = createSequence(Ordinate.createXY(), coordinates);
     CoordinateSequence seqPt2DE = createSequence(Ordinate.createXY(), new double[0]);
     CoordinateSequence seqPt3D = createSequence(Ordinate.createXYZ(), coordinates);
@@ -106,7 +106,7 @@ public class WKTReaderTest extends GeometryTestCase {
   public void testLineString() throws Exception {
 
     // arrange
-    double[] coordinates = new double[] {10, 10, 20, 20, 30, 40};
+    double[] coordinates = {10, 10, 20, 20, 30, 40};
     CoordinateSequence seqLs2D = createSequence(Ordinate.createXY(), coordinates);
     CoordinateSequence seqLs2DE = createSequence(Ordinate.createXY(), new double[0]);
     CoordinateSequence seqLs3D = createSequence(Ordinate.createXYZ(), coordinates);
@@ -135,7 +135,7 @@ public class WKTReaderTest extends GeometryTestCase {
 
   public void testLinearRing() throws Exception {
 
-    double[] coordinates = new double[] {10, 10, 20, 20, 30, 40, 10, 10};
+    double[] coordinates = {10, 10, 20, 20, 30, 40, 10, 10};
     CoordinateSequence seqLs2D = createSequence(Ordinate.createXY(), coordinates);
     CoordinateSequence seqLs2DE = createSequence(Ordinate.createXY(), new double[0]);
     CoordinateSequence seqLs3D = createSequence(Ordinate.createXYZ(), coordinates);
@@ -174,49 +174,49 @@ public class WKTReaderTest extends GeometryTestCase {
   }
 
   public void testPolygon() throws Exception {
-    double[] shell = new double[] {10, 10, 10, 20, 20, 20, 20, 15, 10, 10};
-    double[] ring1 = new double[] {11, 11, 12, 11, 12, 12, 12, 11, 11, 11};
-    double[] ring2 = new double[] {11, 19, 11, 18, 12, 18, 12, 19, 11, 19};
+    double[] shell = {10, 10, 10, 20, 20, 20, 20, 15, 10, 10};
+    double[] ring1 = {11, 11, 12, 11, 12, 12, 12, 11, 11, 11};
+    double[] ring2 = {11, 19, 11, 18, 12, 18, 12, 19, 11, 19};
     
-    CoordinateSequence[] csPoly2D = new CoordinateSequence[] {
+    CoordinateSequence[] csPoly2D = {
             createSequence(Ordinate.createXY(), shell),
             createSequence(Ordinate.createXY(), ring1),
             createSequence(Ordinate.createXY(), ring2)};
     CoordinateSequence csPoly2DE = createSequence(Ordinate.createXY(), new double[0]);
-    CoordinateSequence[] csPoly3D = new CoordinateSequence[] {
+    CoordinateSequence[] csPoly3D = {
             createSequence(Ordinate.createXYZ(), shell),
             createSequence(Ordinate.createXYZ(), ring1),
             createSequence(Ordinate.createXYZ(), ring2)};
-    CoordinateSequence[] csPoly2DM = new CoordinateSequence[] {
+    CoordinateSequence[] csPoly2DM = {
             createSequence(Ordinate.createXYM(), shell),
             createSequence(Ordinate.createXYM(), ring1),
             createSequence(Ordinate.createXYM(), ring2)};
-    CoordinateSequence[] csPoly3DM = new CoordinateSequence[] {
+    CoordinateSequence[] csPoly3DM = {
             createSequence(Ordinate.createXYZM(), shell),
             createSequence(Ordinate.createXYZM(), ring1),
             createSequence(Ordinate.createXYZM(), ring2)};
     
     WKTReader rdr = readerXY;
-    Polygon[] poly2D = new Polygon[]{
+    Polygon[] poly2D = {
             (Polygon) rdr.read("POLYGON ((10 10, 10 20, 20 20, 20 15, 10 10))"),
             (Polygon) rdr.read("POLYGON ((10 10, 10 20, 20 20, 20 15, 10 10), (11 11, 12 11, 12 12, 12 11, 11 11))"),
             (Polygon) rdr.read("POLYGON ((10 10, 10 20, 20 20, 20 15, 10 10), (11 11, 12 11, 12 12, 12 11, 11 11), (11 19, 11 18, 12 18, 12 19, 11 19))")
     };
     Polygon poly2DE = (Polygon) rdr.read("POLYGON EMPTY");
     rdr =  readerXYZ;
-    Polygon[] poly3D = new Polygon[]{
+    Polygon[] poly3D = {
             (Polygon) rdr.read("POLYGON Z((10 10 10, 10 20 10, 20 20 10, 20 15 10, 10 10 10))"),
             (Polygon) rdr.read("POLYGON Z((10 10 10, 10 20 10, 20 20 10, 20 15 10, 10 10 10), (11 11 10, 12 11 10, 12 12 10, 12 11 10, 11 11 10))"),
             (Polygon) rdr.read("POLYGON Z((10 10 10, 10 20 10, 20 20 10, 20 15 10, 10 10 10), (11 11 10, 12 11 10, 12 12 10, 12 11 10, 11 11 10), (11 19 10, 11 18 10, 12 18 10, 12 19 10, 11 19 10))")
     };
     rdr =  readerXYM;
-    Polygon[] poly2DM = new Polygon[]{
+    Polygon[] poly2DM = {
             (Polygon) rdr.read("POLYGON M((10 10 11, 10 20 11, 20 20 11, 20 15 11, 10 10 11))"),
             (Polygon) rdr.read("POLYGON M((10 10 11, 10 20 11, 20 20 11, 20 15 11, 10 10 11), (11 11 11, 12 11 11, 12 12 11, 12 11 11, 11 11 11))"),
             (Polygon) rdr.read("POLYGON M((10 10 11, 10 20 11, 20 20 11, 20 15 11, 10 10 11), (11 11 11, 12 11 11, 12 12 11, 12 11 11, 11 11 11), (11 19 11, 11 18 11, 12 18 11, 12 19 11, 11 19 11))")
     };
     rdr =  readerXYZM;
-    Polygon[] poly3DM = new Polygon[]{
+    Polygon[] poly3DM = {
             (Polygon) rdr.read("POLYGON ZM((10 10 10 11, 10 20 10 11, 20 20 10 11, 20 15 10 11, 10 10 10 11))"),
             (Polygon) rdr.read("POLYGON ZM((10 10 10 11, 10 20 10 11, 20 20 10 11, 20 15 10 11, 10 10 10 11), (11 11 10 11, 12 11 10 11, 12 12 10 11, 12 11 10 11, 11 11 10 11))"),
             (Polygon) rdr.read("POLYGON ZM((10 10 10 11, 10 20 10 11, 20 20 10 11, 20 15 10 11, 10 10 10 11), (11 11 10 11, 12 11 10 11, 12 12 10 11, 12 11 10 11, 11 11 10 11), (11 19 10 11, 11 18 10 11, 12 18 10 11, 12 19 10 11, 11 19 10 11))")
@@ -238,7 +238,7 @@ public class WKTReaderTest extends GeometryTestCase {
     assertTrue(isEqual(csPoly3DM[2], poly3DM[2].getInteriorRingN(1).getCoordinateSequence()));
   }
 
-  static double[][] mpCoords = new double[][] { 
+  static double[][] mpCoords = { 
     new double[] {10, 10}, 
     new double[] {20, 20}};
   
@@ -290,7 +290,7 @@ public class WKTReaderTest extends GeometryTestCase {
     checkCS(cs[1], mp.getGeometryN(1));
   }
 
-  double[][] mLcoords = new double[][] { 
+  double[][] mLcoords = { 
     new double[] {10, 10, 20, 20}, 
     new double[] {15, 15, 30, 15}};
 
@@ -335,7 +335,7 @@ public class WKTReaderTest extends GeometryTestCase {
     checkCS(cs[1], mp.getGeometryN(1));
   }
 
-  double[][] mAcoords = new double[][] { 
+  double[][] mAcoords = { 
     new double[] {10, 10, 10, 20, 20, 20, 20, 15, 10, 10}, 
     new double[] {11, 11, 12, 11, 12, 12, 12, 11, 11, 11},
     new double[] {60, 60, 70, 70, 80, 60, 60, 60}
@@ -395,10 +395,10 @@ public class WKTReaderTest extends GeometryTestCase {
   public void testGeometryCollection() throws Exception {
 
     // arrange
-    double[][] coordinates = new double[][] { new double[] {10, 10}, new double[] {30, 30},
+    double[][] coordinates = { new double[] {10, 10}, new double[] {30, 30},
             new double[] {15, 15, 20, 20}, new double[0], new double[] {10, 10, 20, 20, 30, 40, 10, 10}  };
 
-    CoordinateSequence[] css = new CoordinateSequence[] {
+    CoordinateSequence[] css = {
             createSequence(Ordinate.createXY(), coordinates[0]),
             createSequence(Ordinate.createXY(), coordinates[1]),
             createSequence(Ordinate.createXY(), coordinates[2]),

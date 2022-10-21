@@ -32,7 +32,7 @@ public class OrientationIsCCWTest extends GeometryTestCase {
   public OrientationIsCCWTest(String name) { super(name); }
 
   public void testTooFewPoints() {
-    Coordinate[] pts = new Coordinate[] {
+    Coordinate[] pts = {
       new Coordinate(0, 0),
       new Coordinate(1, 1),
       new Coordinate(2, 2)

@@ -15,12 +15,12 @@ public class DisjointSetsTest extends TestCase {
   }
   
   public void testEmpty() {
-    int[] nums = new int[] { };
+    int[] nums = { };
     checkIntsModulo(nums, 3, new String[] { });
   }
   
   public void testSingleItem() {
-    int[] nums = new int[] {
+    int[] nums = {
         11
     };
     checkIntsModulo(nums, 3, new String[] {
@@ -29,7 +29,7 @@ public class DisjointSetsTest extends TestCase {
   }
   
   public void testIntsModulo3() {
-    int[] nums = new int[] {
+    int[] nums = {
         11,22,3,45,5,62,7
     };
     checkIntsModulo(nums, 3, new String[] {
@@ -40,7 +40,7 @@ public class DisjointSetsTest extends TestCase {
   }
   
   public void testIntsModulo2() {
-    int[] nums = new int[] {
+    int[] nums = {
         11,22,3,45,5,62,7
     };
     checkIntsModulo(nums, 2, new String[] {

@@ -133,9 +133,7 @@ public class DiffFunctions {
 
   private static MultiLineString diffSegments(List<LineSegment> segsA, List<LineSegment> segsB, GeometryFactory factory) {
     
-    Set<LineSegment> segs = new HashSet<>();
-    segs.addAll(segsB);
-
+    Set<LineSegment> segs = new HashSet<>(segsB);
     List<LineSegment> segsDiffA = new ArrayList<>();
     for (LineSegment seg : segsA) {
       if (! segs.contains(seg)) {
@@ -171,4 +169,3 @@ public class DiffFunctions {
 
   
 }
-;

@@ -45,7 +45,7 @@ public class BusyDialog extends JDialog {
 
     public interface Executable {
 
-        public void execute() throws Exception;
+        void execute() throws Exception;
     }
     ////////////////////////////////////////////////////////////////////////////////
     private Executable executable;

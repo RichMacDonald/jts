@@ -17,6 +17,6 @@ import java.util.EventListener;
  */
 public interface GeometryFunctionListener extends EventListener {
 
-  public void functionSelected(GeometryFunctionEvent e);
-  public void functionInvoked(GeometryFunctionEvent e);
+  void functionSelected(GeometryFunctionEvent e);
+  void functionInvoked(GeometryFunctionEvent e);
 }

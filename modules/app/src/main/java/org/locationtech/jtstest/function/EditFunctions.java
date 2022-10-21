@@ -32,7 +32,7 @@ public class EditFunctions {
     boolean isPolygonal = polyGeom instanceof Polygon;
     if (! isPolygonal) 
       throw new IllegalArgumentException("A is not a polygon");
-    if (! (hole instanceof Polygon || hole instanceof LineString))
+    if ((!(hole instanceof Polygon) && !(hole instanceof LineString)))
       throw new IllegalArgumentException("B must be a polygon or line");
     Coordinate[] holePts = extractLine(hole);
     if (! CoordinateArrays.isRing(holePts)) {

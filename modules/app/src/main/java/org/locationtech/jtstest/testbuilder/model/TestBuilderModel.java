@@ -404,7 +404,7 @@ public class TestBuilderModel
    */
   public static class CaseList {
     
-    public static interface CaseFactory {
+    public interface CaseFactory {
       TestCaseEdit create();
     }
 
@@ -481,8 +481,7 @@ public class TestBuilderModel
     }
   
     public void copyCase() {
-      TestCaseEdit copy = null;
-      copy = new TestCaseEdit(getCurrentCase());
+      TestCaseEdit copy = new TestCaseEdit(getCurrentCase());
       addCase(copy);
     }
     

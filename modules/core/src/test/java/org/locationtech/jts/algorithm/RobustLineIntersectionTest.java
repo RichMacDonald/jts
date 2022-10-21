@@ -240,7 +240,7 @@ extends TestCase
   {
     LineString l1 = (LineString) reader.read(wkt1);
     LineString l2 = (LineString) reader.read(wkt2);
-    Coordinate[] pt = new Coordinate[] {
+    Coordinate[] pt = {
         l1.getCoordinateN(0), l1.getCoordinateN(1),
         l2.getCoordinateN(0), l2.getCoordinateN(1)
     };
@@ -255,7 +255,7 @@ extends TestCase
   {
     LineString l1 = (LineString) reader.read(wkt1);
     LineString l2 = (LineString) reader.read(wkt2);
-    Coordinate[] pt = new Coordinate[] {
+    Coordinate[] pt = {
         l1.getCoordinateN(0), l1.getCoordinateN(1),
         l2.getCoordinateN(0), l2.getCoordinateN(1)
     };
@@ -270,7 +270,7 @@ extends TestCase
 	{
 		LineString l1 = (LineString) reader.read(wkt1);
 		LineString l2 = (LineString) reader.read(wkt2);
-		Coordinate[] pt = new Coordinate[] {
+		Coordinate[] pt = {
 				l1.getCoordinateN(0), l1.getCoordinateN(1),
 				l2.getCoordinateN(0), l2.getCoordinateN(1)
 		};
@@ -310,13 +310,11 @@ extends TestCase
 				checkIntPoints(expectedIntPt[1], li.getIntersection(0), distanceTolerance);
 				checkIntPoints(expectedIntPt[1], li.getIntersection(0), distanceTolerance);
 				
-				if (! (equals(expectedIntPt[0],li.getIntersection(0), distanceTolerance) 
-						|| equals(expectedIntPt[0],li.getIntersection(1), distanceTolerance) )) {
+				if ((!equals(expectedIntPt[0],li.getIntersection(0), distanceTolerance) && !equals(expectedIntPt[0],li.getIntersection(1), distanceTolerance))) {
 					checkIntPoints(expectedIntPt[0], li.getIntersection(0), distanceTolerance);
 					checkIntPoints(expectedIntPt[0], li.getIntersection(1), distanceTolerance);
 				}
-				else if (! (equals(expectedIntPt[1],li.getIntersection(0), distanceTolerance) 
-						|| equals(expectedIntPt[1],li.getIntersection(1), distanceTolerance) )) { 
+				else if ((!equals(expectedIntPt[1],li.getIntersection(0), distanceTolerance) && !equals(expectedIntPt[1],li.getIntersection(1), distanceTolerance))) { 
 					checkIntPoints(expectedIntPt[1], li.getIntersection(0), distanceTolerance);
 					checkIntPoints(expectedIntPt[1], li.getIntersection(1), distanceTolerance);
 				}
@@ -341,7 +339,7 @@ extends TestCase
   {
     LineString l1 = (LineString) reader.read(wkt1);
     LineString l2 = (LineString) reader.read(wkt2);
-    Coordinate[] pt = new Coordinate[] { l1.getCoordinateN(0),
+    Coordinate[] pt = { l1.getCoordinateN(0),
         l1.getCoordinateN(1), l2.getCoordinateN(0), l2.getCoordinateN(1) };
     checkInputNotAltered(pt, scaleFactor);
   }

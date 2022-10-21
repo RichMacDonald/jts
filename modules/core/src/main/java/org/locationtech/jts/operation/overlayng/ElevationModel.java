@@ -111,7 +111,7 @@ class ElevationModel {
       @Override
       public void filter(CoordinateSequence seq, int i) {
         if (! seq.hasZ()) {
-          hasZ = false;;
+          hasZ = false;
           return;
         }
         double z = seq.getOrdinate(i, Coordinate.Z);

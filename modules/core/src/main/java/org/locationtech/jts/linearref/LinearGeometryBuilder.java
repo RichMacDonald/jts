@@ -125,7 +125,7 @@ public class LinearGeometryBuilder
   private Coordinate[] validCoordinateSequence(Coordinate[] pts)
   {
     if (pts.length >= 2) return pts;
-    Coordinate[] validPts = new Coordinate[] { pts[0], pts[0]};
+    Coordinate[] validPts = { pts[0], pts[0]};
     return validPts;
   }
 

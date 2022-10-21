@@ -52,7 +52,7 @@ public class GeometryStrategies{
 	 *
 	 * @author David Zwiers, Vivid Solutions.
 	 */
-	static interface ParseStrategy{
+	interface ParseStrategy{
 		/**
 		 * @param arg Value to interpret
 		 * @param gf GeometryFactory

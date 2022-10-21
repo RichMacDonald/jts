@@ -30,7 +30,6 @@ public class DeleteByBoxTool extends BoxBandTool {
   }
 
   private DeleteByBoxTool() {
-    super();
   }
 
   protected void gestureFinished() 

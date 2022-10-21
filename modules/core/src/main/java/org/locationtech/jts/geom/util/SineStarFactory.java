@@ -62,7 +62,6 @@ public class SineStarFactory
    */
 	public SineStarFactory()
 	{
-		super();
 	}
 	
   /**

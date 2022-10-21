@@ -177,7 +177,7 @@ public class VWSimplifier
       Geometry simpResult = super.transformLinearRing(geom, parent);
       if (removeDegenerateRings && !(simpResult instanceof LinearRing))
         return null;
-      ;
+      
       return simpResult;
     }
 

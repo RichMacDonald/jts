@@ -50,7 +50,7 @@ public abstract class AbstractSTRtree implements Serializable {
    * A test for intersection between two bounds, necessary because subclasses
    * of AbstractSTRtree have different implementations of bounds.
    */
-  protected static interface IntersectsOp {
+  protected interface IntersectsOp {
     /**
      * For STRtrees, the bounds will be Envelopes; for SIRtrees, Intervals;
      * for other subclasses of AbstractSTRtree, some other class.
@@ -470,7 +470,6 @@ public abstract class AbstractSTRtree implements Serializable {
         if (level == -1) { boundables.add(boundable); }
       }
     }
-    return;
   }
 
   protected abstract Comparator getComparator();

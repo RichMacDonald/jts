@@ -215,7 +215,7 @@ class PolygonRing {
     PolygonRingTouch touch = touches.get(ring.id);
     if (touch == null) {
       touches.put(ring.id, new PolygonRingTouch(ring, pt));
-    };
+    }
   }
   
   public void addSelfTouch(Coordinate origin, Coordinate e00, Coordinate e01, Coordinate e10, Coordinate e11) {

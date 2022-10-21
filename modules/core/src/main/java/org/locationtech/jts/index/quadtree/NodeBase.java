@@ -110,7 +110,7 @@ public abstract class NodeBase implements Serializable {
 
   public boolean isPrunable()
   {
-    return ! (hasChildren() || hasItems());
+    return (!hasChildren() && !hasItems());
   }
 
   public boolean hasChildren()

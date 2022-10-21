@@ -161,7 +161,6 @@ public class FastNodingValidator
   	noder.computeNodes(segStrings);
   	if (segInt.hasIntersection()) {
   		isValid = false;
-  		return;
   	}
   }
   

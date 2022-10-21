@@ -185,9 +185,9 @@ public class Polygon
     Envelope env = getEnvelopeInternal();
     for (int i = 0; i < 5; i++) {
       double x = seq.getX(i);
-      if (! (x == env.getMinX() || x == env.getMaxX())) return false;
+      if (((x != env.getMinX()) && (x != env.getMaxX()))) return false;
       double y = seq.getY(i);
-      if (! (y == env.getMinY() || y == env.getMaxY())) return false;
+      if (((y != env.getMinY()) && (y != env.getMaxY()))) return false;
     }
 
     // check vertices are in right order

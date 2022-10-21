@@ -345,7 +345,7 @@ public class GridElement {
     
     // scale bar is 10 units long
     int scaleMag = gridMagModel + 1;
-    double scaleSize = Math.pow(10, scaleMag);;
+    double scaleSize = Math.pow(10, scaleMag);
     
   	int viewHeight = (int) viewport.getHeightInView();
   	//int viewWidth = (int) viewport.getWidthInView();

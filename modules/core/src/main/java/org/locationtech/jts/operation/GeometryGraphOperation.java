@@ -58,7 +58,7 @@ public class GeometryGraphOperation
     setComputationPrecision(g0.getPrecisionModel());
 
     arg = new GeometryGraph[1];
-    arg[0] = new GeometryGraph(0, g0);;
+    arg[0] = new GeometryGraph(0, g0);
   }
 
   public Geometry getArgGeometry(int i) { return arg[i].getGeometry(); }
