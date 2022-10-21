@@ -121,7 +121,7 @@ public class NodingIntersectionFinder
   private LineIntersector li;
   private Coordinate interiorIntersection = null;
   private Coordinate[] intSegments = null;
-  private List intersections = new ArrayList();
+  private List<Coordinate> intersections = new ArrayList<Coordinate>();
   private int intersectionCount = 0;
 
   /**
@@ -191,7 +191,7 @@ public class NodingIntersectionFinder
    * 
    * @return a List of {@link Coordinate}
    */
-  public List getIntersections()
+  public List<Coordinate> getIntersections()
   {
     return intersections;
   }

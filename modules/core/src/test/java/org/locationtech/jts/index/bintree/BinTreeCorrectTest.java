@@ -58,7 +58,7 @@ public class BinTreeCorrectTest {
 
   void createGrid(int nGridCells)
   {
-    int gridSize = (int) Math.sqrt((double) nGridCells);
+    int gridSize = (int) Math.sqrt(nGridCells);
     gridSize += 1;
     double extent = MAX_EXTENT - MIN_EXTENT;
     double gridInc = extent / gridSize;
@@ -75,7 +75,7 @@ public class BinTreeCorrectTest {
   void runQueries()
   {
     int nGridCells = 100;
-    int cellSize = (int) Math.sqrt((double) NUM_ITEMS);
+    int cellSize = (int) Math.sqrt(NUM_ITEMS);
     double extent = MAX_EXTENT - MIN_EXTENT;
     double queryCellSize =  2.0 * extent / cellSize;
 
@@ -89,7 +89,7 @@ public class BinTreeCorrectTest {
     Stopwatch sw = new Stopwatch();
     sw.start();
 
-    int gridSize = (int) Math.sqrt((double) nGridCells);
+    int gridSize = (int) Math.sqrt(nGridCells);
     gridSize += 1;
     double extent = MAX_EXTENT - MIN_EXTENT;
     double gridInc = extent / gridSize;

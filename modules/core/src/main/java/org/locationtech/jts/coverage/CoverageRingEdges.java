@@ -57,8 +57,8 @@ class CoverageRingEdges {
   
   public CoverageRingEdges(Geometry[] coverage) {
     this.coverage = coverage;
-    ringEdgesMap = new HashMap<LinearRing, List<CoverageEdge>>();
-    edges = new ArrayList<CoverageEdge>();
+    ringEdgesMap = new HashMap<>();
+    edges = new ArrayList<>();
     build();
   }
 
@@ -73,7 +73,7 @@ class CoverageRingEdges {
    * @return the selected edges
    */
   public List<CoverageEdge> selectEdges(int ringCount) {
-    List<CoverageEdge> result = new ArrayList<CoverageEdge>();
+    List<CoverageEdge> result = new ArrayList<>();
     for (CoverageEdge edge : edges) {
       if (edge.getRingCount() == ringCount) {
         result.add(edge);
@@ -85,7 +85,7 @@ class CoverageRingEdges {
   private void build() {
     Set<Coordinate> nodes = findNodes(coverage);
     Set<LineSegment> boundarySegs = CoverageBoundarySegmentFinder.findBoundarySegments(coverage);
-    HashMap<LineSegment, CoverageEdge> uniqueEdgeMap = new HashMap<LineSegment, CoverageEdge>();
+    HashMap<LineSegment, CoverageEdge> uniqueEdgeMap = new HashMap<>();
     for (Geometry geom : coverage) {
       for (int ipoly = 0; ipoly < geom.getNumGeometries(); ipoly++) {
         Polygon poly = (Polygon) geom.getGeometryN(ipoly);
@@ -130,7 +130,7 @@ class CoverageRingEdges {
   private List<CoverageEdge> extractRingEdges(LinearRing ring, 
       HashMap<LineSegment, CoverageEdge> uniqueEdgeMap, 
       Set<Coordinate> nodes) {
-    List<CoverageEdge> ringEdges = new ArrayList<CoverageEdge>();
+    List<CoverageEdge> ringEdges = new ArrayList<>();
     int first = findNextNodeIndex(ring, -1, nodes);
     if (first < 0) {
       //-- ring does not contain a node, so edge is entire ring
@@ -207,7 +207,7 @@ class CoverageRingEdges {
 
   private Set<Coordinate> findNodes(Geometry[] coverage) {
     Map<Coordinate, Integer> vertexCount = VertexCounter.count(coverage);
-    Set<Coordinate> nodes = new HashSet<Coordinate>();
+    Set<Coordinate> nodes = new HashSet<>();
     for (Coordinate v : vertexCount.keySet()) {
       if (vertexCount.get(v) > 2) {
         nodes.add(v);

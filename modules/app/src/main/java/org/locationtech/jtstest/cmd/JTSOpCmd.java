@@ -197,10 +197,10 @@ public class JTSOpCmd {
     //TODO: include any loaded functions
     DoubleKeyMap funcMap = funcRegistry.getCategorizedGeometryFunctions();
     @SuppressWarnings("unchecked")
-    Collection<String> categories = funcMap.keySet();
-    for (String category : categories) {
+    Collection<Object> categories = funcMap.keySet();
+    for (Object category : categories) {
       @SuppressWarnings("unchecked")
-      Collection<GeometryFunction> funcs = funcMap.values(category);
+      Collection<GeometryFunction> funcs = (Collection<GeometryFunction>) funcMap.values(category);
       for (GeometryFunction fun : funcs) {
         System.out.println(category + "." + functionDesc(fun));
       }

@@ -236,9 +236,9 @@ public class LineSequencerTest
   List fromWKT(String[] wkts)
   {
     List geomList = new ArrayList();
-    for (int i = 0; i < wkts.length; i++) {
+    for (String wkt : wkts) {
       try {
-        geomList.add(rdr.read(wkts[i]));
+        geomList.add(rdr.read(wkt));
       }
       catch (Exception ex) {
         ex.printStackTrace();

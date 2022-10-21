@@ -128,11 +128,11 @@ public abstract class BoxBandTool extends IndicatorTool
    * 
    * @return the coordinates for the rectangle
    */
-  protected List getCoordinatesOfEnvelope()
+  protected List<Coordinate> getCoordinatesOfEnvelope()
   {
     Envelope env = getEnvelope();
     
-    List coords = new ArrayList();
+    List<Coordinate> coords = new ArrayList<Coordinate>();
     coords.add(new Coordinate(env.getMinX(), env.getMinY()));
     coords.add(new Coordinate(env.getMinX(), env.getMaxY()));
     coords.add(new Coordinate(env.getMaxX(), env.getMaxY()));
@@ -148,7 +148,7 @@ public abstract class BoxBandTool extends IndicatorTool
    * 
    * @return the coordinates for the rectangle
    */
-  protected List getCoordinates()
+  protected List<Coordinate> getCoordinates()
   {
     Coordinate start = toModelSnapped(zoomBoxStart);
     Coordinate end = toModelSnapped(zoomBoxEnd);
@@ -163,7 +163,7 @@ public abstract class BoxBandTool extends IndicatorTool
      * Form rectangle starting at start point, 
      * and oriented CW.
      */
-    List coords = new ArrayList();
+    List<Coordinate> coords = new ArrayList<Coordinate>();
     coords.add(new Coordinate(start));
     if (isCW) 
       coords.add(mid1);

@@ -13,7 +13,6 @@
 package org.locationtech.jts.triangulate;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.triangulate.quadedge.LocateFailureException;
 import org.locationtech.jts.triangulate.quadedge.QuadEdge;
@@ -57,8 +56,8 @@ public class IncrementalDelaunayTriangulator
    * @throws LocateFailureException if the location algorithm fails to converge in a reasonable number of iterations
 	 */
 	public void insertSites(Collection vertices) {
-		for (Iterator i = vertices.iterator(); i.hasNext();) {
-			Vertex v = (Vertex) i.next();
+		for (Object element : vertices) {
+			Vertex v = (Vertex) element;
 			insertSite(v);
 		}
 	}

@@ -59,8 +59,7 @@ public class MinimumBoundingCircleStressTest
   
   void checkWithinCircle(Coordinate[] pts, Coordinate centre, double radius, double tolerance)
   {
-  	for (int i = 0; i < pts.length; i++ ) {
-  		Coordinate p = pts[i];
+  	for (Coordinate p : pts) {
   		double ptRadius = centre.distance(p);
   		double error = ptRadius - radius;
   		if (error > tolerance) {

@@ -86,12 +86,12 @@ public class VertexStyle  implements Style
     
     Coordinate[] coordinates = geom.getCoordinates();
     
-    for (int i = 0; i < coordinates.length; i++) {
-        if (! viewport.containsInModel(coordinates[i])) {
+    for (Coordinate coordinate : coordinates) {
+        if (! viewport.containsInModel(coordinate)) {
             //Otherwise get "sun.dc.pr.PRException: endPath: bad path" exception 
             continue;
         }       
-        pM.setLocation(coordinates[i].x, coordinates[i].y);
+        pM.setLocation(coordinate.x, coordinate.y);
         viewport.toView(pM, pV);
       	//shape.setLocation((int) (pV.getX() - sizeOver2), (int) (pV.getY() - sizeOver2));
         //g.fill(shape);

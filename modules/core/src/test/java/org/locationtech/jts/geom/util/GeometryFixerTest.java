@@ -408,8 +408,8 @@ public class GeometryFixerTest extends GeometryTestCase {
   }
 
   private boolean isIn(Coordinate p, Coordinate[] pts) {
-    for (int i = 0; i < pts.length; i++) {
-      if (p == pts[i]) return true;
+    for (Coordinate pt : pts) {
+      if (p == pt) return true;
     }
     return false;
   }

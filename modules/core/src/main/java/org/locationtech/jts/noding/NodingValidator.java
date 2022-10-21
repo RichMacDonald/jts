@@ -12,7 +12,6 @@
 package org.locationtech.jts.noding;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.algorithm.LineIntersector;
 import org.locationtech.jts.algorithm.RobustLineIntersector;
@@ -51,8 +50,8 @@ public class NodingValidator {
    */
   private void checkCollapses()
   {
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      SegmentString ss = (SegmentString) i.next();
+    for (Object segString : segStrings) {
+      SegmentString ss = (SegmentString) segString;
       checkCollapses(ss);
     }
   }
@@ -77,10 +76,10 @@ public class NodingValidator {
    */
   private void checkInteriorIntersections()
   {
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      SegmentString ss0 = (SegmentString) i.next();
-      for (Iterator j = segStrings.iterator(); j.hasNext(); ) {
-        SegmentString ss1 = (SegmentString) j.next();
+    for (Object segString : segStrings) {
+      SegmentString ss0 = (SegmentString) segString;
+      for (Object segString2 : segStrings) {
+        SegmentString ss1 = (SegmentString) segString2;
 
           checkInteriorIntersections(ss0, ss1);
       }
@@ -139,8 +138,8 @@ public class NodingValidator {
    */
   private void checkEndPtVertexIntersections()
   {
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      SegmentString ss = (SegmentString) i.next();
+    for (Object segString : segStrings) {
+      SegmentString ss = (SegmentString) segString;
       Coordinate[] pts = ss.getCoordinates();
       checkEndPtVertexIntersections(pts[0], segStrings);
       checkEndPtVertexIntersections(pts[pts.length - 1], segStrings);
@@ -149,8 +148,8 @@ public class NodingValidator {
 
   private void checkEndPtVertexIntersections(Coordinate testPt, Collection segStrings)
   {
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      SegmentString ss = (SegmentString) i.next();
+    for (Object segString : segStrings) {
+      SegmentString ss = (SegmentString) segString;
       Coordinate[] pts = ss.getCoordinates();
       for (int j = 1; j < pts.length - 1; j++) {
         if (pts[j].equals(testPt))

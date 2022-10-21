@@ -11,7 +11,6 @@
  */
 package org.locationtech.jts.geomgraph.index;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -33,30 +32,26 @@ public class SimpleEdgeSetIntersector
   public SimpleEdgeSetIntersector() {
   }
 
-  public void computeIntersections(List edges, SegmentIntersector si, boolean testAllSegments)
+  public void computeIntersections(List<Edge> edges, SegmentIntersector si, boolean testAllSegments)
   {
     nOverlaps = 0;
 
-    for (Iterator i0 = edges.iterator(); i0.hasNext(); ) {
-      Edge edge0 = (Edge) i0.next();
-      for (Iterator i1 = edges.iterator(); i1.hasNext(); ) {
-        Edge edge1 = (Edge) i1.next();
-        if (testAllSegments || edge0 != edge1)
-          computeIntersects(edge0, edge1, si);
+    for (Edge edge : edges) {
+      for (Edge edge2 : edges) {
+        if (testAllSegments || (Edge) edge != (Edge) edge2)
+          computeIntersects((Edge) edge, (Edge) edge2, si);
       }
     }
   }
 
 
-  public void computeIntersections(List edges0, List edges1, SegmentIntersector si)
+  public void computeIntersections(List<Edge> edges0, List<Edge> edges1, SegmentIntersector si)
   {
     nOverlaps = 0;
 
-    for (Iterator i0 = edges0.iterator(); i0.hasNext(); ) {
-      Edge edge0 = (Edge) i0.next();
-      for (Iterator i1 = edges1.iterator(); i1.hasNext(); ) {
-        Edge edge1 = (Edge) i1.next();
-        computeIntersects(edge0, edge1, si);
+    for (Edge element : edges0) {
+      for (Edge element2 : edges1) {
+        computeIntersects((Edge) element, (Edge) element2, si);
       }
     }
   }

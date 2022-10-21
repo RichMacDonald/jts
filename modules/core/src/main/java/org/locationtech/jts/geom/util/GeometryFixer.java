@@ -189,7 +189,7 @@ public class GeometryFixer {
   }
 
   private Geometry fixMultiPoint(MultiPoint geom) {
-    List<Point> pts = new ArrayList<Point>();
+    List<Point> pts = new ArrayList<>();
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       Point pt = (Point) geom.getGeometryN(i);
       if (pt.isEmpty()) continue;
@@ -269,7 +269,7 @@ public class GeometryFixer {
   }
 
   private Geometry fixMultiLineString(MultiLineString geom) {
-    List<Geometry> fixed = new ArrayList<Geometry>();
+    List<Geometry> fixed = new ArrayList<>();
     boolean isMixed = false;
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       LineString line = (LineString) geom.getGeometryN(i);
@@ -320,8 +320,8 @@ public class GeometryFixer {
 
     //--- fix holes, classify, and construct shell-true holes
     List<Geometry> holesFixed = fixHoles(geom);
-    List<Geometry> holes = new ArrayList<Geometry>();
-    List<Geometry> shells = new ArrayList<Geometry>();
+    List<Geometry> holes = new ArrayList<>();
+    List<Geometry> shells = new ArrayList<>();
     classifyHoles(fixShell, holesFixed, holes, shells);
     Geometry polyWithHoles = difference(fixShell, holes);
     if (shells.size() == 0) {
@@ -335,7 +335,7 @@ public class GeometryFixer {
   }
 
   private List<Geometry> fixHoles(Polygon geom) {
-    List<Geometry> holes = new ArrayList<Geometry>();
+    List<Geometry> holes = new ArrayList<>();
     for (int i = 0; i < geom.getNumInteriorRing(); i++) {
       Geometry holeRep = fixRing(geom.getInteriorRingN(i));
       if (holeRep != null) {
@@ -396,7 +396,7 @@ public class GeometryFixer {
   }
 
   private Geometry fixMultiPolygon(MultiPolygon geom) {
-    List<Geometry> polys = new ArrayList<Geometry>();
+    List<Geometry> polys = new ArrayList<>();
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       Polygon poly = (Polygon) geom.getGeometryN(i);
       Geometry polyFix = fixPolygonElement(poly);

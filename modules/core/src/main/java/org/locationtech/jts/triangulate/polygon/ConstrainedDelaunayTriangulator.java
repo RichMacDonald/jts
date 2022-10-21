@@ -82,7 +82,7 @@ public class ConstrainedDelaunayTriangulator {
     if (triList != null) return;
     
     List<Polygon> polys = PolygonExtracter.getPolygons(inputGeom);
-    triList = new ArrayList<Tri>();
+    triList = new ArrayList<>();
     for (Polygon poly : polys) {
       List<Tri> polyTriList = triangulatePolygon(poly);
       triList.addAll(polyTriList);

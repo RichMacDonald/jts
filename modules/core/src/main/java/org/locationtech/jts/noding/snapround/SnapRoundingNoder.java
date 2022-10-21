@@ -77,7 +77,7 @@ public class SnapRoundingNoder
 	 * @return a Collection of NodedSegmentStrings representing the substrings
 	 * 
 	 */
-  public Collection getNodedSubstrings()
+  public Collection<SegmentString> getNodedSubstrings()
   {
     return NodedSegmentString.getNodedSubstrings(snappedResult);
   }
@@ -88,12 +88,12 @@ public class SnapRoundingNoder
    * 
    * @param inputSegmentStrings a Collection of NodedSegmentStrings
    */
-  public void computeNodes(Collection inputSegmentStrings)
+  public void computeNodes(Collection<? extends SegmentString> inputSegmentStrings)
   {
     snappedResult = snapRound(inputSegmentStrings);
   }
   
-  private List<NodedSegmentString> snapRound(Collection<NodedSegmentString> segStrings)
+  private List<NodedSegmentString> snapRound(Collection<? extends SegmentString> segStrings)
   {
     /**
      * Determine hot pixels for intersections and vertices.
@@ -115,7 +115,7 @@ public class SnapRoundingNoder
    * 
    * @param segStrings the input NodedSegmentStrings
    */
-  private void addIntersectionPixels(Collection<NodedSegmentString> segStrings)
+  private void addIntersectionPixels(Collection<? extends SegmentString> segStrings)
   {
     /**
      * nearness tolerance is a small fraction of the grid size.
@@ -139,7 +139,7 @@ public class SnapRoundingNoder
    * 
    * @param segStrings the input NodedSegmentStrings
    */
-  private void addVertexPixels(Collection<NodedSegmentString> segStrings) {
+  private void addVertexPixels(Collection<? extends SegmentString> segStrings) {
     for (SegmentString nss : segStrings) {
       Coordinate[] pts = nss.getCoordinates();
       pixelIndex.add(pts);
@@ -162,8 +162,8 @@ public class SnapRoundingNoder
   private Coordinate[] round(Coordinate[] pts) {
     CoordinateList roundPts = new CoordinateList();
     
-    for (int i = 0; i < pts.length; i++ ) {
-      roundPts.add( round( pts[i] ), false);
+    for (Coordinate pt : pts) {
+      roundPts.add( round( pt ), false);
     }
     return roundPts.toCoordinateArray();
   }
@@ -175,11 +175,11 @@ public class SnapRoundingNoder
    * @param segStrings segments to snap
    * @return the snapped segment strings
    */
-  private List<NodedSegmentString> computeSnaps(Collection<NodedSegmentString> segStrings)
+  private List<NodedSegmentString> computeSnaps(Collection<? extends SegmentString> segStrings)
   {
-    List<NodedSegmentString> snapped = new ArrayList<NodedSegmentString>();
-    for (NodedSegmentString ss : segStrings ) {
-      NodedSegmentString snappedSS = computeSegmentSnaps(ss);
+    List<NodedSegmentString> snapped = new ArrayList<>();
+    for (SegmentString ss : segStrings ) {
+      NodedSegmentString snappedSS = computeSegmentSnaps((NodedSegmentString) ss);  //manual cast
       if (snappedSS != null)
         snapped.add(snappedSS);
     }

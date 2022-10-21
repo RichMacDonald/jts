@@ -28,8 +28,8 @@ public class BufferByUnionFunctions {
 	
 	public static Geometry componentBuffers(Geometry g, double distance)	
 	{		
-		List bufs = new ArrayList();
-		for (Iterator it = new GeometryCollectionIterator(g); it.hasNext(); ) {
+		List<Geometry> bufs = new ArrayList<Geometry>();
+		for (Iterator<?> it = new GeometryCollectionIterator(g); it.hasNext(); ) {
 			Geometry comp = (Geometry) it.next();
 			if (comp instanceof GeometryCollection) continue;
 			bufs.add(comp.buffer(distance));

@@ -40,7 +40,7 @@ public class ConstrainedInteriorPoint {
   
   private Polygon poly;
   private double scanY;
-  private List<Double> crossings = new ArrayList<Double>();
+  private List<Double> crossings = new ArrayList<>();
   private Envelope constraint;
 
   public ConstrainedInteriorPoint(Polygon poly) {
@@ -62,9 +62,9 @@ public class ConstrainedInteriorPoint {
   }
 
   private void scan(Polygon poly) {
-    scanRing((LinearRing) poly.getExteriorRing());
+    scanRing(poly.getExteriorRing());
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
-      scanRing((LinearRing) poly.getInteriorRingN(i));
+      scanRing(poly.getInteriorRingN(i));
     }
   }
   

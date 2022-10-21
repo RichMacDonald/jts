@@ -525,14 +525,14 @@ public class ShewchuksDeterminant
 
   private static double Fast_Two_Sum_Head(double a, double b)
   {
-    double x = (double) (a + b);
+    double x = a + b;
 
     return x;
   }
 
   private static double Two_Sum_Tail(double a, double b, double x)
   {
-    double bvirt = (double) (x - a);
+    double bvirt = x - a;
     double avirt = x - bvirt;
     double bround = b - bvirt;
     double around = a - avirt;
@@ -544,14 +544,14 @@ public class ShewchuksDeterminant
 
   private static double Two_Sum_Head(double a, double b)
   {
-    double x = (double) (a + b);
+    double x = a + b;
 
     return x;
   }
 
   private static double Two_Diff_Tail(double a, double b, double x)
   {
-    double bvirt = (double) (a - x); // porting issue: why this cast?
+    double bvirt = a - x; // porting issue: why this cast?
     double avirt = x + bvirt;
     double bround = bvirt - b;
     double around = a - avirt;
@@ -562,15 +562,15 @@ public class ShewchuksDeterminant
 
   private static double Two_Diff_Head(double a, double b)
   {
-    double x = (double) (a - b);
+    double x = a - b;
 
     return x;
   }
 
   private static double SplitLo(double a)
   {
-    double c = (double) (splitter * a); // porting issue: why this cast?
-    double abig = (double) (c - a); // porting issue: why this cast?
+    double c = splitter * a; // porting issue: why this cast?
+    double abig = c - a; // porting issue: why this cast?
     double ahi = c - abig;
     double alo = a - ahi;
 
@@ -579,8 +579,8 @@ public class ShewchuksDeterminant
 
   private static double SplitHi(double a)
   {
-    double c = (double) (splitter * a); // porting issue: why this cast?
-    double abig = (double) (c - a); // porting issue: why this cast?
+    double c = splitter * a; // porting issue: why this cast?
+    double abig = c - a; // porting issue: why this cast?
     double ahi = c - abig;
 
     return ahi;
@@ -603,7 +603,7 @@ public class ShewchuksDeterminant
 
   private static double Two_Product_Head(double a, double b)
   {
-    double x = (double) (a * b);
+    double x = a * b;
 
     return x;
   }

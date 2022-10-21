@@ -191,7 +191,7 @@ public class PolygonHullSimplifier {
     RingHullIndex hullIndex = new RingHullIndex();
     int nPoly = multiPoly.getNumGeometries();
     @SuppressWarnings("unchecked")
-    List<RingHull>[] polyHulls = (List<RingHull>[]) new ArrayList[nPoly];
+    List<RingHull>[] polyHulls = new ArrayList[nPoly];
 
     //TODO: investigate if reordering input elements improves result
     
@@ -203,7 +203,7 @@ public class PolygonHullSimplifier {
     }
     
     //-- compute hull polygons
-    List<Polygon> polys = new ArrayList<Polygon>();
+    List<Polygon> polys = new ArrayList<>();
     for (int i = 0 ; i < multiPoly.getNumGeometries(); i++) {
       Polygon poly = (Polygon) multiPoly.getGeometryN(i);
       Polygon hull = polygonHull(poly, polyHulls[i], hullIndex);
@@ -213,7 +213,7 @@ public class PolygonHullSimplifier {
   }
 
   private Geometry computeMultiPolygonEach(MultiPolygon multiPoly) {
-    List<Polygon> polys = new ArrayList<Polygon>();
+    List<Polygon> polys = new ArrayList<>();
     for (int i = 0 ; i < multiPoly.getNumGeometries(); i++) {
       Polygon poly = (Polygon) multiPoly.getGeometryN(i);
       Polygon hull = computePolygon(poly);
@@ -244,7 +244,7 @@ public class PolygonHullSimplifier {
    * @return the list of ring hulls
    */
   private List<RingHull> initPolygon(Polygon poly, RingHullIndex hullIndex) {
-    List<RingHull> hulls = new ArrayList<RingHull>();
+    List<RingHull> hulls = new ArrayList<>();
     if (poly.isEmpty()) 
       return hulls;
     
@@ -290,7 +290,7 @@ public class PolygonHullSimplifier {
     
     int ringIndex = 0;
     LinearRing shellHull = ringHulls.get(ringIndex++).getHull(hullIndex);
-    List<LinearRing> holeHulls = new ArrayList<LinearRing>();
+    List<LinearRing> holeHulls = new ArrayList<>();
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
       LinearRing hull = ringHulls.get(ringIndex++).getHull(hullIndex);
       //TODO: handle empty

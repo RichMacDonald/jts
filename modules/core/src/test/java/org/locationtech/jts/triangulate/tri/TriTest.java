@@ -64,9 +64,9 @@ public class TriTest extends GeometryTestCase {
   }
 
   private static void build(Tri... tri) {
-    List<Tri> triList = new ArrayList<Tri>();
-    for (int i = 0; i < tri.length; i++) {
-      triList.add(tri[i]);
+    List<Tri> triList = new ArrayList<>();
+    for (Tri element : tri) {
+      triList.add(element);
     }
     TriangulationBuilder.build(triList);
   }

@@ -267,10 +267,9 @@ public class DistanceOp
   
   private void computeContainmentDistance( List<GeometryLocation> locs, List<Polygon> polys, GeometryLocation[] locPtPoly)
   {
-    for (int i = 0; i < locs.size(); i++) {
-      GeometryLocation loc = locs.get(i);
-      for (int j = 0; j < polys.size(); j++) {
-      	computeContainmentDistance(loc, polys.get(j), locPtPoly);
+    for (GeometryLocation loc : locs) {
+      for (Polygon poly : polys) {
+      	computeContainmentDistance(loc, poly, locPtPoly);
         if (minDistance <= terminateDistance) return;
       }
     }
@@ -334,10 +333,8 @@ public class DistanceOp
 
   private void computeMinDistanceLines(List<LineString> lines0, List<LineString> lines1, GeometryLocation[] locGeom)
   {
-    for (int i = 0; i < lines0.size(); i++) {
-      LineString line0 = lines0.get(i);
-      for (int j = 0; j < lines1.size(); j++) {
-        LineString line1 = lines1.get(j);
+    for (LineString line0 : lines0) {
+      for (LineString line1 : lines1) {
         computeMinDistance(line0, line1, locGeom);
         if (minDistance <= terminateDistance) return;
       }
@@ -346,10 +343,8 @@ public class DistanceOp
 
   private void computeMinDistancePoints(List<Point> points0, List<Point> points1, GeometryLocation[] locGeom)
   {
-    for (int i = 0; i < points0.size(); i++) {
-      Point pt0 = points0.get(i);
-      for (int j = 0; j < points1.size(); j++) {
-        Point pt1 = points1.get(j);
+    for (Point pt0 : points0) {
+      for (Point pt1 : points1) {
         double dist = pt0.getCoordinate().distance(pt1.getCoordinate());
         if (dist < minDistance) {
           minDistance = dist;
@@ -364,10 +359,8 @@ public class DistanceOp
   private void computeMinDistanceLinesPoints(List<LineString> lines, List<Point> points,
       GeometryLocation[] locGeom)
   {
-    for (int i = 0; i < lines.size(); i++) {
-      LineString line = lines.get(i);
-      for (int j = 0; j < points.size(); j++) {
-        Point pt = points.get(j);
+    for (LineString line : lines) {
+      for (Point pt : points) {
         computeMinDistance(line, pt, locGeom);
         if (minDistance <= terminateDistance) return;
       }

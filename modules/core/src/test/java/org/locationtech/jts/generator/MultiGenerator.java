@@ -74,7 +74,7 @@ public class MultiGenerator extends GeometryGenerator {
 		if(numberGeometries < 1)
 			throw new IllegalStateException("Too few child geoms to create");
 		
-		ArrayList geoms = new ArrayList(numberGeometries);
+		ArrayList<Geometry> geoms = new ArrayList<Geometry>(numberGeometries);
 
 		GridGenerator grid = GeometryGenerator.createGridGenerator();
 		grid.setBoundingBox(boundingBox);

@@ -98,7 +98,7 @@ public class CoordinateSequenceExperiment2 {
         endTime = System.currentTimeMillis();
         totalTime = endTime - startTime;
         totalTimeStr = totalTime < 10000 ? totalTime + " ms"
-                                                : (double) totalTime / 1000.0 +
+                                                : totalTime / 1000.0 +
             " s";
 
         //System.out.println("   signOfDet2x2 calls: " + RobustDeterminant.callCount);

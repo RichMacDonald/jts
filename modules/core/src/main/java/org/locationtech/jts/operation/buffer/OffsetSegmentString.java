@@ -30,7 +30,7 @@ class OffsetSegmentString
 {
   private static final Coordinate[] COORDINATE_ARRAY_TYPE = new Coordinate[0];
 
-  private ArrayList ptList;
+  private ArrayList<Coordinate> ptList;
   private PrecisionModel precisionModel = null;
   
   /**
@@ -42,7 +42,7 @@ class OffsetSegmentString
 
   public OffsetSegmentString()
   {
-  	ptList = new ArrayList();
+  	ptList = new ArrayList<Coordinate>();
   }
   
   public void setPrecisionModel(PrecisionModel precisionModel)
@@ -69,8 +69,8 @@ class OffsetSegmentString
   public void addPts(Coordinate[] pt, boolean isForward)
   {
     if (isForward) {
-      for (int i = 0; i < pt.length; i++) {
-        addPt(pt[i]);
+      for (Coordinate element : pt) {
+        addPt(element);
       }
     }
     else {

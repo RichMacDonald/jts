@@ -13,7 +13,6 @@ package org.locationtech.jts.geom.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -43,8 +42,8 @@ public class LinearComponentExtracter
    */
   public static Collection getLines(Collection geoms, Collection lines)
   {
-  	for (Iterator i = geoms.iterator(); i.hasNext(); ) {
-  		Geometry g = (Geometry) i.next();
+  	for (Object geom : geoms) {
+  		Geometry g = (Geometry) geom;
   		getLines(g, lines);
   	}
     return lines;
@@ -61,8 +60,8 @@ public class LinearComponentExtracter
    */
   public static Collection getLines(Collection geoms, Collection lines, boolean forceToLineString)
   {
-  	for (Iterator i = geoms.iterator(); i.hasNext(); ) {
-  		Geometry g = (Geometry) i.next();
+  	for (Object geom : geoms) {
+  		Geometry g = (Geometry) geom;
   		getLines(g, lines, forceToLineString);
   	}
     return lines;

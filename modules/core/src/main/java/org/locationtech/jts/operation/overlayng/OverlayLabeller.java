@@ -246,7 +246,7 @@ class OverlayLabeller {
     List<OverlayEdge> linearEdges = findLinearEdgesWithLocation(edges, geomIndex);
     if (linearEdges.size() <= 0) return;
     
-    Deque<OverlayEdge> edgeStack = new ArrayDeque<OverlayEdge>(linearEdges);
+    Deque<OverlayEdge> edgeStack = new ArrayDeque<>(linearEdges);
     boolean isInputLine = inputGeometry.isLine(geomIndex);
     // traverse connected linear edges, labeling unknown ones
     while (! edgeStack.isEmpty()) {
@@ -302,7 +302,7 @@ class OverlayLabeller {
    */
   private static List<OverlayEdge> findLinearEdgesWithLocation(
       Collection<OverlayEdge>edges, int geomIndex) {
-    List<OverlayEdge> linearEdges = new ArrayList<OverlayEdge>();
+    List<OverlayEdge> linearEdges = new ArrayList<>();
     for (OverlayEdge edge : edges) {
       OverlayLabel lbl = edge.getLabel();
       // keep if linear with known location

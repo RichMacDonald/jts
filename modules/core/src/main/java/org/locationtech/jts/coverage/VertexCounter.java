@@ -23,7 +23,7 @@ import org.locationtech.jts.geom.Geometry;
 class VertexCounter implements CoordinateSequenceFilter {
 
   public static Map<Coordinate, Integer> count(Geometry[] geoms) {
-    Map<Coordinate, Integer> vertexCount = new HashMap<Coordinate, Integer>();
+    Map<Coordinate, Integer> vertexCount = new HashMap<>();
     VertexCounter counter = new VertexCounter(vertexCount);
     for (Geometry geom : geoms) {
       geom.apply(counter);

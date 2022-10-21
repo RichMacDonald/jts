@@ -12,7 +12,6 @@
 package org.locationtech.jts.operation.overlay;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.PointLocator;
@@ -29,7 +28,7 @@ import org.locationtech.jts.geomgraph.Node;
 public class PointBuilder {
   private OverlayOp op;
   private GeometryFactory geometryFactory;
-  private List resultPointList = new ArrayList();
+  private List<Point> resultPointList = new ArrayList<Point>();
 
   public PointBuilder(OverlayOp op, GeometryFactory geometryFactory, PointLocator ptLocator) {
     this.op = op;
@@ -43,7 +42,7 @@ public class PointBuilder {
    *
    * @return a list of the Points objects in the result
    */
-  public List build(int opCode)
+  public List<Point> build(int opCode)
   {
     extractNonCoveredResultNodes(opCode);
     /**
@@ -67,8 +66,8 @@ public class PointBuilder {
     // testing only
     //if (true) return resultNodeList;
 
-    for (Iterator nodeit = op.getGraph().getNodes().iterator(); nodeit.hasNext(); ) {
-      Node n = (Node) nodeit.next();
+    for (Object element : op.getGraph().getNodes()) {
+      Node n = (Node) element;
 
       // filter out nodes which are known to be in the result
       if (n.isInResult())

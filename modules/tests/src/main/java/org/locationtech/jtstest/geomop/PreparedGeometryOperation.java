@@ -39,7 +39,7 @@ implements GeometryOperation
   	
   }
   
-  public Class getReturnType(String opName)
+  public Class<?> getReturnType(String opName)
   {
   	if (isPreparedOp(opName))
   		return boolean.class;

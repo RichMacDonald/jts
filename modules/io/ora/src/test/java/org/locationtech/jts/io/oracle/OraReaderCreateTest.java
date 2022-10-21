@@ -384,7 +384,7 @@ public class OraReaderCreateTest extends BaseOraTestCase
         geometryFactory.createLineString(new Coordinate[] {new Coordinate(1, 1), new Coordinate(2, 2)});
     final Point point = geometryFactory.createPoint(new Coordinate(3, 3));
 
-    final List<Geometry> geometries = new ArrayList<Geometry>();
+    final List<Geometry> geometries = new ArrayList<>();
     geometries.add(lineString);
     geometries.add(point);
 

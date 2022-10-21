@@ -39,11 +39,11 @@ public class EdgeEndBuilder {
   public EdgeEndBuilder() {
   }
 
-  public List computeEdgeEnds(Iterator edges)
+  public List<EdgeEnd> computeEdgeEnds(Iterator<Edge> edges)
   {
-    List l = new ArrayList();
-    for (Iterator i = edges; i.hasNext(); ) {
-      Edge e = (Edge) i.next();
+    List<EdgeEnd> l = new ArrayList<EdgeEnd>();
+    for (Iterator<Edge> i = edges; i.hasNext(); ) {
+      Edge e = i.next();
       computeEdgeEnds(e, l);
     }
     return l;
@@ -53,14 +53,14 @@ public class EdgeEndBuilder {
    * Creates stub edges for all the intersections in this
    * Edge (if any) and inserts them into the graph.
    */
-  public void computeEdgeEnds(Edge edge, List l)
+  public void computeEdgeEnds(Edge edge, List<EdgeEnd> l)
   {
     EdgeIntersectionList eiList = edge.getEdgeIntersectionList();
 //Debug.print(eiList);
     // ensure that the list has entries for the first and last point of the edge
     eiList.addEndpoints();
 
-    Iterator it = eiList.iterator();
+    Iterator<?> it = eiList.iterator();
     EdgeIntersection eiPrev = null;
     EdgeIntersection eiCurr = null;
     // no intersections, so there is nothing to do
@@ -91,7 +91,7 @@ public class EdgeEndBuilder {
    */
   void createEdgeEndForPrev(
                       Edge edge,
-                      List l,
+                      List<EdgeEnd> l,
                       EdgeIntersection eiCurr,
                       EdgeIntersection eiPrev)
   {
@@ -124,7 +124,7 @@ public class EdgeEndBuilder {
      */
   void createEdgeEndForNext(
                       Edge edge,
-                      List l,
+                      List<EdgeEnd> l,
                       EdgeIntersection eiCurr,
                       EdgeIntersection eiNext)
   {

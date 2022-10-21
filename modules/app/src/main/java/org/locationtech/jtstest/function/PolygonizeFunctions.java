@@ -41,34 +41,34 @@ public class PolygonizeFunctions {
   }
   public static Geometry polygonizeDangles(Geometry g)
   {
-    List lines = LineStringExtracter.getLines(g);
+    List<LineString> lines = LineStringExtracter.getLines(g);
     Polygonizer polygonizer = new Polygonizer();
     polygonizer.add(lines);
-    Collection geom = polygonizer.getDangles();
+    Collection<LineString> geom = polygonizer.getDangles();
     return g.getFactory().buildGeometry(geom);
   }
   public static Geometry polygonizeCutEdges(Geometry g)
   {
-    List lines = LineStringExtracter.getLines(g);
+    List<LineString> lines = LineStringExtracter.getLines(g);
     Polygonizer polygonizer = new Polygonizer();
     polygonizer.add(lines);
-    Collection geom = polygonizer.getCutEdges();
+    Collection<LineString> geom = polygonizer.getCutEdges();
     return g.getFactory().buildGeometry(geom);
   }
   public static Geometry polygonizeInvalidRingLines(Geometry g)
   {
-    List lines = LineStringExtracter.getLines(g);
+    List<LineString> lines = LineStringExtracter.getLines(g);
     Polygonizer polygonizer = new Polygonizer();
     polygonizer.add(lines);
-    Collection geom = polygonizer.getInvalidRingLines();
+    Collection<LineString> geom = polygonizer.getInvalidRingLines();
     return g.getFactory().buildGeometry(geom);
   }
   public static Geometry polygonizeAllErrors(Geometry g)
   {
-    List lines = LineStringExtracter.getLines(g);
+    List<LineString> lines = LineStringExtracter.getLines(g);
     Polygonizer polygonizer = new Polygonizer();
     polygonizer.add(lines);
-    List errs = new ArrayList();
+    List<Geometry> errs = new ArrayList<>();
     errs.addAll(polygonizer.getDangles());
     errs.addAll(polygonizer.getCutEdges());
     errs.addAll(polygonizer.getInvalidRingLines());

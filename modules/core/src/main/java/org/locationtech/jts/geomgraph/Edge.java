@@ -79,8 +79,8 @@ public class Edge
     // compute envelope lazily
     if (env == null) {
       env = new Envelope();
-      for (int i = 0; i < pts.length; i++) {
-        env.expandToInclude(pts[i]);
+      for (Coordinate pt : pts) {
+        env.expandToInclude(pt);
       }
     }
     return env;

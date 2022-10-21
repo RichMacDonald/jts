@@ -31,7 +31,7 @@ import java.util.Collection;
 public class ValidatingNoder implements Noder {
 
   private final Noder noder;
-  private Collection<SegmentString> nodedSS;
+  private Collection<? extends SegmentString> nodedSS;
   
   /**
    * Creates a noding validator wrapping the given Noder
@@ -50,7 +50,7 @@ public class ValidatingNoder implements Noder {
    */
   @SuppressWarnings("unchecked")
   @Override
-  public void computeNodes(@SuppressWarnings("rawtypes") Collection segStrings) {
+  public void computeNodes(@SuppressWarnings("rawtypes") Collection<? extends SegmentString> segStrings) {
     noder.computeNodes(segStrings);
     nodedSS = noder.getNodedSubstrings(); 
     validate();
@@ -63,7 +63,7 @@ public class ValidatingNoder implements Noder {
 
   @SuppressWarnings("rawtypes")
   @Override
-  public Collection getNodedSubstrings() {
+  public Collection<? extends SegmentString> getNodedSubstrings() {
     return nodedSS;
   }
 

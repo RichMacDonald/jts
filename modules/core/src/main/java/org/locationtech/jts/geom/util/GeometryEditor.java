@@ -180,7 +180,7 @@ public class GeometryEditor
       return factory.createPolygon();
     }
 
-    ArrayList holes = new ArrayList();
+    ArrayList<LinearRing> holes = new ArrayList<LinearRing>();
     for (int i = 0; i < newPolygon.getNumInteriorRing(); i++) {
       LinearRing hole = (LinearRing) edit(newPolygon.getInteriorRingN(i), operation);
       if (hole == null || hole.isEmpty()) {
@@ -201,7 +201,7 @@ public class GeometryEditor
         factory);
     
     // edit the component geometries
-    ArrayList geometries = new ArrayList();
+    ArrayList<Geometry> geometries = new ArrayList<Geometry>();
     for (int i = 0; i < collectionForType.getNumGeometries(); i++) {
       Geometry geometry = edit(collectionForType.getGeometryN(i), operation);
       if (geometry == null || geometry.isEmpty()) {

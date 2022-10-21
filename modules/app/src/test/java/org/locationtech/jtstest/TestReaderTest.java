@@ -14,7 +14,6 @@
 package org.locationtech.jtstest;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -57,7 +56,7 @@ public class TestReaderTest extends TestCase {
     printParsingProblems(testReader);
     assertNull(testRun.getWorkspace());
     assertEquals(1, testRun.getTestCases().size());
-    org.locationtech.jtstest.testrunner.TestCase testCase = (org.locationtech.jtstest.testrunner.TestCase) testRun.getTestCases().get(0);
+    org.locationtech.jtstest.testrunner.TestCase testCase = testRun.getTestCases().get(0);
     assertTrue(testCase.getGeometryA().equals(new GeometryFactory().createPoint(new Coordinate(10, 20))));
     assertTrue(testCase.getGeometryB().equals(new GeometryFactory().createPoint(new Coordinate(30, 40))));
 
@@ -104,7 +103,7 @@ public class TestReaderTest extends TestCase {
     printParsingProblems(testReader);
     assertEquals("\\\\pluto\\data\\jts\\testing\\x", testRun.getWorkspace().toString());
     assertEquals(1, testRun.getTestCases().size());
-    org.locationtech.jtstest.testrunner.TestCase testCase = (org.locationtech.jtstest.testrunner.TestCase) testRun.getTestCases().get(0);
+    org.locationtech.jtstest.testrunner.TestCase testCase = testRun.getTestCases().get(0);
     assertTrue(testCase.getGeometryA().equals(new GeometryFactory().createPoint(new Coordinate(5, 6))));
     assertTrue(testCase.getGeometryB().equals(new GeometryFactory().createPoint(new Coordinate(7, 8))));
 
@@ -151,7 +150,7 @@ public class TestReaderTest extends TestCase {
     printParsingProblems(testReader);
     assertNull(testRun.getWorkspace());
     assertEquals(1, testRun.getTestCases().size());
-    org.locationtech.jtstest.testrunner.TestCase testCase = (org.locationtech.jtstest.testrunner.TestCase) testRun.getTestCases().get(0);
+    org.locationtech.jtstest.testrunner.TestCase testCase = testRun.getTestCases().get(0);
     assertTrue(testCase.getGeometryA().equals(new GeometryFactory().createPoint(new Coordinate(3, 4))));
     assertTrue(testCase.getGeometryB().equals(new GeometryFactory().createPoint(new Coordinate(1, 2))));
 
@@ -264,8 +263,8 @@ public class TestReaderTest extends TestCase {
   }
 
   private void printParsingProblems(TestReader testReader) {
-    for (Iterator i = testReader.getParsingProblems().iterator(); i.hasNext(); ) {
-      String problem = (String) i.next();
+    for (Object element : testReader.getParsingProblems()) {
+      String problem = (String) element;
       System.out.println(problem);
     }
   }

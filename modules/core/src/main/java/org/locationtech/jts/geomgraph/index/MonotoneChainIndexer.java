@@ -46,7 +46,7 @@ import org.locationtech.jts.util.IntArrayList;
  */
 public class MonotoneChainIndexer {
 
-  public static int[] toIntArray(List list)
+  public static int[] toIntArray(List<Integer> list)
   {
     int[] array = new int[list.size()];
     for (int i = 0; i < array.length; i++) {
@@ -79,7 +79,7 @@ public class MonotoneChainIndexer {
   {
     // find the startpoint (and endpoints) of all monotone chains in this edge
     int start = 0;
-    List startIndexList = new ArrayList();
+    List<Integer> startIndexList = new ArrayList<Integer>();
     startIndexList.add(start);
     do {
       int last = findChainEnd(pts, start);

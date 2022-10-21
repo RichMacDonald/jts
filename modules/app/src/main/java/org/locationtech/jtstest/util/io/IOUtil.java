@@ -54,7 +54,7 @@ public class IOUtil
   {
     Shapefile shpfile = new Shapefile(new FileInputStream(filename));
     shpfile.readStream(geomFact);
-    List geomList = new ArrayList();
+    List<Geometry> geomList = new ArrayList<Geometry>();
     do {
       Geometry geom = shpfile.next();
       if (geom == null)
@@ -120,7 +120,7 @@ public class IOUtil
     WKTReader reader = new WKTReader(geomFact);
     WKTFileReader fileReader = new WKTFileReader(new StringReader(wkt), reader);
     fileReader.setStrictParsing(isStrict);
-    List geomList = fileReader.read();
+    List<Geometry> geomList = fileReader.read();
     
     if (geomList.size() == 1)
       return (Geometry) geomList.get(0);
@@ -133,7 +133,7 @@ public class IOUtil
   {
     WKBReader reader = new WKBReader(geomFact);
     WKBHexFileReader fileReader = new WKBHexFileReader(new StringReader(wkb), reader);
-    List geomList = fileReader.read();
+    List<Geometry> geomList = fileReader.read();
     
     if (geomList.size() == 1)
       return (Geometry) geomList.get(0);

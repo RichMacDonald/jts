@@ -44,13 +44,13 @@ public class BoundarySegmentNoder implements Noder {
   }
 
   @Override
-  public void computeNodes(Collection segStrings) {
-    HashSet<Segment> segSet = new HashSet<Segment>() ;
+  public void computeNodes(Collection<? extends SegmentString> segStrings) {
+    HashSet<Segment> segSet = new HashSet<>() ;
     addSegments(segStrings, segSet);
     segList = extractSegments(segSet);
   }
 
-  private static void addSegments(Collection<SegmentString> segStrings, HashSet<Segment> segSet) {
+  private static void addSegments(Collection<? extends SegmentString> segStrings, HashSet<Segment> segSet) {
     for (SegmentString ss : segStrings) {
       addSegments( ss, segSet );
     }
@@ -71,7 +71,7 @@ public class BoundarySegmentNoder implements Noder {
   }
   
   private static List<SegmentString> extractSegments(HashSet<Segment> segSet) {
-    List<SegmentString> segList = new ArrayList<SegmentString>();
+    List<SegmentString> segList = new ArrayList<>();
     for (Segment seg : segSet) {
       SegmentString ss = seg.getSegmentString();
       int i = seg.getIndex();
@@ -84,7 +84,7 @@ public class BoundarySegmentNoder implements Noder {
   }
 
   @Override
-  public Collection getNodedSubstrings() {
+  public Collection<SegmentString> getNodedSubstrings() {
     return segList;
   }
 

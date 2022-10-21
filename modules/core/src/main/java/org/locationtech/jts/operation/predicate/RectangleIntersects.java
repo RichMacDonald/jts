@@ -12,7 +12,6 @@
 
 package org.locationtech.jts.operation.predicate;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.RectangleLineIntersector;
@@ -310,8 +309,8 @@ class RectangleIntersectsSegmentVisitor extends ShortCircuitedGeometryVisitor
 
   private void checkIntersectionWithLineStrings(List lines)
   {
-    for (Iterator i = lines.iterator(); i.hasNext(); ) {
-      LineString testLine = (LineString) i.next();
+    for (Object line : lines) {
+      LineString testLine = (LineString) line;
       checkIntersectionWithSegments(testLine);
       if (hasIntersection)
         return;

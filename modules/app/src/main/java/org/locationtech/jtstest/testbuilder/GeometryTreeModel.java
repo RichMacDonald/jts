@@ -42,7 +42,7 @@ public class GeometryTreeModel implements TreeModel
   public static Comparator SORT_LEN_ASC = new LengthComparator(false);
   public static Comparator SORT_LEN_DESC = new LengthComparator(true);
   
-  private Vector<TreeModelListener> treeModelListeners = new Vector<TreeModelListener>();
+  private Vector<TreeModelListener> treeModelListeners = new Vector<>();
 
   private GeometricObjectNode rootGeom;
 
@@ -327,7 +327,7 @@ abstract class GeometryNode extends GeometricObjectNode
     if (children != null)
       return;
 
-    children = new ArrayList<GeometricObjectNode>();
+    children = new ArrayList<>();
     fillChildren();
   }
 
@@ -358,13 +358,13 @@ class PolygonNode extends GeometryNode
   protected void fillChildren()
   {
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
-      children.add(new LinearRingNode((LinearRing) poly.getInteriorRingN(i),
+      children.add(new LinearRingNode(poly.getInteriorRingN(i),
           "Hole " + i, context));
     }
     if (context.isSorted()) {
       children.sort(context.getComparator());
     }
-    children.add(0, new LinearRingNode((LinearRing) poly.getExteriorRing(),
+    children.add(0, new LinearRingNode(poly.getExteriorRing(),
         "Shell", context));
   }
 

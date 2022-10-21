@@ -39,9 +39,9 @@ public class IOUtil {
     public static List<Geometry> readWKT(String[] inputWKT)
     throws ParseException
     {
-      List<Geometry> geometries = new ArrayList<Geometry>();
-      for (int i = 0; i < inputWKT.length; i++) {
-          geometries.add(IOUtil.reader.read(inputWKT[i]));
+      List<Geometry> geometries = new ArrayList<>();
+      for (String element : inputWKT) {
+          geometries.add(IOUtil.reader.read(element));
       }
       return geometries;
     }
@@ -78,7 +78,7 @@ public class IOUtil {
   {
     WKBReader reader = new WKBReader();
     WKBHexFileReader fileReader = new WKBHexFileReader(filename, reader);
-    return (List<Geometry>) fileReader.read();
+    return fileReader.read();
   }
 
   public static List<Geometry> readFile(String filename)

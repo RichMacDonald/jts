@@ -45,7 +45,7 @@ public class GeometryFunctionOperation
   	this.registry = registry;
   }
 
-  public Class getReturnType(String opName)
+  public Class<?> getReturnType(String opName)
   {
   	GeometryFunction func = registry.find(opName);
   	if (func == null)

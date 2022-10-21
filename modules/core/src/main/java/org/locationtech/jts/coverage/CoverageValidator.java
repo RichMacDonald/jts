@@ -16,6 +16,7 @@ import java.util.List;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.index.strtree.Boundable;
 import org.locationtech.jts.index.strtree.STRtree;
 
 /**
@@ -152,7 +153,7 @@ public class CoverageValidator {
   private Geometry validate(Geometry targetGeom, STRtree index) {
     Envelope queryEnv = targetGeom.getEnvelopeInternal();
     queryEnv.expandBy(gapWidth);
-    List<Geometry> nearGeomList = index.query(queryEnv);
+    List<Object> nearGeomList = index.query(queryEnv);
     //-- the target geometry is returned in the query, so must be removed from the set
     nearGeomList.remove(targetGeom);
     

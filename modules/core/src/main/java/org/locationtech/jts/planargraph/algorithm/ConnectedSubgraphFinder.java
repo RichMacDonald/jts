@@ -39,12 +39,12 @@ public class ConnectedSubgraphFinder
     this.graph = graph;
   }
 
-  public List getConnectedSubgraphs()
+  public List<Subgraph> getConnectedSubgraphs()
   {
-    List subgraphs = new ArrayList();
+    List<Subgraph> subgraphs = new ArrayList<Subgraph>();
 
     GraphComponent.setVisited(graph.nodeIterator(), false);
-    for (Iterator i = graph.edgeIterator(); i.hasNext(); ) {
+    for (Iterator<?> i = graph.edgeIterator(); i.hasNext(); ) {
       Edge e = (Edge) i.next();
       Node node = e.getDirEdge(0).getFromNode();
       if (! node.isVisited()) {
@@ -69,7 +69,7 @@ public class ConnectedSubgraphFinder
    */
   private void addReachable(Node startNode, Subgraph subgraph)
   {
-    Stack nodeStack = new Stack();
+    Stack<Node> nodeStack = new Stack<Node>();
     nodeStack.add(startNode);
     while (! nodeStack.empty()) {
       Node node = (Node) nodeStack.pop();
@@ -82,10 +82,10 @@ public class ConnectedSubgraphFinder
    * @param node the node to add
    * @param nodeStack the current set of nodes being traversed
    */
-  private void addEdges(Node node, Stack nodeStack, Subgraph subgraph)
+  private void addEdges(Node node, Stack<Node> nodeStack, Subgraph subgraph)
   {
     node.setVisited(true);
-    for (Iterator i = ((DirectedEdgeStar) node.getOutEdges()).iterator(); i.hasNext(); ) {
+    for (Iterator<?> i = node.getOutEdges().iterator(); i.hasNext(); ) {
       DirectedEdge de = (DirectedEdge) i.next();
       subgraph.add(de.getEdge());
       Node toNode = de.getToNode();

@@ -13,7 +13,6 @@ package org.locationtech.jts.noding.snapround;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -73,16 +72,16 @@ public class GeometryNoder
    * @param geoms a Collection of Geometrys of any type
    * @return a List of LineStrings representing the noded linework of the input
    */
-  public List node(Collection geoms)
+  public List<LineString> node(Collection<?> geoms)
   {
     // get geometry factory
     Geometry geom0 = (Geometry) geoms.iterator().next();
     geomFact = geom0.getFactory();
 
-    List segStrings = toSegmentStrings(extractLines(geoms));
+    List<NodedSegmentString> segStrings = toSegmentStrings(extractLines(geoms));
     Noder sr = new SnapRoundingNoder(pm);
     sr.computeNodes(segStrings);
-    Collection nodedLines = sr.getNodedSubstrings();
+    Collection<?> nodedLines = sr.getNodedSubstrings();
 
     //TODO: improve this to check for full snap-rounded correctness
     if (isValidityChecked) {
@@ -93,11 +92,11 @@ public class GeometryNoder
     return toLineStrings(nodedLines);
   }
 
-  private List toLineStrings(Collection segStrings)
+  private List<LineString> toLineStrings(Collection<?> segStrings)
   {
-    List lines = new ArrayList();
-    for (Iterator it = segStrings.iterator(); it.hasNext(); ) {
-      SegmentString ss = (SegmentString) it.next();
+    List<LineString> lines = new ArrayList<LineString>();
+    for (Object segString : segStrings) {
+      SegmentString ss = (SegmentString) segString;
       // skip collapsed lines
       if (ss.size() < 2)
       	continue;
@@ -106,22 +105,22 @@ public class GeometryNoder
     return lines;
   }
 
-  private List extractLines(Collection geoms)
+  private List<?> extractLines(Collection<?> geoms)
   {
-    List lines = new ArrayList();
+    List<?> lines = new ArrayList<Object>();
     LinearComponentExtracter lce = new LinearComponentExtracter(lines);
-    for (Iterator it = geoms.iterator(); it.hasNext(); ) {
-      Geometry geom = (Geometry) it.next();
+    for (Object geom2 : geoms) {
+      Geometry geom = (Geometry) geom2;
       geom.apply(lce);
     }
     return lines;
   }
 
-  private List toSegmentStrings(Collection lines)
+  private List<NodedSegmentString> toSegmentStrings(Collection<?> lines)
   {
-    List segStrings = new ArrayList();
-    for (Iterator it = lines.iterator(); it.hasNext(); ) {
-      LineString line = (LineString) it.next();
+    List<NodedSegmentString> segStrings = new ArrayList<NodedSegmentString>();
+    for (Object line2 : lines) {
+      LineString line = (LineString) line2;
       segStrings.add(new NodedSegmentString(line.getCoordinates(), null));
     }
     return segStrings;

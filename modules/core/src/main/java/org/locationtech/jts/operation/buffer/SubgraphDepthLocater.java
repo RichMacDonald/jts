@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -24,6 +23,7 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.Position;
 import org.locationtech.jts.geomgraph.DirectedEdge;
+import org.locationtech.jts.operation.buffer.SubgraphDepthLocater.DepthSegment;
 
 /**
  * Locates a subgraph inside a set of subgraphs,
@@ -35,17 +35,17 @@ import org.locationtech.jts.geomgraph.DirectedEdge;
  */
 class SubgraphDepthLocater
 {
-  private Collection subgraphs;
+  private Collection<?> subgraphs;
   private LineSegment seg = new LineSegment();
 
-  public SubgraphDepthLocater(List subgraphs)
+  public SubgraphDepthLocater(List<?> subgraphs)
   {
     this.subgraphs = subgraphs;
   }
 
   public int getDepth(Coordinate p)
   {
-    List stabbedSegments = findStabbedSegments(p);
+    List<DepthSegment> stabbedSegments = findStabbedSegments(p);
     // if no segments on stabbing line subgraph must be outside all others.
     if (stabbedSegments.size() == 0)
       return 0;
@@ -60,11 +60,11 @@ class SubgraphDepthLocater
    * @param stabbingRayLeftPt the left-hand origin of the stabbing line
    * @return a List of {@link DepthSegments} intersecting the stabbing line
    */
-  private List findStabbedSegments(Coordinate stabbingRayLeftPt)
+  private List<DepthSegment> findStabbedSegments(Coordinate stabbingRayLeftPt)
   {
-    List stabbedSegments = new ArrayList();
-    for (Iterator i = subgraphs.iterator(); i.hasNext(); ) {
-      BufferSubgraph bsg = (BufferSubgraph) i.next();
+    List<DepthSegment> stabbedSegments = new ArrayList<DepthSegment>();
+    for (Object subgraph : subgraphs) {
+      BufferSubgraph bsg = (BufferSubgraph) subgraph;
 
       // optimization - don't bother checking subgraphs which the ray does not intersect
       Envelope env = bsg.getEnvelope();
@@ -86,15 +86,15 @@ class SubgraphDepthLocater
    * @param stabbedSegments the current list of {@link DepthSegments} intersecting the stabbing line
    */
   private void findStabbedSegments(Coordinate stabbingRayLeftPt,
-                                   List dirEdges,
-                                   List stabbedSegments)
+                                   List<?> dirEdges,
+                                   List<DepthSegment> stabbedSegments)
   {
     /**
      * Check all forward DirectedEdges only.  This is still general,
      * because each Edge has a forward DirectedEdge.
      */
-    for (Iterator i = dirEdges.iterator(); i.hasNext();) {
-      DirectedEdge de = (DirectedEdge) i.next();
+    for (Object dirEdge : dirEdges) {
+      DirectedEdge de = (DirectedEdge) dirEdge;
       if (! de.isForward())
         continue;
       findStabbedSegments(stabbingRayLeftPt, de, stabbedSegments);
@@ -111,7 +111,7 @@ class SubgraphDepthLocater
    */
   private void findStabbedSegments(Coordinate stabbingRayLeftPt,
                                    DirectedEdge dirEdge,
-                                   List stabbedSegments)
+                                   List<DepthSegment> stabbedSegments)
   {
     Coordinate[] pts = dirEdge.getEdge().getCoordinates();
     for (int i = 0; i < pts.length - 1; i++) {
@@ -155,7 +155,7 @@ class SubgraphDepthLocater
    * for its sides.
    */
   static class DepthSegment
-      implements Comparable
+      implements Comparable<Object>
   {
     private LineSegment upwardSeg;
     private int leftDepth;

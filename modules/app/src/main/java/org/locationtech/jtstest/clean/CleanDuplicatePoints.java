@@ -34,11 +34,11 @@ public class CleanDuplicatePoints {
 
   public static Coordinate[] removeDuplicatePoints(Coordinate[] coord)
   {
-    List uniqueCoords = new ArrayList();
+    List<Coordinate> uniqueCoords = new ArrayList<Coordinate>();
     Coordinate lastPt = null;
-    for (int i = 0; i < coord.length; i++) {
-      if (lastPt == null || ! lastPt.equals(coord[i])) {
-        lastPt = coord[i];
+    for (Coordinate element : coord) {
+      if (lastPt == null || ! lastPt.equals(element)) {
+        lastPt = element;
         uniqueCoords.add(new Coordinate(lastPt));
       }
     }
@@ -82,7 +82,7 @@ public class CleanDuplicatePoints {
   {
     Coordinate[] shellCoords = removeDuplicatePoints(poly.getExteriorRing().getCoordinates());
     LinearRing shell = fact.createLinearRing(shellCoords);
-    List holes = new ArrayList();
+    List<LinearRing> holes = new ArrayList<LinearRing>();
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
       Coordinate[] holeCoords = removeDuplicatePoints(poly.getInteriorRingN(i).getCoordinates());
       holes.add(fact.createLinearRing(holeCoords));
@@ -92,7 +92,7 @@ public class CleanDuplicatePoints {
 
   private MultiPolygon clean(MultiPolygon g)
   {
-    List polys = new ArrayList();
+    List<Polygon> polys = new ArrayList<Polygon>();
     for (int i = 0; i < g.getNumGeometries(); i++) {
       Polygon poly = (Polygon) g.getGeometryN(i);
       polys.add(clean(poly));
@@ -101,7 +101,7 @@ public class CleanDuplicatePoints {
   }
   private MultiLineString clean(MultiLineString g)
   {
-    List lines = new ArrayList();
+    List<LineString> lines = new ArrayList<LineString>();
     for (int i = 0; i < g.getNumGeometries(); i++) {
       LineString line = (LineString) g.getGeometryN(i);
       lines.add(clean(line));
@@ -110,7 +110,7 @@ public class CleanDuplicatePoints {
   }
   private GeometryCollection clean(GeometryCollection g)
   {
-    List geoms = new ArrayList();
+    List<Geometry> geoms = new ArrayList<Geometry>();
     for (int i = 0; i < g.getNumGeometries(); i++) {
       Geometry geom = g.getGeometryN(i);
       geoms.add(clean(geom));

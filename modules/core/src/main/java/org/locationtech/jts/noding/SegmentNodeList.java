@@ -31,7 +31,7 @@ import org.locationtech.jts.util.Assert;
  */
 public class SegmentNodeList
 {
-  private Map nodeMap = new TreeMap();
+  private Map<SegmentNode, SegmentNode> nodeMap = new TreeMap<SegmentNode, SegmentNode>();
   private NodedSegmentString edge;  // the parent edge
 
   public SegmentNodeList(NodedSegmentString edge)
@@ -67,7 +67,7 @@ public class SegmentNodeList
   /**
    * returns an iterator of SegmentNodes
    */
-  public Iterator iterator() { return nodeMap.values().iterator(); }
+  public Iterator<SegmentNode> iterator() { return nodeMap.values().iterator(); }
 
   /**
    * Adds nodes for the first and last points of the edge
@@ -88,14 +88,14 @@ public class SegmentNodeList
    */
   private void addCollapsedNodes()
   {
-    List collapsedVertexIndexes = new ArrayList();
+    List<Integer> collapsedVertexIndexes = new ArrayList<Integer>();
 
     findCollapsesFromInsertedNodes(collapsedVertexIndexes);
     findCollapsesFromExistingVertices(collapsedVertexIndexes);
 
     // node the collapses
-    for (Iterator it = collapsedVertexIndexes.iterator(); it.hasNext(); ) {
-      int vertexIndex = ((Integer) it.next()).intValue();
+    for (Object element : collapsedVertexIndexes) {
+      int vertexIndex = ((Integer) element).intValue();
       add(edge.getCoordinate(vertexIndex), vertexIndex);
     }
   }
@@ -104,7 +104,7 @@ public class SegmentNodeList
    * Adds nodes for any collapsed edge pairs
    * which are pre-existing in the vertex list.
    */
-  private void findCollapsesFromExistingVertices(List collapsedVertexIndexes)
+  private void findCollapsesFromExistingVertices(List<Integer> collapsedVertexIndexes)
   {
     for (int i = 0; i < edge.size() - 2; i++) {
       Coordinate p0 = edge.getCoordinate(i);
@@ -124,10 +124,10 @@ public class SegmentNodeList
    * To provide the correct fully noded semantics,
    * the vertex must be added as a node as well.
    */
-  private void findCollapsesFromInsertedNodes(List collapsedVertexIndexes)
+  private void findCollapsesFromInsertedNodes(List<Integer> collapsedVertexIndexes)
   {
     int[] collapsedVertexIndex = new int[1];
-    Iterator it = iterator();
+    Iterator<SegmentNode> it = iterator();
     // there should always be at least two entries in the list, since the endpoints are nodes
     SegmentNode eiPrev = (SegmentNode) it.next();
     while (it.hasNext()) {
@@ -166,13 +166,13 @@ public class SegmentNodeList
    * (this is so a single list can be used to accumulate all split edges
    * for a set of {@link SegmentString}s).
    */
-  public void addSplitEdges(Collection edgeList)
+  public void addSplitEdges(Collection<SegmentString> edgeList)
   {
     // ensure that the list has entries for the first and last point of the edge
     addEndpoints();
     addCollapsedNodes();
 
-    Iterator it = iterator();
+    Iterator<SegmentNode> it = iterator();
     // there should always be at least two entries in the list, since the endpoints are nodes
     SegmentNode eiPrev = (SegmentNode) it.next();
     while (it.hasNext()) {
@@ -193,7 +193,7 @@ public class SegmentNodeList
    *
    * @param splitEdges the split edges for this edge (in order)
    */
-  private void checkSplitEdgesCorrectness(List splitEdges)
+  private void checkSplitEdgesCorrectness(List<?> splitEdges)
   {
     Coordinate[] edgePts = edge.getCoordinates();
 
@@ -278,7 +278,7 @@ public class SegmentNodeList
     // ensure that the list has entries for the first and last point of the edge
     addEndpoints();
 
-    Iterator it = iterator();
+    Iterator<SegmentNode> it = iterator();
     // there should always be at least two entries in the list, since the endpoints are nodes
     SegmentNode eiPrev = (SegmentNode) it.next();
     while (it.hasNext()) {
@@ -298,7 +298,7 @@ public class SegmentNodeList
   public void print(PrintStream out)
   {
     out.println("Intersections:");
-    for (Iterator it = iterator(); it.hasNext(); ) {
+    for (Iterator<SegmentNode> it = iterator(); it.hasNext(); ) {
       SegmentNode ei = (SegmentNode) it.next();
       ei.print(out);
     }
@@ -307,11 +307,11 @@ public class SegmentNodeList
 
 // INCOMPLETE!
 class NodeVertexIterator
-    implements Iterator
+    implements Iterator<Object>
 {
   private SegmentNodeList nodeList;
   private NodedSegmentString edge;
-  private Iterator nodeIt;
+  private Iterator<SegmentNode> nodeIt;
   private SegmentNode currNode = null;
   private SegmentNode nextNode = null;
   private int currSegIndex = 0;

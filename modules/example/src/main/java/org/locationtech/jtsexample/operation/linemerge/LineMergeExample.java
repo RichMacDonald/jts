@@ -42,18 +42,18 @@ public class LineMergeExample {
   }
 
   void run() throws Exception {
-    Collection lineStrings = getData();
+    Collection<Geometry> lineStrings = getData();
     
     LineMerger lineMerger = new LineMerger();
     lineMerger.add(lineStrings);
-    Collection mergedLineStrings = lineMerger.getMergedLineStrings();
+    Collection<?> mergedLineStrings = lineMerger.getMergedLineStrings();
     
     System.out.println("Lines formed (" + mergedLineStrings.size() + "):");
     System.out.println(mergedLineStrings);
   }
 
-  Collection getData() {
-    Collection lines = new ArrayList();
+  Collection<Geometry> getData() {
+    Collection<Geometry> lines = new ArrayList<Geometry>();
     lines.add(read("LINESTRING (220 160, 240 150, 270 150, 290 170)"));
     lines.add(read("LINESTRING (60 210, 30 190, 30 160)"));
     lines.add(read("LINESTRING (70 430, 100 430, 120 420, 140 400)"));

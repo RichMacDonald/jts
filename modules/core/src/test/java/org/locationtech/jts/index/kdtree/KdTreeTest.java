@@ -149,8 +149,7 @@ public class KdTreeTest extends TestCase {
     assertTrue("Expected result coordinates not found", isMatch);
     
     // test queries for points
-    for (int i = 0; i < expectedCoord.length; i++) {
-      Coordinate p = expectedCoord[i];
+    for (Coordinate p : expectedCoord) {
       KdNode node = index.query(p);
       assertEquals("Point query not found", node.getCoordinate(), p);
     }
@@ -159,8 +158,8 @@ public class KdTreeTest extends TestCase {
   private KdTree build(String wktInput, double tolerance) {
     final KdTree index = new KdTree(tolerance);
     Coordinate[] coords = IOUtil.read(wktInput).getCoordinates();
-    for (int i = 0; i < coords.length; i++) {
-      index.insert(coords[i]);
+    for (Coordinate coord : coords) {
+      index.insert(coord);
     }
     return index;
   }

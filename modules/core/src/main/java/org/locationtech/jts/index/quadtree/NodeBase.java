@@ -50,7 +50,7 @@ public abstract class NodeBase implements Serializable {
     return subnodeIndex;
   }
 
-  protected List items = Collections.synchronizedList(new ArrayList());
+  protected List<Object> items = Collections.synchronizedList(new ArrayList<Object>());
 
   /**
    * subquads are numbered as follows:
@@ -65,7 +65,7 @@ public abstract class NodeBase implements Serializable {
   public NodeBase() {
   }
 
-  public List getItems() { return items; }
+  public List<Object> getItems() { return items; }
 
   public boolean hasItems() { return ! items.isEmpty(); }
 
@@ -141,7 +141,7 @@ public abstract class NodeBase implements Serializable {
 
   //<<TODO:RENAME?>> Sounds like this method adds resultItems to items
   //(like List#addAll). Perhaps it should be renamed to "addAllItemsTo" [Jon Aquino]
-  public List addAllItems(List resultItems)
+  public List<Object> addAllItems(List<Object> resultItems)
   {
     // this node may have items as well as subnodes (since items may not
     // be wholely contained in any single subnode
@@ -155,7 +155,7 @@ public abstract class NodeBase implements Serializable {
   }
   protected abstract boolean isSearchMatch(Envelope searchEnv);
 
-  public void addAllItemsFromOverlapping(Envelope searchEnv, List resultItems)
+  public void addAllItemsFromOverlapping(Envelope searchEnv, List<Object> resultItems)
   {
     if (! isSearchMatch(searchEnv))
       return;
@@ -191,8 +191,8 @@ public abstract class NodeBase implements Serializable {
   {
     // would be nice to filter items based on search envelope, but can't until they contain an envelope
     synchronized (items) {
-        for (int i = 0; i < items.size(); i++) {
-            visitor.visitItem(items.get(i));
+        for (Object item : items) {
+            visitor.visitItem(item);
         }
     }
   }

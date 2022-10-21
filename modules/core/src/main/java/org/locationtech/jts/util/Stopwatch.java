@@ -80,7 +80,7 @@ public class Stopwatch {
   public static String getTimeString(long timeMillis) {
     String totalTimeStr = timeMillis < 10000 
         ? timeMillis + " ms" 
-        : (double) timeMillis / 1000.0 + " s";
+        : timeMillis / 1000.0 + " s";
     return totalTimeStr;
   }
 }

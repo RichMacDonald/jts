@@ -14,6 +14,7 @@ package org.locationtech.jts.operation.distance;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFilter;
 import org.locationtech.jts.geom.LineString;
@@ -37,16 +38,16 @@ public class ConnectedElementPointFilter
    * found inside the specified geometry. Thus, if the specified geometry is
    * not a GeometryCollection, an empty list will be returned.
    */
-  public static List getCoordinates(Geometry geom)
+  public static List<Coordinate> getCoordinates(Geometry geom)
   {
-    List pts = new ArrayList();
+    List<Coordinate> pts = new ArrayList<Coordinate>();
     geom.apply(new ConnectedElementPointFilter(pts));
     return pts;
   }
 
-  private List pts;
+  private List<Coordinate> pts;
 
-  ConnectedElementPointFilter(List pts)
+  ConnectedElementPointFilter(List<Coordinate> pts)
   {
     this.pts = pts;
   }

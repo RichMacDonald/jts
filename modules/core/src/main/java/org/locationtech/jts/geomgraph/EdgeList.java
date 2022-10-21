@@ -30,12 +30,12 @@ import org.locationtech.jts.noding.OrientedCoordinateArray;
  */
 public class EdgeList
 {
-  private List edges = new ArrayList();
+  private List<Edge> edges = new ArrayList<Edge>();
   /**
    * An index of the edges, for fast lookup.
    *
    */
-  private Map ocaMap = new TreeMap();
+  private Map<OrientedCoordinateArray, Edge> ocaMap = new TreeMap<OrientedCoordinateArray, Edge>();
 
   public EdgeList() {
   }
@@ -52,14 +52,14 @@ public class EdgeList
     ocaMap.put(oca, e);
   }
 
-  public void addAll(Collection edgeColl)
+  public void addAll(Collection<?> edgeColl)
   {
-    for (Iterator i = edgeColl.iterator(); i.hasNext(); ) {
-      add((Edge) i.next());
+    for (Object element : edgeColl) {
+      add((Edge) element);
     }
   }
 
-  public List getEdges() { return edges; }
+  public List<Edge> getEdges() { return edges; }
 
   /**
    * If there is an edge equal to e already in the list, return it.
@@ -76,7 +76,7 @@ public class EdgeList
     return matchEdge; 
   }
   
-  public Iterator iterator() { return edges.iterator(); }
+  public Iterator<Edge> iterator() { return edges.iterator(); }
 
   public Edge get(int i) { return (Edge) edges.get(i); }
 

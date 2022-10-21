@@ -22,17 +22,17 @@ import org.locationtech.jts.geom.util.GeometryEditor;
 
 public class GeometryVerticesMover 
 {
-  public static Geometry move(Geometry geom, Map moves)
+  public static Geometry move(Geometry geom, Map<?, ?> moves)
   {
   	GeometryVerticesMover mover = new GeometryVerticesMover(geom, moves);
     return mover.move();
   }
   
   private Geometry geom; 
-  private Map moves;
-  private List modifiedCoords = new ArrayList();
+  private Map<?, ?> moves;
+  private List<Coordinate> modifiedCoords = new ArrayList<Coordinate>();
   
-  public GeometryVerticesMover(Geometry geom, Map moves)
+  public GeometryVerticesMover(Geometry geom, Map<?, ?> moves)
   {
   	this.geom = geom;
   	this.moves = moves;
@@ -46,7 +46,7 @@ public class GeometryVerticesMover
   	return movedGeom;
   }
   
-  public List getModifiedCoordinates()
+  public List<Coordinate> getModifiedCoordinates()
   {
   	return modifiedCoords;
   }
@@ -54,9 +54,9 @@ public class GeometryVerticesMover
   private class MoveVerticesOperation
     extends GeometryEditor.CoordinateOperation
   {
-    private Map moves;
+    private Map<?, ?> moves;
     
-    public MoveVerticesOperation(Map moves)
+    public MoveVerticesOperation(Map<?, ?> moves)
     {
       this.moves = moves;
     }

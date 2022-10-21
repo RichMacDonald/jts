@@ -12,7 +12,6 @@
  */
 package org.locationtech.jts.index.hprtree;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -91,8 +90,8 @@ public class HPRtreeTest extends TestCase {
     geometries.add(factory.createLineString(new Coordinate[]{
         new Coordinate(20, 20), new Coordinate(30, 30)}));
     HPRtree t = new HPRtree(3);
-    for (Iterator i = geometries.iterator(); i.hasNext(); ) {
-      Geometry g = (Geometry) i.next();
+    for (Object element : geometries) {
+      Geometry g = (Geometry) element;
       t.insert(g.getEnvelopeInternal(), new Object());
     }
     t.query(new Envelope(5, 6, 5, 6));

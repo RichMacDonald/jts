@@ -122,9 +122,8 @@ public class CommandLine {
   {
     OptionSpec os = null;
     out.println("Options:");
-    for (Iterator i = optVec.iterator(); i.hasNext(); )
-    {
-      os = (OptionSpec) i.next();
+    for (Object element : optVec) {
+      os = (OptionSpec) element;
       String name = optionChar + os.getName();
       if (os.getName() == OptionSpec.OPTION_FREE_ARGS) name = "(free)";
       out.println("  " + name + " " + os.getArgDesc() + " - " + os.getDocDesc());

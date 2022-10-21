@@ -14,7 +14,6 @@ package org.locationtech.jts.dissolve;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -71,7 +70,7 @@ public class LineDissolver
   private Geometry result;
   private GeometryFactory factory;
   private final DissolveEdgeGraph graph;
-  private final List lines = new ArrayList();
+  private final List<LineString> lines = new ArrayList<LineString>();
 
   public LineDissolver()
   {
@@ -102,10 +101,10 @@ public class LineDissolver
    * 
    * @param geometries the geometries to be line-merged
    */
-  public void add(Collection geometries) 
+  public void add(Collection<?> geometries) 
   {
-    for (Iterator i = geometries.iterator(); i.hasNext(); ) {
-      Geometry geometry = (Geometry) i.next();
+    for (Object element : geometries) {
+      Geometry geometry = (Geometry) element;
       add(geometry);
     }
   }
@@ -144,16 +143,16 @@ public class LineDissolver
   }
 
   private void computeResult() {
-    Collection edges = graph.getVertexEdges();
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      HalfEdge e = (HalfEdge) i.next();
+    Collection<?> edges = graph.getVertexEdges();
+    for (Object edge : edges) {
+      HalfEdge e = (HalfEdge) edge;
       if (MarkHalfEdge.isMarked(e)) continue;
       process(e);
     }
     result = factory.buildGeometry(lines);
   }
 
-  private final Stack nodeEdgeStack = new Stack();
+  private final Stack<HalfEdge> nodeEdgeStack = new Stack<HalfEdge>();
   
   private void process(HalfEdge e) {
     HalfEdge eNode = e.prevNode();

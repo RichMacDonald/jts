@@ -36,7 +36,7 @@ public abstract class NodeBase {
     return subnodeIndex;
   }
 
-  protected List items = new ArrayList();
+  protected List<Object> items = new ArrayList<Object>();
 
   /**
    * subnodes are numbered as follows:
@@ -48,13 +48,13 @@ public abstract class NodeBase {
   public NodeBase() {
   }
 
-  public List getItems() { return items; }
+  public List<Object> getItems() { return items; }
 
   public void add(Object item)
   {
     items.add(item);
   }
-  public List addAllItems(List items)
+  public List<Object> addAllItems(List<Object> items)
   {
     items.addAll(this.items);
     for (int i = 0; i < 2; i++) {
@@ -74,7 +74,7 @@ public abstract class NodeBase {
    * @param interval a query interval, or null
    * @param resultItems the candidate items found
    */
-  public void addAllItemsFromOverlapping(Interval interval, Collection resultItems)
+  public void addAllItemsFromOverlapping(Interval interval, Collection<Object> resultItems)
   {
     if (interval != null && ! isSearchMatch(interval))
       return;

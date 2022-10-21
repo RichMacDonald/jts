@@ -38,7 +38,7 @@ public class NodingTestUtil {
   }
 
   public static List<NodedSegmentString> toSegmentStrings(List<LineString> lines) {
-    List<NodedSegmentString> nssList = new ArrayList<NodedSegmentString>();
+    List<NodedSegmentString> nssList = new ArrayList<>();
     for (LineString line : lines) {
       NodedSegmentString nss = new NodedSegmentString(line.getCoordinates(), line);
       nssList.add(nss);
@@ -46,8 +46,8 @@ public class NodingTestUtil {
     return nssList;
   }
   
-  public static List<NodedSegmentString> getNodedSubstrings(NodedSegmentString nss) {
-    List<NodedSegmentString> resultEdgelist = new ArrayList<NodedSegmentString>();
+  public static List<SegmentString> getNodedSubstrings(NodedSegmentString nss) {
+    List<SegmentString> resultEdgelist = new ArrayList<>();
     nss.getNodeList().addSplitEdges(resultEdgelist);
     return resultEdgelist;
   }
@@ -72,7 +72,7 @@ public class NodingTestUtil {
     
     Noder noderValid = new ValidatingNoder(noder);
     noderValid.computeNodes(ssList);
-    Collection<NodedSegmentString> nodedList = noder.getNodedSubstrings();
+    Collection<NodedSegmentString> nodedList = (Collection<NodedSegmentString>) noder.getNodedSubstrings(); //manual cast
     
     Geometry result = toLines(nodedList, geom1.getFactory());
     return result;

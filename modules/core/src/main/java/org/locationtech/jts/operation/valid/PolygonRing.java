@@ -210,7 +210,7 @@ class PolygonRing {
 
   private void addTouch(PolygonRing ring, Coordinate pt) {
     if (touches == null) {
-      touches = new HashMap<Integer, PolygonRingTouch>();
+      touches = new HashMap<>();
     }
     PolygonRingTouch touch = touches.get(ring.id);
     if (touch == null) {
@@ -220,7 +220,7 @@ class PolygonRing {
   
   public void addSelfTouch(Coordinate origin, Coordinate e00, Coordinate e01, Coordinate e10, Coordinate e11) {
     if (selfNodes == null) {
-      selfNodes = new ArrayList<PolygonRingSelfNode>();
+      selfNodes = new ArrayList<>();
     }
     selfNodes.add(new PolygonRingSelfNode(origin, e00, e01, e10, e11));
   }
@@ -263,7 +263,7 @@ class PolygonRing {
     if (! hasTouches()) 
       return null;
     
-    Deque<PolygonRingTouch> touchStack = new ArrayDeque<PolygonRingTouch>();
+    Deque<PolygonRingTouch> touchStack = new ArrayDeque<>();
     init(root, touchStack);
     
     while (! touchStack.isEmpty()) {

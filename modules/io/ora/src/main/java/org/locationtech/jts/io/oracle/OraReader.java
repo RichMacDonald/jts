@@ -240,7 +240,7 @@ public class OraReader
       checkOrdinates(oraGeom, 0, "GeometryCollection");
       
       int nElem = oraGeom.numElements();
-      List geomList = new ArrayList();
+      List<Geometry> geomList = new ArrayList<Geometry>();
       boolean cont = true;
       for (int i = 0; cont && i < nElem; i++) {
         int etype = oraGeom.eType(i);
@@ -297,7 +297,7 @@ public class OraReader
     private MultiPolygon readMultiPolygon(OraGeom oraGeom)
     {
       int nElem = oraGeom.numElements();
-      List geoms = new ArrayList();
+      List<Polygon> geoms = new ArrayList<Polygon>();
       for (int i = 0; i < nElem; i++) {
         int etype = oraGeom.eType(i);
         if ((etype == OraGeom.ETYPE.POLYGON) || (etype == OraGeom.ETYPE.POLYGON_EXTERIOR)) {
@@ -323,7 +323,7 @@ public class OraReader
     private MultiLineString readMultiLine(OraGeom oraGeom) 
     {
       int nElem = oraGeom.numElements();
-      List geoms = new ArrayList();
+      List<LineString> geoms = new ArrayList<LineString>();
       for (int i = 0; i < nElem; i++) {
         int etype = oraGeom.eType(i);
         // stop reading if not a line
@@ -398,7 +398,7 @@ public class OraReader
        * Holes are read as long as ETYPE = POLYGON_INTERIOR
        * or ETYPE = POLYGON && orient = CW (Hole)
        */
-      List holeRings = new ArrayList();
+      List<LinearRing> holeRings = new ArrayList<LinearRing>();
       for (int i = elemIndex + 1; i < nElem; i++) {
         etype = oraGeom.eType(i);
         if (etype == OraGeom.ETYPE.POLYGON_INTERIOR) {

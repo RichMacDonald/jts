@@ -20,8 +20,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -173,10 +171,10 @@ public class StringUtil
     /**
      *  Returns the elements of v in uppercase
      */
-    public static Vector toUpperCase(Vector v) {
-        Vector result = new Vector();
-        for (Enumeration e = v.elements(); e.hasMoreElements();) {
-            String s = e.nextElement().toString();
+    public static Vector<String> toUpperCase(Vector<?> v) {
+        Vector<String> result = new Vector<String>();
+        for (Object element : v) {
+            String s = element.toString();
             result.add(s.toUpperCase());
         }
         return result;
@@ -185,10 +183,10 @@ public class StringUtil
     /**
      *  Returns the elements of v in lowercase
      */
-    public static Vector toLowerCase(List v) {
-        Vector result = new Vector();
-        for (Iterator i = v.iterator(); i.hasNext();) {
-            String s = i.next().toString();
+    public static Vector<String> toLowerCase(List<?> v) {
+        Vector<String> result = new Vector<String>();
+        for (Object element : v) {
+            String s = element.toString();
             result.add(s.toLowerCase());
         }
         return result;
@@ -198,10 +196,9 @@ public class StringUtil
      *  Returns the elements of c separated by commas and enclosed in
      *  single-quotes
      */
-    public static String toCommaDelimitedStringInQuotes(Collection c) {
+    public static String toCommaDelimitedStringInQuotes(Collection<?> c) {
         StringBuffer result = new StringBuffer();
-        for (Iterator i = c.iterator(); i.hasNext();) {
-            Object o = i.next();
+        for (Object o : c) {
             result.append(",'" + o.toString() + "'");
         }
         return result.substring(1);
@@ -210,13 +207,12 @@ public class StringUtil
     /**
      *  Returns the elements of c separated by commas. c must not be empty.
      */
-    public static String toCommaDelimitedString(Collection c) {
+    public static String toCommaDelimitedString(Collection<?> c) {
         if (c.isEmpty()) {
             throw new IllegalArgumentException();
         }
         StringBuffer result = new StringBuffer();
-        for (Iterator i = c.iterator(); i.hasNext();) {
-            Object o = i.next();
+        for (Object o : c) {
             result.append(", " + o.toString());
         }
         return result.substring(1);
@@ -225,8 +221,8 @@ public class StringUtil
     /**
      *  Converts the comma-delimited string into a List of trimmed strings.
      */
-    public static List fromCommaDelimitedString(String s) {
-        ArrayList result = new ArrayList();
+    public static List<String> fromCommaDelimitedString(String s) {
+        ArrayList<String> result = new ArrayList<String>();
         StringTokenizer tokenizer = new StringTokenizer(s, ",");
         while (tokenizer.hasMoreTokens()) {
             result.add(tokenizer.nextToken().trim());

@@ -39,11 +39,11 @@ abstract public class EdgeEndStar
   /**
    * A map which maintains the edges in sorted order around the node
    */
-  protected Map edgeMap = new TreeMap();
+  protected Map<EdgeEnd, Object> edgeMap = new TreeMap<EdgeEnd, Object>();
   /**
    * A list of all outgoing edges in the result, in CCW order
    */
-  protected List edgeList;
+  protected List<Object> edgeList;
   /**
    * The location of the point for this star in Geometry i Areas
    */
@@ -77,7 +77,7 @@ abstract public class EdgeEndStar
    */
   public Coordinate getCoordinate()
   {
-    Iterator it = iterator();
+    Iterator<Object> it = iterator();
     if (! it.hasNext()) return null;
     EdgeEnd e = (EdgeEnd) it.next();
     return e.getCoordinate();
@@ -95,14 +95,14 @@ abstract public class EdgeEndStar
    *
    * @return access to ordered list of edges
    */
-  public Iterator iterator()
+  public Iterator<Object> iterator()
   {
     return getEdges().iterator();
   }
-  public List getEdges()
+  public List<Object> getEdges()
   {
     if (edgeList == null) {
-      edgeList = new ArrayList(edgeMap.values());
+      edgeList = new ArrayList<Object>(edgeMap.values());
     }
     return edgeList;
   }
@@ -159,7 +159,7 @@ abstract public class EdgeEndStar
      * area label propagation, symLabel merging, then finally null label resolution.
      */
     boolean[] hasDimensionalCollapseEdge = { false, false };
-    for (Iterator it = iterator(); it.hasNext(); ) {
+    for (Iterator<Object> it = iterator(); it.hasNext(); ) {
       EdgeEnd e = (EdgeEnd) it.next();
       Label label = e.getLabel();
       for (int geomi = 0; geomi < 2; geomi++) {
@@ -168,7 +168,7 @@ abstract public class EdgeEndStar
       }
     }
 //Debug.print(this);
-    for (Iterator it = iterator(); it.hasNext(); ) {
+    for (Iterator<Object> it = iterator(); it.hasNext(); ) {
       EdgeEnd e = (EdgeEnd) it.next();
       Label label = e.getLabel();
 //Debug.println(e);
@@ -194,7 +194,7 @@ abstract public class EdgeEndStar
   private void computeEdgeEndLabels(BoundaryNodeRule boundaryNodeRule)
   {
     // Compute edge label for each EdgeEnd
-    for (Iterator it = iterator(); it.hasNext(); ) {
+    for (Iterator<Object> it = iterator(); it.hasNext(); ) {
       EdgeEnd ee = (EdgeEnd) it.next();
       ee.computeLabel(boundaryNodeRule);
     }
@@ -219,7 +219,7 @@ abstract public class EdgeEndStar
   {
     // Since edges are stored in CCW order around the node,
     // As we move around the ring we move from the right to the left side of the edge
-    List edges = getEdges();
+    List<Object> edges = getEdges();
     // if no edges, trivially consistent
     if (edges.size() <= 0)
       return true;
@@ -230,7 +230,7 @@ abstract public class EdgeEndStar
     Assert.isTrue(startLoc != Location.NONE, "Found unlabelled area edge");
 
     int currLoc = startLoc;
-    for (Iterator it = iterator(); it.hasNext(); ) {
+    for (Iterator<Object> it = iterator(); it.hasNext(); ) {
       EdgeEnd e = (EdgeEnd) it.next();
       Label label = e.getLabel();
       // we assume that we are only checking a area
@@ -261,7 +261,7 @@ abstract public class EdgeEndStar
     
     // initialize loc to location of last L side (if any)
 //System.out.println("finding start location");
-    for (Iterator it = iterator(); it.hasNext(); ) {
+    for (Iterator<Object> it = iterator(); it.hasNext(); ) {
       EdgeEnd e = (EdgeEnd) it.next();
       Label label = e.getLabel();
       if (label.isArea(geomIndex) && label.getLocation(geomIndex, Position.LEFT) != Location.NONE)
@@ -272,7 +272,7 @@ abstract public class EdgeEndStar
     if (startLoc == Location.NONE) return;
 
     int currLoc = startLoc;
-    for (Iterator it = iterator(); it.hasNext(); ) {
+    for (Iterator<Object> it = iterator(); it.hasNext(); ) {
       EdgeEnd e = (EdgeEnd) it.next();
       Label label = e.getLabel();
       // set null ON values to be in current location
@@ -320,7 +320,7 @@ abstract public class EdgeEndStar
   public void print(PrintStream out)
   {
     out.println("EdgeEndStar:   " + getCoordinate());
-    for (Iterator it = iterator(); it.hasNext(); ) {
+    for (Iterator<Object> it = iterator(); it.hasNext(); ) {
       EdgeEnd e = (EdgeEnd) it.next();
       e.print(out);
     }
@@ -331,7 +331,7 @@ abstract public class EdgeEndStar
     StringBuffer buf = new StringBuffer();
     buf.append("EdgeEndStar:   " + getCoordinate());
     buf.append("\n");
-    for (Iterator it = iterator(); it.hasNext(); ) {
+    for (Iterator<Object> it = iterator(); it.hasNext(); ) {
       EdgeEnd e = (EdgeEnd) it.next();
       buf.append(e);
       buf.append("\n");

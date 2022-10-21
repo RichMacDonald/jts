@@ -236,7 +236,7 @@ public class ShapeWriter
 		GeometryCollectionShape shape = new GeometryCollectionShape();
 		// add components to GC shape
 		for (int i = 0; i < gc.getNumGeometries(); i++) {
-			Geometry g = (Geometry) gc.getGeometryN(i);
+			Geometry g = gc.getGeometryN(i);
 			shape.add(toShape(g));
 		}
 		return shape;

@@ -14,7 +14,6 @@ package org.locationtech.jts.triangulate;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.ConvexHull;
@@ -67,21 +66,21 @@ import org.locationtech.jts.util.Debug;
  */
 public class ConformingDelaunayTriangulator 
 {
-	private static Envelope computeVertexEnvelope(Collection vertices) {
+	private static Envelope computeVertexEnvelope(Collection<?> vertices) {
 		Envelope env = new Envelope();
-		for (Iterator i = vertices.iterator(); i.hasNext();) {
-			Vertex v = (Vertex) i.next();
+		for (Object element : vertices) {
+			Vertex v = (Vertex) element;
 			env.expandToInclude(v.getCoordinate());
 		}
 		return env;
 	}
 
-	private List initialVertices; // List<Vertex>
-	private List segVertices; // List<Vertex>
+	private List<?> initialVertices; // List<Vertex>
+	private List<?> segVertices; // List<Vertex>
 
 	// MD - using a Set doesn't seem to be much faster
 	// private Set segments = new HashSet();
-	private List segments = new ArrayList(); // List<Segment>
+	private List<Segment> segments = new ArrayList<Segment>(); // List<Segment>
 	private QuadEdgeSubdivision subdiv = null;
 	private IncrementalDelaunayTriangulator incDel;
 	private Geometry convexHull;
@@ -106,9 +105,9 @@ public class ConformingDelaunayTriangulator
 	 * @param tolerance
 	 *          the distance tolerance below which points are considered identical
 	 */
-	public ConformingDelaunayTriangulator(Collection initialVertices,
+	public ConformingDelaunayTriangulator(Collection<?> initialVertices,
 			double tolerance) {
-		this.initialVertices = new ArrayList(initialVertices);
+		this.initialVertices = new ArrayList<Object>(initialVertices);
 		this.tolerance = tolerance;
 		kdt = new KdTree(tolerance);
 	}
@@ -125,7 +124,7 @@ public class ConformingDelaunayTriangulator
 	 * @param segments a list of the constraint {@link Segment}s
 	 * @param segVertices the set of unique {@link ConstraintVertex}es referenced by the segments
 	 */
-	public void setConstraints(List segments, List segVertices) {
+	public void setConstraints(List<Segment> segments, List<?> segVertices) {
 		this.segments = segments;
 		this.segVertices = segVertices;
 	}
@@ -194,7 +193,7 @@ public class ConformingDelaunayTriangulator
 	 *  
 	 * @return a List of Vertex
 	 */
-	public List getInitialVertices() {
+	public List<?> getInitialVertices() {
 		return initialVertices;
 	}
 
@@ -203,7 +202,7 @@ public class ConformingDelaunayTriangulator
 	 * 
 	 * @return a collection of Segments
 	 */
-	public Collection getConstraintSegments() {
+	public Collection<Segment> getConstraintSegments() {
 		return segments;
 	}
 
@@ -281,12 +280,12 @@ public class ConformingDelaunayTriangulator
 		Coordinate[] pts = new Coordinate[initialVertices.size()
 				+ segVertices.size()];
 		int index = 0;
-		for (Iterator i = initialVertices.iterator(); i.hasNext();) {
-			Vertex v = (Vertex) i.next();
+		for (Object element : initialVertices) {
+			Vertex v = (Vertex) element;
 			pts[index++] = v.getCoordinate();
 		}
-		for (Iterator i2 = segVertices.iterator(); i2.hasNext();) {
-			Vertex v = (Vertex) i2.next();
+		for (Object element : segVertices) {
+			Vertex v = (Vertex) element;
 			pts[index++] = v.getCoordinate();
 		}
 		return pts;
@@ -323,10 +322,10 @@ public class ConformingDelaunayTriangulator
 	 * 
 	 * @param vertices a collection of ConstraintVertex
 	 */
-	private void insertSites(Collection vertices) {
+	private void insertSites(Collection<?> vertices) {
 		Debug.println("Adding sites: " + vertices.size());
-		for (Iterator i = vertices.iterator(); i.hasNext();) {
-			ConstraintVertex v = (ConstraintVertex) i.next();
+		for (Object element : vertices) {
+			ConstraintVertex v = (ConstraintVertex) element;
 			insertSite(v);
 		}
 	}
@@ -417,10 +416,10 @@ public class ConformingDelaunayTriangulator
 	 * (q == null) missingSegs.add(s); } return missingSegs; }
 	 */
 
-	private int enforceGabriel(Collection segsToInsert) {
-		List newSegments = new ArrayList();
+	private int enforceGabriel(Collection<Segment> segsToInsert) {
+		List<Segment> newSegments = new ArrayList<Segment>();
 		int splits = 0;
-		List segsToRemove = new ArrayList();
+		List<Segment> segsToRemove = new ArrayList<Segment>();
 
 		/**
 		 * On each iteration must always scan all constraint (sub)segments, since
@@ -428,8 +427,8 @@ public class ConformingDelaunayTriangulator
 		 * insertion of another constraint. However, this process must converge
 		 * eventually, with no splits remaining to find.
 		 */
-		for (Iterator i = segsToInsert.iterator(); i.hasNext();) {
-			Segment seg = (Segment) i.next();
+		for (Object element : segsToInsert) {
+			Segment seg = (Segment) element;
 			// System.out.println(seg);
 
 			Coordinate encroachPt = findNonGabrielPoint(seg);
@@ -515,14 +514,14 @@ public class ConformingDelaunayTriangulator
 		Envelope env = new Envelope(midPt);
 		env.expandBy(segRadius);
 		// Find all points in envelope
-		List result = kdt.query(env);
+		List<?> result = kdt.query(env);
 
 		// For each point found, test if it falls strictly in the circle
 		// find closest point
 		Coordinate closestNonGabriel = null;
 		double minDist = Double.MAX_VALUE;
-		for (Iterator i = result.iterator(); i.hasNext();) {
-			KdNode nextNode = (KdNode) i.next();
+		for (Object element : result) {
+			KdNode nextNode = (KdNode) element;
 			Coordinate testPt = nextNode.getCoordinate();
 			// ignore segment endpoints
 			if (testPt.equals2D(p) || testPt.equals2D(q))

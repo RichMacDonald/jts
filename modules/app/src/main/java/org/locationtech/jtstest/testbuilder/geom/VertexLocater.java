@@ -19,6 +19,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.CoordinateSequenceFilter;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jtstest.testbuilder.geom.VertexLocater.Location;
 
 public class VertexLocater 
 {
@@ -47,7 +48,7 @@ public class VertexLocater
   
   public int getIndex() { return vertexIndex; }
  
-  public List getLocations(Coordinate testPt, double tolerance)
+  public List<Location> getLocations(Coordinate testPt, double tolerance)
   {
   	NearVerticesFilter filter = new NearVerticesFilter(testPt, tolerance);
     geom.apply(filter);
@@ -93,7 +94,7 @@ public class VertexLocater
   {
     private double tolerance = 0.0;
     private Coordinate queryPt;
-    private List locations = new ArrayList();
+    private List<Location> locations = new ArrayList<Location>();
     
     public NearVerticesFilter(Coordinate queryPt, double tolerance)
     {
@@ -111,7 +112,7 @@ public class VertexLocater
 
     }
     
-    public List getLocations()
+    public List<Location> getLocations()
     {
     	return locations;
     }

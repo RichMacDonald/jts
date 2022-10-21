@@ -29,7 +29,7 @@ import org.locationtech.jtstest.util.ClassUtil;
  *
  */
 public abstract class BaseGeometryFunction 
-implements GeometryFunction, Comparable
+implements GeometryFunction, Comparable<GeometryFunction>
 {
   public static boolean isBinaryGeomFunction(GeometryFunction func)
   {
@@ -49,16 +49,16 @@ implements GeometryFunction, Comparable
 	protected String name;
 	protected String description;
 	protected String[] parameterNames;
-	protected Class[] parameterTypes;
-	protected Class returnType;
+	protected Class<?>[] parameterTypes;
+	protected Class<?> returnType;
 	protected boolean isRequiredB = true;
 	
 	public BaseGeometryFunction(
 			String category,
 			String name, 
 			String[] parameterNames, 
-			Class[] parameterTypes, 
-			Class returnType)
+			Class<?>[] parameterTypes, 
+			Class<?> returnType)
 	{
 		this.category = category;
 		this.name = name;
@@ -72,8 +72,8 @@ implements GeometryFunction, Comparable
 			String name, 
 			String description,
 			String[] parameterNames, 
-			Class[] parameterTypes, 
-			Class returnType)
+			Class<?>[] parameterTypes, 
+			Class<?> returnType)
 	{
 		this.category = category;
 		this.name = name;
@@ -109,12 +109,12 @@ implements GeometryFunction, Comparable
 	 * 
 	 * @return the types
 	 */
-	public Class[] getParameterTypes()
+	public Class<?>[] getParameterTypes()
 	{
 		return parameterTypes;
 	}
 	
-	public Class getReturnType()
+	public Class<?> getReturnType()
 	{
 		return returnType;
 	}
@@ -131,9 +131,9 @@ implements GeometryFunction, Comparable
 	{
 		StringBuffer paramTypes = new StringBuffer();
 		paramTypes.append("Geometry");
-		for (int i = 0 ; i < parameterTypes.length; i++) {
+		for (Class<?> parameterType : parameterTypes) {
 			paramTypes.append(",");
-			paramTypes.append(ClassUtil.getClassname(parameterTypes[i]));
+			paramTypes.append(ClassUtil.getClassname(parameterType));
 		}
 		return name + "(" + paramTypes + ")"
 			+ " -> " 
@@ -170,7 +170,7 @@ implements GeometryFunction, Comparable
 		if (! name.equals(func.getName())) return false;
 		if (! returnType.equals(func.getReturnType())) return false;
 		
-		Class[] funcParamTypes = func.getParameterTypes();
+		Class<?>[] funcParamTypes = func.getParameterTypes();
 		if (parameterTypes.length != funcParamTypes.length) return false;
 		for (int i = 0; i < parameterTypes.length; i++) {
 			if (! parameterTypes[i].equals(funcParamTypes[i]))
@@ -193,7 +193,7 @@ implements GeometryFunction, Comparable
     return result;
   }
   
-	public int compareTo(Object o)
+	public int compareTo(GeometryFunction o)
 	{
 		GeometryFunction func = (GeometryFunction) o;
 		int cmp = name.compareTo(func.getName());
@@ -203,7 +203,7 @@ implements GeometryFunction, Comparable
 		//TODO: compare parameter lists as well
 	}
 	
-	private static int compareTo(Class c1, Class c2)
+	private static int compareTo(Class<?> c1, Class<?> c2)
 	{
 		return c1.getName().compareTo(c2.getName());
 	}

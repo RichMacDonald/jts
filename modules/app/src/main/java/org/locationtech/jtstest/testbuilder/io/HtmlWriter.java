@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -76,8 +75,8 @@ public class HtmlWriter {
   }
 
   private static class MapAndList {
-    public Map map;
-    public List list;
+    public Map<String, List<Object>> map;
+    public List<String> list;
   }
 
   public void write(File outputDirectory, TestCaseList testCaseList, PrecisionModel precisionModel) throws IOException {
@@ -87,18 +86,18 @@ public class HtmlWriter {
     Assert.isTrue(outputDirectory.isDirectory());
     this.outputDirectory = outputDirectory;
     MapAndList runMapAndRuns = runMapAndRuns(testCaseList);
-    Map runMap = runMapAndRuns.map;
-    List runs  = runMapAndRuns.list;
+    Map<String, List<Object>> runMap = runMapAndRuns.map;
+    List<String> runs  = runMapAndRuns.list;
     createHtmlFile("contents-frame.html", indexHtml(runs, runMap, precisionModel));
     createHtmlFile("index.html", testTopHtml());
     int runSkey = 0;
-    for (Iterator i = runs.iterator(); i.hasNext(); ) {
-      String runDescription = (String) i.next();
+    for (Object run : runs) {
+      String runDescription = (String) run;
       runSkey++;
-      List testables = (List) runMap.get(runDescription);
+      List<?> testables = (List<?>) runMap.get(runDescription);
       int caseSkey = 0;
-      for (Iterator m = testables.iterator(); m.hasNext(); ) {
-        Testable testable = (Testable) m.next();
+      for (Object testable2 : testables) {
+        Testable testable = (Testable) testable2;
         caseSkey++;
         if (busyDialog != null) {
           busyDialog.setDescription("Saving .html and .gif files: " + caseSkey
@@ -226,10 +225,10 @@ public class HtmlWriter {
       String second) throws Exception {
     try {
       Assert.isTrue((first.equalsIgnoreCase("A")) || (first.equalsIgnoreCase("B")));
-      Class geometryClass = Class.forName("com.vividsolutions.jts.geom.Geometry");
+      Class<?> geometryClass = Class.forName("com.vividsolutions.jts.geom.Geometry");
       Geometry source = testCaseEdit.getGeometry(first.equalsIgnoreCase("A") ? 0 : 1);
       Object[] target;
-      Class[] targetClasses;
+      Class<?>[] targetClasses;
       if (second == null) {
         target = new Object[]{};
         targetClasses = new Class[]{};
@@ -257,8 +256,8 @@ public class HtmlWriter {
     }
     TestRunnerTestCaseAdapter adapter = (TestRunnerTestCaseAdapter) testCaseEdit.getTestable();
     org.locationtech.jtstest.testrunner.TestCase trTestCase = adapter.getTestRunnerTestCase();
-    for (Iterator i = trTestCase.getTests().iterator(); i.hasNext(); ) {
-      Test test = (Test) i.next();
+    for (Object element : trTestCase.getTests()) {
+      Test test = (Test) element;
       if (test.getOperation().equalsIgnoreCase(opName)
            && test.getGeometryIndex().equalsIgnoreCase(first)
            && (test.getArgumentCount() == 0
@@ -387,10 +386,10 @@ public class HtmlWriter {
   }
 
   private MapAndList runMapAndRuns(TestCaseList testCaseList) {
-    Map runMap = new TreeMap();
-    List runs = new ArrayList();
-    for (Iterator i = testCaseList.getList().iterator(); i.hasNext(); ) {
-      TestCaseEdit testCaseEdit = (TestCaseEdit) i.next();
+    Map<String, List<Object>> runMap = new TreeMap<String, List<Object>>();
+    List<String> runs = new ArrayList<String>();
+    for (Object element : testCaseList.getList()) {
+      TestCaseEdit testCaseEdit = (TestCaseEdit) element;
       Testable testable = testCaseEdit.getTestable();
       if (testable instanceof TestRunnerTestCaseAdapter) {
         org.locationtech.jtstest.testrunner.TestCase testRunnerTestCase = ((TestRunnerTestCaseAdapter) testable).getTestRunnerTestCase();
@@ -408,20 +407,20 @@ public class HtmlWriter {
     return runMapAndRuns;
   }
 
-  private void addToListMapAndList(String key, Object valueItem, Map stringToList, List keyList) {
+  private void addToListMapAndList(String key, Object valueItem, Map<String, List<Object>> stringToList, List<String> keyList) {
     if (stringToList.containsKey(key)) {
-      List value = (List) stringToList.get(key);
+      List<Object> value = (List<Object>) stringToList.get(key);
       value.add(valueItem);
     }
     else {
-      List value = new ArrayList();
+      List<Object> value = new ArrayList<Object>();
       value.add(valueItem);
       stringToList.put(key, value);
       keyList.add(key);
     }
   }
 
-  private String indexHtml(List runs, Map runMap, PrecisionModel precisionModel) {
+  private String indexHtml(List<String> runs, Map<String, List<Object>> runMap, PrecisionModel precisionModel) {
     String html
          = "<HTML>" + StringUtil.newLine
          + "<HEAD>" + StringUtil.newLine
@@ -438,14 +437,14 @@ public class HtmlWriter {
          + "        selectedIndex = document.main_form.run_combo.selectedIndex;" + StringUtil.newLine
          + "        selectedCode  = document.main_form.run_combo.options[selectedIndex].value;" + StringUtil.newLine;
     int runSkey = 0;
-    for (Iterator i = runs.iterator(); i.hasNext(); ) {
-      String runDescription = (String) i.next();
+    for (Object run : runs) {
+      String runDescription = (String) run;
       runSkey++;
       html += "        if (selectedCode == 'Run" + runSkey + "') {" + StringUtil.newLine;
-      List testables = (List) runMap.get(runDescription);
+      List<?> testables = (List<?>) runMap.get(runDescription);
       int caseSkey = 0;
-      for (Iterator m = testables.iterator(); m.hasNext(); ) {
-        Testable testable = (Testable) m.next();
+      for (Object testable2 : testables) {
+        Testable testable = (Testable) testable2;
         caseSkey++;
         html += "              document.main_form.test_combo.length = " + caseSkey + ";" + StringUtil.newLine;
         html += "              document.main_form.test_combo.options[" + (caseSkey - 1) + "].text  = \"" + StringUtil.escapeHTML(testName(testable, caseSkey)) + "\";" + StringUtil.newLine;
@@ -465,8 +464,8 @@ public class HtmlWriter {
 
     html += "<select id=run_combo name=run_combo size='1' style='width:30%' onChange='onRunChange()'>" + StringUtil.newLine;
     runSkey = 0;
-    for (Iterator j = runs.iterator(); j.hasNext(); ) {
-      String runDescription = (String) j.next();
+    for (Object run : runs) {
+      String runDescription = (String) run;
       runSkey++;
       html += "<OPTION VALUE='Run" + runSkey + "'>"
            + StringUtil.escapeHTML(runName(runDescription, runSkey))
@@ -476,10 +475,10 @@ public class HtmlWriter {
 
     html += "<select id=test_combo name=test_combo size='1' style='width:60%' onChange='LoadDetailFrame()'>" + StringUtil.newLine;
     String runDescription = (String) runs.iterator().next();
-    List testables = (List) runMap.get(runDescription);
+    List<?> testables = (List<?>) runMap.get(runDescription);
     int caseSkey = 0;
-    for (Iterator m = testables.iterator(); m.hasNext(); ) {
-      Testable testable = (Testable) m.next();
+    for (Object testable2 : testables) {
+      Testable testable = (Testable) testable2;
       caseSkey++;
       html += "<OPTION VALUE='Run1Case" + caseSkey + ".html'>"
            + StringUtil.escapeHTML(testName(testable, caseSkey))

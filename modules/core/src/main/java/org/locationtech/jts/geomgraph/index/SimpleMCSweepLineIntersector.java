@@ -16,7 +16,6 @@ package org.locationtech.jts.geomgraph.index;
  */
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geomgraph.Edge;
@@ -35,7 +34,7 @@ public class SimpleMCSweepLineIntersector
   extends EdgeSetIntersector
 {
 
-  List events = new ArrayList();
+  List<SweepLineEvent> events = new ArrayList<SweepLineEvent>();
   // statistics information
   int nOverlaps;
 
@@ -46,7 +45,7 @@ public class SimpleMCSweepLineIntersector
   public SimpleMCSweepLineIntersector() {
   }
 
-  public void computeIntersections(List edges, SegmentIntersector si, boolean testAllSegments)
+  public void computeIntersections(List<Edge> edges, SegmentIntersector si, boolean testAllSegments)
   {
     if (testAllSegments)
       addEdges(edges, null);
@@ -55,26 +54,24 @@ public class SimpleMCSweepLineIntersector
     computeIntersections(si);
   }
 
-  public void computeIntersections(List edges0, List edges1, SegmentIntersector si)
+  public void computeIntersections(List<Edge> edges0, List<Edge> edges1, SegmentIntersector si)
   {
     addEdges(edges0, edges0);
     addEdges(edges1, edges1);
     computeIntersections(si);
   }
 
-  private void addEdges(List edges)
+  private void addEdges(List<Edge> edges)
   {
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      Edge edge = (Edge) i.next();
+    for (Edge edge2 : edges) {
       // edge is its own group
-      addEdge(edge, edge);
+      addEdge(edge2, edge2);
     }
   }
-  private void addEdges(List edges, Object edgeSet)
+  private void addEdges(List<Edge> edges, Object edgeSet)
   {
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      Edge edge = (Edge) i.next();
-      addEdge(edge, edgeSet);
+    for (Edge edge2 : edges) {
+      addEdge(edge2, edgeSet);
     }
   }
 

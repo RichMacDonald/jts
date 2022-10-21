@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class SweepLineIndex {
 
-  List events = new ArrayList();
+  List<SweepLineEvent> events = new ArrayList<SweepLineEvent>();
   private boolean indexBuilt;
   // statistics information
   private int nOverlaps;

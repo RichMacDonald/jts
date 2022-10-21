@@ -56,7 +56,7 @@ public abstract class SinglePassNoder
    *
    * @param segStrings a collection of {@link SegmentString}s to node
    */
-  public abstract void computeNodes(Collection segStrings);
+  public abstract void computeNodes(Collection<? extends SegmentString> segStrings);
 
   /**
    * Returns a {@link Collection} of fully noded {@link SegmentString}s.
@@ -64,6 +64,6 @@ public abstract class SinglePassNoder
    *
    * @return a Collection of SegmentStrings
    */
-  public abstract Collection getNodedSubstrings();
+  public abstract Collection<SegmentString> getNodedSubstrings();
 
 }

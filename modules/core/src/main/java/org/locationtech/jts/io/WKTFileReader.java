@@ -119,7 +119,7 @@ public class WKTFileReader
 	 * @throws IOException if an I/O exception was encountered
 	 * @throws ParseException if an error occurred reading a geometry
 	 */
-	public List read() 
+	public List<Geometry> read() 
 	throws IOException, ParseException 
 	{
     // do this here so that constructors don't throw exceptions
@@ -139,9 +139,9 @@ public class WKTFileReader
 		}
 	}
 	
-  private List read(BufferedReader bufferedReader) 
+  private List<Geometry> read(BufferedReader bufferedReader) 
       throws IOException, ParseException {
-    List geoms = new ArrayList();
+    List<Geometry> geoms = new ArrayList<Geometry>();
     try {
       read(bufferedReader, geoms);
     }
@@ -153,7 +153,7 @@ public class WKTFileReader
     return geoms;
   }
 
-  private void read(BufferedReader bufferedReader, List geoms) 
+  private void read(BufferedReader bufferedReader, List<Geometry> geoms) 
       throws IOException, ParseException {
     while (!isAtEndOfFile(bufferedReader) && !isAtLimit(geoms)) {
       Geometry g = wktReader.read(bufferedReader);
@@ -163,7 +163,7 @@ public class WKTFileReader
     }
   }
 
-	private boolean isAtLimit(List geoms)
+	private boolean isAtLimit(List<Geometry> geoms)
 	{
 		if (limit < 0) return false;
 		if (geoms.size() < limit) return false;

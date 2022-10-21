@@ -167,7 +167,7 @@ public class JTSTestRunnerCmd {
   }
 
   private List<String> getArguments(TestRunnerOptions options) {
-    List<String> args = new ArrayList<String>();
+    List<String> args = new ArrayList<>();
     if (options.arg1 != null) {
       args.add(options.arg1);
     }
@@ -259,7 +259,7 @@ public class JTSTestRunnerCmd {
   }
   
   private static List<String> extractTestFilenames(CommandLine commandLine) throws FileNotFoundException, IOException {
-    List<String> testFiles = new ArrayList<String>();
+    List<String> testFiles = new ArrayList<>();
     
     if (commandLine.hasOption(OptionSpec.OPTION_FREE_ARGS)) {
       testFiles.addAll(FilesUtil.expand(cmdOptionArgList(commandLine, OptionSpec.OPTION_FREE_ARGS), FILENAME_EXTENSION));
@@ -315,7 +315,7 @@ public class JTSTestRunnerCmd {
 
   public static List<String> cmdOptionArgList(CommandLine commandLine, String optionName) {
     Option option = commandLine.getOption(optionName);
-    ArrayList<String> arguments = new ArrayList<String>();
+    ArrayList<String> arguments = new ArrayList<>();
     for (int i = 0; i < option.getNumArgs(); i++) {
       arguments.add(option.getArg(i));
     }

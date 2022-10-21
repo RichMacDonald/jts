@@ -36,8 +36,7 @@ class LineSegmentIndex
 
   public void add(TaggedLineString line) {
     TaggedLineSegment[] segs = line.getSegments();
-    for (int i = 0; i < segs.length; i++) {
-      TaggedLineSegment seg = segs[i];
+    for (TaggedLineSegment seg : segs) {
       add(seg);
     }
   }
@@ -52,13 +51,13 @@ class LineSegmentIndex
     index.remove(new Envelope(seg.p0, seg.p1), seg);
   }
 
-  public List query(LineSegment querySeg)
+  public List<LineSegment> query(LineSegment querySeg)
   {
     Envelope env = new Envelope(querySeg.p0, querySeg.p1);
 
     LineSegmentVisitor visitor = new LineSegmentVisitor(querySeg);
     index.query(env, visitor);
-    List itemsFound = visitor.getItems();
+    List<LineSegment> itemsFound = visitor.getItems();
 
 //    List listQueryItems = index.query(env);
 //    System.out.println("visitor size = " + itemsFound.size()
@@ -78,7 +77,7 @@ class LineSegmentVisitor
 // MD - only seems to make about a 10% difference in overall time.
 
   private LineSegment querySeg;
-  private ArrayList items = new ArrayList();
+  private ArrayList<LineSegment> items = new ArrayList<LineSegment>();
 
   public LineSegmentVisitor(LineSegment querySeg) {
     this.querySeg = querySeg;
@@ -88,8 +87,8 @@ class LineSegmentVisitor
   {
     LineSegment seg = (LineSegment) item;
     if (Envelope.intersects(seg.p0, seg.p1, querySeg.p0, querySeg.p1))
-      items.add(item);
+      items.add((LineSegment) item);
   }
 
-  public ArrayList getItems() { return items; }
+  public ArrayList<LineSegment> getItems() { return items; }
 }

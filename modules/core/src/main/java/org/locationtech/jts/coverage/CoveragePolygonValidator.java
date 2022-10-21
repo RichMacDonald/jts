@@ -181,7 +181,7 @@ public class CoveragePolygonValidator {
   }
 
   private static List<Polygon> extractPolygons(Geometry[] geoms) {
-    List<Polygon> polygons = new ArrayList<Polygon>();
+    List<Polygon> polygons = new ArrayList<>();
     for (Geometry geom : geoms) {
         PolygonExtracter.getPolygons(geom, polygons);
     }
@@ -228,7 +228,7 @@ public class CoveragePolygonValidator {
    */
   private void markMatchedSegments(List<CoverageRing> targetRings,
       List<CoverageRing> adjRngs, Envelope targetEnv) {
-    Map<CoverageRingSegment, CoverageRingSegment> segmentMap = new HashMap<CoverageRingSegment, CoverageRingSegment>();
+    Map<CoverageRingSegment, CoverageRingSegment> segmentMap = new HashMap<>();
     markMatchedSegments(targetRings, targetEnv, segmentMap);
     markMatchedSegments(adjRngs, targetEnv, segmentMap);
   }
@@ -361,7 +361,7 @@ public class CoveragePolygonValidator {
   }
 
   private Geometry createInvalidLines(List<CoverageRing> rings) {
-    List<LineString> lines = new ArrayList<LineString>();
+    List<LineString> lines = new ArrayList<>();
     for (CoverageRing ring : rings) {
       ring.createInvalidLines(geomFactory, lines);
     }

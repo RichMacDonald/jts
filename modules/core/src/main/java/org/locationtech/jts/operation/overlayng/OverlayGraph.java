@@ -32,8 +32,8 @@ import org.locationtech.jts.geom.Coordinate;
  */
 class OverlayGraph {
   
-  private List<OverlayEdge> edges = new ArrayList<OverlayEdge>();
-  private Map<Coordinate, OverlayEdge> nodeMap = new HashMap<Coordinate, OverlayEdge>();
+  private List<OverlayEdge> edges = new ArrayList<>();
+  private Map<Coordinate, OverlayEdge> nodeMap = new HashMap<>();
   
   /**
    * Creates an empty graph.
@@ -82,7 +82,7 @@ class OverlayGraph {
    * @return the result area edges
    */
   public List<OverlayEdge> getResultAreaEdges() {
-    List<OverlayEdge> resultEdges = new ArrayList<OverlayEdge>();
+    List<OverlayEdge> resultEdges = new ArrayList<>();
     for (OverlayEdge edge : getEdges()) {
       if (edge.isInResultArea()) {
         resultEdges.add(edge);
@@ -123,7 +123,7 @@ class OverlayGraph {
      * insert the edge into the star of edges around the node.
      * Otherwise, add a new node for the origin.
      */
-    OverlayEdge nodeEdge = (OverlayEdge) nodeMap.get(e.orig());
+    OverlayEdge nodeEdge = nodeMap.get(e.orig());
     if (nodeEdge != null) {
       nodeEdge.insert(e);
     }

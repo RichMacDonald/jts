@@ -30,7 +30,7 @@ public class NodeMap
 
 {
   //Map nodeMap = new HashMap();
-  Map nodeMap = new TreeMap();
+  Map<Coordinate, Node> nodeMap = new TreeMap<Coordinate, Node>();
   NodeFactory nodeFact;
 
   public NodeMap(NodeFactory nodeFact) {
@@ -93,19 +93,19 @@ public class NodeMap
    */
   public Node find(Coordinate coord)  {    return (Node) nodeMap.get(coord);  }
 
-  public Iterator iterator()
+  public Iterator<Node> iterator()
   {
     return nodeMap.values().iterator();
   }
-  public Collection values()
+  public Collection<Node> values()
   {
     return nodeMap.values();
   }
 
-  public Collection getBoundaryNodes(int geomIndex)
+  public Collection<Node> getBoundaryNodes(int geomIndex)
   {
-    Collection bdyNodes = new ArrayList();
-    for (Iterator i = iterator(); i.hasNext(); ) {
+    Collection<Node> bdyNodes = new ArrayList<Node>();
+    for (Iterator<Node> i = iterator(); i.hasNext(); ) {
       Node node = (Node) i.next();
       if (node.getLabel().getLocation(geomIndex) == Location.BOUNDARY)
         bdyNodes.add(node);
@@ -115,7 +115,7 @@ public class NodeMap
 
   public void print(PrintStream out)
   {
-    for (Iterator it = iterator(); it.hasNext(); )
+    for (Iterator<Node> it = iterator(); it.hasNext(); )
     {
       Node n = (Node) it.next();
       n.print(out);

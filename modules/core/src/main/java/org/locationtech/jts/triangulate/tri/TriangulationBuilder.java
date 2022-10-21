@@ -42,7 +42,7 @@ public class TriangulationBuilder {
    * @param triList the list of Tris
    */
   private TriangulationBuilder(List<? extends Tri> triList) {
-    triMap = new HashMap<TriEdge, Tri>();
+    triMap = new HashMap<>();
     for (Tri tri : triList) {
       add(tri);
     }

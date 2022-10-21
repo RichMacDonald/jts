@@ -20,45 +20,45 @@ import java.util.TreeSet;
 
 public class DoubleKeyMap 
 {
-	private Map topMap = new TreeMap();
+	private Map<Object, Map<Object, Object>> topMap = new TreeMap<Object, Map<Object, Object>>();
 	
 	public void put(Object key1, Object key2, Object value)
 	{
-		Map keyMap = (Map) topMap.get(key1);
+		Map<Object, Object> keyMap = (Map<Object, Object>) topMap.get(key1);
 		if (keyMap == null)
 			keyMap = createKeyMap(key1);
 		keyMap.put(key2, value);
 	}
 	
-	private Map createKeyMap(Object key1)
+	private Map<Object, Object> createKeyMap(Object key1)
 	{
-		Map map = new TreeMap();
+		Map<Object, Object> map = new TreeMap<Object, Object>();
 		topMap.put(key1, map);
 		return map;
 	}
 	
 	public Object get(Object key1, Object key2)
 	{
-		Map keyMap = (Map) topMap.get(key1);
+		Map<?, ?> keyMap = (Map<?, ?>) topMap.get(key1);
 		if (keyMap == null) return null;
 		return keyMap.get(key2);
 	}
 	
-	public Set keySet()
+	public Set<Object> keySet()
 	{
 		return topMap.keySet();
 	}
-	public Set keySet(Object key)
+	public Set<?> keySet(Object key)
 	{
-		Map keyMap = (Map) topMap.get(key);
-		if (keyMap == null) return new TreeSet();
+		Map<?, ?> keyMap = (Map<?, ?>) topMap.get(key);
+		if (keyMap == null) return new TreeSet<Object>();
 		return keyMap.keySet();
 	}
 	
-	public Collection values(Object key1)
+	public Collection<?> values(Object key1)
 	{
-		Map keyMap = (Map) topMap.get(key1);
-		if (keyMap == null) return new ArrayList();
+		Map<?, ?> keyMap = (Map<?, ?>) topMap.get(key1);
+		if (keyMap == null) return new ArrayList<Object>();
 		return keyMap.values();
 	}
 }

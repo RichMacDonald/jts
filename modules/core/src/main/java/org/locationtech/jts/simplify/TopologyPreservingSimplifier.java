@@ -174,8 +174,8 @@ public class TopologyPreservingSimplifier
         // skip empty geometries
         if (line.isEmpty()) return;
         
-        int minSize = ((LineString) line).isClosed() ? 4 : 2;
-        TaggedLineString taggedLine = new TaggedLineString((LineString) line, minSize);
+        int minSize = line.isClosed() ? 4 : 2;
+        TaggedLineString taggedLine = new TaggedLineString(line, minSize);
         tps.linestringMap.put(line, taggedLine);
       }
     }

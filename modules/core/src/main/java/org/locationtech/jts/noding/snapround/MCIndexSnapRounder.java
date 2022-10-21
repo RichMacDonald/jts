@@ -12,7 +12,6 @@
 package org.locationtech.jts.noding.snapround;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.LineIntersector;
@@ -63,12 +62,12 @@ public class MCIndexSnapRounder
     scaleFactor = pm.getScale();
   }
 
-  public Collection getNodedSubstrings()
+  public Collection<SegmentString> getNodedSubstrings()
   {
     return  NodedSegmentString.getNodedSubstrings(nodedSegStrings);
   }
 
-  public void computeNodes(Collection inputSegmentStrings)
+  public void computeNodes(Collection<? extends SegmentString> inputSegmentStrings)
   {
     this.nodedSegStrings = inputSegmentStrings;
     noder = new MCIndexNoder();
@@ -120,8 +119,8 @@ public class MCIndexSnapRounder
    */
   private void computeIntersectionSnaps(Collection snapPts)
   {
-    for (Iterator it = snapPts.iterator(); it.hasNext(); ) {
-      Coordinate snapPt = (Coordinate) it.next();
+    for (Object snapPt2 : snapPts) {
+      Coordinate snapPt = (Coordinate) snapPt2;
       HotPixel hotPixel = new HotPixel(snapPt, scaleFactor);
       pointSnapper.snap(hotPixel);
     }
@@ -134,8 +133,8 @@ public class MCIndexSnapRounder
    */
   public void computeVertexSnaps(Collection edges)
   {
-    for (Iterator i0 = edges.iterator(); i0.hasNext(); ) {
-      NodedSegmentString edge0 = (NodedSegmentString) i0.next();
+    for (Object edge : edges) {
+      NodedSegmentString edge0 = (NodedSegmentString) edge;
       computeVertexSnaps(edge0);
     }
   }

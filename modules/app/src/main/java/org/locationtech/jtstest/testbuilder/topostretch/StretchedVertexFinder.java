@@ -14,7 +14,6 @@ package org.locationtech.jtstest.testbuilder.topostretch;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -26,18 +25,18 @@ import org.locationtech.jts.geom.LineString;
 
 class StretchedVertexFinder 
 {
-	public static List findNear(Collection linestrings, double tolerance, Envelope mask, Coordinate[] pts)
+	public static List<StretchedVertex> findNear(Collection<?> linestrings, double tolerance, Envelope mask, Coordinate[] pts)
 	{
 		StretchedVertexFinder finder = new StretchedVertexFinder(linestrings, tolerance, mask);
 		return finder.getNearVertices(pts);
 	}
 	
-	private Collection linestrings;
+	private Collection<?> linestrings;
 	private double tolerance = 0.0;
 	private Envelope limitEnv = null;
-	private List nearVerts = new ArrayList();
+	private List<StretchedVertex> nearVerts = new ArrayList<StretchedVertex>();
 	
-	public StretchedVertexFinder(Collection linestrings, double tolerance)
+	public StretchedVertexFinder(Collection<?> linestrings, double tolerance)
 	{
 		this.linestrings = linestrings;
 		this.tolerance = tolerance;
@@ -51,7 +50,7 @@ class StretchedVertexFinder
 	 * @param tolerance the distance tolerance for points to be stretched
 	 * @param limitEnv the envelope to limit searching to
 	 */
-	public StretchedVertexFinder(Collection linestrings, double tolerance, Envelope limitEnv)
+	public StretchedVertexFinder(Collection<?> linestrings, double tolerance, Envelope limitEnv)
 	{
 		this(linestrings, tolerance);
 		this.limitEnv = limitEnv;
@@ -64,7 +63,7 @@ class StretchedVertexFinder
 	 * @param pts the points to test for stretching
 	 * @return a list of StretchedVertexes
 	 */
-	public List getNearVertices(Coordinate[] pts)
+	public List<StretchedVertex> getNearVertices(Coordinate[] pts)
 	{
 		findNearVertices(pts);
 		return nearVerts;
@@ -72,8 +71,8 @@ class StretchedVertexFinder
 	
 	private void findNearVertices()
 	{
-		for (Iterator i = linestrings.iterator(); i.hasNext(); ) {
-			LineString line = (LineString) i.next();
+		for (Object linestring : linestrings) {
+			LineString line = (LineString) linestring;
 			findNearVertices(line);
 		}
 	}
@@ -104,8 +103,8 @@ class StretchedVertexFinder
 	
 	private void findNearVertex(Coordinate linePt)
 	{
-		for (Iterator i = linestrings.iterator(); i.hasNext(); ) {
-			LineString testLine = (LineString) i.next();
+		for (Object linestring : linestrings) {
+			LineString testLine = (LineString) linestring;
 			findNearVertex(linePt, testLine);
 		}
 	}

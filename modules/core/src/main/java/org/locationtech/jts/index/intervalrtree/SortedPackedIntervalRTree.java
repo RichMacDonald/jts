@@ -35,7 +35,7 @@ import org.locationtech.jts.index.ItemVisitor;
  */
 public class SortedPackedIntervalRTree 
 {
-  private final List leaves = new ArrayList();
+  private final List<IntervalRTreeNode> leaves = new ArrayList<IntervalRTreeNode>();
   
   /**
    * If root is null that indicates
@@ -93,9 +93,9 @@ public class SortedPackedIntervalRTree
     Collections.sort(leaves, new IntervalRTreeNode.NodeComparator());
     
     // now group nodes into blocks of two and build tree up recursively
-		List src = leaves;
-		List temp = null;
-		List dest = new ArrayList();
+		List<IntervalRTreeNode> src = leaves;
+		List<IntervalRTreeNode> temp = null;
+		List<IntervalRTreeNode> dest = new ArrayList<IntervalRTreeNode>();
 		
 		while (true) {
 			buildLevel(src, dest);
@@ -110,7 +110,7 @@ public class SortedPackedIntervalRTree
 
   //private int level = 0;
 
-	private void buildLevel(List src, List dest) 
+	private void buildLevel(List<IntervalRTreeNode> src, List<IntervalRTreeNode> dest) 
   {
     //level++;
 		dest.clear();

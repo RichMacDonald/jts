@@ -18,6 +18,7 @@ import java.util.List;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.prep.PreparedGeometry;
 import org.locationtech.jts.geom.prep.PreparedGeometryFactory;
 import org.locationtech.jts.geom.util.PolygonExtracter;
@@ -42,7 +43,7 @@ import org.locationtech.jts.index.strtree.STRtree;
  *
  */
 public class SparsePolygonUnion {
-  public static Geometry union(Collection geoms)
+  public static Geometry union(Collection<Polygon> geoms)
   {
     SparsePolygonUnion op = new SparsePolygonUnion(geoms);
     return op.union();
@@ -50,30 +51,30 @@ public class SparsePolygonUnion {
 
   public static Geometry union(Geometry geoms)
   {
-    List polys = PolygonExtracter.getPolygons(geoms);
+    List<Polygon> polys = PolygonExtracter.getPolygons(geoms);
     SparsePolygonUnion op = new SparsePolygonUnion(polys);
     return op.union();
   }
 
-  private Collection<Geometry> inputPolys;
+  private Collection<Polygon> inputPolys;
   private STRtree index;
   private int count;
-  private List<PolygonNode> nodes = new ArrayList<PolygonNode>();
+  private List<PolygonNode> nodes = new ArrayList<>();
   private GeometryFactory geomFactory;
 
-  public SparsePolygonUnion(Collection<Geometry> polys)
+  public SparsePolygonUnion(Collection<Polygon> polys)
   {
     this.inputPolys = polys;
     // guard against null input
     if (inputPolys == null)
-      inputPolys = new ArrayList();
+      inputPolys = new ArrayList<Polygon>();
   }
   
   public Geometry union()
   {
     if (inputPolys.isEmpty())
       return null;
-    geomFactory = ((Geometry) inputPolys.iterator().next()).getFactory();
+    geomFactory = inputPolys.iterator().next().getFactory();
     
     loadIndex(inputPolys);
     
@@ -96,7 +97,7 @@ public class SparsePolygonUnion {
     }
     
     //--- compute union of each cluster
-    List<Geometry> clusterGeom = new ArrayList<Geometry>();
+    List<Geometry> clusterGeom = new ArrayList<>();
     for (PolygonNode node : nodes) {
       Geometry geom = node.union();
       if (geom == null) continue;
@@ -105,14 +106,14 @@ public class SparsePolygonUnion {
     return geomFactory.buildGeometry(clusterGeom);
   }
 
-  private void loadIndex(Collection<Geometry> inputPolys) {
+  private void loadIndex(Collection<Polygon> inputPolys) {
     index = new STRtree();
-    for (Geometry geom : inputPolys) {
+    for (Polygon geom : inputPolys) {
       add(geom);
     }
   }
 
-  private void add(Geometry poly) {
+  private void add(Polygon poly) {
     PolygonNode node = new PolygonNode(count++, poly);
     nodes.add(node);
     index.insert(poly.getEnvelopeInternal(), node);
@@ -122,11 +123,11 @@ public class SparsePolygonUnion {
 
     private int id;
     private boolean isFree = true;
-    private Geometry poly;
+    private Polygon poly;
     private PolygonNode root;
     private List<PolygonNode> nodes = null;
 
-    public PolygonNode(int id, Geometry poly) {
+    public PolygonNode(int id, Polygon poly) {
       this.id = id;
       this.poly = poly;
     }
@@ -166,7 +167,7 @@ public class SparsePolygonUnion {
     private void initCluster() {
       isFree = false;
       root = this;
-      nodes = new ArrayList<PolygonNode>();
+      nodes = new ArrayList<>();
       nodes.add(this);
    }
     
@@ -216,7 +217,7 @@ public class SparsePolygonUnion {
     }
 
     private static List<Geometry> toPolygons(List<PolygonNode> nodes) {
-      List<Geometry> polys = new ArrayList<Geometry>();
+      List<Geometry> polys = new ArrayList<>();
       for (PolygonNode node : nodes) {
         polys.add(node.poly);
       }

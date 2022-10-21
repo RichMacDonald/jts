@@ -15,7 +15,6 @@ package test.jts.perf.dissolve;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.dissolve.LineDissolver;
@@ -85,8 +84,8 @@ public class LineDissolvePerfTest  extends PerformanceTestCase
   {
     GeometryFactory factory = null;
     List<LineString> lines = new ArrayList<>();
-    for (Iterator i = geoms.iterator(); i.hasNext(); ) {
-      Geometry g = (Geometry) i.next();
+    for (Object geom : geoms) {
+      Geometry g = (Geometry) geom;
       if (factory == null)
           factory = g.getFactory();
       lines.addAll(LinearComponentExtracter.getLines(g));

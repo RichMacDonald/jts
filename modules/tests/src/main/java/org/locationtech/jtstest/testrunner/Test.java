@@ -56,7 +56,7 @@ public class Test implements Runnable
     this.expectedResult = expectedResult;
     this.testIndex = testIndex;
     this.geometryIndex = geometryIndex;
-    this.arguments = new ArrayList<String>(arguments);
+    this.arguments = new ArrayList<>(arguments);
     this.testCase = testCase;
   }
 
@@ -93,7 +93,7 @@ public class Test implements Runnable
   }
 
   public String getArgument(int i) {
-    return (String) arguments.get(i);
+    return arguments.get(i);
   }
 
   public int getArgumentCount() {

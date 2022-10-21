@@ -77,7 +77,7 @@ public class PartitionedUnion {
     
     //--- compute union of each set
     GeometryFactory geomFactory = inputPolys[0].getFactory();
-    List<Geometry> unionGeoms = new ArrayList<Geometry>();
+    List<Geometry> unionGeoms = new ArrayList<>();
     int numSets = part.getCount();
     for (int i = 0; i < numSets; i++) {
       Geometry geom = union(part, i);
@@ -92,7 +92,7 @@ public class PartitionedUnion {
       return part.getGeometry(s, 0).copy();
     }
 
-    List<Geometry> setGeoms = new ArrayList<Geometry>();
+    List<Geometry> setGeoms = new ArrayList<>();
     for (int i = 0; i < part.getSize(s); i++) {
       setGeoms.add( part.getGeometry(s, i) );
     }

@@ -14,7 +14,6 @@ package org.locationtech.jts.planargraph;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -32,17 +31,17 @@ import org.locationtech.jts.geom.Quadrant;
  */
 public class DirectedEdge
     extends GraphComponent
-    implements Comparable
+    implements Comparable<Object>
 {
   /**
    * Returns a List containing the parent Edge (possibly null) for each of the given
    * DirectedEdges.
    */
-  public static List toEdges(Collection dirEdges)
+  public static List<Edge> toEdges(Collection<?> dirEdges)
   {
-    List edges = new ArrayList();
-    for (Iterator i = dirEdges.iterator(); i.hasNext(); ) {
-      edges.add( ((DirectedEdge) i.next()).parentEdge);
+    List<Edge> edges = new ArrayList<Edge>();
+    for (Object dirEdge : dirEdges) {
+      edges.add( ((DirectedEdge) dirEdge).parentEdge);
     }
     return edges;
   }

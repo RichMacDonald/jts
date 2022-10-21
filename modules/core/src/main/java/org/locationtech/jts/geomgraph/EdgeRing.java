@@ -12,7 +12,6 @@
 package org.locationtech.jts.geomgraph;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -36,13 +35,13 @@ public abstract class EdgeRing {
 
   protected DirectedEdge startDe; // the directed edge which starts the list of edges for this EdgeRing
   private int maxNodeDegree = -1;
-  private List edges = new ArrayList(); // the DirectedEdges making up this EdgeRing
-  private List pts = new ArrayList();
+  private List<DirectedEdge> edges = new ArrayList<DirectedEdge>(); // the DirectedEdges making up this EdgeRing
+  private List<Coordinate> pts = new ArrayList<Coordinate>();
   private Label label = new Label(Location.NONE); // label stores the locations of each geometry on the face surrounded by this ring
   private LinearRing ring;  // the ring created for this EdgeRing
   private boolean isHole;
   private EdgeRing shell;   // if non-null, the ring is a hole and this EdgeRing is its containing shell
-  private ArrayList holes = new ArrayList(); // a list of EdgeRings which are holes in this EdgeRing
+  private ArrayList<EdgeRing> holes = new ArrayList<EdgeRing>(); // a list of EdgeRings which are holes in this EdgeRing
 
   protected GeometryFactory geometryFactory;
 
@@ -107,7 +106,7 @@ public abstract class EdgeRing {
    *
    * @return List of DirectedEdges
    */
-  public List getEdges() { return edges; }
+  public List<DirectedEdge> getEdges() { return edges; }
 
   /**
    * Collect all the points from the DirectedEdges of this ring into a contiguous list
@@ -223,8 +222,8 @@ public abstract class EdgeRing {
     if (! env.contains(p)) return false;
     if (! PointLocation.isInRing(p, shell.getCoordinates()) ) return false;
 
-    for (Iterator i = holes.iterator(); i.hasNext(); ) {
-      EdgeRing hole = (EdgeRing) i.next();
+    for (Object hole2 : holes) {
+      EdgeRing hole = (EdgeRing) hole2;
       if (hole.containsPoint(p) )
         return false;
     }

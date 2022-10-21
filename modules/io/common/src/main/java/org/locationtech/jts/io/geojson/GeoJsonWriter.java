@@ -135,7 +135,7 @@ public class GeoJsonWriter {
 
   private Map<String, Object> create(Geometry geometry, boolean encodeCRS) {
 
-    Map<String, Object> result = new LinkedHashMap<String, Object>();
+    Map<String, Object> result = new LinkedHashMap<>();
     result.put(GeoJsonConstants.NAME_TYPE, geometry.getGeometryType());
 
     if (geometry instanceof Point) {
@@ -170,7 +170,7 @@ public class GeoJsonWriter {
       Polygon polygon = (Polygon) geometry;
 
       if (isForceCCW) {
-        polygon = (Polygon) OrientationTransformer.transformCCW(polygon);
+        polygon = OrientationTransformer.transformCCW(polygon);
       }
 
       result.put(GeoJsonConstants.NAME_COORDINATES, makeJsonAware(polygon));
@@ -197,7 +197,7 @@ public class GeoJsonWriter {
     } else if (geometry instanceof GeometryCollection) {
       GeometryCollection geometryCollection = (GeometryCollection) geometry;
 
-      ArrayList<Map<String, Object>> geometries = new ArrayList<Map<String, Object>>(
+      ArrayList<Map<String, Object>> geometries = new ArrayList<>(
           geometryCollection.getNumGeometries());
 
       for (int i = 0; i < geometryCollection.getNumGeometries(); i++) {
@@ -219,10 +219,10 @@ public class GeoJsonWriter {
 
   private Map<String, Object> createCRS(int srid) {
 
-    Map<String, Object> result = new LinkedHashMap<String, Object>();
+    Map<String, Object> result = new LinkedHashMap<>();
     result.put(GeoJsonConstants.NAME_TYPE, GeoJsonConstants.NAME_NAME);
 
-    Map<String, Object> props = new LinkedHashMap<String, Object>();
+    Map<String, Object> props = new LinkedHashMap<>();
     props.put(GeoJsonConstants.NAME_NAME, EPSG_PREFIX + srid);
 
     result.put(GeoJsonConstants.NAME_PROPERTIES, props);
@@ -231,7 +231,7 @@ public class GeoJsonWriter {
   }
 
   private List<JSONAware> makeJsonAware(Polygon poly) {
-    ArrayList<JSONAware> result = new ArrayList<JSONAware>();
+    ArrayList<JSONAware> result = new ArrayList<>();
 
     {
       final String jsonString = getJsonString(poly.getExteriorRing()
@@ -259,7 +259,7 @@ public class GeoJsonWriter {
 
   private List<Object> makeJsonAware(GeometryCollection geometryCollection) {
 
-    ArrayList<Object> list = new ArrayList<Object>(
+    ArrayList<Object> list = new ArrayList<>(
         geometryCollection.getNumGeometries());
     for (int i = 0; i < geometryCollection.getNumGeometries(); i++) {
       Geometry geometry = geometryCollection.getGeometryN(i);

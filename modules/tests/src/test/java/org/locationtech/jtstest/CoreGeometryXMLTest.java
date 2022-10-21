@@ -52,7 +52,7 @@ public class CoreGeometryXMLTest extends TestCase {
 
     private void testFiles(String... directoryName) {
         TestEngine engine = new TestEngine();
-        List<File> testFiles = new ArrayList<File>();
+        List<File> testFiles = new ArrayList<>();
         for (String dirName : directoryName) {
           testFiles.addAll( filenames(new File(dirName)) );
         }

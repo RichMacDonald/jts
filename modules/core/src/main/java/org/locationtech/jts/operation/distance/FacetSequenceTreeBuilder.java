@@ -13,7 +13,6 @@
 package org.locationtech.jts.operation.distance;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.CoordinateSequence;
@@ -33,9 +32,9 @@ public class FacetSequenceTreeBuilder {
 
   public static STRtree build(Geometry g) {
     STRtree tree = new STRtree(STR_TREE_NODE_CAPACITY);
-    List sections = computeFacetSequences(g);
-    for (Iterator i = sections.iterator(); i.hasNext();) {
-      FacetSequence section = (FacetSequence) i.next();
+    List<FacetSequence> sections = computeFacetSequences(g);
+    for (Object section2 : sections) {
+      FacetSequence section = (FacetSequence) section2;
       tree.insert(section.getEnvelope(), section);
     }
     tree.build();
@@ -48,8 +47,8 @@ public class FacetSequenceTreeBuilder {
    * @param g
    * @return List<GeometryFacetSequence>
    */
-  private static List computeFacetSequences(Geometry g) {
-    final List sections = new ArrayList();
+  private static List<FacetSequence> computeFacetSequences(Geometry g) {
+    final List<FacetSequence> sections = new ArrayList<FacetSequence>();
 
     g.apply(new GeometryComponentFilter() {
 
@@ -68,7 +67,7 @@ public class FacetSequenceTreeBuilder {
     return sections;
   }
 
-  private static void addFacetSequences(Geometry geom, CoordinateSequence pts, List sections) {
+  private static void addFacetSequences(Geometry geom, CoordinateSequence pts, List<FacetSequence> sections) {
     int i = 0;
     int size = pts.size();
     while (i <= size - 1) {

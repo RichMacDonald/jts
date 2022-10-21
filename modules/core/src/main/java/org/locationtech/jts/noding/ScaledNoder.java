@@ -14,7 +14,6 @@ package org.locationtech.jts.noding;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -56,26 +55,26 @@ public class ScaledNoder
 
   public boolean isIntegerPrecision() { return scaleFactor == 1.0; }
 
-  public Collection getNodedSubstrings()
+  public Collection<? extends SegmentString> getNodedSubstrings()
   {
-    Collection splitSS = noder.getNodedSubstrings();
+    Collection<? extends SegmentString> splitSS = noder.getNodedSubstrings();
     if (isScaled) rescale(splitSS);
     return splitSS;
   }
 
-  public void computeNodes(Collection inputSegStrings)
+  public void computeNodes(Collection<? extends SegmentString> inputSegStrings)
   {
-    Collection intSegStrings = inputSegStrings;
+    Collection<NodedSegmentString> intSegStrings = (Collection<NodedSegmentString>) inputSegStrings; //manual cast
     if (isScaled)
-      intSegStrings = scale(inputSegStrings);
+      intSegStrings = scale(intSegStrings);
     noder.computeNodes(intSegStrings);
   }
 
-  private Collection scale(Collection segStrings)
+  private Collection<NodedSegmentString> scale(Collection<NodedSegmentString> segStrings)
   {
-    List nodedSegmentStrings = new ArrayList(segStrings.size());
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      SegmentString ss = (SegmentString) i.next();
+    List<NodedSegmentString> nodedSegmentStrings = new ArrayList<NodedSegmentString>(segStrings.size());
+    for (Object segString : segStrings) {
+      SegmentString ss = (SegmentString) segString;
       nodedSegmentStrings.add(new NodedSegmentString(scale(ss.getCoordinates()), ss.getData()));
     }
     return nodedSegmentStrings;
@@ -97,10 +96,10 @@ public class ScaledNoder
 
   //private double scale(double val) { return (double) Math.round(val * scaleFactor); }
 
-  private void rescale(Collection segStrings)
+  private void rescale(Collection<?> segStrings)
   {
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      SegmentString ss = (SegmentString) i.next();
+    for (Object segString : segStrings) {
+      SegmentString ss = (SegmentString) segString;
       rescale(ss.getCoordinates());
     }
   }

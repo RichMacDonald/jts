@@ -34,7 +34,7 @@ public class RandomPolygonBuilder {
   }
   
   private Geometry select(Geometry geoms, int n) {
-    List<Geometry> selection = new ArrayList<Geometry>();
+    List<Geometry> selection = new ArrayList<>();
     // add all the geometries
     for (int i = 0; i < geoms.getNumGeometries(); i++) {
       selection.add(geoms.getGeometryN(i));

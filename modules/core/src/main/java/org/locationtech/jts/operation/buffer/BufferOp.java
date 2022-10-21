@@ -288,7 +288,7 @@ public class BufferOp
     if (poly1.isEmpty()) return poly0;
     if (poly0.isEmpty()) return poly1;
     
-    List<Polygon> polys = new ArrayList<Polygon>();
+    List<Polygon> polys = new ArrayList<>();
     extractPolygons(poly0, polys);
     extractPolygons(poly1, polys);
     if (polys.size() == 1) return polys.get(0);

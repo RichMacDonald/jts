@@ -27,6 +27,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Location;
+import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.Position;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.TopologyException;
@@ -141,7 +142,7 @@ class BufferBuilder
     BufferCurveSetBuilder curveSetBuilder = new BufferCurveSetBuilder(g, distance, precisionModel, bufParams);
     curveSetBuilder.setInvertOrientation(isInvertOrientation);
     
-    List bufferSegStrList = curveSetBuilder.getCurves();
+    List<SegmentString> bufferSegStrList = curveSetBuilder.getCurves();
 
     // short-circuit test
     if (bufferSegStrList.size() <= 0) {
@@ -170,10 +171,10 @@ class BufferBuilder
     graph = new PlanarGraph(new OverlayNodeFactory());
     graph.addEdges(edgeList.getEdges());
 
-    List subgraphList = createSubgraphs(graph);
+    List<BufferSubgraph> subgraphList = createSubgraphs(graph);
     PolygonBuilder polyBuilder = new PolygonBuilder(geomFact);
     buildSubgraphs(subgraphList, polyBuilder);
-    List resultPolyList = polyBuilder.getPolygons();
+    List<Polygon> resultPolyList = polyBuilder.getPolygons();
 
     // just in case...
     if (resultPolyList.size() <= 0) {
@@ -201,11 +202,11 @@ class BufferBuilder
 //                                  precisionModel.getScale());
   }
 
-  private void computeNodedEdges(List bufferSegStrList, PrecisionModel precisionModel, boolean isNodingValidated)
+  private void computeNodedEdges(List<SegmentString> bufferSegStrList, PrecisionModel precisionModel, boolean isNodingValidated)
   {
     Noder noder = getNoder(precisionModel);
     noder.computeNodes(bufferSegStrList);
-    Collection nodedSegStrings = noder.getNodedSubstrings();
+    Collection<?> nodedSegStrings = noder.getNodedSubstrings();
     
     if (isNodingValidated) {
       FastNodingValidator nv = new FastNodingValidator(nodedSegStrings);
@@ -215,8 +216,8 @@ class BufferBuilder
 // DEBUGGING ONLY
 //BufferDebug.saveEdges(nodedEdges, "run" + BufferDebug.runCount + "_nodedEdges");
 
-    for (Iterator i = nodedSegStrings.iterator(); i.hasNext(); ) {
-      SegmentString segStr = (SegmentString) i.next();
+    for (Object nodedSegString : nodedSegStrings) {
+      SegmentString segStr = (SegmentString) nodedSegString;
       
       /**
        * Discard edges which have zero length, 
@@ -272,11 +273,11 @@ class BufferBuilder
     }
   }
 
-  private List createSubgraphs(PlanarGraph graph)
+  private List<BufferSubgraph> createSubgraphs(PlanarGraph graph)
   {
-    List subgraphList = new ArrayList();
-    for (Iterator i = graph.getNodes().iterator(); i.hasNext(); ) {
-      Node node = (Node) i.next();
+    List<BufferSubgraph> subgraphList = new ArrayList<BufferSubgraph>();
+    for (Object element : graph.getNodes()) {
+      Node node = (Node) element;
       if (! node.isVisited()) {
         BufferSubgraph subgraph = new BufferSubgraph();
         subgraph.create(node);
@@ -301,11 +302,11 @@ class BufferBuilder
    * @param subgraphList the subgraphs to build
    * @param polyBuilder the PolygonBuilder which will build the final polygons
    */
-  private void buildSubgraphs(List subgraphList, PolygonBuilder polyBuilder)
+  private void buildSubgraphs(List<BufferSubgraph> subgraphList, PolygonBuilder polyBuilder)
   {
-    List processedGraphs = new ArrayList();
-    for (Iterator i = subgraphList.iterator(); i.hasNext(); ) {
-      BufferSubgraph subgraph = (BufferSubgraph) i.next();
+    List<BufferSubgraph> processedGraphs = new ArrayList<BufferSubgraph>();
+    for (Object element : subgraphList) {
+      BufferSubgraph subgraph = (BufferSubgraph) element;
       Coordinate p = subgraph.getRightmostCoordinate();
 //      int outsideDepth = 0;
 //      if (polyBuilder.containsPoint(p))
@@ -326,10 +327,10 @@ class BufferBuilder
     }
   }
   
-  private static Geometry convertSegStrings(Iterator it)
+  private static Geometry convertSegStrings(Iterator<?> it)
   {
   	GeometryFactory fact = new GeometryFactory();
-  	List lines = new ArrayList();
+  	List<LineString> lines = new ArrayList<LineString>();
   	while (it.hasNext()) {
   		SegmentString ss = (SegmentString) it.next();
   		LineString line = fact.createLineString(ss.getCoordinates());

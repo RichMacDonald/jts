@@ -62,7 +62,7 @@ public class IteratedNoder
     this.maxIter = maxIter;
   }
 
-  public Collection getNodedSubstrings()  {    return nodedSegStrings;  }
+  public Collection<SegmentString> getNodedSubstrings()  {    return nodedSegStrings;  }
 
   /**
    * Fully nodes a list of {@link SegmentString}s, i.e. performs noding iteratively
@@ -73,7 +73,7 @@ public class IteratedNoder
    * @param segStrings a collection of SegmentStrings to be noded
    * @throws TopologyException if the iterated noding fails to converge.
    */
-  public void computeNodes(Collection segStrings)
+  public void computeNodes(Collection<? extends SegmentString> segStrings)
     throws TopologyException
   {
     int[] numInteriorIntersections = new int[1];

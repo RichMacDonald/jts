@@ -16,7 +16,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -65,7 +64,7 @@ public class KdTree {
    *          a collection of nodes
    * @return an array of the coordinates represented by the nodes
    */
-  public static Coordinate[] toCoordinates(Collection kdnodes) {
+  public static Coordinate[] toCoordinates(Collection<?> kdnodes) {
     return toCoordinates(kdnodes, false);
   }
 
@@ -80,10 +79,10 @@ public class KdTree {
    *   be included multiple times
    * @return an array of the coordinates represented by the nodes
    */
-  public static Coordinate[] toCoordinates(Collection kdnodes, boolean includeRepeated) {
+  public static Coordinate[] toCoordinates(Collection<?> kdnodes, boolean includeRepeated) {
     CoordinateList coord = new CoordinateList();
-    for (Iterator it = kdnodes.iterator(); it.hasNext();) {
-      KdNode node = (KdNode) it.next();
+    for (Object kdnode : kdnodes) {
+      KdNode node = (KdNode) kdnode;
       int count = includeRepeated ? node.getCount() : 1;
       for (int i = 0; i < count; i++) {
        coord.add(node.getCoordinate(), true);
@@ -305,7 +304,7 @@ public class KdTree {
    */
   public void query(Envelope queryEnv, KdNodeVisitor visitor) {
     //-- Deque is faster than Stack
-    Deque<QueryStackFrame> queryStack = new ArrayDeque<QueryStackFrame>();
+    Deque<QueryStackFrame> queryStack = new ArrayDeque<>();
     KdNode currentNode = root;
     boolean isXLevel = true;
 
@@ -377,8 +376,8 @@ public class KdTree {
    * @param queryEnv the range rectangle to query
    * @return a list of the KdNodes found
    */
-  public List query(Envelope queryEnv) {
-    final List result = new ArrayList();
+  public List<KdNode> query(Envelope queryEnv) {
+    final List<KdNode> result = new ArrayList<KdNode>();
     query(queryEnv, result);
     return result;
   }
@@ -391,7 +390,7 @@ public class KdTree {
    * @param result
    *          a list to accumulate the result nodes into
    */
-  public void query(Envelope queryEnv, final List result) {
+  public void query(Envelope queryEnv, final List<KdNode> result) {
     query(queryEnv, new KdNodeVisitor() {
 
       public void visit(KdNode node) {

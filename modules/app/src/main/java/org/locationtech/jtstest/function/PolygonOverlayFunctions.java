@@ -25,6 +25,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.Polygonal;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.LinearComponentExtracter;
+import org.locationtech.jts.index.strtree.Boundable;
 import org.locationtech.jts.index.strtree.STRtree;
 import org.locationtech.jts.operation.overlayng.OverlayNG;
 import org.locationtech.jts.operation.overlayng.OverlayNGRobust;
@@ -193,13 +194,14 @@ public class PolygonOverlayFunctions
     }
     
     public List<Polygon> findParents(List<Polygon> resultants) {
-      List<Polygon> polys = new ArrayList<Polygon>();
+      List<Polygon> polys = new ArrayList<>();
       for (Polygon res : resultants) {
         Point intPt = res.getInteriorPoint();
         Coordinate intCoord = intPt.getCoordinate();
         
-        List<Geometry> candidates = sourceIndex.query(intPt.getEnvelopeInternal());
-        for (Geometry cand : candidates) {
+        List<Object> candidates = sourceIndex.query(intPt.getEnvelopeInternal());
+        for (Object cand1 : candidates) {
+        	Geometry cand = (Geometry) cand1;  //manual case
           
           boolean isParent = SimplePointInAreaLocator.isContained(intCoord, cand);
           if (isParent) {

@@ -71,7 +71,7 @@ public class SortingFunctions
   
   private static List<Geometry> components(Geometry g)
   {
-    List<Geometry> comp = new ArrayList<Geometry>();
+    List<Geometry> comp = new ArrayList<>();
     for (int i = 0; i < g.getNumGeometries(); i++) {
       comp.add(g.getGeometryN(i));
     }

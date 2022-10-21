@@ -118,8 +118,8 @@ public class PolygonHandler implements ShapeHandler{
         }
         
         //LinearRing[] rings = new LinearRing[numParts];
-        ArrayList<LinearRing> shells = new ArrayList<LinearRing>();
-        ArrayList<LinearRing> holes = new ArrayList<LinearRing>();
+        ArrayList<LinearRing> shells = new ArrayList<>();
+        ArrayList<LinearRing> holes = new ArrayList<>();
         Coordinate[] coords = new Coordinate[numPoints];
         
         for(int t=0;t<numPoints;t++)
@@ -207,8 +207,8 @@ public class PolygonHandler implements ShapeHandler{
 
         Polygon[] polygons = new Polygon[shells.size()];
         for (int i = 0; i < shells.size(); i++) {
-          polygons[i] = geometryFactory.createPolygon((LinearRing) shells.get(i),
-              (LinearRing[]) ((ArrayList<LinearRing>) holesForShells.get(i))
+          polygons[i] = geometryFactory.createPolygon(shells.get(i),
+              holesForShells.get(i)
                   .toArray(new LinearRing[0]));
         }
 
@@ -230,14 +230,14 @@ public class PolygonHandler implements ShapeHandler{
       private ArrayList<ArrayList<LinearRing>> assignHolesToShells(ArrayList<LinearRing> shells, ArrayList<LinearRing> holes)
       {
         // now we have a list of all shells and all holes
-        ArrayList<ArrayList<LinearRing>> holesForShells = new ArrayList<ArrayList<LinearRing>>(shells.size());
+        ArrayList<ArrayList<LinearRing>> holesForShells = new ArrayList<>(shells.size());
         for (int i = 0; i < shells.size(); i++) {
           holesForShells.add(new ArrayList<LinearRing>());
         }
 
         // find homes
         for (int i = 0; i < holes.size(); i++) {
-          LinearRing testHole = (LinearRing) holes.get(i);
+          LinearRing testHole = holes.get(i);
           LinearRing minShell = null;
           Envelope minEnv = null;
           Envelope testHoleEnv = testHole.getEnvelopeInternal();
@@ -245,7 +245,7 @@ public class PolygonHandler implements ShapeHandler{
           LinearRing tryShell;
           int nShells = shells.size();
           for (int j = 0; j < nShells; j++) {
-            tryShell = (LinearRing) shells.get(j);
+            tryShell = shells.get(j);
             Envelope tryShellEnv = tryShell.getEnvelopeInternal();
             if (! tryShellEnv.contains(testHoleEnv)) continue;
             
@@ -272,7 +272,7 @@ public class PolygonHandler implements ShapeHandler{
           }
           else {
             // ((ArrayList)holesForShells.get(shells.indexOf(minShell))).add(testRing);
-            ((ArrayList<LinearRing>) holesForShells.get(findIndex(shells, minShell)))
+            holesForShells.get(findIndex(shells, minShell))
                 .add(testHole);
           }
         }
@@ -286,7 +286,7 @@ public class PolygonHandler implements ShapeHandler{
        * @param o
        * @return
        */
-      private static int findIndex(ArrayList list, Object o)
+      private static int findIndex(ArrayList<LinearRing> list, LinearRing o)
       {
         int n = list.size();
         for (int i = 0; i < n; i++) {
@@ -338,9 +338,8 @@ public class PolygonHandler implements ShapeHandler{
         zmax = Double.NaN;
         double z;
         
-        for (int t=0;t<cs.length; t++)
-        {
-            z= cs[t].getZ() ;
+        for (Coordinate element : cs) {
+            z= element.getZ() ;
             if (!(Double.isNaN( z ) ))
             {
                 if (validZFound)

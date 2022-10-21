@@ -240,16 +240,16 @@ public abstract class GeometryTestCase extends TestCase{
   }
   protected List readList(String[] wkt) {
     ArrayList geometries = new ArrayList(wkt.length);
-    for (int i = 0; i < wkt.length; i++) {
-      geometries.add(read(wkt[i]));
+    for (String element : wkt) {
+      geometries.add(read(element));
     }
     return geometries;
   }
 
   public static List readList(WKTReader reader, String[] wkt) {
     ArrayList geometries = new ArrayList(wkt.length);
-    for (int i = 0; i < wkt.length; i++) {
-      geometries.add(read(reader, wkt[i]));
+    for (String element : wkt) {
+      geometries.add(read(reader, element));
     }
     return geometries;
   }

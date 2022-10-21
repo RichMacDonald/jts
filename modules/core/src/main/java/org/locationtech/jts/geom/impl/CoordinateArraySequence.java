@@ -321,8 +321,8 @@ public class CoordinateArraySequence
 
   public Envelope expandEnvelope(Envelope env)
   {
-    for (int i = 0; i < coordinates.length; i++ ) {
-      env.expandToInclude(coordinates[i]);
+    for (Coordinate coordinate : coordinates) {
+      env.expandToInclude(coordinate);
     }
     return env;
   }

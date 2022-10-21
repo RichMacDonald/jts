@@ -16,7 +16,6 @@ package org.locationtech.jts.geomgraph.index;
  */
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -34,14 +33,14 @@ public class SimpleSweepLineIntersector
   extends EdgeSetIntersector
 {
 
-  List events = new ArrayList();
+  List<SweepLineEvent> events = new ArrayList<SweepLineEvent>();
   // statistics information
   int nOverlaps;
 
   public SimpleSweepLineIntersector() {
   }
 
-  public void computeIntersections(List edges, SegmentIntersector si, boolean testAllSegments)
+  public void computeIntersections(List<Edge> edges, SegmentIntersector si, boolean testAllSegments)
   {
     if (testAllSegments)
       add(edges, null);
@@ -50,26 +49,24 @@ public class SimpleSweepLineIntersector
     computeIntersections(si);
   }
 
-  public void computeIntersections(List edges0, List edges1, SegmentIntersector si)
+  public void computeIntersections(List<Edge> edges0, List<Edge> edges1, SegmentIntersector si)
   {
     add(edges0, edges0);
     add(edges1, edges1);
     computeIntersections(si);
   }
 
-  private void add(List edges)
+  private void add(List<Edge> edges)
   {
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      Edge edge = (Edge) i.next();
+    for (Edge edge2 : edges) {
       // edge is its own group
-      add(edge, edge);
+      add(edge2, edge2);
     }
   }
-  private void add(List edges, Object edgeSet)
+  private void add(List<Edge> edges, Object edgeSet)
   {
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      Edge edge = (Edge) i.next();
-      add(edge, edgeSet);
+    for (Edge edge2 : edges) {
+      add((Edge) edge2, edgeSet);
     }
   }
 

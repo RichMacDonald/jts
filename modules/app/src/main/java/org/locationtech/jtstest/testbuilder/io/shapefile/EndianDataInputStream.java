@@ -100,7 +100,7 @@ public class EndianDataInputStream {
         ((long) (workSpace[4] & 0xff) << 32) |
         ((long) (workSpace[3] & 0xff) << 24) |
         ((long) (workSpace[2] & 0xff) << 16) |
-        ((long) (workSpace[1] & 0xff) << 8) | ((long) (workSpace[0] & 0xff));
+        ((long) (workSpace[1] & 0xff) << 8) | (workSpace[0] & 0xff);
     }
 
     /** read a 64bit double  in BE*/
@@ -120,7 +120,7 @@ public class EndianDataInputStream {
             ((long) (workSpace[3] & 0xff) << 24) |
             ((long) (workSpace[2] & 0xff) << 16) |
             ((long) (workSpace[1] & 0xff) << 8) |
-            ((long) (workSpace[0] & 0xff));
+            (workSpace[0] & 0xff);
 
         return Double.longBitsToDouble(l);
     }

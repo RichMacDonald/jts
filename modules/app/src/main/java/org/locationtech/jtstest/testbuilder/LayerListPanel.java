@@ -54,7 +54,7 @@ public class LayerListPanel extends JPanel {
   Box buttonPanel = Box.createVerticalBox();
   JTabbedPane tabPane = new JTabbedPane();
   private LayerStylePanel lyrStylePanel;
-  List<LayerItemPanel> layerItems = new ArrayList<LayerItemPanel>();
+  List<LayerItemPanel> layerItems = new ArrayList<>();
 
   private JButton btnCopy;
 

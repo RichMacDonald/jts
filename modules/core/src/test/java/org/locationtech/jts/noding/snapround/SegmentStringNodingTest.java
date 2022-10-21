@@ -71,8 +71,8 @@ public class SegmentStringNodingTest  extends TestCase {
     new SnapRoundingNoder(pm).computeNodes(strings);
     
     @SuppressWarnings("unchecked")
-    List<NodedSegmentString> noded = NodedSegmentString.getNodedSubstrings(strings);
-    for (NodedSegmentString s : noded) {
+    List<SegmentString> noded = NodedSegmentString.getNodedSubstrings(strings);
+    for (SegmentString s : noded) {
       assertTrue("Found a 1-point segmentstring", s.size() >= 2);
       assertTrue("Found a collapsed edge", ! isCollapsed(s) );
     }

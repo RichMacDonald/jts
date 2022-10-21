@@ -12,7 +12,6 @@
 package org.locationtech.jts.operation.overlay;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.PointLocator;
@@ -36,8 +35,8 @@ public class LineBuilder {
   private GeometryFactory geometryFactory;
   private PointLocator ptLocator;
 
-  private List lineEdgesList    = new ArrayList();
-  private List resultLineList   = new ArrayList();
+  private List<Edge> lineEdgesList    = new ArrayList<Edge>();
+  private List<LineString> resultLineList   = new ArrayList<LineString>();
 
   public LineBuilder(OverlayOp op, GeometryFactory geometryFactory, PointLocator ptLocator) {
     this.op = op;
@@ -47,7 +46,7 @@ public class LineBuilder {
   /**
    * @return a list of the LineStrings in the result of the specified overlay operation
    */
-  public List build(int opCode)
+  public List<LineString> build(int opCode)
   {
     findCoveredLineEdges();
     collectLines(opCode);
@@ -65,8 +64,8 @@ public class LineBuilder {
   private void findCoveredLineEdges()
   {
     // first set covered for all L edges at nodes which have A edges too
-    for (Iterator nodeit = op.getGraph().getNodes().iterator(); nodeit.hasNext(); ) {
-      Node node = (Node) nodeit.next();
+    for (Object element : op.getGraph().getNodes()) {
+      Node node = (Node) element;
 //node.print(System.out);
       ((DirectedEdgeStar) node.getEdges()).findCoveredLineEdges();
     }
@@ -75,8 +74,8 @@ public class LineBuilder {
      * For all L edges which weren't handled by the above,
      * use a point-in-poly test to determine whether they are covered
      */
-    for (Iterator it = op.getGraph().getEdgeEnds().iterator(); it.hasNext(); ) {
-      DirectedEdge de = (DirectedEdge) it.next();
+    for (Object element : op.getGraph().getEdgeEnds()) {
+      DirectedEdge de = (DirectedEdge) element;
       Edge e = de.getEdge();
       if (de.isLineEdge() && ! e.isCoveredSet()) {
         boolean isCovered = op.isCoveredByA(de.getCoordinate());
@@ -87,8 +86,8 @@ public class LineBuilder {
 
   private void collectLines(int opCode)
   {
-    for (Iterator it = op.getGraph().getEdgeEnds().iterator(); it.hasNext(); ) {
-      DirectedEdge de = (DirectedEdge) it.next();
+    for (Object element : op.getGraph().getEdgeEnds()) {
+      DirectedEdge de = (DirectedEdge) element;
       collectLineEdge(de, opCode, lineEdgesList);
       collectBoundaryTouchEdge(de, opCode, lineEdgesList);
     }
@@ -104,7 +103,7 @@ public class LineBuilder {
    * @param opCode the overlap operation
    * @param edges the list of included line edges
    */
-  private void collectLineEdge(DirectedEdge de, int opCode, List edges)
+  private void collectLineEdge(DirectedEdge de, int opCode, List<Edge> edges)
   {
     Label label = de.getLabel();
     Edge e = de.getEdge();
@@ -130,7 +129,7 @@ public class LineBuilder {
    * <li> OR as a result of a dimensional collapse.
    * </ul>
    */
-  private void collectBoundaryTouchEdge(DirectedEdge de, int opCode, List edges)
+  private void collectBoundaryTouchEdge(DirectedEdge de, int opCode, List<Edge> edges)
   {
     Label label = de.getLabel();
     if (de.isLineEdge()) return;  // only interested in area edges
@@ -152,8 +151,8 @@ public class LineBuilder {
 
   private void buildLines(int opCode)
   {
-    for (Iterator it = lineEdgesList.iterator(); it.hasNext(); ) {
-      Edge e = (Edge) it.next();
+    for (Object element : lineEdgesList) {
+      Edge e = (Edge) element;
       // Label label = e.getLabel();
         LineString line = geometryFactory.createLineString(e.getCoordinates());
         resultLineList.add(line);
@@ -161,10 +160,10 @@ public class LineBuilder {
     }
   }
 
-  private void labelIsolatedLines(List edgesList)
+  private void labelIsolatedLines(List<?> edgesList)
   {
-    for (Iterator it = edgesList.iterator(); it.hasNext(); ) {
-      Edge e = (Edge) it.next();
+    for (Object element : edgesList) {
+      Edge e = (Edge) element;
       Label label = e.getLabel();
 //n.print(System.out);
       if (e.isIsolated()) {

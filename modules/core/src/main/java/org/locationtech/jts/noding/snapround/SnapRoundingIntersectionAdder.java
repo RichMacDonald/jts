@@ -64,7 +64,7 @@ public class SnapRoundingIntersectionAdder
      * They are snapped in a subsequent phase.
      */
     li = new RobustLineIntersector();
-    intersections = new ArrayList();
+    intersections = new ArrayList<Coordinate>();
   }
 
   /**

@@ -44,7 +44,7 @@ import org.locationtech.jts.triangulate.quadedge.QuadEdgeSubdivision;
  */
 public class VoronoiDiagramBuilder 
 {
-	private Collection siteCoords;
+	private Collection<?> siteCoords;
 	private double tolerance = 0.0;
 	private QuadEdgeSubdivision subdiv = null;
 	private Envelope clipEnv = null;
@@ -76,7 +76,7 @@ public class VoronoiDiagramBuilder
 	 * 
 	 * @param coords a collection of Coordinates.
 	 */
-	public void setSites(Collection coords)
+	public void setSites(Collection<?> coords)
 	{
 		// remove any duplicate points (they will cause the triangulation to fail)
 		siteCoords = DelaunayTriangulationBuilder.unique(CoordinateArrays.toCoordinateArray(coords));
@@ -122,7 +122,7 @@ public class VoronoiDiagramBuilder
   		diagramEnv.expandBy(expandBy);
 		}
 
-		List vertices = DelaunayTriangulationBuilder.toVertices(siteCoords);
+		List<?> vertices = DelaunayTriangulationBuilder.toVertices(siteCoords);
 		subdiv = new QuadEdgeSubdivision(diagramEnv, tolerance);
 		IncrementalDelaunayTriangulator triangulator = new IncrementalDelaunayTriangulator(subdiv);
 		triangulator.insertSites(vertices);
@@ -162,7 +162,7 @@ public class VoronoiDiagramBuilder
 	private static Geometry clipGeometryCollection(Geometry geom, Envelope clipEnv)
 	{
 		Geometry clipPoly = geom.getFactory().toGeometry(clipEnv);
-		List clipped = new ArrayList();
+		List<Geometry> clipped = new ArrayList<Geometry>();
 		for (int i = 0; i < geom.getNumGeometries(); i++) {
 			Geometry g = geom.getGeometryN(i);
 			Geometry result = null;

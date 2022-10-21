@@ -77,13 +77,13 @@ class KMLReader
     LineNumberReader myReader = new LineNumberReader(r);
     xr.parse(new InputSource(myReader));
     
-    List geoms = kmlHandler.getGeometries();
+    List<Geometry> geoms = kmlHandler.getGeometries();
 	}
 }
 
 class KMLHandler extends DefaultHandler
 {
-	private List geoms = new ArrayList();;
+	private List<Geometry> geoms = new ArrayList<Geometry>();;
 	
 	private GMLHandler currGeomHandler;
 	private String lastEltName = null;
@@ -94,7 +94,7 @@ class KMLHandler extends DefaultHandler
 		super();
 	}
 	
-	public List getGeometries()
+	public List<Geometry> getGeometries()
 	{
 		return geoms;
 	}

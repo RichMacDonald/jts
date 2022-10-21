@@ -127,7 +127,7 @@ extends JPanel implements FunctionPanel
   
   private GeometryFunction currentFunc = null;
   private Stopwatch timer;
-  private Map<GeometryFunction, String> funcParamMap = new HashMap<GeometryFunction, String>();
+  private Map<GeometryFunction, String> funcParamMap = new HashMap<>();
   
   public SpatialFunctionPanel() {
     try {
@@ -299,8 +299,7 @@ extends JPanel implements FunctionPanel
 
   static void initLabels(JLabel[] paramLabel)
   {
-    for (int i = 0; i < paramLabel.length; i++) {
-      JLabel lbl = paramLabel[i];
+    for (JLabel lbl : paramLabel) {
       lbl.setHorizontalAlignment(SwingConstants.RIGHT);
       lbl.setBorder(LABEL_BORDER);
     }
@@ -428,9 +427,9 @@ extends JPanel implements FunctionPanel
   private static int numNonGeomParams(GeometryFunction func)
   {
     int count = 0;
-    Class[] paramTypes = func.getParameterTypes();
-    for (int i = 0; i < paramTypes.length; i++) {
-      if (! ClassUtil.isGeometry(paramTypes[i]))
+    Class<?>[] paramTypes = func.getParameterTypes();
+    for (Class<?> paramType : paramTypes) {
+      if (! ClassUtil.isGeometry(paramType))
         count++;
     }
     return count;
@@ -447,7 +446,7 @@ extends JPanel implements FunctionPanel
   public Object[] getFunctionParams()
   {
     if (currentFunc == null) return null;
-    Class[] paramTypes = currentFunc.getParameterTypes();
+    Class<?>[] paramTypes = currentFunc.getParameterTypes();
     Object[] paramVal = new Object[paramTypes.length];
     
     for (int i = 0; i < paramVal.length; i++) {

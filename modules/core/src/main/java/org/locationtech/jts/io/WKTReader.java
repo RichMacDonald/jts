@@ -365,7 +365,7 @@ public class WKTReader
     if (getNextEmptyOrOpener(tokenizer).equals(WKTConstants.EMPTY))
       return createCoordinateSequenceEmpty(ordinateFlags);
     
-    List<Coordinate> coordinates = new ArrayList<Coordinate>();
+    List<Coordinate> coordinates = new ArrayList<>();
     do {
       coordinates.add(getCoordinate(tokenizer, ordinateFlags, false));
     } while (getNextCloserOrComma(tokenizer).equals(COMMA));
@@ -421,7 +421,7 @@ S  */
   private CoordinateSequence getCoordinateSequenceOldMultiPoint(StreamTokenizer tokenizer, EnumSet<Ordinate> ordinateFlags)
           throws IOException, ParseException {
 
-    List<Coordinate> coordinates = new ArrayList<Coordinate>();
+    List<Coordinate> coordinates = new ArrayList<>();
     do {
       coordinates.add(getCoordinate(tokenizer, ordinateFlags, true));
     } while (getNextCloserOrComma(tokenizer).equals(COMMA));
@@ -856,7 +856,7 @@ S  */
       }
     }
     
-    List<Point> points = new ArrayList<Point>();
+    List<Point> points = new ArrayList<>();
     Point point = readPointText(tokenizer, ordinateFlags);
     points.add(point);
     nextToken = getNextCloserOrComma(tokenizer);
@@ -866,7 +866,7 @@ S  */
       nextToken = getNextCloserOrComma(tokenizer);
     }
     Point[] array = new Point[points.size()];
-    return geometryFactory.createMultiPoint((Point[]) points.toArray(array));
+    return geometryFactory.createMultiPoint(points.toArray(array));
   }
 
 
@@ -887,7 +887,7 @@ S  */
     if (nextToken.equals(WKTConstants.EMPTY)) {
         return geometryFactory.createPolygon(createCoordinateSequenceEmpty(ordinateFlags));
     }
-    List<LinearRing> holes = new ArrayList<LinearRing>();
+    List<LinearRing> holes = new ArrayList<>();
     LinearRing shell = readLinearRingText(tokenizer, ordinateFlags);
     nextToken = getNextCloserOrComma(tokenizer);
     while (nextToken.equals(COMMA)) {
@@ -896,7 +896,7 @@ S  */
       nextToken = getNextCloserOrComma(tokenizer);
     }
     LinearRing[] array = new LinearRing[holes.size()];
-    return geometryFactory.createPolygon(shell, (LinearRing[]) holes.toArray(array));
+    return geometryFactory.createPolygon(shell, holes.toArray(array));
   }
 
   /**
@@ -916,7 +916,7 @@ S  */
       return geometryFactory.createMultiLineString();
     }
 
-    List<LineString> lineStrings = new ArrayList<LineString>();
+    List<LineString> lineStrings = new ArrayList<>();
     do {
       LineString lineString = readLineStringText(tokenizer, ordinateFlags);
       lineStrings.add(lineString);
@@ -924,7 +924,7 @@ S  */
     } while (nextToken.equals(COMMA));
 
     LineString[] array = new LineString[lineStrings.size()];
-    return geometryFactory.createMultiLineString((LineString[]) lineStrings.toArray(array));
+    return geometryFactory.createMultiLineString(lineStrings.toArray(array));
   }
 
   /**
@@ -943,14 +943,14 @@ S  */
     if (nextToken.equals(WKTConstants.EMPTY)) {
       return geometryFactory.createMultiPolygon();
     }
-    List<Polygon> polygons = new ArrayList<Polygon>();
+    List<Polygon> polygons = new ArrayList<>();
     do {
       Polygon polygon = readPolygonText(tokenizer, ordinateFlags);
       polygons.add(polygon);
       nextToken = getNextCloserOrComma(tokenizer);
     } while (nextToken.equals(COMMA));
     Polygon[] array = new Polygon[polygons.size()];
-    return geometryFactory.createMultiPolygon((Polygon[]) polygons.toArray(array));
+    return geometryFactory.createMultiPolygon(polygons.toArray(array));
   }
 
   /**
@@ -971,7 +971,7 @@ S  */
     if (nextToken.equals(WKTConstants.EMPTY)) {
       return geometryFactory.createGeometryCollection();
     }
-    List<Geometry> geometries = new ArrayList<Geometry>();
+    List<Geometry> geometries = new ArrayList<>();
     do {
       Geometry geometry = readGeometryTaggedText(tokenizer);
       geometries.add(geometry);
@@ -979,7 +979,7 @@ S  */
     } while (nextToken.equals(COMMA));
 
     Geometry[] array = new Geometry[geometries.size()];
-    return geometryFactory.createGeometryCollection((Geometry[]) geometries.toArray(array));
+    return geometryFactory.createGeometryCollection(geometries.toArray(array));
   }
 
 }

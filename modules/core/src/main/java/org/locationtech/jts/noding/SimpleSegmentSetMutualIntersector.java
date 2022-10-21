@@ -12,7 +12,6 @@
 package org.locationtech.jts.noding;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.Coordinate;
 
@@ -47,10 +46,10 @@ public class SimpleSegmentSetMutualIntersector implements SegmentSetMutualInters
    * @param segInt segment intersector to use
    */
   public void process(Collection segStrings, SegmentIntersector segInt) {
-    for (Iterator i = baseSegStrings.iterator(); i.hasNext(); ) {
-    	SegmentString baseSS = (SegmentString) i.next();
-    	for (Iterator j = segStrings.iterator(); j.hasNext(); ) {
-	      	SegmentString ss = (SegmentString) j.next();
+    for (Object baseSegString : baseSegStrings) {
+    	SegmentString baseSS = (SegmentString) baseSegString;
+    	for (Object segString : segStrings) {
+	      	SegmentString ss = (SegmentString) segString;
 	      	intersect(baseSS, ss, segInt);
 	        if (segInt.isDone()) 
 	        	return;

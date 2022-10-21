@@ -83,7 +83,7 @@ public class GeometryFunctions
 
   public static Geometry getPolygonHoles(Geometry geom)
   {
-    final List holePolys = new ArrayList();
+    final List<Polygon> holePolys = new ArrayList<Polygon>();
     geom.apply(new GeometryFilter() {
 
       public void filter(Geometry geom) {
@@ -118,7 +118,7 @@ public class GeometryFunctions
 	  //TODO: support adding to MultiPolygon
 	  Polygon poly = (Polygon) g;
 	  LinearRing shell = poly.getExteriorRing();
-	  List<LinearRing> holes = new ArrayList<LinearRing>();
+	  List<LinearRing> holes = new ArrayList<>();
 	  
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
       holes.add(poly.getInteriorRingN(i));

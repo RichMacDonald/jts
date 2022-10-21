@@ -104,9 +104,9 @@ public class TestPerfDistanceGeomSet
 
   void testAll(Geometry[] geom)
   {
-    for (int i = 0; i < geom.length; i++ ) {
-      for (int j = 0; j < geom.length; j++ ) {
-       double dist = geom[i].distance(geom[j]);
+    for (Geometry element : geom) {
+      for (Geometry element2 : geom) {
+       double dist = element.distance(element2);
 //      double dist = SortedBoundsFacetDistance.distance(g1, g2);
 //      double dist = BranchAndBoundFacetDistance.distance(geom[i], geom[j]);
 //      double dist = CachedBABDistance.getDistance(geom[i], geom[j]);

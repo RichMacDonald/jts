@@ -301,7 +301,7 @@ public class ConcaveHull
   }
   
   private PriorityQueue<HullTri> createBorderQueue(List<HullTri> triList) {
-    PriorityQueue<HullTri> queue = new PriorityQueue<HullTri>();
+    PriorityQueue<HullTri> queue = new PriorityQueue<>();
     for (HullTri tri : triList) {
       //-- add only border triangles which could be eroded
       // (if tri has only 1 adjacent it can't be removed because that would isolate a vertex)
@@ -357,7 +357,7 @@ public class ConcaveHull
    * @return
    */
   private static List<HullTri> findCandidateHoles(List<HullTri> triList, double minEdgeLen) {
-    List<HullTri> candidates = new ArrayList<HullTri>();
+    List<HullTri> candidates = new ArrayList<>();
     for (HullTri tri : triList) {
       if (tri.getSize() < minEdgeLen) continue;
       boolean isTouchingBoundary = tri.isBorder() || tri.hasBoundaryTouch();
@@ -377,7 +377,7 @@ public class ConcaveHull
    * @param triHole triangle which is a hole
    */
   private void removeHole(List<HullTri> triList, HullTri triHole) {
-    PriorityQueue<HullTri> queue = new PriorityQueue<HullTri>();
+    PriorityQueue<HullTri> queue = new PriorityQueue<>();
     queue.add(triHole);
     
     while (! queue.isEmpty()) {

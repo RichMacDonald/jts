@@ -192,8 +192,8 @@ public class GeometrySnapper
     // TODO: should do this more efficiently.  Use CoordSeq filter to get points, KDTree for uniqueness & queries
     Set ptSet = new TreeSet();
     Coordinate[] pts = g.getCoordinates();
-    for (int i = 0; i < pts.length; i++) {
-      ptSet.add(pts[i]);
+    for (Coordinate pt : pts) {
+      ptSet.add(pt);
     }
     return (Coordinate[]) ptSet.toArray(new Coordinate[0]);
   }

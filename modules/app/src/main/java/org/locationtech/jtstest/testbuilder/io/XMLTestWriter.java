@@ -12,7 +12,6 @@
 package org.locationtech.jtstest.testbuilder.io;
 
 import java.io.File;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
@@ -55,8 +54,7 @@ public class XMLTestWriter
     String xml = "  <test>\n";
     xml += "    <op name=\"" + opName + "\" arg1=\"A\"";
     int j = 2;
-    for (int i = 0; i < arguments.length; i++) {
-      String argument = arguments[i];
+    for (String argument : arguments) {
       Assert.isTrue(argument != null);
       xml += " arg" + j + "=\"" + argument  + "\"";
       j++;
@@ -163,9 +161,9 @@ public class XMLTestWriter
   
   public String getTestXML(TestCaseList tcList) {
     StringBuffer xml = new StringBuffer();
-    for (int i = 0; i < tcList.getList().size(); i++) {
+    for (Object element : tcList.getList()) {
       xml.append("\n");
-      xml.append(getTestXML((Testable) tcList.getList().get(i)));
+      xml.append(getTestXML((Testable) element));
     }
     xml.append("\n");
     return xml.toString();
@@ -181,8 +179,8 @@ public class XMLTestWriter
   }
 
   public static String getRunDescription(TestCaseList l) {
-    for (Iterator i = l.getList().iterator(); i.hasNext(); ) {
-      TestCaseEdit tce = (TestCaseEdit) i.next();
+    for (Object element : l.getList()) {
+      TestCaseEdit tce = (TestCaseEdit) element;
       if (tce.getTestable() instanceof TestRunnerTestCaseAdapter) {
         TestRunnerTestCaseAdapter a = (TestRunnerTestCaseAdapter) tce.getTestable();
         String description = a.getTestRunnerTestCase().getTestRun().getDescription();
@@ -197,8 +195,8 @@ public class XMLTestWriter
   }
 
   public static String getRunWorkspace(TestCaseList l) {
-    for (Iterator i = l.getList().iterator(); i.hasNext(); ) {
-      TestCaseEdit tce = (TestCaseEdit) i.next();
+    for (Object element : l.getList()) {
+      TestCaseEdit tce = (TestCaseEdit) element;
       if (tce.getTestable() instanceof TestRunnerTestCaseAdapter) {
         TestRunnerTestCaseAdapter a = (TestRunnerTestCaseAdapter) tce.getTestable();
         File workspace = a.getTestRunnerTestCase().getTestRun().getWorkspace();

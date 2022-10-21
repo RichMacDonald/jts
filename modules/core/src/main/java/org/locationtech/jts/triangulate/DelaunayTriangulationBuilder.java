@@ -14,7 +14,6 @@ package org.locationtech.jts.triangulate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -67,11 +66,11 @@ public class DelaunayTriangulationBuilder
 	 * @param coords the coordinates to convert
 	 * @return a List of Vertex objects
 	 */
-	public static List toVertices(Collection coords)
+	public static List<Vertex> toVertices(Collection<?> coords)
 	{
-		List verts = new ArrayList();
-		for (Iterator i = coords.iterator(); i.hasNext(); ) {
-			Coordinate coord = (Coordinate) i.next();
+		List<Vertex> verts = new ArrayList<Vertex>();
+		for (Object coord2 : coords) {
+			Coordinate coord = (Coordinate) coord2;
 			verts.add(new Vertex(coord));
 		}
 		return verts;
@@ -83,17 +82,17 @@ public class DelaunayTriangulationBuilder
 	 * @param coords a List of Coordinates
 	 * @return the envelope of the set of coordinates
 	 */
-	public static Envelope envelope(Collection coords)
+	public static Envelope envelope(Collection<?> coords)
 	{
 		Envelope env = new Envelope();
-		for (Iterator i = coords.iterator(); i.hasNext(); ) {
-			Coordinate coord = (Coordinate) i.next();
+		for (Object coord2 : coords) {
+			Coordinate coord = (Coordinate) coord2;
 			env.expandToInclude(coord);
 		}
 		return env;
 	}
 	
-	private Collection siteCoords;
+	private Collection<?> siteCoords;
 	private double tolerance = 0.0;
 	private QuadEdgeSubdivision subdiv = null;
 	
@@ -123,7 +122,7 @@ public class DelaunayTriangulationBuilder
 	 * 
 	 * @param coords a collection of Coordinates.
 	 */
-	public void setSites(Collection coords)
+	public void setSites(Collection<?> coords)
 	{
 		// remove any duplicate points (they will cause the triangulation to fail)
 		siteCoords = unique(CoordinateArrays.toCoordinateArray(coords));
@@ -146,7 +145,7 @@ public class DelaunayTriangulationBuilder
 		if (subdiv != null) return;
 		
 		Envelope siteEnv = envelope(siteCoords);
-		List vertices = toVertices(siteCoords);
+		List<Vertex> vertices = toVertices(siteCoords);
 		subdiv = new QuadEdgeSubdivision(siteEnv, tolerance);
 		IncrementalDelaunayTriangulator triangulator = new IncrementalDelaunayTriangulator(subdiv);
 		triangulator.insertSites(vertices);

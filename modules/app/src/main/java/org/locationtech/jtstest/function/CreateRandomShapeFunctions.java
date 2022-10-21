@@ -72,7 +72,7 @@ public class CreateRandomShapeFunctions {
     Coordinate tri1 = gpts[1];
     Coordinate tri2 = gpts[2];
     
-    List pts = new ArrayList();
+    List<Geometry> pts = new ArrayList<Geometry>();
 
     for (int i = 0; i < nPts; i++) {
       pts.add(geomFact.createPoint(randomPointInTriangle(tri0, tri1, tri2)));
@@ -108,7 +108,7 @@ public class CreateRandomShapeFunctions {
     double centreX = env.getMinX() + xLen/2;
     double centreY = env.getMinY() + yLen/2;
     
-    List pts = new ArrayList();
+    List<Geometry> pts = new ArrayList<Geometry>();
 
     for (int i = 0; i < nPts; i++) {
       double rand = Math.random();
@@ -225,7 +225,7 @@ public class CreateRandomShapeFunctions {
     double xLen = env.getWidth();
     double yLen = env.getHeight();
 
-    List lines = new ArrayList();
+    List<Geometry> lines = new ArrayList<Geometry>();
 
     for (int i = 0; i < nPts; i++) {
       double x0 = env.getMinX() + xLen * Math.random();
@@ -247,7 +247,7 @@ public class CreateRandomShapeFunctions {
     double xLen = env.getWidth() / nCell;
     double yLen = env.getHeight() / nCell;
 
-    List lines = new ArrayList();
+    List<Geometry> lines = new ArrayList<Geometry>();
 
     for (int i = 0; i < nCell; i++) {
       for (int j = 0; j < nCell; j++) {
@@ -268,7 +268,7 @@ public class CreateRandomShapeFunctions {
     double xLen = env.getWidth();
     double yLen = env.getHeight();
 
-    List lines = new ArrayList();
+    List<Geometry> lines = new ArrayList<Geometry>();
 
     for (int i = 0; i < nPts; i++) {
       double x0 = env.getMinX() + xLen * Math.random();

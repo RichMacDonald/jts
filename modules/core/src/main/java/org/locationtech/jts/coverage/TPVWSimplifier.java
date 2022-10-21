@@ -108,7 +108,7 @@ class TPVWSimplifier {
   }
 
   private List<Edge> createEdges(MultiLineString lines) {
-    List<Edge> edges = new ArrayList<Edge>();
+    List<Edge> edges = new ArrayList<>();
     if (lines == null)
       return edges;
     for (int i = 0 ; i < lines.getNumGeometries(); i++) {
@@ -173,7 +173,7 @@ class TPVWSimplifier {
     }
 
     private PriorityQueue<Corner> createQueue() {
-      PriorityQueue<Corner> cornerQueue = new PriorityQueue<Corner>();
+      PriorityQueue<Corner> cornerQueue = new PriorityQueue<>();
       for (int i = 1; i < linkedLine.size() - 1; i++) {
         addCorner(i, cornerQueue);
       }
@@ -219,9 +219,7 @@ class TPVWSimplifier {
     private boolean hasIntersectingVertex(Corner corner, Envelope cornerEnv, 
         Edge edge) {
       int[] result = edge.query(cornerEnv);
-      for (int i = 0; i < result.length; i++) {
-        int index = result[i];
-        
+      for (int index : result) {
         Coordinate v = edge.getCoordinate(index);
         // ok if corner touches another line - should only happen at endpoints
         if (corner.isVertex(v))
@@ -279,7 +277,7 @@ class TPVWSimplifier {
     }
     
     public List<Edge> query(Envelope queryEnv) {
-      return index.query(queryEnv);
+      return (List) index.query(queryEnv); //ugliness of casting
     }
   }
   

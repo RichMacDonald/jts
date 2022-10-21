@@ -29,7 +29,7 @@ public class TestRun implements Runnable
 	// default is to run all cases
 	private int testCaseIndexToRun = -1;
   private String description;
-  private List<TestCase> testCases = new ArrayList<TestCase>();
+  private List<TestCase> testCases = new ArrayList<>();
   private PrecisionModel precisionModel;
   private GeometryOperation geomOp = null;
   private ResultMatcher resultMatcher = null;

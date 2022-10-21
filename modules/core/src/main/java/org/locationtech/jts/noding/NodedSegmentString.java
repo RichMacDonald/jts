@@ -45,9 +45,9 @@ public class NodedSegmentString
 	 * @param segStrings a Collection of NodedSegmentStrings
 	 * @return a Collection of NodedSegmentStrings representing the substrings
 	 */
-  public static List getNodedSubstrings(Collection segStrings)
+  public static List<SegmentString> getNodedSubstrings(Collection<?> segStrings)
   {
-    List resultEdgelist = new ArrayList();
+    List<SegmentString> resultEdgelist = new ArrayList<>();
     getNodedSubstrings(segStrings, resultEdgelist);
     return resultEdgelist;
   }
@@ -58,7 +58,7 @@ public class NodedSegmentString
 	 * @param segStrings a Collection of NodedSegmentStrings
 	 * @param resultEdgelist a List which will collect the NodedSegmentStrings representing the substrings
 	 */
- public static void getNodedSubstrings(Collection segStrings, Collection resultEdgelist)
+ public static void getNodedSubstrings(Collection<?> segStrings, Collection<SegmentString> resultEdgelist)
   {
     for (Object segString : segStrings) {
       NodedSegmentString ss = (NodedSegmentString) segString;

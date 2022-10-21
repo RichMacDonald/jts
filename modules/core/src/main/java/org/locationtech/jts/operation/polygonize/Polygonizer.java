@@ -14,7 +14,6 @@ package org.locationtech.jts.operation.polygonize;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -74,13 +73,13 @@ public class Polygonizer
 
   protected PolygonizeGraph graph;
   // initialize with empty collections, in case nothing is computed
-  protected Collection dangles = new ArrayList();
-  protected List cutEdges = new ArrayList();
-  protected List invalidRingLines = new ArrayList();
+  protected Collection<LineString> dangles = new ArrayList<>();
+  protected List<LineString> cutEdges = new ArrayList<>();
+  protected List<LineString> invalidRingLines = new ArrayList<>();
 
-  protected List holeList = null;
-  protected List shellList = null;
-  protected List polyList = null;
+  protected List<EdgeRing> holeList = null;
+  protected List<EdgeRing> shellList = null;
+  protected List<Polygon> polyList = null;
 
   private boolean isCheckingRingsValid = true;
   private boolean extractOnlyPolygonal;
@@ -116,10 +115,10 @@ public class Polygonizer
    *
    * @param geomList a list of {@link Geometry}s with linework to be polygonized
    */
-  public void add(Collection geomList)
+  public void add(Collection<?> geomList)
   {
-    for (Iterator i = geomList.iterator(); i.hasNext(); ) {
-      Geometry geometry = (Geometry) i.next();
+    for (Object element : geomList) {
+      Geometry geometry = (Geometry) element;
       add(geometry);
     }
   }
@@ -169,7 +168,7 @@ public class Polygonizer
    * Gets the list of polygons formed by the polygonization.
    * @return a collection of {@link Polygon}s
    */
-  public Collection getPolygons()
+  public Collection<Polygon> getPolygons()
   {
     polygonize();
     return polyList;
@@ -196,7 +195,7 @@ public class Polygonizer
    * Gets the list of dangling lines found during polygonization.
    * @return a collection of the input {@link LineString}s which are dangles
    */
-  public Collection getDangles()
+  public Collection<LineString> getDangles()
   {
     polygonize();
     return dangles;
@@ -206,7 +205,7 @@ public class Polygonizer
    * Gets the list of cut edges found during polygonization.
    * @return a collection of the input {@link LineString}s which are cut edges
    */
-  public Collection getCutEdges()
+  public Collection<LineString> getCutEdges()
   {
     polygonize();
     return cutEdges;
@@ -216,7 +215,7 @@ public class Polygonizer
    * Gets the list of lines forming invalid rings found during polygonization.
    * @return a collection of the input {@link LineString}s which form invalid rings
    */
-  public Collection getInvalidRingLines()
+  public Collection<LineString> getInvalidRingLines()
   {
     polygonize();
     return invalidRingLines;
@@ -229,19 +228,19 @@ public class Polygonizer
   {
     // check if already computed
     if (polyList != null) return;
-    polyList = new ArrayList();
+    polyList = new ArrayList<Polygon>();
 
     // if no geometries were supplied it's possible that graph is null
     if (graph == null) return;
 
     dangles = graph.deleteDangles();
     cutEdges = graph.deleteCutEdges();
-    List edgeRingList = graph.getEdgeRings();
+    List<EdgeRing> edgeRingList = graph.getEdgeRings();
 
     //Debug.printTime("Build Edge Rings");
 
-    List validEdgeRingList = new ArrayList();
-    invalidRingLines = new ArrayList();
+    List<EdgeRing> validEdgeRingList = new ArrayList<EdgeRing>();
+    invalidRingLines = new ArrayList<LineString>();
     if (isCheckingRingsValid) {
       findValidRings(edgeRingList, validEdgeRingList, invalidRingLines);
     }
@@ -266,10 +265,10 @@ public class Polygonizer
     polyList = extractPolygons(shellList, includeAll);
   }
 
-  private void findValidRings(List edgeRingList, List validEdgeRingList, List invalidRingList)
+  private void findValidRings(List<EdgeRing> edgeRingList, List<EdgeRing> validEdgeRingList, List<LineString> invalidRingList)
   {
-    for (Iterator i = edgeRingList.iterator(); i.hasNext(); ) {
-      EdgeRing er = (EdgeRing) i.next();
+    for (Object element : edgeRingList) {
+      EdgeRing er = (EdgeRing) element;
       if (er.isValid())
         validEdgeRingList.add(er);
       else
@@ -277,12 +276,12 @@ public class Polygonizer
     }
   }
 
-  private void findShellsAndHoles(List edgeRingList)
+  private void findShellsAndHoles(List<EdgeRing> edgeRingList)
   {
-    holeList = new ArrayList();
-    shellList = new ArrayList();
-    for (Iterator i = edgeRingList.iterator(); i.hasNext(); ) {
-      EdgeRing er = (EdgeRing) i.next();
+    holeList = new ArrayList<EdgeRing>();
+    shellList = new ArrayList<EdgeRing>();
+    for (Object element : edgeRingList) {
+      EdgeRing er = (EdgeRing) element;
       er.computeHole();
       if (er.isHole())
         holeList.add(er);
@@ -291,14 +290,14 @@ public class Polygonizer
     }
   }
 
-  private static void findDisjointShells(List shellList) {
+  private static void findDisjointShells(List<EdgeRing> shellList) {
     findOuterShells(shellList);
     
     boolean isMoreToScan;
     do {
       isMoreToScan = false;
-      for (Iterator i = shellList.iterator(); i.hasNext(); ) {
-        EdgeRing er = (EdgeRing) i.next();
+      for (Object element : shellList) {
+        EdgeRing er = (EdgeRing) element;
         if (er.isIncludedSet()) 
           continue;
         er.updateIncluded();
@@ -315,10 +314,10 @@ public class Polygonizer
    *  
    * @param shellList the list of shell EdgeRings
    */
-  private static void findOuterShells(List shellList) {
+  private static void findOuterShells(List<EdgeRing> shellList) {
 
-    for (Iterator i = shellList.iterator(); i.hasNext();) {
-      EdgeRing er = (EdgeRing) i.next();
+    for (Object element : shellList) {
+      EdgeRing er = (EdgeRing) element;
       EdgeRing outerHoleER = er.getOuterHole();
       if (outerHoleER != null && ! outerHoleER.isProcessed()) {
         er.setIncluded(true);
@@ -327,10 +326,10 @@ public class Polygonizer
     }
   }
   
-  private static List extractPolygons(List shellList, boolean includeAll) {
-    List polyList = new ArrayList();
-    for (Iterator i = shellList.iterator(); i.hasNext();) {
-      EdgeRing er = (EdgeRing) i.next();
+  private static List<Polygon> extractPolygons(List<EdgeRing> shellList, boolean includeAll) {
+    List<Polygon> polyList = new ArrayList<Polygon>();
+    for (Object element : shellList) {
+      EdgeRing er = (EdgeRing) element;
       if (includeAll || er.isIncluded()) {
         polyList.add(er.getPolygon());
       }

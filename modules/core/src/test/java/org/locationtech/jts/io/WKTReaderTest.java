@@ -361,7 +361,7 @@ public class WKTReaderTest extends GeometryTestCase {
     CoordinateSequence[] cs = createSequences(Ordinate.createXY(), mAcoords);
     checkCS(cs[0], ((Polygon)mp.getGeometryN(0)).getExteriorRing());
     checkCS(cs[1], ((Polygon)mp.getGeometryN(0)).getInteriorRingN(0));
-    checkEmpty(((Polygon)mp.getGeometryN(1)));
+    checkEmpty((mp.getGeometryN(1)));
     checkCS(cs[2], ((Polygon)mp.getGeometryN(2)).getExteriorRing());
   }
 

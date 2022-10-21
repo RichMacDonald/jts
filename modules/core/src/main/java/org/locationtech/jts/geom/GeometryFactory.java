@@ -13,7 +13,6 @@ package org.locationtech.jts.geom;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.impl.CoordinateArraySequenceFactory;
 import org.locationtech.jts.geom.util.GeometryEditor;
@@ -108,7 +107,7 @@ public class GeometryFactory
    *@param  points  the <code>List</code> of Points to convert
    *@return         the <code>List</code> in array format
    */
-  public static Point[] toPointArray(Collection points) {
+  public static Point[] toPointArray(Collection<?> points) {
     Point[] pointArray = new Point[points.size()];
     return (Point[]) points.toArray(pointArray);
   }
@@ -119,7 +118,7 @@ public class GeometryFactory
    *@param  geometries  the list of <code>Geometry's</code> to convert
    *@return            the <code>List</code> in array format
    */
-  public static Geometry[] toGeometryArray(Collection geometries) {
+  public static Geometry[] toGeometryArray(Collection<?> geometries) {
     if (geometries == null) return null;
     Geometry[] geometryArray = new Geometry[geometries.size()];
     return (Geometry[]) geometries.toArray(geometryArray);
@@ -131,7 +130,7 @@ public class GeometryFactory
    *@param  linearRings  the <code>List</code> of LinearRings to convert
    *@return              the <code>List</code> in array format
    */
-  public static LinearRing[] toLinearRingArray(Collection linearRings) {
+  public static LinearRing[] toLinearRingArray(Collection<?> linearRings) {
     LinearRing[] linearRingArray = new LinearRing[linearRings.size()];
     return (LinearRing[]) linearRings.toArray(linearRingArray);
   }
@@ -142,7 +141,7 @@ public class GeometryFactory
    *@param  lineStrings  the <code>List</code> of LineStrings to convert
    *@return              the <code>List</code> in array format
    */
-  public static LineString[] toLineStringArray(Collection lineStrings) {
+  public static LineString[] toLineStringArray(Collection<?> lineStrings) {
     LineString[] lineStringArray = new LineString[lineStrings.size()];
     return (LineString[]) lineStrings.toArray(lineStringArray);
   }
@@ -153,7 +152,7 @@ public class GeometryFactory
    *@param  polygons  the <code>List</code> of Polygons to convert
    *@return           the <code>List</code> in array format
    */
-  public static Polygon[] toPolygonArray(Collection polygons) {
+  public static Polygon[] toPolygonArray(Collection<?> polygons) {
     Polygon[] polygonArray = new Polygon[polygons.size()];
     return (Polygon[]) polygons.toArray(polygonArray);
   }
@@ -164,7 +163,7 @@ public class GeometryFactory
    *@param  multiPolygons  the <code>List</code> of MultiPolygons to convert
    *@return                the <code>List</code> in array format
    */
-  public static MultiPolygon[] toMultiPolygonArray(Collection multiPolygons) {
+  public static MultiPolygon[] toMultiPolygonArray(Collection<?> multiPolygons) {
     MultiPolygon[] multiPolygonArray = new MultiPolygon[multiPolygons.size()];
     return (MultiPolygon[]) multiPolygons.toArray(multiPolygonArray);
   }
@@ -175,7 +174,7 @@ public class GeometryFactory
    *@param  multiLineStrings  the <code>List</code> of MultiLineStrings to convert
    *@return                   the <code>List</code> in array format
    */
-  public static MultiLineString[] toMultiLineStringArray(Collection multiLineStrings) {
+  public static MultiLineString[] toMultiLineStringArray(Collection<?> multiLineStrings) {
     MultiLineString[] multiLineStringArray = new MultiLineString[multiLineStrings.size()];
     return (MultiLineString[]) multiLineStrings.toArray(multiLineStringArray);
   }
@@ -186,7 +185,7 @@ public class GeometryFactory
    *@param  multiPoints  the <code>List</code> of MultiPoints to convert
    *@return              the <code>List</code> in array format
    */
-  public static MultiPoint[] toMultiPointArray(Collection multiPoints) {
+  public static MultiPoint[] toMultiPointArray(Collection<?> multiPoints) {
     MultiPoint[] multiPointArray = new MultiPoint[multiPoints.size()];
     return (MultiPoint[]) multiPoints.toArray(multiPointArray);
   }
@@ -542,17 +541,16 @@ public class GeometryFactory
    *      type-specific" class that can contain the elements of <code>geomList</code>
    *      .
    */
-  public Geometry buildGeometry(Collection geomList) {
+  public Geometry buildGeometry(Collection<? extends Geometry> geomList) {
   	
   	/**
   	 * Determine some facts about the geometries in the list
   	 */
-    Class geomClass = null;
+    Class<? extends Geometry> geomClass = null;
     boolean isHeterogeneous = false;
     boolean hasGeometryCollection = false;
-    for (Iterator i = geomList.iterator(); i.hasNext(); ) {
-      Geometry geom = (Geometry) i.next();
-      Class partClass = geom.getClass();
+    for (Geometry geom : geomList) {
+      Class<? extends Geometry> partClass = geom.getClass();
       if (geomClass == null) {
         geomClass = partClass;
       }

@@ -12,7 +12,6 @@
 package org.locationtech.jts.index.strtree;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -61,8 +60,8 @@ public class SIRtree extends AbstractSTRtree {
     return new AbstractNode(level) {
       protected Object computeBounds() {
         Interval bounds = null;
-        for (Iterator i = getChildBoundables().iterator(); i.hasNext(); ) {
-          Boundable childBoundable = (Boundable) i.next();
+        for (Object element : getChildBoundables()) {
+          Boundable childBoundable = (Boundable) element;
           if (bounds == null) {
             bounds = new Interval((Interval)childBoundable.getBounds());
           }

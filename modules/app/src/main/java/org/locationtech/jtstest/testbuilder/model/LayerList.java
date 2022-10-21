@@ -13,7 +13,6 @@
 package org.locationtech.jtstest.testbuilder.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -44,7 +43,7 @@ public class LayerList
   public static final int LYR_B = 1;
   public static final int LYR_RESULT = 2;
   
-  private List<Layer> layers = new ArrayList<Layer>();
+  private List<Layer> layers = new ArrayList<>();
   
   public LayerList() 
   {
@@ -77,7 +76,7 @@ public class LayerList
       Geometry geom = lyr.getGeometry();
       if (geom == null) continue;
       ComponentLocater locater = new ComponentLocater(geom);
-      List locs = locater.getComponents(pt, tolerance);
+      List<?> locs = locater.getComponents(pt, tolerance);
       if (locs.size() > 0) {
         GeometryLocation loc = (GeometryLocation) locs.get(0);
         return loc.getComponent();
@@ -106,8 +105,8 @@ public class LayerList
   private Geometry extractComponents(Geometry parentGeom, Geometry aoi)
   {
     ComponentLocater locater = new ComponentLocater(parentGeom);
-    List locs = locater.getComponents(aoi);
-    List geoms = extractLocationGeometry(locs);
+    List<?> locs = locater.getComponents(aoi);
+    List<Geometry> geoms = extractLocationGeometry(locs);
     if (geoms.size() <= 0)
       return null;
     if (geoms.size() == 1) 
@@ -119,11 +118,11 @@ public class LayerList
     return parentGeom.getFactory().buildGeometry(geoms);
   }
   
-  private List extractLocationGeometry(List locs)
+  private List<Geometry> extractLocationGeometry(List<?> locs)
   {
-    List geoms = new ArrayList();
-    for (Iterator i = locs.iterator(); i.hasNext();) {
-      GeometryLocation loc = (GeometryLocation) i.next();
+    List<Geometry> geoms = new ArrayList<Geometry>();
+    for (Object loc2 : locs) {
+      GeometryLocation loc = (GeometryLocation) loc2;
       geoms.add(loc.getComponent());
     }
     return geoms;

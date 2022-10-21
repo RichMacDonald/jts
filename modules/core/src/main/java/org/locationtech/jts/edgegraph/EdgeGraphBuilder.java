@@ -13,7 +13,6 @@
 package org.locationtech.jts.edgegraph;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Geometry;
@@ -73,8 +72,8 @@ public class EdgeGraphBuilder
    */
   public void add(Collection geometries) 
   {
-    for (Iterator i = geometries.iterator(); i.hasNext(); ) {
-      Geometry geometry = (Geometry) i.next();
+    for (Object element : geometries) {
+      Geometry geometry = (Geometry) element;
       add(geometry);
     }
   }

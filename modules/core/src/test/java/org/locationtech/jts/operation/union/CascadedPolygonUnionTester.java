@@ -13,7 +13,6 @@
 package org.locationtech.jts.operation.union;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.algorithm.match.AreaSimilarityMeasure;
 import org.locationtech.jts.algorithm.match.HausdorffSimilarityMeasure;
@@ -88,11 +87,11 @@ public class CascadedPolygonUnionTester
   {
     Geometry unionAll = null;
     int count = 0;
-    for (Iterator i = geoms.iterator(); i.hasNext(); ) {
-      Geometry geom = (Geometry) i.next();
+    for (Object geom2 : geoms) {
+      Geometry geom = (Geometry) geom2;
       
       if (unionAll == null) {
-      	unionAll = (Geometry) geom.copy();
+      	unionAll = geom.copy();
       }
       else {
       	unionAll = unionAll.union(geom);

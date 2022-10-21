@@ -167,7 +167,7 @@ extends JPanel implements FunctionPanel
   private Object[] OLDgetFunctionParams()
   {
   	// TODO: this is somewhat cheesy
-    Class[] paramTypes = currentFunc.getParameterTypes();
+    Class<?>[] paramTypes = currentFunc.getParameterTypes();
     if (paramTypes.length == 1 
         && paramTypes[0] == Geometry.class)
       return new Object[] { JTSTestBuilder.controller().getGeometryB() };
@@ -192,7 +192,7 @@ extends JPanel implements FunctionPanel
   public Object[] getFunctionParams()
   {
     if (currentFunc == null) return null;
-    Class[] paramTypes = currentFunc.getParameterTypes();
+    Class<?>[] paramTypes = currentFunc.getParameterTypes();
     Object[] paramVal = new Object[paramTypes.length];
     
     for (int i = 0; i < paramVal.length; i++) {

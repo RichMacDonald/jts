@@ -57,7 +57,7 @@ public class AdjacentVertexFinder
   static class AdjacentVertexFilter implements CoordinateSequenceFilter
   {
     private Coordinate basePt;
-    private List adjVerts = new ArrayList();
+    private List<Coordinate> adjVerts = new ArrayList<Coordinate>();
     
     public AdjacentVertexFilter(Coordinate basePt)
     {

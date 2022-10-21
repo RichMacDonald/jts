@@ -19,6 +19,7 @@ import org.locationtech.jts.algorithm.BoundaryNodeRule;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateArrays;
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.util.GeometryFixer;
 import org.locationtech.jts.operation.valid.IsSimpleOp;
 import org.locationtech.jts.operation.valid.IsValidOp;
@@ -37,7 +38,7 @@ public class ValidationFunctions
    */
   public static Geometry invalidLocations(Geometry g)
   {
-    List invalidLoc = new ArrayList();
+    List<Point> invalidLoc = new ArrayList<Point>();
     for (int i = 0; i < g.getNumGeometries(); i++) {
       Geometry geom = g.getGeometryN(i);
       IsValidOp ivop = new IsValidOp(geom);
@@ -51,7 +52,7 @@ public class ValidationFunctions
   
   public static Geometry invalidGeoms(Geometry g)
   {
-    List invalidGeoms = new ArrayList();
+    List<Geometry> invalidGeoms = new ArrayList<Geometry>();
     for (int i = 0; i < g.getNumGeometries(); i++) {
       Geometry geom = g.getGeometryN(i);
       IsValidOp ivop = new IsValidOp(geom);

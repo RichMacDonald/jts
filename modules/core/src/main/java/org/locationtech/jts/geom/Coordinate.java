@@ -376,7 +376,7 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *      is less than, equal to, or greater than the specified <code>Coordinate</code>
    */
   public int compareTo(Coordinate o) {
-    Coordinate other = (Coordinate) o;
+    Coordinate other = o;
 
     if (x < other.x) return -1;
     if (x > other.x) return 1;

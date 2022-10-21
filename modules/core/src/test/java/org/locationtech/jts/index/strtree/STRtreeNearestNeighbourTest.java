@@ -166,8 +166,8 @@ public class STRtreeNearestNeighbourTest extends GeometryTestCase {
     Coordinate coordinate = new Coordinate(10.1, -10.1);
     Point queryCenter = geometryFactory.createPoint(coordinate);
     int valueRange = 1000;
-    List<Geometry> testDataset = new ArrayList<Geometry>();
-    List<Geometry> correctData = new ArrayList<Geometry>();
+    List<Geometry> testDataset = new ArrayList<>();
+    List<Geometry> correctData = new ArrayList<>();
     Random random = new Random();
     GeometryDistanceComparator distanceComparator = new GeometryDistanceComparator(queryCenter, true);
     /*
@@ -201,7 +201,7 @@ public class STRtreeNearestNeighbourTest extends GeometryTestCase {
     /*
      * Issue the KNN query.
      */
-    Object[] testTopK = (Object[]) strtree.nearestNeighbour(queryCenter.getEnvelopeInternal(), queryCenter,
+    Object[] testTopK = strtree.nearestNeighbour(queryCenter.getEnvelopeInternal(), queryCenter,
         new GeometryItemDistance(), topK);
     List topKList = Arrays.asList(testTopK);
     Collections.sort(topKList, distanceComparator);

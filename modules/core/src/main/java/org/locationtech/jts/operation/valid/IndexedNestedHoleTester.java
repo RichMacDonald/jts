@@ -53,7 +53,7 @@ class IndexedNestedHoleTester
     index = new STRtree();
 
     for (int i = 0; i < polygon.getNumInteriorRing(); i++) {
-      LinearRing hole = (LinearRing) polygon.getInteriorRingN(i);
+      LinearRing hole = polygon.getInteriorRingN(i);
       Envelope env = hole.getEnvelopeInternal();
       index.insert(env, hole);
     }
@@ -75,7 +75,7 @@ class IndexedNestedHoleTester
   public boolean isNested()
   {
     for (int i = 0; i < polygon.getNumInteriorRing(); i++) {
-      LinearRing hole = (LinearRing) polygon.getInteriorRingN(i);
+      LinearRing hole = polygon.getInteriorRingN(i);
 
       List<LinearRing> results = index.query(hole.getEnvelopeInternal());
       for (LinearRing testHole : results) {

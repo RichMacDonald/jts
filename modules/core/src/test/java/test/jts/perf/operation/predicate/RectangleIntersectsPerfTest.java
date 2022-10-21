@@ -105,9 +105,9 @@ public class RectangleIntersectsPerfTest
     Stopwatch sw = new Stopwatch();
     int count = 0;
     for (int i = 0; i < MAX_ITER; i++) {
-      for (int j = 0; j < rect.length; j++) {
+      for (Geometry element : rect) {
 //      rect[j].relate(g);
-        rect[j].intersects(g);
+        element.intersects(g);
       }
     }
     System.out.println("Finished in " + sw.getTimeString());
@@ -127,7 +127,7 @@ public class RectangleIntersectsPerfTest
    */
   Geometry[] createRectangles(Envelope env, int nRect, double rectSize )
   {
-    int nSide =  1 + (int)Math.sqrt((double) nRect);
+    int nSide =  1 + (int)Math.sqrt(nRect);
     double dx = env.getWidth() / nSide;
     double dy = env.getHeight() / nSide;
 

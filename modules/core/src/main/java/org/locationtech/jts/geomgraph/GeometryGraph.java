@@ -179,8 +179,8 @@ public class GeometryGraph
     Collection coll = getBoundaryNodes();
     Coordinate[] pts = new Coordinate[coll.size()];
     int i = 0;
-    for (Iterator it = coll.iterator(); it.hasNext(); ) {
-      Node node = (Node) it.next();
+    for (Object element : coll) {
+      Node node = (Node) element;
       pts[i++] = node.getCoordinate().copy();
     }
     return pts;
@@ -193,8 +193,8 @@ public class GeometryGraph
 
   public void computeSplitEdges(List edgelist)
   {
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      Edge e = (Edge) i.next();
+    for (Object edge : edges) {
+      Edge e = (Edge) edge;
       e.eiList.addSplitEdges(edgelist);
     }
   }
@@ -420,8 +420,8 @@ Debug.print(e.getEdgeIntersectionList());
 
   private void addSelfIntersectionNodes(int argIndex)
   {
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      Edge e = (Edge) i.next();
+    for (Object edge : edges) {
+      Edge e = (Edge) edge;
       int eLoc = e.getLabel().getLocation(argIndex);
       for (Iterator eiIt = e.eiList.iterator(); eiIt.hasNext(); ) {
         EdgeIntersection ei = (EdgeIntersection) eiIt.next();

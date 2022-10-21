@@ -136,14 +136,14 @@ if (newSize <= oldSize) {
     return root.remove(insertInterval, item);
   }
   
-  public Iterator iterator()
+  public Iterator<Object> iterator()
   {
-    List foundItems = new ArrayList();
+    List<Object> foundItems = new ArrayList<>();
     root.addAllItems(foundItems);
     return foundItems.iterator();
   }
 
-  public List query(double x)
+  public List<?> query(double x)
   {
     return query(new Interval(x, x));
   }
@@ -155,13 +155,13 @@ if (newSize <= oldSize) {
    * 
    * min and max may be the same value
    */
-  public List query(Interval interval)
+  public List<Object> query(Interval interval)
   {
     /**
      * the items that are matched are all items in intervals
      * which overlap the query interval
      */
-    List foundItems = new ArrayList();
+    List<Object> foundItems = new ArrayList<Object>();
     query(interval, foundItems);
     return foundItems;
   }
@@ -174,7 +174,7 @@ if (newSize <= oldSize) {
    * @param interval a query interval, or null
    * @param foundItems the candidate items found
    */
-  public void query(Interval interval, Collection foundItems)
+  public void query(Interval interval, Collection<Object> foundItems)
   {
     root.addAllItemsFromOverlapping(interval, foundItems);
   }

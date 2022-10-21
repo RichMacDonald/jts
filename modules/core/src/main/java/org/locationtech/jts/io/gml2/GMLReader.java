@@ -112,7 +112,7 @@ public class GMLReader
 			geometryFactory = new GeometryFactory();
 
 		GMLHandler gh = new GMLHandler(geometryFactory,null);
-		parser.parse(new InputSource(reader), (DefaultHandler)gh);
+		parser.parse(new InputSource(reader), gh);
 
 		return gh.getGeometry();
 	}

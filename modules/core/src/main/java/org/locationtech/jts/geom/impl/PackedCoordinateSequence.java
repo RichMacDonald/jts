@@ -130,14 +130,14 @@ public abstract class PackedCoordinateSequence
     for (int i = 0; i < coords.length; i++) {
       coords[i] = getCoordinateInternal(i);
     }
-    coordRef = new SoftReference<Coordinate[]>(coords);
+    coordRef = new SoftReference<>(coords);
 
     return coords;
   }
 
   private Coordinate[] getCachedCoords() {
     if (coordRef != null) {
-      Coordinate[] coords = (Coordinate[]) coordRef.get();
+      Coordinate[] coords = coordRef.get();
       if (coords != null) {
         return coords;
       } else {

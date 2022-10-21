@@ -51,7 +51,7 @@ public class BufferCurveSetBuilder {
   private double distance;
   private OffsetCurveBuilder curveBuilder;
 
-  private List curveList = new ArrayList();
+  private List<SegmentString> curveList = new ArrayList<SegmentString>();
 
   private boolean isInvertOrientation = false;
 
@@ -105,7 +105,7 @@ public class BufferCurveSetBuilder {
    *
    * @return a Collection of SegmentStrings representing the raw buffer curves
    */
-  public List getCurves()
+  public List<SegmentString> getCurves()
   {
     add(inputGeom);
     return curveList;

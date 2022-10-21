@@ -34,7 +34,7 @@ public class OverlayFunctions {
 
   public static Geometry clip(Geometry a, Geometry mask)
   {
-    List geoms = new ArrayList();
+    List<Geometry> geoms = new ArrayList<Geometry>();
     for (int i = 0; i < a.getNumGeometries(); i++) {
       Geometry clip = a.getGeometryN(i).intersection(mask);
       geoms.add(clip);

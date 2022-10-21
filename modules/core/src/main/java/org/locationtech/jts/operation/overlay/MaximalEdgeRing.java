@@ -69,9 +69,9 @@ public class MaximalEdgeRing
     } while (de != startDe);
   }
 
-  public List buildMinimalRings()
+  public List<EdgeRing> buildMinimalRings()
   {
-    List minEdgeRings = new ArrayList();
+    List<EdgeRing> minEdgeRings = new ArrayList<EdgeRing>();
     DirectedEdge de = startDe;
     do {
       if (de.getMinEdgeRing() == null) {

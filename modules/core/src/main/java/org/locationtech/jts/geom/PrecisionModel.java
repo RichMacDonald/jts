@@ -424,7 +424,7 @@ public class PrecisionModel implements Serializable, Comparable
   	
   	if (modelType == FLOATING_SINGLE) {
   		float floatSingleVal = (float) val;
-  		return (double) floatSingleVal;
+  		return floatSingleVal;
   	}
   	if (modelType == FIXED) {
   	  if (gridSize > 0) {

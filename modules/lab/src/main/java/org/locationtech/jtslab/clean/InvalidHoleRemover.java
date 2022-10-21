@@ -98,7 +98,7 @@ public class InvalidHoleRemover {
       Polygon shell = gf.createPolygon(poly.getExteriorRing());
       PreparedGeometry shellPrep = PreparedGeometryFactory.prepare(shell);
       
-      List holes = new ArrayList();
+      List<LinearRing> holes = new ArrayList<LinearRing>();
       for (int i = 0; i < poly.getNumInteriorRing(); i++) {
         LinearRing hole = poly.getInteriorRingN(i);
         if (shellPrep.covers(hole)) {

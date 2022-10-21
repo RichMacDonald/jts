@@ -12,7 +12,6 @@
 package org.locationtech.jts.noding;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -86,8 +85,8 @@ public class SegmentStringDissolver
    */
   public void dissolve(Collection segStrings)
   {
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      dissolve((SegmentString) i.next());
+    for (Object segString : segStrings) {
+      dissolve((SegmentString) segString);
     }
   }
 

@@ -38,7 +38,7 @@ public class ComponentLocater {
 
   
   private Geometry parentGeom;
-  private List<GeometryLocation> components = new ArrayList();
+  private List<GeometryLocation> components = new ArrayList<GeometryLocation>();
   private Geometry aoi;
 
   public ComponentLocater(Geometry parentGeom) {
@@ -64,7 +64,7 @@ public class ComponentLocater {
     //Coordinate queryPt = queryPt;
     //this.tolerance = tolerance;
     this.aoi = aoi;
-    findComponents(new Stack(), parentGeom, components);
+    findComponents(new Stack<Integer>(), parentGeom, components);
     return components;
   }
 
@@ -75,7 +75,7 @@ public class ComponentLocater {
     return parentGeom.getFactory().toGeometry(env);
   }
   
-  private void findComponents(Stack path, Geometry geom, List components)
+  private void findComponents(Stack<Integer> path, Geometry geom, List<GeometryLocation> components)
   {
     if (geom instanceof GeometryCollection) {
       for (int i = 0; i < geom.getNumGeometries(); i++ ) {

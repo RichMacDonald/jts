@@ -300,9 +300,9 @@ public class GeometryImplTest extends TestCase {
 
     public void testEqualsExactForGeometryCollections()
         throws Exception {
-        Geometry polygon1 = (Polygon) reader.read(
+        Geometry polygon1 = reader.read(
                 "POLYGON ((0 0, 0 50, 50 50, 50 0, 0 0))");
-        Geometry polygon2 = (Polygon) reader.read(
+        Geometry polygon2 = reader.read(
                 "POLYGON ((50 50, 50 0, 0 0, 0 50, 50 50))");
         GeometryCollection x = geometryFactory.createGeometryCollection(new Geometry[] {
                     polygon1, polygon2

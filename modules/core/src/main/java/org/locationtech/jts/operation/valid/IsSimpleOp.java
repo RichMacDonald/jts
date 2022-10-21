@@ -185,7 +185,7 @@ public class IsSimpleOp
 
   private void compute() {
     if (nonSimplePts != null) return;
-    nonSimplePts = new ArrayList<Coordinate>();
+    nonSimplePts = new ArrayList<>();
     isSimple = computeSimple(inputGeom);
   }
 
@@ -206,7 +206,7 @@ public class IsSimpleOp
   {
     if (mp.isEmpty()) return true;
     boolean isSimple = true;
-    Set<Coordinate> points = new HashSet<Coordinate>();
+    Set<Coordinate> points = new HashSet<>();
     for (int i = 0; i < mp.getNumGeometries(); i++) {
       Point pt = (Point) mp.getGeometryN(i);
       Coordinate p = pt.getCoordinate();
@@ -282,7 +282,7 @@ public class IsSimpleOp
   }
 
   private static List<SegmentString> extractSegmentStrings(Geometry geom) {
-    List<SegmentString> segStrings = new ArrayList<SegmentString>();
+    List<SegmentString> segStrings = new ArrayList<>();
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       LineString line = (LineString) geom.getGeometryN(i);
       Coordinate[] trimPts = trimRepeatedPoints(line.getCoordinates());

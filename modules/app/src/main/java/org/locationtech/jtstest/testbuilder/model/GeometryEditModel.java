@@ -50,7 +50,7 @@ public class GeometryEditModel
 
   private TestCaseEdit testCase;
   
-  private transient Vector geometryListeners;
+  private transient Vector<GeometryListener> geometryListeners;
 
   private UndoBuffer[] undoBuffers = new UndoBuffer[] { new UndoBuffer(), new UndoBuffer() };
 
@@ -261,7 +261,7 @@ public class GeometryEditModel
    * 
    * @param coordList
    */
-  public void addComponent(List coordList)
+  public void addComponent(List<Coordinate> coordList)
   {
     GeometryCombiner creator = new GeometryCombiner(JTSTestBuilder.getGeometryFactory());
     
@@ -281,14 +281,14 @@ public class GeometryEditModel
     setGeometry(newGeom);
   }
   
-  private static Coordinate[] getRing(List coordList)
+  private static Coordinate[] getRing(List<Coordinate> coordList)
   {
-    List closedPts = coordList;
+    List<Coordinate> closedPts = coordList;
     Coordinate p0 = (Coordinate) coordList.get(0);
     Coordinate pn = (Coordinate) coordList.get(coordList.size() - 1);
     if (! p0.equals2D(pn)) {
-      closedPts = new ArrayList(coordList);
-      closedPts.add(p0.clone()); 
+      closedPts = new ArrayList<Coordinate>(coordList);
+      closedPts.add((Coordinate) p0.clone()); 
     }
     Coordinate[] pts = CoordinateArrays.toCoordinateArray(closedPts);
     return pts;
@@ -367,15 +367,15 @@ public class GeometryEditModel
   
   public synchronized void removeGeometryListener(GeometryListener l) {
     if (geometryListeners != null && geometryListeners.contains(l)) {
-      Vector v = (Vector) geometryListeners.clone();
+      Vector<GeometryListener> v = (Vector<GeometryListener>) geometryListeners.clone();
       v.removeElement(l);
       geometryListeners = v;
     }
   }
 
   public synchronized void addGeometryListener(GeometryListener l) {
-    Vector v = geometryListeners == null ? new Vector(2)
-        : (Vector) geometryListeners.clone();
+    Vector<GeometryListener> v = geometryListeners == null ? new Vector<>(2)
+        : (Vector<GeometryListener>) geometryListeners.clone();
     if (!v.contains(l)) {
       v.addElement(l);
       geometryListeners = v;
@@ -384,7 +384,7 @@ public class GeometryEditModel
 
   public void fireGeometryChanged(GeometryEvent e) {
     if (geometryListeners != null) {
-      Vector listeners = geometryListeners;
+      Vector<GeometryListener> listeners = geometryListeners;
       int count = listeners.size();
       for (int i = 0; i < count; i++) {
         ((GeometryListener) listeners.elementAt(i)).geometryChanged(e);

@@ -260,7 +260,7 @@ public class GeoJsonReader {
       int p = 0;
       for (List<List<List<Number>>> ringsList : polygonsList) {
 
-        List<CoordinateSequence> rings = new ArrayList<CoordinateSequence>();
+        List<CoordinateSequence> rings = new ArrayList<>();
 
         for (List<List<Number>> coordinates : ringsList) {
 
@@ -366,7 +366,7 @@ public class GeoJsonReader {
         return geometryFactory.createPolygon();
       }
 
-      List<CoordinateSequence> rings = new ArrayList<CoordinateSequence>();
+      List<CoordinateSequence> rings = new ArrayList<>();
 
       for (List<List<Number>> coordinates : ringsList) {
 

@@ -23,6 +23,7 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.GeometryFilter;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Location;
 import org.locationtech.jts.geom.MultiLineString;
 import org.locationtech.jts.geom.Polygon;
@@ -80,7 +81,7 @@ public class FuzzyPointLocator
   {
   	PolygonalLineworkExtracter extracter = new PolygonalLineworkExtracter();
   	g.apply(extracter);
-  	List linework = extracter.getLinework();
+  	List<LinearRing> linework = extracter.getLinework();
   	LineString[] lines = GeometryFactory.toLineStringArray(linework);
   	return g.getFactory().createMultiLineString(lines);
   }
@@ -111,11 +112,11 @@ public class FuzzyPointLocator
 class PolygonalLineworkExtracter 
 	implements GeometryFilter
 {
-	private List linework; 
+	private List<LinearRing> linework; 
 	
 	public PolygonalLineworkExtracter()
 	{
-		linework = new ArrayList();
+		linework = new ArrayList<LinearRing>();
 	}
 	
 	/**
@@ -137,5 +138,5 @@ class PolygonalLineworkExtracter
 	 * 
 	 * @return a List of LineStrings
 	 */
-	public List getLinework() { return linework; }
+	public List<LinearRing> getLinework() { return linework; }
 }

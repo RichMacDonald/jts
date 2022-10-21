@@ -14,7 +14,6 @@ package org.locationtech.jtstest.testbuilder.ui.style;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -30,13 +29,13 @@ import org.locationtech.jtstest.testbuilder.ui.Viewport;
  */
 public class StyleList implements Style
 {
-	private List styleList = new ArrayList();
+	private List<StyleEntry> styleList = new ArrayList<StyleEntry>();
 	
   public void paint(Geometry geom, Viewport viewport, Graphics2D g)
   	throws Exception
   {
-  	for (Iterator i = styleList.iterator(); i.hasNext(); ) {
-  		StyleEntry styleEntry = (StyleEntry) i.next();
+  	for (Object element : styleList) {
+  		StyleEntry styleEntry = (StyleEntry) element;
   		if (styleEntry.isFullyEnabled())
   			styleEntry.getStyle().paint(geom, viewport, g);
   	}

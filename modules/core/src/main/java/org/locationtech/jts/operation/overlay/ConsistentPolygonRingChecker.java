@@ -56,17 +56,17 @@ public class ConsistentPolygonRingChecker
    */
   public void check(int opCode)
   {
-    for (Iterator nodeit = graph.getNodeIterator(); nodeit.hasNext(); ) {
+    for (Iterator<?> nodeit = graph.getNodeIterator(); nodeit.hasNext(); ) {
       Node node = (Node) nodeit.next();
       testLinkResultDirectedEdges((DirectedEdgeStar) node.getEdges(), opCode);
     }
   }
 
-  private List getPotentialResultAreaEdges(DirectedEdgeStar deStar, int opCode)
+  private List<DirectedEdge> getPotentialResultAreaEdges(DirectedEdgeStar deStar, int opCode)
   {
 //print(System.out);
-    List resultAreaEdgeList = new ArrayList();
-    for (Iterator it = deStar.iterator(); it.hasNext(); ) {
+    List<DirectedEdge> resultAreaEdgeList = new ArrayList<DirectedEdge>();
+    for (Iterator<?> it = deStar.iterator(); it.hasNext(); ) {
       DirectedEdge de = (DirectedEdge) it.next();
       if (isPotentialResultAreaEdge(de, opCode) || isPotentialResultAreaEdge(de.getSym(), opCode) )
         resultAreaEdgeList.add(de);
@@ -97,14 +97,14 @@ public class ConsistentPolygonRingChecker
   private void testLinkResultDirectedEdges(DirectedEdgeStar deStar, int opCode)
   {
     // make sure edges are copied to resultAreaEdges list
-    List ringEdges = getPotentialResultAreaEdges(deStar, opCode);
+    List<DirectedEdge> ringEdges = getPotentialResultAreaEdges(deStar, opCode);
     // find first area edge (if any) to start linking at
     DirectedEdge firstOut = null;
     DirectedEdge incoming = null;
     int state = SCANNING_FOR_INCOMING;
     // link edges in CCW order
-    for (int i = 0; i < ringEdges.size(); i++) {
-      DirectedEdge nextOut = (DirectedEdge) ringEdges.get(i);
+    for (Object ringEdge : ringEdges) {
+      DirectedEdge nextOut = (DirectedEdge) ringEdge;
       DirectedEdge nextIn = nextOut.getSym();
 
       // skip de's that we're not interested in

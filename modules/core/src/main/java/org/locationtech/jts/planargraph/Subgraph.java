@@ -30,8 +30,8 @@ import java.util.Set;
 public class Subgraph
 {
   protected PlanarGraph parentGraph;
-  protected Set edges = new HashSet();
-  protected List dirEdges = new ArrayList();
+  protected Set<Edge> edges = new HashSet<Edge>();
+  protected List<DirectedEdge> dirEdges = new ArrayList<DirectedEdge>();
   protected NodeMap nodeMap = new NodeMap();
 
   /**
@@ -79,7 +79,7 @@ public class Subgraph
    *
    * @see #add(Edge)
    */
-  public Iterator dirEdgeIterator()  {    return dirEdges.iterator();  }
+  public Iterator<DirectedEdge> dirEdgeIterator()  {    return dirEdges.iterator();  }
 
   /**
    * Returns an {@link Iterator} over the {@link Edge}s in this graph,
@@ -89,13 +89,13 @@ public class Subgraph
    *
    * @see #add(Edge)
    */
-  public Iterator edgeIterator()  {    return edges.iterator();  }
+  public Iterator<Edge> edgeIterator()  {    return edges.iterator();  }
 
   /**
    * Returns an {@link Iterator} over the {@link Node}s in this graph.
    * @return an iterator over the nodes
    */
-  public Iterator nodeIterator()  {    return nodeMap.iterator();  }
+  public Iterator<?> nodeIterator()  {    return nodeMap.iterator();  }
 
   /**
    * Tests whether an {@link Edge} is contained in this subgraph

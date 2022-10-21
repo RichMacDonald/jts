@@ -52,14 +52,14 @@ extends GeometricShapeBuilder
 	
 	private LinearRing[] getHoles(int n, double originX, double originY, double width) 
 	{
-		List holeList = new ArrayList();
+		List<LinearRing> holeList = new ArrayList<LinearRing>();
 		
 		addHoles(n, originX, originY, width, holeList );
 		
 		return GeometryFactory.toLinearRingArray(holeList);
 	}
 
-	private void addHoles(int n, double originX, double originY, double width, List holeList) 
+	private void addHoles(int n, double originX, double originY, double width, List<LinearRing> holeList) 
 	{
 		if (n < 0) return;
 		int n2 = n - 1;

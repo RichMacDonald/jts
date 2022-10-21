@@ -61,10 +61,9 @@ public class LineLimiter {
   public List<Coordinate[]> limit(Coordinate[] pts) {
     lastOutside = null;
     ptList = null;
-    sections = new ArrayList<Coordinate[]>();
+    sections = new ArrayList<>();
     
-    for (int i = 0; i < pts.length; i++) {
-      Coordinate p = pts[i];
+    for (Coordinate p : pts) {
       if ( limitEnv.intersects(p) ) 
         addPoint(p);
       else {

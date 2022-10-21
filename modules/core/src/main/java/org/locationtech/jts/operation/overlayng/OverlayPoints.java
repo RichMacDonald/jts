@@ -88,7 +88,7 @@ class OverlayPoints {
     Map<Coordinate, Point> map0 = buildPointMap(geom0);
     Map<Coordinate, Point> map1 = buildPointMap(geom1);
     
-    resultList = new ArrayList<Point>();
+    resultList = new ArrayList<>();
     switch (opCode) {
     case OverlayNG.INTERSECTION: 
       computeIntersection(map0, map1, resultList);
@@ -157,7 +157,7 @@ class OverlayPoints {
   }
 
   private HashMap<Coordinate, Point> buildPointMap(Geometry geoms) {
-    HashMap<Coordinate, Point> map = new HashMap<Coordinate, Point>();
+    HashMap<Coordinate, Point> map = new HashMap<>();
     geoms.apply(new GeometryComponentFilter() {
 
       @Override

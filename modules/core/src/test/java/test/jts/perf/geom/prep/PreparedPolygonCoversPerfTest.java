@@ -95,7 +95,7 @@ public class PreparedPolygonCoversPerfTest extends PerformanceTestCase
   {
     int nCells = (int) Math.sqrt(nPts);
 
-  	List<Point> geoms = new ArrayList<Point>();
+  	List<Point> geoms = new ArrayList<>();
   	double width = env.getWidth();
   	double xInc = width / nCells;
   	double yInc = width / nCells;

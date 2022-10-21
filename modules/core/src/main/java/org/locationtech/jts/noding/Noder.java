@@ -32,7 +32,7 @@ public interface Noder
    *
    * @param segStrings a collection of {@link SegmentString}s to node
    */
-  void computeNodes(Collection segStrings);
+  void computeNodes(Collection<? extends SegmentString> segStrings);
 
   /**
    * Returns a {@link Collection} of fully noded {@link SegmentString}s.
@@ -40,6 +40,6 @@ public interface Noder
    *
    * @return a Collection of SegmentStrings
    */
-  Collection getNodedSubstrings();
+  Collection<? extends SegmentString> getNodedSubstrings();
 
 }

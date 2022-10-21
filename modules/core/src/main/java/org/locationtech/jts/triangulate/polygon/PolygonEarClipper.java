@@ -132,7 +132,7 @@ class PolygonEarClipper {
   }
   
   public List<Tri> compute() {
-    List<Tri> triList = new ArrayList<Tri>();
+    List<Tri> triList = new ArrayList<>();
 
     /**
      * Count scanned corners, to catch infinite loops
@@ -228,9 +228,7 @@ class PolygonEarClipper {
     
     int dupApexIndex = NO_VERTEX_INDEX;
     //--- check for duplicate vertices
-    for (int i = 0; i < result.length; i++) {
-      int vertIndex = result[i];
-      
+    for (int vertIndex : result) {
       if (vertIndex == cornerIndex 
           || vertIndex == vertex.length - 1
           || isRemoved(vertIndex)) 

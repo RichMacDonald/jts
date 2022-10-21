@@ -92,9 +92,9 @@ public class MultiPolygon
     if (isEmpty()) {
       return getFactory().createMultiLineString();
     }
-    ArrayList allRings = new ArrayList();
-    for (int i = 0; i < geometries.length; i++) {
-      Polygon polygon = (Polygon) geometries[i];
+    ArrayList<Geometry> allRings = new ArrayList<Geometry>();
+    for (Geometry element : geometries) {
+      Polygon polygon = (Polygon) element;
       Geometry rings = polygon.getBoundary();
       for (int j = 0; j < rings.getNumGeometries(); j++) {
         allRings.add(rings.getGeometryN(j));

@@ -295,13 +295,13 @@ public class MinimumDiameter
     double maxPerp = -Double.MAX_VALUE;
     
     // compute maxima and minima of lines parallel and perpendicular to base segment
-    for (int i = 0; i < convexHullPts.length; i++) {
+    for (Coordinate convexHullPt : convexHullPts) {
       
-      double paraC = computeC(dx, dy, convexHullPts[i]);
+      double paraC = computeC(dx, dy, convexHullPt);
       if (paraC > maxPara) maxPara = paraC;
       if (paraC < minPara) minPara = paraC;
       
-      double perpC = computeC(-dy, dx, convexHullPts[i]);
+      double perpC = computeC(-dy, dx, convexHullPt);
       if (perpC > maxPerp) maxPerp = perpC;
       if (perpC < minPerp) minPerp = perpC;
     }

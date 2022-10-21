@@ -455,8 +455,8 @@ public class GMLWriter {
 		if (! isRootTag)			return;
 		if (customElements == null) return;
 		
-		for (int i = 0; i < customElements.length; i++) {
-			writer.write(customElements[i]);
+		for (String customElement : customElements) {
+			writer.write(customElement);
 			writer.write("\n");
 		}
 	}

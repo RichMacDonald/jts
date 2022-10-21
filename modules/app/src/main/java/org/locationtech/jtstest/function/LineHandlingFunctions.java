@@ -13,7 +13,6 @@ package org.locationtech.jtstest.function;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.dissolve.LineDissolver;
@@ -30,7 +29,7 @@ public class LineHandlingFunctions {
   {
     LineMerger merger = new LineMerger();
     merger.add(g);
-    Collection lines = merger.getMergedLineStrings();
+    Collection<LineString> lines = merger.getMergedLineStrings();
     return g.getFactory().buildGeometry(lines);
   }
   
@@ -47,9 +46,8 @@ public class LineHandlingFunctions {
   public static Geometry extractSegments(Geometry g)
   {
 	  List<LineString> lines = LinearComponentExtracter.getLines(g);
-    List segments = new ArrayList();
-    for (Iterator<LineString> it = lines.iterator(); it.hasNext(); ) {
-      LineString line = it.next();
+    List<LineString> segments = new ArrayList<LineString>();
+    for (LineString line : lines) {
       for (int i = 1; i < line.getNumPoints(); i++) {
         LineString seg = g.getFactory().createLineString(
             new Coordinate[] { line.getCoordinateN(i-1), line.getCoordinateN(i) }       
@@ -62,9 +60,8 @@ public class LineHandlingFunctions {
   public static Geometry extractChains(Geometry g, int maxChainSize)
   {
 	  List<LineString> lines = LinearComponentExtracter.getLines(g);
-    List chains = new ArrayList();
-    for (Iterator<LineString> it = lines.iterator(); it.hasNext(); ) {
-      LineString line = it.next();
+    List<LineString> chains = new ArrayList<LineString>();
+    for (LineString line : lines) {
       for (int i = 0; i < line.getNumPoints() - 1; i += maxChainSize) {
         LineString chain = extractChain(line, i, maxChainSize);
         chains.add(chain);

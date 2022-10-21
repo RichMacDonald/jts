@@ -37,10 +37,10 @@ public class LineStringExtracter
    * @param lines the list to add the extracted LineStrings to
    * @return the list argument
    */
-  public static List getLines(Geometry geom, List lines)
+  public static List<LineString> getLines(Geometry geom, List<LineString> lines)
   {
   	if (geom instanceof LineString) {
-  		lines.add(geom);
+  		lines.add((LineString) geom);
   	}
   	else if (geom instanceof GeometryCollection) {
   		geom.apply(new LineStringExtracter(lines));
@@ -57,9 +57,9 @@ public class LineStringExtracter
    * @param geom the geometry from which to extract
    * @return a list containing the linear elements
    */
-  public static List getLines(Geometry geom)
+  public static List<LineString> getLines(Geometry geom)
   {
-    return getLines(geom, new ArrayList());
+    return getLines(geom, new ArrayList<>());
   }
 
   /**
@@ -74,19 +74,19 @@ public class LineStringExtracter
     return geom.getFactory().buildGeometry(getLines(geom));
   }
 
-  private List comps;
+  private List<LineString> comps;
   
   /**
    * Constructs a filter with a list in which to store the elements found.
    */
-  public LineStringExtracter(List comps)
+  public LineStringExtracter(List<LineString> comps)
   {
     this.comps = comps;
   }
 
   public void filter(Geometry geom)
   {
-    if (geom instanceof LineString) comps.add(geom);
+    if (geom instanceof LineString) comps.add((LineString) geom);
   }
 
 }

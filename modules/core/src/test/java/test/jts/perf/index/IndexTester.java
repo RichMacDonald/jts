@@ -12,7 +12,6 @@
 package test.jts.perf.index;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -74,7 +73,7 @@ public class IndexTester {
   public static List createGridItems(int nGridCells)
   {
     ArrayList items = new ArrayList();
-    int gridSize = (int) Math.sqrt((double) nGridCells);
+    int gridSize = (int) Math.sqrt(nGridCells);
     gridSize += 1;
     double extent = EXTENT_MAX - EXTENT_MIN;
     double gridInc = extent / gridSize;
@@ -119,8 +118,8 @@ public class IndexTester {
   
   void loadTree(List items)
   {
-    for (Iterator i = items.iterator(); i.hasNext(); ) {
-      Envelope item = (Envelope) i.next();
+    for (Object item2 : items) {
+      Envelope item = (Envelope) item2;
       index.insert(item, item);
     }
     index.finishInserting();
@@ -129,8 +128,8 @@ public class IndexTester {
   void runQuery(List queries)
   {
     double querySize = 0.0;
-    for (int i = 0; i < queries.size(); i++) {
-      Envelope env = (Envelope) queries.get(i);
+    for (Object element : queries) {
+      Envelope env = (Envelope) element;
       List list = index.query(env);
       Assert.isTrue(!list.isEmpty());
       querySize += list.size();
@@ -140,7 +139,7 @@ public class IndexTester {
   
   void runGridQuery(int nGridCells)
   {
-    int cellSize = (int) Math.sqrt((double) NUM_ITEMS);
+    int cellSize = (int) Math.sqrt(NUM_ITEMS);
     double extent = EXTENT_MAX - EXTENT_MIN;
     double queryCellSize =  2.0 * extent / cellSize;
 
@@ -150,7 +149,7 @@ public class IndexTester {
   void queryGrid(int nGridCells, double cellSize)
   {
 
-    int gridSize = (int) Math.sqrt((double) nGridCells);
+    int gridSize = (int) Math.sqrt(nGridCells);
     gridSize += 1;
     double extent = EXTENT_MAX - EXTENT_MIN;
     double gridInc = extent / gridSize;

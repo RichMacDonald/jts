@@ -131,7 +131,7 @@ public class PointLocator
       }
     }
     else if (geom instanceof GeometryCollection) {
-      Iterator geomi = new GeometryCollectionIterator((GeometryCollection) geom);
+      Iterator geomi = new GeometryCollectionIterator(geom);
       while (geomi.hasNext()) {
         Geometry g2 = (Geometry) geomi.next();
         if (g2 != geom)

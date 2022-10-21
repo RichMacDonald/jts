@@ -47,7 +47,7 @@ extends JPanel
 	private JTextArea txtCmd;
   private JTextArea txtOutput;
 
-  private List<String> commandLog = new ArrayList<String>();
+  private List<String> commandLog = new ArrayList<>();
   
   private int historyIndex = 1;
   protected String commandSave;

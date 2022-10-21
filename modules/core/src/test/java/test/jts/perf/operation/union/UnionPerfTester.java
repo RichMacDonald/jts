@@ -13,7 +13,6 @@
 package test.jts.perf.operation.union;
 
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Envelope;
@@ -110,11 +109,11 @@ public class UnionPerfTester
   {
     Geometry unionAll = null;
     int count = 0;
-    for (Iterator i = geoms.iterator(); i.hasNext(); ) {
-      Geometry geom = (Geometry) i.next();
+    for (Object geom2 : geoms) {
+      Geometry geom = (Geometry) geom2;
       
       if (unionAll == null) {
-      	unionAll = (Geometry) geom.copy();
+      	unionAll = geom.copy();
       }
       else {
       	unionAll = unionAll.union(geom);
@@ -152,8 +151,7 @@ public class UnionPerfTester
   void printItemEnvelopes(List tree)
   {
     Envelope itemEnv = new Envelope();
-    for (Iterator i = tree.iterator(); i.hasNext(); ) {
-      Object o = i.next();
+    for (Object o : tree) {
       if (o instanceof List) {
         printItemEnvelopes((List) o);
       }

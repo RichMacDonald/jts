@@ -82,9 +82,9 @@ public class HoleRemover {
     public Polygon getResult()
     {
       GeometryFactory gf = poly.getFactory();
-      Polygon shell = gf.createPolygon(poly.getExteriorRing());
+      Polygon shell = gf.createPolygon(poly.getExteriorRing()); //should be deleted. RJM 
       
-      List holes = new ArrayList();
+      List<LinearRing> holes = new ArrayList<LinearRing>();
       for (int i = 0; i < poly.getNumInteriorRing(); i++) {
         LinearRing hole = poly.getInteriorRingN(i);
         if (! isRemoved.value(hole)) {

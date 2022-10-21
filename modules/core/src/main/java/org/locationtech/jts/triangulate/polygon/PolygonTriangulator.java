@@ -89,7 +89,7 @@ public class PolygonTriangulator {
   private void compute() {
     @SuppressWarnings("unchecked")
     List<Polygon> polys = PolygonExtracter.getPolygons(inputGeom);
-    triList = new ArrayList<Tri>();
+    triList = new ArrayList<>();
     for (Polygon poly : polys) {
       if (poly.isEmpty()) continue;
       List<Tri> polyTriList = triangulatePolygon(poly);

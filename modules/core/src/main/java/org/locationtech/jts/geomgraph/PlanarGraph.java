@@ -24,7 +24,6 @@ import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Location;
 import org.locationtech.jts.geom.Quadrant;
-import org.locationtech.jts.util.Debug;
 
 /**
  * The computation of the <code>IntersectionMatrix</code> relies on the use of a structure
@@ -54,17 +53,17 @@ public class PlanarGraph
    *
    * @param nodes Collection of nodes
    */
-  public static void linkResultDirectedEdges(Collection nodes)
+  public static void linkResultDirectedEdges(Collection<?> nodes)
   {
-    for (Iterator nodeit = nodes.iterator(); nodeit.hasNext(); ) {
-      Node node = (Node) nodeit.next();
+    for (Object node2 : nodes) {
+      Node node = (Node) node2;
       ((DirectedEdgeStar) node.getEdges()).linkResultDirectedEdges();
     }
   }
 
-  protected List edges        = new ArrayList();
+  protected List<Edge> edges        = new ArrayList<>();
   protected NodeMap nodes;
-  protected List edgeEndList  = new ArrayList();
+  protected List<EdgeEnd> edgeEndList  = new ArrayList<>();
 
   public PlanarGraph(NodeFactory nodeFact) {
     nodes = new NodeMap(nodeFact);
@@ -74,8 +73,8 @@ public class PlanarGraph
     nodes = new NodeMap(new NodeFactory());
   }
 
-  public Iterator getEdgeIterator() { return edges.iterator(); }
-  public Collection getEdgeEnds() { return edgeEndList; }
+  public Iterator<Edge> getEdgeIterator() { return edges.iterator(); }
+  public Collection<EdgeEnd> getEdgeEnds() { return edgeEndList; }
 
   public boolean isBoundaryNode(int geomIndex, Coordinate coord)
   {
@@ -95,8 +94,8 @@ public class PlanarGraph
     edgeEndList.add(e);
   }
 
-  public Iterator getNodeIterator() { return nodes.iterator(); }
-  public Collection getNodes() { return nodes.values(); }
+  public Iterator<?> getNodeIterator() { return nodes.iterator(); }
+  public Collection<?> getNodes() { return nodes.values(); }
   public Node addNode(Node node) { return nodes.addNode(node); }
   public Node addNode(Coordinate coord) { return nodes.addNode(coord); }
   /**
@@ -113,11 +112,11 @@ public class PlanarGraph
    *
    * @param edgesToAdd Set of edges to add to the graph
    */
-  public void addEdges(List edgesToAdd)
+  public void addEdges(List<?> edgesToAdd)
   {
     // create all the nodes for the edges
-    for (Iterator it = edgesToAdd.iterator(); it.hasNext(); ) {
-      Edge e = (Edge) it.next();
+    for (Object element : edgesToAdd) {
+      Edge e = (Edge) element;
       edges.add(e);
 
       DirectedEdge de1 = new DirectedEdge(e, true);
@@ -137,7 +136,7 @@ public class PlanarGraph
    */
   public void linkResultDirectedEdges()
   {
-    for (Iterator nodeit = nodes.iterator(); nodeit.hasNext(); ) {
+    for (Iterator<?> nodeit = nodes.iterator(); nodeit.hasNext(); ) {
       Node node = (Node) nodeit.next();
       ((DirectedEdgeStar) node.getEdges()).linkResultDirectedEdges();
     }
@@ -149,7 +148,7 @@ public class PlanarGraph
    */
   public void linkAllDirectedEdges()
   {
-    for (Iterator nodeit = nodes.iterator(); nodeit.hasNext(); ) {
+    for (Iterator<?> nodeit = nodes.iterator(); nodeit.hasNext(); ) {
       Node node = (Node) nodeit.next();
       ((DirectedEdgeStar) node.getEdges()).linkAllDirectedEdges();
     }
@@ -164,8 +163,8 @@ public class PlanarGraph
    */
   public EdgeEnd findEdgeEnd(Edge e)
   {
-    for (Iterator i = getEdgeEnds().iterator(); i.hasNext(); ) {
-      EdgeEnd ee = (EdgeEnd) i.next();
+    for (Object element : getEdgeEnds()) {
+      EdgeEnd ee = (EdgeEnd) element;
       if (ee.getEdge() == e)
         return ee;
     }
@@ -182,8 +181,8 @@ public class PlanarGraph
    */
   public Edge findEdge(Coordinate p0, Coordinate p1)
   {
-    for (int i = 0; i < edges.size(); i++) {
-      Edge e = (Edge) edges.get(i);
+    for (Object edge : edges) {
+      Edge e = (Edge) edge;
       Coordinate[] eCoord = e.getCoordinates();
       if (p0.equals(eCoord[0]) && p1.equals(eCoord[1]) )
         return e;
@@ -201,8 +200,8 @@ public class PlanarGraph
    */
   public Edge findEdgeInSameDirection(Coordinate p0, Coordinate p1)
   {
-    for (int i = 0; i < edges.size(); i++) {
-      Edge e = (Edge) edges.get(i);
+    for (Object edge : edges) {
+      Edge e = (Edge) edge;
 
       Coordinate[] eCoord = e.getCoordinates();
       if (matchInSameDirection(p0, p1, eCoord[0], eCoord[1]) )

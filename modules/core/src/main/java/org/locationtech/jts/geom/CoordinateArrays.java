@@ -83,8 +83,7 @@ public class CoordinateArrays {
     int maxDimension = -1;
     int maxMeasures = -1;
     boolean isConsistent = true;
-    for (int i = 0; i < array.length; i++) {
-      Coordinate coordinate = array[i];
+    for (Coordinate coordinate : array) {
       if (coordinate != null) {
         int d = Coordinates.dimension(coordinate);
         int m = Coordinates.measures(coordinate);
@@ -133,8 +132,7 @@ public class CoordinateArrays {
     Coordinate sample = Coordinates.create(dimension,measures);
     Class<?> type = sample.getClass();
     boolean isConsistent = true;
-    for (int i = 0; i < array.length; i++) {
-      Coordinate coordinate = array[i];
+    for (Coordinate coordinate : array) {
       if (coordinate != null && !coordinate.getClass().equals(type)) {
         isConsistent = false;
         break;
@@ -184,8 +182,7 @@ public class CoordinateArrays {
    * or <code>null</code>
    */
   public static Coordinate ptNotInList(Coordinate[] testPts, Coordinate[] pts) {
-    for (int i = 0; i < testPts.length; i++) {
-      Coordinate testPt = testPts[i];
+    for (Coordinate testPt : testPts) {
       if (CoordinateArrays.indexOf(testPt, pts) < 0)
         return testPt;
     }
@@ -317,7 +314,7 @@ public class CoordinateArrays {
       int i1 = dir1 > 0 ? 0 : pts1.length - 1;
       int i2 = dir2 > 0 ? 0 : pts1.length - 1;
 
-      for (int i = 0; i < pts1.length; i++) {
+      for (Coordinate element : pts1) {
         int comparePt = pts1[i1].compareTo(pts2[i2]);
         if (comparePt != 0)
           return comparePt;
@@ -438,9 +435,9 @@ public class CoordinateArrays {
   public static Coordinate[] removeRepeatedOrInvalidPoints(Coordinate[] coord) {
     if (!hasRepeatedOrInvalidPoints(coord)) return coord;
     CoordinateList coordList = new CoordinateList();
-    for (int i = 0; i < coord.length; i++) {
-      if (! coord[i].isValid()) continue;
-      coordList.add(coord[i], false);
+    for (Coordinate element : coord) {
+      if (! element.isValid()) continue;
+      coordList.add(element, false);
     }
     return coordList.toCoordinateArray();
   }
@@ -453,16 +450,16 @@ public class CoordinateArrays {
    */
   public static Coordinate[] removeNull(Coordinate[] coord) {
     int nonNull = 0;
-    for (int i = 0; i < coord.length; i++) {
-      if (coord[i] != null) nonNull++;
+    for (Coordinate element : coord) {
+      if (element != null) nonNull++;
     }
     Coordinate[] newCoord = new Coordinate[nonNull];
     // empty case
     if (nonNull == 0) return newCoord;
 
     int j = 0;
-    for (int i = 0; i < coord.length; i++) {
-      if (coord[i] != null) newCoord[j++] = coord[i];
+    for (Coordinate element : coord) {
+      if (element != null) newCoord[j++] = element;
     }
     return newCoord;
   }
@@ -532,9 +529,9 @@ public class CoordinateArrays {
    */
   public static Coordinate minCoordinate(Coordinate[] coordinates) {
     Coordinate minCoord = null;
-    for (int i = 0; i < coordinates.length; i++) {
-      if (minCoord == null || minCoord.compareTo(coordinates[i]) > 0) {
-        minCoord = coordinates[i];
+    for (Coordinate coordinate : coordinates) {
+      if (minCoord == null || minCoord.compareTo(coordinate) > 0) {
+        minCoord = coordinate;
       }
     }
     return minCoord;
@@ -654,8 +651,8 @@ public class CoordinateArrays {
    */
   public static Envelope envelope(Coordinate[] coordinates) {
     Envelope env = new Envelope();
-    for (int i = 0; i < coordinates.length; i++) {
-      env.expandToInclude(coordinates[i]);
+    for (Coordinate coordinate : coordinates) {
+      env.expandToInclude(coordinate);
     }
     return env;
   }
@@ -669,9 +666,9 @@ public class CoordinateArrays {
    */
   public static Coordinate[] intersection(Coordinate[] coordinates, Envelope env) {
     CoordinateList coordList = new CoordinateList();
-    for (int i = 0; i < coordinates.length; i++) {
-      if (env.intersects(coordinates[i]))
-        coordList.add(coordinates[i], true);
+    for (Coordinate coordinate : coordinates) {
+      if (env.intersects(coordinate))
+        coordList.add(coordinate, true);
     }
     return coordList.toCoordinateArray();
   }

@@ -44,12 +44,12 @@ public class SegmentExtractingNoder implements Noder {
   }
 
   @Override
-  public void computeNodes(Collection segStrings) {
+  public void computeNodes(Collection<? extends SegmentString> segStrings) {
     segList = extractSegments(segStrings);
   }
 
-  private static List<SegmentString> extractSegments(Collection<SegmentString> segStrings) {
-    List<SegmentString> segList = new ArrayList<SegmentString>();
+  private static List<SegmentString> extractSegments(Collection<? extends SegmentString> segStrings) {
+    List<SegmentString> segList = new ArrayList<>();
     for (SegmentString ss : segStrings) {
       extractSegments( ss, segList );
     }
@@ -66,7 +66,7 @@ public class SegmentExtractingNoder implements Noder {
   }
 
   @Override
-  public Collection getNodedSubstrings() {
+  public Collection<SegmentString> getNodedSubstrings() {
     return segList;
   }
 

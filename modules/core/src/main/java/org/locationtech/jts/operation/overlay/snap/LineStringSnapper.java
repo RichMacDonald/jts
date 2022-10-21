@@ -101,7 +101,7 @@ public class LineStringSnapper
     // if src is a ring then don't snap final vertex
     int end = isClosed ? srcCoords.size() - 1 : srcCoords.size();
     for (int i = 0; i < end; i++) {
-      Coordinate srcPt = (Coordinate) srcCoords.get(i);
+      Coordinate srcPt = srcCoords.get(i);
       Coordinate snapVert = findSnapForVertex(srcPt, snapPts);
       if (snapVert != null) {
         // update src with snap pt
@@ -115,12 +115,12 @@ public class LineStringSnapper
 
   private Coordinate findSnapForVertex(Coordinate pt, Coordinate[] snapPts)
   {
-    for (int i = 0; i < snapPts.length; i++) {
+    for (Coordinate snapPt : snapPts) {
       // if point is already equal to a src pt, don't snap
-      if (pt.equals2D(snapPts[i]))
+      if (pt.equals2D(snapPt))
         return null;
-      if (pt.distance(snapPts[i]) < snapTolerance)
-        return snapPts[i];
+      if (pt.distance(snapPt) < snapTolerance)
+        return snapPt;
     }
     return null;
   }
@@ -191,8 +191,8 @@ public class LineStringSnapper
     double minDist = Double.MAX_VALUE;
     int snapIndex = -1;
     for (int i = 0; i < srcCoords.size() - 1; i++) {
-      seg.p0 = (Coordinate) srcCoords.get(i);
-      seg.p1 = (Coordinate) srcCoords.get(i + 1);
+      seg.p0 = srcCoords.get(i);
+      seg.p1 = srcCoords.get(i + 1);
 
       /**
        * Check if the snap pt is equal to one of the segment endpoints.

@@ -13,7 +13,6 @@ package org.locationtech.jts.index.strtree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -148,8 +147,8 @@ public class STRtreeTest extends TestCase {
     geometries.add(factory.createLineString(new Coordinate[]{
         new Coordinate(20, 20), new Coordinate(30, 30)}));
     STRtreeDemo.TestTree t = new STRtreeDemo.TestTree(4);
-    for (Iterator i = geometries.iterator(); i.hasNext(); ) {
-      Geometry g = (Geometry) i.next();
+    for (Object element : geometries) {
+      Geometry g = (Geometry) element;
       t.insert(g.getEnvelopeInternal(), new Object());
     }
     t.build();

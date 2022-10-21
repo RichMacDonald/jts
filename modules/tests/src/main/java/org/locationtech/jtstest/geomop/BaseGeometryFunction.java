@@ -37,14 +37,14 @@ implements GeometryFunction, Comparable
 	protected String name;
 	protected String description;
 	protected String[] parameterNames;
-	protected Class[] parameterTypes;
-	protected Class returnType;
+	protected Class<?>[] parameterTypes;
+	protected Class<?> returnType;
 	
 	public BaseGeometryFunction(
 			String name, 
 			String[] parameterNames, 
-			Class[] parameterTypes, 
-			Class returnType)
+			Class<?>[] parameterTypes, 
+			Class<?> returnType)
 	{
 		this.category = category;
 		this.name = name;
@@ -57,8 +57,8 @@ implements GeometryFunction, Comparable
 			String name, 
 			String description,
 			String[] parameterNames, 
-			Class[] parameterTypes, 
-			Class returnType)
+			Class<?>[] parameterTypes, 
+			Class<?> returnType)
 	{
 		this.category = category;
 		this.name = name;
@@ -94,12 +94,12 @@ implements GeometryFunction, Comparable
 	 * 
 	 * @return the types
 	 */
-	public Class[] getParameterTypes()
+	public Class<?>[] getParameterTypes()
 	{
 		return parameterTypes;
 	}
 	
-	public Class getReturnType()
+	public Class<?> getReturnType()
 	{
 		return returnType;
 	}
@@ -138,7 +138,7 @@ implements GeometryFunction, Comparable
 		if (! name.equals(func.getName())) return false;
 		if (! returnType.equals(func.getReturnType())) return false;
 		
-		Class[] funcParamTypes = func.getParameterTypes();
+		Class<?>[] funcParamTypes = func.getParameterTypes();
 		if (parameterTypes.length != funcParamTypes.length) return false;
 		for (int i = 0; i < parameterTypes.length; i++) {
 			if (! parameterTypes[i].equals(funcParamTypes[i]))
@@ -157,7 +157,7 @@ implements GeometryFunction, Comparable
 		//TODO: compare parameter lists as well
 	}
 	
-	private static int compareTo(Class c1, Class c2)
+	private static int compareTo(Class<?> c1, Class<?> c2)
 	{
 		return c1.getName().compareTo(c2.getName());
 	}

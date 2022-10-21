@@ -121,7 +121,7 @@ public class KMLReader {
         }
 
         double[] parsedOrdinates = {Double.NaN, Double.NaN, Double.NaN};
-        List<Coordinate> coordinateList = new ArrayList();
+        List<Coordinate> coordinateList = new ArrayList<Coordinate>();
 
         int spaceIdx = coordinates.indexOf(' ');
         int currentIdx = 0;

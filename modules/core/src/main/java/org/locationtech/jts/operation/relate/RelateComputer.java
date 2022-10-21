@@ -61,7 +61,7 @@ public class RelateComputer
   private NodeMap nodes = new NodeMap(new RelateNodeFactory());
   // this intersection matrix will hold the results compute for the relate
   private IntersectionMatrix im = null;
-  private ArrayList isolatedEdges = new ArrayList();
+  private ArrayList<Edge> isolatedEdges = new ArrayList<Edge>();
 
   // the intersection point found (if any)
   private Coordinate invalidPoint;
@@ -114,9 +114,9 @@ public class RelateComputer
 
     // build EdgeEnds for all intersections
     EdgeEndBuilder eeBuilder = new EdgeEndBuilder();
-    List ee0 = eeBuilder.computeEdgeEnds(arg[0].getEdgeIterator());
+    List<?> ee0 = eeBuilder.computeEdgeEnds(arg[0].getEdgeIterator());
     insertEdgeEnds(ee0);
-    List ee1 = eeBuilder.computeEdgeEnds(arg[1].getEdgeIterator());
+    List<?> ee1 = eeBuilder.computeEdgeEnds(arg[1].getEdgeIterator());
     insertEdgeEnds(ee1);
 
 //Debug.println("==== NodeList ===");
@@ -143,10 +143,10 @@ public class RelateComputer
     return im;
   }
 
-  private void insertEdgeEnds(List ee)
+  private void insertEdgeEnds(List<?> ee)
   {
-    for (Iterator i = ee.iterator(); i.hasNext(); ) {
-      EdgeEnd e = (EdgeEnd) i.next();
+    for (Object element : ee) {
+      EdgeEnd e = (EdgeEnd) element;
       nodes.add(e);
     }
   }
@@ -208,7 +208,7 @@ public class RelateComputer
      */
   private void copyNodesAndLabels(int argIndex)
   {
-    for (Iterator i = arg[argIndex].getNodeIterator(); i.hasNext(); ) {
+    for (Iterator<?> i = arg[argIndex].getNodeIterator(); i.hasNext(); ) {
       Node graphNode = (Node) i.next();
       Node newNode = nodes.addNode(graphNode.getCoordinate());
       newNode.setLabel(argIndex, graphNode.getLabel().getLocation(argIndex));
@@ -224,10 +224,10 @@ public class RelateComputer
    */
   private void computeIntersectionNodes(int argIndex)
   {
-    for (Iterator i = arg[argIndex].getEdgeIterator(); i.hasNext(); ) {
+    for (Iterator<?> i = arg[argIndex].getEdgeIterator(); i.hasNext(); ) {
       Edge e = (Edge) i.next();
       int eLoc = e.getLabel().getLocation(argIndex);
-      for (Iterator eiIt = e.getEdgeIntersectionList().iterator(); eiIt.hasNext(); ) {
+      for (Iterator<?> eiIt = e.getEdgeIntersectionList().iterator(); eiIt.hasNext(); ) {
         EdgeIntersection ei = (EdgeIntersection) eiIt.next();
         RelateNode n = (RelateNode) nodes.addNode(ei.coord);
         if (eLoc == Location.BOUNDARY)
@@ -249,10 +249,10 @@ public class RelateComputer
    */
   private void labelIntersectionNodes(int argIndex)
   {
-    for (Iterator i = arg[argIndex].getEdgeIterator(); i.hasNext(); ) {
+    for (Iterator<?> i = arg[argIndex].getEdgeIterator(); i.hasNext(); ) {
       Edge e = (Edge) i.next();
       int eLoc = e.getLabel().getLocation(argIndex);
-      for (Iterator eiIt = e.getEdgeIntersectionList().iterator(); eiIt.hasNext(); ) {
+      for (Iterator<?> eiIt = e.getEdgeIntersectionList().iterator(); eiIt.hasNext(); ) {
         EdgeIntersection ei = (EdgeIntersection) eiIt.next();
         RelateNode n = (RelateNode) nodes.find(ei.coord);
         if (n.getLabel().isNull(argIndex)) {
@@ -320,7 +320,7 @@ public class RelateComputer
   
   private void labelNodeEdges()
   {
-    for (Iterator ni = nodes.iterator(); ni.hasNext(); ) {
+    for (Iterator<?> ni = nodes.iterator(); ni.hasNext(); ) {
       RelateNode node = (RelateNode) ni.next();
       node.getEdges().computeLabelling(arg);
 //Debug.print(node.getEdges());
@@ -334,12 +334,12 @@ public class RelateComputer
   private void updateIM(IntersectionMatrix im)
   {
 //Debug.println(im);
-    for (Iterator ei = isolatedEdges.iterator(); ei.hasNext(); ) {
-      Edge e = (Edge) ei.next();
+    for (Object isolatedEdge : isolatedEdges) {
+      Edge e = (Edge) isolatedEdge;
       e.updateIM(im);
 //Debug.println(im);
     }
-    for (Iterator ni = nodes.iterator(); ni.hasNext(); ) {
+    for (Iterator<?> ni = nodes.iterator(); ni.hasNext(); ) {
       RelateNode node = (RelateNode) ni.next();
       node.updateIM(im);
 //Debug.println(im);
@@ -358,7 +358,7 @@ public class RelateComputer
    */
   private void labelIsolatedEdges(int thisIndex, int targetIndex)
   {
-    for (Iterator ei = arg[thisIndex].getEdgeIterator(); ei.hasNext(); ) {
+    for (Iterator<?> ei = arg[thisIndex].getEdgeIterator(); ei.hasNext(); ) {
       Edge e = (Edge) ei.next();
       if (e.isIsolated()) {
         labelIsolatedEdge(e, targetIndex, arg[targetIndex].getGeometry());
@@ -398,7 +398,7 @@ public class RelateComputer
    */
   private void labelIsolatedNodes()
   {
-    for (Iterator ni = nodes.iterator(); ni.hasNext(); ) {
+    for (Iterator<?> ni = nodes.iterator(); ni.hasNext(); ) {
       Node n = (Node) ni.next();
       Label label = n.getLabel();
       // isolated nodes should always have at least one geometry in their label

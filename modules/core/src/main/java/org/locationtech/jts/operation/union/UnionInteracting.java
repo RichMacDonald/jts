@@ -112,7 +112,7 @@ public class UnionInteracting
   private Geometry extractElements(Geometry geom, 
   		boolean[] interacts, boolean isInteracting)
   {
-  	List extractedGeoms = new ArrayList();
+  	List<Geometry> extractedGeoms = new ArrayList<Geometry>();
   	for (int i = 0; i < geom.getNumGeometries(); i++) { 
   		Geometry elem = geom.getGeometryN(i);
   		if (interacts[i] == isInteracting)

@@ -234,7 +234,7 @@ class HullTri extends Tri
   }
   
   public static void markConnected(HullTri triStart, Tri exceptTri) {
-    Deque<HullTri> queue = new ArrayDeque<HullTri>();
+    Deque<HullTri> queue = new ArrayDeque<>();
     queue.add(triStart);
     while (! queue.isEmpty()) {
       HullTri tri = queue.pop();

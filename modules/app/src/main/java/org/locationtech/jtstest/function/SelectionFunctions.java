@@ -51,7 +51,7 @@ public class SelectionFunctions
   
   public static Geometry disjoint(Geometry a, Geometry mask)
   {
-    List selected = new ArrayList();
+    List<Geometry> selected = new ArrayList<Geometry>();
     for (int i = 0; i < a.getNumGeometries(); i++ ) {
       Geometry g = a.getGeometryN(i);
       if (mask.disjoint(g)) {
@@ -62,7 +62,7 @@ public class SelectionFunctions
   }
   public static Geometry valid(Geometry a)
   {
-    List selected = new ArrayList();
+    List<Geometry> selected = new ArrayList<Geometry>();
     for (int i = 0; i < a.getNumGeometries(); i++ ) {
       Geometry g = a.getGeometryN(i);
       if (g.isValid()) {
@@ -73,7 +73,7 @@ public class SelectionFunctions
   }
   public static Geometry invalid(Geometry a)
   {
-    List selected = new ArrayList();
+    List<Geometry> selected = new ArrayList<Geometry>();
     for (int i = 0; i < a.getNumGeometries(); i++ ) {
       Geometry g = a.getGeometryN(i);
       if (! g.isValid()) {
@@ -170,7 +170,7 @@ public class SelectionFunctions
 
   private static Geometry select(Geometry geom, GeometryPredicate pred)
   {
-    List selected = new ArrayList();
+    List<Geometry> selected = new ArrayList<Geometry>();
     for (int i = 0; i < geom.getNumGeometries(); i++ ) {
       Geometry g = geom.getGeometryN(i);
       if (pred.isTrue(g)) {
@@ -183,7 +183,7 @@ public class SelectionFunctions
   
   public static Geometry firstNComponents(Geometry g, int n)
   {
-    List comp = new ArrayList();
+    List<Geometry> comp = new ArrayList<Geometry>();
     for (int i = 0; i < g.getNumGeometries() && i < n; i++) {
       comp.add(g.getGeometryN(i));
     }

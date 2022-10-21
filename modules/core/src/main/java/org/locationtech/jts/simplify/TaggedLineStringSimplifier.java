@@ -12,7 +12,6 @@
 
 package org.locationtech.jts.simplify;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.LineIntersector;
@@ -168,8 +167,8 @@ public class TaggedLineStringSimplifier
   private boolean hasBadOutputIntersection(LineSegment candidateSeg)
   {
     List querySegs = outputIndex.query(candidateSeg);
-    for (Iterator i = querySegs.iterator(); i.hasNext(); ) {
-      LineSegment querySeg = (LineSegment) i.next();
+    for (Object querySeg2 : querySegs) {
+      LineSegment querySeg = (LineSegment) querySeg2;
       if (hasInteriorIntersection(querySeg, candidateSeg)) {
           return true;
       }
@@ -182,8 +181,8 @@ public class TaggedLineStringSimplifier
                        LineSegment candidateSeg)
   {
     List querySegs = inputIndex.query(candidateSeg);
-    for (Iterator i = querySegs.iterator(); i.hasNext(); ) {
-      TaggedLineSegment querySeg = (TaggedLineSegment) i.next();
+    for (Object querySeg2 : querySegs) {
+      TaggedLineSegment querySeg = (TaggedLineSegment) querySeg2;
       if (hasInteriorIntersection(querySeg, candidateSeg)) {
           if (isInLineSection(parentLine, sectionIndex, querySeg))
             continue;

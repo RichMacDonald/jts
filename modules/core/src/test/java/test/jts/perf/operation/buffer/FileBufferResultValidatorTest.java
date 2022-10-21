@@ -14,7 +14,6 @@ package test.jts.perf.operation.buffer;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -76,8 +75,8 @@ public class FileBufferResultValidatorTest extends TestCase {
   	Stopwatch sw = new Stopwatch();
     //System.out.println("Geom count = " + geoms.size() + "   distance = " + dist);
   	int count = 0;
-    for (Iterator i = geoms.iterator(); i.hasNext(); ) {
-      Geometry g = (Geometry) i.next();
+    for (Object geom : geoms) {
+      Geometry g = (Geometry) geom;
       runBuffer(g, dist);
       runBuffer(g.reverse(), dist);
       //System.out.print(".");

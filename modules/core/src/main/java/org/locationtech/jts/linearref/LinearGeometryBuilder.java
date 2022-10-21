@@ -31,7 +31,7 @@ import org.locationtech.jts.geom.MultiLineString;
 public class LinearGeometryBuilder
 {
   private GeometryFactory geomFact;
-  private List lines = new ArrayList();
+  private List<LineString> lines = new ArrayList<LineString>();
   private CoordinateList coordList = null;
 
   private boolean ignoreInvalidLines = false;

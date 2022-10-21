@@ -12,7 +12,6 @@
 package org.locationtech.jts.algorithm.locate;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.RayCrossingCounter;
@@ -140,8 +139,7 @@ public class IndexedPointInAreaLocator
     private void init(Geometry geom)
     {
     	List<LineString> lines = LinearComponentExtracter.getLines(geom);
-      for (Iterator<LineString> i = lines.iterator(); i.hasNext(); ) {
-        LineString line = i.next();
+      for (LineString line : lines) {
         //-- only include rings of Polygons or LinearRings
         if (! line.isClosed())
           continue;
@@ -161,10 +159,10 @@ public class IndexedPointInAreaLocator
       }
     }
     
-    public List query(double min, double max)
+    public List<?> query(double min, double max)
     {
      if (isEmpty) 
-        return new ArrayList();
+        return new ArrayList<Object>();
       
       ArrayListVisitor visitor = new ArrayListVisitor();
       index.query(min, max, visitor);

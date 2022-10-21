@@ -309,7 +309,7 @@ class OverlayUtil {
    * @return a geometry structured according to the overlay result semantics
    */
   static Geometry createResultGeometry(List<Polygon> resultPolyList, List<LineString> resultLineList, List<Point> resultPointList, GeometryFactory geometryFactory) {
-    List<Geometry> geomList = new ArrayList<Geometry>();
+    List<Geometry> geomList = new ArrayList<>();
     
     // TODO: for mixed dimension, return collection of Multigeom for each dimension (breaking change)
     
@@ -324,7 +324,7 @@ class OverlayUtil {
   }
 
   static Geometry toLines(OverlayGraph graph, boolean isOutputEdges, GeometryFactory geomFact) {
-    List<LineString> lines = new ArrayList<LineString>();
+    List<LineString> lines = new ArrayList<>();
     for (OverlayEdge edge : graph.getEdges()) {
       boolean includeEdge = isOutputEdges || edge.isInResultArea();
       if (! includeEdge) continue;

@@ -21,14 +21,14 @@ import org.locationtech.jts.geom.Geometry;
 
 public class ClassUtil 
 {
-  public static String getClassname(Class clz)
+  public static String getClassname(Class<?> clz)
   {
     String jClassName = clz.getName();
     int lastDotPos = jClassName.lastIndexOf(".");
     return jClassName.substring(lastDotPos + 1, jClassName.length());
   }
 
-  public static String[] getStringArrayClassField(Class clz, String name) 
+  public static String[] getStringArrayClassField(Class<?> clz, String name) 
   {
   	try {
   		Field field = clz.getField(name);
@@ -40,7 +40,7 @@ public class ClassUtil
 		return null;
   }
   
-  public static String getStringClassField(Class clz, String name) 
+  public static String getStringClassField(Class<?> clz, String name) 
   {
   	try {
   		Field[] f = clz.getDeclaredFields();
@@ -53,15 +53,15 @@ public class ClassUtil
 		return null;
   }
   
-  public static Object dynamicCall(String clzName, String methodName, Class[] methodParamTypes, Object[] methodArgs)
+  public static Object dynamicCall(String clzName, String methodName, Class<?>[] methodParamTypes, Object[] methodArgs)
       throws ClassNotFoundException, SecurityException, NoSuchMethodException,
       IllegalArgumentException, InstantiationException, IllegalAccessException,
       InvocationTargetException
   {
-    Class clz = Class.forName(clzName);
+    Class<?> clz = Class.forName(clzName);
     
-    Class[] constParTypes = new Class[] { String.class, String.class };
-    Constructor constr = clz.getConstructor(new Class[0]);
+    Class<?>[] constParTypes = new Class[] { String.class, String.class };
+    Constructor constr = clz.getConstructor(new Class<?>[0]);
     Object dummyto = constr.newInstance(new Object[0]);
     
     Method meth = clz.getMethod(methodName, methodParamTypes);
@@ -69,7 +69,7 @@ public class ClassUtil
     return result;
   }
 
-  public static boolean isNumber(Class clz) {
+  public static boolean isNumber(Class<?> clz) {
     if (clz == Double.class) return true;
     if (clz == double.class) return true;
     if (clz == Integer.class) return true;
@@ -96,7 +96,7 @@ public class ClassUtil
     return d;
   }
 
-  public static boolean isDouble(Class clz) {
+  public static boolean isDouble(Class<?> clz) {
     if (clz == Double.class) return true;
     if (clz == double.class) return true;
     return false;

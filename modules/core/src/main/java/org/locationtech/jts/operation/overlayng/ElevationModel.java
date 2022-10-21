@@ -147,9 +147,9 @@ class ElevationModel {
     int numCells = 0;
     double sumZ = 0.0;
     
-    for (int i = 0; i < cells.length; i++) {
+    for (ElevationCell[] cell2 : cells) {
       for (int j = 0; j < cells[0].length; j++) {
-        ElevationCell cell = cells[i][j];
+        ElevationCell cell = cell2[j];
         if (cell != null) {
           cell.compute();
           numCells++;

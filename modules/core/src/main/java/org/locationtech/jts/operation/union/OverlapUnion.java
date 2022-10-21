@@ -147,7 +147,7 @@ public class OverlapUnion
       return GeometryCombiner.combine(g0Copy, g1Copy);
     }
     
-    List<Geometry> disjointPolys = new ArrayList<Geometry>();
+    List<Geometry> disjointPolys = new ArrayList<>();
     
     Geometry g0Overlap = extractByEnvelope(overlapEnv, g0, disjointPolys);
     Geometry g1Overlap = extractByEnvelope(overlapEnv, g1, disjointPolys);
@@ -199,7 +199,7 @@ public class OverlapUnion
   private Geometry extractByEnvelope(Envelope env, Geometry geom, 
       List<Geometry> disjointGeoms)
   {
-    List<Geometry> intersectingGeoms = new ArrayList<Geometry>();
+    List<Geometry> intersectingGeoms = new ArrayList<>();
     for (int i = 0; i < geom.getNumGeometries(); i++) { 
       Geometry elem = geom.getGeometryN(i);
       if (elem.getEnvelopeInternal().intersects(env)) {
@@ -226,7 +226,7 @@ public class OverlapUnion
   private boolean isBorderSegmentsSame(Geometry result, Envelope env) {
     List<LineSegment> segsBefore = extractBorderSegments(g0, g1, env);
     
-    List<LineSegment> segsAfter = new ArrayList<LineSegment>();
+    List<LineSegment> segsAfter = new ArrayList<>();
     extractBorderSegments(result, env, segsAfter);
 
     //System.out.println("# seg before: " + segsBefore.size() + " - # seg after: " + segsAfter.size());
@@ -237,7 +237,7 @@ public class OverlapUnion
     if (segs0.size() != segs1.size())
       return false;
     
-    Set<LineSegment> segIndex = new HashSet<LineSegment>(segs0);
+    Set<LineSegment> segIndex = new HashSet<>(segs0);
     
     for (LineSegment seg : segs1) {
       if (! segIndex.contains(seg)) {
@@ -249,7 +249,7 @@ public class OverlapUnion
   }
 
   private List<LineSegment> extractBorderSegments(Geometry geom0, Geometry geom1, Envelope env) {
-    List<LineSegment> segs = new ArrayList<LineSegment>();
+    List<LineSegment> segs = new ArrayList<>();
     extractBorderSegments(geom0, env, segs);
     if (geom1 != null)
       extractBorderSegments(geom1, env, segs);

@@ -100,7 +100,7 @@ public class CreateShapeFunctions {
     double cellSizeX = env.getWidth() / nCellsOnSideX;
     double cellSizeY = env.getHeight() / nCellsOnSideY;
     
-    List geoms = new ArrayList(); 
+    List<Geometry> geoms = new ArrayList<Geometry>(); 
 
     for (int i = 0; i < nCellsOnSideX; i++) {
       for (int j = 0; j < nCellsOnSideY; j++) {
@@ -263,7 +263,7 @@ public class CreateShapeFunctions {
     Coordinate[] pts = ptsGeom.getCoordinates();
     Coordinate centre = centrePt.getCoordinate();
     
-    List<OrderedPoint> orderedPts = new ArrayList<OrderedPoint>();
+    List<OrderedPoint> orderedPts = new ArrayList<>();
     for (Coordinate p : pts) {
       double ang = Angle.angle(centre, p);
       orderedPts.add(new OrderedPoint(p, ang));
@@ -280,7 +280,7 @@ public class CreateShapeFunctions {
     return ptsGeom.getFactory().createPolygon(ring);
   }
   
-  private static class OrderedPoint implements Comparable {
+  private static class OrderedPoint implements Comparable<Object> {
     Coordinate pt;
     double index;
     

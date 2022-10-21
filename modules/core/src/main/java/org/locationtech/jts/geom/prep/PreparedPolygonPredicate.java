@@ -12,7 +12,6 @@
 
 package org.locationtech.jts.geom.prep;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.locate.PointOnGeometryLocator;
@@ -57,8 +56,8 @@ abstract class PreparedPolygonPredicate
 	protected boolean isAllTestComponentsInTarget(Geometry testGeom)
 	{
     List coords = ComponentCoordinateExtracter.getCoordinates(testGeom);
-    for (Iterator i = coords.iterator(); i.hasNext(); ) {
-      Coordinate p = (Coordinate) i.next();
+    for (Object coord : coords) {
+      Coordinate p = (Coordinate) coord;
       int loc = targetPointLocator.locate(p);
       if (loc == Location.EXTERIOR)
         return false;
@@ -77,8 +76,8 @@ abstract class PreparedPolygonPredicate
 	protected boolean isAllTestComponentsInTargetInterior(Geometry testGeom)
 	{
     List coords = ComponentCoordinateExtracter.getCoordinates(testGeom);
-    for (Iterator i = coords.iterator(); i.hasNext(); ) {
-      Coordinate p = (Coordinate) i.next();
+    for (Object coord : coords) {
+      Coordinate p = (Coordinate) coord;
       int loc = targetPointLocator.locate(p);
       if (loc != Location.INTERIOR)
         return false;
@@ -97,8 +96,8 @@ abstract class PreparedPolygonPredicate
 	protected boolean isAnyTestComponentInTarget(Geometry testGeom)
 	{
     List coords = ComponentCoordinateExtracter.getCoordinates(testGeom);
-    for (Iterator i = coords.iterator(); i.hasNext(); ) {
-      Coordinate p = (Coordinate) i.next();
+    for (Object coord : coords) {
+      Coordinate p = (Coordinate) coord;
       int loc = targetPointLocator.locate(p);
       if (loc != Location.EXTERIOR)
         return true;
@@ -155,8 +154,8 @@ abstract class PreparedPolygonPredicate
 	protected boolean isAnyTargetComponentInAreaTest(Geometry testGeom, List targetRepPts)
 	{
 		PointOnGeometryLocator piaLoc = new SimplePointInAreaLocator(testGeom);
-    for (Iterator i = targetRepPts.iterator(); i.hasNext(); ) {
-      Coordinate p = (Coordinate) i.next();
+    for (Object targetRepPt : targetRepPts) {
+      Coordinate p = (Coordinate) targetRepPt;
       int loc = piaLoc.locate(p);
       if (loc != Location.EXTERIOR)
         return true;

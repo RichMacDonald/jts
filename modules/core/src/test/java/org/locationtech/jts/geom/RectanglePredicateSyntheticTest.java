@@ -13,7 +13,6 @@
 package org.locationtech.jts.geom;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.io.WKTReader;
@@ -55,8 +54,8 @@ public class RectanglePredicateSyntheticTest
     //System.out.println(rect);
 
     List testGeoms = getTestGeometries();
-    for (Iterator i = testGeoms.iterator(); i.hasNext(); ) {
-      Geometry testGeom = (Geometry) i.next();
+    for (Object testGeom2 : testGeoms) {
+      Geometry testGeom = (Geometry) testGeom2;
       runRectanglePredicates(rect, testGeom);
     }
   }
@@ -66,8 +65,8 @@ public class RectanglePredicateSyntheticTest
     //System.out.println(rect);
 
     List testGeoms = getTestGeometries();
-    for (Iterator i = testGeoms.iterator(); i.hasNext(); ) {
-      Geometry testGeom = (Geometry) i.next();
+    for (Object testGeom2 : testGeoms) {
+      Geometry testGeom = (Geometry) testGeom2;
 
       SegmentDensifier densifier = new SegmentDensifier((LineString) testGeom);
       LineString denseLine = (LineString) densifier.densify(testGeomSize / 400);
@@ -79,8 +78,8 @@ public class RectanglePredicateSyntheticTest
   public void testPolygons()
   {
     List testGeoms = getTestGeometries();
-    for (Iterator i = testGeoms.iterator(); i.hasNext(); ) {
-      Geometry testGeom = (Geometry) i.next();
+    for (Object testGeom2 : testGeoms) {
+      Geometry testGeom = (Geometry) testGeom2;
       runRectanglePredicates(rect, testGeom.buffer(bufferWidth));
     }
   }

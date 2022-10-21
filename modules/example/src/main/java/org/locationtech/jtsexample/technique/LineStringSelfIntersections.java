@@ -61,7 +61,7 @@ public class LineStringSelfIntersections {
 
   public static Geometry getEndPoints(Geometry g)
   {
-    List endPtList = new ArrayList();
+    List<Coordinate> endPtList = new ArrayList<Coordinate>();
     if (g instanceof LineString) {
       LineString line = (LineString) g;
 

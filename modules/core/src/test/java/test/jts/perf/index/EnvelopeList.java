@@ -12,7 +12,6 @@
 package test.jts.perf.index;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Envelope;
@@ -24,7 +23,7 @@ import org.locationtech.jts.geom.Envelope;
  */
 public class EnvelopeList
 {
-  List envList = new ArrayList();
+  List<Envelope> envList = new ArrayList<Envelope>();
 
   public EnvelopeList() {
   }
@@ -34,11 +33,11 @@ public class EnvelopeList
     envList.add(env);
   }
 
-  public List query(Envelope searchEnv)
+  public List<Envelope> query(Envelope searchEnv)
   {
-    List result = new ArrayList();
-    for (Iterator i = envList.iterator(); i.hasNext(); ) {
-      Envelope env = (Envelope) i.next();
+    List<Envelope> result = new ArrayList<Envelope>();
+    for (Object element : envList) {
+      Envelope env = (Envelope) element;
       if (env.intersects(searchEnv))
         result.add(env);
     }

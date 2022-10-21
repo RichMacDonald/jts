@@ -24,6 +24,7 @@ import org.locationtech.jts.geom.CoordinateList;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.geom.Polygon;
 
 
 /**
@@ -87,9 +88,9 @@ public class ShapeReader
    */
   public Geometry read(PathIterator pathIt)
   {
-    List pathPtSeq = toCoordinates(pathIt);
+    List<Coordinate[]> pathPtSeq = toCoordinates(pathIt);
     
-    List polys = new ArrayList();
+    List<Polygon> polys = new ArrayList<Polygon>();
     int seqIndex = 0;
     while (seqIndex < pathPtSeq.size()) {
       // assume next seq is shell 
@@ -98,7 +99,7 @@ public class ShapeReader
       LinearRing shell = geometryFactory.createLinearRing(pts);
       seqIndex++;
       
-      List holes = new ArrayList();
+      List<LinearRing> holes = new ArrayList<LinearRing>();
       // add holes as long as rings are CCW
       while (seqIndex < pathPtSeq.size() && isHole((Coordinate[]) pathPtSeq.get(seqIndex))) {
         Coordinate[] holePts = (Coordinate[]) pathPtSeq.get(seqIndex);
@@ -125,9 +126,9 @@ public class ShapeReader
    * @return a List of Coordinate arrays
    * @throws IllegalArgumentException if a non-linear segment type is encountered
    */
-  public static List toCoordinates(PathIterator pathIt)
+  public static List<Coordinate[]> toCoordinates(PathIterator pathIt)
   {
-    List coordArrays = new ArrayList();
+    List<Coordinate[]> coordArrays = new ArrayList<Coordinate[]>();
     while (! pathIt.isDone()) {
       Coordinate[] pts = nextCoordinateArray(pathIt);
       if (pts == null)

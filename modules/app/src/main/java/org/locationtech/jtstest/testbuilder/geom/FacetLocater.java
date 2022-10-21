@@ -14,7 +14,6 @@ package org.locationtech.jtstest.testbuilder.geom;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
@@ -46,18 +45,17 @@ public class FacetLocater
 	 * @param locations the source collection
 	 * @return a list of the vertex locations, if any
 	 */
-	public static List filterVertexLocations(Collection locations)
+	public static List<GeometryLocation> filterVertexLocations(Collection<GeometryLocation> locations)
 	{
-		ArrayList vertexLocs = new ArrayList();
-		for (Iterator i = locations.iterator(); i.hasNext(); ) {
-			GeometryLocation loc = (GeometryLocation) i.next();
+		ArrayList<GeometryLocation> vertexLocs = new ArrayList<GeometryLocation>();
+		for (GeometryLocation loc : locations) {
 			if (loc.isVertex()) vertexLocs.add(loc);
 		}
 		return vertexLocs;
 	}
 	
   private Geometry parentGeom;
-  private List locations = new ArrayList();
+  private List<GeometryLocation> locations = new ArrayList<GeometryLocation>();
   private Coordinate queryPt;
   private double tolerance = 0.0; 
   
@@ -65,7 +63,7 @@ public class FacetLocater
     this.parentGeom = parentGeom;
   }
   
-  public List getLocations(Coordinate queryPt, double tolerance)
+  public List<GeometryLocation> getLocations(Coordinate queryPt, double tolerance)
   {
   	this.queryPt = queryPt;
   	this.tolerance = tolerance;
@@ -73,12 +71,12 @@ public class FacetLocater
     return locations;
   }
   
-  private void findLocations(Geometry geom, List locations)
+  private void findLocations(Geometry geom, List<GeometryLocation> locations)
   {
-    findLocations(new Stack(), parentGeom, locations);
+    findLocations(new Stack<Integer>(), parentGeom, locations);
   }
     
-  private void findLocations(Stack path, Geometry geom, List locations)
+  private void findLocations(Stack<Integer> path, Geometry geom, List<GeometryLocation> locations)
   {
   	if (geom instanceof GeometryCollection) {
   		for (int i = 0; i < geom.getNumGeometries(); i++ ) {
@@ -108,7 +106,7 @@ public class FacetLocater
   	}
   }
   
-  private void findLocations(Stack path, Polygon poly, List locations)
+  private void findLocations(Stack<Integer> path, Polygon poly, List<GeometryLocation> locations)
   {
 		path.push(0);
 		findLocations(path, 
@@ -125,13 +123,13 @@ public class FacetLocater
 		}
   }
 
-  private void findLocations(Stack path, Geometry compGeom, CoordinateSequence seq, List locations)
+  private void findLocations(Stack<Integer> path, Geometry compGeom, CoordinateSequence seq, List<GeometryLocation> locations)
   {
   	findVertexLocations(path, compGeom, seq, locations);
   	findSegmentLocations(path, compGeom, seq, locations);
   }
 
-  private void findVertexLocations(Stack path, Geometry compGeom, CoordinateSequence seq, List locations)
+  private void findVertexLocations(Stack<Integer> path, Geometry compGeom, CoordinateSequence seq, List<GeometryLocation> locations)
   {
   	for (int i = 0; i < seq.size(); i++) {
       Coordinate p = seq.getCoordinate(i);
@@ -141,7 +139,7 @@ public class FacetLocater
   	}
   }
 
-  private void findSegmentLocations(Stack path, Geometry compGeom, CoordinateSequence seq, List locations)
+  private void findSegmentLocations(Stack<Integer> path, Geometry compGeom, CoordinateSequence seq, List<GeometryLocation> locations)
   {
   	LineSegment seg = new LineSegment();
   	for (int i = 0; i < seq.size() - 1; i++) {
@@ -153,12 +151,12 @@ public class FacetLocater
   	}
   }
 
-	public static int[] toIntArray(Vector path)
+	public static int[] toIntArray(Vector<Integer> path)
 	{
 		int[] index = new int[path.size()];
 		int i = 0;
-		for (Iterator it = path.iterator(); it.hasNext(); ) {
-			Integer pathIndex = (Integer) it.next();
+		for (Object element : path) {
+			Integer pathIndex = (Integer) element;
 			index[i++] = pathIndex.intValue();
 		}
 		return index;

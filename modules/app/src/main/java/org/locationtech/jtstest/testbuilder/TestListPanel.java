@@ -14,7 +14,7 @@ package org.locationtech.jtstest.testbuilder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.util.Iterator;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -157,11 +157,9 @@ public class TestListPanel extends JPanel {
 
     public void populateList() {
         listModel.clear();
-        for (Iterator i = JTSTestBuilderFrame.instance().getModel().getCases().iterator();
-            i.hasNext();
-            ) {
-            Testable testCase = (Testable) i.next();
-            listModel.addElement(testCase);
-        }
+        for (Object element : JTSTestBuilderFrame.instance().getModel().getCases()) {
+		Testable testCase = (Testable) element;
+		listModel.addElement(testCase);
+      }
     }
 }

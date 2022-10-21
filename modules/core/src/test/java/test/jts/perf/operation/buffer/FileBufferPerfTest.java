@@ -12,7 +12,6 @@
 
 package test.jts.perf.operation.buffer;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -76,8 +75,8 @@ public class FileBufferPerfTest
   {
     System.out.println("Geom count = " + polys.size() + "   distance = " + distance);
     Stopwatch sw = new Stopwatch();
-    for (Iterator i = polys.iterator(); i.hasNext(); ) {
-      Geometry g = (Geometry) i.next();
+    for (Object poly : polys) {
+      Geometry g = (Geometry) poly;
       g.buffer(distance);
       System.out.print(".");
     }

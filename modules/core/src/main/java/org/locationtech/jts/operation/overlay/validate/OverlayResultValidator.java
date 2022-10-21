@@ -60,7 +60,7 @@ public class OverlayResultValidator
   private Coordinate invalidLocation = null;
   private double boundaryDistanceTolerance = TOLERANCE;
 
-  private List testCoords = new ArrayList();
+  private List<Coordinate> testCoords = new ArrayList<>();
 
   public OverlayResultValidator(Geometry a, Geometry b, Geometry result) 
   {
@@ -106,8 +106,8 @@ public class OverlayResultValidator
 
   private boolean checkValid(int overlayOp)
   {
-    for (int i = 0; i < testCoords.size(); i++) {
-      Coordinate pt = (Coordinate) testCoords.get(i);
+    for (Object testCoord : testCoords) {
+      Coordinate pt = (Coordinate) testCoord;
       if (! checkValid(overlayOp, pt)) {
         invalidLocation = pt;
         return false;

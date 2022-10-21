@@ -121,7 +121,7 @@ public class RectangleClipPolygon {
     // TODO: need to precision reduce
     if (isInsideRectangle(geom)) return geom.copy();
 
-    List<Geometry> geomsClip = new ArrayList<Geometry>(); 
+    List<Geometry> geomsClip = new ArrayList<>(); 
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       Geometry poly = geom.getGeometryN(i);
       if (! (poly instanceof Polygon)) continue;
@@ -154,7 +154,7 @@ public class RectangleClipPolygon {
   }
   
   private LinearRing[] clipHoles(Polygon poly) {
-    List<LinearRing> holesClip = new ArrayList<LinearRing>();
+    List<LinearRing> holesClip = new ArrayList<>();
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
       LinearRing holeClip = clipRing(poly.getInteriorRingN(i));
       if (holeClip != null) {
@@ -256,8 +256,7 @@ public class RectangleClipPolygon {
     CoordinateList clipCoords = new CoordinateList();
 
     Coordinate p0 = coords[coords.length - 1];
-    for (int i = 0; i < coords.length; i++) {
-      Coordinate p1 = coords[i];
+    for (Coordinate p1 : coords) {
       if ( isInsideEdge(p1, edgeIndex) ) {
         if ( !isInsideEdge(p0, edgeIndex) ) {
           Coordinate intPt = intersectionPrecise(p0, p1, edgeIndex);

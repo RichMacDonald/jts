@@ -116,7 +116,7 @@ public class SwingUtil {
       comp.setBackground(SystemColor.control);
   }
   
-  public static Object coerce(Object val, Class clz) {
+  public static Object coerce(Object val, Class<?> clz) {
     if (val == null) return val;
     if (val.getClass() == clz) return val;
     if (val instanceof String && (clz == Double.class || clz == double.class))

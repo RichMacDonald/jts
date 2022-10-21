@@ -12,7 +12,6 @@
 package org.locationtech.jts.operation.buffer.validate;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.distance.DiscreteHausdorffDistance;
@@ -153,11 +152,11 @@ public class BufferDistanceValidator
   
   private Geometry getPolygonLines(Geometry g)
   {
-  	List lines = new ArrayList();
+  	List<Geometry> lines = new ArrayList<>();
   	LinearComponentExtracter lineExtracter = new LinearComponentExtracter(lines);
-  	List polys = PolygonExtracter.getPolygons(g);
-  	for (Iterator i = polys.iterator(); i.hasNext(); ) {
-  		Polygon poly = (Polygon) i.next();
+  	List<?> polys = PolygonExtracter.getPolygons(g);
+  	for (Object poly2 : polys) {
+  		Polygon poly = (Polygon) poly2;
   		poly.apply(lineExtracter);
   	}
   	return g.getFactory().buildGeometry(lines);
