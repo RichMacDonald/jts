@@ -259,7 +259,7 @@ public class GeometryEditorEx
     }
 
     return targetFactory.createPolygon(shell,
-                                 (LinearRing[]) holes.toArray(new LinearRing[] {  }));
+                                 holes.toArray(new LinearRing[] {  }));
   }
 
   private GeometryCollection editGeometryCollection(
@@ -284,7 +284,7 @@ public class GeometryEditorEx
     }
 
     if (collectionForType.getClass() == MultiPoint.class) {
-      return targetFactory.createMultiPoint((Point[]) geometries.toArray(
+      return targetFactory.createMultiPoint(geometries.toArray(
             new Point[] {  }));
     }
     if (collectionForType.getClass() == MultiLineString.class) {

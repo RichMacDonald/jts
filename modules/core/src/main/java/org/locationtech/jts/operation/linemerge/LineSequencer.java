@@ -262,7 +262,7 @@ public class LineSequencer
     GraphComponent.setVisited(graph.edgeIterator(), false);
 
     Node startNode = findLowestDegreeNode(graph);
-    DirectedEdge startDE = (DirectedEdge) startNode.getOutEdges().iterator().next();
+    DirectedEdge startDE = startNode.getOutEdges().iterator().next();
     DirectedEdge startDESym = startDE.getSym();
 
     List seq = new LinkedList();

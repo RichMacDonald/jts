@@ -160,7 +160,7 @@ public class GeoJsonWriter {
       Polygon polygon = (Polygon) geometry;
 
       if (isForceCCW) {
-        polygon = (Polygon) OrientationTransformer.transformCCW(polygon);
+        polygon = OrientationTransformer.transformCCW(polygon);
       }
 
       result.put(GeoJsonConstants.NAME_COORDINATES, makeJsonAware(polygon));

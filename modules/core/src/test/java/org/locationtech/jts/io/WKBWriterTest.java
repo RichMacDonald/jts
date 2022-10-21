@@ -63,8 +63,8 @@ public class WKBWriterTest extends GeometryTestCase {
       b = (byte) (wkb[1] & 0x20);
       assertEquals(0x20, b);
       
-      int srid = ((int) (wkb[5] & 0xff) << 24) | ( (int) (wkb[6] & 0xff) << 16)
-          | ( (int) (wkb[7] & 0xff) << 8) | (( int) (wkb[8] & 0xff) );
+      int srid = ((wkb[5] & 0xff) << 24) | ( (wkb[6] & 0xff) << 16)
+          | ( (wkb[7] & 0xff) << 8) | (wkb[8] & 0xff );
      
       assertEquals(1234, srid);
       

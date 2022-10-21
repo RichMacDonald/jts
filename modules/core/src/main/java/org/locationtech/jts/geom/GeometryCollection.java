@@ -103,7 +103,7 @@ public class GeometryCollection extends Geometry {
   public int getBoundaryDimension() {
     int dimension = Dimension.FALSE;
     for (Geometry element : geometries) {
-      dimension = Math.max(dimension, ((Geometry) element).getBoundaryDimension());
+      dimension = Math.max(dimension, element.getBoundaryDimension());
     }
     return dimension;
   }
@@ -119,7 +119,7 @@ public class GeometryCollection extends Geometry {
   public int getNumPoints() {
     int numPoints = 0;
     for (Geometry element : geometries) {
-      numPoints += ((Geometry) element).getNumPoints();
+      numPoints += element.getNumPoints();
     }
     return numPoints;
   }
@@ -166,7 +166,7 @@ public class GeometryCollection extends Geometry {
       return false;
     }
     for (int i = 0; i < geometries.length; i++) {
-      if (!((Geometry) geometries[i]).equalsExact(otherCollection.geometries[i], tolerance)) {
+      if (!geometries[i].equalsExact(otherCollection.geometries[i], tolerance)) {
         return false;
       }
     }

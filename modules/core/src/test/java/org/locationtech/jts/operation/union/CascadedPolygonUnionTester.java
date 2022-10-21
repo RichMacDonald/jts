@@ -91,7 +91,7 @@ public class CascadedPolygonUnionTester
       Geometry geom = (Geometry) geom2;
       
       if (unionAll == null) {
-      	unionAll = (Geometry) geom.copy();
+      	unionAll = geom.copy();
       }
       else {
       	unionAll = unionAll.union(geom);

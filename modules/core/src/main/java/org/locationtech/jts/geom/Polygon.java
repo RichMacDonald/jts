@@ -376,8 +376,8 @@ public class Polygon
     int nHole2 = ((Polygon) o).getNumInteriorRing();
     int i = 0;
     while (i < nHole1 && i < nHole2) {
-      LinearRing thisHole = (LinearRing) getInteriorRingN(i);
-      LinearRing otherHole = (LinearRing) poly.getInteriorRingN(i);
+      LinearRing thisHole = getInteriorRingN(i);
+      LinearRing otherHole = poly.getInteriorRingN(i);
       int holeComp = thisHole.compareToSameClass(otherHole);
       if (holeComp != 0) return holeComp;
       i++;
@@ -399,8 +399,8 @@ public class Polygon
     int nHole2 = poly.getNumInteriorRing();
     int i = 0;
     while (i < nHole1 && i < nHole2) {
-      LinearRing thisHole = (LinearRing) getInteriorRingN(i);
-      LinearRing otherHole = (LinearRing) poly.getInteriorRingN(i);
+      LinearRing thisHole = getInteriorRingN(i);
+      LinearRing otherHole = poly.getInteriorRingN(i);
       int holeComp = thisHole.compareToSameClass(otherHole, comp);
       if (holeComp != 0) return holeComp;
       i++;
@@ -438,10 +438,10 @@ public class Polygon
 
   protected Polygon reverseInternal()
   {
-    LinearRing shell = (LinearRing) getExteriorRing().reverse();
+    LinearRing shell = getExteriorRing().reverse();
     LinearRing[] holes = new LinearRing[getNumInteriorRing()];
     for (int i = 0; i < holes.length; i++) {
-      holes[i] = (LinearRing) getInteriorRingN(i).reverse();
+      holes[i] = getInteriorRingN(i).reverse();
     }
 
     return getFactory().createPolygon(shell, holes);

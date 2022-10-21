@@ -127,7 +127,7 @@ public class RectangleIntersectsPerfTest
    */
   Geometry[] createRectangles(Envelope env, int nRect, double rectSize )
   {
-    int nSide =  1 + (int)Math.sqrt((double) nRect);
+    int nSide =  1 + (int)Math.sqrt(nRect);
     double dx = env.getWidth() / nSide;
     double dy = env.getHeight() / nSide;
 

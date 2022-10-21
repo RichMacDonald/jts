@@ -85,7 +85,7 @@ public class ConnectedSubgraphFinder
   private void addEdges(Node node, Stack nodeStack, Subgraph subgraph)
   {
     node.setVisited(true);
-    for (Iterator i = ((DirectedEdgeStar) node.getOutEdges()).iterator(); i.hasNext(); ) {
+    for (Iterator i = node.getOutEdges().iterator(); i.hasNext(); ) {
       DirectedEdge de = (DirectedEdge) i.next();
       subgraph.add(de.getEdge());
       Node toNode = de.getToNode();

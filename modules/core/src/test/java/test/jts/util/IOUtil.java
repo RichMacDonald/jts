@@ -78,7 +78,7 @@ public class IOUtil {
   {
     WKBReader reader = new WKBReader();
     WKBHexFileReader fileReader = new WKBHexFileReader(filename, reader);
-    return (List<Geometry>) fileReader.read();
+    return fileReader.read();
   }
 
   public static List<Geometry> readFile(String filename)

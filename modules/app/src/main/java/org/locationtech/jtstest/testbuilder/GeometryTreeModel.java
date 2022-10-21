@@ -358,13 +358,13 @@ class PolygonNode extends GeometryNode
   protected void fillChildren()
   {
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
-      children.add(new LinearRingNode((LinearRing) poly.getInteriorRingN(i),
+      children.add(new LinearRingNode(poly.getInteriorRingN(i),
           "Hole " + i, context));
     }
     if (context.isSorted()) {
       children.sort(context.getComparator());
     }
-    children.add(0, new LinearRingNode((LinearRing) poly.getExteriorRing(),
+    children.add(0, new LinearRingNode(poly.getExteriorRing(),
         "Shell", context));
   }
 

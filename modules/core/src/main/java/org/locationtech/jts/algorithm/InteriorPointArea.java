@@ -208,9 +208,9 @@ public class InteriorPointArea {
       interiorPoint = new Coordinate(polygon.getCoordinate());
       
       List<Double> crossings = new ArrayList<>();
-      scanRing((LinearRing) polygon.getExteriorRing(), crossings);
+      scanRing(polygon.getExteriorRing(), crossings);
       for (int i = 0; i < polygon.getNumInteriorRing(); i++) {
-        scanRing((LinearRing) polygon.getInteriorRingN(i), crossings);
+        scanRing(polygon.getInteriorRingN(i), crossings);
       }
       findBestMidpoint(crossings);
     }

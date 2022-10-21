@@ -93,7 +93,7 @@ public class Test implements Runnable
   }
 
   public String getArgument(int i) {
-    return (String) arguments.get(i);
+    return arguments.get(i);
   }
 
   public int getArgumentCount() {

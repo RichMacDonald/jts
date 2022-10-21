@@ -127,7 +127,7 @@ public class HotPixel
   
   private double scaleRound(double val)
   {
-    return (double) Math.round(val * scaleFactor);
+    return Math.round(val * scaleFactor);
   }
 
   /**

@@ -81,7 +81,7 @@ public class HoleAssigner
   }
   
   private List<EdgeRing> queryOverlappingShells(Envelope ringEnv) {
-    return (List<EdgeRing>) shellIndex.query(ringEnv);
+    return shellIndex.query(ringEnv);
   }
   
   /**

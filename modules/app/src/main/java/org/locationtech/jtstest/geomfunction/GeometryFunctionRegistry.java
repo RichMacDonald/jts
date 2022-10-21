@@ -178,7 +178,7 @@ public class GeometryFunctionRegistry
 	{
 		List<GeometryFunction> funList = new ArrayList<>();
 		for (GeometryFunction geometryFunction : sortedFunctions.values()) {
-			GeometryFunction fun = (GeometryFunction) geometryFunction;
+			GeometryFunction fun = geometryFunction;
 			if (hasGeometryResult(fun))
 				funList.add(fun);
 		}
@@ -194,7 +194,7 @@ public class GeometryFunctionRegistry
 	{
 		List<GeometryFunction> scalarFun = new ArrayList<>();
 		for (GeometryFunction geometryFunction : sortedFunctions.values()) {
-			GeometryFunction fun = (GeometryFunction) geometryFunction;
+			GeometryFunction fun = geometryFunction;
 			if (! hasGeometryResult(fun))
 				scalarFun.add(fun);
 		}
@@ -232,7 +232,7 @@ public class GeometryFunctionRegistry
 	public void add(Collection<StaticMethodGeometryFunction> funcs)
 	{
 		for (StaticMethodGeometryFunction func : funcs) {
-			GeometryFunction f = (GeometryFunction) func;
+			GeometryFunction f = func;
 			add(f);
 		}
 	}
@@ -336,7 +336,7 @@ public class GeometryFunctionRegistry
   public GeometryFunction find(String name, int argCount)
   {
     for (GeometryFunction function : functions) {
-      GeometryFunction func = (GeometryFunction) function;
+      GeometryFunction func = function;
       String funcName = func.getName();
       if (funcName.equalsIgnoreCase(name) 
       		&& func.getParameterTypes().length == argCount)
@@ -353,7 +353,7 @@ public class GeometryFunctionRegistry
   public GeometryFunction find(String name)
   {
     for (GeometryFunction function : functions) {
-      GeometryFunction func = (GeometryFunction) function;
+      GeometryFunction func = function;
       String funcName = func.getName();
       if (funcName.equalsIgnoreCase(name))
         return func;
@@ -369,7 +369,7 @@ public class GeometryFunctionRegistry
   public GeometryFunction find(String category, String name)
   {
     for (GeometryFunction function : functions) {
-      GeometryFunction func = (GeometryFunction) function;
+      GeometryFunction func = function;
       String funcName = func.getName();
       if (category.equalsIgnoreCase(func.getCategory()) && funcName.equalsIgnoreCase(name))
         return func;

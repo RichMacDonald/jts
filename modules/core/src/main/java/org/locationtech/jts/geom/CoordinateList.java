@@ -62,7 +62,7 @@ public class CoordinateList
     add(coord, allowRepeated);
   }
 
-  public Coordinate getCoordinate(int i) { return (Coordinate) get(i); }
+  public Coordinate getCoordinate(int i) { return get(i); }
 
 
   /** 
@@ -142,7 +142,7 @@ public class CoordinateList
     // don't add duplicate coordinates
     if (! allowRepeated) {
       if (size() >= 1) {
-        Coordinate last = (Coordinate) get(size() - 1);
+        Coordinate last = get(size() - 1);
         if (last.equals2D(coord)) return;
       }
     }
@@ -163,11 +163,11 @@ public class CoordinateList
       int size = size();
       if (size > 0) {
         if (i > 0) {
-          Coordinate prev = (Coordinate) get(i - 1);
+          Coordinate prev = get(i - 1);
           if (prev.equals2D(coord)) return;
         }
         if (i < size) {
-          Coordinate next = (Coordinate) get(i);
+          Coordinate next = get(i);
           if (next.equals2D(coord)) return;
         }
       }
@@ -207,7 +207,7 @@ public class CoordinateList
    */
   public Coordinate[] toCoordinateArray()
   {
-    return (Coordinate[]) toArray(coordArrayType);
+    return toArray(coordArrayType);
   }
 
   /**
@@ -220,7 +220,7 @@ public class CoordinateList
   public Coordinate[] toCoordinateArray(boolean isForward)
   {
     if (isForward) {
-      return (Coordinate[]) toArray(coordArrayType);
+      return toArray(coordArrayType);
     }
     // construct reversed array
     int size = size();

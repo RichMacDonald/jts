@@ -265,7 +265,7 @@ public class TestBuilderModel
       Testable tc = (Testable) element;
 
       if (tc instanceof TestCaseEdit) {
-        newTcl.add((TestCaseEdit) tc);
+        newTcl.add(tc);
       } else {
         newTcl.add(new TestCaseEdit(tc));
       }
@@ -451,7 +451,7 @@ public class TestBuilderModel
     }
     
     public Testable getCurrentTestable() {
-      return (TestCaseEdit) tcList.get(tcIndex);
+      return tcList.get(tcIndex);
     }
   
     public int getCurrentTestIndex()

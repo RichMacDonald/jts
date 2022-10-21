@@ -502,9 +502,9 @@ public class JTSOpRunner {
     if (outputFormat == null) return;
     
     if (captureGeometry) {
-      resultGeoms.add((Geometry) geom);
+      resultGeoms.add(geom);
     }
-    geomOut.printGeometry((Geometry) geom, srid, outputFormat);
+    geomOut.printGeometry(geom, srid, outputFormat);
   }
   
   private void printlnInfo(String s) {

@@ -304,7 +304,7 @@ public class LayerStylePanel extends JPanel {
     sliderLineAlpha = createOpacitySlider(e -> {
         JSlider source = (JSlider)e.getSource();
         if (! source.getValueIsAdjusting()) {
-          int alpha = (int)source.getValue();
+          int alpha = source.getValue();
           geomStyle().setLineAlpha(alpha);
           JTSTestBuilder.controller().geometryViewChanged();
           JTSTestBuilder.controller().updateLayerList();
@@ -396,7 +396,7 @@ public class LayerStylePanel extends JPanel {
     sliderFillAlpha = createOpacitySlider(e -> {
         JSlider source = (JSlider)e.getSource();
         if (! source.getValueIsAdjusting()) {
-          int alpha = (int)source.getValue();
+          int alpha = source.getValue();
           geomStyle().setFillAlpha(alpha);
           JTSTestBuilder.controller().geometryViewChanged();
           JTSTestBuilder.controller().updateLayerList();

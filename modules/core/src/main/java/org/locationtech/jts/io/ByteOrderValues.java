@@ -64,7 +64,7 @@ public class ByteOrderValues
           | (long) (buf[4] & 0xff) << 24
           | (long) (buf[5] & 0xff) << 16
           | (long) (buf[6] & 0xff) <<  8
-          | (long) (buf[7] & 0xff);
+          | buf[7] & 0xff;
     }
     else {// LITTLE_ENDIAN
       return
@@ -75,7 +75,7 @@ public class ByteOrderValues
           | (long) (buf[3] & 0xff) << 24
           | (long) (buf[2] & 0xff) << 16
           | (long) (buf[1] & 0xff) <<  8
-          | (long) (buf[0] & 0xff);
+          | buf[0] & 0xff;
     }
   }
 

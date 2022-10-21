@@ -201,7 +201,7 @@ public class GeometryImplTest extends TestCase {
 		        Arrays.asList(geometries)));
 
         doTestEqualsExact(x, somethingExactlyEqual,
-            somethingNotEqualButSameClass, sameClassButEmpty,
+            sameClassButEmpty,
             anotherSameClassButEmpty, collectionFactory);
 
         //    LineString somethingEqualButNotExactly = geometryFactory.createLineString(new Coordinate[] {
@@ -231,14 +231,14 @@ public class GeometryImplTest extends TestCase {
 		        Arrays.asList(geometries)));
 
         doTestEqualsExact(x, somethingExactlyEqual,
-            somethingNotEqualButSameClass, sameClassButEmpty,
+            sameClassButEmpty,
             anotherSameClassButEmpty, collectionFactory);
 
         CollectionFactory collectionFactory2 = geometries -> geometryFactory.createMultiLineString(GeometryFactory.toLineStringArray(
 		        Arrays.asList(geometries)));
 
         doTestEqualsExact(x, somethingExactlyEqual,
-            somethingNotEqualButSameClass, sameClassButEmpty,
+            sameClassButEmpty,
             anotherSameClassButEmpty, collectionFactory2);
     }
 
@@ -254,7 +254,7 @@ public class GeometryImplTest extends TestCase {
 		        Arrays.asList(geometries)));
 
         doTestEqualsExact(x, somethingExactlyEqual,
-            somethingNotEqualButSameClass, sameClassButEmpty,
+            sameClassButEmpty,
             anotherSameClassButEmpty, collectionFactory);
     }
 
@@ -272,15 +272,15 @@ public class GeometryImplTest extends TestCase {
 		        Arrays.asList(geometries)));
 
         doTestEqualsExact(x, somethingExactlyEqual,
-            somethingNotEqualButSameClass, sameClassButEmpty,
+            sameClassButEmpty,
             anotherSameClassButEmpty, collectionFactory);
     }
 
     public void testEqualsExactForGeometryCollections()
         throws Exception {
-        Geometry polygon1 = (Polygon) reader.read(
+        Geometry polygon1 = reader.read(
                 "POLYGON ((0 0, 0 50, 50 50, 50 0, 0 0))");
-        Geometry polygon2 = (Polygon) reader.read(
+        Geometry polygon2 = reader.read(
                 "POLYGON ((50 50, 50 0, 0 0, 0 50, 50 50))");
         GeometryCollection x = geometryFactory.createGeometryCollection(new Geometry[] {
                     polygon1, polygon2
@@ -296,7 +296,7 @@ public class GeometryImplTest extends TestCase {
         CollectionFactory collectionFactory = geometries -> geometryFactory.createGeometryCollection(geometries);
 
         doTestEqualsExact(x, somethingExactlyEqual,
-            somethingNotEqualButSameClass, sameClassButEmpty,
+            sameClassButEmpty,
             anotherSameClassButEmpty, collectionFactory);
     }
 
@@ -348,7 +348,6 @@ public class GeometryImplTest extends TestCase {
 
     private void doTestEqualsExact(Geometry x, 
         Geometry somethingExactlyEqual,
-        Geometry somethingNotEqualButSameClass, 
         Geometry sameClassButEmpty,
         Geometry anotherSameClassButEmpty, 
         CollectionFactory collectionFactory)

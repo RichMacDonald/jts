@@ -42,7 +42,7 @@ public class TestCaseList {
   }
   public void add(TestCaseList tcl) {
     for (Object test : tcl.tests) {
-      tests.add((Testable) test);
+      tests.add(test);
     }
   }
   public void remove(int i) {

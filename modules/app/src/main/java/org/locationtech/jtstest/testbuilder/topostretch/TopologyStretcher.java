@@ -80,7 +80,7 @@ public class TopologyStretcher
 		modifiedCoords = new List[inputGeoms.length];
 		
 		for (int i = 0; i < inputGeoms.length; i++) {
-			Geometry geom = (Geometry) inputGeoms[i];
+			Geometry geom = inputGeoms[i];
 			if (geom != null) {
 				GeometryVerticesMover mover = new GeometryVerticesMover(geom, coordinateMoves);
 				Geometry stretchedGeom = mover.move();

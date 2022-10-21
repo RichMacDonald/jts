@@ -57,7 +57,7 @@ public class UniqueCoordinateArrayFilter implements CoordinateFilter
    */
   public Coordinate[] getCoordinates() {
     Coordinate[] coordinates = new Coordinate[list.size()];
-    return (Coordinate[]) list.toArray(coordinates);
+    return list.toArray(coordinates);
   }
 
   /**

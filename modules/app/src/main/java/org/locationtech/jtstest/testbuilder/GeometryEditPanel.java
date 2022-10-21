@@ -414,12 +414,12 @@ public class GeometryEditPanel extends JPanel
     float maskWidth = (float) (minExtent * AppConstants.MASK_WIDTH_FRAC / 2);
     
     Area mask = new Area(new Rectangle2D.Float(
-    		(float) 0, (float) 0, 
+    		0, 0, 
     		(float) viewWidth, (float) viewHeight));
     
     Area maskHole = new Area(new Rectangle2D.Float(
-    		(float) maskWidth, 
-    		(float) maskWidth, 
+    		maskWidth, 
+    		maskWidth, 
     		((float) viewWidth) - 2 * maskWidth, 
     		((float) viewHeight) - 2 * maskWidth));
     

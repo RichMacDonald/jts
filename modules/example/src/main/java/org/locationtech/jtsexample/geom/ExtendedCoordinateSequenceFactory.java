@@ -49,7 +49,7 @@ public class ExtendedCoordinateSequenceFactory
 
     public CoordinateSequence create(CoordinateSequence coordSeq) {
       return coordSeq instanceof ExtendedCoordinateSequence
-          ? new ExtendedCoordinateSequence((ExtendedCoordinateSequence) coordSeq)
+          ? new ExtendedCoordinateSequence(coordSeq)
           : new ExtendedCoordinateSequence(coordSeq);
     }
 

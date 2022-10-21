@@ -227,7 +227,7 @@ class OverlayEdgeRing {
     if (holes != null) {
       holeLR = new LinearRing[holes.size()];
       for (int i = 0; i < holes.size(); i++) {
-        holeLR[i] = (LinearRing) holes.get(i).getRing();
+        holeLR[i] = holes.get(i).getRing();
       }
     }
     Polygon poly = factory.createPolygon(ring, holeLR);

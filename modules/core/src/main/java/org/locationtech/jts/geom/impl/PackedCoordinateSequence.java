@@ -137,7 +137,7 @@ public abstract class PackedCoordinateSequence
 
   private Coordinate[] getCachedCoords() {
     if (coordRef != null) {
-      Coordinate[] coords = (Coordinate[]) coordRef.get();
+      Coordinate[] coords = coordRef.get();
       if (coords != null) {
         return coords;
       } else {

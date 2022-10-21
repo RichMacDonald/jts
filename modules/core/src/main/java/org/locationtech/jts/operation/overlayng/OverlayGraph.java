@@ -123,7 +123,7 @@ class OverlayGraph {
      * insert the edge into the star of edges around the node.
      * Otherwise, add a new node for the origin.
      */
-    OverlayEdge nodeEdge = (OverlayEdge) nodeMap.get(e.orig());
+    OverlayEdge nodeEdge = nodeMap.get(e.orig());
     if (nodeEdge != null) {
       nodeEdge.insert(e);
     }

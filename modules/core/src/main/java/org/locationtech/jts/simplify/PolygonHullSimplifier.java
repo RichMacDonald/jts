@@ -191,7 +191,7 @@ public class PolygonHullSimplifier {
     RingHullIndex hullIndex = new RingHullIndex();
     int nPoly = multiPoly.getNumGeometries();
     @SuppressWarnings("unchecked")
-    List<RingHull>[] polyHulls = (List<RingHull>[]) new ArrayList[nPoly];
+    List<RingHull>[] polyHulls = new ArrayList[nPoly];
 
     //TODO: investigate if reordering input elements improves result
     

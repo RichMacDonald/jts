@@ -140,7 +140,7 @@ public class HtmlWriter {
   }
 
   private String htmlForTests(TestCaseEdit testCaseEdit, int caseSkey) throws IOException {
-    String html = htmlForBinaryPredicates(testCaseEdit, caseSkey);
+    String html = htmlForBinaryPredicates(testCaseEdit);
     return html;
   }
 
@@ -287,7 +287,7 @@ public class HtmlWriter {
     return html;
   }
 
-  private String htmlImageTextTable(String imageFilename, String text, int border) {
+  private String htmlImageTextTable(String imageFilename, String text) {
     return htmlImageHtmlTextTable(imageFilename, StringUtil.escapeHTML(text));
   }
 
@@ -514,7 +514,7 @@ public class HtmlWriter {
          + "</HTML>" + StringUtil.newLine;
   }
 
-  private String htmlForBinaryPredicates(TestCaseEdit testCaseEdit, int caseSkey) {
+  private String htmlForBinaryPredicates(TestCaseEdit testCaseEdit) {
     String html = "";
     if (testCaseEdit.getGeometry(1) != null) {
       html += htmlForRelateTest(testCaseEdit);

@@ -237,7 +237,7 @@ public class OraReader
    */
     private GeometryCollection readCollection(OraGeom oraGeom) 
     {
-      checkOrdinates(oraGeom, 0, "GeometryCollection");
+      checkOrdinates(oraGeom, 0);
       
       int nElem = oraGeom.numElements();
       List geomList = new ArrayList();
@@ -359,7 +359,7 @@ public class OraReader
         int etype = oraGeom.eType(elemIndex);
         int interpretation = oraGeom.interpretation(elemIndex);
   
-        checkOrdinates(oraGeom, elemIndex, "MultiPoint");
+        checkOrdinates(oraGeom, elemIndex);
         checkETYPE(etype, OraGeom.ETYPE.POINT, "MultiPoint");
         // MultiPoints have a unique interpretation code
         if (! (interpretation >= 1)){
@@ -386,7 +386,7 @@ public class OraReader
       int etype = oraGeom.eType(elemIndex);
       int interpretation = oraGeom.interpretation(elemIndex);
 
-    	checkOrdinates(oraGeom, elemIndex, "Polygon");
+    	checkOrdinates(oraGeom, elemIndex);
     	checkETYPE(etype,OraGeom.ETYPE.POLYGON, OraGeom.ETYPE.POLYGON_EXTERIOR, "Polygon");
     	checkInterpretation(interpretation, OraGeom.INTERP.POLYGON, OraGeom.INTERP.RECTANGLE, "Polygon");
 
@@ -440,7 +440,7 @@ public class OraReader
       int etype = oraGeom.eType(elemIndex);
       int interpretation = oraGeom.interpretation(elemIndex);
 
-    	checkOrdinates(oraGeom, elemIndex, "Polygon");
+    	checkOrdinates(oraGeom, elemIndex);
     	checkETYPE(etype,OraGeom.ETYPE.POLYGON, OraGeom.ETYPE.POLYGON_EXTERIOR,  OraGeom.ETYPE.POLYGON_INTERIOR, "Polygon");
     	checkInterpretation(interpretation, OraGeom.INTERP.POLYGON, OraGeom.INTERP.RECTANGLE, "Polygon");
 
@@ -478,7 +478,7 @@ public class OraReader
     int etype = oraGeom.eType(elemIndex);
     int interpretation = oraGeom.interpretation(elemIndex);
 
-  	checkOrdinates(oraGeom, elemIndex, "LineString");
+  	checkOrdinates(oraGeom, elemIndex);
   	checkETYPE(etype, OraGeom.ETYPE.LINE, "LineString");
   	checkInterpretation(interpretation, OraGeom.INTERP.LINESTRING, "LineString");
 	
@@ -499,7 +499,7 @@ public class OraReader
       int etype = oraGeom.eType(elemIndex);
       int interpretation = oraGeom.interpretation(elemIndex);
 
-  		checkOrdinates(oraGeom, elemIndex, "Point");
+  		checkOrdinates(oraGeom, elemIndex);
   		checkETYPE(etype,OraGeom.ETYPE.POINT, "Point");
   		checkInterpretation(interpretation, OraGeom.INTERP.POINT, "Point");
   
@@ -604,7 +604,7 @@ public class OraReader
   		throw new IllegalArgumentException("SDO_INTERPRETATION "+ interpretation +" is not supported when reading a " + geomType);
   	}
 
-    private static void checkOrdinates(OraGeom oraGeom, int elemIndex, String geomType)
+    private static void checkOrdinates(OraGeom oraGeom, int elemIndex)
     {
       int startOffset = oraGeom.startingOffset(elemIndex);
       int ordLen = oraGeom.ordinateLen();

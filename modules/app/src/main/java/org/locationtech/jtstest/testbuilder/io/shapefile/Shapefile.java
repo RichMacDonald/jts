@@ -148,7 +148,7 @@ public class Shapefile
         }catch(EOFException e){
 
         }
-        return geometryFactory.createGeometryCollection((Geometry[])list.toArray(new Geometry[]{}));
+        return geometryFactory.createGeometryCollection(list.toArray(new Geometry[]{}));
     }
 
     private EndianDataInputStream file;

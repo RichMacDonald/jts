@@ -168,7 +168,7 @@ public class MultiFormatFileReader
   
   private Geometry toGeometry(List<Geometry> geomList) {
     if (geomList.size() == 1)
-      return (Geometry) geomList.get(0);
+      return geomList.get(0);
     
     return geomFact.createGeometryCollection(GeometryFactory.toGeometryArray(geomList));
   }

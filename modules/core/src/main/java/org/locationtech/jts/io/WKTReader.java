@@ -862,7 +862,7 @@ S  */
       nextToken = getNextCloserOrComma(tokenizer);
     }
     Point[] array = new Point[points.size()];
-    return geometryFactory.createMultiPoint((Point[]) points.toArray(array));
+    return geometryFactory.createMultiPoint(points.toArray(array));
   }
 
 
@@ -892,7 +892,7 @@ S  */
       nextToken = getNextCloserOrComma(tokenizer);
     }
     LinearRing[] array = new LinearRing[holes.size()];
-    return geometryFactory.createPolygon(shell, (LinearRing[]) holes.toArray(array));
+    return geometryFactory.createPolygon(shell, holes.toArray(array));
   }
 
   /**
@@ -920,7 +920,7 @@ S  */
     } while (nextToken.equals(COMMA));
 
     LineString[] array = new LineString[lineStrings.size()];
-    return geometryFactory.createMultiLineString((LineString[]) lineStrings.toArray(array));
+    return geometryFactory.createMultiLineString(lineStrings.toArray(array));
   }
 
   /**
@@ -946,7 +946,7 @@ S  */
       nextToken = getNextCloserOrComma(tokenizer);
     } while (nextToken.equals(COMMA));
     Polygon[] array = new Polygon[polygons.size()];
-    return geometryFactory.createMultiPolygon((Polygon[]) polygons.toArray(array));
+    return geometryFactory.createMultiPolygon(polygons.toArray(array));
   }
 
   /**
@@ -975,7 +975,7 @@ S  */
     } while (nextToken.equals(COMMA));
 
     Geometry[] array = new Geometry[geometries.size()];
-    return geometryFactory.createGeometryCollection((Geometry[]) geometries.toArray(array));
+    return geometryFactory.createGeometryCollection(geometries.toArray(array));
   }
 
 }

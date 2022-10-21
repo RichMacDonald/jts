@@ -57,7 +57,7 @@ public abstract class PlanarGraph
    */
   public Node findNode(Coordinate pt)
   {
-    return (Node) nodeMap.find(pt);
+    return nodeMap.find(pt);
   }
 
   /**

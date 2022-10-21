@@ -26,7 +26,7 @@ public class TestPerfRectangleClipPolygon {
   }
   public static List<Geometry> readWKTFile(String filename) throws Exception {
     WKTFileReader fileRdr = new WKTFileReader(filename, new WKTReader());
-    return (List<Geometry>) fileRdr.read();
+    return fileRdr.read();
   }
   
   private void run() {

@@ -73,7 +73,7 @@ public class IndexTester {
   public static List createGridItems(int nGridCells)
   {
     ArrayList items = new ArrayList();
-    int gridSize = (int) Math.sqrt((double) nGridCells);
+    int gridSize = (int) Math.sqrt(nGridCells);
     gridSize += 1;
     double extent = EXTENT_MAX - EXTENT_MIN;
     double gridInc = extent / gridSize;
@@ -139,7 +139,7 @@ public class IndexTester {
   
   void runGridQuery(int nGridCells)
   {
-    int cellSize = (int) Math.sqrt((double) NUM_ITEMS);
+    int cellSize = (int) Math.sqrt(NUM_ITEMS);
     double extent = EXTENT_MAX - EXTENT_MIN;
     double queryCellSize =  2.0 * extent / cellSize;
 
@@ -149,7 +149,7 @@ public class IndexTester {
   void queryGrid(int nGridCells, double cellSize)
   {
 
-    int gridSize = (int) Math.sqrt((double) nGridCells);
+    int gridSize = (int) Math.sqrt(nGridCells);
     gridSize += 1;
     double extent = EXTENT_MAX - EXTENT_MIN;
     double gridInc = extent / gridSize;

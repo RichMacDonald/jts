@@ -74,7 +74,7 @@ public class DirectedEdgeStar
   {
     Iterator<DirectedEdge> it = iterator();
     if (! it.hasNext()) return null;
-    DirectedEdge e = (DirectedEdge) it.next();
+    DirectedEdge e = it.next();
     return e.getCoordinate();
   }
 
@@ -102,7 +102,7 @@ public class DirectedEdgeStar
   {
     sortEdges();
     for (int i = 0; i < outEdges.size(); i++) {
-      DirectedEdge de = (DirectedEdge) outEdges.get(i);
+      DirectedEdge de = outEdges.get(i);
       if (de.getEdge() == edge)
         return i;
     }
@@ -116,7 +116,7 @@ public class DirectedEdgeStar
   {
     sortEdges();
     for (int i = 0; i < outEdges.size(); i++) {
-      DirectedEdge de = (DirectedEdge) outEdges.get(i);
+      DirectedEdge de = outEdges.get(i);
       if (de == dirEdge)
         return i;
     }
@@ -144,7 +144,7 @@ public class DirectedEdgeStar
   public DirectedEdge getNextEdge(DirectedEdge dirEdge)
   {
     int i = getIndex(dirEdge);
-    return (DirectedEdge) outEdges.get(getIndex(i + 1));
+    return outEdges.get(getIndex(i + 1));
   }
   
   /**
@@ -155,6 +155,6 @@ public class DirectedEdgeStar
   public DirectedEdge getNextCWEdge(DirectedEdge dirEdge)
   {
     int i = getIndex(dirEdge);
-    return (DirectedEdge) outEdges.get(getIndex(i - 1));
+    return outEdges.get(getIndex(i - 1));
   }
 }

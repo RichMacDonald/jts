@@ -73,7 +73,7 @@ public class SparsePolygonUnion {
   {
     if (inputPolys.isEmpty())
       return null;
-    geomFactory = ((Geometry) inputPolys.iterator().next()).getFactory();
+    geomFactory = inputPolys.iterator().next().getFactory();
     
     loadIndex(inputPolys);
     

@@ -201,7 +201,7 @@ public class STRtreeNearestNeighbourTest extends GeometryTestCase {
     /*
      * Issue the KNN query.
      */
-    Object[] testTopK = (Object[]) strtree.nearestNeighbour(queryCenter.getEnvelopeInternal(), queryCenter,
+    Object[] testTopK = strtree.nearestNeighbour(queryCenter.getEnvelopeInternal(), queryCenter,
         new GeometryItemDistance(), topK);
     List topKList = Arrays.asList(testTopK);
     Collections.sort(topKList, distanceComparator);
