@@ -59,11 +59,6 @@ class OffsetSegmentGenerator
   private static final int MAX_CLOSING_SEG_LEN_FACTOR = 80;
 
   /**
-   * the max error of approximation (distance) between a quad segment and the true fillet curve
-   */
-  private double maxCurveSegmentError = 0.0;
-
-  /**
    * The angle quantum with which to approximate a fillet curve
    * (based on the input # of quadrant segments)
    */
@@ -144,7 +139,7 @@ class OffsetSegmentGenerator
   private void init(double distance)
   {
     this.distance = distance;
-    maxCurveSegmentError = distance * (1 - Math.cos(filletAngleQuantum / 2.0));
+    double maxCurveSegmentError = distance * (1 - Math.cos(filletAngleQuantum / 2.0));
     segList = new OffsetSegmentString();
     segList.setPrecisionModel(precisionModel);
     /**

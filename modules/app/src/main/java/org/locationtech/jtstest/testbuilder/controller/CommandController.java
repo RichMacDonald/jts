@@ -77,17 +77,17 @@ public class CommandController {
 
   }
   private static void logCommand(String name, String cmd, Geometry geom, String errMsg) {
-    String cmdLog = name + ": " + limitLength( cmd, 200);
+    StringBuilder cmdLog = new StringBuilder().append(name).append(": ").append(limitLength( cmd, 200));
     if (geom != null) {
       String geomLog = GeometryFunctionInvocation.toString(geom);
-      cmdLog += "\n ==> " + geomLog;
+      cmdLog.append("\n ==> ").append(geomLog);
     }
     if (errMsg.length() > 0) {
       String errLog = limitLength( errMsg, 200);
-      cmdLog += "\n ERROR: " + errLog;
+      cmdLog.append("\n ERROR: ").append(errLog);
     }
     
-    JTSTestBuilder.controller().displayInfo(cmdLog, false);
+    JTSTestBuilder.controller().displayInfo(cmdLog.toString(), false);
   }
   public static final String VAR_A = "#a#";
   public static final String VAR_A_WKB = "#awkb#";

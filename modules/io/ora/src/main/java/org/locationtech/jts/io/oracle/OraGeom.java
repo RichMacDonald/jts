@@ -145,7 +145,7 @@ class OraGeom
   
   public String toSQLString()
   {
-  	StringBuffer buf = new StringBuffer();
+  	StringBuilder buf = new StringBuilder();
   	buf.append("SDO_GEOMETRY(");
   	
   	buf.append(gType);
@@ -170,7 +170,7 @@ class OraGeom
   {
     if (ordinates == null) return SQL_NULL;
     
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int i = 0; i < ordinates.length; i++) {
       if (i > 0) {
         buf.append(",");
@@ -192,7 +192,7 @@ class OraGeom
   public static String toStringElemInfo(int[] elemInfo)
   {
     if (elemInfo == null) return "null";
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int i = 0; i < elemInfo.length; i++) {
       if (i > 0) {
         buf.append(",");

@@ -192,26 +192,25 @@ public class Test implements Runnable
   }
   	
   public String toXml() {
-    String xml = "";
-    xml += "<test>" + StringUtil.newLine;
+    StringBuilder xml = new StringBuilder();
+    xml.append("<test>").append(StringUtil.newLine);
     if (description != null && description.length() > 0) {
-      xml += "  <desc>" + StringUtil.escapeHTML(description) + "</desc>" +
-          StringUtil.newLine;
+      xml.append("  <desc>").append(StringUtil.escapeHTML(description)).append("</desc>").append(StringUtil.newLine);
     }
-    xml += "  <op name=\"" + operation + "\"";
-    xml += " arg1=\"" + geometryIndex + "\"";
+    xml.append("  <op name=\"").append(operation).append("\"");
+    xml.append(" arg1=\"").append(geometryIndex).append("\"");
     int j = 2;
     for (String argument : arguments ) {
       Assert.isTrue(argument != null);
-      xml += " arg" + j + "=\"" + argument + "\"";
+      xml.append(" arg").append(j).append("=\"").append(argument).append("\"");
       j++;
     }
 
-    xml += ">" + StringUtil.newLine;
-    xml += StringUtil.indent(expectedResult.toFormattedString(), 4) + StringUtil.newLine;
-    xml += "  </op>" + StringUtil.newLine;
-    xml += "</test>" + StringUtil.newLine;
-    return xml;
+    xml.append(">").append(StringUtil.newLine);
+    xml.append(StringUtil.indent(expectedResult.toFormattedString(), 4)).append(StringUtil.newLine);
+    xml.append("  </op>").append(StringUtil.newLine);
+    xml.append("</test>").append(StringUtil.newLine);
+    return xml.toString();
   }
 
   private Object[] convertArgs(List argStr)

@@ -328,7 +328,7 @@ abstract public class EdgeEndStar
   
   public String toString()
   {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append("EdgeEndStar:   " + getCoordinate());
     buf.append("\n");
     for (Iterator it = iterator(); it.hasNext(); ) {

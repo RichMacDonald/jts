@@ -66,7 +66,7 @@ extends PerformanceTestCase
   
   public void startRun(int npts)
   {
-    iter = 0;
+    int iter = 0;
     sineStar = SineStarFactory.create(new Coordinate(ORG_X, ORG_Y), SIZE, npts, N_ARMS, ARM_RATIO);
     
     double scale = npts / SIZE;
@@ -77,8 +77,6 @@ extends PerformanceTestCase
     System.out.println("\nRunning with # pts " + sinePolyCrinkly.getNumPoints() );
     //if (size <= 1000) System.out.println(sineStar);
   }
-  
-  private int iter = 0;
   
   public void runTest1()
   {

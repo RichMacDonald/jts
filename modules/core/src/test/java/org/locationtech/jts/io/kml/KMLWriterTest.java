@@ -160,7 +160,7 @@ public class KMLWriterTest extends TestCase
    */
   private String normalizeKML(String kml) {
     String condenseSpace = kml.replaceAll("\\s+", " ").trim();
-    String removeRedundantSpace = condenseSpace.replaceAll("> <", "><");
+    String removeRedundantSpace = condenseSpace.replace("> <", "><");
     return removeRedundantSpace;
   }
 }

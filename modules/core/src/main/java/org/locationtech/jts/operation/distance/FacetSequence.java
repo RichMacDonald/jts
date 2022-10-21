@@ -231,7 +231,7 @@ public class FacetSequence
 
   public String toString()
   {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append("LINESTRING ( ");
     Coordinate p = new Coordinate();
     for (int i = start; i < end; i++) {

@@ -54,12 +54,12 @@ private boolean verbose;
     long hours = (elapsedTime - (days * 24 * 60 * 60 * 1000)) / (60 * 60 * 1000);
     long minutes = (elapsedTime - (hours * 60 * 60 * 1000)) / (60 * 1000);
     double seconds = (elapsedTime - (minutes * 60 * 1000)) / (1000d);
-    String message = "Elapsed time: ";
-    message += days > 0 ? days + " days, " : "";
-    message += hours > 0 ? hours + " hours, " : "";
-    message += minutes > 0 ? minutes + " minutes, " : "";
-    message += seconds > 0 ? seconds + " seconds" : "";
-    reportBuf.write(message);
+    StringBuilder message = new StringBuilder("Elapsed time: ");
+    message.append(days > 0 ? days + " days, " : "");
+    message.append(hours > 0 ? hours + " hours, " : "");
+    message.append(minutes > 0 ? minutes + " minutes, " : "");
+    message.append(seconds > 0 ? seconds + " seconds" : "");
+    reportBuf.write(message.toString());
   }
 
   public void reportOnTest(Test test) 

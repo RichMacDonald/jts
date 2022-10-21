@@ -179,7 +179,7 @@ public class TopologyLocation {
 
   public String toString()
   {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     if (location.length > 1) buf.append(Location.toLocationSymbol(location[Position.LEFT]));
     buf.append(Location.toLocationSymbol(location[Position.ON]));
     if (location.length > 1) buf.append(Location.toLocationSymbol(location[Position.RIGHT]));

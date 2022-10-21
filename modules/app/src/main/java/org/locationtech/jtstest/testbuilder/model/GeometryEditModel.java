@@ -127,16 +127,16 @@ public class GeometryEditModel
   }
   
   public String getText(int textType) {
-    String str = "";
+    StringBuilder str = new StringBuilder();
     if (getGeometry(0) != null) {
-      str += getText(getGeometry(0), textType);
-      str += "\n\n";
+      str.append(getText(getGeometry(0), textType));
+      str.append("\n\n");
     }
     if (getGeometry(1) != null) {
-      str += getText(getGeometry(1), textType);
-      str += "\n\n";
+      str.append(getText(getGeometry(1), textType));
+      str.append("\n\n");
     }
-    return str;
+    return str.toString();
   }
 
   public static String getText(Geometry geom, int textType) {

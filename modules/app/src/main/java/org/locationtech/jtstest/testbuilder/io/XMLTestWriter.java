@@ -51,19 +51,19 @@ public class XMLTestWriter
   }
 
   public String getTestXML(Geometry geometry, String opName, String[] arguments, boolean useWKT) {
-    String xml = "  <test>\n";
-    xml += "    <op name=\"" + opName + "\" arg1=\"A\"";
+    StringBuilder xml = new StringBuilder("  <test>\n");
+    xml.append("    <op name=\"").append(opName).append("\" arg1=\"A\"");
     int j = 2;
     for (String argument : arguments) {
       Assert.isTrue(argument != null);
-      xml += " arg" + j + "=\"" + argument  + "\"";
+      xml.append(" arg").append(j).append("=\"").append(argument).append("\"");
       j++;
     }
-    xml += ">\n";
-    xml += getWKTorWKB(geometry, useWKT) + "\n";
-    xml += "    </op>\n";
-    xml += "  </test>\n";
-    return xml;
+    xml.append(">\n");
+    xml.append(getWKTorWKB(geometry, useWKT)).append("\n");
+    xml.append("    </op>\n");
+    xml.append("  </test>\n");
+    return xml.toString();
   }
 
   private boolean isGdbcTestCase(TestCase testCase) {
@@ -137,7 +137,7 @@ public class XMLTestWriter
   public String getTestXML(Testable testCase, boolean useWKT) {
     Geometry geom0 = testCase.getGeometry(0);
     Geometry geom1 = testCase.getGeometry(1);
-    StringBuffer xml = new StringBuffer();
+    StringBuilder xml = new StringBuilder();
     xml.append("<case>\n");
     xml.append(getDescriptionForXml(testCase));
     if (geom0 != null) {
@@ -160,7 +160,7 @@ public class XMLTestWriter
   }
   
   public String getTestXML(TestCaseList tcList) {
-    StringBuffer xml = new StringBuffer();
+    StringBuilder xml = new StringBuilder();
     for (Object element : tcList.getList()) {
       xml.append("\n");
       xml.append(getTestXML((Testable) element));
@@ -170,12 +170,12 @@ public class XMLTestWriter
   }
 
   public static String getRunXml(TestCaseList tcList, PrecisionModel precModel) {
-    String runXML = "<run>" + StringUtil.newLine;
-    runXML += getRunDescription(tcList);
-    runXML += getRunWorkspace(tcList);
-    runXML += toXML(precModel) + StringUtil.newLine;
-    runXML += (new XMLTestWriter()).getTestXML(tcList) + "</run>";
-    return runXML;
+    StringBuilder runXML = new StringBuilder("<run>").append(StringUtil.newLine);
+    runXML.append(getRunDescription(tcList));
+    runXML.append(getRunWorkspace(tcList));
+    runXML.append(toXML(precModel)).append(StringUtil.newLine);
+    runXML.append((new XMLTestWriter()).getTestXML(tcList)).append("</run>");
+    return runXML.toString();
   }
 
   public static String getRunDescription(TestCaseList l) {

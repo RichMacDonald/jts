@@ -6,7 +6,7 @@
         <setting id="cleanup.overridden_assignment_move_decl" value="true"/>
         <setting id="cleanup.always_use_this_for_non_static_method_access" value="false"/>
         <setting id="cleanup.remove_trailing_whitespaces_ignore_empty" value="false"/>
-        <setting id="cleanup.primitive_comparison" value="false"/>
+        <setting id="cleanup.primitive_comparison" value="true"/>
         <setting id="cleanup.system_property_file_encoding" value="false"/>
         <setting id="cleanup.format_source_code_changes_only" value="false"/>
         <setting id="cleanup.remove_redundant_semicolons" value="true"/>
@@ -14,9 +14,9 @@
         <setting id="cleanup.useless_continue" value="true"/>
         <setting id="cleanup.remove_redundant_type_arguments" value="true"/>
         <setting id="cleanup.remove_unused_imports" value="true"/>
-        <setting id="cleanup.break_loop" value="false"/>
+        <setting id="cleanup.break_loop" value="true"/>
         <setting id="cleanup.pull_up_assignment" value="false"/>
-        <setting id="cleanup.stringbuilder" value="false"/>
+        <setting id="cleanup.stringbuilder" value="true"/>
         <setting id="cleanup.no_super" value="true"/>
         <setting id="cleanup.arrays_fill" value="true"/>
         <setting id="cleanup.use_lambda" value="true"/>
@@ -28,15 +28,15 @@
         <setting id="cleanup.system_property_path_separator" value="false"/>
         <setting id="cleanup.instanceof" value="false"/>
         <setting id="cleanup.add_missing_annotations" value="false"/>
-        <setting id="cleanup.precompile_regex" value="false"/>
+        <setting id="cleanup.precompile_regex" value="true"/>
         <setting id="cleanup.always_use_this_for_non_static_field_access" value="false"/>
-        <setting id="cleanup.boolean_literal" value="false"/>
+        <setting id="cleanup.boolean_literal" value="true"/>
         <setting id="cleanup.always_use_parentheses_in_expressions" value="false"/>
         <setting id="cleanup.sort_members" value="false"/>
         <setting id="cleanup.remove_unused_method_parameters" value="true"/>
         <setting id="cleanup.remove_unused_local_variables" value="false"/>
         <setting id="cleanup.add_missing_deprecated_annotations" value="true"/>
-        <setting id="cleanup.no_string_creation" value="false"/>
+        <setting id="cleanup.no_string_creation" value="true"/>
         <setting id="cleanup.use_unboxing" value="false"/>
         <setting id="cleanup.use_blocks_only_for_return_and_throw" value="false"/>
         <setting id="cleanup.standard_comparison" value="false"/>
@@ -48,9 +48,9 @@
         <setting id="cleanup.try_with_resource" value="true"/>
         <setting id="cleanup.use_this_for_non_static_method_access" value="false"/>
         <setting id="cleanup.use_this_for_non_static_method_access_only_if_necessary" value="true"/>
-        <setting id="cleanup.single_used_field" value="false"/>
+        <setting id="cleanup.single_used_field" value="true"/>
         <setting id="cleanup.reduce_indentation" value="false"/>
-        <setting id="cleanup.primitive_parsing" value="false"/>
+        <setting id="cleanup.primitive_parsing" value="true"/>
         <setting id="cleanup.make_local_variable_final" value="true"/>
         <setting id="cleanup.add_missing_methods" value="false"/>
         <setting id="cleanup.qualify_static_member_accesses_with_declaring_class" value="false"/>
@@ -66,7 +66,7 @@
         <setting id="cleanup.system_property_boolean" value="false"/>
         <setting id="cleanup.qualify_static_method_accesses_with_declaring_class" value="false"/>
         <setting id="cleanup.organize_imports" value="false"/>
-        <setting id="cleanup.lazy_logical_operator" value="false"/>
+        <setting id="cleanup.lazy_logical_operator" value="true"/>
         <setting id="cleanup.bitwise_conditional_expression" value="false"/>
         <setting id="cleanup.use_directly_map_method" value="true"/>
         <setting id="cleanup.add_all" value="false"/>
@@ -75,12 +75,12 @@
         <setting id="cleanup.stringbuilder_for_local_vars" value="true"/>
         <setting id="cleanup.add_generated_serial_version_id" value="false"/>
         <setting id="cleanup.controlflow_merge" value="false"/>
-        <setting id="cleanup.primitive_serialization" value="false"/>
+        <setting id="cleanup.primitive_serialization" value="true"/>
         <setting id="cleanup.comparing_on_criteria" value="true"/>
         <setting id="cleanup.do_while_rather_than_while" value="true"/>
         <setting id="cleanup.comparison_statement" value="true"/>
         <setting id="cleanup.extract_increment" value="false"/>
-        <setting id="cleanup.stringbuffer_to_stringbuilder" value="false"/>
+        <setting id="cleanup.stringbuffer_to_stringbuilder" value="true"/>
         <setting id="cleanup.insert_inferred_type_arguments" value="false"/>
         <setting id="cleanup.make_private_fields_final" value="true"/>
         <setting id="cleanup.useless_return" value="true"/>
@@ -88,8 +88,8 @@
         <setting id="cleanup.use_this_for_non_static_field_access_only_if_necessary" value="true"/>
         <setting id="cleanup.remove_trailing_whitespaces_all" value="true"/>
         <setting id="cleanup.one_if_rather_than_duplicate_blocks_that_fall_through" value="false"/>
-        <setting id="cleanup.valueof_rather_than_instantiation" value="false"/>
-        <setting id="cleanup.plain_replacement" value="false"/>
+        <setting id="cleanup.valueof_rather_than_instantiation" value="true"/>
+        <setting id="cleanup.plain_replacement" value="true"/>
         <setting id="cleanup.remove_unnecessary_array_creation" value="true"/>
         <setting id="cleanup.remove_private_constructors" value="true"/>
         <setting id="cleanup.make_parameters_final" value="false"/>
@@ -111,7 +111,7 @@
         <setting id="cleanup.convert_to_switch_expressions" value="false"/>
         <setting id="cleanup.use_this_for_non_static_field_access" value="false"/>
         <setting id="cleanup.static_inner_class" value="false"/>
-        <setting id="cleanup.use_string_is_blank" value="false"/>
+        <setting id="cleanup.use_string_is_blank" value="true"/>
         <setting id="cleanup.add_missing_nls_tags" value="false"/>
         <setting id="cleanup.qualify_static_member_accesses_through_instances_with_declaring_class" value="true"/>
         <setting id="cleanup.remove_unnecessary_casts" value="true"/>
@@ -137,7 +137,7 @@
         <setting id="cleanup.hash" value="true"/>
         <setting id="cleanup.double_negation" value="true"/>
         <setting id="cleanup.overridden_assignment" value="true"/>
-        <setting id="cleanup.primitive_rather_than_wrapper" value="false"/>
+        <setting id="cleanup.primitive_rather_than_wrapper" value="true"/>
         <setting id="cleanup.correct_indentation" value="false"/>
         <setting id="cleanup.use_var" value="false"/>
     </profile>

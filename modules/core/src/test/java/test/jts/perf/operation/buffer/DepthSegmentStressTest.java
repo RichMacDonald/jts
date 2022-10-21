@@ -144,14 +144,12 @@ extends PerformanceTestCase
       implements Comparable
   {
     private LineSegment upwardSeg;
-    private int leftDepth;
-
     public DepthSegment(LineSegment seg, int depth)
     {
       // input seg is assumed to be normalized
       upwardSeg = new LineSegment(seg);
       //upwardSeg.normalize();
-      this.leftDepth = depth;
+      int leftDepth = depth;
     }
     /**
      * Defines a comparison operation on DepthSegments

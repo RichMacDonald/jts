@@ -193,7 +193,7 @@ public class WKBWriter
    */
   public static String toHex(byte[] bytes)
   {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (byte b : bytes) {
       buf.append(toHexDigit((b >> 4) & 0x0F));
       buf.append(toHexDigit(b & 0x0F));

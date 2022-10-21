@@ -270,12 +270,12 @@ public class TestReaderTest extends TestCase {
   }
 
   private String normalize(String xml) {
-    String normalizedXML = "";
+    StringBuilder normalizedXML = new StringBuilder();
     StringTokenizer tokenizer = new StringTokenizer(xml.toUpperCase());
     while (tokenizer.hasMoreTokens()) {
-      normalizedXML += tokenizer.nextToken();
+      normalizedXML.append(tokenizer.nextToken());
     }
-    return normalizedXML;
+    return normalizedXML.toString();
   }
 
 }

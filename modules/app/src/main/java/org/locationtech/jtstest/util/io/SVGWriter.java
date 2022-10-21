@@ -70,7 +70,7 @@ public class SVGWriter
    *@return        a <code>String</code> of characters
    */
   public static String stringOfChar(char ch, int count) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int i = 0; i < count; i++) {
       buf.append(ch);
     }

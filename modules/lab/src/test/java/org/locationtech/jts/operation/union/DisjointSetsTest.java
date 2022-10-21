@@ -73,13 +73,13 @@ public class DisjointSetsTest extends TestCase {
     for (int s = 0; s < nSet; s++) {
       //System.out.println("---- Set " + s);
       int size = subsets.getSize(s);
-      String str = "";
+      StringBuilder str = new StringBuilder();
       for (int si = 0; si < size; si++) {
         int itemIndex = subsets.getItem(s, si);
-        if (si > 0) str += ",";
-        str += nums[itemIndex];
+        if (si > 0) str.append(",");
+        str.append(nums[itemIndex]);
       }
-      setStr[s] = str;
+      setStr[s] = str.toString();
       
       //System.out.println(setStr);
     }

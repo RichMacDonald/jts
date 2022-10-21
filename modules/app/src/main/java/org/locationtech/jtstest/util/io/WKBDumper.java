@@ -234,14 +234,14 @@ public class WKBDumper
   private void readCoordinate(int index) throws IOException, ParseException
   {
     writer.write(dis.getCount() + ": ");
-    String hex = "";
+    StringBuilder hex = new StringBuilder();
     String nums = "";
     for (int i = 0; i < inputDimension; i++) {
         double d = dis.readDouble();
-        hex += WKBWriter.toHex(dis.getData()) + " ";
+        hex.append(WKBWriter.toHex(dis.getData())).append(" ");
         nums += (i > 0 ? ", " : "") + d;
     }
-    writer.write(hex + " [" + index + "] " + nums + "\n");
+    writer.write(hex.append(" [").append(index).append("] ").append(nums).append("\n").toString());
   }
   
   private int readTaggedInt(String tag) throws IOException, ParseException {

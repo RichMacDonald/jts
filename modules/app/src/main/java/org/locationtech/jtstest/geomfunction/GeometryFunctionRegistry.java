@@ -146,12 +146,12 @@ public class GeometryFunctionRegistry
   }
   public static String functionDescriptionHTML(GeometryFunction func)
   {
-    String txt = "<b>" + func.getSignature() + "</b>";
+    StringBuilder txt = new StringBuilder("<b>").append(func.getSignature()).append("</b>");
     String desc = func.getDescription();
     if (desc != null) {
-      txt += "<br><br>" + desc;
+      txt.append("<br><br>").append(desc);
     }
-    return "<html>" + txt + "</html>";
+    return "<html>" + txt.append("</html>").toString();
   }
   
 	private List<GeometryFunction> functions = new ArrayList<>();

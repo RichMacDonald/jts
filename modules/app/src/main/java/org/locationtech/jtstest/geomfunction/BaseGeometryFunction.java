@@ -130,7 +130,7 @@ implements GeometryFunction, Comparable
   
 	public String getSignature()
 	{
-		StringBuffer paramTypes = new StringBuffer();
+		StringBuilder paramTypes = new StringBuilder();
 		paramTypes.append("Geometry");
 		for (Class parameterType : parameterTypes) {
 			paramTypes.append(",");

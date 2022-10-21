@@ -42,10 +42,10 @@ public class GeometryUtil {
 
   public static String metricsSummary(Geometry g)
   {
-    String metrics = "";
-    if ( hasLength(g) ) metrics += "Len: " + g.getLength(); 
-    if ( hasArea(g) ) metrics += "  Area: " + area(g);
-    return metrics;
+    StringBuilder metrics = new StringBuilder();
+    if ( hasLength(g) ) metrics.append("Len: ").append(g.getLength()); 
+    if ( hasArea(g) ) metrics.append("  Area: ").append(area(g));
+    return metrics.toString();
   }
 
   public static boolean hasArea(Geometry geom) {

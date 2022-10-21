@@ -61,7 +61,7 @@ extends PerformanceTestCase
   
   public void startRun(int npts)
   {
-    iter = 0;
+    int iter = 0;
     precisionModel = new PrecisionModel(PREC_SCALE_FACTOR);
 
     geomA = SineStarFactory.create(new Coordinate(ORG_X, ORG_Y), SIZE, npts, N_ARMS, ARM_RATIO);
@@ -97,8 +97,6 @@ extends PerformanceTestCase
     return geoms;
   }
 
-  private int iter = 0;
-  
   public void runIntersectionOLD()
   {
     for (Geometry b : geomB) {

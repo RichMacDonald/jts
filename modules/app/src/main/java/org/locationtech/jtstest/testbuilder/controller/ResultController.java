@@ -117,10 +117,10 @@ public class ResultController
   private void resultLogEntry(GeometryFunctionInvocation function, String timeString, Object result) {
     if (function == null) return;
     String funTimeLine = function.getSignature() + " : " + timeString;
-    String entry = funTimeLine;
+    StringBuilder entry = new StringBuilder().append(funTimeLine);
     String resultDesc = GeometryFunctionInvocation.toString(result);
-    if (resultDesc != null && resultDesc.length() < 40) entry += "\n ==> " + resultDesc;
-    JTSTestBuilder.controller().displayInfo(entry, false);
+    if (resultDesc != null && resultDesc.length() < 40) entry.append("\n ==> ").append(resultDesc);
+    JTSTestBuilder.controller().displayInfo(entry.toString(), false);
   }
   
   

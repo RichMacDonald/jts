@@ -51,7 +51,6 @@ public class TestReader
     Vector parsingProblems = new Vector();
     private GeometryFactory geometryFactory;
     private WKTOrWKBReader wktorbReader;
-    private double tolerance = 0.0;
     private GeometryOperation geomOp = null;
     private ResultMatcher resultMatcher = null;
     
@@ -335,7 +334,7 @@ public class TestReader
         }
         
         //----------- <tolerance> (optional) ------------------
-        tolerance = parseTolerance(runElement);
+        double tolerance = parseTolerance(runElement);
         
         Element descElement = runElement.getChild("desc");
 
@@ -567,12 +566,12 @@ public class TestReader
     }
 
     private String toString(List stringList) {
-        String string = "";
+        StringBuilder string = new StringBuilder();
         for (Object element : stringList) {
             String line = (String) element;
-            string += line + "\n";
+            string.append(line).append("\n");
         }
-        return string;
+        return string.toString();
     }
 
     private File absoluteWktFile(File wktFile, TestRun testRun) {

@@ -34,10 +34,10 @@ public class SpreaderGeometryFunction implements GeometryFunction {
   }
 
   public String getName() {
-    String name = fun.getName();
-    if (isEachA) name += "*A";
-    if (isEachB) name += "*B";
-    return name;
+    StringBuilder name = new StringBuilder().append(fun.getName());
+    if (isEachA) name.append("*A");
+    if (isEachB) name.append("*B");
+    return name.toString();
   }
 
   public String getDescription() {

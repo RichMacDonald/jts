@@ -30,15 +30,15 @@ public class JTSTestReflectionException
   }
   
   private static String createMessage(String opName, Object[] args) {
-		String msg = "Could not find Geometry method: " + opName + "(";
+		StringBuilder msg = new StringBuilder("Could not find Geometry method: ").append(opName).append("(");
 		for (int j = 0; j < args.length; j++) {
 			if (j > 0) {
-				msg += ", ";
+				msg.append(", ");
 			}
-			msg += args[j].getClass().getName();
+			msg.append(args[j].getClass().getName());
 		}
-		msg += ")";
-		return msg;
+		msg.append(")");
+		return msg.toString();
 	}
 
 }

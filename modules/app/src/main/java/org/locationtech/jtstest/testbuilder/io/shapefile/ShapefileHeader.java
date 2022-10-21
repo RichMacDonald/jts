@@ -39,7 +39,6 @@ public class ShapefileHeader{
     private final static boolean DEBUG=false;
     private int fileCode = -1;
     public int fileLength = -1;
-    private int indexLength = -1;
     private int version = -1;
     private int shapeType = -1;
     //private double[] bounds = new double[4];
@@ -94,7 +93,7 @@ public class ShapefileHeader{
             fileLength+=4;//for each header
         }
         fileLength+=50;//space used by this, the main header
-        indexLength = 50+(4*numShapes);
+        int indexLength = 50+(4*numShapes);
     }
     
     public void setFileLength(int fileLength){
@@ -114,7 +113,7 @@ public class ShapefileHeader{
     }
     
     public String toString()  {
-        String res = new String("Sf-->type "+fileCode+" size "+fileLength+" version "+ version + " Shape Type "+shapeType);
+        String res = ("Sf-->type "+fileCode+" size "+fileLength+" version "+ version + " Shape Type "+shapeType);
         return res;
     }
 }

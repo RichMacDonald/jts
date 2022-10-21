@@ -366,13 +366,13 @@ public class JTSOpRunner {
   }
 
   private String errorMsg(Throwable ex) {
-    String msg = "ERROR excuting function: " + ex.getMessage() + "\n";
-    msg += toStackString(ex);
+    StringBuilder msg = new StringBuilder("ERROR excuting function: ").append(ex.getMessage()).append("\n");
+    msg.append(toStackString(ex));
     if (ex.getCause() != null) {
-      msg += "Caused by:\n";
-      msg += toStackString(ex.getCause());
+      msg.append("Caused by:\n");
+      msg.append(toStackString(ex.getCause()));
     }
-    return msg;
+    return msg.toString();
   }
 
   private String toStackString(Throwable ex) {
@@ -529,10 +529,10 @@ public class JTSOpRunner {
   
   private static String fileInfo(String filename, int limit, int offset) {
     if (filename == null) return null;
-    String info = filename;
-    if (limit > OpParams.LIMIT_DEFAULT) info += " LIMIT " + limit;
-    if (offset > OpParams.OFFSET_DEFAULT) info += " OFFSET " + offset;
-    return info;
+    StringBuilder info = new StringBuilder().append(filename);
+    if (limit > OpParams.LIMIT_DEFAULT) info.append(" LIMIT ").append(limit);
+    if (offset > OpParams.OFFSET_DEFAULT) info.append(" OFFSET ").append(offset);
+    return info.toString();
   }
   
   private void checkFunctionArgs(GeometryFunction func, String[] argList) {
@@ -661,7 +661,7 @@ class IndexedGeometry
     index = new STRtree();
     for (int i = 0; i < geoms.size(); i++) {
       Geometry comp = geoms.get(i);
-      index.insert(comp.getEnvelopeInternal(), new Integer(i));
+      index.insert(comp.getEnvelopeInternal(), Integer.valueOf(i));
     }
   }
   

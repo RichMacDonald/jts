@@ -25,13 +25,11 @@ public class EdgerayPerfTest extends PerformanceTestCase
   public void startRun(int size)
   {
     System.out.println("\n---  Running with size " + size + "  -----------");
-    iter = 0;
+    int iter = 0;
     geom1 = createSineStar(size, 0);
     geom2 = createSineStar(size, 10);
 
   }
-  
-  private int iter = 0;
   
   public void runEdgeRayArea()
   {

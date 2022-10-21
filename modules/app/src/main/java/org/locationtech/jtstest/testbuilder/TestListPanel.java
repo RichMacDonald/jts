@@ -85,10 +85,10 @@ public class TestListPanel extends JPanel {
               name = "";
           }
           int testSkey = 1 + JTSTestBuilderFrame.instance().getModel().getCases().indexOf(testCase);
-          String nameFinal = "# " + testSkey + INDEX_SEP + testCaseSignatureHTML(testCase);
+          StringBuilder nameFinal = new StringBuilder("# ").append(testSkey).append(INDEX_SEP).append(testCaseSignatureHTML(testCase));
           if (name != "")
-          	nameFinal = nameFinal + DESC_SEP + name;
-          return "<html>" + nameFinal + "<html>";
+          	nameFinal.append(DESC_SEP).append(name);
+          return "<html>" + nameFinal.append("<html>").toString();
         }
         
         private String testCaseSignatureHTML(Testable testCase)
@@ -107,14 +107,14 @@ public class TestListPanel extends JPanel {
         	if (geom == null) 
         		return ""; 
         	
-        	String sig = geom.getGeometryType();
+        	StringBuilder sig = new StringBuilder().append(geom.getGeometryType());
         	if (geom instanceof GeometryCollection) {
-        		sig += "[" + geom.getNumGeometries() + "]";
+        		sig.append("[").append(geom.getNumGeometries()).append("]");
         	}
           else {
-            sig += "(" + geom.getNumPoints() + ")";
+            sig.append("(").append(geom.getNumPoints()).append(")");
           }
-        	return sig;
+        	return sig.toString();
         }
     }
 

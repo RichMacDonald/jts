@@ -108,7 +108,7 @@ public class SegmentStringUtil
 
   public static String toString(List segStrings)
   {
-	StringBuffer buf = new StringBuffer();
+	StringBuilder buf = new StringBuilder();
     for (Object segString : segStrings) {
         SegmentString segStr = (SegmentString) segString;
         buf.append(segStr.toString());

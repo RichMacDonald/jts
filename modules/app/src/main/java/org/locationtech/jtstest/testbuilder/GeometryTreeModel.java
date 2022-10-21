@@ -515,11 +515,11 @@ class CoordinateNode extends GeometricObjectNode
   
   private static String label(Coordinate coord, double distPrev)
   {
-    String lbl = fmt.format(coord.x) + "   " + fmt.format(coord.y);
+    StringBuilder lbl = new StringBuilder().append(fmt.format(coord.x)).append("   ").append(fmt.format(coord.y));
     if (! Double.isNaN(distPrev)) {
-      lbl += "  --  dist: " + distPrev;
+      lbl.append("  --  dist: ").append(distPrev);
     }
-    return lbl;
+    return lbl.toString();
   }
   
 

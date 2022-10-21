@@ -143,7 +143,7 @@ public class PointInRingRobustnessTest extends GeometryTestCase {
   
   public static String toPolygon(Coordinate[] coord)
   {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append("POLYGON ");
     if (coord.length == 0)
       buf.append(" EMPTY");

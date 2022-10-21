@@ -131,19 +131,18 @@ public class TestCase implements Runnable {
 
   public String toXml() {
     WKTWriter writer = new WKTWriter();
-    String xml = "";
-    xml += "<case>" + StringUtil.newLine;
+    StringBuilder xml = new StringBuilder();
+    xml.append("<case>").append(StringUtil.newLine);
     if (description != null && description.length() > 0) {
-      xml += "  <desc>" + StringUtil.escapeHTML(description) + "</desc>" +
-          StringUtil.newLine;
+      xml.append("  <desc>").append(StringUtil.escapeHTML(description)).append("</desc>").append(StringUtil.newLine);
     }
-    xml += xml("a", a, aWktFile, writer) + StringUtil.newLine;
-    xml += xml("b", b, bWktFile, writer);
+    xml.append(xml("a", a, aWktFile, writer)).append(StringUtil.newLine);
+    xml.append(xml("b", b, bWktFile, writer));
     for (Test test : tests ) {
-      xml += test.toXml();
+      xml.append(test.toXml());
     }
-    xml += "</case>" + StringUtil.newLine;
-    return xml;
+    xml.append("</case>").append(StringUtil.newLine);
+    return xml.toString();
   }
 
   private String xml(String id, Geometry g, File wktFile, WKTWriter writer) {
@@ -153,11 +152,11 @@ public class TestCase implements Runnable {
     if (wktFile != null) {
       return "  <" + id + " file=\"" + wktFile + "\"/>";
     }
-    String xml = "";
-    xml += "  <" + id + ">" + StringUtil.newLine;
-    xml += StringUtil.indent(writer.writeFormatted(g), 4) + StringUtil.newLine;
-    xml += "  </" + id + ">" + StringUtil.newLine;
-    return xml;
+    StringBuilder xml = new StringBuilder();
+    xml.append("  <").append(id).append(">").append(StringUtil.newLine);
+    xml.append(StringUtil.indent(writer.writeFormatted(g), 4)).append(StringUtil.newLine);
+    xml.append("  </").append(id).append(">").append(StringUtil.newLine);
+    return xml.toString();
   }
 }
 

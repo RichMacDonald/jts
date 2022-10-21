@@ -81,7 +81,6 @@ public class MinimumDiameter
   private Coordinate[] convexHullPts = null;
   private LineSegment minBaseSeg = new LineSegment();
   private Coordinate minWidthPt = null;
-  private int minPtIndex;
   private double minWidth = 0.0;
 
   /**
@@ -242,7 +241,7 @@ public class MinimumDiameter
     }
     // found maximum width for this segment - update global min dist if appropriate
     if (maxPerpDistance < minWidth) {
-      minPtIndex = maxIndex;
+      int minPtIndex = maxIndex;
       minWidth = maxPerpDistance;
       minWidthPt = pts[minPtIndex];
       minBaseSeg = new LineSegment(seg);

@@ -30,8 +30,6 @@ import org.locationtech.jts.triangulate.quadedge.Vertex;
 public class IncrementalDelaunayTriangulator 
 {
 	private QuadEdgeSubdivision subdiv;
-	private boolean isUsingTolerance = false;
-
 	/**
 	 * Creates a new triangulator using the given {@link QuadEdgeSubdivision}.
 	 * The triangulator uses the tolerance of the supplied subdivision.
@@ -41,7 +39,7 @@ public class IncrementalDelaunayTriangulator
 	 */
 	public IncrementalDelaunayTriangulator(QuadEdgeSubdivision subdiv) {
 		this.subdiv = subdiv;
-		isUsingTolerance = subdiv.getTolerance() > 0.0;
+		boolean isUsingTolerance = subdiv.getTolerance() > 0.0;
 		
 	}
 

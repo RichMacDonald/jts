@@ -85,7 +85,6 @@ public class CommonBits {
   }
 
   private boolean isFirst = true;
-  private int commonMantissaBitsCount = 53;
   private long commonBits = 0;
   private long commonSignExp;
 
@@ -110,7 +109,7 @@ public class CommonBits {
 
 //    System.out.println(toString(commonBits));
 //    System.out.println(toString(numBits));
-    commonMantissaBitsCount = numCommonMostSigMantissaBits(commonBits, numBits);
+    int commonMantissaBitsCount = numCommonMostSigMantissaBits(commonBits, numBits);
     commonBits = zeroLowerBits(commonBits, 64 - (12 + commonMantissaBitsCount));
 //    System.out.println(toString(commonBits));
   }

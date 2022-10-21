@@ -321,11 +321,11 @@ public class GeometryStrategies{
 					String ts = new String(toupleSeperator);
 					if(ts.indexOf('\\')>-1){
 						// need to escape it
-						ts = ts.replaceAll("\\\\","\\\\\\\\");
+						ts = ts.replace("\\","\\\\");
 					}
 					if(ts.indexOf('.')>-1){
 						// need to escape it
-						ts = ts.replaceAll("\\.","\\\\.");
+						ts = ts.replace(".","\\.");
 					}
 					ptn = Pattern.compile(ts);
 					patterns.put(toupleSeperator,ptn);
@@ -366,11 +366,11 @@ public class GeometryStrategies{
 						String ts = new String(coordSeperator);
 						if(ts.indexOf('\\')>-1){
 							// need to escape it
-							ts = ts.replaceAll("\\\\","\\\\\\\\");
+							ts = ts.replace("\\","\\\\");
 						}
 						if(ts.indexOf('.')>-1){
 							// need to escape it
-							ts = ts.replaceAll("\\.","\\\\.");
+							ts = ts.replace(".","\\.");
 						}
 						ptn = Pattern.compile(ts);
 						patterns.put(coordSeperator,ptn);

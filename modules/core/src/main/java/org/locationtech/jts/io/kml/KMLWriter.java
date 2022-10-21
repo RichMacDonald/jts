@@ -241,7 +241,7 @@ public class KMLWriter
   }
 
   private String geometryTag(String geometryName, String attributes) {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     buf.append("<");
     buf.append(geometryName);
     if (attributes != null && attributes.length() > 0) {

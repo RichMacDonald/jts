@@ -98,7 +98,7 @@ public class FileUtil
   	throws IOException 
   	{
 		String thisLine;
-		StringBuffer strb = new StringBuffer("");
+		StringBuilder strb = new StringBuilder("");
 
 		try(FileInputStream fin = new FileInputStream(file)){
             BufferedReader br = new BufferedReader(new InputStreamReader(fin));

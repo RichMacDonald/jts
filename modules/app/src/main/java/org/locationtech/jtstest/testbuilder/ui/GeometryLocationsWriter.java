@@ -73,7 +73,7 @@ public class GeometryLocationsWriter
   public String writeLocationString(LayerList layers,
       Coordinate pt, double tolerance)
   {
-    StringBuffer text = new StringBuffer();
+    StringBuilder text = new StringBuilder();
     for (int i = 0; i < layers.size(); i++) {
 
       Layer lyr = layers.getLayer(i);
@@ -127,7 +127,7 @@ public class GeometryLocationsWriter
     ComponentLocater locater = new ComponentLocater(geom);
     List locs = locater.getComponents(p, tolerance);
     
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     int count = 0;
     for (Object loc2 : locs) {
     	
@@ -180,7 +180,7 @@ public class GeometryLocationsWriter
   {
     if (locs.size() <= 0) return null;
     
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     boolean isFirst = true;
     int count = 0;
     for (Object loc2 : locs) {
@@ -230,7 +230,7 @@ public class GeometryLocationsWriter
     
     if (locs.size() <= 0) return null;
     
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     boolean isFirst = true;
     for (Object loc : locs) {
     	VertexLocater.Location vertLoc = (VertexLocater.Location) loc;

@@ -204,7 +204,7 @@ s   */
   }
   public String toString()
   {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     if (elt[0] != null) {
       buf.append("A:");
       buf.append(elt[0].toString());

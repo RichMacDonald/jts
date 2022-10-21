@@ -265,7 +265,7 @@ public class GeoJsonWriter {
   }
 
   private String getJsonString(CoordinateSequence coordinateSequence) {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     if (coordinateSequence.size() > 1) {
       result.append("[");

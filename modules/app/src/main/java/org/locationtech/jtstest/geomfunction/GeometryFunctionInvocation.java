@@ -29,13 +29,11 @@ public class GeometryFunctionInvocation {
   public String getSignature() {
     if (function == null)
       return null;
-    String funArgs = toString(target);
+    StringBuilder funArgs = new StringBuilder().append(toString(target));
     if (args.length > 0) {
-      funArgs += ", " + toString(args);
+      funArgs.append(", ").append(toString(args));
     }
-    return function.getCategory() 
-        + "." + function.getName()
-        + "( " + funArgs + " )";
+    return function.getCategory() + "." + function.getName() + "( " + funArgs.append(" )").toString();
   }
 
   public GeometryFunction getFunction() {
@@ -50,7 +48,7 @@ public class GeometryFunctionInvocation {
   {
     if (param == null) return "";
     
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int i = 0; i < param.length; i++) {
       if (i > 0) buf.append(", ");
       buf.append(toString(param[i]));

@@ -1183,7 +1183,7 @@ public strictfp final class DD
     }
     
     int decimalPointPos = mag + 1;
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     int numDigits = MAX_PRINT_DIGITS - 1;
     for (int i = 0; i <= numDigits; i++) {
       if (insertDecimalPoint && i == decimalPointPos) {
@@ -1258,7 +1258,7 @@ public strictfp final class DD
    */
   private static String stringOfChar(char ch, int len)
   {
-    StringBuffer buf = new StringBuffer();
+    StringBuilder buf = new StringBuilder();
     for (int i = 0; i < len; i++) {
       buf.append(ch);
     }

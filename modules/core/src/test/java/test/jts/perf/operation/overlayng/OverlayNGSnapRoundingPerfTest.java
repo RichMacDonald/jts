@@ -68,7 +68,7 @@ extends PerformanceTestCase
   
   public void startRun(int npts)
   {
-    iter = 0;
+    int iter = 0;
     sineStar = SineStarFactory.create(new Coordinate(ORG_X, ORG_Y), SIZE, npts, N_ARMS, ARM_RATIO);
     sineStar2 = SineStarFactory.create(new Coordinate(ORG_X + SIZE/8, ORG_Y + SIZE/8), SIZE, npts, N_ARMS, ARM_RATIO);
     
@@ -78,8 +78,6 @@ extends PerformanceTestCase
     
     if (npts <= 1000) System.out.println(sineStar);
   }
-  
-  private int iter = 0;
   
   public void runSR()
   {

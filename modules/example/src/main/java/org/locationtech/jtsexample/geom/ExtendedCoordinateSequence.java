@@ -204,7 +204,7 @@ public class ExtendedCoordinateSequence
 
   public String toString()
   {
-    StringBuffer strBuf = new StringBuffer();
+    StringBuilder strBuf = new StringBuilder();
     strBuf.append("ExtendedCoordinateSequence [");
     for (int i = 0; i < coordinates.length; i++) {
       if (i > 0) strBuf.append(", ");
