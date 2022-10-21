@@ -67,239 +67,212 @@ public class GeometryStrategies{
 		HashMap strats = new HashMap();
 		
 		// point
-		strats.put(GMLConstants.GML_POINT.toLowerCase(),new ParseStrategy(){
+		strats.put(GMLConstants.GML_POINT.toLowerCase(),(ParseStrategy) (arg, gf) -> {
+			// one child, either a coord
+			// or a coordinate sequence
+			
+			if(arg.children.size()!=1)
+				throw new SAXException("Cannot create a point without exactly one coordinate");
 
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				// one child, either a coord
-				// or a coordinate sequence
-				
-				if(arg.children.size()!=1)
-					throw new SAXException("Cannot create a point without exactly one coordinate");
+			int srid = getSrid(arg.attrs,gf.getSRID());
 
-				int srid = getSrid(arg.attrs,gf.getSRID());
-
-				Object c = arg.children.get(0);
-				Point p = null;
-				if(c instanceof Coordinate){
-					p = gf.createPoint((Coordinate)c);
-				}else{
-					p = gf.createPoint((CoordinateSequence)c);
-				}
-				if(p.getSRID()!=srid)
-					p.setSRID(srid);
-				
-				return p;
+			Object c = arg.children.get(0);
+			Point p = null;
+			if(c instanceof Coordinate){
+				p = gf.createPoint((Coordinate)c);
+			}else{
+				p = gf.createPoint((CoordinateSequence)c);
 			}
+			if(p.getSRID()!=srid)
+				p.setSRID(srid);
+			
+			return p;
 		});
 		
 		// linestring
-		strats.put(GMLConstants.GML_LINESTRING.toLowerCase(),new ParseStrategy(){
+		strats.put(GMLConstants.GML_LINESTRING.toLowerCase(),(ParseStrategy) (arg, gf) -> {
+			// one child, either a coord
+			// or a coordinate sequence
+			
+			if(arg.children.size()<1)
+				throw new SAXException("Cannot create a linestring without atleast two coordinates or one coordinate sequence");
 
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				// one child, either a coord
-				// or a coordinate sequence
-				
-				if(arg.children.size()<1)
-					throw new SAXException("Cannot create a linestring without atleast two coordinates or one coordinate sequence");
-
-				int srid = getSrid(arg.attrs,gf.getSRID());
-				
-				LineString ls = null;
-				if(arg.children.size() == 1){
-					// coord set
-					try{
-						CoordinateSequence cs = (CoordinateSequence) arg.children.get(0);
-						ls = gf.createLineString(cs);
-					}catch(ClassCastException e){
-						throw new SAXException("Cannot create a linestring without atleast two coordinates or one coordinate sequence",e);
-					}
-				}else{
-					try{
-						Coordinate[] coords = (Coordinate[]) arg.children.toArray(new Coordinate[arg.children.size()]);
-						ls = gf.createLineString(coords);
-					}catch(ClassCastException e){
-						throw new SAXException("Cannot create a linestring without atleast two coordinates or one coordinate sequence",e);
-					}
+			int srid = getSrid(arg.attrs,gf.getSRID());
+			
+			LineString ls = null;
+			if(arg.children.size() == 1){
+				// coord set
+				try{
+					CoordinateSequence cs = (CoordinateSequence) arg.children.get(0);
+					ls = gf.createLineString(cs);
+				}catch(ClassCastException e){
+					throw new SAXException("Cannot create a linestring without atleast two coordinates or one coordinate sequence",e);
 				}
-				
-				if(ls.getSRID()!=srid)
-					ls.setSRID(srid);
-				
-				return ls;
+			}else{
+				try{
+					Coordinate[] coords = (Coordinate[]) arg.children.toArray(new Coordinate[arg.children.size()]);
+					ls = gf.createLineString(coords);
+				}catch(ClassCastException e){
+					throw new SAXException("Cannot create a linestring without atleast two coordinates or one coordinate sequence",e);
+				}
 			}
+			
+			if(ls.getSRID()!=srid)
+				ls.setSRID(srid);
+			
+			return ls;
 		});
 		
 		// linearring
-		strats.put(GMLConstants.GML_LINEARRING.toLowerCase(),new ParseStrategy(){
+		strats.put(GMLConstants.GML_LINEARRING.toLowerCase(),(ParseStrategy) (arg, gf) -> {
+			// one child, either a coord
+			// or a coordinate sequence
+			
+			if(arg.children.size()!=1 && arg.children.size()<4)
+				throw new SAXException("Cannot create a linear ring without atleast four coordinates or one coordinate sequence");
 
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				// one child, either a coord
-				// or a coordinate sequence
-				
-				if(arg.children.size()!=1 && arg.children.size()<4)
-					throw new SAXException("Cannot create a linear ring without atleast four coordinates or one coordinate sequence");
-
-				int srid = getSrid(arg.attrs,gf.getSRID());
-				
-				LinearRing ls = null;
-				if(arg.children.size() == 1){
-					// coord set
-					try{
-						CoordinateSequence cs = (CoordinateSequence) arg.children.get(0);
-						ls = gf.createLinearRing(cs);
-					}catch(ClassCastException e){
-						throw new SAXException("Cannot create a linear ring without atleast four coordinates or one coordinate sequence",e);
-					}
-				}else{
-					try{
-						Coordinate[] coords = (Coordinate[]) arg.children.toArray(new Coordinate[arg.children.size()]);
-						ls = gf.createLinearRing(coords);
-					}catch(ClassCastException e){
-						throw new SAXException("Cannot create a linear ring without atleast four coordinates or one coordinate sequence",e);
-					}
+			int srid = getSrid(arg.attrs,gf.getSRID());
+			
+			LinearRing ls = null;
+			if(arg.children.size() == 1){
+				// coord set
+				try{
+					CoordinateSequence cs = (CoordinateSequence) arg.children.get(0);
+					ls = gf.createLinearRing(cs);
+				}catch(ClassCastException e){
+					throw new SAXException("Cannot create a linear ring without atleast four coordinates or one coordinate sequence",e);
 				}
-				
-				if(ls.getSRID()!=srid)
-					ls.setSRID(srid);
-				
-				return ls;
+			}else{
+				try{
+					Coordinate[] coords = (Coordinate[]) arg.children.toArray(new Coordinate[arg.children.size()]);
+					ls = gf.createLinearRing(coords);
+				}catch(ClassCastException e){
+					throw new SAXException("Cannot create a linear ring without atleast four coordinates or one coordinate sequence",e);
+				}
 			}
+			
+			if(ls.getSRID()!=srid)
+				ls.setSRID(srid);
+			
+			return ls;
 		});
 		
 		// polygon
-		strats.put(GMLConstants.GML_POLYGON.toLowerCase(),new ParseStrategy(){
+		strats.put(GMLConstants.GML_POLYGON.toLowerCase(),(ParseStrategy) (arg, gf) -> {
+			// one child, either a coord
+			// or a coordinate sequence
+			
+			if(arg.children.size()<1)
+				throw new SAXException("Cannot create a polygon without atleast one linear ring");
 
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				// one child, either a coord
-				// or a coordinate sequence
-				
-				if(arg.children.size()<1)
-					throw new SAXException("Cannot create a polygon without atleast one linear ring");
-
-				int srid = getSrid(arg.attrs,gf.getSRID());
-				
-				LinearRing outer = (LinearRing) arg.children.get(0); // will be the first
-				List t = arg.children.size()>1?arg.children.subList(1,arg.children.size()):null;
-				LinearRing[] inner = t==null?null:(LinearRing[]) t.toArray(new LinearRing[t.size()]);
-				
-				Polygon p = gf.createPolygon(outer,inner);
-				
-				if(p.getSRID()!=srid)
-					p.setSRID(srid);
-				
-				return p;
-			}
+			int srid = getSrid(arg.attrs,gf.getSRID());
+			
+			LinearRing outer = (LinearRing) arg.children.get(0); // will be the first
+			List t = arg.children.size()>1?arg.children.subList(1,arg.children.size()):null;
+			LinearRing[] inner = t==null?null:(LinearRing[]) t.toArray(new LinearRing[t.size()]);
+			
+			Polygon p = gf.createPolygon(outer,inner);
+			
+			if(p.getSRID()!=srid)
+				p.setSRID(srid);
+			
+			return p;
 		});
 		
 		// box
-		strats.put(GMLConstants.GML_BOX.toLowerCase(),new ParseStrategy(){
-
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				// one child, either a coord
-				// or a coordinate sequence
-				
-				if(arg.children.size()<1 || arg.children.size()>2)
-					throw new SAXException("Cannot create a box without either two coords or one coordinate sequence");
+		strats.put(GMLConstants.GML_BOX.toLowerCase(),(ParseStrategy) (arg, gf) -> {
+			// one child, either a coord
+			// or a coordinate sequence
+			
+			if(arg.children.size()<1 || arg.children.size()>2)
+				throw new SAXException("Cannot create a box without either two coords or one coordinate sequence");
 
 //				int srid = getSrid(arg.attrs,gf.getSRID());
-				
-				Envelope box = null;
-				if(arg.children.size() == 1){
-					CoordinateSequence cs = (CoordinateSequence) arg.children.get(0);
-					box = cs.expandEnvelope(new Envelope());
-				}else{
-					box = new Envelope((Coordinate)arg.children.get(0),(Coordinate)arg.children.get(1));
-				}
-				
-				return box;
+			
+			Envelope box = null;
+			if(arg.children.size() == 1){
+				CoordinateSequence cs = (CoordinateSequence) arg.children.get(0);
+				box = cs.expandEnvelope(new Envelope());
+			}else{
+				box = new Envelope((Coordinate)arg.children.get(0),(Coordinate)arg.children.get(1));
 			}
+			
+			return box;
 		});
 		
 		// multi-point
-		strats.put(GMLConstants.GML_MULTI_POINT.toLowerCase(),new ParseStrategy(){
+		strats.put(GMLConstants.GML_MULTI_POINT.toLowerCase(),(ParseStrategy) (arg, gf) -> {
+			// one child, either a coord
+			// or a coordinate sequence
+			
+			if(arg.children.size()<1)
+				throw new SAXException("Cannot create a multi-point without atleast one point");
 
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				// one child, either a coord
-				// or a coordinate sequence
-				
-				if(arg.children.size()<1)
-					throw new SAXException("Cannot create a multi-point without atleast one point");
-
-				int srid = getSrid(arg.attrs,gf.getSRID());
-				
-				Point[] pts = (Point[]) arg.children.toArray(new Point[arg.children.size()]);
-				
-				MultiPoint mp = gf.createMultiPoint(pts);
-				
-				if(mp.getSRID()!=srid)
-					mp.setSRID(srid);
-				
-				return mp;
-			}
+			int srid = getSrid(arg.attrs,gf.getSRID());
+			
+			Point[] pts = (Point[]) arg.children.toArray(new Point[arg.children.size()]);
+			
+			MultiPoint mp = gf.createMultiPoint(pts);
+			
+			if(mp.getSRID()!=srid)
+				mp.setSRID(srid);
+			
+			return mp;
 		});
 		
 		// multi-linestring
-		strats.put(GMLConstants.GML_MULTI_LINESTRING.toLowerCase(),new ParseStrategy(){
+		strats.put(GMLConstants.GML_MULTI_LINESTRING.toLowerCase(),(ParseStrategy) (arg, gf) -> {
+			// one child, either a coord
+			// or a coordinate sequence
+			
+			if(arg.children.size()<1)
+				throw new SAXException("Cannot create a multi-linestring without atleast one linestring");
 
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				// one child, either a coord
-				// or a coordinate sequence
-				
-				if(arg.children.size()<1)
-					throw new SAXException("Cannot create a multi-linestring without atleast one linestring");
-
-				int srid = getSrid(arg.attrs,gf.getSRID());
-				
-				LineString[] lns = (LineString[]) arg.children.toArray(new LineString[arg.children.size()]);
-				
-				MultiLineString mp = gf.createMultiLineString(lns);
-				
-				if(mp.getSRID()!=srid)
-					mp.setSRID(srid);
-				
-				return mp;
-			}
+			int srid = getSrid(arg.attrs,gf.getSRID());
+			
+			LineString[] lns = (LineString[]) arg.children.toArray(new LineString[arg.children.size()]);
+			
+			MultiLineString mp = gf.createMultiLineString(lns);
+			
+			if(mp.getSRID()!=srid)
+				mp.setSRID(srid);
+			
+			return mp;
 		});
 		
 		// multi-poly
-		strats.put(GMLConstants.GML_MULTI_POLYGON.toLowerCase(),new ParseStrategy(){
+		strats.put(GMLConstants.GML_MULTI_POLYGON.toLowerCase(),(ParseStrategy) (arg, gf) -> {
+			// one child, either a coord
+			// or a coordinate sequence
+			
+			if(arg.children.size()<1)
+				throw new SAXException("Cannot create a multi-polygon without atleast one polygon");
 
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				// one child, either a coord
-				// or a coordinate sequence
-				
-				if(arg.children.size()<1)
-					throw new SAXException("Cannot create a multi-polygon without atleast one polygon");
-
-				int srid = getSrid(arg.attrs,gf.getSRID());
-				
-				Polygon[] plys = (Polygon[]) arg.children.toArray(new Polygon[arg.children.size()]);
-				
-				MultiPolygon mp = gf.createMultiPolygon(plys);
-				
-				if(mp.getSRID()!=srid)
-					mp.setSRID(srid);
-				
-				return mp;
-			}
+			int srid = getSrid(arg.attrs,gf.getSRID());
+			
+			Polygon[] plys = (Polygon[]) arg.children.toArray(new Polygon[arg.children.size()]);
+			
+			MultiPolygon mp = gf.createMultiPolygon(plys);
+			
+			if(mp.getSRID()!=srid)
+				mp.setSRID(srid);
+			
+			return mp;
 		});
 		
 		// multi-geom
-		strats.put(GMLConstants.GML_MULTI_GEOMETRY.toLowerCase(),new ParseStrategy(){
-
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				// one child, either a coord
-				// or a coordinate sequence
-				
-				if(arg.children.size()<1)
-					throw new SAXException("Cannot create a multi-polygon without atleast one geometry");
-				
-				Geometry[] geoms = (Geometry[]) arg.children.toArray(new Geometry[arg.children.size()]);
-				
-				GeometryCollection gc = gf.createGeometryCollection(geoms);
-								
-				return gc;
-			}
+		strats.put(GMLConstants.GML_MULTI_GEOMETRY.toLowerCase(),(ParseStrategy) (arg, gf) -> {
+			// one child, either a coord
+			// or a coordinate sequence
+			
+			if(arg.children.size()<1)
+				throw new SAXException("Cannot create a multi-polygon without atleast one geometry");
+			
+			Geometry[] geoms = (Geometry[]) arg.children.toArray(new Geometry[arg.children.size()]);
+			
+			GeometryCollection gc = gf.createGeometryCollection(geoms);
+							
+			return gc;
 		});
 		
 		// coordinates
@@ -420,36 +393,30 @@ public class GeometryStrategies{
 		});
 		
 		// coord
-		strats.put(GMLConstants.GML_COORD.toLowerCase(),new ParseStrategy(){
+		strats.put(GMLConstants.GML_COORD.toLowerCase(),(ParseStrategy) (arg, gf) -> {
+			// one child, either a coord
+			// or a coordinate sequence
 
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				// one child, either a coord
-				// or a coordinate sequence
-
-				if(arg.children.size()<1)
-					throw new SAXException("Cannot create a coordinate without atleast one axis");
-				if(arg.children.size()>3)
-					throw new SAXException("Cannot create a coordinate with more than 3 axis");
-				
-				Double[] axis = (Double[]) arg.children.toArray(new Double[arg.children.size()]);
-				Coordinate c = new Coordinate();
-				c.x = axis[0].doubleValue();
-				if(axis.length>1)
-					c.y = axis[1].doubleValue();
-				if(axis.length>2)
-					c.setZ(axis[2].doubleValue());
-				
-				return c;
-			}
+			if(arg.children.size()<1)
+				throw new SAXException("Cannot create a coordinate without atleast one axis");
+			if(arg.children.size()>3)
+				throw new SAXException("Cannot create a coordinate with more than 3 axis");
+			
+			Double[] axis = (Double[]) arg.children.toArray(new Double[arg.children.size()]);
+			Coordinate c = new Coordinate();
+			c.x = axis[0].doubleValue();
+			if(axis.length>1)
+				c.y = axis[1].doubleValue();
+			if(axis.length>2)
+				c.setZ(axis[2].doubleValue());
+			
+			return c;
 		});
 		
-		ParseStrategy coord_child = new ParseStrategy(){
-
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				if(arg.text == null)
-					return null;
-				return Double.valueOf((arg.text.toString()));
-			}
+		ParseStrategy coord_child = (arg, gf) -> {
+			if(arg.text == null)
+				return null;
+			return Double.valueOf((arg.text.toString()));
 		};
 		
 		// coord-x
@@ -461,17 +428,14 @@ public class GeometryStrategies{
 		// coord-z
 		strats.put(GMLConstants.GML_COORD_Z.toLowerCase(),coord_child);
 		
-		ParseStrategy member = new ParseStrategy(){
-
-			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
-				if(arg.children.size()!=1)
-					throw new SAXException("Geometry Members may only contain one geometry.");
-				
-				// type checking will occur in the parent geom collection.
-				// may wish to add this in the future
-				
-				return arg.children.get(0);
-			}
+		ParseStrategy member = (arg, gf) -> {
+			if(arg.children.size()!=1)
+				throw new SAXException("Geometry Members may only contain one geometry.");
+			
+			// type checking will occur in the parent geom collection.
+			// may wish to add this in the future
+			
+			return arg.children.get(0);
 		};
 		// outerBoundary - linear ring member
 		strats.put(GMLConstants.GML_OUTER_BOUNDARY_IS.toLowerCase(),member);

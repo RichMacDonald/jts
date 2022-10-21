@@ -268,15 +268,11 @@ public class SpatialIndexFunctions
   }
 
   private static void loadIndex(Geometry geom, SpatialIndex index) {
-    geom.apply(new GeometryFilter() {
-
-      public void filter(Geometry geom) {
+    geom.apply((GeometryFilter) geom1 -> {
         // only insert atomic geometries
-        if (geom instanceof GeometryCollection) return;
-        index.insert(geom.getEnvelopeInternal(), geom);
-      }
-      
-    });
+        if (geom1 instanceof GeometryCollection) return;
+        index.insert(geom1.getEnvelopeInternal(), geom1);
+      });
   }
 
   public static Geometry hprTreeBounds(Geometry geoms)
@@ -357,15 +353,11 @@ public class SpatialIndexFunctions
 
   private static Quadtree buildQuadtree(Geometry geom) {
     final Quadtree index = new Quadtree();
-    geom.apply(new GeometryFilter() {
-
-      public void filter(Geometry geom) {
+    geom.apply((GeometryFilter) geom1 -> {
         // only insert atomic geometries
-        if (geom instanceof GeometryCollection) return;
-        index.insert(geom.getEnvelopeInternal(), geom);
-      }
-      
-    });
+        if (geom1 instanceof GeometryCollection) return;
+        index.insert(geom1.getEnvelopeInternal(), geom1);
+      });
     return index;
   }
   

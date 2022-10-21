@@ -76,23 +76,11 @@ extends JPanel
     jScrollPane1.setBorder(BorderFactory.createLoweredBevelBorder());
     
     JButton copyButton = SwingUtil.createButton(AppIcons.COPY, "Copy Result (Ctl-click for formatted)", 
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        rCopyButton_actionPerformed(e);
-      }
-    });
+        (ActionListener) e -> rCopyButton_actionPerformed(e));
     JButton copyToTestButton = SwingUtil.createButton(AppIcons.COPY_TO_TEST, "Copy Result to new Test",
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        JTSTestBuilderFrame.instance().copyResultToTest();
-      }
-    });
+        (ActionListener) e -> JTSTestBuilderFrame.instance().copyResultToTest());
     JButton btnClearResult = SwingUtil.createButton(AppIcons.CUT, "Clear Result",         
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        JTSTestBuilder.controller().clearResult();
-      }
-    });
+        (ActionListener) e -> JTSTestBuilder.controller().clearResult());
 
     
     rButtonPanelLayout = new GridLayout(3,1);
@@ -133,11 +121,7 @@ extends JPanel
     memoryLabel.setToolTipText("JVM Memory Usage");
 
     //-------------------------------------
-    JButton btnInspect = SwingUtil.createButton(AppIcons.GEOM_INSPECT, "Inspect", new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        JTSTestBuilder.controller().inspectResult();
-      }        
-    });
+    JButton btnInspect = SwingUtil.createButton(AppIcons.GEOM_INSPECT, "Inspect", (ActionListener) e -> JTSTestBuilder.controller().inspectResult());
 
     Box panelRHBtns = Box.createVerticalBox();
     panelRHBtns.setPreferredSize(new java.awt.Dimension(30, 30));

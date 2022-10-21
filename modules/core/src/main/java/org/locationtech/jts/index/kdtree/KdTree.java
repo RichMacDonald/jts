@@ -391,13 +391,7 @@ public class KdTree {
    *          a list to accumulate the result nodes into
    */
   public void query(Envelope queryEnv, final List result) {
-    query(queryEnv, new KdNodeVisitor() {
-
-      public void visit(KdNode node) {
-        result.add(node);
-      }
-      
-    });
+    query(queryEnv, node -> result.add(node));
   }
 
   /**

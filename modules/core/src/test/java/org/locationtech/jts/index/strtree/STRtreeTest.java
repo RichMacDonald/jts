@@ -57,11 +57,7 @@ public class STRtreeTest extends TestCase {
   public void testEmptyTreeUsingItemVisitorQuery()  
   {
     STRtree tree = new STRtree();
-    tree.query(new Envelope(0,0,1,1), new ItemVisitor() {
-      public void visitItem(Object item) {
-        assertTrue("Should never reach here", true);
-      }
-    });  
+    tree.query(new Envelope(0,0,1,1), (ItemVisitor) item -> assertTrue("Should never reach here", true));  
   }
   
   public void testCreateParentsFromVerticalSlice() {

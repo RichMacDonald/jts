@@ -16,7 +16,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -99,50 +98,32 @@ public class LayerListPanel extends JPanel {
 
     btnCopy = SwingUtil.createButton(AppIcons.ADD, 
         "Copy layer to a new layer",
-            new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            layerCopy();
-          }
-        });
+            (ActionListener) e -> layerCopy());
     buttonPanel.add(btnCopy);
     
     btnPaste = SwingUtil.createButton(AppIcons.PASTE, 
         "Paste geometry into layer",
-            new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            layerPaste(focusLayer);
-          }
-        });
+            (ActionListener) e -> layerPaste(focusLayer));
     buttonPanel.add(btnPaste);
     btnUp = SwingUtil.createButton(AppIcons.UP, 
         "Move layer up",
-            new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            layerUp(focusLayer);
-          }
-        });
+            (ActionListener) e -> layerUp(focusLayer));
     buttonPanel.add(btnUp);
     btnDown = SwingUtil.createButton(AppIcons.DOWN, 
         "Move layer down",
-            new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            layerDown(focusLayer);
-          }
-        });
+            (ActionListener) e -> layerDown(focusLayer));
     buttonPanel.add(btnDown);
     
     btnDelete = SwingUtil.createButton(AppIcons.DELETE, 
         AppStrings.TIP_LAYER_CLEAR,
-            new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            if (SwingUtil.isCtlKeyPressed(e)) {
-              layerDelete(focusLayer);
-            }
-            else {
-              layerClear(focusLayer);
-            }
-         }
-        });
+            (ActionListener) e -> {
+			    if (SwingUtil.isCtlKeyPressed(e)) {
+			      layerDelete(focusLayer);
+			    }
+			    else {
+			      layerClear(focusLayer);
+			    }
+			 });
     buttonPanel.add(btnDelete);
     
     add(panelLeft, BorderLayout.WEST);
@@ -341,11 +322,7 @@ class LayerItemPanel extends JPanel {
     checkbox = new JCheckBox();
     add(checkbox);
     checkbox.setAlignmentX(Component.LEFT_ALIGNMENT);
-    checkbox.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        layerVisAction();
-      }
-    });
+    checkbox.addActionListener(e -> layerVisAction());
     checkbox.setSelected(layer.isEnabled());
     checkbox.setOpaque(false);
 

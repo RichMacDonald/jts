@@ -86,19 +86,9 @@ public class GeometryInputDialog extends JDialog {
         jPanel1.setLayout(gridBagLayout2);
         btnLoad.setToolTipText("");
         btnLoad.setText("Load");
-        btnLoad.addActionListener(new java.awt.event.ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                btnLoad_actionPerformed(e);
-            }
-        });
+        btnLoad.addActionListener(e -> btnLoad_actionPerformed(e));
         btnCancel.setText("Cancel");
-        btnCancel.addActionListener(new java.awt.event.ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                btnCancel_actionPerformed(e);
-            }
-        });
+        btnCancel.addActionListener(e -> btnCancel_actionPerformed(e));
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 12));
         jLabel2.setForeground(Color.red);
         jLabel2.setText("B");

@@ -54,12 +54,10 @@ public class MCIndexPointSnapper
     final Envelope pixelEnv = getSafeEnvelope(hotPixel);
     final HotPixelSnapAction hotPixelSnapAction = new HotPixelSnapAction(hotPixel, parentEdge, hotPixelVertexIndex);
 
-    index.query(pixelEnv, new ItemVisitor() {
-      public void visitItem(Object item) {
+    index.query(pixelEnv, (ItemVisitor) item -> {
         MonotoneChain testChain = (MonotoneChain) item;
         testChain.select(pixelEnv, hotPixelSnapAction);
       }
-    }
     );
     return hotPixelSnapAction.isNodeAdded();
   }

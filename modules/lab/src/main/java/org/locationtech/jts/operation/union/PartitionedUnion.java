@@ -63,17 +63,13 @@ public class PartitionedUnion {
     if (inputPolys.length == 0)
       return null;
     
-    SpatialPartition part = new SpatialPartition(inputPolys, new SpatialPartition.EquivalenceRelation() {
-      
-      @Override
-      public boolean isEquivalent(int i, int j) {
+    SpatialPartition part = new SpatialPartition(inputPolys, (i, j) -> {
          //return inputPolys[i].intersects(inputPolys[j]);
         //*
          PreparedGeometry pg = PreparedGeometryFactory.prepare(inputPolys[i]);
          return pg.intersects(inputPolys[j]);
          //*/
-      }
-    });
+      });
     
     //--- compute union of each set
     GeometryFactory geomFactory = inputPolys[0].getFactory();

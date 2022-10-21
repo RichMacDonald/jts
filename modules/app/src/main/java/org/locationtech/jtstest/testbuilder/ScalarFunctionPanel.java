@@ -105,11 +105,7 @@ extends JPanel implements FunctionPanel
     panelParam.add(txtDistance);
     
     execButton = SwingUtil.createButton(AppIcons.EXECUTE, AppStrings.TIP_EXECUTE,
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        execButton_actionPerformed(e);
-      }
-    });
+        (ActionListener) e -> execButton_actionPerformed(e));
     
     panelExec.add(execButton);
     

@@ -50,9 +50,7 @@ public class FacetSequenceTreeBuilder {
   private static List computeFacetSequences(Geometry g) {
     final List sections = new ArrayList();
 
-    g.apply(new GeometryComponentFilter() {
-
-      public void filter(Geometry geom) {
+    g.apply((GeometryComponentFilter) geom -> {
         CoordinateSequence seq = null;
         if (geom instanceof LineString) {
           seq = ((LineString) geom).getCoordinateSequence();
@@ -62,8 +60,7 @@ public class FacetSequenceTreeBuilder {
           seq = ((Point) geom).getCoordinateSequence();
           addFacetSequences(geom, seq, sections);
         }
-      }
-    });
+      });
     return sections;
   }
 

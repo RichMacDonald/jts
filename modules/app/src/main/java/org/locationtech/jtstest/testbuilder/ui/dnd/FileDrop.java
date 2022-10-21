@@ -428,20 +428,17 @@ public class FileDrop
         }   // end catch
         
         // Listen for hierarchy changes and remove the drop target when the parent gets cleared out.
-        c.addHierarchyListener( new java.awt.event.HierarchyListener()
-        {   public void hierarchyChanged( java.awt.event.HierarchyEvent evt )
-            {   log( out, "FileDrop: Hierarchy changed." );
-                java.awt.Component parent = c.getParent();
-                if( parent == null )
-                {   c.setDropTarget( null );
-                    log( out, "FileDrop: Drop target cleared from component." );
-                }   // end if: null parent
-                else
-                {   new java.awt.dnd.DropTarget(c, dropListener);
-                    log( out, "FileDrop: Drop target added to component." );
-                }   // end else: parent not null
-            }   // end hierarchyChanged
-        }); // end hierarchy listener
+        c.addHierarchyListener( evt -> {   log( out, "FileDrop: Hierarchy changed." );
+		    java.awt.Component parent = c.getParent();
+		    if( parent == null )
+		    {   c.setDropTarget( null );
+		        log( out, "FileDrop: Drop target cleared from component." );
+		    }   // end if: null parent
+		    else
+		    {   new java.awt.dnd.DropTarget(c, dropListener);
+		        log( out, "FileDrop: Drop target added to component." );
+		    }   // end else: parent not null
+		});   // end hierarchyChanged); // end hierarchy listener
         if( c.getParent() != null )
             new java.awt.dnd.DropTarget(c, dropListener);
         
@@ -556,15 +553,12 @@ public class FileDrop
             new javax.swing.JScrollPane( text ), 
             java.awt.BorderLayout.CENTER );
         
-        new FileDrop( System.out, text, /*dragBorder,*/ new FileDrop.Listener()
-        {   public void filesDropped( java.io.File[] files )
-            {   for (File file : files) {   try
-			    {   text.append( file.getCanonicalPath() + "\n" );
-			    }   // end try
-			    catch( java.io.IOException e ) {}
-			}   // end for: through each dropped file
-            }   // end filesDropped
-        }); // end FileDrop.Listener
+        new FileDrop( System.out, text, (Listener) files -> {   for (File file : files) {   try
+		    {   text.append( file.getCanonicalPath() + "\n" );
+		    }   // end try
+		    catch( java.io.IOException e ) {}
+		}   // end for: through each dropped file
+		});   // end filesDropped); // end FileDrop.Listener
 
         frame.setBounds( 100, 100, 300, 400 );
         frame.setDefaultCloseOperation( frame.EXIT_ON_CLOSE );

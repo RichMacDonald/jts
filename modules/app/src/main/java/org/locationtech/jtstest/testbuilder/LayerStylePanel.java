@@ -18,7 +18,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -33,7 +32,6 @@ import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -146,14 +144,12 @@ public class LayerStylePanel extends JPanel {
 
     add( stylePanel(), BorderLayout.CENTER );
     
-    JButton btnReset = SwingUtil.createButton(AppIcons.CLEAR, "Reset style to default", new ActionListener() {
-      public void actionPerformed(ActionEvent arg0) {
+    JButton btnReset = SwingUtil.createButton(AppIcons.CLEAR, "Reset style to default", (ActionListener) arg0 -> {
         if (layer == null) return;
         layer.resetStyle();
         updateStyleControls();
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
     JPanel btnPanel = new JPanel();
     btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.Y_AXIS));
     btnPanel.add(btnReset);
@@ -186,13 +182,11 @@ public class LayerStylePanel extends JPanel {
     cbShift.setToolTipText(AppStrings.TIP_STYLE_SHIFT);
     cbShift.setAlignmentX(Component.LEFT_ALIGNMENT);
     cbShift.setText("Shift");
-    cbShift.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbShift.addActionListener(e -> {
         if (layer == null) return;
         layer.getLayerStyle().setShift(cbShift.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
 
     addRow("Name", txtName, cbShift);
     
@@ -219,57 +213,47 @@ public class LayerStylePanel extends JPanel {
     cbVertex = new JCheckBox();
     cbVertex.setToolTipText(AppStrings.TIP_STYLE_VERTEX_ENABLE);
     cbVertex.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbVertex.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbVertex.addActionListener(e -> {
         if (layer == null) return;
         layer.getLayerStyle().setVertices(cbVertex.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
     btnVertexColor = ColorControl.create(this, 
         "Vertex",
         AppColors.GEOM_VIEW_BACKGROUND,
-        new ColorControl.ColorListener() {
-          public void colorChanged(Color clr) {
+        clr -> {
             if (layer == null) return;
             layer.getLayerStyle().setVertexColor(clr);
             JTSTestBuilder.controller().geometryViewChanged();
           }
-        }
        );
     
     vertexSizeModel = new SpinnerNumberModel(4, 0, 100, 1);
     spinVertexSize = new JSpinner(vertexSizeModel);
     spinVertexSize.setMaximumSize(new Dimension(40,16));
     spinVertexSize.setAlignmentX(Component.LEFT_ALIGNMENT);
-    spinVertexSize.addChangeListener(new ChangeListener() {
-      public void stateChanged(ChangeEvent e) {
+    spinVertexSize.addChangeListener(e -> {
         int size = vertexSizeModel.getNumber().intValue();
         layer.getLayerStyle().setVertexSize(size);
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
     cbVertexLabel = new JCheckBox();
     cbVertexLabel.setToolTipText(AppStrings.TIP_STYLE_VERTEX_LABEL_ENABLE);
     cbVertexLabel.setText("Label");
     cbVertexLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbVertexLabel.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbVertexLabel.addActionListener(e -> {
         if (layer == null) return;
         layer.getLayerStyle().setVertexLabels(cbVertexLabel.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
 
     comboVertexSymbol = new JComboBox(vertexSymbolNames);
-    comboVertexSymbol.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    comboVertexSymbol.addActionListener(e -> {
         JComboBox cb = (JComboBox)e.getSource();
         int symType = getVertexSymbol(cb);
         layer.getLayerStyle().setVertexSymbol(symType);
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
     
     comboVertexSymbol.setToolTipText(AppStrings.TIP_STYLE_SYMBOL);
    
@@ -279,35 +263,29 @@ public class LayerStylePanel extends JPanel {
     cbStroked = new JCheckBox();
     cbStroked.setToolTipText(AppStrings.TIP_STYLE_LINE_ENABLE);
     cbStroked.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbStroked.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbStroked.addActionListener(e -> {
         geomStyle().setStroked(cbStroked.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
 
     btnLineColor = ColorControl.create(this, 
         "Line",
         AppColors.GEOM_VIEW_BACKGROUND,
-        new ColorControl.ColorListener() {
-          public void colorChanged(Color clr) {
+        clr -> {
             geomStyle().setLineColor(clr);
             layer.getLayerStyle().setColor(clr);
             JTSTestBuilder.controller().geometryViewChanged();
             JTSTestBuilder.controller().updateLayerList();
           }
-        }
        );
-    JButton btnVertexSynch = createSynchButton("^", "Synch Vertex Color", new ActionListener() {
-      public void actionPerformed(ActionEvent arg0) {
+    JButton btnVertexSynch = createSynchButton("^", "Synch Vertex Color", arg0 -> {
         if (layer == null) return;
         Color clr = ColorControl.getColor(btnLineColor);
         layer.getLayerStyle().setColor(clr);
         layer.getLayerStyle().setVertexColor(clr);
         updateStyleControls();
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
 
     lineWidthModel = new SpinnerNumberModel(1.0, 0, 100, 0.2);
     spinnerLineWidth = new JSpinner(lineWidthModel);
@@ -316,17 +294,14 @@ public class LayerStylePanel extends JPanel {
     spinnerLineWidth.setMaximumSize(new Dimension(40,16));
     spinnerLineWidth.setAlignmentX(Component.LEFT_ALIGNMENT);
     
-    spinnerLineWidth.addChangeListener(new ChangeListener() {
-      public void stateChanged(ChangeEvent e) {
+    spinnerLineWidth.addChangeListener(e -> {
         float width = lineWidthModel.getNumber().floatValue();
         geomStyle().setStrokeWidth(width);
         JTSTestBuilder.controller().geometryViewChanged();
         JTSTestBuilder.controller().updateLayerList();
-      }
-    });
+      });
 
-    sliderLineAlpha = createOpacitySlider(new ChangeListener() {
-      public void stateChanged(ChangeEvent e) {
+    sliderLineAlpha = createOpacitySlider(e -> {
         JSlider source = (JSlider)e.getSource();
         if (! source.getValueIsAdjusting()) {
           int alpha = (int)source.getValue();
@@ -334,41 +309,34 @@ public class LayerStylePanel extends JPanel {
           JTSTestBuilder.controller().geometryViewChanged();
           JTSTestBuilder.controller().updateLayerList();
         }
-      }
-    });
+      });
     cbDashed = new JCheckBox();
     cbDashed.setText("Dashed");
     //cbDashed.setToolTipText(AppStrings.STYLE_VERTEX_ENABLE);
     cbDashed.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbDashed.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbDashed.addActionListener(e -> {
         if (layer == null) return;
         geomStyle().setDashed(cbDashed.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
     cbOffset = new JCheckBox();
     cbOffset.setText("Offset");
     //cbDashed.setToolTipText(AppStrings.STYLE_VERTEX_ENABLE);
     cbOffset.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbOffset.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbOffset.addActionListener(e -> {
         if (layer == null) return;
         layer.getLayerStyle().setOffset(cbOffset.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
     offsetSizeModel = new SpinnerNumberModel(LayerStyle.INIT_OFFSET_SIZE, -100, 100, 1);
     spinOffsetSize = new JSpinner(offsetSizeModel);
     spinOffsetSize.setMaximumSize(new Dimension(40,16));
     spinOffsetSize.setAlignmentX(Component.LEFT_ALIGNMENT);
-    spinOffsetSize.addChangeListener(new ChangeListener() {
-      public void stateChanged(ChangeEvent e) {
+    spinOffsetSize.addChangeListener(e -> {
         int size = offsetSizeModel.getNumber().intValue();
         layer.getLayerStyle().setOffsetSize(size);
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
 
     addRow("Line", cbStroked, btnLineColor, btnVertexSynch, sliderLineAlpha, spinnerLineWidth, 
         cbDashed, cbOffset, spinOffsetSize);
@@ -378,46 +346,38 @@ public class LayerStylePanel extends JPanel {
     cbEndpoint = new JCheckBox();
     cbEndpoint.setText("Endpoints");
     cbEndpoint.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbEndpoint.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbEndpoint.addActionListener(e -> {
         if (layer == null) return;
         layer.getLayerStyle().setEndpoints(cbEndpoint.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
     
     cbOrient = new JCheckBox();
     cbOrient.setText("Orientation");
     cbOrient.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbOrient.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbOrient.addActionListener(e -> {
         if (layer == null) return;
         layer.getLayerStyle().setOrientations(cbOrient.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
 
     cbStructure = new JCheckBox();
     cbStructure.setText("Structure");
     cbStructure.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbStructure.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbStructure.addActionListener(e -> {
         if (layer == null) return;
         layer.getLayerStyle().setStructure(cbStructure.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
 
     cbSegIndex = new JCheckBox();
     cbSegIndex.setText("Index");
     cbSegIndex.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbSegIndex.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbSegIndex.addActionListener(e -> {
         if (layer == null) return;
         layer.getLayerStyle().setSegIndex(cbSegIndex.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
 
     
    // Leave on separate line to allow room for dash style
@@ -427,16 +387,13 @@ public class LayerStylePanel extends JPanel {
     cbFilled = new JCheckBox();
     cbFilled.setToolTipText(AppStrings.TIP_STYLE_FILL_ENABLE);
     cbFilled.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbFilled.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbFilled.addActionListener(e -> {
         geomStyle().setFilled(cbFilled.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
         JTSTestBuilder.controller().updateLayerList();
-      }
-    });
+      });
    
-    sliderFillAlpha = createOpacitySlider(new ChangeListener() {
-      public void stateChanged(ChangeEvent e) {
+    sliderFillAlpha = createOpacitySlider(e -> {
         JSlider source = (JSlider)e.getSource();
         if (! source.getValueIsAdjusting()) {
           int alpha = (int)source.getValue();
@@ -444,42 +401,35 @@ public class LayerStylePanel extends JPanel {
           JTSTestBuilder.controller().geometryViewChanged();
           JTSTestBuilder.controller().updateLayerList();
         }
-      }
-    });
+      });
     btnFillColor = ColorControl.create(this, 
         "Fill",
         AppColors.GEOM_VIEW_BACKGROUND,
-        new ColorControl.ColorListener() {
-          public void colorChanged(Color clr) {
+        clr -> {
             geomStyle().setFillColor(clr);
             updateStyleControls();
             JTSTestBuilder.controller().geometryViewChanged();
             JTSTestBuilder.controller().updateLayerList();
           }
-        }
        );
-    JButton btnLineSynch = createSynchButton("^", "Synch Line Color", new ActionListener() {
-      public void actionPerformed(ActionEvent arg0) {
+    JButton btnLineSynch = createSynchButton("^", "Synch Line Color", arg0 -> {
         Color clr = lineColorFromFill( ColorControl.getColor(btnFillColor));
         geomStyle().setLineColor(clr );
         layer.getLayerStyle().setColor(clr);
         updateStyleControls();
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
     addRow("Fill", cbFilled, btnFillColor, btnLineSynch, sliderFillAlpha);
 
     //=============================================
 
     comboPalette = new JComboBox(paletteNames);
-    comboPalette.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    comboPalette.addActionListener(e -> {
         JComboBox cb = (JComboBox)e.getSource();
         int fillType = getPaletteType(cb);
         layer.getLayerStyle().setFillType(fillType);
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
     comboPalette.setToolTipText(AppStrings.TIP_STYLE_PALETTE);
     addRow("Palette", comboPalette);
     
@@ -489,36 +439,30 @@ public class LayerStylePanel extends JPanel {
     cbLabel = new JCheckBox();
     //cbLabel.setToolTipText(AppStrings.TIP_STYLE_VERTEX_ENABLE);
     cbLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbLabel.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    cbLabel.addActionListener(e -> {
         if (layer == null) return;
         layer.getLayerStyle().setLabel(cbLabel.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
     btnLabelColor = ColorControl.create(this, 
         "Label",
         AppColors.GEOM_VIEW_BACKGROUND,
-        new ColorControl.ColorListener() {
-          public void colorChanged(Color clr) {
+        clr -> {
             if (layer == null) return;
             layer.getLayerStyle().setLabelColor(clr);
             JTSTestBuilder.controller().geometryViewChanged();
           }
-        }
        );
     
     labelSizeModel = new SpinnerNumberModel(4, 0, 100, 1);
     spinLabelSize = new JSpinner(labelSizeModel);
     spinLabelSize.setMaximumSize(new Dimension(40,16));
     spinLabelSize.setAlignmentX(Component.LEFT_ALIGNMENT);
-    spinLabelSize.addChangeListener(new ChangeListener() {
-      public void stateChanged(ChangeEvent e) {
+    spinLabelSize.addChangeListener(e -> {
         int size = labelSizeModel.getNumber().intValue();
         layer.getLayerStyle().setLabelSize(size);
         JTSTestBuilder.controller().geometryViewChanged();
-      }
-    });
+      });
 
 
     

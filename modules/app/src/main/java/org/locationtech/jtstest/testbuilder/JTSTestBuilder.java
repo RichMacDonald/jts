@@ -149,9 +149,7 @@ public class JTSTestBuilder
     /**
      * Invoke on Swing thread to pass Java security requirements
      */
-    javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
-      public void run()
-      {
+    javax.swing.SwingUtilities.invokeAndWait(() -> {
         try {
           String laf = System.getProperty(PROP_SWING_DEFAULTLAF);
           if (laf == null) {
@@ -162,8 +160,7 @@ public class JTSTestBuilder
         catch (Exception e) {
           e.printStackTrace();
         }
-      }
-    });
+      });
   }
 
   private static CommandLine createCmdLine() {

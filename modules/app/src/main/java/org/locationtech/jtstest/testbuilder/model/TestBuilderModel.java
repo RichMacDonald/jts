@@ -199,11 +199,7 @@ public class TestBuilderModel
   
   //=============================================================
   
-  private CaseList caseList = new CaseList(new CaseList.CaseFactory() {
-    public TestCaseEdit create() {
-      return new TestCaseEdit(precisionModel);
-    }
-  });
+  private CaseList caseList = new CaseList(() -> new TestCaseEdit(precisionModel));
 
   public CaseList cases() {
     return caseList;

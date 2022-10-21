@@ -38,20 +38,12 @@ public class PolygonOverlayFunctions
       double scale)
   {
     PrecisionModel pm = new PrecisionModel(scale);
-    return computeOverlay(g1, g2, new Noder() {
-      public Geometry node(Geometry inputLines) {
-       return OverlayNG.overlay(inputLines, null, OverlayNG.UNION, pm);
-      }
-    });
+    return computeOverlay(g1, g2, inputLines -> OverlayNG.overlay(inputLines, null, OverlayNG.UNION, pm));
   }
   
   public static Geometry overlay(Geometry g1, Geometry g2)
   {
-    return computeOverlay(g1, g2, new Noder( ) {
-      public Geometry node(Geometry inputLines) {
-        return OverlayNGRobust.overlay(inputLines, null, OverlayNG.UNION);
-      }
-    });
+    return computeOverlay(g1, g2, inputLines -> OverlayNGRobust.overlay(inputLines, null, OverlayNG.UNION));
   }
   
   interface Noder {

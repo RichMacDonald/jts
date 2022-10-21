@@ -149,12 +149,10 @@ public class GeometryImplTest extends TestCase {
     public void testInvalidateEnvelope() throws Exception {
         Geometry g = reader.read("POLYGON ((0 0, 0 50, 50 50, 50 0, 0 0))");
         assertEquals(new Envelope(0, 50, 0, 50), g.getEnvelopeInternal());
-        g.apply(new CoordinateFilter() {
-                public void filter(Coordinate coord) {
-                    coord.x += 1;
-                    coord.y += 1;
-                }
-            });
+        g.apply((CoordinateFilter) coord -> {
+		    coord.x += 1;
+		    coord.y += 1;
+		});
         assertEquals(new Envelope(0, 50, 0, 50), g.getEnvelopeInternal());
         g.geometryChanged();
         assertEquals(new Envelope(1, 51, 1, 51), g.getEnvelopeInternal());
@@ -199,12 +197,8 @@ public class GeometryImplTest extends TestCase {
                 });
         LinearRing sameClassButEmpty = geometryFactory.createLinearRing((CoordinateSequence)null);
         LinearRing anotherSameClassButEmpty = geometryFactory.createLinearRing((CoordinateSequence)null);
-        CollectionFactory collectionFactory = new CollectionFactory() {
-                public Geometry createCollection(Geometry[] geometries) {
-                    return geometryFactory.createMultiLineString(GeometryFactory.toLineStringArray(
-                            Arrays.asList(geometries)));
-                }
-            };
+        CollectionFactory collectionFactory = geometries -> geometryFactory.createMultiLineString(GeometryFactory.toLineStringArray(
+		        Arrays.asList(geometries)));
 
         doTestEqualsExact(x, somethingExactlyEqual,
             somethingNotEqualButSameClass, sameClassButEmpty,
@@ -233,23 +227,15 @@ public class GeometryImplTest extends TestCase {
                 });
         LineString sameClassButEmpty = geometryFactory.createLineString((Coordinate[])null);
         LineString anotherSameClassButEmpty = geometryFactory.createLineString((Coordinate[])null);
-        CollectionFactory collectionFactory = new CollectionFactory() {
-                public Geometry createCollection(Geometry[] geometries) {
-                    return geometryFactory.createMultiLineString(GeometryFactory.toLineStringArray(
-                            Arrays.asList(geometries)));
-                }
-            };
+        CollectionFactory collectionFactory = geometries -> geometryFactory.createMultiLineString(GeometryFactory.toLineStringArray(
+		        Arrays.asList(geometries)));
 
         doTestEqualsExact(x, somethingExactlyEqual,
             somethingNotEqualButSameClass, sameClassButEmpty,
             anotherSameClassButEmpty, collectionFactory);
 
-        CollectionFactory collectionFactory2 = new CollectionFactory() {
-                public Geometry createCollection(Geometry[] geometries) {
-                    return geometryFactory.createMultiLineString(GeometryFactory.toLineStringArray(
-                            Arrays.asList(geometries)));
-                }
-            };
+        CollectionFactory collectionFactory2 = geometries -> geometryFactory.createMultiLineString(GeometryFactory.toLineStringArray(
+		        Arrays.asList(geometries)));
 
         doTestEqualsExact(x, somethingExactlyEqual,
             somethingNotEqualButSameClass, sameClassButEmpty,
@@ -264,12 +250,8 @@ public class GeometryImplTest extends TestCase {
                     999, 100));
         Point sameClassButEmpty = geometryFactory.createPoint((Coordinate)null);
         Point anotherSameClassButEmpty = geometryFactory.createPoint((Coordinate)null);
-        CollectionFactory collectionFactory = new CollectionFactory() {
-                public Geometry createCollection(Geometry[] geometries) {
-                    return geometryFactory.createMultiPoint(GeometryFactory.toPointArray(
-                            Arrays.asList(geometries)));
-                }
-            };
+        CollectionFactory collectionFactory = geometries -> geometryFactory.createMultiPoint(GeometryFactory.toPointArray(
+		        Arrays.asList(geometries)));
 
         doTestEqualsExact(x, somethingExactlyEqual,
             somethingNotEqualButSameClass, sameClassButEmpty,
@@ -286,12 +268,8 @@ public class GeometryImplTest extends TestCase {
         Polygon sameClassButEmpty = (Polygon) reader.read("POLYGON EMPTY");
         Polygon anotherSameClassButEmpty = (Polygon) reader.read(
                 "POLYGON EMPTY");
-        CollectionFactory collectionFactory = new CollectionFactory() {
-                public Geometry createCollection(Geometry[] geometries) {
-                    return geometryFactory.createMultiPolygon(GeometryFactory.toPolygonArray(
-                            Arrays.asList(geometries)));
-                }
-            };
+        CollectionFactory collectionFactory = geometries -> geometryFactory.createMultiPolygon(GeometryFactory.toPolygonArray(
+		        Arrays.asList(geometries)));
 
         doTestEqualsExact(x, somethingExactlyEqual,
             somethingNotEqualButSameClass, sameClassButEmpty,
@@ -315,11 +293,7 @@ public class GeometryImplTest extends TestCase {
                 });
         GeometryCollection sameClassButEmpty = geometryFactory.createGeometryCollection(null);
         GeometryCollection anotherSameClassButEmpty = geometryFactory.createGeometryCollection(null);
-        CollectionFactory collectionFactory = new CollectionFactory() {
-                public Geometry createCollection(Geometry[] geometries) {
-                    return geometryFactory.createGeometryCollection(geometries);
-                }
-            };
+        CollectionFactory collectionFactory = geometries -> geometryFactory.createGeometryCollection(geometries);
 
         doTestEqualsExact(x, somethingExactlyEqual,
             somethingNotEqualButSameClass, sameClassButEmpty,

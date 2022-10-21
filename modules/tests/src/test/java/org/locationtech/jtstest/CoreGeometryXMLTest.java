@@ -66,12 +66,7 @@ public class CoreGeometryXMLTest extends TestCase {
         assertEquals(failures, false);
     }
 
-    static FilenameFilter XML_FILTER = new FilenameFilter() {
-      @Override
-      public boolean accept(File dir, String name) {
-        return name.endsWith(".xml");
-      }
-    };
+    static FilenameFilter XML_FILTER = (dir, name) -> name.endsWith(".xml");
     
     private static List<File> filenames(File directory) {
         Assert.isTrue(directory.isDirectory());

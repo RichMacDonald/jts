@@ -164,13 +164,11 @@ public class LineSequencer
    * @param geometry the geometry to add
    */
   public void add(Geometry geometry) {
-    geometry.apply(new GeometryComponentFilter() {
-      public void filter(Geometry component) {
+    geometry.apply((GeometryComponentFilter) component -> {
         if (component instanceof LineString) {
           addLine((LineString)component);
         }
-      }
-    });
+      });
   }
 
   private void addLine(LineString lineString) {

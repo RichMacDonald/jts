@@ -11,10 +11,9 @@
  */
 package org.locationtech.jtstest.testbuilder;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
+
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -57,25 +56,15 @@ public class GeometryViewStylePanel extends LabelComponentsPanel {
     cbTitle = new JCheckBox();
     cbTitle.setSelected(viewStyle.isTitleEnabled());
     cbTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbTitle.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        updateView();      }
-    });
+    cbTitle.addActionListener(e -> updateView());
     cbTitleBorder = new JCheckBox();
     cbTitleBorder.setSelected(viewStyle.isTitleBorderEnabled());
     cbTitleBorder.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbTitleBorder.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        updateView();      }
-    });
+    cbTitleBorder.addActionListener(e -> updateView());
     ctlTitleFillClr = ColorControl.create(this, 
         "Title fill color",
         viewStyle.getTitleFill(),
-        new ColorControl.ColorListener() {
-          public void colorChanged(Color clr) {
-            updateView();
-          }
-        }
+        clr -> updateView()
        );
 
     addRow("Title", cbTitle, txtTitle, "Border", cbTitleBorder, ctlTitleFillClr );
@@ -83,58 +72,35 @@ public class GeometryViewStylePanel extends LabelComponentsPanel {
     cbLegend = new JCheckBox();
     cbLegend.setSelected(viewStyle.isLegendEnabled());
     cbLegend.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbLegend.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        updateView();      }
-    });
+    cbLegend.addActionListener(e -> updateView());
     cbLegendBorder = new JCheckBox();
     cbLegendBorder.setSelected(viewStyle.isLegendBorderEnabled());
     cbLegendBorder.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbLegendBorder.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        updateView();      }
-    });
+    cbLegendBorder.addActionListener(e -> updateView());
     ctlLegendFillClr = ColorControl.create(this, 
         "Legend fill color",
         viewStyle.getLegendFill(),
-        new ColorControl.ColorListener() {
-          public void colorChanged(Color clr) {
-            updateView();
-          }
-        }
+        clr -> updateView()
        );
     cbLegendStats = new JCheckBox();
     cbLegendStats.setSelected(viewStyle.isLegendStatsEnabled());
     cbLegendStats.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbLegendStats.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        updateView();      }
-    });
+    cbLegendStats.addActionListener(e -> updateView());
     cbLegendMetrics = new JCheckBox();
     cbLegendMetrics.setSelected(viewStyle.isLegendStatsEnabled());
     cbLegendMetrics.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbLegendMetrics.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        updateView();      }
-    });
+    cbLegendMetrics.addActionListener(e -> updateView());
     addRow("Legend", cbLegend, ctlLegendFillClr, "Border", cbLegendBorder,
         "Stats", cbLegendStats, "Metrics", cbLegendMetrics );
     
     cbViewBorder = new JCheckBox();
     cbViewBorder.setSelected(viewStyle.isBorderEnabled());
     cbViewBorder.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbViewBorder.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        updateView();      }
-    });
+    cbViewBorder.addActionListener(e -> updateView());
     ctlBorderClr = ColorControl.create(this, 
         "Border Color",
         viewStyle.getBorderColor(),
-        new ColorControl.ColorListener() {
-          public void colorChanged(Color clr) {
-            updateView();
-          }
-        }
+        clr -> updateView()
        );
     addRow("Border", cbViewBorder, ctlBorderClr);
     
@@ -142,19 +108,12 @@ public class GeometryViewStylePanel extends LabelComponentsPanel {
     cbGrid = new JCheckBox();
     cbGrid.setSelected(viewStyle.isGridEnabled());
     cbGrid.setAlignmentX(Component.LEFT_ALIGNMENT);
-    cbGrid.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        updateView();      }
-    });
+    cbGrid.addActionListener(e -> updateView());
     
     ctlBackgroundClr = ColorControl.create(this, 
         "Background Color",
         viewStyle.getBackground(),
-        new ColorControl.ColorListener() {
-          public void colorChanged(Color clr) {
-            updateView();
-          }
-        }
+        clr -> updateView()
        );
     addRow("Grid", cbGrid, "Background", ctlBackgroundClr);
   }

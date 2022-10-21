@@ -29,19 +29,11 @@ import java.util.List;
  */
 public class SIRtree extends AbstractSTRtree {
 
-  private Comparator comparator = new Comparator() {
-    public int compare(Object o1, Object o2) {
-      return compareDoubles(
-          ((Interval)((Boundable)o1).getBounds()).getCentre(),
-          ((Interval)((Boundable)o2).getBounds()).getCentre());
-    }
-  };
+  private Comparator comparator = (o1, o2) -> compareDoubles(
+      ((Interval)((Boundable)o1).getBounds()).getCentre(),
+      ((Interval)((Boundable)o2).getBounds()).getCentre());
 
-  private IntersectsOp intersectsOp = new IntersectsOp() {
-    public boolean intersects(Object aBounds, Object bBounds) {
-      return ((Interval)aBounds).intersects((Interval)bBounds);
-    }
-  };
+  private IntersectsOp intersectsOp = (aBounds, bBounds) -> ((Interval)aBounds).intersects((Interval)bBounds);
   
   /**
    * Constructs an SIRtree with the default node capacity.

@@ -145,12 +145,7 @@ public class GeoJsonWriter {
       final String jsonString = coordinateSequence.size() == 0
           ? JSON_ARRAY_EMPTY : getJsonString(coordinateSequence);
 
-      result.put(GeoJsonConstants.NAME_COORDINATES, new JSONAware() {
-
-        public String toJSONString() {
-          return jsonString;
-        }
-      });
+      result.put(GeoJsonConstants.NAME_COORDINATES, (JSONAware) () -> jsonString);
 
     } else if (geometry instanceof LineString) {
       LineString lineString = (LineString) geometry;
@@ -159,12 +154,7 @@ public class GeoJsonWriter {
       final String jsonString = coordinateSequence.size() == 0
           ? JSON_ARRAY_EMPTY : getJsonString(coordinateSequence);
 
-      result.put(GeoJsonConstants.NAME_COORDINATES, new JSONAware() {
-
-        public String toJSONString() {
-          return jsonString;
-        }
-      });
+      result.put(GeoJsonConstants.NAME_COORDINATES, (JSONAware) () -> jsonString);
 
     } else if (geometry instanceof Polygon) {
       Polygon polygon = (Polygon) geometry;
@@ -236,22 +226,12 @@ public class GeoJsonWriter {
     {
       final String jsonString = getJsonString(poly.getExteriorRing()
           .getCoordinateSequence());
-      result.add(new JSONAware() {
-
-        public String toJSONString() {
-          return jsonString;
-        }
-      });
+      result.add(() -> jsonString);
     }
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
       final String jsonString = getJsonString(poly.getInteriorRingN(i)
           .getCoordinateSequence());
-      result.add(new JSONAware() {
-
-        public String toJSONString() {
-          return jsonString;
-        }
-      });
+      result.add(() -> jsonString);
     }
 
     return result;
@@ -272,22 +252,12 @@ public class GeoJsonWriter {
         LineString lineString = (LineString) geometry;
         final String jsonString = getJsonString(lineString
             .getCoordinateSequence());
-        list.add(new JSONAware() {
-
-          public String toJSONString() {
-            return jsonString;
-          }
-        });
+        list.add((JSONAware) () -> jsonString);
       } 
       else if (geometry instanceof Point) {
         Point point = (Point) geometry;
         final String jsonString = getJsonString(point.getCoordinateSequence());
-        list.add(new JSONAware() {
-
-          public String toJSONString() {
-            return jsonString;
-          }
-        });
+        list.add((JSONAware) () -> jsonString);
       }
     }
 

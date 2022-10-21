@@ -18,7 +18,6 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.index.ItemVisitor;
 import org.locationtech.jts.index.SpatialIndexTester;
 
 import junit.framework.TestCase;
@@ -50,11 +49,7 @@ public class HPRtreeTest extends TestCase {
   public void testEmptyTreeUsingItemVisitorQuery()  
   {
     HPRtree tree = new HPRtree(0);
-    tree.query(new Envelope(0,0,1,1), new ItemVisitor() {
-      public void visitItem(Object item) {
-        assertTrue("Should never reach here", true);
-      }
-    });  
+    tree.query(new Envelope(0,0,1,1), item -> assertTrue("Should never reach here", true));  
   }
 
   public void testSpatialIndex()

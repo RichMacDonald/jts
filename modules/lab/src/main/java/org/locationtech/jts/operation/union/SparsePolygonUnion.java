@@ -79,20 +79,15 @@ public class SparsePolygonUnion {
     
     //--- cluster the geometries
     for (PolygonNode queryNode : nodes) {
-      index.query(queryNode.getEnvelope(), new ItemVisitor() {
-
-        @Override
-        public void visitItem(Object item) {
-          PolygonNode node = (PolygonNode) item;
-          if (item == queryNode) return;
-          // avoid duplicate intersections
-          if (node.id() > queryNode.id()) return;
-          if (queryNode.isInSameCluster(node)) return;
-          if (! queryNode.intersects(node)) return;
-          queryNode.merge((PolygonNode) item);
-        }
-        
-      });
+      index.query(queryNode.getEnvelope(), (ItemVisitor) item -> {
+	  PolygonNode node = (PolygonNode) item;
+	  if (item == queryNode) return;
+	  // avoid duplicate intersections
+	  if (node.id() > queryNode.id()) return;
+	  if (queryNode.isInSameCluster(node)) return;
+	  if (! queryNode.intersects(node)) return;
+	  queryNode.merge((PolygonNode) item);
+	});
     }
     
     //--- compute union of each cluster

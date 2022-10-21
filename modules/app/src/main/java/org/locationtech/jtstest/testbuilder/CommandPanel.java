@@ -14,7 +14,6 @@ package org.locationtech.jtstest.testbuilder;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,28 +122,19 @@ extends JPanel
     textPanel.add(jScrollPaneErr, BorderLayout.SOUTH);
     
     
-    JButton btnRun = SwingUtil.createButton(AppIcons.EXECUTE, "Run Command", new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        doRun();
-      }
-    });
+    JButton btnRun = SwingUtil.createButton(AppIcons.EXECUTE, "Run Command", (ActionListener) e -> doRun());
     
-    JButton btnPaste = SwingUtil.createButton(AppIcons.PASTE, "Paste Command", new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    JButton btnPaste = SwingUtil.createButton(AppIcons.PASTE, "Paste Command", (ActionListener) e -> {
         setCommandText(getPaste());
         update();
-      }
-    });
+      });
     
-    JButton btnClear = SwingUtil.createButton(AppIcons.CUT, "Clear Command", new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    JButton btnClear = SwingUtil.createButton(AppIcons.CUT, "Clear Command", (ActionListener) e -> {
         setCommandText("");
         update();
-      }
-    });
+      });
     
-    JButton btnPrev = SwingUtil.createButton(AppIcons.LEFT, "Previous Command", new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    JButton btnPrev = SwingUtil.createButton(AppIcons.LEFT, "Previous Command", (ActionListener) e -> {
         if (historyIndex == -1) {
           historyIndex = commandLog.size()-1;
         }
@@ -153,11 +143,9 @@ extends JPanel
         }
         setCommandTextNoSave(commandLog.get(historyIndex));
         update();
-      }
-    });
+      });
     
-    JButton btnNext = SwingUtil.createButton(AppIcons.RIGHT, "Next Command", new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+    JButton btnNext = SwingUtil.createButton(AppIcons.RIGHT, "Next Command", (ActionListener) e -> {
         if (historyIndex == -1) return;
         if (historyIndex == commandLog.size()-1) {
           historyIndex = -1;
@@ -168,8 +156,7 @@ extends JPanel
           setCommandTextNoSave(commandLog.get(historyIndex));
         }
         update();
-      }
-    });
+      });
     
     /*
     Box btnPanel = Box.createVerticalBox();
@@ -188,32 +175,16 @@ extends JPanel
     
     JButton btnAwkt = SwingUtil.createButton("A-WKT", 
         "Insert variable " + CommandController.VAR_A + " for A as WKT", 
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        insertCmdText(CommandController.VAR_A);
-      }
-    });
+        (ActionListener) e -> insertCmdText(CommandController.VAR_A));
     JButton btnAwkb = SwingUtil.createButton("A-WKB", 
         "Insert variable " + CommandController.VAR_A_WKB + " for A as WKB", 
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        insertCmdText(CommandController.VAR_A_WKB);
-      }
-    });
+        (ActionListener) e -> insertCmdText(CommandController.VAR_A_WKB));
     JButton btnBwkt = SwingUtil.createButton("B-WKT", 
         "Insert variable " + CommandController.VAR_B + " for B as WKT", 
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        insertCmdText(CommandController.VAR_B);
-      }
-    });
+        (ActionListener) e -> insertCmdText(CommandController.VAR_B));
     JButton btnBwkb = SwingUtil.createButton("B-WKB", 
         "Insert variable " + CommandController.VAR_B_WKB + " for B as WKB", 
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        insertCmdText(CommandController.VAR_B_WKB);
-      }
-    });
+        (ActionListener) e -> insertCmdText(CommandController.VAR_B_WKB));
     JLabel lblStdin = new JLabel();
     lblStdin.setText("Stdin ");
     lblStdin.setBorder(new EmptyBorder(2,10,2,0));//top,left,bottom,right

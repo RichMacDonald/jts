@@ -18,8 +18,6 @@ import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateList;
 import org.locationtech.jts.geom.PrecisionModel;
-import org.locationtech.jts.index.kdtree.KdNode;
-import org.locationtech.jts.index.kdtree.KdNodeVisitor;
 import org.locationtech.jts.noding.MCIndexNoder;
 import org.locationtech.jts.noding.NodedSegmentString;
 import org.locationtech.jts.noding.Noder;
@@ -254,10 +252,7 @@ public class SnapRoundingNoder
    * @param segIndex the index of the segment
    */
   private void snapSegment(Coordinate p0, Coordinate p1, NodedSegmentString ss, int segIndex) {
-    pixelIndex.query(p0, p1, new KdNodeVisitor() {
-
-      @Override
-      public void visit(KdNode node) {
+    pixelIndex.query(p0, p1, node -> {
         HotPixel hp = (HotPixel) node.getData();
         
         /**
@@ -281,8 +276,7 @@ public class SnapRoundingNoder
           ss.addIntersection( hp.getCoordinate(), segIndex );
           hp.setToNode();
         }
-      }
-    });
+      });
   }
 
   /**
@@ -301,10 +295,7 @@ public class SnapRoundingNoder
   }
 
   private void snapVertexNode(Coordinate p0, NodedSegmentString ss, int segIndex) {
-    pixelIndex.query(p0, p0, new KdNodeVisitor() {
-
-      @Override
-      public void visit(KdNode node) {
+    pixelIndex.query(p0, p0, node -> {
         HotPixel hp = (HotPixel) node.getData();
         /**
          * If vertex pixel is a node, add it.
@@ -312,9 +303,7 @@ public class SnapRoundingNoder
         if (hp.isNode() && hp.getCoordinate().equals2D(p0)) {
           ss.addIntersection( p0, segIndex );
         }
-      }
-      
-    });
+      });
   }
 
 }

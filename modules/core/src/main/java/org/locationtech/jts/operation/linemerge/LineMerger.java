@@ -69,13 +69,11 @@ public class LineMerger
    * @param geometry geometry to be line-merged
    */  
   public void add(Geometry geometry) {
-    geometry.apply(new GeometryComponentFilter() {
-      public void filter(Geometry component) {
+    geometry.apply((GeometryComponentFilter) component -> {
         if (component instanceof LineString) {
           add((LineString)component);
         }
-      }      
-    });
+      });
   }
   /**
    * Adds a collection of Geometries to be processed. May be called multiple times.

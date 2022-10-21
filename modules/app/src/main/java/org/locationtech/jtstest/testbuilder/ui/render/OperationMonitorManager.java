@@ -14,8 +14,7 @@ package org.locationtech.jtstest.testbuilder.ui.render;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -40,15 +39,12 @@ public class OperationMonitorManager
   private JPanel panel;
   private Viewport viewport;
   
-  private Timer repaintTimer = new Timer(50, new ActionListener() 
-      {
-        public void actionPerformed(ActionEvent e) {
-          if (indicator != null) {
-            paint();
-            return;
-          }
-        }
-      });
+  private Timer repaintTimer = new Timer(50, e -> {
+  if (indicator != null) {
+    paint();
+    return;
+  }
+});
 
   public OperationMonitorManager(JPanel panel, Viewport viewport)
   {

@@ -55,13 +55,11 @@ public class EdgeGraphBuilder
    * @param geometry geometry to be added
    */  
   public void add(Geometry geometry) {
-    geometry.apply(new GeometryComponentFilter() {
-      public void filter(Geometry component) {
+    geometry.apply((GeometryComponentFilter) component -> {
         if (component instanceof LineString) {
           add((LineString)component);
         }
-      }      
-    });
+      });
   }
   /**
    * Adds the edges in a collection of {@link Geometry}s to the graph. 

@@ -68,16 +68,11 @@ public class PreparedGeometryThreadSafeTest extends ThreadTestCase
   @Override
   public Runnable getRunnable(final int threadIndex)
   {
-    return new Runnable() {
-
-      public void run()
-      {
+    return () -> {
         while (true) {
           System.out.println(threadIndex);
           pg.intersects(g);
         }
-      }
-    
-    };
+      };
   }
 }

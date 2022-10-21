@@ -159,10 +159,7 @@ public class CubicBezierCurve {
     bezierCurvePts = new Coordinate[numVerticesPerSegment];
     interpolationParam = computeIterpolationParameters(numVerticesPerSegment);
 
-    return GeometryMapper.flatMap(inputGeom, 1, new GeometryMapper.MapOp() {
-      
-      @Override
-      public Geometry map(Geometry geom) {
+    return GeometryMapper.flatMap(inputGeom, 1, geom -> {
         if (geom instanceof LineString) {
           return bezierLine((LineString) geom);
         }
@@ -171,8 +168,7 @@ public class CubicBezierCurve {
         } 
         //-- Points
         return geom.copy();
-      }
-    });
+      });
   }
   
   private LineString bezierLine(LineString ls) {

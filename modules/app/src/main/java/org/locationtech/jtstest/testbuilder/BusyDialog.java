@@ -16,8 +16,6 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -56,16 +54,13 @@ public class BusyDialog extends JDialog {
     private ImageIcon icon = new ImageIcon(this.getClass().getResource("Hourglass.gif"));
     private Exception exception = null;
     private String stackTrace = null;
-    private javax.swing.Timer timer = new javax.swing.Timer(250, new ActionListener() {
-
-        public void actionPerformed(ActionEvent evt) {
-            label.setText(description);
-            if (!thread.isAlive()) {
-                timer.stop();
-                setVisible(false);
-            }
-        }
-    });
+    private javax.swing.Timer timer = new javax.swing.Timer(250, evt -> {
+	    this.label.setText(description);
+	    if (!thread.isAlive()) {
+	        this.timer.stop();
+	        setVisible(false);
+	    }
+	});
     JLabel label = new JLabel();
     GridBagLayout gridBagLayout1 = new GridBagLayout();
 
@@ -134,17 +129,14 @@ public class BusyDialog extends JDialog {
 
     void this_windowOpened(WindowEvent e) {
         label.setText(description);
-        Runnable runnable = new Runnable() {
-
-            public void run() {
-                try {
-                    executable.execute();
-                } catch (Exception e) {
-                    exception = e;
-                    stackTrace = StringUtil.getStackTrace(e);
-                }
-            }
-        };
+        Runnable runnable = () -> {
+		    try {
+		        executable.execute();
+		    } catch (Exception e1) {
+		        exception = e1;
+		        stackTrace = StringUtil.getStackTrace(e1);
+		    }
+		};
         thread = new Thread(runnable);
         thread.start();
         timer.start();

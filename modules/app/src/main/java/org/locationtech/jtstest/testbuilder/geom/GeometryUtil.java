@@ -78,14 +78,7 @@ public class GeometryUtil {
    */
   public static Envelope totalEnvelope(Geometry geom) {
     Envelope env = geom.getEnvelopeInternal();
-    geom.apply(new GeometryComponentFilter() {
-  
-      @Override
-      public void filter(Geometry comp) {
-        env.expandToInclude(comp.getEnvelopeInternal());
-      }
-      
-    });
+    geom.apply((GeometryComponentFilter) comp -> env.expandToInclude(comp.getEnvelopeInternal()));
     return env;
   }
 

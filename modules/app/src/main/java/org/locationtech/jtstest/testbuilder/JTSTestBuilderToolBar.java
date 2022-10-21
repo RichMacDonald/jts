@@ -125,12 +125,10 @@ public class JTSTestBuilderToolBar {
       previousButton.setMargin(new Insets(0, 0, 0, 0));
       previousButton.setVerticalTextPosition(SwingConstants.BOTTOM);
       previousButton.addActionListener(
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              boolean isZoom = 0 == (e.getModifiers() & ActionEvent.CTRL_MASK);
-              controller().caseMoveToPrev(isZoom);
-            }
-          });
+          e -> {
+		  boolean isZoom = 0 == (e.getModifiers() & ActionEvent.CTRL_MASK);
+		  controller().caseMoveToPrev(isZoom);
+		});
       
       nextButton.setMargin(new Insets(0, 0, 0, 0));
       nextButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -142,12 +140,10 @@ public class JTSTestBuilderToolBar {
       nextButton.setHorizontalTextPosition(SwingConstants.CENTER);
       nextButton.setIcon(rightIcon);
       nextButton.addActionListener(
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-             boolean isZoom = 0 == (e.getModifiers() & ActionEvent.CTRL_MASK);
-             controller().caseMoveToNext(isZoom);
-            }
-          });
+          e -> {
+		 boolean isZoom = 0 == (e.getModifiers() & ActionEvent.CTRL_MASK);
+		 controller().caseMoveToNext(isZoom);
+		});
       
       newButton.setMargin(new Insets(0, 0, 0, 0));
       newButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -159,11 +155,7 @@ public class JTSTestBuilderToolBar {
       newButton.setHorizontalTextPosition(SwingConstants.CENTER);
       newButton.setIcon(plusIcon);
       newButton.addActionListener(
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().caseCreateNew();
-            }
-          });
+          e -> controller().caseCreateNew());
       
       copyButton.setMargin(new Insets(0, 0, 0, 0));
       copyButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -175,11 +167,7 @@ public class JTSTestBuilderToolBar {
       copyButton.setHorizontalTextPosition(SwingConstants.CENTER);
       copyButton.setIcon(copyCaseIcon);
       copyButton.addActionListener(
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().caseCopy();
-            }
-          });
+          e -> controller().caseCopy());
       
       deleteButton.setMargin(new Insets(0, 0, 0, 0));
       deleteButton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -191,11 +179,7 @@ public class JTSTestBuilderToolBar {
       deleteButton.setHorizontalTextPosition(SwingConstants.CENTER);
       deleteButton.setIcon(deleteIcon);
       deleteButton.addActionListener(
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().caseDelete();
-            }
-          });
+          e -> controller().caseDelete());
 
       
       oneToOneButton.setMargin(new Insets(0, 0, 0, 0));
@@ -204,12 +188,7 @@ public class JTSTestBuilderToolBar {
       oneToOneButton.setMinimumSize(new Dimension(30, 30));
       oneToOneButton.setVerticalTextPosition(SwingConstants.BOTTOM);
       oneToOneButton.addActionListener(
-        new java.awt.event.ActionListener() {
-
-          public void actionPerformed(ActionEvent e) {
-            controller().zoomOneToOne();
-          }
-        });
+        e -> controller().zoomOneToOne());
       oneToOneButton.setFont(new java.awt.Font("SansSerif", 0, 10));
       oneToOneButton.setToolTipText(AppStrings.TIP_ZOOM_1_1);
       oneToOneButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -225,12 +204,7 @@ public class JTSTestBuilderToolBar {
       zoomToInputButton.setHorizontalTextPosition(SwingConstants.CENTER);
       zoomToInputButton.setToolTipText("Zoom To Input");
       zoomToInputButton.addActionListener(
-        new java.awt.event.ActionListener() {
-
-          public void actionPerformed(ActionEvent e) {
-            controller().zoomToInput();
-          }
-        });
+        e -> controller().zoomToInput());
 
       zoomToInputAButton.setMargin(new Insets(0, 0, 0, 0));
       zoomToInputAButton.setIcon(zoomToInputAIcon);
@@ -242,12 +216,7 @@ public class JTSTestBuilderToolBar {
       zoomToInputAButton.setHorizontalTextPosition(SwingConstants.CENTER);
       zoomToInputAButton.setToolTipText(AppStrings.TIP_ZOOM_TO_A);
       zoomToInputAButton.addActionListener(
-        new java.awt.event.ActionListener() {
-
-          public void actionPerformed(ActionEvent e) {
-            controller().zoomToInputA();
-          }
-        });
+        e -> controller().zoomToInputA());
       
       zoomToInputBButton.setMargin(new Insets(0, 0, 0, 0));
       zoomToInputBButton.setIcon(zoomToInputBIcon);
@@ -259,12 +228,7 @@ public class JTSTestBuilderToolBar {
       zoomToInputBButton.setHorizontalTextPosition(SwingConstants.CENTER);
       zoomToInputBButton.setToolTipText(AppStrings.TIP_ZOOM_TO_B);
       zoomToInputBButton.addActionListener(
-        new java.awt.event.ActionListener() {
-
-          public void actionPerformed(ActionEvent e) {
-            controller().zoomToInputB();
-          }
-        });
+        e -> controller().zoomToInputB());
       zoomToInputButton.setMaximumSize(new Dimension(30, 30));
       
       zoomToResultButton.setMargin(new Insets(0, 0, 0, 0));
@@ -277,12 +241,7 @@ public class JTSTestBuilderToolBar {
       zoomToResultButton.setHorizontalTextPosition(SwingConstants.CENTER);
       zoomToResultButton.setToolTipText(AppStrings.TIP_ZOOM_TO_RESULT);
       zoomToResultButton.addActionListener(
-        new java.awt.event.ActionListener() {
-
-          public void actionPerformed(ActionEvent e) {
-            controller().zoomToResult();
-          }
-        });
+        e -> controller().zoomToResult());
       zoomToResultButton.setMaximumSize(new Dimension(30, 30));
       
       zoomToFullExtentButton.setMargin(new Insets(0, 0, 0, 0));
@@ -294,97 +253,48 @@ public class JTSTestBuilderToolBar {
       zoomToFullExtentButton.setHorizontalTextPosition(SwingConstants.CENTER);
       zoomToFullExtentButton.setToolTipText(AppStrings.TIP_ZOOM_TO_FULL_EXTENT);
       zoomToFullExtentButton.addActionListener(
-        new java.awt.event.ActionListener() {
-
-          public void actionPerformed(ActionEvent e) {
-            controller().zoomToFullExtent();
-          }
-        });
+        e -> controller().zoomToFullExtent());
       zoomToFullExtentButton.setMaximumSize(new Dimension(30, 30));
       
       drawRectangleButton = createToggleButton(
           AppStrings.TIP_DRAW_RECTANGLE, drawRectangleIcon,
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().modeDrawRectangle();
-            }
-          });
+          e -> controller().modeDrawRectangle());
       drawPolygonButton = createToggleButton(
           AppStrings.TIP_DRAW_POLY, drawPolygonIcon,
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().modeDrawPolygon();
-            }
-          });
+          e -> controller().modeDrawPolygon());
       drawLineStringButton = createToggleButton(
           AppStrings.TIP_DRAW_LINE, drawLineStringIcon,
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().modeDrawLineString();
-            }
-          });
+          e -> controller().modeDrawLineString());
       drawPointButton = createToggleButton(
           AppStrings.TIP_DRAW_POINT, drawPointIcon,
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().modeDrawPoint();
-            }
-          });
+          e -> controller().modeDrawPoint());
       infoButton = createToggleButton(
           AppStrings.TIP_INFO, infoIcon,
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().modeInfo();
-            }
-          });
+          e -> controller().modeInfo());
       zoomButton = createToggleButton(
           AppStrings.TIP_ZOOM, zoomIcon,
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().modeZoomIn();
-            }
-          });
+          e -> controller().modeZoomIn());
       panButton = createToggleButton(
           AppStrings.TIP_PAN, panIcon,
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().modePan();
-            }
-          });
+          e -> controller().modePan());
       
       btnEditVertex = createToggleButton(
           AppStrings.TIP_MOVE_VERTEX, moveVertexIcon,
-        new java.awt.event.ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            controller().modeEditVertex();
-          }
-        });
+        e -> controller().modeEditVertex());
 
       btnMove = createToggleButton(
           AppStrings.TIP_MOVE, AppIcons.MOVE,
-        new java.awt.event.ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            controller().modeMove();
-          }
-        });
+        e -> controller().modeMove());
 
       extractComponentButton = createToggleButton(
           AppStrings.TIP_EXTRACT_COMPONENTS,
           new ImageIcon(this.getClass().getResource("ExtractComponent.png")), 
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
-              controller().modeExtractComponent();
-            }
-          });
+          e -> controller().modeExtractComponent());
       
       deleteVertexButton = createToggleButton(
           AppStrings.TIP_DELETE_VERTEX_COMPONENT,
           new ImageIcon(this.getClass().getResource("DeleteVertex.png")), 
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              controller().modeDeleteVertex();
-          }});
+          e -> controller().modeDeleteVertex());
 
       group(drawRectangleButton
           ,drawPolygonButton

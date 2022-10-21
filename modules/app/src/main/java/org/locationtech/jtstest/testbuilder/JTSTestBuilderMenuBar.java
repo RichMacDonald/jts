@@ -12,7 +12,6 @@
 
 package org.locationtech.jtstest.testbuilder;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -55,117 +54,53 @@ public class JTSTestBuilderMenuBar
   {
     jMenuAbout.setText("About");
     jMenuAbout.addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          TestBuilderDialogs.showAbout(tbFrame);
-        }
-      });
+      e -> TestBuilderDialogs.showAbout(tbFrame));
 
     jMenuFileExit.setText("Exit");
     jMenuFileExit.addActionListener(
-      new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          tbFrame.actionExit();
-        }
-      });
+      e -> tbFrame.actionExit());
     menuViewText.setText("Test Case Text...");
     menuViewText.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          TestBuilderDialogs.viewCaseText(tbFrame);
-        }
-      });
+      e -> TestBuilderDialogs.viewCaseText(tbFrame));
     menuViewGeometry.setText("Geometry Inspector...");
     menuViewGeometry.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          JTSTestBuilder.controller().inspectGeometryDialogForCurrentCase();
-        }
-      });
+      e -> JTSTestBuilder.controller().inspectGeometryDialogForCurrentCase());
     JMenuItem menuShowIndicators = menuItemCheck("ShowIndicators",
       JTSTestBuilderFrame.isShowingIndicators,
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          JTSTestBuilderFrame.isShowingIndicators = ! JTSTestBuilderFrame.isShowingIndicators;
-        }
-      });
+      e -> JTSTestBuilderFrame.isShowingIndicators = ! JTSTestBuilderFrame.isShowingIndicators);
     menuLoadXmlTestFile.setText("Open XML File(s)...");
     menuLoadXmlTestFile.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          tbFrame.menuLoadXmlTestFile_actionPerformed(e);
-        }
-      });
+      e -> tbFrame.menuLoadXmlTestFile_actionPerformed(e));
     saveAsXmlMenuItem.setText("Save As XML...");
     saveAsXmlMenuItem.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          TestBuilderDialogs.saveAsXML(tbFrame, JTSTestBuilder.model());
-        }
-      });
+      e -> TestBuilderDialogs.saveAsXML(tbFrame, JTSTestBuilder.model()));
     saveAsHtmlMenuItem.setText("Save As HTML...");
     saveAsHtmlMenuItem.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          TestBuilderDialogs.saveAsHtml(tbFrame, JTSTestBuilder.model());
-        }
-      });
+      e -> TestBuilderDialogs.saveAsHtml(tbFrame, JTSTestBuilder.model()));
     JMenuItem saveAsSvgMenuItem = new JMenuItem();
     saveAsSvgMenuItem.setText("Save As HTML+SVG...");
     saveAsSvgMenuItem.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          TestBuilderDialogs.saveAsHtmlSVG(tbFrame, JTSTestBuilder.model());
-        }
-      });
+      e -> TestBuilderDialogs.saveAsHtmlSVG(tbFrame, JTSTestBuilder.model()));
     saveAsPNGMenuItem.setText("Save As PNG...");
     saveAsPNGMenuItem.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          JTSTestBuilder.controller().saveImageAsPNG();
-        }
-      });
+      e -> JTSTestBuilder.controller().saveImageAsPNG());
     saveToClipboardMenuItem.setText("Save Screen To Clipboard");
     saveToClipboardMenuItem.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          JTSTestBuilder.controller().saveImageToClipboard();
-        }
-      });
+      e -> JTSTestBuilder.controller().saveImageToClipboard());
     deleteAllTestCasesMenuItem.setText("Delete All Test Cases");
     deleteAllTestCasesMenuItem.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          tbFrame.actionDeleteAllTestCases();
-        }
-      });
+      e -> tbFrame.actionDeleteAllTestCases());
 
     menuLoadXmlTestFolder.setText("Open XML Folder(s)...");
     menuLoadXmlTestFolder.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          tbFrame.actionLoadXmlTestFolder();
-        }
-      });
+      e -> tbFrame.actionLoadXmlTestFolder());
     precisionModelMenuItem.setText("Precision Model...");
     precisionModelMenuItem.addActionListener(
-      new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          TestBuilderDialogs.precisionModel(tbFrame);
-        }
-      });
+      e -> TestBuilderDialogs.precisionModel(tbFrame));
     removeDuplicatePoints.setText("Remove Duplicate Points");
-    removeDuplicatePoints.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        JTSTestBuilder.controller().removeDuplicatePoints();
-      }
-    });
+    removeDuplicatePoints.addActionListener(e -> JTSTestBuilder.controller().removeDuplicatePoints());
     changeToLines.setText("Change to Lines");
-    changeToLines.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        JTSTestBuilder.controller().changeToLines();
-      }
-    });
+    changeToLines.addActionListener(e -> JTSTestBuilder.controller().changeToLines());
     jMenuFile.setText("File");
     //jMenuOptions.setText("Options");
     //jMenuTools.setText("Tools");

@@ -15,8 +15,6 @@ package org.locationtech.jtstest.testbuilder.ui.render;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
@@ -33,16 +31,13 @@ public class RenderManager
 	private Image image = null;
 	private boolean isDirty = true;
 	
-	private Timer repaintTimer = new Timer(100, new ActionListener() 
-	{
-		public void actionPerformed(ActionEvent e) {
-			if (worker.isRendering()) {
-				paintPanel();
-				return;
-			}
-			repaintTimer.stop();
+	private Timer repaintTimer = new Timer(100, e -> {
+		if (worker.isRendering()) {
 			paintPanel();
+			return;
 		}
+		this.repaintTimer.stop();
+		paintPanel();
 	});
 
 	public RenderManager(GeometryEditPanel panel)

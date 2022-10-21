@@ -99,25 +99,20 @@ public class SpatialPartition {
       final int queryIndex = i;
       Geometry queryGeom = geoms[i];
       // TODO: allow expanding query env to account for distance-based relations
-      index.query(queryGeom.getEnvelopeInternal(), new ItemVisitor() {
-
-        @Override
-        public void visitItem(Object item) {
-          int itemIndex = (Integer) item;
-          
-          // avoid reflexive and symmetric comparisons by comparing only lower to higher
-          if (itemIndex <= queryIndex) return;
-          
-          // already in same partition
-          if (dset.isInSameSubset(queryIndex,  itemIndex)) return;
-          
-          if (rel.isEquivalent(queryIndex, itemIndex)) {
-            // geometries are in same partition
-            dset.merge(queryIndex, itemIndex);            
-          }
-        }
-        
-      });
+      index.query(queryGeom.getEnvelopeInternal(), (ItemVisitor) item -> {
+	  int itemIndex = (Integer) item;
+	  
+	  // avoid reflexive and symmetric comparisons by comparing only lower to higher
+	  if (itemIndex <= queryIndex) return;
+	  
+	  // already in same partition
+	  if (dset.isInSameSubset(queryIndex,  itemIndex)) return;
+	  
+	  if (rel.isEquivalent(queryIndex, itemIndex)) {
+	    // geometries are in same partition
+	    dset.merge(queryIndex, itemIndex);            
+	  }
+	});
     }
     return dset.subsets();
   }

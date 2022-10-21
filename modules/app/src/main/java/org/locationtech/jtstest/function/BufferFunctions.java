@@ -178,14 +178,7 @@ public class BufferFunctions {
   
   public static Geometry bufferEach(Geometry g, final double distance)
   {
-    return GeometryMapper.map(g, new MapOp() {
-
-      public Geometry map(Geometry g)
-      {
-        return g.buffer(distance);
-      }
-      
-    });
+    return GeometryMapper.map(g, (MapOp) g1 -> g1.buffer(distance));
   }
 
   public static Geometry bufferAndInverse(Geometry g, double distance) {

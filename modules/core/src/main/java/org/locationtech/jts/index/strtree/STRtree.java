@@ -82,21 +82,13 @@ implements SpatialIndex, Serializable
   private static final long serialVersionUID = 259274702368956900L;
   
   private static Comparator xComparator =
-    new Comparator() {
-      public int compare(Object o1, Object o2) {
-        return compareDoubles(
-            centreX((Envelope)((Boundable)o1).getBounds()),
-            centreX((Envelope)((Boundable)o2).getBounds()));
-      }
-    };
+    (o1, o2) -> compareDoubles(
+    centreX((Envelope)((Boundable)o1).getBounds()),
+    centreX((Envelope)((Boundable)o2).getBounds()));
   private static Comparator yComparator =
-    new Comparator() {
-      public int compare(Object o1, Object o2) {
-        return compareDoubles(
-            centreY((Envelope)((Boundable)o1).getBounds()),
-            centreY((Envelope)((Boundable)o2).getBounds()));
-      }
-    };
+    (o1, o2) -> compareDoubles(
+    centreY((Envelope)((Boundable)o1).getBounds()),
+    centreY((Envelope)((Boundable)o2).getBounds()));
 
   private static double centreX(Envelope e) {
     return avg(e.getMinX(), e.getMaxX());
@@ -108,11 +100,7 @@ implements SpatialIndex, Serializable
 
   private static double avg(double a, double b) { return (a + b) / 2d; }
 
-  private static IntersectsOp intersectsOp = new IntersectsOp() {
-    public boolean intersects(Object aBounds, Object bBounds) {
-      return ((Envelope)aBounds).intersects((Envelope)bBounds);
-    }
-  };
+  private static IntersectsOp intersectsOp = (aBounds, bBounds) -> ((Envelope)aBounds).intersects((Envelope)bBounds);
 
   /**
    * Creates the parent level for the given child level. First, orders the items

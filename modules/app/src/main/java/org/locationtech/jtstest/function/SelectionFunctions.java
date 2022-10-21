@@ -24,29 +24,17 @@ public class SelectionFunctions
 {
   public static Geometry intersects(Geometry a, final Geometry mask)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return mask.intersects(g);
-      }
-    });
+    return select(a, g -> mask.intersects(g));
   }
   
   public static Geometry covers(Geometry a, final Geometry mask)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return g.covers(mask);
-      }
-    });
+    return select(a, g -> g.covers(mask));
   }
   
   public static Geometry coveredBy(Geometry a, final Geometry mask)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return g.coveredBy(mask);
-      }
-    });
+    return select(a, g -> g.coveredBy(mask));
   }
   
   public static Geometry disjoint(Geometry a, Geometry mask)
@@ -84,88 +72,50 @@ public class SelectionFunctions
   }
   public static Geometry lengthGreaterThan(Geometry a, final double minLen)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return g.getLength() > minLen;
-      }
-    });
+    return select(a, g -> g.getLength() > minLen);
   }
   public static Geometry lengthLessThan(Geometry a, final double maxLen)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return g.getLength() < maxLen;
-      }
-    });
+    return select(a, g -> g.getLength() < maxLen);
   }
   public static Geometry lengthZero(Geometry a)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return g.getLength() == 0.0;
-      }
-    });
+    return select(a, g -> g.getLength() == 0.0);
   }
   public static Geometry areaGreaterThan(Geometry a, final double minArea)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return g.getArea() > minArea;
-      }
-    });
+    return select(a, g -> g.getArea() > minArea);
   }
   public static Geometry areaLessThan(Geometry a, final double maxArea)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return g.getArea() < maxArea;
-      }
-    });
+    return select(a, g -> g.getArea() < maxArea);
   }
   public static Geometry areaZero(Geometry a)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return g.getArea() == 0.0;
-      }
-    });
+    return select(a, g -> g.getArea() == 0.0);
   }
   public static Geometry within(Geometry a, final Geometry mask)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return g.within(mask);
-      }
-    });
+    return select(a, g -> g.within(mask));
   }
   
   public static Geometry interiorPointWithin(Geometry a, final Geometry mask)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return g.getInteriorPoint().within(mask);
-      }
-    });
+    return select(a, g -> g.getInteriorPoint().within(mask));
   }
   
   public static Geometry withinDistance(Geometry a, final Geometry mask, double maximumDistance)
   {
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
-        return mask.isWithinDistance(g, maximumDistance);
-      }
-    });
+    return select(a, g -> mask.isWithinDistance(g, maximumDistance));
   }
 
   public static Geometry withinDistanceIndexed(Geometry a, final Geometry mask, double maximumDistance)
   {
     IndexedFacetDistance indexedDist = new IndexedFacetDistance(mask);
-    return select(a, new GeometryPredicate() {
-      public boolean isTrue(Geometry g) {
+    return select(a, g -> {
         boolean isWithinDist = indexedDist.isWithinDistance(g, maximumDistance);
         return isWithinDist;
-      }
-    });
+      });
   }
 
   private static Geometry select(Geometry geom, GeometryPredicate pred)

@@ -171,11 +171,7 @@ public abstract class Geometry
   public static final String TYPENAME_MULTIPOLYGON = "MultiPolygon";
   public static final String TYPENAME_GEOMETRYCOLLECTION = "GeometryCollection";
   
-  private final static GeometryComponentFilter geometryChangedFilter = new GeometryComponentFilter() {
-    public void filter(Geometry geom) {
-      geom.geometryChangedAction();
-    }
-  };
+  private final static GeometryComponentFilter geometryChangedFilter = geom -> geom.geometryChangedAction();
 
   /**
    *  The bounding box of this <code>Geometry</code>.

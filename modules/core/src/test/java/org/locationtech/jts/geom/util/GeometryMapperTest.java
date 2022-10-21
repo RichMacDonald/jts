@@ -36,24 +36,16 @@ public class GeometryMapperTest extends GeometryTestCase {
 	 *   Point -> empty LineString, 
 	 *   Polygon -> null
 	 */
-	static GeometryMapper.MapOp KEEP_LINE = new GeometryMapper.MapOp() {
-    @Override
-    public Geometry map(Geometry geom) {
+	static GeometryMapper.MapOp KEEP_LINE = geom -> {
       if (geom instanceof Point) {
         return geom.getFactory().createEmpty(1);
       }
       if (geom instanceof LineString)
         return geom;
       return null;
-    }
-  };
+    };
   
-  static GeometryMapper.MapOp BOUNDARY = new GeometryMapper.MapOp() {
-    @Override
-    public Geometry map(Geometry geom) {
-      return geom.getBoundary();
-    }
-  };
+  static GeometryMapper.MapOp BOUNDARY = geom -> geom.getBoundary();
   
   public void testFlatMapInputEmpty() throws ParseException {
     checkFlatMap("GEOMETRYCOLLECTION( POINT EMPTY, LINESTRING EMPTY)",

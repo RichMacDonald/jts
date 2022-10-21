@@ -69,23 +69,11 @@ private PrecisionModel precisionModel;
     rbFixed.setToolTipText(" * <li>FLOATING - represents full double precision floating point.\n" +
     " * This is the default precision model used in JTS\n");
     rbFixed.setText("Fixed");
-    rbFixed.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        rbFixed_actionPerformed(e);
-      }
-    });
+    rbFixed.addActionListener(e -> rbFixed_actionPerformed(e));
     rbFloating.setText("Floating (Double)");
     rbFloating.setToolTipText("");
-    rbFloating.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        rbFloating_actionPerformed(e);
-      }
-    });
-    rbFloatingSingle.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        rbFloatingSingle_actionPerformed(e);
-      }
-    });
+    rbFloating.addActionListener(e -> rbFloating_actionPerformed(e));
+    rbFloatingSingle.addActionListener(e -> rbFloatingSingle_actionPerformed(e));
     rbFloatingSingle.setToolTipText("");
     rbFloatingSingle.setText("Floating (Single)");
     this.add(jLabel1,        new GridBagConstraints(0, 4, 1, 1, 0.2, 0.0

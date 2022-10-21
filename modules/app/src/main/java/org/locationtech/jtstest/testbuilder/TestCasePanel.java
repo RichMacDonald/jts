@@ -18,6 +18,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
@@ -40,7 +41,6 @@ import javax.swing.event.ChangeEvent;
 
 import org.locationtech.jtstest.testbuilder.controller.JTSTestBuilderController;
 import org.locationtech.jtstest.testbuilder.event.ValidPanelEvent;
-import org.locationtech.jtstest.testbuilder.event.ValidPanelListener;
 import org.locationtech.jtstest.testbuilder.model.GeometryEvent;
 import org.locationtech.jtstest.testbuilder.model.TestBuilderModel;
 import org.locationtech.jtstest.testbuilder.model.TestCaseEdit;
@@ -228,18 +228,9 @@ public class TestCasePanel extends JPanel {
     btnRunTests.setToolTipText("");
     btnRunTests.setText("Run");
     btnRunTests.addActionListener(
-      new java.awt.event.ActionListener() {
-
-        public void actionPerformed(ActionEvent e) {
-          btnRunTests_actionPerformed(e);
-        }
-      });    
+      e -> btnRunTests_actionPerformed(e));    
     validPanel.addValidPanelListener(
-        new ValidPanelListener() {
-          public void setHighlightPerformed(ValidPanelEvent e) {
-            validPanel_setHighlightPerformed(e);
-          }
-        });
+        e -> validPanel_setHighlightPerformed(e));
     jPanel1.setLayout(gridBagLayout1);
     txtDesc.addFocusListener(
       new java.awt.event.FocusAdapter() {
@@ -249,12 +240,7 @@ public class TestCasePanel extends JPanel {
         }
       });
     jTabbedPane1.addChangeListener(
-      new javax.swing.event.ChangeListener() {
-
-        public void stateChanged(ChangeEvent e) {
-          jTabbedPane1_stateChanged(e);
-        }
-      });
+      e -> jTabbedPane1_stateChanged(e));
     //testCaseIndexLabel.setBorder(BorderFactory.createLoweredBevelBorder());
     testCaseIndexLabel.setBorder(new EmptyBorder(0,4,0,0));
     testCaseIndexLabel.setToolTipText("");
@@ -287,11 +273,7 @@ public class TestCasePanel extends JPanel {
     cbDisplayAB.setSelected(true);
     cbDisplayAB.setToolTipText("Dislplay A and B");
     //cbDisplayAB.setText("Display Input");
-    cbDisplayAB.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-          JTSTestBuilderController.editPanel().setShowingInput(cbDisplayAB.isSelected());
-        }
-      });
+    cbDisplayAB.addActionListener(e -> JTSTestBuilderController.editPanel().setShowingInput(cbDisplayAB.isSelected()));
     JLabel lblDisplayAB = new JLabel();
     lblDisplayAB.setIcon(AppIcons.GEOFUNC_BINARY);
     
@@ -311,14 +293,13 @@ public class TestCasePanel extends JPanel {
 
     JButton btnSaveImage = SwingUtil.createButton(
         AppIcons.SAVE_IMAGE, AppStrings.TIP_SAVE_IMAGE,   
-        new java.awt.event.ActionListener() {
-          public void actionPerformed(ActionEvent e) {
+        (ActionListener) e -> {
             if (SwingUtil.isCtlKeyPressed(e)) {
               JTSTestBuilder.controller().saveImageAsPNG();
             } else {
               JTSTestBuilder.controller().saveImageToClipboard();
             }
-        }});
+        });
     
     JPanel panelCase = new JPanel();
     panelCase.setLayout(new BorderLayout());

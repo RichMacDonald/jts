@@ -23,8 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.border.Border;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
@@ -135,12 +133,10 @@ public class GeometryFunctionTreePanel extends JPanel {
 
 			}
 		});
-		tree.addTreeSelectionListener(new TreeSelectionListener() {
-			public void valueChanged(TreeSelectionEvent e) {
-				GeometryFunction fun = getFunction();
-				if (fun != null)
-					fireFunctionSelected(new GeometryFunctionEvent(fun));
-			}
+		tree.addTreeSelectionListener(e -> {
+			GeometryFunction fun = getFunction();
+			if (fun != null)
+				fireFunctionSelected(new GeometryFunctionEvent(fun));
 		});
 	}
 

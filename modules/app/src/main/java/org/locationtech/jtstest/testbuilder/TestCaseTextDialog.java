@@ -88,80 +88,36 @@ public class TestCaseTextDialog extends JDialog {
         jPanel1.setLayout(borderLayout2);
         btnCopy.setEnabled(true);
         btnCopy.setText("Copy");
-        btnCopy.addActionListener(new java.awt.event.ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                btnSelect_actionPerformed(e);
-            }
-        });
+        btnCopy.addActionListener(e -> btnSelect_actionPerformed(e));
         btnOk.setToolTipText("");
         btnOk.setText("Close");
-        btnOk.addActionListener(new java.awt.event.ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                btnOk_actionPerformed(e);
-            }
-        });
+        btnOk.addActionListener(e -> btnOk_actionPerformed(e));
         rbXML.setText("Test XML");
         rbXML.setToolTipText("");
-        rbXML.addActionListener(new java.awt.event.ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                rbXML_actionPerformed(e);
-            }
-        });
+        rbXML.addActionListener(e -> rbXML_actionPerformed(e));
         rbXMLWKB.setText("Test XML - WKB");
         rbXMLWKB.setToolTipText("");
-        rbXMLWKB.addActionListener(new java.awt.event.ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                rbXMLWKB_actionPerformed(e);
-            }
-        });
+        rbXMLWKB.addActionListener(e -> rbXMLWKB_actionPerformed(e));
         rbSVG.setText("SVG");
         rbSVG.setToolTipText("");
-        rbSVG.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                rbSVG_actionPerformed(e);
-            }
-        });
+        rbSVG.addActionListener(e -> rbSVG_actionPerformed(e));
         
         rbTestCaseJava.setText("TestCase Java");
         rbTestCaseJava.setToolTipText("");
-        rbTestCaseJava.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                rbTestCaseJava_actionPerformed(e);
-            }
-        });
+        rbTestCaseJava.addActionListener(e -> rbTestCaseJava_actionPerformed(e));
         rbJTSJava.setEnabled(false);
         rbJTSJava.setText("JTS Java ");
         
         rbWKT.setText("WKT");
-        rbWKT.addActionListener(new java.awt.event.ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-              rbWKT_actionPerformed(e);
-          }
-      });
+        rbWKT.addActionListener(e -> rbWKT_actionPerformed(e));
         
         rbWKTFormatted.setText("WKT-Formatted");
-        rbWKTFormatted.addActionListener(new java.awt.event.ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-              rbWKTFormatted_actionPerformed(e);
-          }
-      });
+        rbWKTFormatted.addActionListener(e -> rbWKTFormatted_actionPerformed(e));
         
         rbWKB.setText("WKB");
-        rbWKB.addActionListener(new java.awt.event.ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-              rbWKB_actionPerformed(e);
-          }
-      });
+        rbWKB.addActionListener(e -> rbWKB_actionPerformed(e));
         rbGML.setText("GML");
-        rbGML.addActionListener(new java.awt.event.ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-              rbGML_actionPerformed(e);
-          }
-      });
+        rbGML.addActionListener(e -> rbGML_actionPerformed(e));
         getContentPane().add(dialogPanel);
         dialogPanel.add(jScrollPane1, BorderLayout.CENTER);
         dialogPanel.add(jPanel1, BorderLayout.SOUTH);

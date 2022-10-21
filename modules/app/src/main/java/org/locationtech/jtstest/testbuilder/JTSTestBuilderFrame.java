@@ -30,8 +30,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -103,18 +101,10 @@ public class JTSTestBuilderFrame extends JFrame
       setIconImage(AppIcons.APP.getImage());
       jbInit();
       testCasePanel.cbRevealTopo.addActionListener(
-          new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              displayRevealTopo();
-            }
-          });
+          e -> displayRevealTopo());
       //testCasePanel.editCtlPanel.stretchDist
       testCasePanel.spStretchDist
-      .addChangeListener(new javax.swing.event.ChangeListener() {
-        public void stateChanged(javax.swing.event.ChangeEvent e) {
-          displayRevealTopo();
-        }
-      });
+      .addChangeListener(e -> displayRevealTopo());
 
       showGeomsTab();
       initFileDrop(testCasePanel);
@@ -126,15 +116,13 @@ public class JTSTestBuilderFrame extends JFrame
   }
 
   private void initFileDrop(Component comp) {
-    new FileDrop(comp, new FileDrop.Listener() {
-      public void filesDropped(java.io.File[] files) {
+    new FileDrop(comp, files -> {
         try {
           openXmlFilesAndDirectories(files);
         } catch (Exception ex) {
           SwingUtil.reportException(null, ex);
         }
-      }
-    });
+      });
   }
   private void initFileChoosers() {
     if (pngFileChooser == null) {
@@ -192,11 +180,7 @@ public class JTSTestBuilderFrame extends JFrame
     statsPanel.setModel(model);
     
     model.getGeometryEditModel().addGeometryListener(
-        new org.locationtech.jtstest.testbuilder.model.GeometryListener() {
-          public void geometryChanged(GeometryEvent e) {
-            model_geometryChanged(e);
-          }
-        });
+        e -> model_geometryChanged(e));
     
     testListPanel.populateList();
     //layerListPanel.init(getModel().getLayers());
@@ -441,12 +425,7 @@ public class JTSTestBuilderFrame extends JFrame
     inputTabbedPane.add(logPanel, AppStrings.TAB_LABEL_LOG);
     inputTabbedPane.add(commandPanel,  AppStrings.TAB_LABEL_COMMAND);
     inputTabbedPane.setSelectedIndex(1);
-    inputTabbedPane.addChangeListener(new ChangeListener() {
-      public void stateChanged(ChangeEvent e)
-      {
-        updateStatsPanelIfVisible();
-        }
-    });   
+    inputTabbedPane.addChangeListener(e -> updateStatsPanelIfVisible());   
     
     //--- main frame
   

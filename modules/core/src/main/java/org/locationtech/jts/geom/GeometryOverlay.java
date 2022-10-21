@@ -12,7 +12,6 @@
 package org.locationtech.jts.geom;
 
 import org.locationtech.jts.geom.util.GeometryCollectionMapper;
-import org.locationtech.jts.geom.util.GeometryMapper;
 import org.locationtech.jts.operation.overlay.OverlayOp;
 import org.locationtech.jts.operation.overlay.snap.SnapIfNeededOverlayOp;
 import org.locationtech.jts.operation.overlayng.OverlayNGRobust;
@@ -105,11 +104,7 @@ class GeometryOverlay
       final Geometry g2 = b;
       return GeometryCollectionMapper.map(
           (GeometryCollection) a,
-          new GeometryMapper.MapOp() {
-            public Geometry map(Geometry g) {
-              return g.intersection(g2);
-            }
-      });
+          g -> g.intersection(g2));
     }
 
     // No longer needed since GCs are handled by previous code

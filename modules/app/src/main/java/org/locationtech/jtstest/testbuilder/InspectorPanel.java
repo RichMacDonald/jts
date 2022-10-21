@@ -16,6 +16,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Comparator;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -67,31 +68,11 @@ public class InspectorPanel extends TestBuilderPanel  {
     geomTreePanel.setPreferredSize(new Dimension(300, 500));
     this.add(geomTreePanel, BorderLayout.CENTER);
     
-    JButton btnZoom = SwingUtil.createButton(AppIcons.ZOOM, "Zoom to component", new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        btnZoom_actionPerformed(e);
-      }
-    });
-    JButton btnCopy = SwingUtil.createButton(AppIcons.COPY, "Copy (Ctl-click to copy formatted", new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        btnCopy_actionPerformed(e);
-      }
-    });
-    JButton btnNext = SwingUtil.createButton(AppIcons.DOWN, "Zoom to Next", new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        btnZoomNext_actionPerformed(e, 1);
-      }
-    });
-    JButton btnPrev = SwingUtil.createButton(AppIcons.UP, "Zoom to Previous", new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        btnZoomNext_actionPerformed(e, -1);
-      }
-    });
-    btnDelete = SwingUtil.createButton(AppIcons.DELETE, "Delete", new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        deleteGeom();
-      }
-    });    
+    JButton btnZoom = SwingUtil.createButton(AppIcons.ZOOM, "Zoom to component", (ActionListener) e -> btnZoom_actionPerformed(e));
+    JButton btnCopy = SwingUtil.createButton(AppIcons.COPY, "Copy (Ctl-click to copy formatted", (ActionListener) e -> btnCopy_actionPerformed(e));
+    JButton btnNext = SwingUtil.createButton(AppIcons.DOWN, "Zoom to Next", (ActionListener) e -> btnZoomNext_actionPerformed(e, 1));
+    JButton btnPrev = SwingUtil.createButton(AppIcons.UP, "Zoom to Previous", (ActionListener) e -> btnZoomNext_actionPerformed(e, -1));
+    btnDelete = SwingUtil.createButton(AppIcons.DELETE, "Delete", (ActionListener) e -> deleteGeom());    
     
     lblGeom.setFont(new java.awt.Font("Dialog", 1, 16));
     lblGeom.setText(" ");
@@ -121,31 +102,14 @@ public class InspectorPanel extends TestBuilderPanel  {
       btnExpand.setMaximumSize(new Dimension(30, 30));
       btnExpand.setText("...");
       btnExpand.setToolTipText("Display in window");
-      btnExpand.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(ActionEvent e)
-        {
-          btnExpand_actionPerformed();
-        }
-      });
+      btnExpand.addActionListener(e -> btnExpand_actionPerformed());
       btn2Panel.add(btnExpand);
       this.add(btn2Panel, BorderLayout.EAST);
     }
     
-    JButton btnSortNone = SwingUtil.createButton(AppIcons.CLEAR, "Unsorted", new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        sortNone();
-      }
-    });
-    JButton btnSortByArea = SwingUtil.createButton(AppIcons.ICON_POLYGON, "Sort by Area (Asc/Desc)", new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        sortByArea();
-      }
-    });
-    JButton btnSortByLen = SwingUtil.createButton(AppIcons.ICON_LINESTRING, "Sort by Length (Asc/Desc)", new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        sortByLen();
-      }
-    });
+    JButton btnSortNone = SwingUtil.createButton(AppIcons.CLEAR, "Unsorted", (ActionListener) e -> sortNone());
+    JButton btnSortByArea = SwingUtil.createButton(AppIcons.ICON_POLYGON, "Sort by Area (Asc/Desc)", (ActionListener) e -> sortByArea());
+    JButton btnSortByLen = SwingUtil.createButton(AppIcons.ICON_LINESTRING, "Sort by Length (Asc/Desc)", (ActionListener) e -> sortByLen());
     
     JPanel sortPanel = new JPanel();
     sortPanel.setLayout(new BoxLayout(sortPanel, BoxLayout.LINE_AXIS));

@@ -218,15 +218,10 @@ class OverlayMixedPoints {
   
   private static Coordinate[] extractCoordinates(Geometry points, PrecisionModel pm) {
     CoordinateList coords = new CoordinateList();
-    points.apply(new CoordinateFilter() {
-
-      @Override
-      public void filter(Coordinate coord) {
+    points.apply((CoordinateFilter) coord -> {
         Coordinate p = OverlayUtil.round(coord, pm);
         coords.add(p, false);
-      }
-      
-    });
+      });
     return coords.toCoordinateArray();
   }
   

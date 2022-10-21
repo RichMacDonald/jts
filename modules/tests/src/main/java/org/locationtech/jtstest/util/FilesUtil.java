@@ -66,12 +66,7 @@ public class FilesUtil {
   public static List expand(File fileOrDir, String fileExtension) {
     List filenames = new ArrayList();
     if (fileOrDir.isDirectory()) {
-      File[] files = fileOrDir.listFiles(new FilenameFilter() {
-        @Override
-        public boolean accept(File dir, String name) {
-          return name.endsWith("." + fileExtension);
-        }
-      });
+      File[] files = fileOrDir.listFiles((FilenameFilter) (dir, name) -> name.endsWith("." + fileExtension));
       for (File file : files) {
         if (file.isFile()) {
           filenames.add(file.getPath());

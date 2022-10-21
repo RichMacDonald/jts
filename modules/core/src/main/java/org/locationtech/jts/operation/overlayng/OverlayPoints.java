@@ -158,10 +158,7 @@ class OverlayPoints {
 
   private HashMap<Coordinate, Point> buildPointMap(Geometry geoms) {
     HashMap<Coordinate, Point> map = new HashMap<>();
-    geoms.apply(new GeometryComponentFilter() {
-
-      @Override
-      public void filter(Geometry geom) {
+    geoms.apply((GeometryComponentFilter) geom -> {
         if (! (geom instanceof Point))
           return;
         if (geom.isEmpty())
@@ -175,9 +172,7 @@ class OverlayPoints {
          */
         if (! map.containsKey(p))
           map.put(p, pt);
-      }
-      
-    });
+      });
 
     return map;
   }

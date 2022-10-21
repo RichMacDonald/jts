@@ -84,18 +84,15 @@ public class GeometryFunctions
   public static Geometry getPolygonHoles(Geometry geom)
   {
     final List holePolys = new ArrayList();
-    geom.apply(new GeometryFilter() {
-
-      public void filter(Geometry geom) {
-        if (geom instanceof Polygon) {
-          Polygon poly = (Polygon) geom;
+    geom.apply((GeometryFilter) geom1 -> {
+        if (geom1 instanceof Polygon) {
+          Polygon poly = (Polygon) geom1;
           for (int i = 0; i < poly.getNumInteriorRing(); i++) {
-            Polygon hole = geom.getFactory().createPolygon(poly.getInteriorRingN(i), null);
+            Polygon hole = geom1.getFactory().createPolygon(poly.getInteriorRingN(i), null);
             holePolys.add(hole);
           }
         }
-      }      
-    });
+      });
     return geom.getFactory().buildGeometry(holePolys);
   }
 

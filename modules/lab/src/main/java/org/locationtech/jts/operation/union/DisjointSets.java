@@ -12,7 +12,6 @@
 package org.locationtech.jts.operation.union;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * A data structure that represents a partition of a set
@@ -146,17 +145,14 @@ public class DisjointSets
     // can only use comparator on Integer array
     Integer[] itemsSort = arrayOfIntegerIndex(parent.length);
     // sort items by their subset root
-    Arrays.sort(itemsSort, new Comparator<Integer>() {
-      @Override
-      public int compare(Integer i1, Integer i2) {
+    Arrays.sort(itemsSort, (i1, i2) -> {
         int root1 = findRoot(i1);
         int root2 = findRoot(i2);
         if (root1 < root2) return -1;
         if (root1 > root2) return 1;
         // in same set - sort by value
         return Integer.compare(i1,  i2);
-      }
-    });
+      });
     return itemsSort;
   }
   

@@ -220,28 +220,18 @@ extends JPanel implements FunctionPanel
     txtRepeatCount.setHorizontalAlignment(SwingConstants.RIGHT); 
     
     execButton = SwingUtil.createButton(AppIcons.EXECUTE, AppStrings.TIP_EXECUTE,
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        execFunction(false);
-      }
-    });
+        (ActionListener) e -> execFunction(false));
     execButton.setEnabled(false);
     
     execToNewButton = SwingUtil.createButton("New", AppIcons.EXECUTE, "Compute function result to a new case",
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        execFunction(true);
-      }
-    });
+        e -> execFunction(true));
     execToNewButton.setEnabled(false); 
     
     JButton btnShowExecExt = SwingUtil.createButton(expandDownIcon, "Show extended/meta Compute tools",
-        new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        clearExtended();
-        panelExecMeta.setVisible(! panelExecMeta.isVisible());
-      }
-    });
+        (ActionListener) e -> {
+		    clearExtended();
+		    panelExecMeta.setVisible(! panelExecMeta.isVisible());
+		  });
     btnShowExecExt.setPreferredSize(new Dimension(20, 20));
     btnShowExecExt.setBorder(BorderFactory.createEmptyBorder());
     btnShowExecExt.setContentAreaFilled(false);

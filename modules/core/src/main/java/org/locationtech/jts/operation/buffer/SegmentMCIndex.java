@@ -45,11 +45,9 @@ class SegmentMCIndex {
   }
 
   public void query(Envelope env, MonotoneChainSelectAction action) {
-    index.query(env, new ItemVisitor() {
-      public void visitItem(Object item) {
+    index.query(env, (ItemVisitor) item -> {
         MonotoneChain testChain = (MonotoneChain) item;
         testChain.select(env, action);
-      }
-    });
+      });
   }
 }
