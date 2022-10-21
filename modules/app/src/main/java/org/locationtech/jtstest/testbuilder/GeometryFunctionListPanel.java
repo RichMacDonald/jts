@@ -15,7 +15,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -145,8 +144,8 @@ public class GeometryFunctionListPanel extends JPanel {
    
   public void populate(List funcs) {
 //  listModel.clear();
-         for (Iterator i = funcs.iterator(); i.hasNext(); ) {
-             GeometryFunction func = (GeometryFunction) i.next();
+         for (Object func2 : funcs) {
+             GeometryFunction func = (GeometryFunction) func2;
              listModel.addElement(func);
          }
      }

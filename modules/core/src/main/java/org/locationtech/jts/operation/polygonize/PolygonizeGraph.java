@@ -48,8 +48,8 @@ class PolygonizeGraph
   {
     List<DirectedEdge> edges = node.getOutEdges().getEdges();
     int degree = 0;
-    for (Iterator<DirectedEdge> i = edges.iterator(); i.hasNext(); ) {
-      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) i.next();
+    for (DirectedEdge edge : edges) {
+      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) edge;
       if (! de.isMarked()) degree++;
     }
     return degree;
@@ -59,8 +59,8 @@ class PolygonizeGraph
   {
     List<DirectedEdge> edges = node.getOutEdges().getEdges();
     int degree = 0;
-    for (Iterator<DirectedEdge> i = edges.iterator(); i.hasNext(); ) {
-      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) i.next();
+    for (DirectedEdge edge : edges) {
+      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) edge;
       if (de.getLabel() == label) degree++;
     }
     return degree;
@@ -72,8 +72,8 @@ class PolygonizeGraph
   public static void deleteAllEdges(Node node)
   {
     List<DirectedEdge> edges = node.getOutEdges().getEdges();
-    for (Iterator<DirectedEdge> i = edges.iterator(); i.hasNext(); ) {
-      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) i.next();
+    for (DirectedEdge edge : edges) {
+      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) edge;
       de.setMarked(true);
       PolygonizeDirectedEdge sym = (PolygonizeDirectedEdge) de.getSym();
       if (sym != null)
@@ -145,15 +145,15 @@ class PolygonizeGraph
    */
   private void convertMaximalToMinimalEdgeRings(List ringEdges)
   {
-    for (Iterator i = ringEdges.iterator(); i.hasNext(); ) {
-      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) i.next();
+    for (Object ringEdge : ringEdges) {
+      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) ringEdge;
       long label = de.getLabel();
       List intNodes = findIntersectionNodes(de, label);
 
       if (intNodes == null) continue;
       // flip the next pointers on the intersection nodes to create minimal edge rings
-      for (Iterator iNode = intNodes.iterator(); iNode.hasNext(); ) {
-        Node node = (Node) iNode.next();
+      for (Object intNode : intNodes) {
+        Node node = (Node) intNode;
         computeNextCCWEdges(node, label);
       }
     }
@@ -202,8 +202,8 @@ class PolygonizeGraph
 
     // find all edgerings (which will now be minimal ones, as required)
     List edgeRingList = new ArrayList();
-    for (Iterator i = dirEdges.iterator(); i.hasNext(); ) {
-      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) i.next();
+    for (Object dirEdge : dirEdges) {
+      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) dirEdge;
       if (de.isMarked()) continue;
       if (de.isInRing()) continue;
 
@@ -226,8 +226,8 @@ class PolygonizeGraph
     List edgeRingStarts = new ArrayList();
     // label the edge rings formed
     long currLabel = 1;
-    for (Iterator i = dirEdges.iterator(); i.hasNext(); ) {
-      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) i.next();
+    for (Object dirEdge : dirEdges) {
+      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) dirEdge;
       if (de.isMarked()) continue;
       if (de.getLabel() >= 0) continue;
 
@@ -255,8 +255,8 @@ class PolygonizeGraph
      * Delete them, and record them
      */
     List cutLines = new ArrayList();
-    for (Iterator i = dirEdges.iterator(); i.hasNext(); ) {
-      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) i.next();
+    for (Object dirEdge : dirEdges) {
+      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) dirEdge;
       if (de.isMarked()) continue;
 
       PolygonizeDirectedEdge sym = (PolygonizeDirectedEdge) de.getSym();
@@ -275,8 +275,8 @@ class PolygonizeGraph
 
   private static void label(Collection dirEdges, long label)
   {
-    for (Iterator i = dirEdges.iterator(); i.hasNext(); ) {
-      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) i.next();
+    for (Object dirEdge : dirEdges) {
+      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) dirEdge;
       de.setLabel(label);
     }
   }
@@ -287,8 +287,8 @@ class PolygonizeGraph
     PolygonizeDirectedEdge prevDE = null;
 
     // the edges are stored in CCW order around the star
-    for (Iterator i = deStar.getEdges().iterator(); i.hasNext(); ) {
-      PolygonizeDirectedEdge outDE = (PolygonizeDirectedEdge) i.next();
+    for (Object element : deStar.getEdges()) {
+      PolygonizeDirectedEdge outDE = (PolygonizeDirectedEdge) element;
       if (outDE.isMarked()) continue;
 
       if (startDE == null)
@@ -372,8 +372,8 @@ class PolygonizeGraph
     Set dangleLines = new HashSet();
 
     Stack nodeStack = new Stack();
-    for (Iterator i = nodesToRemove.iterator(); i.hasNext(); ) {
-      nodeStack.push(i.next());
+    for (Object element : nodesToRemove) {
+      nodeStack.push(element);
     }
 
     while (! nodeStack.isEmpty()) {
@@ -381,8 +381,8 @@ class PolygonizeGraph
 
       deleteAllEdges(node);
       List nodeOutEdges = node.getOutEdges().getEdges();
-      for (Iterator i = nodeOutEdges.iterator(); i.hasNext(); ) {
-        PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) i.next();
+      for (Object nodeOutEdge : nodeOutEdges) {
+        PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) nodeOutEdge;
         // delete this edge and its sym
         de.setMarked(true);
         PolygonizeDirectedEdge sym = (PolygonizeDirectedEdge) de.getSym();

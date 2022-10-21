@@ -63,8 +63,8 @@ implements SpatialIndex, Serializable
 
     protected Object computeBounds() {
       Envelope bounds = null;
-      for (Iterator i = getChildBoundables().iterator(); i.hasNext(); ) {
-        Boundable childBoundable = (Boundable) i.next();
+      for (Object element : getChildBoundables()) {
+        Boundable childBoundable = (Boundable) element;
         if (bounds == null) {
           bounds = new Envelope((Envelope)childBoundable.getBounds());
         }
@@ -134,9 +134,9 @@ implements SpatialIndex, Serializable
   private List createParentBoundablesFromVerticalSlices(List[] verticalSlices, int newLevel) {
     Assert.isTrue(verticalSlices.length > 0);
     List parentBoundables = new ArrayList();
-    for (int i = 0; i < verticalSlices.length; i++) {
+    for (List element : verticalSlices) {
       parentBoundables.addAll(
-            createParentBoundablesFromVerticalSlice(verticalSlices[i], newLevel));
+            createParentBoundablesFromVerticalSlice(element, newLevel));
     }
     return parentBoundables;
   }

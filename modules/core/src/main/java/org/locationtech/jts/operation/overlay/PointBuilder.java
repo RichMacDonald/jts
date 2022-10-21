@@ -12,7 +12,6 @@
 package org.locationtech.jts.operation.overlay;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.PointLocator;
@@ -67,8 +66,8 @@ public class PointBuilder {
     // testing only
     //if (true) return resultNodeList;
 
-    for (Iterator nodeit = op.getGraph().getNodes().iterator(); nodeit.hasNext(); ) {
-      Node n = (Node) nodeit.next();
+    for (Object element : op.getGraph().getNodes()) {
+      Node n = (Node) element;
 
       // filter out nodes which are known to be in the result
       if (n.isInResult())

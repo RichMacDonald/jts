@@ -15,7 +15,6 @@ package org.locationtech.jtstest.function;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -191,8 +190,8 @@ public class SpatialIndexFunctions
   private static KdTree buildKdTree(Geometry geom, double tolerance) {
     final KdTree index = new KdTree(tolerance);
     Coordinate[] pt = geom.getCoordinates();
-    for (int i = 0; i < pt.length; i++) {
-      index.insert(pt[i]);
+    for (Coordinate element : pt) {
+      index.insert(element);
     }
     return index;
   }
@@ -210,8 +209,8 @@ public class SpatialIndexFunctions
       tree.insert(pt[index]);
     }
     //-- insert all the points
-    for (int i = 0; i < pt.length; i++) {
-      tree.insert(pt[i]);
+    for (Coordinate element : pt) {
+      tree.insert(element);
     }
     return tree;
   }
@@ -235,8 +234,8 @@ public class SpatialIndexFunctions
     if (bnd instanceof AbstractNode) {
       AbstractNode node = (AbstractNode) bnd;
       List children = node.getChildBoundables();
-      for (Iterator i = children.iterator(); i.hasNext(); ) {
-        Boundable child = (Boundable) i.next();
+      for (Object child2 : children) {
+        Boundable child = (Boundable) child2;
         addBounds(child, bounds, factory);
       }
     }

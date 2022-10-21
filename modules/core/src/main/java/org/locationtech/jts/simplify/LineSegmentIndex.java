@@ -36,8 +36,7 @@ class LineSegmentIndex
 
   public void add(TaggedLineString line) {
     TaggedLineSegment[] segs = line.getSegments();
-    for (int i = 0; i < segs.length; i++) {
-      TaggedLineSegment seg = segs[i];
+    for (TaggedLineSegment seg : segs) {
       add(seg);
     }
   }

@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -63,8 +62,8 @@ class SubgraphDepthLocater
   private List findStabbedSegments(Coordinate stabbingRayLeftPt)
   {
     List stabbedSegments = new ArrayList();
-    for (Iterator i = subgraphs.iterator(); i.hasNext(); ) {
-      BufferSubgraph bsg = (BufferSubgraph) i.next();
+    for (Object subgraph : subgraphs) {
+      BufferSubgraph bsg = (BufferSubgraph) subgraph;
 
       // optimization - don't bother checking subgraphs which the ray does not intersect
       Envelope env = bsg.getEnvelope();
@@ -93,8 +92,8 @@ class SubgraphDepthLocater
      * Check all forward DirectedEdges only.  This is still general,
      * because each Edge has a forward DirectedEdge.
      */
-    for (Iterator i = dirEdges.iterator(); i.hasNext();) {
-      DirectedEdge de = (DirectedEdge) i.next();
+    for (Object dirEdge : dirEdges) {
+      DirectedEdge de = (DirectedEdge) dirEdge;
       if (! de.isForward())
         continue;
       findStabbedSegments(stabbingRayLeftPt, de, stabbedSegments);

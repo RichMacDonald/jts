@@ -14,7 +14,6 @@ package org.locationtech.jts.noding;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -58,8 +57,8 @@ public class SegmentStringUtil
   {
     List segStr = new ArrayList();
     List lines = LinearComponentExtracter.getLines(geom);
-    for (Iterator i = lines.iterator(); i.hasNext(); ) {
-      LineString line = (LineString) i.next();
+    for (Object line2 : lines) {
+      LineString line = (LineString) line2;
       Coordinate[] pts = line.getCoordinates();
       segStr.add(new NodedSegmentString(pts, geom));
     }
@@ -78,8 +77,8 @@ public class SegmentStringUtil
   {
     List segStr = new ArrayList();
     List lines = LinearComponentExtracter.getLines(geom);
-    for (Iterator i = lines.iterator(); i.hasNext(); ) {
-      LineString line = (LineString) i.next();
+    for (Object line2 : lines) {
+      LineString line = (LineString) line2;
       Coordinate[] pts = line.getCoordinates();
       segStr.add(new BasicSegmentString(pts, geom));
     }
@@ -98,8 +97,8 @@ public class SegmentStringUtil
   {
     LineString[] lines = new LineString[segStrings.size()];
     int index = 0;
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      SegmentString ss = (SegmentString) i.next();
+    for (Object segString : segStrings) {
+      SegmentString ss = (SegmentString) segString;
       LineString line = geomFact.createLineString(ss.getCoordinates());
       lines[index++] = line;
     }
@@ -110,8 +109,8 @@ public class SegmentStringUtil
   public static String toString(List segStrings)
   {
 	StringBuffer buf = new StringBuffer();
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-        SegmentString segStr = (SegmentString) i.next();
+    for (Object segString : segStrings) {
+        SegmentString segStr = (SegmentString) segString;
         buf.append(segStr.toString());
         buf.append("\n");
         

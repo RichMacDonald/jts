@@ -13,7 +13,6 @@ package org.locationtech.jts.operation.linemerge;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
@@ -95,16 +94,16 @@ public class LineMergerTest extends TestCase {
     Collection actualGeometries, boolean compareDirections) {
     assertEquals("Geometry count, " + actualGeometries,
       expectedGeometries.size(), actualGeometries.size());
-    for (Iterator i = expectedGeometries.iterator(); i.hasNext();) {
-      Geometry expectedGeometry = (Geometry) i.next();
+    for (Object element : expectedGeometries) {
+      Geometry expectedGeometry = (Geometry) element;
       assertTrue("Not found: " + expectedGeometry + ", " + actualGeometries,
         contains(actualGeometries, expectedGeometry, compareDirections));
     }
   }
 
   private static boolean contains(Collection geometries, Geometry g, boolean exact) {
-    for (Iterator i = geometries.iterator(); i.hasNext();) {
-      Geometry element = (Geometry) i.next();
+    for (Object element2 : geometries) {
+      Geometry element = (Geometry) element2;
       if (exact && element.equalsExact(g)) {
         return true;
       }
@@ -118,9 +117,9 @@ public class LineMergerTest extends TestCase {
 
   public static Collection toGeometries(String[] inputWKT) {
     ArrayList geometries = new ArrayList();
-    for (int i = 0; i < inputWKT.length; i++) {
+    for (String element : inputWKT) {
       try {
-        geometries.add(reader.read(inputWKT[i]));
+        geometries.add(reader.read(element));
       } catch (ParseException e) {
         Assert.shouldNeverReachHere();
       }

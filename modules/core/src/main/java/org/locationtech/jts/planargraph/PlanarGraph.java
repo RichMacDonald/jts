@@ -183,8 +183,8 @@ public abstract class PlanarGraph
   {
     // unhook all directed edges
     List outEdges = node.getOutEdges().getEdges();
-    for (Iterator i = outEdges.iterator(); i.hasNext(); ) {
-      DirectedEdge de = (DirectedEdge) i.next();
+    for (Object outEdge : outEdges) {
+      DirectedEdge de = (DirectedEdge) outEdge;
       DirectedEdge sym = de.getSym();
       // remove the diredge that points to this node
       if (sym != null) remove(sym);

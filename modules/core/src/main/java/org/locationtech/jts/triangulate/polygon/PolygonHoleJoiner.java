@@ -96,8 +96,8 @@ public class PolygonHoleJoiner {
     shellCoordsSorted.addAll(shellCoords);
     cutMap = new HashMap<Coordinate, ArrayList<Coordinate>>();
     List<LinearRing> orderedHoles = sortHoles(inputPolygon);
-    for (int i = 0; i < orderedHoles.size(); i++) {
-      joinHole(orderedHoles.get(i));
+    for (LinearRing orderedHole : orderedHoles) {
+      joinHole(orderedHole);
     }
   }
 
@@ -125,12 +125,12 @@ public class PolygonHoleJoiner {
     if ( Math.abs(shellCoord.x - holeCoord.x) < EPS ) {
       double shortest = Double.MAX_VALUE;
       for (int i = 0; i < holeLeftVerticesIndex.size(); i++) {
-        for (int j = 0; j < shellCoordsList.size(); j++) {
-          double currLength = Math.abs(shellCoordsList.get(j).y - holeCoords[holeLeftVerticesIndex.get(i)].y);
+        for (Coordinate element : shellCoordsList) {
+          double currLength = Math.abs(element.y - holeCoords[holeLeftVerticesIndex.get(i)].y);
           if ( currLength < shortest ) {
             shortest = currLength;
             shortestHoleVertexIndex = i;
-            shellCoord = shellCoordsList.get(j);
+            shellCoord = element;
           }
         }
       }

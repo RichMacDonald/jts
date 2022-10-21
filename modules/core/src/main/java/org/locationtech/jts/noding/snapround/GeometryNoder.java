@@ -13,7 +13,6 @@ package org.locationtech.jts.noding.snapround;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -96,8 +95,8 @@ public class GeometryNoder
   private List toLineStrings(Collection segStrings)
   {
     List lines = new ArrayList();
-    for (Iterator it = segStrings.iterator(); it.hasNext(); ) {
-      SegmentString ss = (SegmentString) it.next();
+    for (Object segString : segStrings) {
+      SegmentString ss = (SegmentString) segString;
       // skip collapsed lines
       if (ss.size() < 2)
       	continue;
@@ -110,8 +109,8 @@ public class GeometryNoder
   {
     List lines = new ArrayList();
     LinearComponentExtracter lce = new LinearComponentExtracter(lines);
-    for (Iterator it = geoms.iterator(); it.hasNext(); ) {
-      Geometry geom = (Geometry) it.next();
+    for (Object geom2 : geoms) {
+      Geometry geom = (Geometry) geom2;
       geom.apply(lce);
     }
     return lines;
@@ -120,8 +119,8 @@ public class GeometryNoder
   private List toSegmentStrings(Collection lines)
   {
     List segStrings = new ArrayList();
-    for (Iterator it = lines.iterator(); it.hasNext(); ) {
-      LineString line = (LineString) it.next();
+    for (Object line2 : lines) {
+      LineString line = (LineString) line2;
       segStrings.add(new NodedSegmentString(line.getCoordinates(), null));
     }
     return segStrings;

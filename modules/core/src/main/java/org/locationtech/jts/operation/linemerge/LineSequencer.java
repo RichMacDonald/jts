@@ -150,8 +150,8 @@ public class LineSequencer
    * @param geometries a Collection of geometries to add
    */
   public void add(Collection geometries) {
-    for (Iterator i = geometries.iterator(); i.hasNext(); ) {
-      Geometry geometry = (Geometry) i.next();
+    for (Object element : geometries) {
+      Geometry geometry = (Geometry) element;
       add(geometry);
     }
   }
@@ -227,8 +227,8 @@ public class LineSequencer
     List sequences = new ArrayList();
     ConnectedSubgraphFinder csFinder = new ConnectedSubgraphFinder(graph);
     List subgraphs = csFinder.getConnectedSubgraphs();
-    for (Iterator i = subgraphs.iterator(); i.hasNext(); ) {
-      Subgraph subgraph = (Subgraph) i.next();
+    for (Object subgraph2 : subgraphs) {
+      Subgraph subgraph = (Subgraph) subgraph2;
       if (hasSequence(subgraph)) {
         List seq = findSequence(subgraph);
         sequences.add(seq);
@@ -419,8 +419,8 @@ public class LineSequencer
   private List reverse(List seq)
   {
     LinkedList newSeq = new LinkedList();
-    for (Iterator i = seq.iterator(); i.hasNext(); ) {
-      DirectedEdge de = (DirectedEdge) i.next();
+    for (Object element : seq) {
+      DirectedEdge de = (DirectedEdge) element;
       newSeq.addFirst(de.getSym());
     }
     return newSeq;
@@ -438,10 +438,10 @@ public class LineSequencer
   {
     List lines = new ArrayList();
 
-    for (Iterator i1 = sequences.iterator(); i1.hasNext(); ) {
-      List seq = (List) i1.next();
-      for (Iterator i2 = seq.iterator(); i2.hasNext(); ) {
-        DirectedEdge de = (DirectedEdge) i2.next();
+    for (Object element : sequences) {
+      List seq = (List) element;
+      for (Object element2 : seq) {
+        DirectedEdge de = (DirectedEdge) element2;
         LineMergeEdge e = (LineMergeEdge) de.getEdge();
         LineString line = e.getLine();
 

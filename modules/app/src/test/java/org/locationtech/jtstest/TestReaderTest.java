@@ -14,7 +14,6 @@
 package org.locationtech.jtstest;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -264,8 +263,8 @@ public class TestReaderTest extends TestCase {
   }
 
   private void printParsingProblems(TestReader testReader) {
-    for (Iterator i = testReader.getParsingProblems().iterator(); i.hasNext(); ) {
-      String problem = (String) i.next();
+    for (Object element : testReader.getParsingProblems()) {
+      String problem = (String) element;
       System.out.println(problem);
     }
   }

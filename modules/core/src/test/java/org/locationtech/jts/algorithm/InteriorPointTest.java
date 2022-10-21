@@ -15,7 +15,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -79,8 +78,8 @@ public class InteriorPointTest extends GeometryTestCase
   void checkInteriorPoint(List geoms)
   {
     Stopwatch sw = new Stopwatch();
-    for (Iterator i = geoms.iterator(); i.hasNext();) {
-      Geometry g = (Geometry) i.next();
+    for (Object geom : geoms) {
+      Geometry g = (Geometry) geom;
       checkInteriorPoint(g);
       System.out.print(".");
     }

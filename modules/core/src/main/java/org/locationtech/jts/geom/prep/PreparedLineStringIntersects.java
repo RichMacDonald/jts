@@ -11,7 +11,6 @@
  */
 package org.locationtech.jts.geom.prep;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.PointLocator;
@@ -114,8 +113,8 @@ class PreparedLineStringIntersects
 		 */
 		PointLocator locator = new PointLocator();
     List coords = ComponentCoordinateExtracter.getCoordinates(testGeom);
-    for (Iterator i = coords.iterator(); i.hasNext(); ) {
-      Coordinate p = (Coordinate) i.next();
+    for (Object coord : coords) {
+      Coordinate p = (Coordinate) coord;
       if (locator.intersects(p, prepLine.getGeometry()))
         return true;
     }

@@ -56,8 +56,8 @@ public class PlanarGraph
    */
   public static void linkResultDirectedEdges(Collection nodes)
   {
-    for (Iterator nodeit = nodes.iterator(); nodeit.hasNext(); ) {
-      Node node = (Node) nodeit.next();
+    for (Object node2 : nodes) {
+      Node node = (Node) node2;
       ((DirectedEdgeStar) node.getEdges()).linkResultDirectedEdges();
     }
   }
@@ -116,8 +116,8 @@ public class PlanarGraph
   public void addEdges(List edgesToAdd)
   {
     // create all the nodes for the edges
-    for (Iterator it = edgesToAdd.iterator(); it.hasNext(); ) {
-      Edge e = (Edge) it.next();
+    for (Object element : edgesToAdd) {
+      Edge e = (Edge) element;
       edges.add(e);
 
       DirectedEdge de1 = new DirectedEdge(e, true);
@@ -164,8 +164,8 @@ public class PlanarGraph
    */
   public EdgeEnd findEdgeEnd(Edge e)
   {
-    for (Iterator i = getEdgeEnds().iterator(); i.hasNext(); ) {
-      EdgeEnd ee = (EdgeEnd) i.next();
+    for (Object element : getEdgeEnds()) {
+      EdgeEnd ee = (EdgeEnd) element;
       if (ee.getEdge() == e)
         return ee;
     }
@@ -182,8 +182,8 @@ public class PlanarGraph
    */
   public Edge findEdge(Coordinate p0, Coordinate p1)
   {
-    for (int i = 0; i < edges.size(); i++) {
-      Edge e = (Edge) edges.get(i);
+    for (Object edge : edges) {
+      Edge e = (Edge) edge;
       Coordinate[] eCoord = e.getCoordinates();
       if (p0.equals(eCoord[0]) && p1.equals(eCoord[1]) )
         return e;
@@ -201,8 +201,8 @@ public class PlanarGraph
    */
   public Edge findEdgeInSameDirection(Coordinate p0, Coordinate p1)
   {
-    for (int i = 0; i < edges.size(); i++) {
-      Edge e = (Edge) edges.get(i);
+    for (Object edge : edges) {
+      Edge e = (Edge) edge;
 
       Coordinate[] eCoord = e.getCoordinates();
       if (matchInSameDirection(p0, p1, eCoord[0], eCoord[1]) )

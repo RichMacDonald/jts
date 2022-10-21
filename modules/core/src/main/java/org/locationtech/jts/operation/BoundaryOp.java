@@ -12,7 +12,6 @@
 package org.locationtech.jts.operation;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -184,8 +183,8 @@ public class BoundaryOp
       addEndpoint(line.getCoordinateN(line.getNumPoints() - 1));
     }
 
-    for (Iterator it = endpointMap.entrySet().iterator(); it.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) it.next();
+    for (Object element : endpointMap.entrySet()) {
+      Map.Entry entry = (Map.Entry) element;
       Counter counter = (Counter) entry.getValue();
       int valence = counter.count;
       if (bnRule.isInBoundary(valence)) {

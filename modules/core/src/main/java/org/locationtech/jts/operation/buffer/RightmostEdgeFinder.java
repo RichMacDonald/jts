@@ -11,10 +11,6 @@
  */
 package org.locationtech.jts.operation.buffer;
 
-/**
- * @version 1.7
- */
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -56,8 +52,8 @@ class RightmostEdgeFinder {
      * Check all forward DirectedEdges only.  This is still general,
      * because each edge has a forward DirectedEdge.
      */
-    for (Iterator i = dirEdgeList.iterator(); i.hasNext();) {
-      DirectedEdge de = (DirectedEdge) i.next();
+    for (Object element : dirEdgeList) {
+      DirectedEdge de = (DirectedEdge) element;
       if (! de.isForward())
         continue;
       checkForRightmostCoordinate(de);

@@ -14,7 +14,6 @@ package org.locationtech.jts.triangulate;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.ConvexHull;
@@ -69,8 +68,8 @@ public class ConformingDelaunayTriangulator
 {
 	private static Envelope computeVertexEnvelope(Collection vertices) {
 		Envelope env = new Envelope();
-		for (Iterator i = vertices.iterator(); i.hasNext();) {
-			Vertex v = (Vertex) i.next();
+		for (Object element : vertices) {
+			Vertex v = (Vertex) element;
 			env.expandToInclude(v.getCoordinate());
 		}
 		return env;
@@ -281,12 +280,12 @@ public class ConformingDelaunayTriangulator
 		Coordinate[] pts = new Coordinate[initialVertices.size()
 				+ segVertices.size()];
 		int index = 0;
-		for (Iterator i = initialVertices.iterator(); i.hasNext();) {
-			Vertex v = (Vertex) i.next();
+		for (Object element : initialVertices) {
+			Vertex v = (Vertex) element;
 			pts[index++] = v.getCoordinate();
 		}
-		for (Iterator i2 = segVertices.iterator(); i2.hasNext();) {
-			Vertex v = (Vertex) i2.next();
+		for (Object element : segVertices) {
+			Vertex v = (Vertex) element;
 			pts[index++] = v.getCoordinate();
 		}
 		return pts;
@@ -325,8 +324,8 @@ public class ConformingDelaunayTriangulator
 	 */
 	private void insertSites(Collection vertices) {
 		Debug.println("Adding sites: " + vertices.size());
-		for (Iterator i = vertices.iterator(); i.hasNext();) {
-			ConstraintVertex v = (ConstraintVertex) i.next();
+		for (Object element : vertices) {
+			ConstraintVertex v = (ConstraintVertex) element;
 			insertSite(v);
 		}
 	}
@@ -428,8 +427,8 @@ public class ConformingDelaunayTriangulator
 		 * insertion of another constraint. However, this process must converge
 		 * eventually, with no splits remaining to find.
 		 */
-		for (Iterator i = segsToInsert.iterator(); i.hasNext();) {
-			Segment seg = (Segment) i.next();
+		for (Object element : segsToInsert) {
+			Segment seg = (Segment) element;
 			// System.out.println(seg);
 
 			Coordinate encroachPt = findNonGabrielPoint(seg);
@@ -521,8 +520,8 @@ public class ConformingDelaunayTriangulator
 		// find closest point
 		Coordinate closestNonGabriel = null;
 		double minDist = Double.MAX_VALUE;
-		for (Iterator i = result.iterator(); i.hasNext();) {
-			KdNode nextNode = (KdNode) i.next();
+		for (Object element : result) {
+			KdNode nextNode = (KdNode) element;
 			Coordinate testPt = nextNode.getCoordinate();
 			// ignore segment endpoints
 			if (testPt.equals2D(p) || testPt.equals2D(q))

@@ -12,7 +12,6 @@
 package org.locationtech.jts.geomgraph.index;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.algorithm.LineIntersector;
 import org.locationtech.jts.geom.Coordinate;
@@ -200,8 +199,8 @@ public class SegmentIntersector
 
   private boolean isBoundaryPointInternal(LineIntersector li, Collection bdyNodes)
   {
-    for (Iterator i = bdyNodes.iterator(); i.hasNext(); ) {
-      Node node = (Node) i.next();
+    for (Object bdyNode : bdyNodes) {
+      Node node = (Node) bdyNode;
       Coordinate pt = node.getCoordinate();
       if (li.isIntersection(pt)) return true;
     }

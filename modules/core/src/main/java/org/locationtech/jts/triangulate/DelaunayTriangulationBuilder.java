@@ -14,7 +14,6 @@ package org.locationtech.jts.triangulate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -70,8 +69,8 @@ public class DelaunayTriangulationBuilder
 	public static List toVertices(Collection coords)
 	{
 		List verts = new ArrayList();
-		for (Iterator i = coords.iterator(); i.hasNext(); ) {
-			Coordinate coord = (Coordinate) i.next();
+		for (Object coord2 : coords) {
+			Coordinate coord = (Coordinate) coord2;
 			verts.add(new Vertex(coord));
 		}
 		return verts;
@@ -86,8 +85,8 @@ public class DelaunayTriangulationBuilder
 	public static Envelope envelope(Collection coords)
 	{
 		Envelope env = new Envelope();
-		for (Iterator i = coords.iterator(); i.hasNext(); ) {
-			Coordinate coord = (Coordinate) i.next();
+		for (Object coord2 : coords) {
+			Coordinate coord = (Coordinate) coord2;
 			env.expandToInclude(coord);
 		}
 		return env;

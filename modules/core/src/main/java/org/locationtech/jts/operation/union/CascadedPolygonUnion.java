@@ -13,7 +13,6 @@ package org.locationtech.jts.operation.union;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -167,8 +166,8 @@ public class CascadedPolygonUnion
 		 */
 //    STRtree index = new STRtree();
     STRtree index = new STRtree(STRTREE_NODE_CAPACITY);
-    for (Iterator i = inputPolys.iterator(); i.hasNext(); ) {
-      Geometry item = (Geometry) i.next();
+    for (Object inputPoly : inputPolys) {
+      Geometry item = (Geometry) inputPoly;
       index.insert(item.getEnvelopeInternal(), item);
     }
     // To avoiding holding memory remove references to the input geometries,
@@ -279,8 +278,7 @@ public class CascadedPolygonUnion
   private List reduceToGeometries(List geomTree)
   {
     List geoms = new ArrayList();
-    for (Iterator i = geomTree.iterator(); i.hasNext(); ) {
-      Object o = i.next();
+    for (Object o : geomTree) {
       Geometry geom = null;
       if (o instanceof List) {
         geom = unionTree((List) o);

@@ -14,7 +14,6 @@ package org.locationtech.jts.noding;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -74,8 +73,8 @@ public class ScaledNoder
   private Collection scale(Collection segStrings)
   {
     List nodedSegmentStrings = new ArrayList(segStrings.size());
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      SegmentString ss = (SegmentString) i.next();
+    for (Object segString : segStrings) {
+      SegmentString ss = (SegmentString) segString;
       nodedSegmentStrings.add(new NodedSegmentString(scale(ss.getCoordinates()), ss.getData()));
     }
     return nodedSegmentStrings;
@@ -99,8 +98,8 @@ public class ScaledNoder
 
   private void rescale(Collection segStrings)
   {
-    for (Iterator i = segStrings.iterator(); i.hasNext(); ) {
-      SegmentString ss = (SegmentString) i.next();
+    for (Object segString : segStrings) {
+      SegmentString ss = (SegmentString) segString;
       rescale(ss.getCoordinates());
     }
   }

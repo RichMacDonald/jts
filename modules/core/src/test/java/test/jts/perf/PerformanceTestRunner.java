@@ -61,13 +61,13 @@ public class PerformanceTestRunner
       {
         int size = runSize[runNum];
         test.startRun(size);
-        for (int i = 0; i < runMethod.length; i++) {
+        for (Method element : runMethod) {
           Stopwatch sw = new Stopwatch();
           for (int iter = 0; iter < runIter; iter++) {
-            runMethod[i].invoke(test);
+            element.invoke(test);
           }
           long time = sw.getTime();
-          System.out.println(runMethod[i].getName()
+          System.out.println(element.getName()
               + " : " + sw.getTimeString());
           test.setTime(runNum, time);
         }
@@ -88,9 +88,9 @@ public class PerformanceTestRunner
   {
     List runMeths = new ArrayList();
     Method meth[] = clz.getDeclaredMethods();
-    for (int i = 0; i < meth.length; i++) {
-      if (meth[i].getName().startsWith(RUN_PREFIX)) {
-        runMeths.add(meth[i]);
+    for (Method element : meth) {
+      if (element.getName().startsWith(RUN_PREFIX)) {
+        runMeths.add(element);
       }
     }
     return (Method[]) runMeths.toArray(new Method[0]);

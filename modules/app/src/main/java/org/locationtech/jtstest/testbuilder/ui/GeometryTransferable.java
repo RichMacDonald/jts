@@ -46,8 +46,8 @@ public class GeometryTransferable implements Transferable
   }
 
   public boolean isDataFlavorSupported(DataFlavor flavor) {
-      for (int i = 0; i < flavors.length; i++) {
-          if (flavor.equals(flavors[i])) {
+      for (DataFlavor flavor2 : flavors) {
+          if (flavor.equals(flavor2)) {
               return true;
           }
       }

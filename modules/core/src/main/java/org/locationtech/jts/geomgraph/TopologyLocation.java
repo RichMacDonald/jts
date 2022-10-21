@@ -89,8 +89,8 @@ public class TopologyLocation {
    */
   public boolean isNull()
   {
-    for (int i = 0; i < location.length; i++) {
-      if (location[i] != Location.NONE) return false;
+    for (int element : location) {
+      if (element != Location.NONE) return false;
     }
     return true;
   }
@@ -99,8 +99,8 @@ public class TopologyLocation {
    */
   public boolean isAnyNull()
   {
-    for (int i = 0; i < location.length; i++) {
-      if (location[i] == Location.NONE) return true;
+    for (int element : location) {
+      if (element == Location.NONE) return true;
     }
     return false;
   }
@@ -149,8 +149,8 @@ public class TopologyLocation {
   }
   public boolean allPositionsEqual(int loc)
   {
-    for (int i = 0; i < location.length; i++) {
-      if (location[i] != loc) return false;
+    for (int element : location) {
+      if (element != loc) return false;
     }
     return true;
   }

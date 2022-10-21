@@ -137,9 +137,9 @@ public class SnapRoundingTest  extends TestCase {
   List fromWKT(String[] wkts)
   {
     List geomList = new ArrayList();
-    for (int i = 0; i < wkts.length; i++) {
+    for (String wkt : wkts) {
       try {
-        geomList.add(rdr.read(wkts[i]));
+        geomList.add(rdr.read(wkt));
       }
       catch (Exception ex) {
         ex.printStackTrace();
@@ -150,8 +150,8 @@ public class SnapRoundingTest  extends TestCase {
 
   boolean isSnapped(List lines, double tol)
   {
-    for (int i = 0; i < lines.size(); i++) {
-      LineString line = (LineString) lines.get(i);
+    for (Object line2 : lines) {
+      LineString line = (LineString) line2;
       for (int j = 0; j < line.getNumPoints(); j++) {
         Coordinate v = line.getCoordinateN(j);
           if (! isSnapped(v, lines)) return false;
@@ -163,8 +163,8 @@ public class SnapRoundingTest  extends TestCase {
 
   private boolean isSnapped(Coordinate v, List lines)
   {
-    for (int i = 0; i < lines.size(); i++) {
-      LineString line = (LineString) lines.get(i);
+    for (Object line2 : lines) {
+      LineString line = (LineString) line2;
       for (int j = 0; j < line.getNumPoints() - 1; j++) {
         Coordinate p0 = line.getCoordinateN(j);
         Coordinate p1 = line.getCoordinateN(j+1);

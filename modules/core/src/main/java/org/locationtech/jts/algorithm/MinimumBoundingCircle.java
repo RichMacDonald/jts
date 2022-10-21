@@ -315,7 +315,7 @@ public class MinimumBoundingCircle
 		 * at most <tt>pts.length</tt> iterations are required to terminate 
 		 * with a correct result.
 		 */ 
-		for (int i = 0; i < pts.length; i++) {
+		for (Coordinate pt : pts) {
 			Coordinate R = pointWithMinAngleWithSegment(pts, P, Q);
 			
 			if (Angle.isObtuse(P, R, Q)) {
@@ -356,9 +356,8 @@ public class MinimumBoundingCircle
 	{
 		double minSin = Double.MAX_VALUE;
 		Coordinate minAngPt = null;
-		for (int i = 0; i < pts.length; i++) {
+		for (Coordinate p : pts) {
 			
-			Coordinate p = pts[i];
 			if (p == P) continue;
 			
 			/**
@@ -382,9 +381,8 @@ public class MinimumBoundingCircle
 	{
 		double minAng = Double.MAX_VALUE;
 		Coordinate minAngPt = null;
-		for (int i = 0; i < pts.length; i++) {
+		for (Coordinate p : pts) {
 			
-			Coordinate p = pts[i];
 			if (p == P) continue;
 			if (p == Q) continue;
 			

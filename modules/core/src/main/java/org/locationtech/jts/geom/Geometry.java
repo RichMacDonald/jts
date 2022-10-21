@@ -224,8 +224,8 @@ public abstract class Geometry
    *      <code>isEmpty</code> methods return <code>false</code>
    */
   protected static boolean hasNonEmptyElements(Geometry[] geometries) {
-    for (int i = 0; i < geometries.length; i++) {
-      if (!geometries[i].isEmpty()) {
+    for (Geometry element : geometries) {
+      if (!element.isEmpty()) {
         return true;
       }
     }
@@ -240,8 +240,8 @@ public abstract class Geometry
    *      <code>null</code>
    */
   protected static boolean hasNullElements(Object[] array) {
-    for (int i = 0; i < array.length; i++) {
-      if (array[i] == null) {
+    for (Object element : array) {
+      if (element == null) {
         return true;
       }
     }

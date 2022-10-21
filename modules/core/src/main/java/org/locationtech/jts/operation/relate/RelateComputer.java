@@ -145,8 +145,8 @@ public class RelateComputer
 
   private void insertEdgeEnds(List ee)
   {
-    for (Iterator i = ee.iterator(); i.hasNext(); ) {
-      EdgeEnd e = (EdgeEnd) i.next();
+    for (Object element : ee) {
+      EdgeEnd e = (EdgeEnd) element;
       nodes.add(e);
     }
   }
@@ -334,8 +334,8 @@ public class RelateComputer
   private void updateIM(IntersectionMatrix im)
   {
 //Debug.println(im);
-    for (Iterator ei = isolatedEdges.iterator(); ei.hasNext(); ) {
-      Edge e = (Edge) ei.next();
+    for (Object isolatedEdge : isolatedEdges) {
+      Edge e = (Edge) isolatedEdge;
       e.updateIM(im);
 //Debug.println(im);
     }

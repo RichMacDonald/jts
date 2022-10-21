@@ -12,7 +12,6 @@
 
 package org.locationtech.jtstest.testbuilder.ui;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -130,9 +129,9 @@ public class GeometryLocationsWriter
     
     StringBuffer buf = new StringBuffer();
     int count = 0;
-    for (Iterator i = locs.iterator(); i.hasNext(); ) {
+    for (Object loc2 : locs) {
     	
-    	GeometryLocation loc = (GeometryLocation) i.next();
+    	GeometryLocation loc = (GeometryLocation) loc2;
     	Geometry comp = loc.getComponent();
       
       String path = loc.pathString();
@@ -184,8 +183,8 @@ public class GeometryLocationsWriter
     StringBuffer buf = new StringBuffer();
     boolean isFirst = true;
     int count = 0;
-    for (Iterator i = locs.iterator(); i.hasNext(); ) {
-    	GeometryLocation loc = (GeometryLocation) i.next();
+    for (Object loc2 : locs) {
+    	GeometryLocation loc = (GeometryLocation) loc2;
 
     	if (! isFirst) {
     		buf.append(eol);
@@ -233,8 +232,8 @@ public class GeometryLocationsWriter
     
     StringBuffer buf = new StringBuffer();
     boolean isFirst = true;
-    for (Iterator i = locs.iterator(); i.hasNext(); ) {
-    	VertexLocater.Location vertLoc = (VertexLocater.Location) i.next();
+    for (Object loc : locs) {
+    	VertexLocater.Location vertLoc = (VertexLocater.Location) loc;
     	int index = vertLoc.getIndices()[0];
     	Coordinate pt = vertLoc.getCoordinate();
     	if (! isFirst) {

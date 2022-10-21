@@ -14,7 +14,6 @@ package org.locationtech.jts.dissolve;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -104,8 +103,8 @@ public class LineDissolver
    */
   public void add(Collection geometries) 
   {
-    for (Iterator i = geometries.iterator(); i.hasNext(); ) {
-      Geometry geometry = (Geometry) i.next();
+    for (Object element : geometries) {
+      Geometry geometry = (Geometry) element;
       add(geometry);
     }
   }
@@ -145,8 +144,8 @@ public class LineDissolver
 
   private void computeResult() {
     Collection edges = graph.getVertexEdges();
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      HalfEdge e = (HalfEdge) i.next();
+    for (Object edge : edges) {
+      HalfEdge e = (HalfEdge) edge;
       if (MarkHalfEdge.isMarked(e)) continue;
       process(e);
     }

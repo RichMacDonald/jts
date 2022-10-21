@@ -13,7 +13,6 @@
 package org.locationtech.jtstest.testbuilder.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -122,8 +121,8 @@ public class LayerList
   private List extractLocationGeometry(List locs)
   {
     List geoms = new ArrayList();
-    for (Iterator i = locs.iterator(); i.hasNext();) {
-      GeometryLocation loc = (GeometryLocation) i.next();
+    for (Object loc2 : locs) {
+      GeometryLocation loc = (GeometryLocation) loc2;
       geoms.add(loc.getComponent());
     }
     return geoms;

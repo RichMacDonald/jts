@@ -51,14 +51,13 @@ public class DiffFunctions {
     
     Coordinate[] ptsB = b.getCoordinates();
     Set<Coordinate> pts = new HashSet<Coordinate>();
-    for (int i = 0; i < ptsB.length; i++) {
-      pts.add(ptsB[i]);
+    for (Coordinate element : ptsB) {
+      pts.add(element);
     }
 
     CoordinateList diffPts = new CoordinateList();
     Coordinate[] ptsA = a.getCoordinates();
-    for (int j = 0; j < ptsA.length; j++) {
-      Coordinate pa = ptsA[j];
+    for (Coordinate pa : ptsA) {
       if (! pts.contains(pa)) {
         diffPts.add(pa);
       }

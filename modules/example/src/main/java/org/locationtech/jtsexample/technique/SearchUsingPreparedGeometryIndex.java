@@ -13,7 +13,6 @@ package org.locationtech.jtsexample.technique;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -112,8 +111,8 @@ public class SearchUsingPreparedGeometryIndex
   static double area(Collection geoms)
   {
   	double area = 0.0;
-		for (Iterator i = geoms.iterator(); i.hasNext(); ) {
-			Geometry geom = (Geometry) i.next();
+		for (Object geom2 : geoms) {
+			Geometry geom = (Geometry) geom2;
 			area += geom.getArea();
 		}
 		return area;
@@ -149,8 +148,8 @@ public class SearchUsingPreparedGeometryIndex
   static List findIntersecting(Collection targetGeoms, Geometry queryGeom)
   {
 		List result = new ArrayList();
-		for (Iterator it = targetGeoms.iterator(); it.hasNext(); ) {
-			Geometry test = (Geometry) it.next();
+		for (Object targetGeom : targetGeoms) {
+			Geometry test = (Geometry) targetGeom;
 			if (test.intersects(queryGeom)) {
 				result.add(test);
 			}
@@ -188,8 +187,8 @@ class PreparedGeometryIndex
 	 */
 	public void insert(Collection geoms)
 	{
-		for (Iterator i = geoms.iterator(); i.hasNext(); ) {
-			Geometry geom = (Geometry) i.next();
+		for (Object geom2 : geoms) {
+			Geometry geom = (Geometry) geom2;
 			index.insert(geom.getEnvelopeInternal(), PreparedGeometryFactory.prepare(geom));
 		}
 	}
@@ -216,8 +215,8 @@ class PreparedGeometryIndex
 	{
 		List result = new ArrayList();
 		List candidates = query(g);
-		for (Iterator it = candidates.iterator(); it.hasNext(); ) {
-			PreparedGeometry prepGeom = (PreparedGeometry) it.next();
+		for (Object candidate : candidates) {
+			PreparedGeometry prepGeom = (PreparedGeometry) candidate;
 			if (prepGeom.intersects(g)) {
 				result.add(prepGeom);
 			}

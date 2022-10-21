@@ -128,8 +128,8 @@ public class SnappingNoder
   
   private Coordinate[] snap(Coordinate[] coords) {
     CoordinateList snapCoords = new CoordinateList();
-    for (int i = 0 ; i < coords.length; i++) {
-      Coordinate pt = snapIndex.snap(coords[i]);
+    for (Coordinate coord : coords) {
+      Coordinate pt = snapIndex.snap(coord);
       snapCoords.add(pt, false);
     }
     return snapCoords.toCoordinateArray();

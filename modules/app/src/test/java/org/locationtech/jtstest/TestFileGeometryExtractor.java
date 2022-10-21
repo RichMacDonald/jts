@@ -13,7 +13,6 @@ package org.locationtech.jtstest;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jtstest.testrunner.TestCase;
@@ -35,15 +34,15 @@ public class TestFileGeometryExtractor {
     TestReader testReader = new TestReader();
     TestRun testRun = testReader.createTestRun(new File("c:\\blah\\isvalid.xml"), 0);
     ArrayList geometries = new ArrayList();
-    for (Iterator i = testRun.getTestCases().iterator(); i.hasNext(); ) {
-      TestCase testCase = (TestCase) i.next();
+    for (Object element : testRun.getTestCases()) {
+      TestCase testCase = (TestCase) element;
       add(testCase.getGeometryA(), geometries);
       add(testCase.getGeometryB(), geometries);
     }
     String run = "";
     int j = 0;
-    for (Iterator i = geometries.iterator(); i.hasNext(); ) {
-      Geometry geometry = (Geometry) i.next();
+    for (Object element : geometries) {
+      Geometry geometry = (Geometry) element;
       j++;
       run += "<case>" + StringUtil.newLine;
       run += "  <desc>Test " + j + "</desc>" + StringUtil.newLine;
@@ -58,8 +57,8 @@ public class TestFileGeometryExtractor {
 
   private static void add(Geometry geometry, ArrayList geometries) {
     if (geometry == null) { return; }
-    for (Iterator i = geometries.iterator(); i.hasNext(); ) {
-      Geometry existingGeometry = (Geometry) i.next();
+    for (Object element : geometries) {
+      Geometry existingGeometry = (Geometry) element;
       if (geometry.equalsExact(existingGeometry)) { return; }
     }
     geometries.add(geometry);

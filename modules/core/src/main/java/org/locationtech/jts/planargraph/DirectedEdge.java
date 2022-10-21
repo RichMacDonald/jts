@@ -14,7 +14,6 @@ package org.locationtech.jts.planargraph;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -41,8 +40,8 @@ public class DirectedEdge
   public static List toEdges(Collection dirEdges)
   {
     List edges = new ArrayList();
-    for (Iterator i = dirEdges.iterator(); i.hasNext(); ) {
-      edges.add( ((DirectedEdge) i.next()).parentEdge);
+    for (Object dirEdge : dirEdges) {
+      edges.add( ((DirectedEdge) dirEdge).parentEdge);
     }
     return edges;
   }

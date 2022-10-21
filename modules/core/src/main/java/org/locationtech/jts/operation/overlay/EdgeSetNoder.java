@@ -12,7 +12,6 @@
 package org.locationtech.jts.operation.overlay;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.LineIntersector;
@@ -50,8 +49,8 @@ public class EdgeSetNoder {
 //Debug.println("has proper int = " + si.hasProperIntersection());
 
     List splitEdges = new ArrayList();
-    for (Iterator i = inputEdges.iterator(); i.hasNext(); ) {
-      Edge e = (Edge) i.next();
+    for (Object inputEdge : inputEdges) {
+      Edge e = (Edge) inputEdge;
       e.getEdgeIntersectionList().addSplitEdges(splitEdges);
     }
     return splitEdges;

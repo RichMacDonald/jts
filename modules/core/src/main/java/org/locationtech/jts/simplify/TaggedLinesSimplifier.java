@@ -13,7 +13,6 @@
 package org.locationtech.jts.simplify;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Simplifies a collection of TaggedLineStrings, preserving topology
@@ -49,14 +48,14 @@ class TaggedLinesSimplifier
    * @param taggedLines the collection of lines to simplify
    */
   public void simplify(Collection taggedLines) {
-    for (Iterator i = taggedLines.iterator(); i.hasNext(); ) {
-      inputIndex.add((TaggedLineString) i.next());
+    for (Object taggedLine : taggedLines) {
+      inputIndex.add((TaggedLineString) taggedLine);
     }
-    for (Iterator i = taggedLines.iterator(); i.hasNext(); ) {
+    for (Object taggedLine : taggedLines) {
       TaggedLineStringSimplifier tlss
                     = new TaggedLineStringSimplifier(inputIndex, outputIndex);
       tlss.setDistanceTolerance(distanceTolerance);
-      tlss.simplify((TaggedLineString) i.next());
+      tlss.simplify((TaggedLineString) taggedLine);
     }
   }
 

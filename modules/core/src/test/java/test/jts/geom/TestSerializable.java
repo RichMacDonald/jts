@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Envelope;
@@ -112,8 +111,8 @@ public class TestSerializable {
       int count = 0;
       Object obj = objStream.readObject();
       List inputList = (List) obj;
-      for (Iterator i = inputList.iterator(); i.hasNext(); ) {
-        compare(objList.get(count++), i.next());
+      for (Object element : inputList) {
+        compare(objList.get(count++), element);
       }
 
 //      while (objStream.available() > 0) {

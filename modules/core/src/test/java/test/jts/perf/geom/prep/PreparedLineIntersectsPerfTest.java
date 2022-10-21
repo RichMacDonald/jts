@@ -11,7 +11,6 @@
  */
 package test.jts.perf.geom.prep;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -104,8 +103,8 @@ public class PreparedLineIntersectsPerfTest
   { 
   	System.out.println("Using original JTS algorithm");
   	int count = 0;
-  	for (Iterator i = lines.iterator(); i.hasNext(); ) {
-  		LineString line = (LineString) i.next();
+  	for (Object line2 : lines) {
+  		LineString line = (LineString) line2;
   		if (g.intersects(line))
   			count++;
   	}
@@ -119,8 +118,8 @@ public class PreparedLineIntersectsPerfTest
     PreparedGeometry prepGeom = pgFact.create(g);
     
   	int count = 0;
-  	for (Iterator i = lines.iterator(); i.hasNext(); ) {
-  		LineString line = (LineString) i.next();
+  	for (Object line2 : lines) {
+  		LineString line = (LineString) line2;
   		
   		if (prepGeom.intersects(line))
   			count++;
@@ -146,8 +145,8 @@ public class PreparedLineIntersectsPerfTest
 //    PreparedGeometry prepGeom = pgFact.create(g);
     
   	int count = 0;
-  	for (Iterator i = lines.iterator(); i.hasNext(); ) {
-  		LineString line = (LineString) i.next();
+  	for (Object line2 : lines) {
+  		LineString line = (LineString) line2;
   		
   		// test performance of creating the prepared geometry each time
       PreparedGeometry prepGeom = pgFact.create(g);

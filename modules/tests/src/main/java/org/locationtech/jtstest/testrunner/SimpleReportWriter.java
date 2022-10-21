@@ -12,7 +12,6 @@
 package org.locationtech.jtstest.testrunner;
 import java.io.StringWriter;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.util.Assert;
@@ -105,16 +104,16 @@ private boolean verbose;
       return;
     }
     reportBuf.write("\n");
-    for (Iterator i = parsingProblems.iterator(); i.hasNext(); ) {
-      String parsingProblem = (String) i.next();
+    for (Object parsingProblem2 : parsingProblems) {
+      String parsingProblem = (String) parsingProblem2;
       reportBuf.write(parsingProblem);
       reportBuf.write("\n");
     }
   }
 
   private void reportOnTestRuns(List testRuns) {
-    for (Iterator i = testRuns.iterator(); i.hasNext(); ) {
-      TestRun testRun = (TestRun) i.next();
+    for (Object testRun2 : testRuns) {
+      TestRun testRun = (TestRun) testRun2;
       reportOnTestRun(testRun);
     }
   }
@@ -124,16 +123,16 @@ private boolean verbose;
   }
 
   private void reportOnTestCases(List testCases) {
-    for (Iterator i = testCases.iterator(); i.hasNext(); ) {
-      TestCase testCase = (TestCase) i.next();
+    for (Object element : testCases) {
+      TestCase testCase = (TestCase) element;
       if (testCase.isRun())
       	reportOnTestCase(testCase);
     }
   }
 
   private boolean areAllTestsPassed(TestCase testCase) {
-    for (Iterator i = testCase.getTests().iterator(); i.hasNext(); ) {
-      Test test = (Test) i.next();
+    for (Object element : testCase.getTests()) {
+      Test test = (Test) element;
       if (! test.isPassed()) {
         return false;
       }
@@ -155,8 +154,8 @@ private boolean verbose;
   }
 
   private void reportOnTests(List tests) {
-    for (Iterator i = tests.iterator(); i.hasNext(); ) {
-      Test test = (Test) i.next();
+    for (Object test2 : tests) {
+      Test test = (Test) test2;
       reportOnTest(test);
     }
   }

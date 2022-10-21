@@ -14,7 +14,6 @@ package org.locationtech.jtstest.testbuilder.geom;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
@@ -49,8 +48,8 @@ public class FacetLocater
 	public static List filterVertexLocations(Collection locations)
 	{
 		ArrayList vertexLocs = new ArrayList();
-		for (Iterator i = locations.iterator(); i.hasNext(); ) {
-			GeometryLocation loc = (GeometryLocation) i.next();
+		for (Object location : locations) {
+			GeometryLocation loc = (GeometryLocation) location;
 			if (loc.isVertex()) vertexLocs.add(loc);
 		}
 		return vertexLocs;
@@ -157,8 +156,8 @@ public class FacetLocater
 	{
 		int[] index = new int[path.size()];
 		int i = 0;
-		for (Iterator it = path.iterator(); it.hasNext(); ) {
-			Integer pathIndex = (Integer) it.next();
+		for (Object element : path) {
+			Integer pathIndex = (Integer) element;
 			index[i++] = pathIndex.intValue();
 		}
 		return index;

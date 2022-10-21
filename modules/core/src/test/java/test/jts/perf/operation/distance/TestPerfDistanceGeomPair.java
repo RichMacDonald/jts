@@ -106,9 +106,7 @@ public class TestPerfDistanceGeomPair
     double dist = 0.0;
     double dist2 = 0.0;
     IndexedFacetDistance fastDist = new IndexedFacetDistance(geom[0]);
-    for (int i = 0; i < pts.length; i++) {
-      Coordinate p = pts[i];
-      
+    for (Coordinate p : pts) {
       // slow N^2 distance
       dist = geom[0].distance(geom[1].getFactory().createPoint(p));
       

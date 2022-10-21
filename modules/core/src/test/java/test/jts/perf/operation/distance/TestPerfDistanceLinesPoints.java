@@ -142,13 +142,13 @@ public class TestPerfDistanceLinesPoints
     IndexedFacetDistance bbd = null;
     if (USE_INDEXED_DIST)
       bbd = new IndexedFacetDistance(geom);
-    for (int i = 0; i < pts.length; i++ ) {
+    for (Geometry pt : pts) {
       if (USE_INDEXED_DIST) {
-        double dist = bbd.distance(pts[i]);
+        double dist = bbd.distance(pt);
 //        double dist = bbd.getDistanceWithin(pts[i].getCoordinate(), 100000);
       }
       else { 
-       double dist = geom.distance(pts[i]);
+       double dist = geom.distance(pt);
       }
     }
   }

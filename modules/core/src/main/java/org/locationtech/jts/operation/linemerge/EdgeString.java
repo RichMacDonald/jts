@@ -13,7 +13,6 @@ package org.locationtech.jts.operation.linemerge;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -52,8 +51,8 @@ public class EdgeString {
       int forwardDirectedEdges = 0;
       int reverseDirectedEdges = 0;
       CoordinateList coordinateList = new CoordinateList();
-      for (Iterator i = directedEdges.iterator(); i.hasNext();) {
-        LineMergeDirectedEdge directedEdge = (LineMergeDirectedEdge) i.next();
+      for (Object directedEdge2 : directedEdges) {
+        LineMergeDirectedEdge directedEdge = (LineMergeDirectedEdge) directedEdge2;
         if (directedEdge.getEdgeDirection()) {
           forwardDirectedEdges++;
         }

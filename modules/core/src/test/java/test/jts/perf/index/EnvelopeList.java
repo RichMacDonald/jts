@@ -12,7 +12,6 @@
 package test.jts.perf.index;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Envelope;
@@ -37,8 +36,8 @@ public class EnvelopeList
   public List query(Envelope searchEnv)
   {
     List result = new ArrayList();
-    for (Iterator i = envList.iterator(); i.hasNext(); ) {
-      Envelope env = (Envelope) i.next();
+    for (Object element : envList) {
+      Envelope env = (Envelope) element;
       if (env.intersects(searchEnv))
         result.add(env);
     }

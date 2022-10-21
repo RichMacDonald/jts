@@ -12,7 +12,6 @@
 package test.jts.perf.index;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -119,8 +118,8 @@ public class IndexTester {
   
   void loadTree(List items)
   {
-    for (Iterator i = items.iterator(); i.hasNext(); ) {
-      Envelope item = (Envelope) i.next();
+    for (Object item2 : items) {
+      Envelope item = (Envelope) item2;
       index.insert(item, item);
     }
     index.finishInserting();
@@ -129,8 +128,8 @@ public class IndexTester {
   void runQuery(List queries)
   {
     double querySize = 0.0;
-    for (int i = 0; i < queries.size(); i++) {
-      Envelope env = (Envelope) queries.get(i);
+    for (Object element : queries) {
+      Envelope env = (Envelope) element;
       List list = index.query(env);
       Assert.isTrue(!list.isEmpty());
       querySize += list.size();

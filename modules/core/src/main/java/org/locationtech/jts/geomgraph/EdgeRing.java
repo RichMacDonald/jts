@@ -12,7 +12,6 @@
 package org.locationtech.jts.geomgraph;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -223,8 +222,8 @@ public abstract class EdgeRing {
     if (! env.contains(p)) return false;
     if (! PointLocation.isInRing(p, shell.getCoordinates()) ) return false;
 
-    for (Iterator i = holes.iterator(); i.hasNext(); ) {
-      EdgeRing hole = (EdgeRing) i.next();
+    for (Object hole2 : holes) {
+      EdgeRing hole = (EdgeRing) hole2;
       if (hole.containsPoint(p) )
         return false;
     }

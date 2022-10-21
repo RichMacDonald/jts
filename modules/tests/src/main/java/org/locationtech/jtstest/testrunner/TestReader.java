@@ -20,7 +20,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -128,8 +127,8 @@ public class TestReader
         throws TestParseException {
         List<Test> tests = new ArrayList<Test>();
         int testIndex = 0;
-        for (Iterator i = testElements.iterator(); i.hasNext();) {
-            Element testElement = (Element) i.next();
+        for (Object testElement2 : testElements) {
+            Element testElement = (Element) testElement2;
             testIndex++;
             try {
                 Element descElement = testElement.getChild("desc");
@@ -267,8 +266,8 @@ public class TestReader
         wktorbReader = new WKTOrWKBReader(geometryFactory);
         Vector testCases = new Vector();
         int caseIndex = 0;
-        for (Iterator i = caseElements.iterator(); i.hasNext();) {
-            Element caseElement = (Element) i.next();
+        for (Object caseElement2 : caseElements) {
+            Element caseElement = (Element) caseElement2;
             //System.out.println("Line: " + ((LineNumberElement)caseElement).getStartLine());
             caseIndex++;
             try {
@@ -294,8 +293,8 @@ public class TestReader
                 //          throw  new TestParseException("Missing <test> in <case>");
                 //        }
                 List tests = parseTests(testElements, caseIndex, testFile, testCase, tolerance);
-                for (Iterator j = tests.iterator(); j.hasNext();) {
-                    Test test = (Test) j.next();
+                for (Object test2 : tests) {
+                    Test test = (Test) test2;
                     testCase.add(test);
                 }
                 testCases.add(testCase);
@@ -363,12 +362,10 @@ public class TestReader
         if (caseElements.size() == 0) {
             throw new TestParseException("Missing <case> in <run>");
         }
-        for (Iterator i = parseTestCases(caseElements, testFile, testRun, tolerance).iterator();
-            i.hasNext();
-            ) {
-            TestCase testCase = (TestCase) i.next();
-            testRun.addTestCase(testCase);
-        }
+        for (Object element : parseTestCases(caseElements, testFile, testRun, tolerance)) {
+		TestCase testCase = (TestCase) element;
+		testRun.addTestCase(testCase);
+      }
         return testRun;
     }
 
@@ -571,8 +568,8 @@ public class TestReader
 
     private String toString(List stringList) {
         String string = "";
-        for (Iterator i = stringList.iterator(); i.hasNext();) {
-            String line = (String) i.next();
+        for (Object element : stringList) {
+            String line = (String) element;
             string += line + "\n";
         }
         return string;

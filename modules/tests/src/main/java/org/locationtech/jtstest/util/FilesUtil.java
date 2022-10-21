@@ -15,15 +15,14 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 public class FilesUtil {
 
   public static List expand(Collection fileAndDirectoryNames) {
     List filenames = new ArrayList();
-    for (Iterator i = fileAndDirectoryNames.iterator(); i.hasNext();) {
-      String name = (String) i.next();
+    for (Object fileAndDirectoryName : fileAndDirectoryNames) {
+      String name = (String) fileAndDirectoryName;
       File file = new File(name);
       if (file.isDirectory()) {
         filenames.addAll(expand(file));
@@ -36,8 +35,8 @@ public class FilesUtil {
 
   public static List expand(Collection fileAndDirectoryNames, String fileExtension) {
     List filenames = new ArrayList();
-    for (Iterator i = fileAndDirectoryNames.iterator(); i.hasNext();) {
-      String name = (String) i.next();
+    for (Object fileAndDirectoryName : fileAndDirectoryNames) {
+      String name = (String) fileAndDirectoryName;
       File file = new File(name);
       if (file.isDirectory()) {
         filenames.addAll(expand(file, fileExtension));
@@ -52,9 +51,9 @@ public class FilesUtil {
     List filenames = new ArrayList();
     if (fileOrDir.isDirectory()) {
       File[] files = fileOrDir.listFiles();
-      for (int i = 0; i < files.length; i++) {
-        if (files[i].isFile()) {
-          filenames.add(files[i].getPath());
+      for (File file : files) {
+        if (file.isFile()) {
+          filenames.add(file.getPath());
         }
       }
     }
@@ -73,9 +72,9 @@ public class FilesUtil {
           return name.endsWith("." + fileExtension);
         }
       });
-      for (int i = 0; i < files.length; i++) {
-        if (files[i].isFile()) {
-          filenames.add(files[i].getPath());
+      for (File file : files) {
+        if (file.isFile()) {
+          filenames.add(file.getPath());
         }
       }
     } else {
@@ -87,11 +86,11 @@ public class FilesUtil {
 	public static Collection filenamesDeep(File directory) {
 		Collection filenames = new ArrayList();
 		File[] files = directory.listFiles();
-		for (int i = 0; i < files.length; i++) {
-			if (files[i].isFile()) {
-				filenames.add(files[i].getPath());
-			} else if (files[i].isDirectory()) {
-				filenames.add(filenamesDeep(files[i]));
+		for (File file : files) {
+			if (file.isFile()) {
+				filenames.add(file.getPath());
+			} else if (file.isDirectory()) {
+				filenames.add(filenamesDeep(file));
 			}
 		}
 		return filenames;

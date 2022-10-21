@@ -21,7 +21,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -517,8 +516,8 @@ public class JTSTestBuilderFrame extends JFrame
     if (parsingProblems.isEmpty()) {
       return;
     }
-    for (Iterator i = parsingProblems.iterator(); i.hasNext(); ) {
-      String problem = (String) i.next();
+    for (Object parsingProblem : parsingProblems) {
+      String problem = (String) parsingProblem;
       System.out.println(problem);
     }
     JOptionPane.showMessageDialog(this, StringUtil.wrap(parsingProblems.size()

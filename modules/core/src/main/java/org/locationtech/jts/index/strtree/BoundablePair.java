@@ -11,7 +11,6 @@
  */
 package org.locationtech.jts.index.strtree;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -192,8 +191,8 @@ class BoundablePair
       PriorityQueue priQ, double minDistance)
   {
     List children = ((AbstractNode) bndComposite).getChildBoundables();
-    for (Iterator i = children.iterator(); i.hasNext(); ) {
-      Boundable child = (Boundable) i.next();
+    for (Object child2 : children) {
+      Boundable child = (Boundable) child2;
       BoundablePair bp;
       if (isFlipped) {
         bp = new BoundablePair(bndOther, child, itemDistance);

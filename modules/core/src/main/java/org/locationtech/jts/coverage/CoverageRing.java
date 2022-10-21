@@ -103,8 +103,8 @@ class CoverageRing extends BasicSegmentString {
    * @return true if all segments are valid
    */
   public boolean isValid() {
-    for (int i = 0; i < isValid.length; i++) {
-      if (! isValid[i])
+    for (boolean element : isValid) {
+      if (! element)
         return false;
     }
     return true;
@@ -116,8 +116,8 @@ class CoverageRing extends BasicSegmentString {
    * @return true if all segments are invalid
    */
   public boolean isInvalid() {
-    for (int i = 0; i < isInvalid.length; i++) {
-      if (! isInvalid[i])
+    for (boolean element : isInvalid) {
+      if (! element)
         return false;
     }
     return true;
@@ -129,8 +129,8 @@ class CoverageRing extends BasicSegmentString {
    * @return true if some segment is invalid
    */
   public boolean hasInvalid() {
-    for (int i = 0; i < isInvalid.length; i++) {
-      if (isInvalid[i])
+    for (boolean element : isInvalid) {
+      if (element)
         return true;
     }
     return false;

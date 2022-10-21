@@ -14,7 +14,6 @@ package org.locationtech.jts.operation.polygonize;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -118,8 +117,8 @@ public class Polygonizer
    */
   public void add(Collection geomList)
   {
-    for (Iterator i = geomList.iterator(); i.hasNext(); ) {
-      Geometry geometry = (Geometry) i.next();
+    for (Object element : geomList) {
+      Geometry geometry = (Geometry) element;
       add(geometry);
     }
   }
@@ -268,8 +267,8 @@ public class Polygonizer
 
   private void findValidRings(List edgeRingList, List validEdgeRingList, List invalidRingList)
   {
-    for (Iterator i = edgeRingList.iterator(); i.hasNext(); ) {
-      EdgeRing er = (EdgeRing) i.next();
+    for (Object element : edgeRingList) {
+      EdgeRing er = (EdgeRing) element;
       if (er.isValid())
         validEdgeRingList.add(er);
       else
@@ -281,8 +280,8 @@ public class Polygonizer
   {
     holeList = new ArrayList();
     shellList = new ArrayList();
-    for (Iterator i = edgeRingList.iterator(); i.hasNext(); ) {
-      EdgeRing er = (EdgeRing) i.next();
+    for (Object element : edgeRingList) {
+      EdgeRing er = (EdgeRing) element;
       er.computeHole();
       if (er.isHole())
         holeList.add(er);
@@ -297,8 +296,8 @@ public class Polygonizer
     boolean isMoreToScan;
     do {
       isMoreToScan = false;
-      for (Iterator i = shellList.iterator(); i.hasNext(); ) {
-        EdgeRing er = (EdgeRing) i.next();
+      for (Object element : shellList) {
+        EdgeRing er = (EdgeRing) element;
         if (er.isIncludedSet()) 
           continue;
         er.updateIncluded();
@@ -317,8 +316,8 @@ public class Polygonizer
    */
   private static void findOuterShells(List shellList) {
 
-    for (Iterator i = shellList.iterator(); i.hasNext();) {
-      EdgeRing er = (EdgeRing) i.next();
+    for (Object element : shellList) {
+      EdgeRing er = (EdgeRing) element;
       EdgeRing outerHoleER = er.getOuterHole();
       if (outerHoleER != null && ! outerHoleER.isProcessed()) {
         er.setIncluded(true);
@@ -329,8 +328,8 @@ public class Polygonizer
   
   private static List extractPolygons(List shellList, boolean includeAll) {
     List polyList = new ArrayList();
-    for (Iterator i = shellList.iterator(); i.hasNext();) {
-      EdgeRing er = (EdgeRing) i.next();
+    for (Object element : shellList) {
+      EdgeRing er = (EdgeRing) element;
       if (includeAll || er.isIncluded()) {
         polyList.add(er.getPolygon());
       }

@@ -87,8 +87,8 @@ public class LineMerger
   public void add(Collection geometries) 
   {
   	mergedLineStrings = null;
-    for (Iterator i = geometries.iterator(); i.hasNext(); ) {
-      Geometry geometry = (Geometry) i.next();
+    for (Object element : geometries) {
+      Geometry geometry = (Geometry) element;
       add(geometry);
     }
   }
@@ -113,8 +113,8 @@ public class LineMerger
     buildEdgeStringsForObviousStartNodes();
     buildEdgeStringsForIsolatedLoops();
     mergedLineStrings = new ArrayList();    
-    for (Iterator i = edgeStrings.iterator(); i.hasNext(); ) {
-      EdgeString edgeString = (EdgeString) i.next();
+    for (Object edgeString2 : edgeStrings) {
+      EdgeString edgeString = (EdgeString) edgeString2;
       mergedLineStrings.add(edgeString.toLineString());
     }    
   }
@@ -128,8 +128,8 @@ public class LineMerger
   }  
   
   private void buildEdgeStringsForUnprocessedNodes() {
-    for (Iterator i = graph.getNodes().iterator(); i.hasNext(); ) {
-      Node node = (Node) i.next();
+    for (Object element : graph.getNodes()) {
+      Node node = (Node) element;
       if (!node.isMarked()) { 
         Assert.isTrue(node.getDegree() == 2);
         buildEdgeStringsStartingAt(node);
@@ -138,8 +138,8 @@ public class LineMerger
     }
   }  
   private void buildEdgeStringsForNonDegree2Nodes() {
-    for (Iterator i = graph.getNodes().iterator(); i.hasNext(); ) {
-      Node node = (Node) i.next();
+    for (Object element : graph.getNodes()) {
+      Node node = (Node) element;
       if (node.getDegree() != 2) { 
         buildEdgeStringsStartingAt(node);
         node.setMarked(true);

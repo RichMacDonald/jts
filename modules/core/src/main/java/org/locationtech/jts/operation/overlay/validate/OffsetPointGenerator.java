@@ -13,7 +13,6 @@
 package org.locationtech.jts.operation.overlay.validate;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -67,8 +66,8 @@ public class OffsetPointGenerator
   {
     List offsetPts = new ArrayList();
     List lines = LinearComponentExtracter.getLines(g);
-    for (Iterator i = lines.iterator(); i.hasNext(); ) {
-      LineString line = (LineString) i.next();
+    for (Object line2 : lines) {
+      LineString line = (LineString) line2;
       extractPoints(line, offsetDistance, offsetPts);
     }
     //System.out.println(toMultiPoint(offsetPts));

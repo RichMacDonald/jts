@@ -16,7 +16,6 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -178,9 +177,8 @@ public class GeometryFunctionRegistry
 	public List<GeometryFunction> getGeometryFunctions()
 	{
 		List<GeometryFunction> funList = new ArrayList<GeometryFunction>();
-		for (Iterator<GeometryFunction> i = sortedFunctions.values().iterator(); i.hasNext(); )
-		{
-			GeometryFunction fun = (GeometryFunction) i.next();
+		for (GeometryFunction geometryFunction : sortedFunctions.values()) {
+			GeometryFunction fun = (GeometryFunction) geometryFunction;
 			if (hasGeometryResult(fun))
 				funList.add(fun);
 		}
@@ -195,9 +193,8 @@ public class GeometryFunctionRegistry
 	public List<GeometryFunction> getScalarFunctions()
 	{
 		List<GeometryFunction> scalarFun = new ArrayList<GeometryFunction>();
-		for (Iterator<GeometryFunction> i = sortedFunctions.values().iterator(); i.hasNext(); )
-		{
-			GeometryFunction fun = (GeometryFunction) i.next();
+		for (GeometryFunction geometryFunction : sortedFunctions.values()) {
+			GeometryFunction fun = (GeometryFunction) geometryFunction;
 			if (! hasGeometryResult(fun))
 				scalarFun.add(fun);
 		}
@@ -234,8 +231,8 @@ public class GeometryFunctionRegistry
 
 	public void add(Collection<StaticMethodGeometryFunction> funcs)
 	{
-		for (Iterator<StaticMethodGeometryFunction> i = funcs.iterator(); i.hasNext(); ) {
-			GeometryFunction f = (GeometryFunction) i.next();
+		for (StaticMethodGeometryFunction func : funcs) {
+			GeometryFunction f = (GeometryFunction) func;
 			add(f);
 		}
 	}
@@ -250,12 +247,12 @@ public class GeometryFunctionRegistry
 	public List<StaticMethodGeometryFunction> createFunctions(Class<?> functionClass) {
 		List<StaticMethodGeometryFunction> funcs = new ArrayList<StaticMethodGeometryFunction>();
 		Method[] method = functionClass.getMethods();
-		for (int i = 0; i < method.length; i++) {
-			int mod = method[i].getModifiers();
+		for (Method element : method) {
+			int mod = element.getModifiers();
 			if (Modifier.isStatic(mod) 
 			    && Modifier.isPublic(mod)
-			    && isGeometryFunction(method[i])) {
-				funcs.add(StaticMethodGeometryFunction.createFunction(method[i]));
+			    && isGeometryFunction(element)) {
+				funcs.add(StaticMethodGeometryFunction.createFunction(element));
 			}
 		}
 		return funcs;
@@ -338,8 +335,8 @@ public class GeometryFunctionRegistry
    */
   public GeometryFunction find(String name, int argCount)
   {
-    for (Iterator<GeometryFunction> i = functions.iterator(); i.hasNext(); ) {
-      GeometryFunction func = (GeometryFunction) i.next();
+    for (GeometryFunction function : functions) {
+      GeometryFunction func = (GeometryFunction) function;
       String funcName = func.getName();
       if (funcName.equalsIgnoreCase(name) 
       		&& func.getParameterTypes().length == argCount)
@@ -355,8 +352,8 @@ public class GeometryFunctionRegistry
    */
   public GeometryFunction find(String name)
   {
-    for (Iterator<GeometryFunction> i = functions.iterator(); i.hasNext(); ) {
-      GeometryFunction func = (GeometryFunction) i.next();
+    for (GeometryFunction function : functions) {
+      GeometryFunction func = (GeometryFunction) function;
       String funcName = func.getName();
       if (funcName.equalsIgnoreCase(name))
         return func;
@@ -371,8 +368,8 @@ public class GeometryFunctionRegistry
    */
   public GeometryFunction find(String category, String name)
   {
-    for (Iterator<GeometryFunction> i = functions.iterator(); i.hasNext(); ) {
-      GeometryFunction func = (GeometryFunction) i.next();
+    for (GeometryFunction function : functions) {
+      GeometryFunction func = (GeometryFunction) function;
       String funcName = func.getName();
       if (category.equalsIgnoreCase(func.getCategory()) && funcName.equalsIgnoreCase(name))
         return func;

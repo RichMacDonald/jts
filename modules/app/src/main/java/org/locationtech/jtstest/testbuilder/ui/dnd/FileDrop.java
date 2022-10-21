@@ -12,6 +12,9 @@
 
 package org.locationtech.jtstest.testbuilder.ui.dnd;
 
+import java.awt.Component;
+import java.io.File;
+
 /**
  * This class makes it easy to drag and drop files from the operating
  * system to a Java program. Any <tt>java.awt.Component</tt> can be
@@ -451,8 +454,8 @@ public class FileDrop
             java.awt.Component[] comps = cont.getComponents();
             
             // Set it's components as listeners also
-            for( int i = 0; i < comps.length; i++ )
-                makeDropTarget( out, comps[i], recursive );
+            for (Component comp : comps)
+				makeDropTarget( out, comp, recursive );
         }   // end if: recursively set components as listener
     }   // end dropListener
     
@@ -529,8 +532,8 @@ public class FileDrop
             c.setDropTarget( null );
             if( recursive && ( c instanceof java.awt.Container ) )
             {   java.awt.Component[] comps = ((java.awt.Container)c).getComponents();
-                for( int i = 0; i < comps.length; i++ )
-                    remove( out, comps[i], recursive );
+                for (Component comp : comps)
+					remove( out, comp, recursive );
                 return true;
             }   // end if: recursive
             else return false;
@@ -555,12 +558,11 @@ public class FileDrop
         
         new FileDrop( System.out, text, /*dragBorder,*/ new FileDrop.Listener()
         {   public void filesDropped( java.io.File[] files )
-            {   for( int i = 0; i < files.length; i++ )
-                {   try
-                    {   text.append( files[i].getCanonicalPath() + "\n" );
-                    }   // end try
-                    catch( java.io.IOException e ) {}
-                }   // end for: through each dropped file
+            {   for (File file : files) {   try
+			    {   text.append( file.getCanonicalPath() + "\n" );
+			    }   // end try
+			    catch( java.io.IOException e ) {}
+			}   // end for: through each dropped file
             }   // end filesDropped
         }); // end FileDrop.Listener
 

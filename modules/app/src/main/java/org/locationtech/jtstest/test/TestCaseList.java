@@ -12,7 +12,6 @@
 package org.locationtech.jtstest.test;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jtstest.testbuilder.model.TestCaseEdit;
@@ -42,8 +41,8 @@ public class TestCaseList {
     arrayAdd(tests, tc, i);
   }
   public void add(TestCaseList tcl) {
-    for (Iterator<Object> i = tcl.tests.iterator(); i.hasNext(); ) {
-      tests.add((Testable) i.next());
+    for (Object test : tcl.tests) {
+      tests.add((Testable) test);
     }
   }
   public void remove(int i) {

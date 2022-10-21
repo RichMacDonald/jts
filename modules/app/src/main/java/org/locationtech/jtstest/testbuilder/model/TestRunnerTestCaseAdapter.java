@@ -12,7 +12,6 @@
 package org.locationtech.jtstest.testbuilder.model;
 
 import java.util.Arrays;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
@@ -97,8 +96,8 @@ public class TestRunnerTestCaseAdapter
     if (!ranAtLeastOnce) {
       return false;
     }
-    for (Iterator i = testCase.getTests().iterator(); i.hasNext(); ) {
-      org.locationtech.jtstest.testrunner.Test test = (org.locationtech.jtstest.testrunner.Test) i.next();
+    for (Object element : testCase.getTests()) {
+      org.locationtech.jtstest.testrunner.Test test = (org.locationtech.jtstest.testrunner.Test) element;
       if (!test.isPassed()) {
         return true;
       }
@@ -110,8 +109,8 @@ public class TestRunnerTestCaseAdapter
     if (!ranAtLeastOnce) {
       return "";
     }
-    for (Iterator i = testCase.getTests().iterator(); i.hasNext(); ) {
-      org.locationtech.jtstest.testrunner.Test test = (org.locationtech.jtstest.testrunner.Test) i.next();
+    for (Object element : testCase.getTests()) {
+      org.locationtech.jtstest.testrunner.Test test = (org.locationtech.jtstest.testrunner.Test) element;
       if (!test.isPassed()) {
         SimpleReportWriter reportWriter = new SimpleReportWriter(false);
         return reportWriter.write(test);
@@ -147,8 +146,8 @@ public class TestRunnerTestCaseAdapter
     if (!ranAtLeastOnce) {
       return false;
     }
-    for (Iterator i = testCase.getTests().iterator(); i.hasNext(); ) {
-      org.locationtech.jtstest.testrunner.Test test = (org.locationtech.jtstest.testrunner.Test) i.next();
+    for (Object element : testCase.getTests()) {
+      org.locationtech.jtstest.testrunner.Test test = (org.locationtech.jtstest.testrunner.Test) element;
       if (!test.isPassed()) {
         return false;
       }
@@ -260,8 +259,8 @@ public class TestRunnerTestCaseAdapter
   private Test getABTest(String opName) {
     Assert.isTrue(GeometryMethodOperation.isBooleanFunction(opName) 
     		|| GeometryMethodOperation.isGeometryFunction(opName));
-    for (Iterator i = testCase.getTests().iterator(); i.hasNext(); ) {
-      Test test = (Test) i.next();
+    for (Object element : testCase.getTests()) {
+      Test test = (Test) element;
       if (test.getOperation().equalsIgnoreCase(opName)
            && ((!opName.equalsIgnoreCase("relate"))
            || test.getExpectedResult().equals(new BooleanResult(true)))
@@ -277,8 +276,8 @@ public class TestRunnerTestCaseAdapter
 
   private int maxTestIndex(TestCase testCase) {
     int maxTestIndex = -1;
-    for (Iterator i = testCase.getTests().iterator(); i.hasNext(); ) {
-      Test test = (Test) i.next();
+    for (Object element : testCase.getTests()) {
+      Test test = (Test) element;
       maxTestIndex = Math.max(maxTestIndex, test.getTestIndex());
     }
     return maxTestIndex;

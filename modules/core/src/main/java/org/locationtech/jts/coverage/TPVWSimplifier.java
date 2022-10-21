@@ -219,9 +219,7 @@ class TPVWSimplifier {
     private boolean hasIntersectingVertex(Corner corner, Envelope cornerEnv, 
         Edge edge) {
       int[] result = edge.query(cornerEnv);
-      for (int i = 0; i < result.length; i++) {
-        int index = result[i];
-        
+      for (int index : result) {
         Coordinate v = edge.getCoordinate(index);
         // ok if corner touches another line - should only happen at endpoints
         if (corner.isVertex(v))

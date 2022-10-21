@@ -191,8 +191,8 @@ public abstract class NodeBase implements Serializable {
   {
     // would be nice to filter items based on search envelope, but can't until they contain an envelope
     synchronized (items) {
-        for (int i = 0; i < items.size(); i++) {
-            visitor.visitItem(items.get(i));
+        for (Object item : items) {
+            visitor.visitItem(item);
         }
     }
   }

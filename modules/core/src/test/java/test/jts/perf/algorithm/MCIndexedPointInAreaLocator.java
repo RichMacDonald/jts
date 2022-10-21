@@ -11,7 +11,6 @@
  */
 package test.jts.perf.algorithm;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.RayCrossingCounter;
@@ -83,8 +82,8 @@ public class MCIndexedPointInAreaLocator
 	
 	private void countSegs(RayCrossingCounter rcc, Envelope rayEnv, List monoChains, MCSegmentCounter mcSegCounter)
 	{
-		for (Iterator i = monoChains.iterator(); i.hasNext(); ) {
-			MonotoneChain mc = (MonotoneChain) i.next();
+		for (Object monoChain : monoChains) {
+			MonotoneChain mc = (MonotoneChain) monoChain;
 			mc.select(rayEnv, mcSegCounter);
 			// short-circuit if possible
 			if (rcc.isOnSegment()) return;
@@ -120,8 +119,8 @@ class MCIndexedGeometry
 	private void init(Geometry geom)
 	{
 		List lines = LinearComponentExtracter.getLines(geom);
-		for (Iterator i = lines.iterator(); i.hasNext(); ) {
-			LineString line = (LineString) i.next();
+		for (Object line2 : lines) {
+			LineString line = (LineString) line2;
 			Coordinate[] pts = line.getCoordinates();
 			addLine(pts);
 		}
@@ -131,8 +130,8 @@ class MCIndexedGeometry
 	{
 			SegmentString segStr = new BasicSegmentString(pts, null);
 	    List segChains = MonotoneChainBuilder.getChains(segStr.getCoordinates(), segStr);
-	    for (Iterator i = segChains.iterator(); i.hasNext(); ) {
-	      MonotoneChain mc = (MonotoneChain) i.next();
+	    for (Object segChain : segChains) {
+	      MonotoneChain mc = (MonotoneChain) segChain;
 	      index.insert(mc.getEnvelope(), mc);
 	    }
 	}

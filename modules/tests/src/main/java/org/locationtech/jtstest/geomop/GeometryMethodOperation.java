@@ -56,9 +56,9 @@ public class GeometryMethodOperation
 
   public static Class getGeometryReturnType(String functionName) {
 		Method[] methods = Geometry.class.getMethods();
-		for (int i = 0; i < methods.length; i++) {
-			if (methods[i].getName().equalsIgnoreCase(functionName)) {
-				Class returnClass = methods[i].getReturnType();
+		for (Method method : methods) {
+			if (method.getName().equalsIgnoreCase(functionName)) {
+				Class returnClass = method.getReturnType();
 				/**
 				 * Filter out only acceptable classes. (For instance, don't accept the
 				 * relate()=>IntersectionMatrix method)
@@ -96,12 +96,12 @@ public class GeometryMethodOperation
   private Method getGeometryMethod(String opName, Object[] args, Object[] actualArgs)
   {
     // could index methods by name for efficiency...
-    for (int i = 0; i < geometryMethods.length; i++) {
-      if (! geometryMethods[i].getName().equalsIgnoreCase(opName)) {
+    for (Method geometryMethod : geometryMethods) {
+      if (! geometryMethod.getName().equalsIgnoreCase(opName)) {
         continue;
       }
-      if (convertArgs(geometryMethods[i].getParameterTypes(), args, actualArgs)) {
-        return geometryMethods[i];
+      if (convertArgs(geometryMethod.getParameterTypes(), args, actualArgs)) {
+        return geometryMethod;
       }
     }
     return null;
@@ -110,8 +110,8 @@ public class GeometryMethodOperation
   private static int nonNullItemCount(Object[] obj)
   {
     int count = 0;
-    for (int i = 0; i < obj.length; i++) {
-      if (obj[i] != null)
+    for (Object element : obj) {
+      if (element != null)
         count++;
     }
     return count;

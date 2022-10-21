@@ -299,8 +299,7 @@ extends JPanel implements FunctionPanel
 
   static void initLabels(JLabel[] paramLabel)
   {
-    for (int i = 0; i < paramLabel.length; i++) {
-      JLabel lbl = paramLabel[i];
+    for (JLabel lbl : paramLabel) {
       lbl.setHorizontalAlignment(SwingConstants.RIGHT);
       lbl.setBorder(LABEL_BORDER);
     }
@@ -429,8 +428,8 @@ extends JPanel implements FunctionPanel
   {
     int count = 0;
     Class[] paramTypes = func.getParameterTypes();
-    for (int i = 0; i < paramTypes.length; i++) {
-      if (! ClassUtil.isGeometry(paramTypes[i]))
+    for (Class paramType : paramTypes) {
+      if (! ClassUtil.isGeometry(paramType))
         count++;
     }
     return count;

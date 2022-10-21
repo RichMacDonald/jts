@@ -12,7 +12,6 @@
 package org.locationtech.jts.noding;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.Coordinate;
 
@@ -41,10 +40,10 @@ public class SimpleNoder
   public void computeNodes(Collection inputSegStrings)
   {
     this.nodedSegStrings = inputSegStrings;
-    for (Iterator i0 = inputSegStrings.iterator(); i0.hasNext(); ) {
-      SegmentString edge0 = (SegmentString) i0.next();
-      for (Iterator i1 = inputSegStrings.iterator(); i1.hasNext(); ) {
-        SegmentString edge1 = (SegmentString) i1.next();
+    for (Object inputSegString : inputSegStrings) {
+      SegmentString edge0 = (SegmentString) inputSegString;
+      for (Object inputSegString2 : inputSegStrings) {
+        SegmentString edge1 = (SegmentString) inputSegString2;
         computeIntersects(edge0, edge1);
       }
     }

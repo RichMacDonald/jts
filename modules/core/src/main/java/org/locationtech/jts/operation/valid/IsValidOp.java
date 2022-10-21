@@ -312,9 +312,9 @@ public class IsValidOp
 
   private void checkCoordinatesValid(Coordinate[] coords)
   {
-    for (int i = 0; i < coords.length; i++) {
-      if (! isValid(coords[i])) {
-        logInvalid(TopologyValidationError.INVALID_COORDINATE, coords[i]);
+    for (Coordinate coord : coords) {
+      if (! isValid(coord)) {
+        logInvalid(TopologyValidationError.INVALID_COORDINATE, coord);
         return;
       }
     }

@@ -16,7 +16,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -82,8 +81,8 @@ public class KdTree {
    */
   public static Coordinate[] toCoordinates(Collection kdnodes, boolean includeRepeated) {
     CoordinateList coord = new CoordinateList();
-    for (Iterator it = kdnodes.iterator(); it.hasNext();) {
-      KdNode node = (KdNode) it.next();
+    for (Object kdnode : kdnodes) {
+      KdNode node = (KdNode) kdnode;
       int count = includeRepeated ? node.getCount() : 1;
       for (int i = 0; i < count; i++) {
        coord.add(node.getCoordinate(), true);

@@ -70,8 +70,8 @@ class BufferSubgraph
   {
     if (env == null) {
       Envelope edgeEnv = new Envelope();
-      for (Iterator it = dirEdgeList.iterator(); it.hasNext(); ) {
-        DirectedEdge dirEdge = (DirectedEdge) it.next();
+      for (Object element : dirEdgeList) {
+        DirectedEdge dirEdge = (DirectedEdge) element;
         Coordinate[] pts = dirEdge.getEdge().getCoordinates();
         for (int i = 0; i < pts.length - 1; i++) {
           edgeEnv.expandToInclude(pts[i]);
@@ -144,8 +144,8 @@ class BufferSubgraph
 
   private void clearVisitedEdges()
   {
-    for (Iterator it = dirEdgeList.iterator(); it.hasNext(); ) {
-      DirectedEdge de = (DirectedEdge) it.next();
+    for (Object element : dirEdgeList) {
+      DirectedEdge de = (DirectedEdge) element;
       de.setVisited(false);
     }
   }
@@ -247,8 +247,8 @@ class BufferSubgraph
    */
   public void findResultEdges()
   {
-    for (Iterator it = dirEdgeList.iterator(); it.hasNext(); ) {
-      DirectedEdge de = (DirectedEdge) it.next();
+    for (Object element : dirEdgeList) {
+      DirectedEdge de = (DirectedEdge) element;
       /**
        * Select edges which have an interior depth on the RHS
        * and an exterior depth on the LHS.

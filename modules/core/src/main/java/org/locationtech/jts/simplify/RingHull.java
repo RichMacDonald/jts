@@ -220,8 +220,7 @@ class RingHull {
   private boolean hasIntersectingVertex(Corner corner, Envelope cornerEnv, 
       RingHull hull) {
     int[] result = hull.query(cornerEnv);
-    for (int i = 0; i < result.length; i++) {
-      int index = result[i];
+    for (int index : result) {
       //-- skip vertices of corner
       if (hull == this && corner.isVertex(index))
         continue;
@@ -245,8 +244,7 @@ class RingHull {
   void queryHull(Envelope queryEnv, List<Coordinate> pts) {
     int[] result = vertexIndex.query(queryEnv);
     
-    for (int i = 0; i < result.length; i++) {
-      int index = result[i];
+    for (int index : result) {
       //-- skip if already removed
       if (! vertexRing.hasCoordinate(index))
         continue;

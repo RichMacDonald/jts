@@ -124,8 +124,8 @@ public class RelateNodeGraph {
 
   public void insertEdgeEnds(List ee)
   {
-    for (Iterator i = ee.iterator(); i.hasNext(); ) {
-      EdgeEnd e = (EdgeEnd) i.next();
+    for (Object element : ee) {
+      EdgeEnd e = (EdgeEnd) element;
       nodes.add(e);
     }
   }

@@ -13,7 +13,6 @@
 package org.locationtech.jts.operation.distance;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.CoordinateSequence;
@@ -34,8 +33,8 @@ public class FacetSequenceTreeBuilder {
   public static STRtree build(Geometry g) {
     STRtree tree = new STRtree(STR_TREE_NODE_CAPACITY);
     List sections = computeFacetSequences(g);
-    for (Iterator i = sections.iterator(); i.hasNext();) {
-      FacetSequence section = (FacetSequence) i.next();
+    for (Object section2 : sections) {
+      FacetSequence section = (FacetSequence) section2;
       tree.insert(section.getEnvelope(), section);
     }
     tree.build();

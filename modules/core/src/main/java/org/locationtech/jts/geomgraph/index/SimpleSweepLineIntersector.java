@@ -16,7 +16,6 @@ package org.locationtech.jts.geomgraph.index;
  */
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -59,16 +58,16 @@ public class SimpleSweepLineIntersector
 
   private void add(List edges)
   {
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      Edge edge = (Edge) i.next();
+    for (Object edge2 : edges) {
+      Edge edge = (Edge) edge2;
       // edge is its own group
       add(edge, edge);
     }
   }
   private void add(List edges, Object edgeSet)
   {
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      Edge edge = (Edge) i.next();
+    for (Object edge2 : edges) {
+      Edge edge = (Edge) edge2;
       add(edge, edgeSet);
     }
   }

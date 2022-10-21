@@ -267,10 +267,10 @@ public class DistanceOp
   
   private void computeContainmentDistance(List locs, List polys, GeometryLocation[] locPtPoly)
   {
-    for (int i = 0; i < locs.size(); i++) {
-      GeometryLocation loc = (GeometryLocation) locs.get(i);
-      for (int j = 0; j < polys.size(); j++) {
-      	computeContainmentDistance(loc, (Polygon) polys.get(j), locPtPoly);
+    for (Object loc2 : locs) {
+      GeometryLocation loc = (GeometryLocation) loc2;
+      for (Object poly : polys) {
+      	computeContainmentDistance(loc, (Polygon) poly, locPtPoly);
         if (minDistance <= terminateDistance) return;
       }
     }
@@ -334,10 +334,10 @@ public class DistanceOp
 
   private void computeMinDistanceLines(List lines0, List lines1, GeometryLocation[] locGeom)
   {
-    for (int i = 0; i < lines0.size(); i++) {
-      LineString line0 = (LineString) lines0.get(i);
-      for (int j = 0; j < lines1.size(); j++) {
-        LineString line1 = (LineString) lines1.get(j);
+    for (Object element : lines0) {
+      LineString line0 = (LineString) element;
+      for (Object element2 : lines1) {
+        LineString line1 = (LineString) element2;
         computeMinDistance(line0, line1, locGeom);
         if (minDistance <= terminateDistance) return;
       }
@@ -346,10 +346,10 @@ public class DistanceOp
 
   private void computeMinDistancePoints(List points0, List points1, GeometryLocation[] locGeom)
   {
-    for (int i = 0; i < points0.size(); i++) {
-      Point pt0 = (Point) points0.get(i);
-      for (int j = 0; j < points1.size(); j++) {
-        Point pt1 = (Point) points1.get(j);
+    for (Object element : points0) {
+      Point pt0 = (Point) element;
+      for (Object element2 : points1) {
+        Point pt1 = (Point) element2;
         double dist = pt0.getCoordinate().distance(pt1.getCoordinate());
         if (dist < minDistance) {
           minDistance = dist;
@@ -364,10 +364,10 @@ public class DistanceOp
   private void computeMinDistanceLinesPoints(List lines, List points,
       GeometryLocation[] locGeom)
   {
-    for (int i = 0; i < lines.size(); i++) {
-      LineString line = (LineString) lines.get(i);
-      for (int j = 0; j < points.size(); j++) {
-        Point pt = (Point) points.get(j);
+    for (Object line2 : lines) {
+      LineString line = (LineString) line2;
+      for (Object point : points) {
+        Point pt = (Point) point;
         computeMinDistance(line, pt, locGeom);
         if (minDistance <= terminateDistance) return;
       }

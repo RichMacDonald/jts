@@ -105,9 +105,9 @@ public class RectangleIntersectsPerfTest
     Stopwatch sw = new Stopwatch();
     int count = 0;
     for (int i = 0; i < MAX_ITER; i++) {
-      for (int j = 0; j < rect.length; j++) {
+      for (Geometry element : rect) {
 //      rect[j].relate(g);
-        rect[j].intersects(g);
+        element.intersects(g);
       }
     }
     System.out.println("Finished in " + sw.getTimeString());

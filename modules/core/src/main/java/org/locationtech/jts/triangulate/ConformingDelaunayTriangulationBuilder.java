@@ -13,7 +13,6 @@ package org.locationtech.jts.triangulate;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -120,8 +119,8 @@ public class ConformingDelaunayTriangulationBuilder
 	private List createSiteVertices(Collection coords)
 	{
 		List verts = new ArrayList();
-		for (Iterator i = coords.iterator(); i.hasNext(); ) {
-			Coordinate coord = (Coordinate) i.next();
+		for (Object coord2 : coords) {
+			Coordinate coord = (Coordinate) coord2;
 			if (constraintVertexMap.containsKey(coord)) 
 			  continue;
 			verts.add(new ConstraintVertex(coord));
@@ -132,9 +131,9 @@ public class ConformingDelaunayTriangulationBuilder
 	private void createVertices(Geometry geom)
 	{
 		Coordinate[] coords = geom.getCoordinates();
-		for (int i = 0; i < coords.length; i++) {
-			Vertex v = new ConstraintVertex(coords[i]);
-			constraintVertexMap.put(coords[i], v);
+		for (Coordinate coord : coords) {
+			Vertex v = new ConstraintVertex(coord);
+			constraintVertexMap.put(coord, v);
 		}
 	}
 	
@@ -142,8 +141,8 @@ public class ConformingDelaunayTriangulationBuilder
 	{
 		List lines = LinearComponentExtracter.getLines(geom);
 		List constraintSegs = new ArrayList();
-		for (Iterator i = lines.iterator(); i.hasNext(); ) {
-			LineString line = (LineString) i.next();
+		for (Object line2 : lines) {
+			LineString line = (LineString) line2;
 			createConstraintSegments(line, constraintSegs);
 		}
 		return constraintSegs;

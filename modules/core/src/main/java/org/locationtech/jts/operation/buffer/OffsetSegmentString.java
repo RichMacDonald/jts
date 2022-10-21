@@ -69,8 +69,8 @@ class OffsetSegmentString
   public void addPts(Coordinate[] pt, boolean isForward)
   {
     if (isForward) {
-      for (int i = 0; i < pt.length; i++) {
-        addPt(pt[i]);
+      for (Coordinate element : pt) {
+        addPt(element);
       }
     }
     else {

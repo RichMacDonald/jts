@@ -12,7 +12,6 @@
 package org.locationtech.jtstest.function;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -114,8 +113,8 @@ public class BufferFunctions {
     List curves = ocsb.getCurves();
     
     List lines = new ArrayList();
-    for (Iterator i = curves.iterator(); i.hasNext(); ) {
-    	SegmentString ss = (SegmentString) i.next();
+    for (Object element : curves) {
+    	SegmentString ss = (SegmentString) element;
     	Coordinate[] pts = ss.getCoordinates();
     	lines.add(g.getFactory().createLineString(pts));
     }
@@ -134,8 +133,8 @@ public class BufferFunctions {
 
     List lines = new ArrayList();
     LinearComponentExtracter.getLines(g, lines);
-    for (Iterator i = lines.iterator(); i.hasNext(); ) {
-    	LineString line = (LineString) i.next();
+    for (Object line2 : lines) {
+    	LineString line = (LineString) line2;
     	Coordinate[] pts = line.getCoordinates();
     	simpLines.add(g.getFactory().createLineString(BufferInputLineSimplifier.simplify(pts, distance)));
     }

@@ -215,8 +215,8 @@ class BufferBuilder
 // DEBUGGING ONLY
 //BufferDebug.saveEdges(nodedEdges, "run" + BufferDebug.runCount + "_nodedEdges");
 
-    for (Iterator i = nodedSegStrings.iterator(); i.hasNext(); ) {
-      SegmentString segStr = (SegmentString) i.next();
+    for (Object nodedSegString : nodedSegStrings) {
+      SegmentString segStr = (SegmentString) nodedSegString;
       
       /**
        * Discard edges which have zero length, 
@@ -275,8 +275,8 @@ class BufferBuilder
   private List createSubgraphs(PlanarGraph graph)
   {
     List subgraphList = new ArrayList();
-    for (Iterator i = graph.getNodes().iterator(); i.hasNext(); ) {
-      Node node = (Node) i.next();
+    for (Object element : graph.getNodes()) {
+      Node node = (Node) element;
       if (! node.isVisited()) {
         BufferSubgraph subgraph = new BufferSubgraph();
         subgraph.create(node);
@@ -304,8 +304,8 @@ class BufferBuilder
   private void buildSubgraphs(List subgraphList, PolygonBuilder polyBuilder)
   {
     List processedGraphs = new ArrayList();
-    for (Iterator i = subgraphList.iterator(); i.hasNext(); ) {
-      BufferSubgraph subgraph = (BufferSubgraph) i.next();
+    for (Object element : subgraphList) {
+      BufferSubgraph subgraph = (BufferSubgraph) element;
       Coordinate p = subgraph.getRightmostCoordinate();
 //      int outsideDepth = 0;
 //      if (polyBuilder.containsPoint(p))

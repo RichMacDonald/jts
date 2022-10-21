@@ -12,7 +12,6 @@
 package org.locationtech.jts.operation.overlay;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.PointLocator;
@@ -65,8 +64,8 @@ public class LineBuilder {
   private void findCoveredLineEdges()
   {
     // first set covered for all L edges at nodes which have A edges too
-    for (Iterator nodeit = op.getGraph().getNodes().iterator(); nodeit.hasNext(); ) {
-      Node node = (Node) nodeit.next();
+    for (Object element : op.getGraph().getNodes()) {
+      Node node = (Node) element;
 //node.print(System.out);
       ((DirectedEdgeStar) node.getEdges()).findCoveredLineEdges();
     }
@@ -75,8 +74,8 @@ public class LineBuilder {
      * For all L edges which weren't handled by the above,
      * use a point-in-poly test to determine whether they are covered
      */
-    for (Iterator it = op.getGraph().getEdgeEnds().iterator(); it.hasNext(); ) {
-      DirectedEdge de = (DirectedEdge) it.next();
+    for (Object element : op.getGraph().getEdgeEnds()) {
+      DirectedEdge de = (DirectedEdge) element;
       Edge e = de.getEdge();
       if (de.isLineEdge() && ! e.isCoveredSet()) {
         boolean isCovered = op.isCoveredByA(de.getCoordinate());
@@ -87,8 +86,8 @@ public class LineBuilder {
 
   private void collectLines(int opCode)
   {
-    for (Iterator it = op.getGraph().getEdgeEnds().iterator(); it.hasNext(); ) {
-      DirectedEdge de = (DirectedEdge) it.next();
+    for (Object element : op.getGraph().getEdgeEnds()) {
+      DirectedEdge de = (DirectedEdge) element;
       collectLineEdge(de, opCode, lineEdgesList);
       collectBoundaryTouchEdge(de, opCode, lineEdgesList);
     }
@@ -152,8 +151,8 @@ public class LineBuilder {
 
   private void buildLines(int opCode)
   {
-    for (Iterator it = lineEdgesList.iterator(); it.hasNext(); ) {
-      Edge e = (Edge) it.next();
+    for (Object element : lineEdgesList) {
+      Edge e = (Edge) element;
       // Label label = e.getLabel();
         LineString line = geometryFactory.createLineString(e.getCoordinates());
         resultLineList.add(line);
@@ -163,8 +162,8 @@ public class LineBuilder {
 
   private void labelIsolatedLines(List edgesList)
   {
-    for (Iterator it = edgesList.iterator(); it.hasNext(); ) {
-      Edge e = (Edge) it.next();
+    for (Object element : edgesList) {
+      Edge e = (Edge) element;
       Label label = e.getLabel();
 //n.print(System.out);
       if (e.isIsolated()) {

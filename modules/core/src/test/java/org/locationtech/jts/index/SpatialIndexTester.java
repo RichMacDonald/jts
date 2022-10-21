@@ -11,7 +11,6 @@
  */
 package org.locationtech.jts.index;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Envelope;
@@ -70,8 +69,8 @@ public class SpatialIndexTester
   }
 
   private void insert(List sourceData, SpatialIndex index) {
-    for (Iterator i = sourceData.iterator(); i.hasNext(); ) {
-      Envelope envelope = (Envelope) i.next();
+    for (Object element : sourceData) {
+      Envelope envelope = (Envelope) element;
       index.insert(envelope, envelope);
     }
   }
@@ -133,11 +132,11 @@ public class SpatialIndexTester
   private void compare(List expectedEnvelopes, List actualEnvelopes) {
     //Don't use #containsAll because we want to check using
     //==, not #equals. [Jon Aquino]
-    for (Iterator i = expectedEnvelopes.iterator(); i.hasNext(); ) {
-      Envelope expected = (Envelope) i.next();
+    for (Object expectedEnvelope : expectedEnvelopes) {
+      Envelope expected = (Envelope) expectedEnvelope;
       boolean found = false;
-      for (Iterator j = actualEnvelopes.iterator(); j.hasNext(); ) {
-        Envelope actual = (Envelope) j.next();
+      for (Object actualEnvelope : actualEnvelopes) {
+        Envelope actual = (Envelope) actualEnvelope;
         if (actual.equals(expected)) {
           found = true;
           break;
@@ -150,8 +149,8 @@ public class SpatialIndexTester
 
   private List intersectingEnvelopes(Envelope queryEnvelope, List envelopes) {
     ArrayList intersectingEnvelopes = new ArrayList();
-    for (Iterator i = envelopes.iterator(); i.hasNext(); ) {
-      Envelope candidate = (Envelope) i.next();
+    for (Object envelope : envelopes) {
+      Envelope candidate = (Envelope) envelope;
       if (candidate.intersects(queryEnvelope)) { intersectingEnvelopes.add(candidate); }
     }
     return intersectingEnvelopes;

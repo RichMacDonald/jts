@@ -53,8 +53,8 @@ public class FileUtil
     public static void deleteFiles(String directoryName) {
         File dir = new File(directoryName);
         File[] files = dir.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            files[i].delete();
+        for (File file : files) {
+            file.delete();
         }
     }
 

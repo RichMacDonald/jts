@@ -12,7 +12,6 @@
 package org.locationtech.jts.geomgraph;
 
 import java.io.PrintStream;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.IntersectionMatrix;
@@ -48,8 +47,8 @@ public class Node
    */
   public boolean isIncidentEdgeInResult()
   {
-    for (Iterator it = getEdges().getEdges().iterator(); it.hasNext(); ) {
-      DirectedEdge de = (DirectedEdge) it.next();
+    for (Object element : getEdges().getEdges()) {
+      DirectedEdge de = (DirectedEdge) element;
       if (de.getEdge().isInResult())
         return true;
     }

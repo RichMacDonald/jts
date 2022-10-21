@@ -194,8 +194,8 @@ public class DirectedEdgeStar
     DirectedEdge incoming = null;
     int state = SCANNING_FOR_INCOMING;
     // link edges in CCW order
-    for (int i = 0; i < resultAreaEdgeList.size(); i++) {
-      DirectedEdge nextOut = (DirectedEdge) resultAreaEdgeList.get(i);
+    for (Object element : resultAreaEdgeList) {
+      DirectedEdge nextOut = (DirectedEdge) element;
       DirectedEdge nextIn = nextOut.getSym();
 
       // skip de's that we're not interested in

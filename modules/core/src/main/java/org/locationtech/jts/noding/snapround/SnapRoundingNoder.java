@@ -162,8 +162,8 @@ public class SnapRoundingNoder
   private Coordinate[] round(Coordinate[] pts) {
     CoordinateList roundPts = new CoordinateList();
     
-    for (int i = 0; i < pts.length; i++ ) {
-      roundPts.add( round( pts[i] ), false);
+    for (Coordinate pt : pts) {
+      roundPts.add( round( pt ), false);
     }
     return roundPts.toCoordinateArray();
   }

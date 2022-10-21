@@ -15,7 +15,6 @@ package org.locationtech.jts.triangulate.quadedge;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -501,8 +500,8 @@ public class QuadEdgeSubdivision {
   public Collection getVertices(boolean includeFrame) 
   {
     Set vertices = new HashSet();
-    for (Iterator i = quadEdges.iterator(); i.hasNext();) {
-      QuadEdge qe = (QuadEdge) i.next();
+    for (Object quadEdge : quadEdges) {
+      QuadEdge qe = (QuadEdge) quadEdge;
       Vertex v = qe.orig();
       //System.out.println(v);
       if (includeFrame || ! isFrameVertex(v))
@@ -542,8 +541,8 @@ public class QuadEdgeSubdivision {
   {
   	List edges = new ArrayList();
     Set visitedVertices = new HashSet();
-    for (Iterator i = quadEdges.iterator(); i.hasNext();) {
-      QuadEdge qe = (QuadEdge) i.next();
+    for (Object quadEdge : quadEdges) {
+      QuadEdge qe = (QuadEdge) quadEdge;
       Vertex v = qe.orig();
       //System.out.println(v);
       if (! visitedVertices.contains(v)) {
@@ -830,8 +829,8 @@ public class QuadEdgeSubdivision {
 		List quadEdges = getPrimaryEdges(false);
 		LineString[] edges = new LineString[quadEdges.size()];
 		int i = 0;
-		for (Iterator it = quadEdges.iterator(); it.hasNext();) {
-			QuadEdge qe = (QuadEdge) it.next();
+		for (Object quadEdge : quadEdges) {
+			QuadEdge qe = (QuadEdge) quadEdge;
 			edges[i++] = geomFact.createLineString(new Coordinate[] {
 					qe.orig().getCoordinate(), qe.dest().getCoordinate() });
 		}
@@ -849,8 +848,8 @@ public class QuadEdgeSubdivision {
 		List triPtsList = getTriangleCoordinates(false);
 		Polygon[] tris = new Polygon[triPtsList.size()];
 		int i = 0;
-		for (Iterator it = triPtsList.iterator(); it.hasNext();) {
-			Coordinate[] triPt = (Coordinate[]) it.next();
+		for (Object element : triPtsList) {
+			Coordinate[] triPt = (Coordinate[]) element;
 			tris[i++] = geomFact
 					.createPolygon(geomFact.createLinearRing(triPt));
 		}
@@ -897,8 +896,8 @@ public class QuadEdgeSubdivision {
   	
     List cells = new ArrayList();
     Collection edges = getVertexUniqueEdges(false);
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-    	QuadEdge qe = (QuadEdge) i.next();
+    for (Object edge : edges) {
+    	QuadEdge qe = (QuadEdge) edge;
       cells.add(getVoronoiCellPolygon(qe, geomFact));
     }
     return cells;

@@ -14,7 +14,6 @@ package org.locationtech.jtstest.testbuilder.topostretch;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -72,8 +71,8 @@ class StretchedVertexFinder
 	
 	private void findNearVertices()
 	{
-		for (Iterator i = linestrings.iterator(); i.hasNext(); ) {
-			LineString line = (LineString) i.next();
+		for (Object linestring : linestrings) {
+			LineString line = (LineString) linestring;
 			findNearVertices(line);
 		}
 	}
@@ -104,8 +103,8 @@ class StretchedVertexFinder
 	
 	private void findNearVertex(Coordinate linePt)
 	{
-		for (Iterator i = linestrings.iterator(); i.hasNext(); ) {
-			LineString testLine = (LineString) i.next();
+		for (Object linestring : linestrings) {
+			LineString testLine = (LineString) linestring;
 			findNearVertex(linePt, testLine);
 		}
 	}

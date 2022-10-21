@@ -131,9 +131,9 @@ implements GeometryFunction, Comparable
 	{
 		StringBuffer paramTypes = new StringBuffer();
 		paramTypes.append("Geometry");
-		for (int i = 0 ; i < parameterTypes.length; i++) {
+		for (Class parameterType : parameterTypes) {
 			paramTypes.append(",");
-			paramTypes.append(ClassUtil.getClassname(parameterTypes[i]));
+			paramTypes.append(ClassUtil.getClassname(parameterType));
 		}
 		return name + "(" + paramTypes + ")"
 			+ " -> " 

@@ -87,8 +87,8 @@ class VWLineSimplifier
     {
       VWLineSimplifier.VWVertex first = null;
       VWLineSimplifier.VWVertex prev = null;
-      for (int i = 0; i < pts.length; i++) {
-        VWLineSimplifier.VWVertex v = new VWVertex(pts[i]);
+      for (Coordinate pt2 : pts) {
+        VWLineSimplifier.VWVertex v = new VWVertex(pt2);
         if (first == null)
           first = v;
         v.setPrev(prev);

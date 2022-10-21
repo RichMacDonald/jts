@@ -40,8 +40,8 @@ public class IOUtil {
     throws ParseException
     {
       List<Geometry> geometries = new ArrayList<Geometry>();
-      for (int i = 0; i < inputWKT.length; i++) {
-          geometries.add(IOUtil.reader.read(inputWKT[i]));
+      for (String element : inputWKT) {
+          geometries.add(IOUtil.reader.read(element));
       }
       return geometries;
     }

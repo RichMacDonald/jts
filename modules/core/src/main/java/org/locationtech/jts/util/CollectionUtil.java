@@ -14,7 +14,6 @@ package org.locationtech.jts.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -40,8 +39,8 @@ public class CollectionUtil
   public static List transform(Collection coll, Function func)
   {
     List result = new ArrayList();
-    for (Iterator i = coll.iterator(); i.hasNext(); ) {
-      result.add(func.execute(i.next()));
+    for (Object element : coll) {
+      result.add(func.execute(element));
     }
     return result;
   }
@@ -55,8 +54,8 @@ public class CollectionUtil
    */
   public static void apply(Collection coll, Function func)
   {
-    for (Iterator i = coll.iterator(); i.hasNext(); ) {
-      func.execute(i.next());
+    for (Object element : coll) {
+      func.execute(element);
     }
   }
 
@@ -71,8 +70,7 @@ public class CollectionUtil
    */
   public static List select(Collection collection, Function func) {
     List result = new ArrayList();
-    for (Iterator i = collection.iterator(); i.hasNext();) {
-      Object item = i.next();
+    for (Object item : collection) {
       if (Boolean.TRUE.equals(func.execute(item))) {
         result.add(item);
       }

@@ -13,7 +13,6 @@ package org.locationtech.jts.operation.buffer;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -101,12 +100,10 @@ public class BufferValidator
   public void test() throws Exception {
     try {
       Collection tests = nameToTestMap.values();
-      for (Iterator i = tests.iterator();
-        i.hasNext();
-        ) {
-        Test test = (Test) i.next();
-        test.test();
-      }
+      for (Object test2 : tests) {
+	Test test = (Test) test2;
+	test.test();
+     }
     } catch (Exception e) {
       throw new Exception(
         supplement(e.toString()) + StringUtil.getStackTrace(e));

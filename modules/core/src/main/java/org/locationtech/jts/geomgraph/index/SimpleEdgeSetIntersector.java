@@ -11,7 +11,6 @@
  */
 package org.locationtech.jts.geomgraph.index;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -37,10 +36,10 @@ public class SimpleEdgeSetIntersector
   {
     nOverlaps = 0;
 
-    for (Iterator i0 = edges.iterator(); i0.hasNext(); ) {
-      Edge edge0 = (Edge) i0.next();
-      for (Iterator i1 = edges.iterator(); i1.hasNext(); ) {
-        Edge edge1 = (Edge) i1.next();
+    for (Object edge : edges) {
+      Edge edge0 = (Edge) edge;
+      for (Object edge2 : edges) {
+        Edge edge1 = (Edge) edge2;
         if (testAllSegments || edge0 != edge1)
           computeIntersects(edge0, edge1, si);
       }
@@ -52,10 +51,10 @@ public class SimpleEdgeSetIntersector
   {
     nOverlaps = 0;
 
-    for (Iterator i0 = edges0.iterator(); i0.hasNext(); ) {
-      Edge edge0 = (Edge) i0.next();
-      for (Iterator i1 = edges1.iterator(); i1.hasNext(); ) {
-        Edge edge1 = (Edge) i1.next();
+    for (Object element : edges0) {
+      Edge edge0 = (Edge) element;
+      for (Object element2 : edges1) {
+        Edge edge1 = (Edge) element2;
         computeIntersects(edge0, edge1, si);
       }
     }

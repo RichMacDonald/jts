@@ -157,8 +157,8 @@ public class ConvexHull
 
     // add points defining polygon
     TreeSet reducedSet = new TreeSet();
-    for (int i = 0; i < polyPts.length; i++) {
-      reducedSet.add(polyPts[i]);
+    for (Coordinate polyPt : polyPts) {
+      reducedSet.add(polyPt);
     }
     /**
      * Add all unique points not in the interior poly.
@@ -166,9 +166,9 @@ public class ConvexHull
      * but this doesn't matter since the points of the interior polygon
      * are forced to be in the reduced set.
      */
-    for (int i = 0; i < inputPts.length; i++) {
-      if (! PointLocation.isInRing(inputPts[i], polyPts)) {
-        reducedSet.add(inputPts[i]);
+    for (Coordinate inputPt : inputPts) {
+      if (! PointLocation.isInRing(inputPt, polyPts)) {
+        reducedSet.add(inputPt);
       }
     }
     Coordinate[] reducedPts = CoordinateArrays.toCoordinateArray(reducedSet);

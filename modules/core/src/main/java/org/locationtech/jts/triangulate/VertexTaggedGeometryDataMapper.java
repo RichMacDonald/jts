@@ -14,7 +14,6 @@ package org.locationtech.jts.triangulate;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -47,8 +46,8 @@ public class VertexTaggedGeometryDataMapper
 	
 	public void loadSourceGeometries(Collection geoms)
 	{
-		for (Iterator i = geoms.iterator(); i.hasNext(); ) {
-			Geometry geom = (Geometry) i.next();
+		for (Object geom2 : geoms) {
+			Geometry geom = (Geometry) geom2;
 			loadVertices(geom.getCoordinates(), geom.getUserData());
 		}
 	}
@@ -63,8 +62,8 @@ public class VertexTaggedGeometryDataMapper
 	
 	private void loadVertices(Coordinate[] pts, Object data)
 	{
-		for (int i = 0; i < pts.length; i++) {
-			coordDataMap.put(pts[i], data);
+		for (Coordinate pt : pts) {
+			coordDataMap.put(pt, data);
 		}
 	}
 	

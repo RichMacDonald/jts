@@ -213,8 +213,8 @@ public class IsSimpleOp
   private boolean isSimplePolygonal(Geometry geom)
   {
     List rings = LinearComponentExtracter.getLines(geom);
-    for (Iterator i = rings.iterator(); i.hasNext(); ) {
-      LinearRing ring = (LinearRing) i.next();
+    for (Object ring2 : rings) {
+      LinearRing ring = (LinearRing) ring2;
       if (! isSimpleLinearGeometry(ring))
         return false;
     }
@@ -318,8 +318,8 @@ public class IsSimpleOp
       addEndpoint(endPoints, p1, isClosed);
     }
 
-    for (Iterator i = endPoints.values().iterator(); i.hasNext(); ) {
-      EndpointInfo eiInfo = (EndpointInfo) i.next();
+    for (Object element : endPoints.values()) {
+      EndpointInfo eiInfo = (EndpointInfo) element;
       if (eiInfo.isClosed && eiInfo.degree != 2) {
         nonSimpleLocation = eiInfo.getCoordinate();
         return true;

@@ -74,8 +74,8 @@ public class MultiLineString
     if (isEmpty()) {
       return false;
     }
-    for (int i = 0; i < geometries.length; i++) {
-      if (!((LineString) geometries[i]).isClosed()) {
+    for (Geometry element : geometries) {
+      if (!((LineString) element).isClosed()) {
         return false;
       }
     }

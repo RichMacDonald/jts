@@ -13,7 +13,6 @@ package org.locationtech.jts.operation.polygonize;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -61,8 +60,8 @@ class EdgeRing {
   public static EdgeRing findEdgeRingContaining(EdgeRing testEr, List erList)
   {
     EdgeRing minContainingRing = null;
-    for (Iterator it = erList.iterator(); it.hasNext(); ) {
-      EdgeRing edgeRing = (EdgeRing) it.next();
+    for (Object element : erList) {
+      EdgeRing edgeRing = (EdgeRing) element;
       if (edgeRing.contains(testEr)) {
         if (minContainingRing == null
             || minContainingRing.getEnvelope().contains(edgeRing.getEnvelope())) {
@@ -279,8 +278,8 @@ class EdgeRing {
   {
     if (ringPts == null) {
       CoordinateList coordList = new CoordinateList();
-      for (Iterator i = deList.iterator(); i.hasNext(); ) {
-        DirectedEdge de = (DirectedEdge) i.next();
+      for (Object element : deList) {
+        DirectedEdge de = (DirectedEdge) element;
         PolygonizeEdge edge = (PolygonizeEdge) de.getEdge();
         addEdge(edge.getLine().getCoordinates(), de.getEdgeDirection(), coordList);
       }
@@ -327,8 +326,8 @@ class EdgeRing {
   private static void addEdge(Coordinate[] coords, boolean isForward, CoordinateList coordList)
   {
     if (isForward) {
-      for (int i = 0; i < coords.length; i++) {
-        coordList.add(coords[i], false);
+      for (Coordinate coord : coords) {
+        coordList.add(coord, false);
       }
     }
     else {
@@ -404,8 +403,8 @@ class EdgeRing {
      * A shell is an outer shell if any edge is also in an outer hole.
      * A hole is an outer hole if it is not contained by a shell.
      */
-    for (int i = 0; i < deList.size(); i++) {
-      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) deList.get(i);
+    for (Object element : deList) {
+      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) element;
       EdgeRing adjRing = ((PolygonizeDirectedEdge) de.getSym()).getRing();
       if (adjRing.isOuterHole()) return adjRing;
     }
@@ -418,8 +417,8 @@ class EdgeRing {
    */
   public void updateIncluded() {
     if (isHole()) return;
-    for (int i = 0; i < deList.size(); i++) {
-      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) deList.get(i);
+    for (Object element : deList) {
+      PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) element;
       EdgeRing adjShell = ((PolygonizeDirectedEdge) de.getSym()).getRing().getShell();
       
       if (adjShell != null && adjShell.isIncludedSet()) {

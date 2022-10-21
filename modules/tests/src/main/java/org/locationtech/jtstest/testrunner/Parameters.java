@@ -13,7 +13,6 @@ package org.locationtech.jtstest.testrunner;
 
 import java.util.Arrays;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -63,8 +62,8 @@ public class Parameters {
      * Creates a Parameters object for the given main-method arguments.
      */
     private Parameters() {
-        for (Iterator i = arguments.iterator(); i.hasNext();) {
-            String arg = (String) i.next();
+        for (Object argument : arguments) {
+            String arg = (String) argument;
             arg = arg.toLowerCase();
             if (!arg.startsWith("-"))
                 throw new IllegalArgumentException(
@@ -87,8 +86,8 @@ public class Parameters {
                         + StringUtil.toCommaDelimitedString(allowedKeys));
             hashtable.put(key, value);
         }
-        for (Iterator i = requiredKeys.iterator(); i.hasNext();) {
-            String requiredKey = (String) i.next();
+        for (Object requiredKey2 : requiredKeys) {
+            String requiredKey = (String) requiredKey2;
             if (!hashtable.containsKey(requiredKey))
                 throw new IllegalArgumentException(
                     "Required command-line argument is missing: " + requiredKey);

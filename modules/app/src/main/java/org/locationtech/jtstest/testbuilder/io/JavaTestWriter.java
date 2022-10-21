@@ -45,8 +45,8 @@ public class JavaTestWriter {
 
     public static String getTestJava(List testCases) {
       StringBuffer java = new StringBuffer();
-      for (int i = 0; i < testCases.size(); i++) {
-        java.append((new JavaTestWriter()).write((Testable) testCases.get(i)));
+      for (Object element : testCases) {
+        java.append((new JavaTestWriter()).write((Testable) element));
       }
       return java.toString();
     }

@@ -14,7 +14,6 @@ package org.locationtech.jts.geom.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Geometry;
@@ -143,8 +142,8 @@ public class GeometryCombiner
   public Geometry combine()
   {
   	List elems = new ArrayList();
-  	for (Iterator i = inputGeoms.iterator(); i.hasNext(); ) {
-  		Geometry g = (Geometry) i.next();
+  	for (Object inputGeom : inputGeoms) {
+  		Geometry g = (Geometry) inputGeom;
   		extractElements(g, elems);
   	}
     

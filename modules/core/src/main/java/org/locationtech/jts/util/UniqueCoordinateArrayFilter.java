@@ -38,8 +38,8 @@ public class UniqueCoordinateArrayFilter implements CoordinateFilter
   public static Coordinate[] filterCoordinates(Coordinate[] coords)
   {
     UniqueCoordinateArrayFilter filter = new UniqueCoordinateArrayFilter();
-    for (int i = 0; i < coords.length; i++) {
-      filter.filter(coords[i]);
+    for (Coordinate coord : coords) {
+      filter.filter(coord);
     }
     return filter.getCoordinates();
   }

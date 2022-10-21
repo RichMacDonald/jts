@@ -13,7 +13,6 @@ package org.locationtech.jts.geom;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.impl.CoordinateArraySequenceFactory;
 import org.locationtech.jts.geom.util.GeometryEditor;
@@ -550,8 +549,8 @@ public class GeometryFactory
     Class geomClass = null;
     boolean isHeterogeneous = false;
     boolean hasGeometryCollection = false;
-    for (Iterator i = geomList.iterator(); i.hasNext(); ) {
-      Geometry geom = (Geometry) i.next();
+    for (Object element : geomList) {
+      Geometry geom = (Geometry) element;
       Class partClass = geom.getClass();
       if (geomClass == null) {
         geomClass = partClass;

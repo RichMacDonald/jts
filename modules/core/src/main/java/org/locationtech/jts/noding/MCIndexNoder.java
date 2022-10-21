@@ -13,7 +13,6 @@ package org.locationtech.jts.noding;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Envelope;
@@ -81,8 +80,8 @@ public class MCIndexNoder
   public void computeNodes(Collection inputSegStrings)
   {
     this.nodedSegStrings = inputSegStrings;
-    for (Iterator i = inputSegStrings.iterator(); i.hasNext(); ) {
-      add((SegmentString) i.next());
+    for (Object inputSegString : inputSegStrings) {
+      add((SegmentString) inputSegString);
     }
     intersectChains();
 //System.out.println("MCIndexNoder: # chain overlaps = " + nOverlaps);
@@ -92,12 +91,12 @@ public class MCIndexNoder
   {
     MonotoneChainOverlapAction overlapAction = new SegmentOverlapAction(segInt);
 
-    for (Iterator i = monoChains.iterator(); i.hasNext(); ) {
-      MonotoneChain queryChain = (MonotoneChain) i.next();
+    for (Object monoChain : monoChains) {
+      MonotoneChain queryChain = (MonotoneChain) monoChain;
       Envelope queryEnv = queryChain.getEnvelope(overlapTolerance);
       List overlapChains = index.query(queryEnv);
-      for (Iterator j = overlapChains.iterator(); j.hasNext(); ) {
-        MonotoneChain testChain = (MonotoneChain) j.next();
+      for (Object overlapChain : overlapChains) {
+        MonotoneChain testChain = (MonotoneChain) overlapChain;
         /**
          * following test makes sure we only compare each pair of chains once
          * and that we don't compare a chain to itself
@@ -116,8 +115,8 @@ public class MCIndexNoder
   private void add(SegmentString segStr)
   {
     List segChains = MonotoneChainBuilder.getChains(segStr.getCoordinates(), segStr);
-    for (Iterator i = segChains.iterator(); i.hasNext(); ) {
-      MonotoneChain mc = (MonotoneChain) i.next();
+    for (Object segChain : segChains) {
+      MonotoneChain mc = (MonotoneChain) segChain;
       mc.setId(idCounter++);
       //mc.setOverlapDistance(overlapDistance);
       index.insert(mc.getEnvelope(overlapTolerance), mc);

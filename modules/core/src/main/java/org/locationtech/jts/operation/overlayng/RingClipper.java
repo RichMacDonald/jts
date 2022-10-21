@@ -97,8 +97,7 @@ public class RingClipper {
     CoordinateList ptsClip = new CoordinateList();
 
     Coordinate p0 = pts[pts.length - 1];
-    for (int i = 0; i < pts.length; i++) {
-      Coordinate p1 = pts[i];
+    for (Coordinate p1 : pts) {
       if ( isInsideEdge(p1, edgeIndex) ) {
         if ( ! isInsideEdge(p0, edgeIndex) ) {
           Coordinate intPt = intersection(p0, p1, edgeIndex);

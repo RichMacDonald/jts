@@ -139,15 +139,15 @@ public class Polygon
     Coordinate[] coordinates = new Coordinate[getNumPoints()];
     int k = -1;
     Coordinate[] shellCoordinates = shell.getCoordinates();
-    for (int x = 0; x < shellCoordinates.length; x++) {
+    for (Coordinate shellCoordinate : shellCoordinates) {
       k++;
-      coordinates[k] = shellCoordinates[x];
+      coordinates[k] = shellCoordinate;
     }
-    for (int i = 0; i < holes.length; i++) {
-      Coordinate[] childCoordinates = holes[i].getCoordinates();
-      for (int j = 0; j < childCoordinates.length; j++) {
+    for (LinearRing hole : holes) {
+      Coordinate[] childCoordinates = hole.getCoordinates();
+      for (Coordinate childCoordinate : childCoordinates) {
         k++;
-        coordinates[k] = childCoordinates[j];
+        coordinates[k] = childCoordinate;
       }
     }
     return coordinates;
@@ -155,8 +155,8 @@ public class Polygon
 
   public int getNumPoints() {
     int numPoints = shell.getNumPoints();
-    for (int i = 0; i < holes.length; i++) {
-      numPoints += holes[i].getNumPoints();
+    for (LinearRing hole : holes) {
+      numPoints += hole.getNumPoints();
     }
     return numPoints;
   }
@@ -231,8 +231,8 @@ public class Polygon
   {
     double area = 0.0;
     area += Area.ofRing(shell.getCoordinateSequence());
-    for (int i = 0; i < holes.length; i++) {
-      area -= Area.ofRing(holes[i].getCoordinateSequence());
+    for (LinearRing hole : holes) {
+      area -= Area.ofRing(hole.getCoordinateSequence());
     }
     return area;
   }
@@ -246,8 +246,8 @@ public class Polygon
   {
     double len = 0.0;
     len += shell.getLength();
-    for (int i = 0; i < holes.length; i++) {
-      len += holes[i].getLength();
+    for (LinearRing hole : holes) {
+      len += hole.getLength();
     }
     return len;
   }
@@ -300,8 +300,8 @@ public class Polygon
 
   public void apply(CoordinateFilter filter) {
 	    shell.apply(filter);
-	    for (int i = 0; i < holes.length; i++) {
-	      holes[i].apply(filter);
+	    for (LinearRing hole : holes) {
+	      hole.apply(filter);
 	    }
 	  }
 
@@ -309,8 +309,8 @@ public class Polygon
   {
 	    shell.apply(filter);
       if (! filter.isDone()) {
-        for (int i = 0; i < holes.length; i++) {
-          holes[i].apply(filter);
+        for (LinearRing hole : holes) {
+          hole.apply(filter);
           if (filter.isDone())
             break;
         }
@@ -326,8 +326,8 @@ public class Polygon
   public void apply(GeometryComponentFilter filter) {
     filter.filter(this);
     shell.apply(filter);
-    for (int i = 0; i < holes.length; i++) {
-      holes[i].apply(filter);
+    for (LinearRing hole : holes) {
+      hole.apply(filter);
     }
   }
 

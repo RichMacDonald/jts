@@ -13,7 +13,6 @@ package org.locationtech.jts.geom;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * A list of {@link Coordinate}s, which may
@@ -95,8 +94,8 @@ public class CoordinateList
   public boolean add(Coordinate[] coord, boolean allowRepeated, boolean direction)
   {
     if (direction) {
-      for (int i = 0; i < coord.length; i++) {
-        add(coord[i], allowRepeated);
+      for (Coordinate element : coord) {
+        add(element, allowRepeated);
       }
     }
     else {
@@ -184,8 +183,8 @@ public class CoordinateList
   public boolean addAll(Collection<? extends Coordinate> coll, boolean allowRepeated)
   {
     boolean isChanged = false;
-    for (Iterator<? extends Coordinate> i = coll.iterator(); i.hasNext(); ) {
-      add(i.next(), allowRepeated);
+    for (Coordinate coordinate : coll) {
+      add(coordinate, allowRepeated);
       isChanged = true;
     }
     return isChanged;

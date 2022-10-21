@@ -228,9 +228,8 @@ public class MultiLineHandler implements ShapeHandler {
         zmax = Double.NaN;
         double z;
         
-        for (int t=0;t<cs.length; t++)
-        {
-            z= cs[t].getZ() ;
+        for (Coordinate element : cs) {
+            z= element.getZ() ;
             if (!(Double.isNaN( z ) ))
             {
                 if (validZFound)

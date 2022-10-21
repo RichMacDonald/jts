@@ -196,8 +196,8 @@ public class ExtendedCoordinateSequence
 
   public Envelope expandEnvelope(Envelope env)
   {
-    for (int i = 0; i < coordinates.length; i++ ) {
-      env.expandToInclude(coordinates[i]);
+    for (ExtendedCoordinate coordinate : coordinates) {
+      env.expandToInclude(coordinate);
     }
     return env;
   }

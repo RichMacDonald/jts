@@ -484,8 +484,8 @@ public class OraWriter
   {
     int[] elemInfo = new int[3 * elemTriplets.size()];
     int eiIndex = 0;
-    for (int i = 0; i < elemTriplets.size(); i++) {
-      int[] triplet = (int[]) elemTriplets.get(i);
+    for (Object elemTriplet : elemTriplets) {
+      int[] triplet = (int[]) elemTriplet;
       for (int ii = 0; ii < 3; ii++) {
         elemInfo[eiIndex++] = triplet[ii];
       }

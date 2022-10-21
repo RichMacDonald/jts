@@ -13,7 +13,6 @@ package test.jts.index;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
@@ -53,8 +52,8 @@ public class STRtreeDemo {
   }
 
   private static void initTree(TestTree t, List sourceEnvelopes) {
-    for (Iterator i = sourceEnvelopes.iterator(); i.hasNext(); ) {
-      Envelope sourceEnvelope = (Envelope) i.next();
+    for (Object sourceEnvelope2 : sourceEnvelopes) {
+      Envelope sourceEnvelope = (Envelope) sourceEnvelope2;
       t.insert(sourceEnvelope, sourceEnvelope);
     }
     t.build();
@@ -73,8 +72,8 @@ public class STRtreeDemo {
     out.println("============ Source Data ============\n");
     out.print("GEOMETRYCOLLECTION(");
     boolean first = true;
-    for (Iterator i = sourceEnvelopes.iterator(); i.hasNext(); ) {
-      Envelope e = (Envelope) i.next();
+    for (Object sourceEnvelope : sourceEnvelopes) {
+      Envelope e = (Envelope) sourceEnvelope;
       Geometry g = factory.createPolygon(factory.createLinearRing(new Coordinate[] {
         new Coordinate(e.getMinX(), e.getMinY()), new Coordinate(e.getMinX(), e.getMaxY()),
         new Coordinate(e.getMaxX(), e.getMaxY()), new Coordinate(e.getMaxX(), e.getMinY()),
@@ -128,8 +127,8 @@ public class STRtreeDemo {
     out.println("============ " + title + " ============\n");
     out.print("GEOMETRYCOLLECTION(");
     boolean first = true;
-    for (Iterator i = boundables.iterator(); i.hasNext(); ) {
-      Boundable boundable = (Boundable) i.next();
+    for (Object boundable2 : boundables) {
+      Boundable boundable = (Boundable) boundable2;
       if (first) {
         first = false;
       }

@@ -256,8 +256,7 @@ public class RectangleClipPolygon {
     CoordinateList clipCoords = new CoordinateList();
 
     Coordinate p0 = coords[coords.length - 1];
-    for (int i = 0; i < coords.length; i++) {
-      Coordinate p1 = coords[i];
+    for (Coordinate p1 : coords) {
       if ( isInsideEdge(p1, edgeIndex) ) {
         if ( !isInsideEdge(p0, edgeIndex) ) {
           Coordinate intPt = intersectionPrecise(p0, p1, edgeIndex);

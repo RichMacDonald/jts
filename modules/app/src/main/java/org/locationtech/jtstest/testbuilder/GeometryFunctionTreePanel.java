@@ -16,7 +16,6 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -157,14 +156,13 @@ public class GeometryFunctionTreePanel extends JPanel {
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode();
 
 		Collection categories = funcMap.keySet();
-		for (Iterator i = categories.iterator(); i.hasNext();) {
-			String category = (String) i.next();
+		for (Object element : categories) {
+			String category = (String) element;
 			DefaultMutableTreeNode catNode = new DefaultMutableTreeNode(category);
 			top.add(catNode);
 
 			Collection funcs = funcMap.values(category);
-			for (Iterator j = funcs.iterator(); j.hasNext();) {
-				Object func = j.next();
+			for (Object func : funcs) {
 				catNode.add(new DefaultMutableTreeNode(func));
 			}
 		}

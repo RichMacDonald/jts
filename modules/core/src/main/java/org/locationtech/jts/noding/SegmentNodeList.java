@@ -94,8 +94,8 @@ public class SegmentNodeList
     findCollapsesFromExistingVertices(collapsedVertexIndexes);
 
     // node the collapses
-    for (Iterator it = collapsedVertexIndexes.iterator(); it.hasNext(); ) {
-      int vertexIndex = ((Integer) it.next()).intValue();
+    for (Object element : collapsedVertexIndexes) {
+      int vertexIndex = ((Integer) element).intValue();
       add(edge.getCoordinate(vertexIndex), vertexIndex);
     }
   }

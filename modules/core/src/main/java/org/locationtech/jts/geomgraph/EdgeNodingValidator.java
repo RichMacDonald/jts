@@ -13,7 +13,6 @@ package org.locationtech.jts.geomgraph;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.locationtech.jts.geom.TopologyException;
 import org.locationtech.jts.noding.BasicSegmentString;
@@ -49,8 +48,8 @@ public class EdgeNodingValidator
   {
     // convert Edges to SegmentStrings
     Collection segStrings = new ArrayList();
-    for (Iterator i = edges.iterator(); i.hasNext(); ) {
-      Edge e = (Edge) i.next();
+    for (Object edge : edges) {
+      Edge e = (Edge) edge;
       segStrings.add(new BasicSegmentString(e.getCoordinates(), e));
     }
     return segStrings;

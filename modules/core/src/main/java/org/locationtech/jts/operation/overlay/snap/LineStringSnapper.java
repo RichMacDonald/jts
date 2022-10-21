@@ -115,12 +115,12 @@ public class LineStringSnapper
 
   private Coordinate findSnapForVertex(Coordinate pt, Coordinate[] snapPts)
   {
-    for (int i = 0; i < snapPts.length; i++) {
+    for (Coordinate snapPt : snapPts) {
       // if point is already equal to a src pt, don't snap
-      if (pt.equals2D(snapPts[i]))
+      if (pt.equals2D(snapPt))
         return null;
-      if (pt.distance(snapPts[i]) < snapTolerance)
-        return snapPts[i];
+      if (pt.distance(snapPt) < snapTolerance)
+        return snapPt;
     }
     return null;
   }
