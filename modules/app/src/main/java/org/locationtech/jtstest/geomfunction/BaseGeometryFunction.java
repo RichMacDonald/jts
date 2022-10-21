@@ -13,6 +13,7 @@ package org.locationtech.jtstest.geomfunction;
 
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jtstest.util.ClassUtil;
@@ -184,13 +185,7 @@ implements GeometryFunction, Comparable
    */
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((name == null) ? 0 : name.hashCode());
-    result = prime * result + Arrays.hashCode(parameterNames);
-    result = prime * result + Arrays.hashCode(parameterTypes);
-    result = prime * result + ((returnType == null) ? 0 : returnType.hashCode());
-    return result;
+    return Objects.hash(name, Arrays.hashCode(parameterNames), Arrays.hashCode(parameterTypes), returnType);
   }
   
 	public int compareTo(Object o)

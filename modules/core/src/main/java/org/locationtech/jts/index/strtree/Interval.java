@@ -11,6 +11,8 @@
  */
 package org.locationtech.jts.index.strtree;
 
+import java.util.Objects;
+
 import org.locationtech.jts.util.Assert;
 
 /**
@@ -60,13 +62,6 @@ public class Interval {
    */
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    long temp;
-    temp = Double.doubleToLongBits(max);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
-    temp = Double.doubleToLongBits(min);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
-    return result;
+    return Objects.hash(max, min);
   }
 }

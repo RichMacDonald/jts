@@ -14,6 +14,7 @@ package org.locationtech.jts.geom;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.locationtech.jts.io.WKTWriter;
 
@@ -478,13 +479,7 @@ public class PrecisionModel implements Serializable, Comparable
    */
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((modelType == null) ? 0 : modelType.hashCode());
-    long temp;
-    temp = Double.doubleToLongBits(scale);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
-    return result;
+    return Objects.hash(modelType, scale);
   }
   
   /**
