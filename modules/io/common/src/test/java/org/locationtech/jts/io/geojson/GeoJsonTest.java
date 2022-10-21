@@ -14,6 +14,7 @@ package org.locationtech.jts.io.geojson;
 
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.ParseException;
+
 import test.jts.GeometryTestCase;
 
 

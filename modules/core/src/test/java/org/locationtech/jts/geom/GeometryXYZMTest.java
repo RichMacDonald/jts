@@ -1,6 +1,7 @@
 package org.locationtech.jts.geom;
 
 import org.locationtech.jts.geom.impl.PackedCoordinateSequenceFactory;
+
 import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 

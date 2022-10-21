@@ -11,10 +11,9 @@
  */
 package org.locationtech.jts.algorithm;
 
-import org.locationtech.jts.geom.Coordinate;
+import java.util.Arrays;
 
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
+import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateSequenceFactory;
 import org.locationtech.jts.geom.CoordinateSequences;
 import org.locationtech.jts.geom.Geometry;
@@ -22,7 +21,8 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.shape.random.RandomPointsBuilder;
 
-import java.util.Arrays;
+import junit.framework.TestCase;
+import junit.textui.TestRunner;
 
 /**
  * @version 1.7

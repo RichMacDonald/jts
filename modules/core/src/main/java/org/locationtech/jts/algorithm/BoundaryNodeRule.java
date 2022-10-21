@@ -16,8 +16,8 @@ import org.locationtech.jts.geom.Lineal;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.MultiLineString;
 import org.locationtech.jts.operation.BoundaryOp;
-import org.locationtech.jts.operation.valid.IsSimpleOp;
 import org.locationtech.jts.operation.relate.RelateOp;
+import org.locationtech.jts.operation.valid.IsSimpleOp;
 
 /**
  * An interface for rules which determine whether node points

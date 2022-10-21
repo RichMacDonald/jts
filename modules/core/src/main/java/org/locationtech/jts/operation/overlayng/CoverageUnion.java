@@ -12,6 +12,7 @@
 package org.locationtech.jts.operation.overlayng;
 
 import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.TopologyException;
 import org.locationtech.jts.noding.BoundaryChainNoder;
 import org.locationtech.jts.noding.Noder;

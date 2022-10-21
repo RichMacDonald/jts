@@ -12,15 +12,16 @@
 package org.locationtech.jts.io.oracle;
 
 import java.net.URL;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.PrecisionModel;
 
-
-import oracle.jdbc.OracleConnection;
 import junit.framework.TestCase;
+import oracle.jdbc.OracleConnection;
 
 /**
  *

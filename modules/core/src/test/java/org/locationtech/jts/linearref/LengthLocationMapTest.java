@@ -4,6 +4,7 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Lineal;
 import org.locationtech.jts.geom.MultiLineString;
 import org.locationtech.jts.geom.Point;
+
 import test.jts.GeometryTestCase;
 
 public class LengthLocationMapTest extends GeometryTestCase {

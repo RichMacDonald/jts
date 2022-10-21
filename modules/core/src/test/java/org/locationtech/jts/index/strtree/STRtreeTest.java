@@ -12,7 +12,6 @@
 package org.locationtech.jts.index.strtree;
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.TestCase;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
@@ -22,6 +21,7 @@ import org.locationtech.jts.index.ItemVisitor;
 import org.locationtech.jts.index.SpatialIndexTester;
 import org.locationtech.jts.util.AssertionFailedException;
 
+import junit.framework.TestCase;
 import test.jts.index.STRtreeDemo;
 import test.jts.util.SerializationUtil;
 

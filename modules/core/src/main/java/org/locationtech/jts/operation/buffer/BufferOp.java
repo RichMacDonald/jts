@@ -13,6 +13,7 @@ package org.locationtech.jts.operation.buffer;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;

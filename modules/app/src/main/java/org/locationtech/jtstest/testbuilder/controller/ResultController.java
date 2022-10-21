@@ -13,6 +13,7 @@
 package org.locationtech.jtstest.testbuilder.controller;
 
 import java.text.NumberFormat;
+
 import javax.swing.Timer;
 
 import org.locationtech.jts.geom.Geometry;

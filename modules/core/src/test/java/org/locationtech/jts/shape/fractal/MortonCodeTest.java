@@ -1,8 +1,11 @@
 package org.locationtech.jts.shape.fractal;
 
-import org.locationtech.jts.geom.Coordinate;
+import static org.locationtech.jts.shape.fractal.MortonCode.decode;
+import static org.locationtech.jts.shape.fractal.MortonCode.encode;
+import static org.locationtech.jts.shape.fractal.MortonCode.level;
+import static org.locationtech.jts.shape.fractal.MortonCode.size;
 
-import static org.locationtech.jts.shape.fractal.MortonCode.*;
+import org.locationtech.jts.geom.Coordinate;
 
 import junit.framework.TestCase;
 

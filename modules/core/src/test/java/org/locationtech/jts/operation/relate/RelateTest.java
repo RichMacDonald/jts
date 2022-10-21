@@ -14,6 +14,7 @@ package org.locationtech.jts.operation.relate;
 
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.IntersectionMatrix;
+
 import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 

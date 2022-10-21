@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
+
 import javax.swing.SwingUtilities;
 
 import org.locationtech.jts.awt.GeometryCollectionShape;

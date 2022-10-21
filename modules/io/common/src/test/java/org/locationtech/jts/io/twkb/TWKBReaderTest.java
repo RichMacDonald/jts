@@ -13,6 +13,7 @@
 package org.locationtech.jts.io.twkb;
 
 import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
 import org.junit.Rule;

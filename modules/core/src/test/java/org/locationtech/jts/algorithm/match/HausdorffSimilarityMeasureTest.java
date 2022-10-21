@@ -12,6 +12,7 @@
 package org.locationtech.jts.algorithm.match;
 
 import org.locationtech.jts.geom.Geometry;
+
 import test.jts.GeometryTestCase;
 
 public class HausdorffSimilarityMeasureTest extends GeometryTestCase {

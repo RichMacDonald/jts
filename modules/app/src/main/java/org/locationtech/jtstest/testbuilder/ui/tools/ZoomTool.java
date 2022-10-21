@@ -18,6 +18,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Point2D;
+
 import javax.swing.SwingUtilities;
 
 import org.locationtech.jtstest.testbuilder.AppConstants;

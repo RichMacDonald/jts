@@ -11,15 +11,15 @@
  */
 package org.locationtech.jts.io.geojson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.locationtech.jts.algorithm.Orientation;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Polygon;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Utilities to modify the ring orientation of polygonal geometries.

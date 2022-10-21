@@ -13,8 +13,11 @@ package org.locationtech.jts.io.oracle;
 
 import java.sql.SQLException;
 
-import org.locationtech.jts.generator.*;
-import org.locationtech.jts.geom.*;
+import org.locationtech.jts.generator.GridGenerator;
+import org.locationtech.jts.generator.PolygonGenerator;
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Polygon;
+
 import oracle.sql.STRUCT;
 
 

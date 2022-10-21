@@ -65,7 +65,7 @@
         <setting id="cleanup.remove_unused_private_types" value="true"/>
         <setting id="cleanup.system_property_boolean" value="false"/>
         <setting id="cleanup.qualify_static_method_accesses_with_declaring_class" value="false"/>
-        <setting id="cleanup.organize_imports" value="false"/>
+        <setting id="cleanup.organize_imports" value="true"/>
         <setting id="cleanup.lazy_logical_operator" value="true"/>
         <setting id="cleanup.bitwise_conditional_expression" value="false"/>
         <setting id="cleanup.use_directly_map_method" value="true"/>

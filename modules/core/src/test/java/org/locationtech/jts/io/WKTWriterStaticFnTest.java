@@ -1,14 +1,15 @@
 package org.locationtech.jts.io;
 
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import java.util.Random;
+
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.CoordinateXY;
 import org.locationtech.jts.geom.LineString;
-import test.jts.GeometryTestCase;
 
-import java.util.Random;
+import junit.framework.TestSuite;
+import junit.textui.TestRunner;
+import test.jts.GeometryTestCase;
 
 public class WKTWriterStaticFnTest extends GeometryTestCase {
 

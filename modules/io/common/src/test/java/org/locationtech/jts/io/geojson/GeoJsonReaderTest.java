@@ -12,6 +12,8 @@
 
 package org.locationtech.jts.io.geojson;
 
+import java.util.Arrays;
+
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
@@ -20,8 +22,6 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.io.ParseException;
 
 import test.jts.GeometryTestCase;
-
-import java.util.Arrays;
 
 public class GeoJsonReaderTest extends GeometryTestCase {
 

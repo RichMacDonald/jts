@@ -18,6 +18,7 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.util.SineStarFactory;
 import org.locationtech.jts.operation.distance.DistanceOp;
 import org.locationtech.jts.operation.distance.IndexedFacetDistance;
+
 import test.jts.perf.PerformanceTestCase;
 import test.jts.perf.PerformanceTestRunner;
 

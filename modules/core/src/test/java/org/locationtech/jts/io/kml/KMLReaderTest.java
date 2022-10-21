@@ -12,17 +12,18 @@
 
 package org.locationtech.jts.io.kml;
 
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.io.ParseException;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
+import junit.framework.TestCase;
+import junit.textui.TestRunner;
 
 public class KMLReaderTest extends TestCase {
     public static void main(String args[]) {

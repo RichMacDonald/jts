@@ -1,6 +1,8 @@
 package org.locationtech.jts.shape.fractal;
 
-import static org.locationtech.jts.shape.fractal.HilbertCode.*;
+import static org.locationtech.jts.shape.fractal.HilbertCode.decode;
+import static org.locationtech.jts.shape.fractal.HilbertCode.encode;
+import static org.locationtech.jts.shape.fractal.HilbertCode.size;
 import static org.locationtech.jts.shape.fractal.MortonCode.level;
 
 import org.locationtech.jts.geom.Coordinate;

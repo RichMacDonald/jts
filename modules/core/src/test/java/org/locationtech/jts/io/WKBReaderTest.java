@@ -16,10 +16,10 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.impl.PackedCoordinateSequenceFactory;
 
 import junit.framework.TestCase;
 import junit.textui.TestRunner;
-import org.locationtech.jts.geom.impl.PackedCoordinateSequenceFactory;
 
 
 /**

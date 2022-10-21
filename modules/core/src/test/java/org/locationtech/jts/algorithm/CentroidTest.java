@@ -1,9 +1,10 @@
 package org.locationtech.jts.algorithm;
 
-import junit.framework.TestCase;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.io.WKTReader;
+
+import junit.framework.TestCase;
 
 public class CentroidTest extends TestCase {
 

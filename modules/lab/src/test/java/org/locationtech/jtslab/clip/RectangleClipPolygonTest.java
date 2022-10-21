@@ -11,10 +11,9 @@
  */
 package org.locationtech.jtslab.clip;
 
-import junit.textui.TestRunner;
-
 import org.locationtech.jts.geom.Geometry;
 
+import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 
 public class RectangleClipPolygonTest extends GeometryTestCase {
