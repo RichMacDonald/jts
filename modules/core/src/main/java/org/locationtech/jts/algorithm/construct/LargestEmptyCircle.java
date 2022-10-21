@@ -397,7 +397,8 @@ public class LargestEmptyCircle {
     /**
      * A cell is greater if its maximum distance is larger.
      */
-    public int compareTo(Cell o) {
+    @Override
+	public int compareTo(Cell o) {
       return (int) (o.maxDist - this.maxDist);
     }
   }

@@ -128,7 +128,8 @@ public class CoordinateSequencesTest extends TestCase {
    *
    * @deprecated only use to update {@link #ordinateValues}
    */
-  public void ttestCreateRandomOrdinates() {
+  @Deprecated
+public void ttestCreateRandomOrdinates() {
     CoordinateSequence sequence = createRandomTestSequence(CoordinateArraySequenceFactory.instance(), 20,
             2, new Random(7),
             new Envelope(10, 100, 10, 100), new PrecisionModel(100));
@@ -172,7 +173,8 @@ public class CoordinateSequencesTest extends TestCase {
   /**
    * @deprecated only use to update in conjunction with {@link this.ttestCreateRandomOrdinates}
    */
-  private static CoordinateSequence createRandomTestSequence(CoordinateSequenceFactory csFactory, int size, int dim,
+  @Deprecated
+private static CoordinateSequence createRandomTestSequence(CoordinateSequenceFactory csFactory, int size, int dim,
                                                    Random rnd, Envelope range, PrecisionModel pm)
   {
     CoordinateSequence cs = csFactory.create(size,  dim);

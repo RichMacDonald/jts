@@ -207,7 +207,8 @@ public class Viewport implements PointTransformation
     return new Coordinate(p.getX(), p.getY());
   }
 
-  public void transform(Coordinate modelCoordinate, Point2D point)
+  @Override
+public void transform(Coordinate modelCoordinate, Point2D point)
   {
     point.setLocation(modelCoordinate.x, modelCoordinate.y);
     getModelToViewTransform().transform(point, point);

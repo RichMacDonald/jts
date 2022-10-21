@@ -111,7 +111,8 @@ public class Edge
    *
    * @return <code>true</code> if this edge is removed
    */
-  public boolean isRemoved()
+  @Override
+public boolean isRemoved()
   {
     return dirEdge == null;
   }

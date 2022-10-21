@@ -79,7 +79,8 @@ public class Vertex
         return p;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return "POINT (" + p.x + " " + p.y + ")";
     }
 

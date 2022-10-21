@@ -44,7 +44,8 @@ public class CoordinateArrayFilter implements CoordinateFilter {
     return pts;
   }
 
-  public void filter(Coordinate coord) {
+  @Override
+public void filter(Coordinate coord) {
     pts[n++] = coord;
   }
 }

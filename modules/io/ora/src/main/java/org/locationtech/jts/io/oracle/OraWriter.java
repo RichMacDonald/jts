@@ -122,7 +122,8 @@ public class OraWriter
    * @param con a valid Oracle connection
    * @deprecated use {@link #OraWriter()} instead
    */
-  public OraWriter(OracleConnection con)
+  @Deprecated
+public OraWriter(OracleConnection con)
   {
     this.connection = con;
   }
@@ -141,6 +142,7 @@ public class OraWriter
 	 * @param outputDimension the coordinate dimension to use for the output
 	 * @deprecated use {@link #OraWriter(int)} instead
 	 */
+	@Deprecated
 	public OraWriter(OracleConnection con, int outputDimension)
 	{
 		this.connection = con;
@@ -228,7 +230,8 @@ public class OraWriter
    * @throws SQLException if an encoding error was encountered
    * @deprecated
    */
-  public STRUCT write(Geometry geom) throws SQLException
+  @Deprecated
+public STRUCT write(Geometry geom) throws SQLException
   {
     return write(geom, connection);
   }

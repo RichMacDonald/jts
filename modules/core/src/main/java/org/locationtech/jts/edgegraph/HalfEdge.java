@@ -432,7 +432,8 @@ public class HalfEdge {
    * 
    * @return a string representation
    */
-  public String toString()
+  @Override
+public String toString()
   {
     return "HE("+orig.x + " " + orig.y
         + ", "

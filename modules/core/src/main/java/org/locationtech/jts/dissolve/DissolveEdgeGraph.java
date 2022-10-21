@@ -25,7 +25,8 @@ import org.locationtech.jts.geom.Coordinate;
  */
 class DissolveEdgeGraph extends EdgeGraph
 {
-  protected HalfEdge createEdge(Coordinate p0)
+  @Override
+protected HalfEdge createEdge(Coordinate p0)
   {
     return new DissolveHalfEdge(p0);
   }

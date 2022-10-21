@@ -35,7 +35,8 @@ public class LineIntersectorBenchmark implements Runnable {
     lineIntersectorBenchmark.run();
   }
 
-  public void run() {
+  @Override
+public void run() {
     exercise(new NonRobustLineIntersector());
     exercise(new RobustLineIntersector());
   }

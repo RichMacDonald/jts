@@ -35,6 +35,7 @@ import org.locationtech.jts.io.WKTReader;
  *
  * @version 1.7
  */
+@Deprecated
 public class PolygonUnionUsingBuffer {
 
   public static void main(String[] args)

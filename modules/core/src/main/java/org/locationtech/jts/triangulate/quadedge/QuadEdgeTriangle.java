@@ -253,6 +253,7 @@ public class QuadEdgeTriangle
 		return tri;
 	}
 
+	@Override
 	public String toString() {
 		return getGeometry(new GeometryFactory()).toString();
 	}
@@ -327,6 +328,7 @@ public class QuadEdgeTriangle
 		public QuadEdgeTriangleBuilderVisitor() {
 		}
 
+		@Override
 		public void visit(QuadEdge[] edges) {
 			triangles.add(new QuadEdgeTriangle(edges));
 		}

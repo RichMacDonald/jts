@@ -49,7 +49,8 @@ class PrecisionReducerTransformer extends GeometryTransformer {
     this.isRemoveCollapsed  = isRemoveCollapsed;
   }
   
-  protected CoordinateSequence transformCoordinates(
+  @Override
+protected CoordinateSequence transformCoordinates(
       CoordinateSequence coordinates, Geometry parent) {
     if (coordinates.size() == 0)
       return null;
@@ -108,11 +109,13 @@ class PrecisionReducerTransformer extends GeometryTransformer {
     return noRepeatCoords;
   }
 
-  protected Geometry transformPolygon(Polygon geom, Geometry parent) {
+  @Override
+protected Geometry transformPolygon(Polygon geom, Geometry parent) {
     return reduceArea(geom);
   }
 
-  protected Geometry transformMultiPolygon(MultiPolygon geom, Geometry parent) {
+  @Override
+protected Geometry transformMultiPolygon(MultiPolygon geom, Geometry parent) {
     return reduceArea(geom);
   }
 

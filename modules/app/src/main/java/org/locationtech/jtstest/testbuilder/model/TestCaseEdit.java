@@ -69,11 +69,13 @@ public class TestCaseEdit implements Testable {
     return (Geometry) geom.clone();
   }
   
-  public void setGeometry(int i, Geometry geom) {
+  @Override
+public void setGeometry(int i, Geometry geom) {
     testable.setGeometry(i, geom);
   }
 
-  public void setName(String name) {
+  @Override
+public void setName(String name) {
     testable.setName(name);
   }
 
@@ -91,7 +93,8 @@ public class TestCaseEdit implements Testable {
   
   public void setOpName(String name) { opName = name; }
   
-  public Geometry getGeometry(int i) {
+  @Override
+public Geometry getGeometry(int i) {
 //    return geom[i];
     return testable.getGeometry(i);
   }
@@ -102,26 +105,32 @@ public class TestCaseEdit implements Testable {
   }
 
 
-  public String getName() {
+  @Override
+public String getName() {
     return testable.getName();
   }
 
-  public IntersectionMatrix getIntersectionMatrix() {
+  @Override
+public IntersectionMatrix getIntersectionMatrix() {
     return testable.getIntersectionMatrix();
   }
 
-  public void setIntersectionMatrix(IntersectionMatrix im) {
+  @Override
+public void setIntersectionMatrix(IntersectionMatrix im) {
     testable.setIntersectionMatrix(im);
   }
-  public String getDescription() {
+  @Override
+public String getDescription() {
     return testable.getDescription();
   }
 
-  public String getWellKnownText(int i) {
+  @Override
+public String getWellKnownText(int i) {
     return testable.getWellKnownText(i);
   }
 
-  public void initGeometry() throws ParseException {
+  @Override
+public void initGeometry() throws ParseException {
     testable.initGeometry();
   }
 

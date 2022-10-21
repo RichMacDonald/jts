@@ -39,7 +39,8 @@ extends LineStringStyle
     this.color = color;
   }
 
-  protected void paintLineString(LineString lineString,
+  @Override
+protected void paintLineString(LineString lineString,
       int lineType,
       Viewport viewport, Graphics2D gr)
   throws Exception

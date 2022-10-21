@@ -434,7 +434,8 @@ class EdgeRing {
    * 
    * @return a string representing the object 
    */
-  public String toString() {
+  @Override
+public String toString() {
     return WKTWriter.toLineString(new CoordinateArraySequence(getCoordinates()));
   }
   
@@ -461,7 +462,8 @@ class EdgeRing {
    *
    */
   static class EnvelopeComparator implements Comparator {
-    public int compare(Object obj0, Object obj1) {
+    @Override
+	public int compare(Object obj0, Object obj1) {
       EdgeRing r0 = (EdgeRing) obj0;
       EdgeRing r1 = (EdgeRing) obj1;
       return r0.getRing().getEnvelope().compareTo(r1.getRing().getEnvelope());

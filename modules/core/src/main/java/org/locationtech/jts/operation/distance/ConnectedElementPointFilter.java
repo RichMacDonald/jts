@@ -51,7 +51,8 @@ public class ConnectedElementPointFilter
     this.pts = pts;
   }
 
-  public void filter(Geometry geom)
+  @Override
+public void filter(Geometry geom)
   {
     if (geom instanceof Point
       || geom instanceof LineString

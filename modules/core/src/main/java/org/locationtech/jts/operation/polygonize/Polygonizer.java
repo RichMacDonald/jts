@@ -62,7 +62,8 @@ public class Polygonizer
       this.p = p;
     }
     
-    public void filter(Geometry g) {
+    @Override
+	public void filter(Geometry g) {
       if (g instanceof LineString)
         p.add((LineString) g);
     }

@@ -100,7 +100,8 @@ public class GeometryBoxDeleter
     
     public boolean isEdited() { return isEdited; }
 
-    public Geometry edit(Geometry geometry, GeometryFactory factory)
+    @Override
+	public Geometry edit(Geometry geometry, GeometryFactory factory)
     {
       // Allow any number of components to be deleted
       //if (isEdited) return geometry;
@@ -145,7 +146,8 @@ public class GeometryBoxDeleter
     
     public boolean isEdited() { return isEdited; }
   
-    public Coordinate[] edit(Coordinate[] coords,
+    @Override
+	public Coordinate[] edit(Coordinate[] coords,
         Geometry geometry)
     {
       if (isEdited) return coords;

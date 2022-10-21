@@ -112,7 +112,8 @@ public class Corner implements Comparable<Corner> {
         new Coordinate[] { safeCoord(pp), safeCoord(p), safeCoord(pn) });
   }
 
-  public String toString() {
+  @Override
+public String toString() {
     return toLineString().toString();
   }
 

@@ -26,22 +26,26 @@ public class BooleanResult implements Result {
         this(result.booleanValue());
     }
 
-    public boolean equals(Result other, double tolerance) {
+    @Override
+	public boolean equals(Result other, double tolerance) {
         if (!(other instanceof BooleanResult))
             return false;
         BooleanResult otherBooleanResult = (BooleanResult) other;
         return result == otherBooleanResult.result;
     }
 
-    public String toFormattedString() {
+    @Override
+	public String toFormattedString() {
         return toShortString();
     }
 
-    public String toLongString() {
+    @Override
+	public String toLongString() {
         return toShortString();
     }
 
-    public String toShortString() {
+    @Override
+	public String toShortString() {
         return result ? "true" : "false";
     }
 }

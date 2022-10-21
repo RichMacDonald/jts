@@ -246,7 +246,8 @@ public class WKBTest
 
 class AverageZFilter implements CoordinateFilter
 {
-  public void filter(Coordinate coord)
+  @Override
+public void filter(Coordinate coord)
   {
     coord.setZ((coord.x + coord.y) / 2);
   }

@@ -40,31 +40,38 @@ public class RepeaterGeometryFunction implements GeometryFunction {
     hasRepeatableArg = hasRepeatableArg(fun);
   }
   
-  public String getCategory() {
+  @Override
+public String getCategory() {
     return fun.getCategory();
   }
 
-  public String getName() {
+  @Override
+public String getName() {
     return fun.getName() + repeatAnnotation();
   }
 
-  public String getDescription() {
+  @Override
+public String getDescription() {
     return fun.getDescription();
   }
 
-  public String[] getParameterNames() {
+  @Override
+public String[] getParameterNames() {
     return fun.getParameterNames();
   }
 
-  public Class<?>[] getParameterTypes() {
+  @Override
+public Class<?>[] getParameterTypes() {
     return fun.getParameterTypes();
   }
 
-  public Class<?> getReturnType() {
+  @Override
+public Class<?> getReturnType() {
     return fun.getReturnType();
   }
 
-  public String getSignature() {
+  @Override
+public String getSignature() {
     return fun.getSignature();
   }
 
@@ -72,15 +79,18 @@ public class RepeaterGeometryFunction implements GeometryFunction {
     return "*" + count;
   }
 
-  public boolean isBinary() {
+  @Override
+public boolean isBinary() {
     return fun.isBinary();
   }
   
-  public boolean isRequiredB() {
+  @Override
+public boolean isRequiredB() {
     return fun.isRequiredB();
   }
   
-  public Object invoke(Geometry geom, Object[] args) {
+  @Override
+public Object invoke(Geometry geom, Object[] args) {
     
     if (! isRepeatable(fun)) {
       throw new IllegalArgumentException("Cannot repeat function whose argumnent is not a double");

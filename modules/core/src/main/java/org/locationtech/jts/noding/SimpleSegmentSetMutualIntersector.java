@@ -45,7 +45,8 @@ public class SimpleSegmentSetMutualIntersector implements SegmentSetMutualInters
    * @param segStrings set of segments to intersect
    * @param segInt segment intersector to use
    */
-  public void process(Collection segStrings, SegmentIntersector segInt) {
+  @Override
+public void process(Collection segStrings, SegmentIntersector segInt) {
     for (Object baseSegString : baseSegStrings) {
     	SegmentString baseSS = (SegmentString) baseSegString;
     	for (Object segString : segStrings) {

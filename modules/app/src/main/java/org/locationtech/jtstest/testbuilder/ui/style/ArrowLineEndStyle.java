@@ -44,7 +44,8 @@ public class ArrowLineEndStyle
     this.color = ColorUtil.setAlpha(color, FILL_ALPHA);
   }
 
-  protected void paint(Point2D terminal, Point2D next, Viewport viewport,
+  @Override
+protected void paint(Point2D terminal, Point2D next, Viewport viewport,
       Graphics2D g) throws NoninvertibleTransformException 
   {
     // can't compute valid arrow for zero-length segments

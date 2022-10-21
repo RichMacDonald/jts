@@ -41,11 +41,13 @@ public class GeometryTransferable implements Transferable
     this.isFormatted = isFormatted;
   }
 
-  public DataFlavor[] getTransferDataFlavors() {
+  @Override
+public DataFlavor[] getTransferDataFlavors() {
       return flavors;
   }
 
-  public boolean isDataFlavorSupported(DataFlavor flavor) {
+  @Override
+public boolean isDataFlavorSupported(DataFlavor flavor) {
       for (DataFlavor flavor2 : flavors) {
           if (flavor.equals(flavor2)) {
               return true;
@@ -54,7 +56,8 @@ public class GeometryTransferable implements Transferable
       return false;
   }
 
-  public Object getTransferData(DataFlavor flavor)
+  @Override
+public Object getTransferData(DataFlavor flavor)
       throws UnsupportedFlavorException, IOException
   {
     if (flavor.equals(GEOMETRY_FLAVOR)) {

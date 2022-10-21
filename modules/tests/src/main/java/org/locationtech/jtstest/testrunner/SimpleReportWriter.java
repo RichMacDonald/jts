@@ -31,7 +31,8 @@ private boolean verbose;
 
   public SimpleReportWriter(boolean verbose) { this.verbose = verbose; }
 
-  public String writeReport(TestEngine engine) {
+  @Override
+public String writeReport(TestEngine engine) {
     reportBuf = new StringWriter();
     reportOnParsingProblems(engine.getParsingProblems());
     reportOnTestRuns(engine.getTestRuns());

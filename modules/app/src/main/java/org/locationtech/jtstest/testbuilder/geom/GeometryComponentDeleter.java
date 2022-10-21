@@ -47,7 +47,8 @@ public class GeometryComponentDeleter
     
     public boolean isEdited() { return isEdited; }
 
-    public Geometry edit(Geometry geometry, GeometryFactory factory)
+    @Override
+	public Geometry edit(Geometry geometry, GeometryFactory factory)
     {               
       if (geometry == component) {
           isEdited = true;

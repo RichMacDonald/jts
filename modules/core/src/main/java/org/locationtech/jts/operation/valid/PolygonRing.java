@@ -358,7 +358,8 @@ class PolygonRing {
     return null;
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     return ring.toString();
   }
 

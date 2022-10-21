@@ -72,7 +72,8 @@ public class CoordinateXY extends Coordinate {
    * 
    * @return a copy of this CoordinateXY
    */
-  public CoordinateXY copy() {
+  @Override
+public CoordinateXY copy() {
     return new CoordinateXY(this);
   }
   
@@ -131,7 +132,8 @@ public class CoordinateXY extends Coordinate {
     }
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     return "(" + x + ", " + y + ")";
   }
 }

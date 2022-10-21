@@ -56,7 +56,8 @@ public class GeometryTreeModel implements TreeModel
   /**
    * Adds a listener for the TreeModelEvent posted after the tree changes.
    */
-  public void addTreeModelListener(TreeModelListener l)
+  @Override
+public void addTreeModelListener(TreeModelListener l)
   {
     treeModelListeners.addElement(l);
   }
@@ -64,7 +65,8 @@ public class GeometryTreeModel implements TreeModel
   /**
    * Returns the child of parent at index index in the parent's child array.
    */
-  public Object getChild(Object parent, int index)
+  @Override
+public Object getChild(Object parent, int index)
   {
     GeometricObjectNode gn = (GeometricObjectNode) parent;
     return gn.getChildAt(index);
@@ -73,7 +75,8 @@ public class GeometryTreeModel implements TreeModel
   /**
    * Returns the number of children of parent.
    */
-  public int getChildCount(Object parent)
+  @Override
+public int getChildCount(Object parent)
   {
     GeometricObjectNode gn = (GeometricObjectNode) parent;
     return gn.getChildCount();
@@ -82,7 +85,8 @@ public class GeometryTreeModel implements TreeModel
   /**
    * Returns the index of child in parent.
    */
-  public int getIndexOfChild(Object parent, Object child)
+  @Override
+public int getIndexOfChild(Object parent, Object child)
   {
     GeometricObjectNode gn = (GeometricObjectNode) parent;
     return gn.getIndexOfChild((GeometricObjectNode) child);
@@ -91,7 +95,8 @@ public class GeometryTreeModel implements TreeModel
   /**
    * Returns the root of the tree.
    */
-  public Object getRoot()
+  @Override
+public Object getRoot()
   {
     return rootGeom;
   }
@@ -99,7 +104,8 @@ public class GeometryTreeModel implements TreeModel
   /**
    * Returns true if node is a leaf.
    */
-  public boolean isLeaf(Object node)
+  @Override
+public boolean isLeaf(Object node)
   {
     GeometricObjectNode gn = (GeometricObjectNode) node;
     return gn.isLeaf();
@@ -108,7 +114,8 @@ public class GeometryTreeModel implements TreeModel
   /**
    * Removes a listener previously added with addTreeModelListener().
    */
-  public void removeTreeModelListener(TreeModelListener l)
+  @Override
+public void removeTreeModelListener(TreeModelListener l)
   {
     treeModelListeners.removeElement(l);
   }
@@ -117,7 +124,8 @@ public class GeometryTreeModel implements TreeModel
    * Messaged when the user has altered the value for the item identified by
    * path to newValue. Not used by this model.
    */
-  public void valueForPathChanged(TreePath path, Object newValue)
+  @Override
+public void valueForPathChanged(TreePath path, Object newValue)
   {
     System.out
         .println("*** valueForPathChanged : " + path + " --> " + newValue);
@@ -284,17 +292,20 @@ abstract class GeometryNode extends GeometricObjectNode
     return buf.toString();
   }
   
-  public boolean isLeaf()
+  @Override
+public boolean isLeaf()
   {
     return isLeaf;
   }
   
-  public ImageIcon getIcon()
+  @Override
+public ImageIcon getIcon()
   {
     return context.source == 0 ? AppIcons.ICON_POLYGON : AppIcons.ICON_POLYGON_B;
   }
 
-  public GeometricObjectNode getChildAt(int index)
+  @Override
+public GeometricObjectNode getChildAt(int index)
   {
     if (isLeaf)
       return null;
@@ -302,7 +313,8 @@ abstract class GeometryNode extends GeometricObjectNode
     return children.get(index);
   }
 
-  public int getChildCount()
+  @Override
+public int getChildCount()
   {
     if (isLeaf)
       return 0;
@@ -310,7 +322,8 @@ abstract class GeometryNode extends GeometricObjectNode
     return children.size();
   }
 
-  public int getIndexOfChild(GeometricObjectNode child)
+  @Override
+public int getIndexOfChild(GeometricObjectNode child)
   {
     if (isLeaf)
       return -1;
@@ -345,17 +358,20 @@ class PolygonNode extends GeometryNode
     this.poly = poly;
   }
 
-  public Geometry getGeometry()
+  @Override
+public Geometry getGeometry()
   {
     return poly;
   }
 
-  public ImageIcon getIcon()
+  @Override
+public ImageIcon getIcon()
   {
     return context.source == 0 ? AppIcons.ICON_POLYGON : AppIcons.ICON_POLYGON_B;
   }
 
-  protected void fillChildren()
+  @Override
+protected void fillChildren()
   {
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
       children.add(new LinearRingNode(poly.getInteriorRingN(i),
@@ -386,17 +402,20 @@ class LineStringNode extends GeometryNode
     this.line = line;
   }
 
-  public ImageIcon getIcon()
+  @Override
+public ImageIcon getIcon()
   {
     return context.source == 0 ? AppIcons.ICON_LINESTRING : AppIcons.ICON_LINESTRING_B;
   }
 
-  public Geometry getGeometry()
+  @Override
+public Geometry getGeometry()
   {
     return line;
   }
 
-  protected void fillChildren()
+  @Override
+protected void fillChildren()
   {
     populateChildren(line.getCoordinates());
   }
@@ -425,7 +444,8 @@ class LinearRingNode extends LineStringNode
       GeometryContext context) {
     super(ring, tag, context);
   }
-  public ImageIcon getIcon()
+  @Override
+public ImageIcon getIcon()
   {
     return context.source == 0 ? AppIcons.ICON_LINEARRING : AppIcons.ICON_LINEARRING_B;
   }
@@ -441,17 +461,20 @@ class PointNode extends GeometryNode
     pt = p;
   }
 
-  public ImageIcon getIcon()
+  @Override
+public ImageIcon getIcon()
   {
     return context.source == 0 ? AppIcons.ICON_POINT : AppIcons.ICON_POINT_B;
   }
 
-  public Geometry getGeometry()
+  @Override
+public Geometry getGeometry()
   {
     return pt;
   }
 
-  protected void fillChildren()
+  @Override
+protected void fillChildren()
   {
     children.add(CoordinateNode.create(pt.getCoordinate()));
   }
@@ -467,12 +490,14 @@ class GeometryCollectionNode extends GeometryNode
     this.coll = coll;
   }
 
-  public Geometry getGeometry()
+  @Override
+public Geometry getGeometry()
   {
     return coll;
   }
 
-  protected void fillChildren()
+  @Override
+protected void fillChildren()
   {
     for (int i = 0; i < coll.getNumGeometries(); i++) {
       GeometryNode node = create(coll.getGeometryN(i), context);
@@ -484,7 +509,8 @@ class GeometryCollectionNode extends GeometryNode
     }
   }
   
-  public ImageIcon getIcon()
+  @Override
+public ImageIcon getIcon()
   {
     return context.source == 0 ? AppIcons.ICON_COLLECTION : AppIcons.ICON_COLLECTION_B;
   }
@@ -536,12 +562,14 @@ class CoordinateNode extends GeometricObjectNode
     this.coord = coord;
     this.index = i;
   }
-  public ImageIcon getIcon()
+  @Override
+public ImageIcon getIcon()
   {
     return AppIcons.ICON_POINT;
   }
 
-  public Geometry getGeometry()
+  @Override
+public Geometry getGeometry()
   {
     GeometryFactory geomFact = new GeometryFactory();
     return geomFact.createPoint(coord);

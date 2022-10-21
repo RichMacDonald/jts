@@ -50,7 +50,8 @@ public class GeometryPopupMenu extends JPopupMenu
   /**
    * Record model coordinate of click point for use in menu operations
    */
-  public void show(Component invoker, int x, int y)
+  @Override
+public void show(Component invoker, int x, int y)
   {
     GeometryEditPanel editPanel = (GeometryEditPanel) invoker;
     clickCoord = editPanel.getViewport().toModelCoordinate(new java.awt.Point(x, y));

@@ -273,7 +273,8 @@ public class JTSTestBuilderFrame extends JFrame
   /**
    *  Overridden so we can exit when window is closed
    */
-  protected void processWindowEvent(WindowEvent e) {
+  @Override
+protected void processWindowEvent(WindowEvent e) {
     super.processWindowEvent(e);
     if (e.getID() == WindowEvent.WINDOW_CLOSING) {
       actionExit();

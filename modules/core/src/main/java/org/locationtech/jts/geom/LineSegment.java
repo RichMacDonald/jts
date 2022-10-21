@@ -627,7 +627,8 @@ public class LineSegment
    *@return        <code>true</code> if <code>other</code> is a <code>LineSegment</code>
    *      with the same values for the x and y ordinates.
    */
-  public boolean equals(Object o) {
+  @Override
+public boolean equals(Object o) {
     if (!(o instanceof LineSegment)) {
       return false;
     }
@@ -640,7 +641,8 @@ public class LineSegment
    * 
    * @return a hashcode for this object
    */
-  public int hashCode() {
+  @Override
+public int hashCode() {
     int hash = 17;
     hash = hash * 29 + Double.hashCode(p0.x);
     hash = hash * 29 + Double.hashCode(p0.y);
@@ -671,7 +673,8 @@ public class LineSegment
    *@return    a negative integer, zero, or a positive integer as this <code>LineSegment</code>
    *      is less than, equal to, or greater than the specified <code>LineSegment</code>
    */
-  public int compareTo(Object o) {
+  @Override
+public int compareTo(Object o) {
     LineSegment other = (LineSegment) o;
     int comp0 = p0.compareTo(other.p0);
     if (comp0 != 0) return comp0;
@@ -694,7 +697,8 @@ public class LineSegment
       || p0.equals(other.p1) && p1.equals(other.p0);
   }
 
-  public String toString()
+  @Override
+public String toString()
   {
     return WKTConstants.LINESTRING + " (" +
         p0.x + " " + p0.y

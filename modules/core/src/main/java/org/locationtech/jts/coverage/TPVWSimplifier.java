@@ -257,7 +257,8 @@ class TPVWSimplifier {
       addCorner(next, cornerQueue);
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
       return linkedLine.toString();
     }
   }

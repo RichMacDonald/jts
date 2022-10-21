@@ -239,7 +239,8 @@ public strictfp final class DD
    * 
    * @return a copy of this value
    */
-  public Object clone()
+  @Override
+public Object clone()
   {
     try {
       return super.clone();
@@ -1033,7 +1034,8 @@ public strictfp final class DD
    * @return -1,0 or 1 depending on whether this value is less than, equal to
    * or greater than the value of <tt>o</tt>
    */
-  public int compareTo(Object o) 
+  @Override
+public int compareTo(Object o) 
   {
     DD other = (DD) o;
 
@@ -1073,7 +1075,8 @@ public strictfp final class DD
    * 
    * @return a string representation of this number
    */
-  public String toString()
+  @Override
+public String toString()
   {
     int mag = magnitude(hi);
     if (mag >= -3 && mag <= 20)

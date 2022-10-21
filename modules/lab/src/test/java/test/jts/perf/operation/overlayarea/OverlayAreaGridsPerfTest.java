@@ -45,7 +45,8 @@ public class OverlayAreaGridsPerfTest extends PerformanceTestCase
     setRunIterations(1);
   }
 
-  public void startRun(int size) throws IOException, ParseException
+  @Override
+public void startRun(int size) throws IOException, ParseException
   {
     //geom = createSineStar(10_000, 0);
     //geom = (Geometry) IOUtil.readWKTFile("D:/proj/jts/testing/intersectionarea/dvg_nw.wkt").toArray()[0];

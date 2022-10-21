@@ -68,7 +68,8 @@ public class VertexLocater
       this.tolerance = tolerance;
     }
 
-    public void filter(CoordinateSequence seq, int i)
+    @Override
+	public void filter(CoordinateSequence seq, int i)
     {
       Coordinate p = seq.getCoordinate(i);
       double dist = p.distance(basePt);
@@ -85,9 +86,11 @@ public class VertexLocater
     }
     public int getIndex() { return vertexIndex; }
     
-    public boolean isDone() { return nearestPt != null; }
+    @Override
+	public boolean isDone() { return nearestPt != null; }
 
-    public boolean isGeometryChanged() { return false; }
+    @Override
+	public boolean isGeometryChanged() { return false; }
   }
   static class NearVerticesFilter implements CoordinateSequenceFilter
   {
@@ -101,7 +104,8 @@ public class VertexLocater
       this.tolerance = tolerance;
     }
 
-    public void filter(CoordinateSequence seq, int i)
+    @Override
+	public void filter(CoordinateSequence seq, int i)
     {
       Coordinate p = seq.getCoordinate(i);
       double dist = p.distance(queryPt);
@@ -116,13 +120,15 @@ public class VertexLocater
     	return locations;
     }
     
-    public boolean isDone()
+    @Override
+	public boolean isDone()
     { 
     	// evaluate all points
     	return false; 
     }
 
-    public boolean isGeometryChanged() { return false; }
+    @Override
+	public boolean isGeometryChanged() { return false; }
   }
 
   public static class Location

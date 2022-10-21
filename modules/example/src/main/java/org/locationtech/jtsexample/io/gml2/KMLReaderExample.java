@@ -108,7 +108,8 @@ class KMLHandler extends DefaultHandler
    *@param  atts              Description of the Parameter
    *@exception  SAXException  Description of the Exception
    */
-  public void startElement(String uri, String name, String qName,
+  @Override
+public void startElement(String uri, String name, String qName,
 			Attributes atts) throws SAXException {
 		if (name.equalsIgnoreCase(GMLConstants.GML_POLYGON)) {
 			currGeomHandler = new GMLHandler(fact, null);
@@ -121,6 +122,7 @@ class KMLHandler extends DefaultHandler
 		}
 	}
   
+	@Override
 	public void characters(char[] ch, int start, int length) throws SAXException 
 	{
     if (currGeomHandler != null) {
@@ -134,6 +136,7 @@ class KMLHandler extends DefaultHandler
     }
 	}
 	
+	@Override
 	public void ignorableWhitespace(char[] ch, int start, int length)
 	throws SAXException {
     if (currGeomHandler != null)
@@ -149,7 +152,8 @@ class KMLHandler extends DefaultHandler
    *@param  qName             Description of the Parameter
    *@exception  SAXException  Description of the Exception
    */
-  public void endElement(String uri, String name, String qName)
+  @Override
+public void endElement(String uri, String name, String qName)
 			throws SAXException {
 		// System.out.println("/" + name);
 
@@ -178,6 +182,7 @@ class KMLHandler extends DefaultHandler
  */
 class FixingGeometryFactory extends GeometryFactory
 {
+	@Override
 	public LinearRing createLinearRing(CoordinateSequence cs)
 	{
 		if (cs.getCoordinate(0).equals(cs.getCoordinate(cs.size() - 1))) 

@@ -70,7 +70,8 @@ public interface PointShapeFactory {
      *          the location of the point
      * @return a shape
      */
-    public abstract Shape createPoint(Point2D point);
+    @Override
+	public abstract Shape createPoint(Point2D point);
   }
 
   public static class Point extends BasePointShapeFactory {
@@ -98,7 +99,8 @@ public interface PointShapeFactory {
      *          the location of the point
      * @return a shape
      */
-    public Shape createPoint(Point2D point) {
+    @Override
+	public Shape createPoint(Point2D point) {
       Line2D.Double pointMarker =
         new Line2D.Double(
         	point.getX(),
@@ -134,7 +136,8 @@ public interface PointShapeFactory {
      *          the location of the point
      * @return a shape
      */
-    public Shape createPoint(Point2D point) {
+    @Override
+	public Shape createPoint(Point2D point) {
       Rectangle2D.Double pointMarker =
         new Rectangle2D.Double(
           0.0,
@@ -173,7 +176,8 @@ public interface PointShapeFactory {
      *          the location of the point
      * @return a shape
      */
-    public Shape createPoint(Point2D point) {
+    @Override
+	public Shape createPoint(Point2D point) {
       GeneralPath path = new GeneralPath();
       path.moveTo((float) point.getX(), (float) (point.getY() - size/2));
       path.lineTo((float) (point.getX() + size * 1/8), (float) (point.getY() - size * 1/8));
@@ -215,7 +219,8 @@ public interface PointShapeFactory {
      *          the location of the point
      * @return a shape
      */
-    public Shape createPoint(Point2D point) {
+    @Override
+	public Shape createPoint(Point2D point) {
 
       GeneralPath path = new GeneralPath();
       path.moveTo((float) (point.getX()), (float) (point.getY() - size / 2));
@@ -252,7 +257,8 @@ public interface PointShapeFactory {
      *          the location of the point
      * @return a shape
      */
-    public Shape createPoint(Point2D point) {
+    @Override
+	public Shape createPoint(Point2D point) {
       Ellipse2D.Double pointMarker =
         new Ellipse2D.Double(
           0.0,
@@ -291,7 +297,8 @@ public interface PointShapeFactory {
      *          the location of the point
      * @return a shape
      */
-    public Shape createPoint(Point2D point) {
+    @Override
+	public Shape createPoint(Point2D point) {
 
       float x1 = (float) (point.getX() - size/2f);
       float x2 = (float) (point.getX() - size/4f);
@@ -347,7 +354,8 @@ public interface PointShapeFactory {
      *          the location of the point
      * @return a shape
      */
-    public Shape createPoint(Point2D point) {
+    @Override
+	public Shape createPoint(Point2D point) {
       GeneralPath path = new GeneralPath();
       path.moveTo((float) (point.getX()), (float) (point.getY() - size * 1/8));
       path.lineTo((float) (point.getX() + size * 2/8), (float) (point.getY() - size/2));

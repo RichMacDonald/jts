@@ -27,7 +27,7 @@
         <setting id="cleanup.sort_members_all" value="false"/>
         <setting id="cleanup.system_property_path_separator" value="false"/>
         <setting id="cleanup.instanceof" value="false"/>
-        <setting id="cleanup.add_missing_annotations" value="false"/>
+        <setting id="cleanup.add_missing_annotations" value="true"/>
         <setting id="cleanup.precompile_regex" value="true"/>
         <setting id="cleanup.always_use_this_for_non_static_field_access" value="false"/>
         <setting id="cleanup.boolean_literal" value="true"/>

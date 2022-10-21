@@ -120,7 +120,8 @@ public class LinkedLine {
     return coords.toCoordinateArray();
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     return WKTWriter.toLineString(getCoordinates());
   }
 }

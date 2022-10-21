@@ -52,7 +52,8 @@ public class ExtendedCoordinate
     m = coord.m;
   }
   
-  public ExtendedCoordinate copy() {
+  @Override
+public ExtendedCoordinate copy() {
     return new ExtendedCoordinate(this);
   }
 
@@ -61,8 +62,10 @@ public class ExtendedCoordinate
    * The m variable holds a measure value for linear referencing
    */
   private double m;
-  public double getM() { return m; }
-  public void setM(double m) { this.m = m; }
+  @Override
+public double getM() { return m; }
+  @Override
+public void setM(double m) { this.m = m; }
 
   @Override
   public void setCoordinate(Coordinate other)
@@ -105,7 +108,8 @@ public class ExtendedCoordinate
     throw new IllegalArgumentException("Invalid ordinate index: " + ordinateIndex);
   }
   
-  public String toString()
+  @Override
+public String toString()
   {
     String stringRep = "(" + x + "," + y + "," + getZ() + " m=" + m + ")";
     return stringRep;

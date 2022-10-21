@@ -110,15 +110,18 @@ public class RelatePanel extends JPanel {
   private DocumentListener expectedImDocumentListener =
     new DocumentListener() {
 
-      public void insertUpdate(DocumentEvent e) {
+      @Override
+	public void insertUpdate(DocumentEvent e) {
         expectedIntersectionMatrixChanged();
       }
 
-      public void removeUpdate(DocumentEvent e) {
+      @Override
+	public void removeUpdate(DocumentEvent e) {
         expectedIntersectionMatrixChanged();
       }
 
-      public void changedUpdate(DocumentEvent e) {
+      @Override
+	public void changedUpdate(DocumentEvent e) {
         expectedIntersectionMatrixChanged();
       }
     };

@@ -137,7 +137,8 @@ public class Quadtree
     return 0;
   }
 
-  public void insert(Envelope itemEnv, Object item)
+  @Override
+public void insert(Envelope itemEnv, Object item)
   {
     collectStats(itemEnv);
     Envelope insertEnv = ensureExtent(itemEnv, minExtent);
@@ -151,7 +152,8 @@ public class Quadtree
    * @param item the item to remove
    * @return <code>true</code> if the item was found (and thus removed)
    */
-  public boolean remove(Envelope itemEnv, Object item)
+  @Override
+public boolean remove(Envelope itemEnv, Object item)
   {
     Envelope posEnv = ensureExtent(itemEnv, minExtent);
     return root.remove(posEnv, item);
@@ -184,7 +186,8 @@ public class Quadtree
    * @param searchEnv the envelope of the desired query area.
    * @return a List of items which may intersect the search envelope
    */
-  public List query(Envelope searchEnv)
+  @Override
+public List query(Envelope searchEnv)
   {
     /**
      * the items that are matched are the items in quads which
@@ -208,7 +211,8 @@ public class Quadtree
    * @param searchEnv the envelope of the desired query area.
    * @param visitor a visitor object which is passed the visited items
    */
-  public void query(Envelope searchEnv, ItemVisitor visitor)
+  @Override
+public void query(Envelope searchEnv, ItemVisitor visitor)
   {
     /**
      * the items that are matched are the items in quads which

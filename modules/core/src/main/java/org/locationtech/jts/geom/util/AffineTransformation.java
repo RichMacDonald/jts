@@ -1009,12 +1009,14 @@ public class AffineTransformation
    *@param seq  a <code>CoordinateSequence</code>
    *@param i the index of the coordinate to transform
    */
-  public void filter(CoordinateSequence seq, int i)
+  @Override
+public void filter(CoordinateSequence seq, int i)
   {
     transform(seq, i);
   }
   
-  public boolean isGeometryChanged()
+  @Override
+public boolean isGeometryChanged()
   {
     return true;
   }
@@ -1025,7 +1027,8 @@ public class AffineTransformation
    * 
    * @return false
    */
-  public boolean isDone() 
+  @Override
+public boolean isDone() 
   {
     return false;
   }
@@ -1050,7 +1053,8 @@ public class AffineTransformation
   * @param obj an object to test
   * @return true if the given object is equal to this object
   */
-  public boolean equals(Object obj)
+  @Override
+public boolean equals(Object obj)
   {
     if (obj == null) return false;
     if (! (obj instanceof AffineTransformation))
@@ -1083,7 +1087,8 @@ public class AffineTransformation
    * @return a string representing this transformation
    * 
    */
-  public String toString()
+  @Override
+public String toString()
   {
     return "AffineTransformation[[" + m00 + ", " + m01 + ", " + m02 
     + "], ["
@@ -1095,7 +1100,8 @@ public class AffineTransformation
    * 
    * @return a copy of this transformation
    */
-  public Object clone()
+  @Override
+public Object clone()
   {
   	try {
   		return super.clone();

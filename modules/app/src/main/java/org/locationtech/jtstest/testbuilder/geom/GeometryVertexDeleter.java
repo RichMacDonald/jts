@@ -42,7 +42,8 @@ public class GeometryVertexDeleter
       this.vertexIndex = vertexIndex;
     }
     
-    public Coordinate[] edit(Coordinate[] coords,
+    @Override
+	public Coordinate[] edit(Coordinate[] coords,
         Geometry geometry)
     {
       if (geometry != line) return coords;

@@ -28,7 +28,8 @@ public class GeometryResult implements Result {
     return geometry;
   }
 
-  public boolean equals(Result other, double tolerance) {
+  @Override
+public boolean equals(Result other, double tolerance) {
     if (!(other instanceof GeometryResult)) {
       return false;
     }
@@ -43,16 +44,19 @@ public class GeometryResult implements Result {
     return isEqual;
   }
 
-  public String toLongString() {
+  @Override
+public String toLongString() {
     return geometry.toText();
   }
 
-  public String toFormattedString() {
+  @Override
+public String toFormattedString() {
     WKTWriter writer = new WKTWriter();
     return writer.writeFormatted(geometry);
   }
 
-  public String toShortString() {
+  @Override
+public String toShortString() {
     return geometry.getClass().getName();
   }
 }

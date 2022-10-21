@@ -75,7 +75,8 @@ public class SnapRoundingNoder
 	 * @return a Collection of NodedSegmentStrings representing the substrings
 	 * 
 	 */
-  public Collection getNodedSubstrings()
+  @Override
+public Collection getNodedSubstrings()
   {
     return NodedSegmentString.getNodedSubstrings(snappedResult);
   }
@@ -86,7 +87,8 @@ public class SnapRoundingNoder
    * 
    * @param inputSegmentStrings a Collection of NodedSegmentStrings
    */
-  public void computeNodes(Collection inputSegmentStrings)
+  @Override
+public void computeNodes(Collection inputSegmentStrings)
   {
     snappedResult = snapRound(inputSegmentStrings);
   }

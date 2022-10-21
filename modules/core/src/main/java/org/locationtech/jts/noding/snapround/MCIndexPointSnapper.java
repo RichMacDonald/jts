@@ -115,7 +115,8 @@ public class MCIndexPointSnapper
      * contain the vertex (which otherwise
      * would cause every vertex to be noded).
      */
-    public void select(MonotoneChain mc, int startIndex)
+    @Override
+	public void select(MonotoneChain mc, int startIndex)
     {
     	NodedSegmentString ss = (NodedSegmentString) mc.getContext();
       /**

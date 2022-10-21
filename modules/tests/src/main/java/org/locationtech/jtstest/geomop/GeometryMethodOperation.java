@@ -78,12 +78,14 @@ public class GeometryMethodOperation
   public GeometryMethodOperation() {
   }
 
-  public Class getReturnType(String opName)
+  @Override
+public Class getReturnType(String opName)
   {
   	return getGeometryReturnType(opName);
   }
   
-  public Result invoke(String opName, Geometry geometry, Object[] args)
+  @Override
+public Result invoke(String opName, Geometry geometry, Object[] args)
       throws Exception
   {
     Object[] actualArgs = new Object[args.length];

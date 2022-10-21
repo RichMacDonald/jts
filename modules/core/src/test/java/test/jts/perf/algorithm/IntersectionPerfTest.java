@@ -68,7 +68,8 @@ public class IntersectionPerfTest extends PerformanceTestCase {
   Coordinate q0;
   Coordinate q1;
   
-  public void startRun(int npts)
+  @Override
+public void startRun(int npts)
   {
     p0 = new Coordinate(35613471.6165017, 4257145.3061322933);
     p1 = new Coordinate(35613477.7705378, 4257160.5282227108);

@@ -37,7 +37,8 @@ public class MultiPoint
    *      <code>MultiPoint</code>
    * @deprecated Use GeometryFactory instead
    */
-  public MultiPoint(Point[] points, PrecisionModel precisionModel, int SRID) {
+  @Deprecated
+public MultiPoint(Point[] points, PrecisionModel precisionModel, int SRID) {
     super(points, new GeometryFactory(precisionModel, SRID));
   }
 
@@ -50,15 +51,18 @@ public class MultiPoint
     super(points, factory);
   }
 
-  public int getDimension() {
+  @Override
+public int getDimension() {
     return 0;
   }
 
-  public int getBoundaryDimension() {
+  @Override
+public int getBoundaryDimension() {
     return Dimension.FALSE;
   }
 
-  public String getGeometryType() {
+  @Override
+public String getGeometryType() {
     return Geometry.TYPENAME_MULTIPOINT;
   }
 
@@ -70,15 +74,18 @@ public class MultiPoint
    * @return an empty GeometryCollection
    * @see Geometry#getBoundary
    */
-  public Geometry getBoundary() {
+  @Override
+public Geometry getBoundary() {
     return getFactory().createGeometryCollection();
   }
 
-  public MultiPoint reverse() {
+  @Override
+public MultiPoint reverse() {
     return (MultiPoint) super.reverse();
   }
   
-  protected MultiPoint reverseInternal() {
+  @Override
+protected MultiPoint reverseInternal() {
     Point[] points = new Point[this.geometries.length];
     for (int i = 0; i < points.length; i++) {
       points[i] = (Point) this.geometries[i].copy();
@@ -86,7 +93,8 @@ public class MultiPoint
     return new MultiPoint(points, factory);
   }
 
-  public boolean equalsExact(Geometry other, double tolerance) {
+  @Override
+public boolean equalsExact(Geometry other, double tolerance) {
     if (!isEquivalentClass(other)) {
       return false;
     }
@@ -104,7 +112,8 @@ public class MultiPoint
     return ((Point) geometries[n]).getCoordinate();
   }
   
-  protected MultiPoint copyInternal() {
+  @Override
+protected MultiPoint copyInternal() {
     Point[] points = new Point[this.geometries.length];
     for (int i = 0; i < points.length; i++) {
       points[i] = (Point) this.geometries[i].copy();
@@ -112,7 +121,8 @@ public class MultiPoint
     return new MultiPoint(points, factory);
   }
   
-  protected int getTypeCode() {
+  @Override
+protected int getTypeCode() {
     return Geometry.TYPECODE_MULTIPOINT;
   }
 

@@ -59,7 +59,6 @@ public class HSBPalette {
   private int numEntries;
   private float sLo;
   private float bLo;
-  private float hBase;
   private float hRange;
   
   private float h1;
@@ -72,7 +71,7 @@ public class HSBPalette {
     this.numH = numH;
     this.numS = numS;
     this.numB = numB;
-    this.hBase = hBase;
+    float hBase = hBase;
     this.hRange = hRange;
     this.h1 = hBase - hRange / 2;
     this.sLo = sLo;

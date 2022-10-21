@@ -1114,7 +1114,8 @@ public abstract class Geometry
    * @see #norm()
    * @see #normalize()
    */
-  public boolean equals(Object o)
+  @Override
+public boolean equals(Object o)
   {
     if (! (o instanceof Geometry)) return false;
     Geometry g = (Geometry) o;
@@ -1126,12 +1127,14 @@ public abstract class Geometry
    *
    * @return an integer value suitable for use as a hashcode
    */
-  public int hashCode()
+  @Override
+public int hashCode()
   {
     return getEnvelopeInternal().hashCode();
   }
 
-  public String toString() {
+  @Override
+public String toString() {
     return toText();
   }
 
@@ -1574,7 +1577,9 @@ public abstract class Geometry
    * @return a clone of this instance
    * @deprecated
    */
-  public Object clone() {
+  @Deprecated
+@Override
+public Object clone() {
     try {
       Geometry clone = (Geometry) super.clone();
       if (clone.envelope != null) { clone.envelope = new Envelope(clone.envelope); }
@@ -1670,7 +1675,8 @@ public abstract class Geometry
    *      defined in "Normal Form For Geometry" in the JTS Technical
    *      Specifications
    */
-  public int compareTo(Object o) {
+  @Override
+public int compareTo(Object o) {
     Geometry other = (Geometry) o;
     if (getTypeCode() != other.getTypeCode()) {
       return getTypeCode() - other.getTypeCode();

@@ -89,7 +89,8 @@ public class BusyDialog extends JDialog {
         this.getContentPane().setLayout(gridBagLayout1);
         this.addWindowListener(new java.awt.event.WindowAdapter() {
 
-            public void windowOpened(WindowEvent e) {
+            @Override
+			public void windowOpened(WindowEvent e) {
                 this_windowOpened(e);
             }
         });

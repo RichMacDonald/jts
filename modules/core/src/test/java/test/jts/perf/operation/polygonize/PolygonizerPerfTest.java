@@ -41,7 +41,8 @@ public class PolygonizerPerfTest extends PerformanceTestCase {
     setRunIterations(1);
   }
 
-  public void startRun(int num)
+  @Override
+public void startRun(int num)
   {
     System.out.println("Running with size " + num);
     

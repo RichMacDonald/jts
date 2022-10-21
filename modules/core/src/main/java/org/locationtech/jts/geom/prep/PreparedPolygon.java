@@ -74,7 +74,8 @@ public class PreparedPolygon
     return pia;
   }
   
-  public boolean intersects(Geometry g)
+  @Override
+public boolean intersects(Geometry g)
   {
   	// envelope test
   	if (! envelopesIntersect(g)) return false;
@@ -87,7 +88,8 @@ public class PreparedPolygon
     return PreparedPolygonIntersects.intersects(this, g);
   }
   
-  public boolean contains(Geometry g)
+  @Override
+public boolean contains(Geometry g)
   {
     // short-circuit test
     if (! envelopeCovers(g)) 
@@ -101,7 +103,8 @@ public class PreparedPolygon
     return PreparedPolygonContains.contains(this, g);
   }
   
-  public boolean containsProperly(Geometry g)
+  @Override
+public boolean containsProperly(Geometry g)
   {
     // short-circuit test
     if (! envelopeCovers(g)) 
@@ -109,7 +112,8 @@ public class PreparedPolygon
     return PreparedPolygonContainsProperly.containsProperly(this, g);
   }
   
-  public boolean covers(Geometry g)
+  @Override
+public boolean covers(Geometry g)
   {
     // short-circuit test
     if (! envelopeCovers(g)) 

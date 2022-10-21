@@ -92,7 +92,8 @@ public class StringUtil
    *
    * @deprecated use {@link OrdinateFormat}
    */
-  public static String toString(double d) {
+  @Deprecated
+public static String toString(double d) {
     return OrdinateFormat.DEFAULT.format(d);
   }
 

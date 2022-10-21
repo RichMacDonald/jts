@@ -28,7 +28,8 @@ public class ItemBoundable implements Boundable, Serializable {
     this.item = item;
   }
 
-  public Object getBounds() {
+  @Override
+public Object getBounds() {
     return bounds;
   }
 

@@ -48,9 +48,11 @@ public class SIRtree extends AbstractSTRtree {
     super(nodeCapacity);
   }
 
-  protected AbstractNode createNode(int level) {
+  @Override
+protected AbstractNode createNode(int level) {
     return new AbstractNode(level) {
-      protected Object computeBounds() {
+      @Override
+	protected Object computeBounds() {
         Interval bounds = null;
         for (Object element : getChildBoundables()) {
           Boundable childBoundable = (Boundable) element;
@@ -88,11 +90,13 @@ public class SIRtree extends AbstractSTRtree {
     return super.query(new Interval(Math.min(x1, x2), Math.max(x1, x2)));
   }
 
-  protected IntersectsOp getIntersectsOp() {
+  @Override
+protected IntersectsOp getIntersectsOp() {
     return intersectsOp;
   }
 
-  protected Comparator getComparator() {
+  @Override
+protected Comparator getComparator() {
     return comparator;
   }
 

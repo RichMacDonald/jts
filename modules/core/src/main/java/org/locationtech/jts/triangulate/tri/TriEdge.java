@@ -62,7 +62,8 @@ class TriEdge {
     return false;
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     return WKTWriter.toLineString(new Coordinate[] { p0, p1});
   }
 }

@@ -39,13 +39,15 @@ public class GeometryCollectionShape implements Shape {
         shapes.add(shape);
     }
 
-    public Rectangle getBounds() {
+    @Override
+	public Rectangle getBounds() {
         /**@todo Implement this java.awt.Shape method*/
         throw new java.lang.UnsupportedOperationException(
             "Method getBounds() not yet implemented.");
     }
 
-    public Rectangle2D getBounds2D() {
+    @Override
+	public Rectangle2D getBounds2D() {
         Rectangle2D rectangle = null;
 
         for (Object shape2 : shapes) {
@@ -61,47 +63,55 @@ public class GeometryCollectionShape implements Shape {
         return rectangle;
     }
 
-    public boolean contains(double x, double y) {
+    @Override
+	public boolean contains(double x, double y) {
         /**@todo Implement this java.awt.Shape method*/
         throw new java.lang.UnsupportedOperationException(
             "Method contains() not yet implemented.");
     }
 
-    public boolean contains(Point2D p) {
+    @Override
+	public boolean contains(Point2D p) {
         /**@todo Implement this java.awt.Shape method*/
         throw new java.lang.UnsupportedOperationException(
             "Method contains() not yet implemented.");
     }
 
-    public boolean intersects(double x, double y, double w, double h) {
+    @Override
+	public boolean intersects(double x, double y, double w, double h) {
         /**@todo Implement this java.awt.Shape method*/
         throw new java.lang.UnsupportedOperationException(
             "Method intersects() not yet implemented.");
     }
 
-    public boolean intersects(Rectangle2D r) {
+    @Override
+	public boolean intersects(Rectangle2D r) {
         /**@todo Implement this java.awt.Shape method*/
         throw new java.lang.UnsupportedOperationException(
             "Method intersects() not yet implemented.");
     }
 
-    public boolean contains(double x, double y, double w, double h) {
+    @Override
+	public boolean contains(double x, double y, double w, double h) {
         /**@todo Implement this java.awt.Shape method*/
         throw new java.lang.UnsupportedOperationException(
             "Method contains() not yet implemented.");
     }
 
-    public boolean contains(Rectangle2D r) {
+    @Override
+	public boolean contains(Rectangle2D r) {
         /**@todo Implement this java.awt.Shape method*/
         throw new java.lang.UnsupportedOperationException(
             "Method contains() not yet implemented.");
     }
 
-    public PathIterator getPathIterator(AffineTransform at) {
+    @Override
+	public PathIterator getPathIterator(AffineTransform at) {
         return new ShapeCollectionPathIterator(shapes, at);
     }
 
-    public PathIterator getPathIterator(AffineTransform at, double flatness) {
+    @Override
+	public PathIterator getPathIterator(AffineTransform at, double flatness) {
         // since Geometry is linear, can simply delegate to the simple method
         return getPathIterator(at);
     }

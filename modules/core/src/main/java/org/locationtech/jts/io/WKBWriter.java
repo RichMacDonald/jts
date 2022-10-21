@@ -180,7 +180,8 @@ public class WKBWriter
    * 
    * @deprecated
    */
-  public static String bytesToHex(byte[] bytes)
+  @Deprecated
+public static String bytesToHex(byte[] bytes)
   {
     return toHex(bytes);
   }

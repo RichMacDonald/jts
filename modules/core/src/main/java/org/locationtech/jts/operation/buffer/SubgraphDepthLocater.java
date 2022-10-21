@@ -183,7 +183,8 @@ class SubgraphDepthLocater
      * @param obj a DepthSegment
      * @return the comparison value
      */
-    public int compareTo(Object obj)
+    @Override
+	public int compareTo(Object obj)
     {
       DepthSegment other = (DepthSegment) obj;
       
@@ -242,7 +243,8 @@ class SubgraphDepthLocater
       return upwardSeg.compareTo(other.upwardSeg);
     }
 
-    public String toString()
+    @Override
+	public String toString()
     {
       return upwardSeg.toString();
     }

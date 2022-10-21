@@ -240,7 +240,8 @@ public class Vector3D {
    * 
    * @return a string representing this vector
    */
-  public String toString() {
+  @Override
+public String toString() {
     return "[" + x + ", " + y + ", " + z + "]";
   }
 		
@@ -251,7 +252,8 @@ public class Vector3D {
    * @return true if <tt>other</tt> is a <tt>Vector3D</tt> with the same values
    *         for the x and y components.
    */
-  public boolean equals(Object o) {
+  @Override
+public boolean equals(Object o) {
     if ( !(o instanceof Vector3D) ) {
       return false;
     }
@@ -264,7 +266,8 @@ public class Vector3D {
    * 
    * @return a hashcode for this vector
    */
-  public int hashCode() {
+  @Override
+public int hashCode() {
     // Algorithm from Effective Java by Joshua Bloch
     int result = 17;
     result = 37 * result + Coordinate.hashCode(x);

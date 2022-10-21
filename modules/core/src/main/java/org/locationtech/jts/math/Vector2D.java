@@ -291,7 +291,8 @@ public class Vector2D {
    * 
    * @return a copy of this vector
    */
-  public Object clone()
+  @Override
+public Object clone()
   {
     return new Vector2D(this);
   }
@@ -301,6 +302,7 @@ public class Vector2D {
    * 
    * @return a string representing this vector
    */
+	@Override
 	public String toString() {
 		return "[" + x + ", " + y + "]";
 	}
@@ -314,6 +316,7 @@ public class Vector2D {
 	 * @return true if <tt>other</tt> is a <tt>Vector2D</tt> with the same
 	 *         values for the x and y components.
 	 */
+	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Vector2D)) {
 			return false;
@@ -327,6 +330,7 @@ public class Vector2D {
 	 * 
 	 * @return a hashcode for this vector
 	 */
+	@Override
 	public int hashCode() {
 		// Algorithm from Effective Java by Joshua Bloch
 		int result = 17;

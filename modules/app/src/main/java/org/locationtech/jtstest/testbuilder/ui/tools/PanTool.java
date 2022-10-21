@@ -36,7 +36,8 @@ public class PanTool extends BasicTool {
   private PanTool() {
   }
 
-  public Cursor getCursor() {
+  @Override
+public Cursor getCursor() {
     return AppCursors.HAND;
   }
 
@@ -44,11 +45,13 @@ public class PanTool extends BasicTool {
     source = null;
   }
 
-  public void mousePressed(MouseEvent e) {
+  @Override
+public void mousePressed(MouseEvent e) {
     source = toModel(e.getPoint());
   }
   
-  public void mouseReleased(MouseEvent e) {
+  @Override
+public void mouseReleased(MouseEvent e) {
     if (source == null)
       return;
     Point2D destination = toModel(e.getPoint());

@@ -52,7 +52,8 @@ public class CascadedPolygonUnion
    * with a robustness fallback to OverlayNG.
    */
   final static  UnionStrategy CLASSIC_UNION = new UnionStrategy() {
-    public Geometry union(Geometry g0, Geometry g1) {
+    @Override
+	public Geometry union(Geometry g0, Geometry g1) {
       try {
         return SnapIfNeededOverlayOp.union(g0, g1);
       }

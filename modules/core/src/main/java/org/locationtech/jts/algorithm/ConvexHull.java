@@ -440,7 +440,8 @@ public class ConvexHull
     {
       this.origin = origin;
     }
-    public int compare(Object o1, Object o2)
+    @Override
+	public int compare(Object o1, Object o2)
     {
       Coordinate p1 = (Coordinate) o1;
       Coordinate p2 = (Coordinate) o2;

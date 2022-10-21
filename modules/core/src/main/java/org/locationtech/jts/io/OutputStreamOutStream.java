@@ -26,7 +26,8 @@ public class OutputStreamOutStream
   {
     this.os = os;
   }
-  public void write(byte[] buf, int len) throws IOException
+  @Override
+public void write(byte[] buf, int len) throws IOException
   {
     os.write(buf, 0, len);
   }

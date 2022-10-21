@@ -167,7 +167,8 @@ public class TopologyStretcher
       this.mask = mask;
     }
     
-    public void filter(Coordinate coord)
+    @Override
+	public void filter(Coordinate coord)
     {
       if (mask.contains(coord))
         count++;

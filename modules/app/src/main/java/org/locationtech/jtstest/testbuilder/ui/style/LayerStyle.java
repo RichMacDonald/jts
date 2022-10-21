@@ -223,7 +223,8 @@ public class LayerStyle implements Style  {
     labelStyle.setColor(color);
   }
   
-  public void paint(Geometry geom, Viewport viewport, Graphics2D g) throws Exception {
+  @Override
+public void paint(Geometry geom, Viewport viewport, Graphics2D g) throws Exception {
     Geometry transformGeom = transform(geom, viewport);
     geomStyle.paint(transformGeom, viewport, g);
     decoratorStyle.paint(transformGeom, viewport, g);

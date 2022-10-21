@@ -61,7 +61,8 @@ implements SpatialIndex, Serializable
       super(level);
     }
 
-    protected Object computeBounds() {
+    @Override
+	protected Object computeBounds() {
       Envelope bounds = null;
       for (Object element : getChildBoundables()) {
         Boundable childBoundable = (Boundable) element;
@@ -109,7 +110,8 @@ implements SpatialIndex, Serializable
    * group them into runs of size M (the node capacity). For each run, creates
    * a new (parent) node.
    */
-  protected List createParentBoundables(List childBoundables, int newLevel) {
+  @Override
+protected List createParentBoundables(List childBoundables, int newLevel) {
     Assert.isTrue(!childBoundables.isEmpty());
     int minLeafCount = (int) Math.ceil((childBoundables.size() / (double) getNodeCapacity()));
     ArrayList sortedChildBoundables = new ArrayList(childBoundables);
@@ -195,18 +197,21 @@ implements SpatialIndex, Serializable
     super(nodeCapacity, itemBoundables);
   }
 
-  protected AbstractNode createNode(int level) {
+  @Override
+protected AbstractNode createNode(int level) {
     return new STRtreeNode(level);
   }
 
-  protected IntersectsOp getIntersectsOp() {
+  @Override
+protected IntersectsOp getIntersectsOp() {
     return intersectsOp;
   }
 
   /**
    * Inserts an item having the given bounds into the tree.
    */
-  public void insert(Envelope itemEnv, Object item) {
+  @Override
+public void insert(Envelope itemEnv, Object item) {
     if (itemEnv.isNull()) { return; }
     super.insert(itemEnv, item);
   }
@@ -214,7 +219,8 @@ implements SpatialIndex, Serializable
   /**
    * Returns items whose bounds intersect the given envelope.
    */
-  public List query(Envelope searchEnv) {
+  @Override
+public List query(Envelope searchEnv) {
     //Yes this method does something. It specifies that the bounds is an
     //Envelope. super.query takes an Object, not an Envelope. [Jon Aquino 10/24/2003]
     return super.query(searchEnv);
@@ -223,7 +229,8 @@ implements SpatialIndex, Serializable
   /**
    * Returns items whose bounds intersect the given envelope.
    */
-  public void query(Envelope searchEnv, ItemVisitor visitor) {
+  @Override
+public void query(Envelope searchEnv, ItemVisitor visitor) {
     //Yes this method does something. It specifies that the bounds is an
     //Envelope. super.query takes an Object, not an Envelope. [Jon Aquino 10/24/2003]
     super.query(searchEnv, visitor);
@@ -236,7 +243,8 @@ implements SpatialIndex, Serializable
    * @param item the item to remove
    * @return <code>true</code> if the item was found
    */
-  public boolean remove(Envelope itemEnv, Object item) {
+  @Override
+public boolean remove(Envelope itemEnv, Object item) {
     return super.remove(itemEnv, item);
   }
 
@@ -245,7 +253,8 @@ implements SpatialIndex, Serializable
    *
    * @return the number of items in the tree
    */
-  public int size()
+  @Override
+public int size()
   {
     return super.size();
   }
@@ -255,12 +264,14 @@ implements SpatialIndex, Serializable
    *
    * @return the number of items in the tree
    */
-  public int depth()
+  @Override
+public int depth()
   {
     return super.depth();
   }
 
-  protected Comparator getComparator() {
+  @Override
+protected Comparator getComparator() {
     return yComparator;
   }
 

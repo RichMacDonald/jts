@@ -29,8 +29,6 @@ public class TestDataBuilder
 
 	private Coordinate origin = new Coordinate(0, 0); 
 	private double size = 100.0;
-	private int testDim = 1;
-	
 	public TestDataBuilder()
 	{
 		
@@ -49,7 +47,7 @@ public class TestDataBuilder
 	
 	public void setTestDimension(int testDim)
 	{
-		this.testDim = testDim;
+		int testDim = testDim;
 	}
 	
 	public Geometry createCircle(int nPts) {

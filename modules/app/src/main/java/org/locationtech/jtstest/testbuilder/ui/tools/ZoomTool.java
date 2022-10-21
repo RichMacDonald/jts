@@ -47,7 +47,8 @@ public class ZoomTool extends BasicTool
     this.zoomFactor = zoomFactor;
   }
 
-  public void mouseClicked(MouseEvent mouseEvent) 
+  @Override
+public void mouseClicked(MouseEvent mouseEvent) 
   {
     // determine if zoom in (left) or zoom out (right)
     double realZoomFactor = SwingUtilities.isRightMouseButton(mouseEvent)
@@ -55,14 +56,16 @@ public class ZoomTool extends BasicTool
     panel().zoom(toModel(mouseEvent.getPoint()), realZoomFactor);
   }
 
-  public void mousePressed(MouseEvent e)
+  @Override
+public void mousePressed(MouseEvent e)
   {
   	mouseStart = e.getPoint();
   	mouseEnd = e.getPoint();
   	panStart = isPanGesture(e) ? toModel(mouseStart) : null;
   }
   
-  public void mouseReleased(MouseEvent e) {
+  @Override
+public void mouseReleased(MouseEvent e) {
     // don't process if mouse was dragged a very short distance
     if (! isSignificantMouseMove(e.getPoint()))
       return;
@@ -83,7 +86,8 @@ public class ZoomTool extends BasicTool
     return panStart != null;
   }
   
-  public void mouseDragged(MouseEvent e)
+  @Override
+public void mouseDragged(MouseEvent e)
   {   
   	Graphics g = getBandGraphics();
   	// erase old band
@@ -111,7 +115,8 @@ public class ZoomTool extends BasicTool
     }
   }
 
-  public void mouseWheelMoved(MouseWheelEvent e) {
+  @Override
+public void mouseWheelMoved(MouseWheelEvent e) {
     double notches = e.getPreciseWheelRotation();
     double zoomFactor = Math.abs(notches) * 2;
     if (notches > 0 && zoomFactor > 0) zoomFactor = 1.0 / zoomFactor;

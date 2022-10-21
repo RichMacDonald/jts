@@ -23,7 +23,8 @@ public class StaticGeometryContainer implements GeometryContainer {
 		this.geometry = geometry;
 	}
 	
-  public Geometry getGeometry() {
+  @Override
+public Geometry getGeometry() {
     return geometry;
   }
   

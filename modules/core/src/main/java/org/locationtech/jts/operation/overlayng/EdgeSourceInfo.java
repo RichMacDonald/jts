@@ -59,7 +59,8 @@ class EdgeSourceInfo {
     return isHole;
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     return Edge.infoString(index, dim, isHole, depthDelta);
   }
 }

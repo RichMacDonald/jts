@@ -54,7 +54,8 @@ public class TestListPanel extends JPanel {
         private final ImageIcon clearIcon = new ImageIcon(this.getClass().getResource("clear.gif"));
          */
         
-        public Component getListCellRendererComponent(
+        @Override
+		public Component getListCellRendererComponent(
             JList list,
             Object value,
             int index,

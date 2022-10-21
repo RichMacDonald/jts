@@ -335,7 +335,8 @@ public class GeometryEditorEx
   public static class NoOpGeometryOperation
   implements GeometryEditorOperation
   {
-  	public Geometry edit(Geometry geometry, GeometryFactory targetFactory)
+  	@Override
+	public Geometry edit(Geometry geometry, GeometryFactory targetFactory)
   	{
   		return geometry;
   	}
@@ -348,7 +349,8 @@ public class GeometryEditorEx
   public abstract static class CoordinateOperation
       implements GeometryEditorOperation
   {
-    public final Geometry edit(Geometry geometry, GeometryFactory targetFactory) {
+    @Override
+	public final Geometry edit(Geometry geometry, GeometryFactory targetFactory) {
       if (geometry instanceof LinearRing) {
         return targetFactory.createLinearRing(edit(geometry.getCoordinates(),
             geometry));
@@ -393,7 +395,8 @@ public class GeometryEditorEx
   public abstract static class CoordinateSequenceOperation
       implements GeometryEditorOperation
   {
-    public final Geometry edit(Geometry geometry, GeometryFactory targetFactory) {
+    @Override
+	public final Geometry edit(Geometry geometry, GeometryFactory targetFactory) {
       if (geometry instanceof LinearRing) {
         return targetFactory.createLinearRing(edit(
             ((LinearRing)geometry).getCoordinateSequence(),

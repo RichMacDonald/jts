@@ -51,14 +51,16 @@ public final class CoordinateArraySequenceFactory
    *            the coordinates, which may not be null nor contain null
    *            elements
    */
-  public CoordinateSequence create(Coordinate[] coordinates) {
+  @Override
+public CoordinateSequence create(Coordinate[] coordinates) {
     return new CoordinateArraySequence(coordinates);
   }
 
   /**
    * @see org.locationtech.jts.geom.CoordinateSequenceFactory#create(org.locationtech.jts.geom.CoordinateSequence)
    */
-  public CoordinateSequence create(CoordinateSequence coordSeq) {
+  @Override
+public CoordinateSequence create(CoordinateSequence coordSeq) {
     return new CoordinateArraySequence(coordSeq);
   }
 
@@ -68,7 +70,8 @@ public final class CoordinateArraySequenceFactory
    * @see org.locationtech.jts.geom.CoordinateSequenceFactory#create(int, int)
    *
    */
-  public CoordinateSequence create(int size, int dimension) {
+  @Override
+public CoordinateSequence create(int size, int dimension) {
     if (dimension > 3)
       dimension = 3;
       //throw new IllegalArgumentException("dimension must be <= 3");
@@ -80,7 +83,8 @@ public final class CoordinateArraySequenceFactory
     return new CoordinateArraySequence(size, dimension);
   }
   
-  public CoordinateSequence create(int size, int dimension, int measures) {
+  @Override
+public CoordinateSequence create(int size, int dimension, int measures) {
     int spatial = dimension - measures;
     
     if (measures > 1) {

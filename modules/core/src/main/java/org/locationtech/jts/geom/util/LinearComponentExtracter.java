@@ -190,7 +190,8 @@ public class LinearComponentExtracter
   	this.isForcedToLineString = isForcedToLineString;
   }
   
-  public void filter(Geometry geom)
+  @Override
+public void filter(Geometry geom)
   {
   	if (isForcedToLineString && geom instanceof LinearRing) {
   		LineString line = geom.getFactory().createLineString( ((LinearRing) geom).getCoordinateSequence());

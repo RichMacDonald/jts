@@ -61,7 +61,8 @@ public class SegmentNode
    * 0 this SegmentNode is at the argument location;
    * 1 this SegmentNode is located after the argument location
    */
-  public int compareTo(Object obj)
+  @Override
+public int compareTo(Object obj)
   {
     SegmentNode other = (SegmentNode) obj;
 
@@ -85,7 +86,8 @@ public class SegmentNode
     out.print(" seg # = " + segmentIndex);
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     return segmentIndex + ":" + coord.toString();
   }
 }

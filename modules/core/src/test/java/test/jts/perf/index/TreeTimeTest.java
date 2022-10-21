@@ -68,7 +68,8 @@ public class TreeTimeTest {
   class STRtreeIndex
   implements Index
 {
-  public String toString() { return "STR[M=" + index.getNodeCapacity() + "]"; }
+  @Override
+public String toString() { return "STR[M=" + index.getNodeCapacity() + "]"; }
 //  public String toString() { return "" + index.getNodeCapacity() + ""; }
   public STRtreeIndex(int nodeCapacity)
   {
@@ -76,15 +77,18 @@ public class TreeTimeTest {
   }
   STRtree index;
 
-  public void insert(Envelope itemEnv, Object item)
+  @Override
+public void insert(Envelope itemEnv, Object item)
   {
     index.insert(itemEnv, item);
   }
-  public List query(Envelope searchEnv)
+  @Override
+public List query(Envelope searchEnv)
   {
     return index.query(searchEnv);
   }
-  public void finishInserting()
+  @Override
+public void finishInserting()
   {
     index.build();
   }
@@ -102,35 +106,43 @@ public class TreeTimeTest {
   }
   HPRtree index;
 
-  public void insert(Envelope itemEnv, Object item)
+  @Override
+public void insert(Envelope itemEnv, Object item)
   {
     index.insert(itemEnv, item);
   }
-  public List query(Envelope searchEnv)
+  @Override
+public List query(Envelope searchEnv)
   {
     return index.query(searchEnv);
   }
-  public void finishInserting()
+  @Override
+public void finishInserting()
   {
     index.build();
   }
-  public String toString() { return "HPR[M=" + nodeCapacity + "]"; }
+  @Override
+public String toString() { return "HPR[M=" + nodeCapacity + "]"; }
 }
 
   class QuadtreeIndex
     implements Index
   {
     Quadtree index = new Quadtree();
-    public String toString() { return "Quad"; }
-    public void insert(Envelope itemEnv, Object item)
+    @Override
+	public String toString() { return "Quad"; }
+    @Override
+	public void insert(Envelope itemEnv, Object item)
     {
       index.insert(itemEnv, item);
     }
-    public List query(Envelope searchEnv)
+    @Override
+	public List query(Envelope searchEnv)
     {
       return index.query(searchEnv);
     }
-    public void finishInserting()
+    @Override
+	public void finishInserting()
     {
     }
   }
@@ -139,16 +151,20 @@ public class TreeTimeTest {
     implements Index
   {
     EnvelopeList index = new EnvelopeList();
-    public String toString() { return "Env"; }
-    public void insert(Envelope itemEnv, Object item)
+    @Override
+	public String toString() { return "Env"; }
+    @Override
+	public void insert(Envelope itemEnv, Object item)
     {
       index.add(itemEnv);
     }
-    public List query(Envelope searchEnv)
+    @Override
+	public List query(Envelope searchEnv)
     {
       return index.query(searchEnv);
     }
-    public void finishInserting()
+    @Override
+	public void finishInserting()
     {
     }
   }

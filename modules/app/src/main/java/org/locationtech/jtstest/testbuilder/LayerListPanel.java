@@ -286,7 +286,8 @@ class LayerItemPanel extends JPanel {
     self = this;
   }
 
-  public String getToolTipText(MouseEvent e) {
+  @Override
+public String getToolTipText(MouseEvent e) {
     return layer.getNameInfo();
   }
   
@@ -336,7 +337,8 @@ class LayerItemPanel extends JPanel {
     lblName.addMouseListener(new HighlightMouseListener(this));
     lblName.addMouseListener(new MouseAdapter()  
     {  
-      public void mouseClicked(MouseEvent e)  
+      @Override
+	public void mouseClicked(MouseEvent e)  
       {  
         lyrListPanel.setLayerFocus(self);
       }
@@ -375,14 +377,16 @@ class LayerItemPanel extends JPanel {
       this.comp = comp;
     }
     
-    public void mouseEntered(MouseEvent e) {
+    @Override
+	public void mouseEntered(MouseEvent e) {
       if (comp.isFocusLayer()) return;
       comp.setBackground(CLR_HIGHLIGHT);
       //comp.setBorder(BORDER_HIGHLIGHT);
       comp.revalidate();
     }
 
-    public void mouseExited(MouseEvent e) {
+    @Override
+	public void mouseExited(MouseEvent e) {
       if (comp.isFocusLayer()) return;
       comp.setBackground(AppColors.BACKGROUND);
       //comp.setBorder(BORDER_CONTROL);
@@ -401,7 +405,8 @@ class LayerName extends JLabel {
     setToolTipText(layer.getName()); 
   }
 
-  public String getToolTipText(MouseEvent e) {
+  @Override
+public String getToolTipText(MouseEvent e) {
     return layer.getNameSummary();
   }
 }
@@ -426,7 +431,8 @@ class LayerStyleSwatchControl extends JPanel {
     setToolTipText(layer.getName()); 
   }
 
-  public String getToolTipText(MouseEvent e) {
+  @Override
+public String getToolTipText(MouseEvent e) {
     return layer.getNameSummary();
   }
   

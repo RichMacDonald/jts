@@ -27,7 +27,8 @@ public abstract class LineEndStyle extends LineStringStyle  {
         this.start = start;
     }    
 
-    protected void paintLineString(LineString lineString, int lineType, Viewport viewport, Graphics2D graphics
+    @Override
+	protected void paintLineString(LineString lineString, int lineType, Viewport viewport, Graphics2D graphics
         ) throws Exception {
         if (lineString.isEmpty()) {
             return;

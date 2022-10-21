@@ -61,7 +61,8 @@ class HullTriangulation
     public HullTriVisitor() {
     }
 
-    public void visit(QuadEdge[] triEdges) {
+    @Override
+	public void visit(QuadEdge[] triEdges) {
       Coordinate p0 = triEdges[0].orig().getCoordinate();
       Coordinate p1 = triEdges[1].orig().getCoordinate();
       Coordinate p2 = triEdges[2].orig().getCoordinate();

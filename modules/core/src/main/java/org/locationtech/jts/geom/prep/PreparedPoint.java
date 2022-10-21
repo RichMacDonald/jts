@@ -36,7 +36,8 @@ public class PreparedPoint
    * The optimization here is that computing topology for the test geometry
    * is avoided.  This can be significant for large geometries.
    */
-  public boolean intersects(Geometry g)
+  @Override
+public boolean intersects(Geometry g)
   {
   	if (! envelopesIntersect(g)) return false;
   	

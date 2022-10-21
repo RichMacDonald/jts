@@ -350,7 +350,8 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *@return        <code>true</code> if <code>other</code> is a <code>Coordinate</code>
    *      with the same values for the x and y ordinates.
    */
-  public boolean equals(Object other) {
+  @Override
+public boolean equals(Object other) {
     if (!(other instanceof Coordinate)) {
       return false;
     }
@@ -375,7 +376,8 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *@return    -1, zero, or 1 as this <code>Coordinate</code>
    *      is less than, equal to, or greater than the specified <code>Coordinate</code>
    */
-  public int compareTo(Coordinate o) {
+  @Override
+public int compareTo(Coordinate o) {
     Coordinate other = o;
 
     if (x < other.x) return -1;
@@ -390,11 +392,13 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    *
    *@return    a <code>String</code> of the form <I>(x,y,z)</I>
    */
-  public String toString() {
+  @Override
+public String toString() {
     return "(" + x + ", " + y + ", " + getZ() + ")";
   }
 
-  public Object clone() {
+  @Override
+public Object clone() {
     try {
       Coordinate coord = (Coordinate) super.clone();
 
@@ -456,7 +460,8 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
    * 
    * @return a hashcode for this coordinate
    */
-  public int hashCode() {
+  @Override
+public int hashCode() {
     //Algorithm from Effective Java by Joshua Bloch [Jon Aquino]
     int result = 17;
     result = 37 * result + hashCode(x);
@@ -539,7 +544,8 @@ public class Coordinate implements Comparable<Coordinate>, Cloneable, Serializab
      * equal to, or greater than 02
      *
      */
-    public int compare(Coordinate c1, Coordinate c2)
+    @Override
+	public int compare(Coordinate c1, Coordinate c2)
     {
       int compX = compare(c1.x, c2.x);
       if (compX != 0) return compX;

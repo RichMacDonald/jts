@@ -48,7 +48,8 @@ extends PerformanceTestCase
     setRunIterations(N_ITER);
   }
 
-  public void setUp()
+  @Override
+public void setUp()
   {
     System.out.println("OverlaySR perf test");
     System.out.println("SineStar: origin: ("
@@ -59,7 +60,8 @@ extends PerformanceTestCase
     System.out.println("Precision scale: " + PREC_SCALE_FACTOR);
   }
   
-  public void startRun(int npts)
+  @Override
+public void startRun(int npts)
   {
     int iter = 0;
     precisionModel = new PrecisionModel(PREC_SCALE_FACTOR);

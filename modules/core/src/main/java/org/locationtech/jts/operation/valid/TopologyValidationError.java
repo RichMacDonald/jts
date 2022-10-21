@@ -26,12 +26,14 @@ public class TopologyValidationError {
    * Not used
    * @deprecated
    */
-  public static final int ERROR                   = 0;
+  @Deprecated
+public static final int ERROR                   = 0;
   /**
    * No longer used - repeated points are considered valid as per the SFS
    * @deprecated
    */
-  public static final int REPEATED_POINT          = 1;
+  @Deprecated
+public static final int REPEATED_POINT          = 1;
 
   /**
    * Indicates that a hole of a polygon lies partially or completely in the exterior of the shell
@@ -161,7 +163,8 @@ public class TopologyValidationError {
    * Gets a message describing the type and location of this error.
    * @return the error message
    */
-  public String toString()
+  @Override
+public String toString()
   {
     String locStr = "";
     if (pt != null)

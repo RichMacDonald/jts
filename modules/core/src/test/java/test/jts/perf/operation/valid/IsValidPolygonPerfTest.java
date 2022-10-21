@@ -42,7 +42,8 @@ public class IsValidPolygonPerfTest extends PerformanceTestCase {
   
   Geometry geom;
   
-  public void startRun(int npts)
+  @Override
+public void startRun(int npts)
   {
     geom = createSineStar(npts);
   }

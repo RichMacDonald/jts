@@ -100,7 +100,8 @@ public class PrecisionModel implements Serializable, Comparable
         nameToTypeMap.put(name, this);
     }
     private String name;
-    public String toString() { return name; }
+    @Override
+	public String toString() { return name; }
     
     
     /*
@@ -188,7 +189,8 @@ public class PrecisionModel implements Serializable, Comparable
    *
    * @deprecated offsets are no longer supported, since internal representation is rounded floating point
    */
-  public PrecisionModel(double scale, double offsetX, double offsetY) {
+  @Deprecated
+public PrecisionModel(double scale, double offsetX, double offsetY) {
     modelType = FIXED;
     setScale(scale);
   }
@@ -329,7 +331,8 @@ public class PrecisionModel implements Serializable, Comparable
    *         multiplying by the scale
    * @deprecated Offsets are no longer used
    */
-  public double getOffsetX() {
+  @Deprecated
+public double getOffsetX() {
     //We actually don't use offsetX and offsetY anymore ... [Jon Aquino]
     return 0;
   }
@@ -343,7 +346,8 @@ public class PrecisionModel implements Serializable, Comparable
    *         multiplying by the scale
    * @deprecated Offsets are no longer used
    */
-  public double getOffsetY() {
+  @Deprecated
+public double getOffsetY() {
     return 0;
   }
 
@@ -355,7 +359,8 @@ public class PrecisionModel implements Serializable, Comparable
    *                 precise representation of <code>external</code>
    * @deprecated use makePrecise instead
    */
-  public void toInternal (Coordinate external, Coordinate internal) {
+  @Deprecated
+public void toInternal (Coordinate external, Coordinate internal) {
     if (isFloating()) {
       internal.x = external.x;
       internal.y = external.y;
@@ -375,7 +380,8 @@ public class PrecisionModel implements Serializable, Comparable
    *      representation of <code>external</code>
    * @deprecated use makePrecise instead
    */
-  public Coordinate toInternal(Coordinate external) {
+  @Deprecated
+public Coordinate toInternal(Coordinate external) {
     Coordinate internal = new Coordinate(external);
     makePrecise(internal);
     return internal;
@@ -389,7 +395,8 @@ public class PrecisionModel implements Serializable, Comparable
    *      external representation of <code>internal</code>
    * @deprecated no longer needed, since internal representation is same as external representation
    */
-  public Coordinate toExternal(Coordinate internal) {
+  @Deprecated
+public Coordinate toExternal(Coordinate internal) {
     Coordinate external = new Coordinate(internal);
     return external;
   }
@@ -402,7 +409,8 @@ public class PrecisionModel implements Serializable, Comparable
    *      external representation of <code>internal</code>
    * @deprecated no longer needed, since internal representation is same as external representation
    */
-  public void toExternal(Coordinate internal, Coordinate external) {
+  @Deprecated
+public void toExternal(Coordinate internal, Coordinate external) {
       external.x = internal.x;
       external.y = internal.y;
   }
@@ -453,7 +461,8 @@ public class PrecisionModel implements Serializable, Comparable
   }
 
 
-  public String toString() {
+  @Override
+public String toString() {
   	String description = "UNKNOWN";
   	if (modelType == FLOATING) {
   		description = "Floating";
@@ -465,7 +474,8 @@ public class PrecisionModel implements Serializable, Comparable
   	return description;
   }
 
-  public boolean equals(Object other) {
+  @Override
+public boolean equals(Object other) {
     if (! (other instanceof PrecisionModel)) {
       return false;
     }
@@ -495,7 +505,8 @@ public class PrecisionModel implements Serializable, Comparable
    *@return    a negative integer, zero, or a positive integer as this <code>PrecisionModel</code>
    *      is less than, equal to, or greater than the specified <code>PrecisionModel</code>
    */
-  public int compareTo(Object o) {
+  @Override
+public int compareTo(Object o) {
     PrecisionModel other = (PrecisionModel) o;
 
     int sigDigits = getMaximumSignificantDigits();

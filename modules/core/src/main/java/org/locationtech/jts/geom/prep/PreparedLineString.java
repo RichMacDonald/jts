@@ -46,7 +46,8 @@ public class PreparedLineString
     return segIntFinder;
   }
   
-  public boolean intersects(Geometry g)
+  @Override
+public boolean intersects(Geometry g)
   {
   	if (! envelopesIntersect(g)) return false;
     return PreparedLineStringIntersects.intersects(this, g);

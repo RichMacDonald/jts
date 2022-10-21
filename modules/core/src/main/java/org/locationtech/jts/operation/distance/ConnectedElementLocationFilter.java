@@ -54,7 +54,8 @@ public class ConnectedElementLocationFilter
     this.locations = locations;
   }
 
-  public void filter(Geometry geom)
+  @Override
+public void filter(Geometry geom)
   {
     // empty geometries do not provide a location
     if (geom.isEmpty()) return;

@@ -49,20 +49,26 @@ public class BasicSegmentString
    *
    * @return the user-defined data
    */
-  public Object getData() { return data; }
+  @Override
+public Object getData() { return data; }
 
   /**
    * Sets the user-defined data for this segment string.
    *
    * @param data an Object containing user-defined data
    */
-  public void setData(Object data) { this.data = data; }
+  @Override
+public void setData(Object data) { this.data = data; }
 
-  public int size() { return pts.length; }
-  public Coordinate getCoordinate(int i) { return pts[i]; }
-  public Coordinate[] getCoordinates() { return pts; }
+  @Override
+public int size() { return pts.length; }
+  @Override
+public Coordinate getCoordinate(int i) { return pts[i]; }
+  @Override
+public Coordinate[] getCoordinates() { return pts; }
 
-  public boolean isClosed()
+  @Override
+public boolean isClosed()
   {
     return pts[0].equals(pts[pts.length - 1]);
   }
@@ -80,7 +86,8 @@ public class BasicSegmentString
     return Octant.octant(getCoordinate(index), getCoordinate(index + 1));
   }
 
-  public String toString()
+  @Override
+public String toString()
   {
     return WKTWriter.toLineString(new CoordinateArraySequence(pts));
   }

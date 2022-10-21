@@ -72,7 +72,8 @@ public class PointExtracter
     this.pts = pts;
   }
 
-  public void filter(Geometry geom)
+  @Override
+public void filter(Geometry geom)
   {
     if (geom instanceof Point) pts.add(geom);
   }

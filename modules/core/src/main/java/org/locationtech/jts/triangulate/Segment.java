@@ -195,7 +195,8 @@ public class Segment
      * 
      * @return a string
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return ls.toString();
     }
 }

@@ -40,7 +40,6 @@ public class GeometryLocationsWriter
 
   private static final int MAX_ITEMS_TO_DISPLAY = 10;
   
-  private boolean isHtmlFormatted = true;
   private String eol = null;
   private String highlightStart = null;
   private String highlightEnd = null;
@@ -53,7 +52,7 @@ public class GeometryLocationsWriter
 
   public void setHtml(boolean isHtmlFormatted) 
   {
-    this.isHtmlFormatted = isHtmlFormatted;
+    boolean isHtmlFormatted = isHtmlFormatted;
     if (isHtmlFormatted) {
       eol = "<br>";
       highlightStart = "<b>";

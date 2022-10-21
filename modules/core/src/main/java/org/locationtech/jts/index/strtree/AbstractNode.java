@@ -80,7 +80,8 @@ public abstract class AbstractNode implements Boundable, Serializable {
    * 
    * @return the object representing bounds in this index
    */
-  public Object getBounds() {
+  @Override
+public Object getBounds() {
     if (bounds == null) {
       bounds = computeBounds();
     }

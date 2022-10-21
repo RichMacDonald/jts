@@ -59,7 +59,8 @@ public class OrientedCoordinateArray
    * 1 this one is greater
    */
 
-  public int compareTo(Object o1) {
+  @Override
+public int compareTo(Object o1) {
     OrientedCoordinateArray oca = (OrientedCoordinateArray) o1;
     int comp = compareOriented(pts, orientation,
                                oca.pts, oca.orientation);

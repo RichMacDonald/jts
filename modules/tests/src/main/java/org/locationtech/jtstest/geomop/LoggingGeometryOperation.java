@@ -34,7 +34,8 @@ public class LoggingGeometryOperation
 		
 	}
 	
-  public Class getReturnType(String opName)
+  @Override
+public Class getReturnType(String opName)
   {
   	return GeometryMethodOperation.getGeometryReturnType(opName);
   }
@@ -44,7 +45,8 @@ public class LoggingGeometryOperation
 		this.geomOp = geomOp;
 	}
 	
-  public Result invoke(String opName, Geometry geometry, Object[] args)
+  @Override
+public Result invoke(String opName, Geometry geometry, Object[] args)
   	throws Exception
   {
   	System.out.println("Operation <" + opName + ">");

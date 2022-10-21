@@ -44,14 +44,13 @@ implements GeometryOperation
   private int argCount = 0;
   private double distance;
   private int quadSegments;
-  private int endCapStyle;
-  
   public BufferValidatedGeometryOperation()
   {
   	
   }
   
-  public Class getReturnType(String opName)
+  @Override
+public Class getReturnType(String opName)
   {
   	return chainOp.getReturnType(opName);
   }
@@ -77,6 +76,7 @@ implements GeometryOperation
    * @throws Exception
    * @see GeometryOperation#invoke
    */
+	@Override
 	public Result invoke(String opName, Geometry geometry, Object[] args)
 	  throws Exception
 	{	  
@@ -95,8 +95,7 @@ implements GeometryOperation
 		distance = Double.parseDouble((String) args[0]);
 		if (argCount >= 2) 
 			quadSegments = Integer.parseInt((String) args[1]);
-		if (argCount >= 3)
-			endCapStyle = Integer.parseInt((String) args[2]);
+		if (argCount >= 3)int endCapStyle = Integer.parseInt((String) args[2]);
 	}
 	private Result invokeBufferOpValidated(Geometry geometry)
 	{

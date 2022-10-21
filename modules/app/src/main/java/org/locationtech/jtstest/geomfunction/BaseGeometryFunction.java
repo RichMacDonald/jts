@@ -84,21 +84,25 @@ implements GeometryFunction, Comparable
 		this.returnType = returnType;
 	}
 	
+	@Override
 	public String getCategory()
 	{
 		return category;
 	}
 	
+	@Override
 	public String getName()
 	{
 		return name;
 	}
 	
+	@Override
 	public String getDescription()
 	{
 		return description;
 	}
 	
+	@Override
 	public String[] getParameterNames()
 	{
 		return parameterNames;
@@ -110,24 +114,29 @@ implements GeometryFunction, Comparable
 	 * 
 	 * @return the types
 	 */
+	@Override
 	public Class[] getParameterTypes()
 	{
 		return parameterTypes;
 	}
 	
+	@Override
 	public Class getReturnType()
 	{
 		return returnType;
 	}
 	
-  public boolean isBinary() {
+  @Override
+public boolean isBinary() {
     return parameterTypes.length > 0 && parameterTypes[0] == Geometry.class;
   }
 
-  public boolean isRequiredB() {
+  @Override
+public boolean isRequiredB() {
     return isRequiredB;
   }
   
+	@Override
 	public String getSignature()
 	{
 		StringBuilder paramTypes = new StringBuilder();
@@ -155,6 +164,7 @@ implements GeometryFunction, Comparable
   	return (Integer) args[index];
   }
   
+	@Override
 	public abstract Object invoke(Geometry geom, Object[] args);
 	
 	/**
@@ -164,6 +174,7 @@ implements GeometryFunction, Comparable
 	 * @param obj
 	 * @return true if this object is the same as the <tt>obj</tt> argument
 	 */
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (! (obj instanceof GeometryFunction)) return false;
@@ -188,6 +199,7 @@ implements GeometryFunction, Comparable
     return Objects.hash(name, Arrays.hashCode(parameterNames), Arrays.hashCode(parameterTypes), returnType);
   }
   
+	@Override
 	public int compareTo(Object o)
 	{
 		GeometryFunction func = (GeometryFunction) o;

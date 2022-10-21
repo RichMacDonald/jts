@@ -63,7 +63,8 @@ public class PreparedPolygonCoversPerfTest extends PerformanceTestCase
     setRunIterations(1);
   }
 
-  public void startRun(int nPts)
+  @Override
+public void startRun(int nPts)
   {
     System.out.println("Running with size " + nPts);
     System.out.println("Iterations per run = " + NUM_ITER);

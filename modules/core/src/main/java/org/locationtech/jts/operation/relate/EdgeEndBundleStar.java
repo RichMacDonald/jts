@@ -40,7 +40,8 @@ public class EdgeEndBundleStar
    * to contain the EdgeEnd.
    * <br>
    */
-  public void insert(EdgeEnd e)
+  @Override
+public void insert(EdgeEnd e)
   {
     EdgeEndBundle eb = (EdgeEndBundle) edgeMap.get(e);
     if (eb == null) {

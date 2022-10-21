@@ -219,7 +219,8 @@ public class KdTree {
       return matchNode;
     }
 
-    public void visit(KdNode node) {
+    @Override
+	public void visit(KdNode node) {
       double dist = p.distance(node.getCoordinate());
       boolean isInTolerance =  dist <= tolerance; 
       if (! isInTolerance) return;

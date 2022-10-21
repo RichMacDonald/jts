@@ -38,7 +38,8 @@ public class MultiLineString
    *      <code>MultiLineString</code>
    * @deprecated Use GeometryFactory instead
    */
-  public MultiLineString(LineString[] lineStrings, PrecisionModel precisionModel, int SRID) {
+  @Deprecated
+public MultiLineString(LineString[] lineStrings, PrecisionModel precisionModel, int SRID) {
     super(lineStrings, new GeometryFactory(precisionModel, SRID));
   }
 
@@ -55,18 +56,21 @@ public class MultiLineString
     super(lineStrings, factory);
   }
 
-  public int getDimension() {
+  @Override
+public int getDimension() {
     return 1;
   }
 
-  public int getBoundaryDimension() {
+  @Override
+public int getBoundaryDimension() {
     if (isClosed()) {
       return Dimension.FALSE;
     }
     return 0;
   }
 
-  public String getGeometryType() {
+  @Override
+public String getGeometryType() {
     return Geometry.TYPENAME_MULTILINESTRING;
   }
 
@@ -89,7 +93,8 @@ public class MultiLineString
    * @return the boundary geometry
    * @see Geometry#getBoundary
    */
-  public Geometry getBoundary()
+  @Override
+public Geometry getBoundary()
   {
     return (new BoundaryOp(this)).getBoundary();
   }
@@ -103,11 +108,13 @@ public class MultiLineString
    *
    * @return a {@link MultiLineString} in the reverse order
    */
-  public MultiLineString reverse() {
+  @Override
+public MultiLineString reverse() {
     return (MultiLineString) super.reverse();
   }
 
-  protected MultiLineString reverseInternal() {
+  @Override
+protected MultiLineString reverseInternal() {
     LineString[] lineStrings = new LineString[this.geometries.length];
     for (int i = 0; i < lineStrings.length; i++) {
       lineStrings[i] = (LineString) this.geometries[i].reverse();
@@ -115,7 +122,8 @@ public class MultiLineString
     return new MultiLineString(lineStrings, factory);
   }
   
-  protected MultiLineString copyInternal() {
+  @Override
+protected MultiLineString copyInternal() {
     LineString[] lineStrings = new LineString[this.geometries.length];
     for (int i = 0; i < lineStrings.length; i++) {
       lineStrings[i] = (LineString) this.geometries[i].copy();
@@ -123,14 +131,16 @@ public class MultiLineString
     return new MultiLineString(lineStrings, factory);
   }
 
-  public boolean equalsExact(Geometry other, double tolerance) {
+  @Override
+public boolean equalsExact(Geometry other, double tolerance) {
     if (!isEquivalentClass(other)) {
       return false;
     }
     return super.equalsExact(other, tolerance);
   }
 
-  protected int getTypeCode() {
+  @Override
+protected int getTypeCode() {
     return Geometry.TYPECODE_MULTILINESTRING;
   }
 }

@@ -60,7 +60,8 @@ public class BasicStyle implements Style
     return new BasicStyle(this);
   }
   
-  public void paint(Geometry geom, Viewport viewport, Graphics2D g)
+  @Override
+public void paint(Geometry geom, Viewport viewport, Graphics2D g)
   {
     Stroke stroke = createStroke();
     Color lineClr = (isStroked && stroke != null) ? getLineColor() : null;

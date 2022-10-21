@@ -83,7 +83,8 @@ class LineSegmentVisitor
     this.querySeg = querySeg;
   }
 
-  public void visitItem(Object item)
+  @Override
+public void visitItem(Object item)
   {
     LineSegment seg = (LineSegment) item;
     if (Envelope.intersects(seg.p0, seg.p1, querySeg.p0, querySeg.p1))

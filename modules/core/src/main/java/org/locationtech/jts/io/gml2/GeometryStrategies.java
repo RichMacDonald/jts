@@ -280,6 +280,7 @@ public class GeometryStrategies{
 
 			private WeakHashMap patterns = new WeakHashMap();
 			
+			@Override
 			public Object parse(Handler arg, GeometryFactory gf) throws SAXException {
 				// one child, either a coord
 				// or a coordinate sequence

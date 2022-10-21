@@ -326,7 +326,8 @@ abstract public class EdgeEndStar
     }
   }
   
-  public String toString()
+  @Override
+public String toString()
   {
     StringBuilder buf = new StringBuilder();
     buf.append("EdgeEndStar:   " + getCoordinate());

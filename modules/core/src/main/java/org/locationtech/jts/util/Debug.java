@@ -228,19 +228,22 @@ public class Debug {
 
     public boolean hasSegment() { return hasSegment; }
 
-    public void filter(CoordinateSequence seq, int i)
+    @Override
+	public void filter(CoordinateSequence seq, int i)
     {
       if (i == 0) return;
       hasSegment = p0.equals2D(seq.getCoordinate(i-1)) 
           && p1.equals2D(seq.getCoordinate(i));
     }
     
-    public boolean isDone()
+    @Override
+	public boolean isDone()
     {
       return hasSegment; 
     }
     
-    public boolean isGeometryChanged()
+    @Override
+	public boolean isGeometryChanged()
     {
       return false;
     }

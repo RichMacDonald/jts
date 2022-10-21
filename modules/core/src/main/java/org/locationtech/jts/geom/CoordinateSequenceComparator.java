@@ -80,7 +80,8 @@ public class CoordinateSequenceComparator
    * @param o2 a {@link CoordinateSequence}
    * @return -1, 0, or 1 depending on whether o1 is less than, equal to, or greater than o2
    */
-  public int compare(Object o1, Object o2)
+  @Override
+public int compare(Object o1, Object o2)
   {
     CoordinateSequence s1 = (CoordinateSequence) o1;
     CoordinateSequence s2 = (CoordinateSequence) o2;

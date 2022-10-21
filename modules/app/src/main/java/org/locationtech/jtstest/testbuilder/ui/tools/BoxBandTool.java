@@ -45,7 +45,8 @@ public abstract class BoxBandTool extends IndicatorTool
     super(cursor);
   }
 
-  public void mousePressed(MouseEvent e)
+  @Override
+public void mousePressed(MouseEvent e)
   {
   	zoomBoxStart = e.getPoint();
   	zoomBoxEnd = null;
@@ -53,7 +54,8 @@ public abstract class BoxBandTool extends IndicatorTool
   	isRightButton = SwingUtilities.isRightMouseButton(e);
   }
   
-  public void mouseReleased(MouseEvent e)
+  @Override
+public void mouseReleased(MouseEvent e)
   {
     clearIndicator();
   	// don't process this event if the mouse was clicked or dragged a very short distance
@@ -64,14 +66,16 @@ public abstract class BoxBandTool extends IndicatorTool
     gestureFinished();
   }
   
-  public void mouseDragged(MouseEvent e)
+  @Override
+public void mouseDragged(MouseEvent e)
   {
     super.mouseDragged(e);
     zoomBoxEnd = e.getPoint();
     redrawIndicator();
   }
   
-  protected Shape getShape()
+  @Override
+protected Shape getShape()
   {
     if (zoomBoxEnd == null) return null;
     

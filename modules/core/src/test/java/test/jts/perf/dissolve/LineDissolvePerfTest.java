@@ -44,7 +44,8 @@ public class LineDissolvePerfTest  extends PerformanceTestCase
 
   Collection data;
   
-  public void setUp() throws IOException, ParseException
+  @Override
+public void setUp() throws IOException, ParseException
   {
     System.out.println("Loading data...");
     data = IOUtil.readWKTFile("/Users/mdavis/myproj/jts/svn/jts-topo-suite/trunk/jts/testdata/world.wkt");

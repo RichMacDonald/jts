@@ -132,7 +132,8 @@ class RendererSwingWorker extends SwingWorker
 		this.image = image;
 	}
 	
-  public Object construct()
+  @Override
+public Object construct()
   {
   	isRendering = true;
 		Graphics2D gr = (Graphics2D) image.getGraphics();

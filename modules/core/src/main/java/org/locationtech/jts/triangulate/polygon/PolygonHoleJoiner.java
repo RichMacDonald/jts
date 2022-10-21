@@ -342,7 +342,8 @@ public class PolygonHoleJoiner {
    *
    */
   private static class EnvelopeComparator implements Comparator<Geometry> {
-    public int compare(Geometry o1, Geometry o2) {
+    @Override
+	public int compare(Geometry o1, Geometry o2) {
       Envelope e1 = o1.getEnvelopeInternal();
       Envelope e2 = o2.getEnvelopeInternal();
       return e1.compareTo(e2);

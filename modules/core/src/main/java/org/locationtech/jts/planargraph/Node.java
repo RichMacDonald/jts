@@ -117,7 +117,8 @@ public class Node
    *
    * @return <code>true</code> if this node is removed
    */
-  public boolean isRemoved()
+  @Override
+public boolean isRemoved()
   {
     return pt == null;
   }

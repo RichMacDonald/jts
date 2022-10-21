@@ -55,7 +55,8 @@ public class LineSegmentHashCodePerfTest extends PerformanceTestCase
     setRunSize(new int[] { 50, 100, 200, 400 });
   }
 
-  public void startRun(int size)
+  @Override
+public void startRun(int size)
   {
     System.out.println("\nRunning with grid size " + size);
     grid = createGrid(size);

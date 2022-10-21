@@ -173,7 +173,8 @@ public class ConstrainedInteriorPoint {
   }
   
   private static class DoubleComparator implements Comparator<Double> {
-    public int compare(Double v1, Double v2) {
+    @Override
+	public int compare(Double v1, Double v2) {
         return v1 < v2 ? -1 : v1 > v2 ? +1 : 0;
     }
   }

@@ -82,7 +82,8 @@ public class SnapRoundingIntersectionAdder
    * this call for segment pairs which they have determined do not intersect
    * (e.g. by an disjoint envelope test).
    */
-  public void processIntersections(
+  @Override
+public void processIntersections(
       SegmentString e0,  int segIndex0,
       SegmentString e1,  int segIndex1
       )
@@ -162,6 +163,7 @@ public class SnapRoundingIntersectionAdder
    * 
    * @return false always
    */
-  public boolean isDone() { return false; }
+  @Override
+public boolean isDone() { return false; }
 
 }

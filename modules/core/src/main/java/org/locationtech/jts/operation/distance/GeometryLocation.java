@@ -90,7 +90,8 @@ public class GeometryLocation
    */
   public boolean isInsideArea() { return segIndex == INSIDE_AREA; }
   
-  public String toString() {
+  @Override
+public String toString() {
     return component.getGeometryType() 
         + "[" + segIndex + "]" 
         + "-" + WKTWriter.toPoint(pt);

@@ -34,7 +34,8 @@ public class OverlayAreaStarsPerfTest extends PerformanceTestCase
     setRunIterations(1);
   }
 
-  public void startRun(int size)
+  @Override
+public void startRun(int size)
   {
     System.out.println("\n---  Running with size " + size + "  -----------");
     star1 = createSineStar(size, 0);

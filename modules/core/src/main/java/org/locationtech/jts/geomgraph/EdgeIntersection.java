@@ -57,7 +57,8 @@ public class EdgeIntersection
 
   public double getDistance() { return dist; }
 
-  public int compareTo(Object obj)
+  @Override
+public int compareTo(Object obj)
   {
     EdgeIntersection other = (EdgeIntersection) obj;
     return compare(other.segmentIndex, other.dist);
@@ -93,7 +94,8 @@ public class EdgeIntersection
     out.print(" seg # = " + segmentIndex);
     out.println(" dist = " + dist);
   }
-  public String toString()
+  @Override
+public String toString()
   {
     return coord + " seg # = " + segmentIndex + " dist = " + dist;
   }

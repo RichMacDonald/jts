@@ -39,7 +39,8 @@ public class TintBandStyle implements Style
   public TintBandStyle() {
   }
 
-  public void paint(Geometry geom, Viewport viewport, Graphics2D g2d)
+  @Override
+public void paint(Geometry geom, Viewport viewport, Graphics2D g2d)
   {
     if (! (geom instanceof Polygon)) 
       return;

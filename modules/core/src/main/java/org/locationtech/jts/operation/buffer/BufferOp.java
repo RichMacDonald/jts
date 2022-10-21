@@ -84,23 +84,27 @@ public class BufferOp
    * Specifies a round line buffer end cap style.
    * @deprecated use BufferParameters
    */
-  public static final int CAP_ROUND = BufferParameters.CAP_ROUND;
+  @Deprecated
+public static final int CAP_ROUND = BufferParameters.CAP_ROUND;
   /**
    * Specifies a butt (or flat) line buffer end cap style.
    * @deprecated use BufferParameters
    */
-  public static final int CAP_BUTT = BufferParameters.CAP_FLAT;
+  @Deprecated
+public static final int CAP_BUTT = BufferParameters.CAP_FLAT;
   
   /**
    * Specifies a butt (or flat) line buffer end cap style.
    * @deprecated use BufferParameters
    */
-  public static final int CAP_FLAT = BufferParameters.CAP_FLAT;
+  @Deprecated
+public static final int CAP_FLAT = BufferParameters.CAP_FLAT;
   /**
    * Specifies a square line buffer end cap style.
    * @deprecated use BufferParameters
    */
-  public static final int CAP_SQUARE = BufferParameters.CAP_SQUARE;
+  @Deprecated
+public static final int CAP_SQUARE = BufferParameters.CAP_SQUARE;
   
   /**
    * A number of digits of precision which leaves some computational "headroom"

@@ -60,7 +60,8 @@ public class CircleLineEndStyle
     this.diameter = size;
   }
 
-  protected void paint(Point2D terminal, Point2D next, Viewport viewport,
+  @Override
+protected void paint(Point2D terminal, Point2D next, Viewport viewport,
       Graphics2D g) 
   {
     Point2D offsetPt = AWTUtil.vector(next, terminal, offset);

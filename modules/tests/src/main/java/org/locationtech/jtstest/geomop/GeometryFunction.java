@@ -73,6 +73,7 @@ public interface GeometryFunction
 	 * @param obj
 	 * @return true if this object is the same as the <tt>obj</tt> argument
 	 */
+	@Override
 	boolean equals(Object obj);
 
   boolean isBinary();

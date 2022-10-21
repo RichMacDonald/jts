@@ -245,7 +245,8 @@ class SnapTransformer
     this.isSelfSnap = isSelfSnap;
   }
 
-  protected CoordinateSequence transformCoordinates(CoordinateSequence coords, Geometry parent)
+  @Override
+protected CoordinateSequence transformCoordinates(CoordinateSequence coords, Geometry parent)
   {
     Coordinate[] srcPts = coords.toCoordinateArray();
     Coordinate[] newPts = snapLine(srcPts, snapPts);

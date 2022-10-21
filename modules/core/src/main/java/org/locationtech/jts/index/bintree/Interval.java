@@ -76,7 +76,8 @@ public class Interval {
     return (p >= this.min && p <= this.max);
   }
 
-  public String toString()
+  @Override
+public String toString()
   {
     return "[" + min + ", " + max + "]";
   }

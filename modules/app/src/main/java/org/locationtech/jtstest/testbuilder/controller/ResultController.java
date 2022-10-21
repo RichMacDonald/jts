@@ -132,7 +132,8 @@ public class ResultController
     worker = new SwingWorker() {
     	Stopwatch timer;
     	
-      public Object construct()
+      @Override
+	public Object construct()
       {
         return computeResult();
       }
@@ -160,7 +161,8 @@ public class ResultController
         return result;
       }
 
-      public void finished() {
+      @Override
+	public void finished() {
         stopFunctionMonitor();
         resetUI();
         Object result = getValue();

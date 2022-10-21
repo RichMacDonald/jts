@@ -129,7 +129,8 @@ public class ConvexHullTest extends TestCase {
     public ConvexHullEx(Geometry geometry) {
       super(geometry);
     }
-    protected Coordinate[] toCoordinateArray(Stack stack) {
+    @Override
+	protected Coordinate[] toCoordinateArray(Stack stack) {
       return super.toCoordinateArray(stack);
     }
   }

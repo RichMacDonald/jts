@@ -42,7 +42,8 @@ class BasicPreparedGeometry
     representativePts = ComponentCoordinateExtracter.getCoordinates(geom);
   }
 
-  public Geometry getGeometry() { return baseGeom; }
+  @Override
+public Geometry getGeometry() { return baseGeom; }
 
   /**
    * Gets the list of representative points for this geometry.
@@ -110,7 +111,8 @@ class BasicPreparedGeometry
   /**
    * Default implementation.
    */
-  public boolean contains(Geometry g)
+  @Override
+public boolean contains(Geometry g)
   {
     return baseGeom.contains(g);
   }
@@ -118,7 +120,8 @@ class BasicPreparedGeometry
   /**
    * Default implementation.
    */
-  public boolean containsProperly(Geometry g)
+  @Override
+public boolean containsProperly(Geometry g)
   {
   	// since raw relate is used, provide some optimizations
   	
@@ -133,7 +136,8 @@ class BasicPreparedGeometry
   /**
    * Default implementation.
    */
-  public boolean coveredBy(Geometry g)
+  @Override
+public boolean coveredBy(Geometry g)
   {
     return baseGeom.coveredBy(g);
   }
@@ -141,7 +145,8 @@ class BasicPreparedGeometry
   /**
    * Default implementation.
    */
-  public boolean covers(Geometry g)
+  @Override
+public boolean covers(Geometry g)
   {
     return baseGeom.covers(g);
   }
@@ -149,7 +154,8 @@ class BasicPreparedGeometry
   /**
    * Default implementation.
    */
-  public boolean crosses(Geometry g)
+  @Override
+public boolean crosses(Geometry g)
   {
     return baseGeom.crosses(g);
   }
@@ -158,7 +164,8 @@ class BasicPreparedGeometry
    * Standard implementation for all geometries.
    * Supports {@link GeometryCollection}s as input.
    */
-  public boolean disjoint(Geometry g)
+  @Override
+public boolean disjoint(Geometry g)
   {
     return ! intersects(g);
   }
@@ -166,7 +173,8 @@ class BasicPreparedGeometry
   /**
    * Default implementation.
    */
-  public boolean intersects(Geometry g)
+  @Override
+public boolean intersects(Geometry g)
   {
     return baseGeom.intersects(g);
   }
@@ -174,7 +182,8 @@ class BasicPreparedGeometry
   /**
    * Default implementation.
    */
-  public boolean overlaps(Geometry g)
+  @Override
+public boolean overlaps(Geometry g)
   {
     return baseGeom.overlaps(g);
   }
@@ -182,7 +191,8 @@ class BasicPreparedGeometry
   /**
    * Default implementation.
    */
-  public boolean touches(Geometry g)
+  @Override
+public boolean touches(Geometry g)
   {
     return baseGeom.touches(g);
   }
@@ -190,12 +200,14 @@ class BasicPreparedGeometry
   /**
    * Default implementation.
    */
-  public boolean within(Geometry g)
+  @Override
+public boolean within(Geometry g)
   {
     return baseGeom.within(g);
   }
   
-  public String toString()
+  @Override
+public String toString()
   {
   	return baseGeom.toString();
   }

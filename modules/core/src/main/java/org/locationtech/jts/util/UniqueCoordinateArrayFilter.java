@@ -63,7 +63,8 @@ public class UniqueCoordinateArrayFilter implements CoordinateFilter
   /**
    * @see CoordinateFilter#filter(Coordinate)
    */
-  public void filter(Coordinate coord) {
+  @Override
+public void filter(Coordinate coord) {
     if (coordSet.add(coord)) {
       list.add(coord);
     }

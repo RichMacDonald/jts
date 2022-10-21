@@ -22,7 +22,8 @@ public class EdgerayPerfTest extends PerformanceTestCase
     setRunIterations(1);
   }
 
-  public void startRun(int size)
+  @Override
+public void startRun(int size)
   {
     System.out.println("\n---  Running with size " + size + "  -----------");
     int iter = 0;

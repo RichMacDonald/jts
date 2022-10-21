@@ -61,12 +61,14 @@ public class MCIndexSnapRounder
     scaleFactor = pm.getScale();
   }
 
-  public Collection getNodedSubstrings()
+  @Override
+public Collection getNodedSubstrings()
   {
     return  NodedSegmentString.getNodedSubstrings(nodedSegStrings);
   }
 
-  public void computeNodes(Collection inputSegmentStrings)
+  @Override
+public void computeNodes(Collection inputSegmentStrings)
   {
     this.nodedSegStrings = inputSegmentStrings;
     noder = new MCIndexNoder();

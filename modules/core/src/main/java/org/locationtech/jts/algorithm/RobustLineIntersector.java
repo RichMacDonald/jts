@@ -29,7 +29,8 @@ public class RobustLineIntersector
   public RobustLineIntersector() {
   }
 
-  public void computeIntersection(Coordinate p, Coordinate p1, Coordinate p2) {
+  @Override
+public void computeIntersection(Coordinate p, Coordinate p1, Coordinate p2) {
     isProper = false;
     // do between check first, since it is faster than the orientation test
     if (Envelope.intersects(p1, p2, p)) {
@@ -46,7 +47,8 @@ public class RobustLineIntersector
     result = NO_INTERSECTION;
   }
 
-  protected int computeIntersect(
+  @Override
+protected int computeIntersect(
                 Coordinate p1, Coordinate p2,
                 Coordinate q1, Coordinate q2  ) {
     isProper = false;

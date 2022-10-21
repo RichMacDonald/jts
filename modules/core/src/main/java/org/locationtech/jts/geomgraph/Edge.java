@@ -69,7 +69,8 @@ public class Edge
   {
     return pts[i];
   }
-  public Coordinate getCoordinate()
+  @Override
+public Coordinate getCoordinate()
   {
     if (pts.length > 0) return pts[0];
     return null;
@@ -137,7 +138,8 @@ public class Edge
   {
     this.isIsolated = isIsolated;
   }
-  public boolean isIsolated()
+  @Override
+public boolean isIsolated()
   {
     return isIsolated;
   }
@@ -197,7 +199,8 @@ public class Edge
    * Update the IM with the contribution for this component.
    * A component only contributes if it has a labelling for both parent geometries
    */
-  public void computeIM(IntersectionMatrix im)
+  @Override
+public void computeIM(IntersectionMatrix im)
   {
     updateIM(label, im);
   }
@@ -209,7 +212,8 @@ public class Edge
    * <b>iff</b>
    * the coordinates of e1 are the same or the reverse of the coordinates in e2
    */
-  public boolean equals(Object o)
+  @Override
+public boolean equals(Object o)
   {
     if (! (o instanceof Edge)) return false;
     Edge e = (Edge) o;
@@ -270,7 +274,8 @@ public class Edge
     return true;
   }
 
-  public String toString()
+  @Override
+public String toString()
   {
     StringBuilder builder = new StringBuilder();
     builder.append("edge " + name + ": ");

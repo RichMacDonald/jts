@@ -23,7 +23,8 @@ public class DoubleResult implements Result {
     this.value = value.doubleValue();
   }
 
-  public boolean equals(Result other, double tolerance) {
+  @Override
+public boolean equals(Result other, double tolerance) {
     if (!(other instanceof DoubleResult)) {
       return false;
     }
@@ -33,15 +34,18 @@ public class DoubleResult implements Result {
     return Math.abs(value-otherValue) <= tolerance;
   }
 
-  public String toLongString() {
+  @Override
+public String toLongString() {
     return Double.toString(value);
   }
 
-  public String toFormattedString() {
+  @Override
+public String toFormattedString() {
     return Double.toString(value);
   }
 
-  public String toShortString() {
+  @Override
+public String toShortString() {
     return Double.toString(value);
   }
 }

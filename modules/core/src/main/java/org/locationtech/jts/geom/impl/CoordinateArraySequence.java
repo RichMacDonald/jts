@@ -168,7 +168,8 @@ public class CoordinateArraySequence
   /**
    * @see org.locationtech.jts.geom.CoordinateSequence#getDimension()
    */
-  public int getDimension()
+  @Override
+public int getDimension()
   {
     return dimension;
   }
@@ -186,7 +187,8 @@ public class CoordinateArraySequence
    *                  the index of the coordinate
    * @return the requested Coordinate instance
    */
-  public Coordinate getCoordinate(int i) {
+  @Override
+public Coordinate getCoordinate(int i) {
     return coordinates[i];
   }
 
@@ -196,7 +198,8 @@ public class CoordinateArraySequence
    * @param i  the index of the coordinate
    * @return a copy of the requested Coordinate
    */
-  public Coordinate getCoordinateCopy(int i) {
+  @Override
+public Coordinate getCoordinateCopy(int i) {
     Coordinate copy = createCoordinate();
     copy.setCoordinate(coordinates[i]);
     return copy;
@@ -205,28 +208,32 @@ public class CoordinateArraySequence
   /**
    * @see org.locationtech.jts.geom.CoordinateSequence#getX(int)
    */
-  public void getCoordinate(int index, Coordinate coord) {
+  @Override
+public void getCoordinate(int index, Coordinate coord) {
     coord.setCoordinate(coordinates[index]);
   }
 
   /**
    * @see org.locationtech.jts.geom.CoordinateSequence#getX(int)
    */
-  public double getX(int index) {
+  @Override
+public double getX(int index) {
     return coordinates[index].x;
   }
 
   /**
    * @see org.locationtech.jts.geom.CoordinateSequence#getY(int)
    */
-  public double getY(int index) {
+  @Override
+public double getY(int index) {
     return coordinates[index].y;
   }
 
   /**
    * @see org.locationtech.jts.geom.CoordinateSequence#getZ(int)
    */
-  public double getZ(int index)
+  @Override
+public double getZ(int index)
   {
     if (hasZ()) {
       return coordinates[index].getZ();
@@ -239,7 +246,8 @@ public class CoordinateArraySequence
   /**
    * @see org.locationtech.jts.geom.CoordinateSequence#getM(int)
    */
-  public double getM(int index) {
+  @Override
+public double getM(int index) {
     if (hasM()) {
       return coordinates[index].getM();
     }
@@ -251,7 +259,8 @@ public class CoordinateArraySequence
   /**
    * @see org.locationtech.jts.geom.CoordinateSequence#getOrdinate(int, int)
    */
-  public double getOrdinate(int index, int ordinateIndex)
+  @Override
+public double getOrdinate(int index, int ordinateIndex)
   {
     switch (ordinateIndex) {
       case CoordinateSequence.X:  return coordinates[index].x;
@@ -267,7 +276,9 @@ public class CoordinateArraySequence
    * @return The deep copy
    * @deprecated
    */
-  public Object clone() {
+  @Deprecated
+@Override
+public Object clone() {
     return copy();
   }
   /**
@@ -275,7 +286,8 @@ public class CoordinateArraySequence
    *
    * @return The deep copy
    */
-  public CoordinateArraySequence copy() {
+  @Override
+public CoordinateArraySequence copy() {
     Coordinate[] cloneCoordinates = new Coordinate[size()];
     for (int i = 0; i < coordinates.length; i++) {
       Coordinate duplicate = createCoordinate();
@@ -289,14 +301,16 @@ public class CoordinateArraySequence
    *
    * @return the number of coordinates
    */
-  public int size() {
+  @Override
+public int size() {
     return coordinates.length;
   }
 
   /**
    * @see org.locationtech.jts.geom.CoordinateSequence#setOrdinate(int, int, double)
    */
-  public void setOrdinate(int index, int ordinateIndex, double value)
+  @Override
+public void setOrdinate(int index, int ordinateIndex, double value)
   {
     switch (ordinateIndex) {
       case CoordinateSequence.X:
@@ -315,11 +329,13 @@ public class CoordinateArraySequence
    *
    * @return the Coordinate[] array.
    */
-  public Coordinate[] toCoordinateArray() {
+  @Override
+public Coordinate[] toCoordinateArray() {
     return coordinates;
   }
 
-  public Envelope expandEnvelope(Envelope env)
+  @Override
+public Envelope expandEnvelope(Envelope env)
   {
     for (Coordinate coordinate : coordinates) {
       env.expandToInclude(coordinate);
@@ -332,7 +348,8 @@ public class CoordinateArraySequence
    *
    * @return The string
    */
-  public String toString() {
+  @Override
+public String toString() {
     if (coordinates.length > 0) {
       StringBuilder strBuilder = new StringBuilder(17 * coordinates.length);
       strBuilder.append('(');

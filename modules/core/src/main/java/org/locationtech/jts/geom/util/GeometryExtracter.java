@@ -41,7 +41,8 @@ public class GeometryExtracter
    * @param list the list to add the extracted elements to
    * @deprecated Use {@link GeometryExtracter#extract(Geometry, String, List)}
    */
-  public static List extract(Geometry geom, Class clz, List list)
+  @Deprecated
+public static List extract(Geometry geom, Class clz, List list)
   {
   	return extract(geom, toGeometryType(clz), list);
   }
@@ -49,7 +50,8 @@ public class GeometryExtracter
   /**
    * @deprecated
    */
-  private static String toGeometryType(Class clz) {
+  @Deprecated
+private static String toGeometryType(Class clz) {
 	if (clz == null)
 	  return null;
 	else if (clz.isAssignableFrom(Point.class))
@@ -99,7 +101,8 @@ public class GeometryExtracter
    * @param geom the geometry from which to extract
    * @deprecated Use {@link GeometryExtracter#extract(Geometry, String)}
    */
-  public static List extract(Geometry geom, Class clz)
+  @Deprecated
+public static List extract(Geometry geom, Class clz)
   {
     return extract(geom, clz, new ArrayList());
   }
@@ -119,7 +122,8 @@ public class GeometryExtracter
    * @param comps the list to extract into
    * @deprecated
    */
-  public GeometryExtracter(Class clz, List comps)
+  @Deprecated
+public GeometryExtracter(Class clz, List comps)
   {
   	this.geometryType = toGeometryType(clz);
     this.comps = comps;
@@ -144,7 +148,8 @@ public class GeometryExtracter
     return false;
   }
 
-  public void filter(Geometry geom) {
+  @Override
+public void filter(Geometry geom) {
     if (geometryType == null || isOfType(geom, geometryType))
       comps.add(geom);
   }

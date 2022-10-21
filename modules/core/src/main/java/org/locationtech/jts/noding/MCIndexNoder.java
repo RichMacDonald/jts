@@ -72,12 +72,14 @@ public class MCIndexNoder
 
   public SpatialIndex getIndex() { return index; }
 
-  public Collection getNodedSubstrings()
+  @Override
+public Collection getNodedSubstrings()
   {
     return  NodedSegmentString.getNodedSubstrings(nodedSegStrings);
   }
 
-  public void computeNodes(Collection inputSegStrings)
+  @Override
+public void computeNodes(Collection inputSegStrings)
   {
     this.nodedSegStrings = inputSegStrings;
     for (Object inputSegString : inputSegStrings) {
@@ -134,7 +136,8 @@ public class MCIndexNoder
       this.si = si;
     }
 
-    public void overlap(MonotoneChain mc1, int start1, MonotoneChain mc2, int start2)
+    @Override
+	public void overlap(MonotoneChain mc1, int start1, MonotoneChain mc2, int start2)
     {
       SegmentString ss1 = (SegmentString) mc1.getContext();
       SegmentString ss2 = (SegmentString) mc2.getContext();

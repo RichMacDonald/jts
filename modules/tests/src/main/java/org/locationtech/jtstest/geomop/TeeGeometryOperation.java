@@ -39,7 +39,8 @@ implements GeometryOperation
   	
   }
   
-  public Class getReturnType(String opName)
+  @Override
+public Class getReturnType(String opName)
   {
   	return chainOp.getReturnType(opName);
   }
@@ -65,6 +66,7 @@ implements GeometryOperation
    * @throws Exception
    * @see GeometryOperation#invoke
    */
+	@Override
 	public Result invoke(String opName, Geometry geometry, Object[] args)
 	  throws Exception
 	{	  

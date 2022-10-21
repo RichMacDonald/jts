@@ -172,7 +172,8 @@ public abstract class LineIntersector
    * @param precisionModel
    * @deprecated use <code>setPrecisionModel</code> instead
    */
-  public void setMakePrecise(PrecisionModel precisionModel)
+  @Deprecated
+public void setMakePrecise(PrecisionModel precisionModel)
   {
     this.precisionModel = precisionModel;
   }
@@ -244,7 +245,8 @@ public abstract class LineIntersector
   }
 */
 
-  public String toString() {
+  @Override
+public String toString() {
     return WKTWriter.toLineString(inputLines[0][0], inputLines[0][1]) + " - "
     + WKTWriter.toLineString(inputLines[1][0], inputLines[1][1])
                  + getTopologySummary();

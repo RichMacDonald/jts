@@ -245,7 +245,8 @@ public class NodingIntersectionFinder
    * this call for segment pairs which they have determined do not intersect
    * (e.g. by an disjoint envelope test).
    */
-  public void processIntersections(
+  @Override
+public void processIntersections(
       SegmentString e0,  int segIndex0,
       SegmentString e1,  int segIndex1
       )
@@ -378,7 +379,8 @@ public class NodingIntersectionFinder
   /**
    * 
    */
-  public boolean isDone()
+  @Override
+public boolean isDone()
   { 
   	if (findAllIntersections) return false;
   	return interiorIntersection != null;

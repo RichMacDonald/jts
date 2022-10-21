@@ -112,7 +112,8 @@ public class ShapefileHeader{
         return bounds;
     }
     
-    public String toString()  {
+    @Override
+	public String toString()  {
         String res = ("Sf-->type "+fileCode+" size "+fileLength+" version "+ version + " Shape Type "+shapeType);
         return res;
     }

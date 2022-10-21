@@ -340,7 +340,8 @@ public class MaximumInscribedCircle {
     /**
      * A cell is greater if its maximum possible distance is larger.
      */
-    public int compareTo(Cell o) {
+    @Override
+	public int compareTo(Cell o) {
       return (int) (o.maxDist - this.maxDist);
     }
     

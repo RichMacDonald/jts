@@ -235,13 +235,13 @@ public class WKBDumper
   {
     writer.write(dis.getCount() + ": ");
     StringBuilder hex = new StringBuilder();
-    String nums = "";
+    StringBuilder nums = new StringBuilder();
     for (int i = 0; i < inputDimension; i++) {
         double d = dis.readDouble();
         hex.append(WKBWriter.toHex(dis.getData())).append(" ");
-        nums += (i > 0 ? ", " : "") + d;
+        nums.append(i > 0 ? ", " : "").append(d);
     }
-    writer.write(hex.append(" [").append(index).append("] ").append(nums).append("\n").toString());
+    writer.write(hex.append(" [").append(index).append("] ").append(nums.toString()).append("\n").toString());
   }
   
   private int readTaggedInt(String tag) throws IOException, ParseException {

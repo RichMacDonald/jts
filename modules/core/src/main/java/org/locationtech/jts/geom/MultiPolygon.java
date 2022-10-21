@@ -45,7 +45,8 @@ public class MultiPolygon
    *      <code>MultiPolygon</code>
    * @deprecated Use GeometryFactory instead
    */
-  public MultiPolygon(Polygon[] polygons, PrecisionModel precisionModel, int SRID) {
+  @Deprecated
+public MultiPolygon(Polygon[] polygons, PrecisionModel precisionModel, int SRID) {
     this(polygons, new GeometryFactory(precisionModel, SRID));
   }
 
@@ -64,15 +65,18 @@ public class MultiPolygon
     super(polygons, factory);
   }
 
-  public int getDimension() {
+  @Override
+public int getDimension() {
     return 2;
   }
 
-  public int getBoundaryDimension() {
+  @Override
+public int getBoundaryDimension() {
     return 1;
   }
 
-  public String getGeometryType() {
+  @Override
+public String getGeometryType() {
     return Geometry.TYPENAME_MULTIPOLYGON;
   }
 
@@ -88,7 +92,8 @@ public class MultiPolygon
    * @return a lineal geometry (which may be empty)
    * @see Geometry#getBoundary
    */
-  public Geometry getBoundary() {
+  @Override
+public Geometry getBoundary() {
     if (isEmpty()) {
       return getFactory().createMultiLineString();
     }
@@ -104,7 +109,8 @@ public class MultiPolygon
     return getFactory().createMultiLineString((LineString[]) allRings.toArray(allRingsArray));
   }
 
-  public boolean equalsExact(Geometry other, double tolerance) {
+  @Override
+public boolean equalsExact(Geometry other, double tolerance) {
     if (!isEquivalentClass(other)) {
       return false;
     }
@@ -118,11 +124,13 @@ public class MultiPolygon
    *
    * @return a MultiPolygon in the reverse order
    */
-  public MultiPolygon reverse() {
+  @Override
+public MultiPolygon reverse() {
     return (MultiPolygon) super.reverse();
   }
 
-  protected MultiPolygon reverseInternal() {
+  @Override
+protected MultiPolygon reverseInternal() {
     Polygon[] polygons = new Polygon[this.geometries.length];
     for (int i = 0; i < polygons.length; i++) {
       polygons[i] = (Polygon) this.geometries[i].reverse();
@@ -130,7 +138,8 @@ public class MultiPolygon
     return new MultiPolygon(polygons, factory);
   }
   
-  protected MultiPolygon copyInternal() {
+  @Override
+protected MultiPolygon copyInternal() {
     Polygon[] polygons = new Polygon[this.geometries.length];
     for (int i = 0; i < polygons.length; i++) {
       polygons[i] = (Polygon) this.geometries[i].copy();
@@ -138,7 +147,8 @@ public class MultiPolygon
     return new MultiPolygon(polygons, factory);
   }
 
-  protected int getTypeCode() {
+  @Override
+protected int getTypeCode() {
     return Geometry.TYPECODE_MULTIPOLYGON;
   }
 }

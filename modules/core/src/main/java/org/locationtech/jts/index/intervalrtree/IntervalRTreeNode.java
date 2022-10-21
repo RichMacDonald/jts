@@ -36,6 +36,7 @@ public abstract class IntervalRTreeNode
 		return true;
 	}
 
+	@Override
 	public String toString()
 	{
 		return WKTWriter.toLineString(new Coordinate(min, 0), new Coordinate(max, 0));
@@ -43,7 +44,8 @@ public abstract class IntervalRTreeNode
   
   public static class NodeComparator implements Comparator
   {
-    public int compare(Object o1, Object o2)
+    @Override
+	public int compare(Object o1, Object o2)
     {
       IntervalRTreeNode n1 = (IntervalRTreeNode) o1;
       IntervalRTreeNode n2 = (IntervalRTreeNode) o2;

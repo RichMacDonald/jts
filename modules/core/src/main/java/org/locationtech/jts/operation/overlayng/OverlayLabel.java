@@ -654,7 +654,8 @@ class OverlayLabel {
     return new OverlayLabel(this);
   }
     
-  public String toString()
+  @Override
+public String toString()
   {
     return toString(true);
   }

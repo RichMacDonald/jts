@@ -146,7 +146,8 @@ public class DirectedEdge
    *
    * @return <code>true</code> if this directed edge is removed
    */
-  public boolean isRemoved()
+  @Override
+public boolean isRemoved()
   {
     return parentEdge == null;
   }
@@ -166,7 +167,8 @@ public class DirectedEdge
    * function can be used to decide the relative orientation of the vectors.
    * </ul>
    */
-  public int compareTo(Object obj)
+  @Override
+public int compareTo(Object obj)
   {
       DirectedEdge de = (DirectedEdge) obj;
       return compareDirection(de);

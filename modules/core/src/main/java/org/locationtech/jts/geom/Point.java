@@ -45,7 +45,8 @@ public class Point
    *      <code>Point</code>
    * @deprecated Use GeometryFactory instead
    */
-  public Point(Coordinate coordinate, PrecisionModel precisionModel, int SRID) {
+  @Deprecated
+public Point(Coordinate coordinate, PrecisionModel precisionModel, int SRID) {
     super(new GeometryFactory(precisionModel, SRID));
     init(getFactory().getCoordinateSequenceFactory().create(
           coordinate != null ? new Coordinate[]{coordinate} : new Coordinate[]{}));
@@ -69,29 +70,35 @@ public class Point
     this.coordinates = coordinates;
   }
 
-  public Coordinate[] getCoordinates() {
+  @Override
+public Coordinate[] getCoordinates() {
     return isEmpty() ? new Coordinate[]{} : new Coordinate[]{
         getCoordinate()
         };
   }
 
-  public int getNumPoints() {
+  @Override
+public int getNumPoints() {
     return isEmpty() ? 0 : 1;
   }
 
-  public boolean isEmpty() {
+  @Override
+public boolean isEmpty() {
     return coordinates.size() == 0;
   }
 
-  public boolean isSimple() {
+  @Override
+public boolean isSimple() {
     return true;
   }
 
-  public int getDimension() {
+  @Override
+public int getDimension() {
     return 0;
   }
 
-  public int getBoundaryDimension() {
+  @Override
+public int getBoundaryDimension() {
     return Dimension.FALSE;
   }
 
@@ -109,11 +116,13 @@ public class Point
     return getCoordinate().y;
   }
 
-  public Coordinate getCoordinate() {
+  @Override
+public Coordinate getCoordinate() {
     return coordinates.size() != 0 ? coordinates.getCoordinate(0): null;
   }
 
-  public String getGeometryType() {
+  @Override
+public String getGeometryType() {
     return Geometry.TYPENAME_POINT;
   }
 
@@ -125,11 +134,13 @@ public class Point
    * @return an empty GeometryCollection
    * @see Geometry#getBoundary
    */
-  public Geometry getBoundary() {
+  @Override
+public Geometry getBoundary() {
     return getFactory().createGeometryCollection();
   }
 
-  protected Envelope computeEnvelopeInternal() {
+  @Override
+protected Envelope computeEnvelopeInternal() {
     if (isEmpty()) {
       return new Envelope();
     }
@@ -138,7 +149,8 @@ public class Point
     return env;
   }
 
-  public boolean equalsExact(Geometry other, double tolerance) {
+  @Override
+public boolean equalsExact(Geometry other, double tolerance) {
     if (!isEquivalentClass(other)) {
       return false;
     }
@@ -151,12 +163,14 @@ public class Point
     return equal(((Point) other).getCoordinate(), this.getCoordinate(), tolerance);
   }
 
-  public void apply(CoordinateFilter filter) {
+  @Override
+public void apply(CoordinateFilter filter) {
 	    if (isEmpty()) { return; }
 	    filter.filter(getCoordinate());
 	  }
 
-  public void apply(CoordinateSequenceFilter filter)
+  @Override
+public void apply(CoordinateSequenceFilter filter)
   {
 	    if (isEmpty())
         return;
@@ -165,11 +179,13 @@ public class Point
         geometryChanged();
 	  }
 
-  public void apply(GeometryFilter filter) {
+  @Override
+public void apply(GeometryFilter filter) {
     filter.filter(this);
   }
 
-  public void apply(GeometryComponentFilter filter) {
+  @Override
+public void apply(GeometryComponentFilter filter) {
     filter.filter(this);
   }
 
@@ -180,40 +196,49 @@ public class Point
    * @return a clone of this instance
    * @deprecated
    */
-  public Object clone() {
+  @Deprecated
+@Override
+public Object clone() {
     return copy();
   }
 
-  protected Point copyInternal() {
+  @Override
+protected Point copyInternal() {
     return new Point(coordinates.copy(), factory);
   }
 
-  public Point reverse() {
+  @Override
+public Point reverse() {
     return (Point) super.reverse();
   }
 
-  protected Point reverseInternal()
+  @Override
+protected Point reverseInternal()
   {
     return getFactory().createPoint(coordinates.copy());
   }
 
-  public void normalize()
+  @Override
+public void normalize()
   {
     // a Point is always in normalized form
   }
 
-  protected int compareToSameClass(Object other) {
+  @Override
+protected int compareToSameClass(Object other) {
     Point point = (Point) other;
     return getCoordinate().compareTo(point.getCoordinate());
   }
 
-  protected int compareToSameClass(Object other, CoordinateSequenceComparator comp)
+  @Override
+protected int compareToSameClass(Object other, CoordinateSequenceComparator comp)
   {
     Point point = (Point) other;
     return comp.compare(this.coordinates, point.coordinates);
   }
   
-  protected int getTypeCode() {
+  @Override
+protected int getTypeCode() {
     return Geometry.TYPECODE_POINT;
   }
 

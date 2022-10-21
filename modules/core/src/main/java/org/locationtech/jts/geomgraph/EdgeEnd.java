@@ -74,7 +74,8 @@ public class EdgeEnd
   public void setNode(Node node) { this.node = node; }
   public Node getNode() { return node; }
 
-  public int compareTo(Object obj)
+  @Override
+public int compareTo(Object obj)
   {
       EdgeEnd e = (EdgeEnd) obj;
       return compareDirection(e);
@@ -119,7 +120,8 @@ public class EdgeEnd
     String name = className.substring(lastDotPos + 1);
     out.print("  " + name + ": " + p0 + " - " + p1 + " " + quadrant + ":" + angle + "   " + label);
   }
-  public String toString()
+  @Override
+public String toString()
   {
     double angle = Math.atan2(dy, dx);
     String className = getClass().getName();

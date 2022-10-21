@@ -68,6 +68,7 @@ public class SimpleRayCrossingStressTest extends TestCase {
 			this.geom = geom;
 		}
 		
+		@Override
 		public int locate(Coordinate p)
 		{
 			RayCrossingCounter rcc = new RayCrossingCounter(p);
@@ -87,7 +88,8 @@ public class SimpleRayCrossingStressTest extends TestCase {
 				this.rcc = rcc;
 			}
 			
-		  public void filter(CoordinateSequence seq, int i)
+		  @Override
+		public void filter(CoordinateSequence seq, int i)
 		  {
 		  	if (i == 0) return;
 		  	seq.getCoordinate(i - 1, p0);
@@ -95,9 +97,11 @@ public class SimpleRayCrossingStressTest extends TestCase {
 		  	rcc.countSegment(p0, p1);
 		  }
 		  
-		  public boolean isDone() { return rcc.isOnSegment(); }
+		  @Override
+		public boolean isDone() { return rcc.isOnSegment(); }
 		  
-		  public boolean isGeometryChanged() { return false; }
+		  @Override
+		public boolean isGeometryChanged() { return false; }
 		}
 	}
 }

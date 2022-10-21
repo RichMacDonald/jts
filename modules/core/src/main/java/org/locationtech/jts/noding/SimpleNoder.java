@@ -32,12 +32,14 @@ public class SimpleNoder
   public SimpleNoder() {
   }
 
-  public Collection getNodedSubstrings()
+  @Override
+public Collection getNodedSubstrings()
   {
     return  NodedSegmentString.getNodedSubstrings(nodedSegStrings);
   }
 
-  public void computeNodes(Collection inputSegStrings)
+  @Override
+public void computeNodes(Collection inputSegStrings)
   {
     this.nodedSegStrings = inputSegStrings;
     for (Object inputSegString : inputSegStrings) {

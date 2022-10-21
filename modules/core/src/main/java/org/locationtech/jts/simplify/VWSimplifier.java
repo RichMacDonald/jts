@@ -136,7 +136,8 @@ public class VWSimplifier
       this.distanceTolerance = distanceTolerance;
     }
 
-    protected CoordinateSequence transformCoordinates(CoordinateSequence coords, Geometry parent)
+    @Override
+	protected CoordinateSequence transformCoordinates(CoordinateSequence coords, Geometry parent)
     {
       Coordinate[] inputPts = coords.toCoordinateArray();
       Coordinate[] newPts = null;
@@ -152,7 +153,8 @@ public class VWSimplifier
     /**
      * Simplifies a polygon, fixing it if required.
      */
-    protected Geometry transformPolygon(Polygon geom, Geometry parent)
+    @Override
+	protected Geometry transformPolygon(Polygon geom, Geometry parent)
     {
       // empty geometries are simply removed
       if (geom.isEmpty())
@@ -171,7 +173,8 @@ public class VWSimplifier
      * 
      * @return null if the simplification results in a degenerate ring
      */
-    protected Geometry transformLinearRing(LinearRing geom, Geometry parent)
+    @Override
+	protected Geometry transformLinearRing(LinearRing geom, Geometry parent)
     {
       boolean removeDegenerateRings = parent instanceof Polygon;
       Geometry simpResult = super.transformLinearRing(geom, parent);
@@ -184,7 +187,8 @@ public class VWSimplifier
     /**
      * Simplifies a MultiPolygon, fixing it if required.
      */
-    protected Geometry transformMultiPolygon(MultiPolygon geom, Geometry parent)
+    @Override
+	protected Geometry transformMultiPolygon(MultiPolygon geom, Geometry parent)
     {
       Geometry rawGeom = super.transformMultiPolygon(geom, parent);
       return createValidArea(rawGeom);

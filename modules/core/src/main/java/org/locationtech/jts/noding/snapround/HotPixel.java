@@ -339,7 +339,8 @@ public class HotPixel
     return false;
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     return "HP(" + WKTWriter.format(originalPt) + ")";
   }
 

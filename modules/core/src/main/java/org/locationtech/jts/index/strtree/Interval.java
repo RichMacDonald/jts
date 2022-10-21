@@ -51,7 +51,8 @@ public class Interval {
     return ((other.min <= max) && (other.max >= min));
   }
   
-  public boolean equals(Object o) {
+  @Override
+public boolean equals(Object o) {
     if (! (o instanceof Interval)) { return false; }
     Interval other = (Interval) o;
     return min == other.min && max == other.max;

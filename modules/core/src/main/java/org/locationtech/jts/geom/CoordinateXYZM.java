@@ -64,7 +64,8 @@ public class CoordinateXYZM extends Coordinate {
    * 
    * @return a copy of this CoordinateXYZM
    */
-  public CoordinateXYZM copy() {
+  @Override
+public CoordinateXYZM copy() {
     return new CoordinateXYZM(this);
   }
   
@@ -82,15 +83,18 @@ public class CoordinateXYZM extends Coordinate {
   private double m;
 
   /** The m-measure, if available. */
-  public double getM() {
+  @Override
+public double getM() {
     return m;
   }
 
-  public void setM(double m) {
+  @Override
+public void setM(double m) {
     this.m = m;
   }
 
-  public double getOrdinate(int ordinateIndex)
+  @Override
+public double getOrdinate(int ordinateIndex)
   {
     switch (ordinateIndex) {
     case X: return x;
@@ -130,7 +134,8 @@ public class CoordinateXYZM extends Coordinate {
     }
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     return "(" + x + ", " + y + ", " + getZ() + " m="+getM()+")";
   }
 }

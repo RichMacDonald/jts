@@ -220,7 +220,8 @@ public class CoordinateArrays {
    */
   public static class ForwardComparator
     implements Comparator {
-    public int compare(Object o1, Object o2) {
+    @Override
+	public int compare(Object o1, Object o2) {
       Coordinate[] pts1 = (Coordinate[]) o1;
       Coordinate[] pts2 = (Coordinate[]) o2;
 
@@ -283,7 +284,8 @@ public class CoordinateArrays {
    */
   public static class BidirectionalComparator
     implements Comparator {
-    public int compare(Object o1, Object o2) {
+    @Override
+	public int compare(Object o1, Object o2) {
       Coordinate[] pts1 = (Coordinate[]) o1;
       Coordinate[] pts2 = (Coordinate[]) o2;
 

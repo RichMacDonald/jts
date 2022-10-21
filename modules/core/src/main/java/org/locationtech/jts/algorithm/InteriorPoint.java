@@ -91,7 +91,8 @@ public class InteriorPoint {
       return dim;
     }
     
-    public void filter(Geometry elem) {
+    @Override
+	public void filter(Geometry elem) {
       if (elem instanceof GeometryCollection)
         return;
       if (! elem.isEmpty()) {

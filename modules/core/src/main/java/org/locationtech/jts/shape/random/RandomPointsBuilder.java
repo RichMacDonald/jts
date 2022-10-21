@@ -70,7 +70,8 @@ extends GeometricShapeBuilder
   	extentLocator = new IndexedPointInAreaLocator(mask);
   }
   
-  public Geometry getGeometry()
+  @Override
+public Geometry getGeometry()
   {
   	Coordinate[] pts = new Coordinate[numPts];
   	int i = 0;
@@ -90,7 +91,8 @@ extends GeometricShapeBuilder
   	return getExtent().contains(p);
   }
   
-  protected Coordinate createCoord(double x, double y)
+  @Override
+protected Coordinate createCoord(double x, double y)
   {
   	Coordinate pt = new Coordinate(x, y);
   	geomFactory.getPrecisionModel().makePrecise(pt);

@@ -44,7 +44,8 @@ public class IsValidNestedHolesPerfTest extends PerformanceTestCase {
   
   Geometry geom;
   
-  public void startRun(int npts)
+  @Override
+public void startRun(int npts)
   {
     geom = createSlantHoles(npts);
   }

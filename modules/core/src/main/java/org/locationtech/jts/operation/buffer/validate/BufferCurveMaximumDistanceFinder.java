@@ -76,6 +76,7 @@ public class BufferCurveMaximumDistanceFinder
 			this.geom = geom;
 		}
 
+		@Override
 		public void filter(Coordinate pt) {
 			minPtDist.initialize();
 			DistanceToPointFinder.computeDistance(geom, pt, minPtDist);
@@ -98,6 +99,7 @@ public class BufferCurveMaximumDistanceFinder
 			this.geom = geom;
 		}
 
+		@Override
 		public void filter(CoordinateSequence seq, int index) 
 		{
 			if (index == 0)
@@ -114,8 +116,10 @@ public class BufferCurveMaximumDistanceFinder
 			maxPtDist.setMaximum(minPtDist);
 		}
 
+		@Override
 		public boolean isGeometryChanged() { return false; }
 		
+		@Override
 		public boolean isDone() { return false; }
 		
 		public PointPairDistance getMaxPointDistance() {

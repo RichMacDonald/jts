@@ -566,7 +566,8 @@ public class IntersectionMatrix implements Cloneable {
    *@return    the nine dimension symbols of this <code>IntersectionMatrix</code>
    *      in row-major order.
    */
-  public String toString() {
+  @Override
+public String toString() {
     StringBuilder builder = new StringBuilder("123456789");
     for (int ai = 0; ai < 3; ai++) {
       for (int bi = 0; bi < 3; bi++) {

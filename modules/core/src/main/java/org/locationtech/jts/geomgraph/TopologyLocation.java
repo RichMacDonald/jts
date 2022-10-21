@@ -177,7 +177,8 @@ public class TopologyLocation {
     }
   }
 
-  public String toString()
+  @Override
+public String toString()
   {
     StringBuilder buf = new StringBuilder();
     if (location.length > 1) buf.append(Location.toLocationSymbol(location[Position.LEFT]));

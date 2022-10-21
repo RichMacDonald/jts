@@ -46,7 +46,8 @@ public class DistanceGeomPairPerfTest extends PerformanceTestCase
   private Geometry geom2;
   private Point pt2;
   
-  public void startRun(int nPts)
+  @Override
+public void startRun(int nPts)
   {
     //int nPts2 = nPts;
     int nPts2 = 100;

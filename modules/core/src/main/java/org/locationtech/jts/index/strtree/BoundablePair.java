@@ -109,7 +109,8 @@ class BoundablePair
   /**
    * Compares two pairs based on their minimum distances
    */
-  public int compareTo(Object o)
+  @Override
+public int compareTo(Object o)
   {
     BoundablePair nd = (BoundablePair) o;
     if (distance < nd.distance) return -1;

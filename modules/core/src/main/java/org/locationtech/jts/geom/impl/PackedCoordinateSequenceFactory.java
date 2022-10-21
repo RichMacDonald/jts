@@ -90,7 +90,8 @@ public class PackedCoordinateSequenceFactory implements
   /**
    * @see CoordinateSequenceFactory#create(Coordinate[])
    */
-  public CoordinateSequence create(Coordinate[] coordinates) {
+  @Override
+public CoordinateSequence create(Coordinate[] coordinates) {
     int dimension = DEFAULT_DIMENSION;
     int measures = DEFAULT_MEASURES;
     if (coordinates != null && coordinates.length > 0 && coordinates[0] != null) {
@@ -108,7 +109,8 @@ public class PackedCoordinateSequenceFactory implements
   /**
    * @see CoordinateSequenceFactory#create(CoordinateSequence)
    */
-  public CoordinateSequence create(CoordinateSequence coordSeq) {
+  @Override
+public CoordinateSequence create(CoordinateSequence coordSeq) {
     int dimension = coordSeq.getDimension();
     int measures = coordSeq.getMeasures();
     if (type == DOUBLE) {
@@ -180,7 +182,8 @@ public class PackedCoordinateSequenceFactory implements
   /**
    * @see org.locationtech.jts.geom.CoordinateSequenceFactory#create(int, int)
    */
-  public CoordinateSequence create(int size, int dimension) {
+  @Override
+public CoordinateSequence create(int size, int dimension) {
     if (type == DOUBLE) {
       return new PackedCoordinateSequence.Double(
               size, dimension, Math.max(DEFAULT_MEASURES, dimension-3));
@@ -193,7 +196,8 @@ public class PackedCoordinateSequenceFactory implements
   /**
    * @see org.locationtech.jts.geom.CoordinateSequenceFactory#create(int, int, int)
    */
-  public CoordinateSequence create(int size, int dimension, int measures) {
+  @Override
+public CoordinateSequence create(int size, int dimension, int measures) {
     if (type == DOUBLE) {
       return new PackedCoordinateSequence.Double(size, dimension, measures);
     } else {

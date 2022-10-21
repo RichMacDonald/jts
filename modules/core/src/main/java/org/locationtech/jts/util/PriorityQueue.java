@@ -19,6 +19,7 @@ import java.util.ArrayList;
  * @author Martin Davis
  * @deprecated
  */
+@Deprecated
 public class PriorityQueue 
 {
   private int size; // Number of elements in queue

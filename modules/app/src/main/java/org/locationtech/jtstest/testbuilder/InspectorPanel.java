@@ -60,7 +60,8 @@ public class InspectorPanel extends TestBuilderPanel  {
     uiInit();
    }
 
-  protected void uiInit() {
+  @Override
+protected void uiInit() {
     this.setLayout(new BorderLayout());
     geomTreePanel = new GeometryTreePanel();
     

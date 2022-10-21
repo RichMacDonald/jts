@@ -59,7 +59,8 @@ extends PerformanceTestCase
     setRunIterations(N_ITER);
   }
 
-  public void setUp()
+  @Override
+public void setUp()
   {
     System.out.println("Geometry Precision Reducer perf test");
     System.out.println("SineStar: origin: ("
@@ -68,7 +69,8 @@ extends PerformanceTestCase
     System.out.println("# Iterations: " + N_ITER);
   }
   
-  public void startRun(int npts)
+  @Override
+public void startRun(int npts)
   {
     int iter = 0;
     sineStar = SineStarFactory.create(new Coordinate(ORG_X, ORG_Y), SIZE, npts, N_ARMS, ARM_RATIO);

@@ -38,6 +38,7 @@ import org.locationtech.jts.geom.util.GeometryEditor;
  * 
  * @deprecated use GeometryPrecisionReducer
  */
+@Deprecated
 public class SimpleGeometryPrecisionReducer
 {
 	/**
@@ -108,7 +109,8 @@ public class SimpleGeometryPrecisionReducer
   private class PrecisionReducerCoordinateOperation
       extends GeometryEditor.CoordinateOperation
   {
-    public Coordinate[] edit(Coordinate[] coordinates, Geometry geom)
+    @Override
+	public Coordinate[] edit(Coordinate[] coordinates, Geometry geom)
     {
       if (coordinates.length == 0) return null;
 

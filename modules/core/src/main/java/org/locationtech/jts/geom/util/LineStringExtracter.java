@@ -84,7 +84,8 @@ public class LineStringExtracter
     this.comps = comps;
   }
 
-  public void filter(Geometry geom)
+  @Override
+public void filter(Geometry geom)
   {
     if (geom instanceof LineString) comps.add(geom);
   }

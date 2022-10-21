@@ -102,7 +102,8 @@ class OverlayEdge extends HalfEdge {
   public boolean isForward() {
     return direction;
   }
-  public Coordinate directionPt() {
+  @Override
+public Coordinate directionPt() {
     return dirPt;
   }
   
@@ -273,7 +274,8 @@ class OverlayEdge extends HalfEdge {
     maxEdgeRing = maximalEdgeRing;
   }
 
-  public String toString() {
+  @Override
+public String toString() {
     Coordinate orig = orig();
     Coordinate dest = dest();
     String dirPtStr = (pts.length > 2)

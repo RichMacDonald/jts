@@ -116,10 +116,12 @@ extends JPanel implements FunctionPanel
     this.add(panelExecParam, BorderLayout.SOUTH);
 
     GeometryFunctionListener gfListener = new GeometryFunctionListener() {
-      public void functionSelected(GeometryFunctionEvent e) {
+      @Override
+	public void functionSelected(GeometryFunctionEvent e) {
         functionChanged(e.getFunction());
       }
-      public void functionInvoked(GeometryFunctionEvent e) {
+      @Override
+	public void functionInvoked(GeometryFunctionEvent e) {
         execFunction(e.getFunction(), false);
       }
     };
@@ -185,7 +187,8 @@ extends JPanel implements FunctionPanel
     return null;
   }
   
-  public Object[] getFunctionParams()
+  @Override
+public Object[] getFunctionParams()
   {
     if (currentFunc == null) return null;
     Class[] paramTypes = currentFunc.getParameterTypes();
@@ -216,7 +219,8 @@ extends JPanel implements FunctionPanel
     return currentFunc.getName();
   }
 
-  public GeometryFunction getFunction() {
+  @Override
+public GeometryFunction getFunction() {
     return currentFunc;
   }
   

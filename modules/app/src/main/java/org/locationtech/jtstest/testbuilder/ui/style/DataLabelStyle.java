@@ -56,7 +56,8 @@ public class DataLabelStyle implements Style
     font = new Font(FontGlyphReader.FONT_SANSSERIF, Font.BOLD, size);
   }
 
-  public void paint(Geometry geom, Viewport viewport, Graphics2D g2d)
+  @Override
+public void paint(Geometry geom, Viewport viewport, Graphics2D g2d)
   {
     if (geom.getUserData() == null) return;
     g2d.setColor(color);

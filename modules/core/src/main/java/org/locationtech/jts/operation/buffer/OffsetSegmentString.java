@@ -127,7 +127,8 @@ class OffsetSegmentString
     return coord;
   }
 
-  public String toString()
+  @Override
+public String toString()
   {
   	GeometryFactory fact = new GeometryFactory();
   	LineString line = fact.createLineString(getCoordinates());

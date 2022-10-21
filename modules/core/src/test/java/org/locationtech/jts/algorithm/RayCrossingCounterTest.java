@@ -36,7 +36,8 @@ public class RayCrossingCounterTest extends AbstractPointInRingTest {
 
   public RayCrossingCounterTest(String name) { super(name); }
 
-  protected void runPtInRing(int expectedLoc, Coordinate pt, String wkt)
+  @Override
+protected void runPtInRing(int expectedLoc, Coordinate pt, String wkt)
           throws Exception
   {
     Geometry geom = reader.read(wkt);

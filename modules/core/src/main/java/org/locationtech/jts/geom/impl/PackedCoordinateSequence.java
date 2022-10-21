@@ -74,7 +74,8 @@ public abstract class PackedCoordinateSequence
   /**
    * @see CoordinateSequence#getDimension()
    */
-  public int getDimension() {
+  @Override
+public int getDimension() {
     return this.dimension;
   }
 
@@ -89,7 +90,8 @@ public abstract class PackedCoordinateSequence
   /**
    * @see CoordinateSequence#getCoordinate(int)
    */
-  public Coordinate getCoordinate(int i) {
+  @Override
+public Coordinate getCoordinate(int i) {
     Coordinate[] coords = getCachedCoords();
     if(coords != null)
       return coords[i];
@@ -99,14 +101,16 @@ public abstract class PackedCoordinateSequence
   /**
    * @see CoordinateSequence#getCoordinate(int)
    */
-  public Coordinate getCoordinateCopy(int i) {
+  @Override
+public Coordinate getCoordinateCopy(int i) {
     return getCoordinateInternal(i);
   }
 
   /**
    * @see CoordinateSequence#getCoordinate(int)
    */
-  public void getCoordinate(int i, Coordinate coord) {
+  @Override
+public void getCoordinate(int i, Coordinate coord) {
     coord.x = getOrdinate(i, 0);
     coord.y = getOrdinate(i, 1);
     if (hasZ()) {
@@ -120,7 +124,8 @@ public abstract class PackedCoordinateSequence
   /**
    * @see CoordinateSequence#toCoordinateArray()
    */
-  public Coordinate[] toCoordinateArray() {
+  @Override
+public Coordinate[] toCoordinateArray() {
     Coordinate[] coords = getCachedCoords();
 // testing - never cache
     if (coords != null)
@@ -155,21 +160,24 @@ public abstract class PackedCoordinateSequence
   /**
    * @see CoordinateSequence#getX(int)
    */
-  public double getX(int index) {
+  @Override
+public double getX(int index) {
     return getOrdinate(index, 0);
   }
 
   /**
    * @see CoordinateSequence#getY(int)
    */
-  public double getY(int index) {
+  @Override
+public double getY(int index) {
     return getOrdinate(index, 1);
   }
 
   /**
    * @see CoordinateSequence#getOrdinate(int, int)
    */
-  public abstract double getOrdinate(int index, int ordinateIndex);
+  @Override
+public abstract double getOrdinate(int index, int ordinateIndex);
 
   /**
    * Sets the first ordinate of a coordinate in this sequence.
@@ -193,7 +201,8 @@ public abstract class PackedCoordinateSequence
     setOrdinate(index, 1, value);
   }
 
-  public String toString()
+  @Override
+public String toString()
   {
     return CoordinateSequences.toString(this);
   }
@@ -217,9 +226,12 @@ public abstract class PackedCoordinateSequence
    * @see CoordinateSequence#clone()
    * @deprecated
    */
-  public abstract Object clone();
+  @Deprecated
+@Override
+public abstract Object clone();
   
-  public abstract PackedCoordinateSequence copy();
+  @Override
+public abstract PackedCoordinateSequence copy();
 
   /**
    * Sets the ordinate of a coordinate in this sequence.
@@ -235,7 +247,8 @@ public abstract class PackedCoordinateSequence
    * @param value
    *          the new ordinate value
    */
-  public abstract void setOrdinate(int index, int ordinate, double value);
+  @Override
+public abstract void setOrdinate(int index, int ordinate, double value);
 
   /**
    * Packed coordinate sequence implementation based on doubles
@@ -334,7 +347,8 @@ public abstract class PackedCoordinateSequence
     /**
      * @see PackedCoordinateSequence#getCoordinate(int)
      */
-    public Coordinate getCoordinateInternal(int i) {
+    @Override
+	public Coordinate getCoordinateInternal(int i) {
       double x = coords[i * dimension];
       double y = coords[i * dimension + 1];
       if( dimension == 2 && measures == 0 ) {
@@ -369,7 +383,8 @@ public abstract class PackedCoordinateSequence
     /**
      * @see CoordinateSequence#size()
      */
-    public int size() {
+    @Override
+	public int size() {
       return coords.length / dimension;
     }
 
@@ -378,14 +393,17 @@ public abstract class PackedCoordinateSequence
      * @see PackedCoordinateSequence#clone()
      * @deprecated
      */
-    public Object clone() {
+    @Deprecated
+	@Override
+	public Object clone() {
       return copy();
     }
 
     /**
      * @see PackedCoordinateSequence#size()
      */
-    public Double copy() {
+    @Override
+	public Double copy() {
       double[] clone = Arrays.copyOf(coords, coords.length);
       return new Double(clone, dimension, measures);
     }
@@ -396,14 +414,16 @@ public abstract class PackedCoordinateSequence
      *      it's over dimensions you may not get an exception but a meaningless
      *      value.
      */
-    public double getOrdinate(int index, int ordinate) {
+    @Override
+	public double getOrdinate(int index, int ordinate) {
       return coords[index * dimension + ordinate];
     }
 
     /**
      * @see PackedCoordinateSequence#setOrdinate(int, int, double)
      */
-    public void setOrdinate(int index, int ordinate, double value) {
+    @Override
+	public void setOrdinate(int index, int ordinate, double value) {
       coordRef = null;
       coords[index * dimension + ordinate] = value;
     }
@@ -411,7 +431,8 @@ public abstract class PackedCoordinateSequence
     /**
      * @see CoordinateSequence#expandEnvelope(Envelope)
      */
-    public Envelope expandEnvelope(Envelope env)
+    @Override
+	public Envelope expandEnvelope(Envelope env)
     {
       for (int i = 0; i < coords.length; i += dimension ) {
         // added to make static code analysis happy
@@ -514,7 +535,8 @@ public abstract class PackedCoordinateSequence
     /**
      * @see PackedCoordinateSequence#getCoordinate(int)
      */
-    public Coordinate getCoordinateInternal(int i) {
+    @Override
+	public Coordinate getCoordinateInternal(int i) {
       double x = coords[i * dimension];
       double y = coords[i * dimension + 1];
       if( dimension == 2 && measures == 0 ) {
@@ -549,7 +571,8 @@ public abstract class PackedCoordinateSequence
     /**
      * @see CoordinateSequence#size()
      */
-    public int size() {
+    @Override
+	public int size() {
       return coords.length / dimension;
     }
 
@@ -558,14 +581,17 @@ public abstract class PackedCoordinateSequence
      * @see PackedCoordinateSequence#clone()
      * @deprecated
      */
-    public Object clone() {
+    @Deprecated
+	@Override
+	public Object clone() {
       return copy();
     }
 
     /**
      * @see PackedCoordinateSequence#copy()
      */
-    public Float copy() {
+    @Override
+	public Float copy() {
       float[] clone = Arrays.copyOf(coords, coords.length);
       return new Float(clone, dimension,measures);
     }
@@ -576,14 +602,16 @@ public abstract class PackedCoordinateSequence
      *      If it is larger than the dimension a meaningless
      *      value may be returned.
      */
-    public double getOrdinate(int index, int ordinate) {
+    @Override
+	public double getOrdinate(int index, int ordinate) {
       return coords[index * dimension + ordinate];
     }
 
     /**
      * @see PackedCoordinateSequence#setOrdinate(int, int, double)
      */
-    public void setOrdinate(int index, int ordinate, double value) {
+    @Override
+	public void setOrdinate(int index, int ordinate, double value) {
       coordRef = null;
       coords[index * dimension + ordinate] = (float) value;
     }
@@ -591,7 +619,8 @@ public abstract class PackedCoordinateSequence
     /**
      * @see CoordinateSequence#expandEnvelope(Envelope)
      */
-    public Envelope expandEnvelope(Envelope env)
+    @Override
+	public Envelope expandEnvelope(Envelope env)
     {
       for (int i = 0; i < coords.length; i += dimension ) {
         // added to make static code analysis happy

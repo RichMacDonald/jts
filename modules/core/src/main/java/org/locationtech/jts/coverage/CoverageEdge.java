@@ -148,7 +148,8 @@ class CoverageEdge {
     return pts[0];
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     return WKTWriter.toLineString(pts);
   }
 

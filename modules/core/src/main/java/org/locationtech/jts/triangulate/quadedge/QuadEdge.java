@@ -406,7 +406,8 @@ public class QuadEdge
      * 
      * @return a String representing this edge's geometry
      */
-    public String toString() {
+    @Override
+	public String toString() {
         Coordinate p0 = vertex.getCoordinate();
         Coordinate p1 = dest().getCoordinate();
         return WKTWriter.toLineString(p0, p1);

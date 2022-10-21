@@ -32,7 +32,8 @@ public class Envelope
 {
     private static final long serialVersionUID = 5873921885273102420L;
 
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         //Algorithm from Effective Java by Joshua Bloch [Jon Aquino]
         int result = 17;
         result = 37 * result + Coordinate.hashCode(minx);
@@ -601,7 +602,8 @@ public class Envelope
    * changed to be a true overlap check; that is, whether the intersection is
    * two-dimensional.
    */
-  public boolean overlaps(Envelope other) {
+  @Deprecated
+public boolean overlaps(Envelope other) {
     return intersects(other);
   }
 
@@ -618,7 +620,8 @@ public class Envelope
   /**
    * @deprecated Use #intersects instead.
    */
-  public boolean overlaps(Coordinate p) {
+  @Deprecated
+public boolean overlaps(Coordinate p) {
     return intersects(p);
   }
   /**
@@ -636,7 +639,8 @@ public class Envelope
   /**
    * @deprecated Use #intersects instead.
    */
-  public boolean overlaps(double x, double y) {
+  @Deprecated
+public boolean overlaps(double x, double y) {
     return intersects(x, y);
   }
 
@@ -778,7 +782,8 @@ public class Envelope
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  public boolean equals(Object other) {
+  @Override
+public boolean equals(Object other) {
     if (!(other instanceof Envelope)) {
       return false;
     }
@@ -792,7 +797,8 @@ public class Envelope
         miny == otherEnvelope.getMinY();
   }
 
-  public String toString()
+  @Override
+public String toString()
   {
     return "Env[" + minx + " : " + maxx + ", " + miny + " : " + maxy + "]";
   }
@@ -805,7 +811,8 @@ public class Envelope
    * 
    * @param o an Envelope object
    */
-  public int compareTo(Object o) {
+  @Override
+public int compareTo(Object o) {
     Envelope env = (Envelope) o;
     // compare nulls if present
     if (isNull()) {

@@ -100,43 +100,53 @@ public class PolygonShape implements Shape
       return path;
   }
 
-    public Rectangle getBounds() {
+    @Override
+	public Rectangle getBounds() {
       return polygonPath.getBounds();
     }
 
-    public Rectangle2D getBounds2D() {
+    @Override
+	public Rectangle2D getBounds2D() {
         return polygonPath.getBounds2D();
     }
 
-    public boolean contains(double x, double y) {
+    @Override
+	public boolean contains(double x, double y) {
       return polygonPath.contains(x, y);
     }
 
-    public boolean contains(Point2D p) {
+    @Override
+	public boolean contains(Point2D p) {
       return polygonPath.contains(p);
     }
 
-    public boolean intersects(double x, double y, double w, double h) {
+    @Override
+	public boolean intersects(double x, double y, double w, double h) {
       return polygonPath.intersects(x, y, w, h);
     }
 
-    public boolean intersects(Rectangle2D r) {
+    @Override
+	public boolean intersects(Rectangle2D r) {
       return polygonPath.intersects(r);
     }
 
-    public boolean contains(double x, double y, double w, double h) {
+    @Override
+	public boolean contains(double x, double y, double w, double h) {
       return polygonPath.contains(x, y, w, h);
     }
 
-    public boolean contains(Rectangle2D r) {
+    @Override
+	public boolean contains(Rectangle2D r) {
       return polygonPath.contains(r);
     }
 
-    public PathIterator getPathIterator(AffineTransform at) {
+    @Override
+	public PathIterator getPathIterator(AffineTransform at) {
         return polygonPath.getPathIterator(at);
     }
 
-    public PathIterator getPathIterator(AffineTransform at, double flatness) {
+    @Override
+	public PathIterator getPathIterator(AffineTransform at, double flatness) {
     	return polygonPath.getPathIterator(at, flatness);
     }
 }

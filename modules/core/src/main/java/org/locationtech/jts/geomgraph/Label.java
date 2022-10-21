@@ -202,7 +202,8 @@ s   */
     if (elt[geomIndex].isArea())
       elt[geomIndex] = new TopologyLocation(elt[geomIndex].location[0]);
   }
-  public String toString()
+  @Override
+public String toString()
   {
     StringBuilder buf = new StringBuilder();
     if (elt[0] != null) {

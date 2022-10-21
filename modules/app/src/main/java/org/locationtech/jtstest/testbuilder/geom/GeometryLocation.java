@@ -115,7 +115,8 @@ public class GeometryLocation
     Coordinate p1 = component.getCoordinates()[index + 1];
     return pt.distance(p1);
   }
-  public String toString()
+  @Override
+public String toString()
   {
     return pt.toString();
   }

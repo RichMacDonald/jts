@@ -237,7 +237,8 @@ class MaximalEdgeRing {
     return null;
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     Coordinate[] pts = getCoordinates();
     return WKTWriter.toLineString(pts);
   }

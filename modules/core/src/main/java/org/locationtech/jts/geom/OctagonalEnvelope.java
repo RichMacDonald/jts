@@ -349,7 +349,8 @@ public class OctagonalEnvelope
       this.oe = oe;
     }
     
-     public void filter(Geometry geom)
+     @Override
+	public void filter(Geometry geom)
      {
        if (geom instanceof LineString) {
          oe.expandToInclude( ((LineString) geom).getCoordinateSequence());

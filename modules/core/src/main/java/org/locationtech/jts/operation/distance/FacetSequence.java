@@ -229,7 +229,8 @@ public class FacetSequence
     locs[1] = new  GeometryLocation(facetSeq.geom, i, new Coordinate(segClosestPoint));
   }
 
-  public String toString()
+  @Override
+public String toString()
   {
     StringBuilder buf = new StringBuilder();
     buf.append("LINESTRING ( ");

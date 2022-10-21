@@ -407,7 +407,8 @@ public class GeometryFactory
    * @return a MultiPoint object
    * @deprecated Use {@link GeometryFactory#createMultiPointFromCoords} instead
    */
-  public MultiPoint createMultiPoint(Coordinate[] coordinates) {
+  @Deprecated
+public MultiPoint createMultiPoint(Coordinate[] coordinates) {
       return createMultiPoint(coordinates != null
                               ? getCoordinateSequenceFactory().create(coordinates)
                               : null);
@@ -666,7 +667,8 @@ public class GeometryFactory
     public CoordSeqCloneOp(CoordinateSequenceFactory coordinateSequenceFactory) {
       this.coordinateSequenceFactory = coordinateSequenceFactory;
     }
-    public CoordinateSequence edit(CoordinateSequence coordSeq, Geometry geometry) {
+    @Override
+	public CoordinateSequence edit(CoordinateSequence coordSeq, Geometry geometry) {
       return coordinateSequenceFactory.create(coordSeq);
     }
   }

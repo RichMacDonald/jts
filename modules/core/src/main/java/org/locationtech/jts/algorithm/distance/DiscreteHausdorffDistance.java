@@ -148,7 +148,8 @@ public class DiscreteHausdorffDistance
       this.geom = geom;
     }
 
-    public void filter(Coordinate pt)
+    @Override
+	public void filter(Coordinate pt)
     {
       minPtDist.initialize();
       DistanceToPoint.computeDistance(geom, pt, minPtDist);
@@ -171,7 +172,8 @@ public class DiscreteHausdorffDistance
     numSubSegs = (int) Math.rint(1.0/fraction);
   }
 
-  public void filter(CoordinateSequence seq, int index) 
+  @Override
+public void filter(CoordinateSequence seq, int index) 
   {
     /**
      * This logic also handles skipping Point geometries
@@ -197,9 +199,11 @@ public class DiscreteHausdorffDistance
     
   }
 
-  public boolean isGeometryChanged() { return false; }
+  @Override
+public boolean isGeometryChanged() { return false; }
   
-  public boolean isDone() { return false; }
+  @Override
+public boolean isDone() { return false; }
   
   public PointPairDistance getMaxPointDistance() {
     return maxPtDist;

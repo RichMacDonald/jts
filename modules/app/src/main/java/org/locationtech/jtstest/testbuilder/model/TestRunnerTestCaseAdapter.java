@@ -42,7 +42,8 @@ public class TestRunnerTestCaseAdapter
     this.testCase = testCase;
   }
 
-  public void setGeometry(int index, Geometry g) {
+  @Override
+public void setGeometry(int index, Geometry g) {
     if (index == 0) {
       testCase.setGeometryA(g);
     }
@@ -54,9 +55,11 @@ public class TestRunnerTestCaseAdapter
     }
   }
 
-  public void setIntersectionMatrix(IntersectionMatrix im) { }
+  @Override
+public void setIntersectionMatrix(IntersectionMatrix im) { }
 
-  public void setName(String name) {
+  @Override
+public void setName(String name) {
     testCase.setDescription(name);
   }
 
@@ -119,11 +122,13 @@ public class TestRunnerTestCaseAdapter
     return "";
   }
 
-  public String getName() {
+  @Override
+public String getName() {
     return testCase.getDescription();
   }
 
-  public Geometry getGeometry(int index) {
+  @Override
+public Geometry getGeometry(int index) {
     if (index == 0) {
       return testCase.getGeometryA();
     }
@@ -134,11 +139,13 @@ public class TestRunnerTestCaseAdapter
     return null;
   }
 
-  public IntersectionMatrix getIntersectionMatrix() {
+  @Override
+public IntersectionMatrix getIntersectionMatrix() {
     return testCase.getGeometryA().relate(testCase.getGeometryB());
   }
 
-  public String getDescription() {
+  @Override
+public String getDescription() {
     return testCase.getDescription();
   }
 
@@ -155,7 +162,8 @@ public class TestRunnerTestCaseAdapter
     return true;
   }
 
-  public String getWellKnownText(int index) {
+  @Override
+public String getWellKnownText(int index) {
     if (index == 0) {
       if (testCase.getGeometryA() == null) {
         return null;
@@ -213,7 +221,8 @@ public class TestRunnerTestCaseAdapter
     testCase.run();
   }
 
-  public void initGeometry() throws ParseException { }
+  @Override
+public void initGeometry() throws ParseException { }
 
   public Geometry toGeometry(Test test) {
     if (test == null) {

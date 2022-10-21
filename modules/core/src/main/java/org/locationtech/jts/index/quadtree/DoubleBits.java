@@ -135,7 +135,8 @@ public class DoubleBits {
   /**
    * A representation of the Double bits formatted for easy readability
    */
-  public String toString()
+  @Override
+public String toString()
   {
     String numStr = Long.toBinaryString(xBits);
     // 64 zeroes!

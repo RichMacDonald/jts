@@ -83,6 +83,7 @@ import org.locationtech.jts.geom.util.GeometryCombiner;
  * @deprecated due to impairing performance
  *
  */
+@Deprecated
 public class OverlapUnion 
 {
   /**
@@ -275,7 +276,8 @@ public class OverlapUnion
   private static void extractBorderSegments(Geometry geom, Envelope env, List<LineSegment> segs) {
     geom.apply(new CoordinateSequenceFilter() {
 
-      public void filter(CoordinateSequence seq, int i) {
+      @Override
+	public void filter(CoordinateSequence seq, int i) {
         if (i <= 0) return;
         
         // extract LineSegment
@@ -288,9 +290,11 @@ public class OverlapUnion
         }
       }
 
-      public boolean isDone() {   return false;   }
+      @Override
+	public boolean isDone() {   return false;   }
 
-      public boolean isGeometryChanged() {   return false;   }
+      @Override
+	public boolean isGeometryChanged() {   return false;   }
       
     });
   }

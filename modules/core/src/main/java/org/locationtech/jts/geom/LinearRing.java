@@ -54,7 +54,8 @@ public class LinearRing extends LineString
    *
    * @deprecated Use GeometryFactory instead
    */
-  public LinearRing(Coordinate points[], PrecisionModel precisionModel,
+  @Deprecated
+public LinearRing(Coordinate points[], PrecisionModel precisionModel,
                     int SRID) {
     this(points, new GeometryFactory(precisionModel, SRID));
     validateConstruction();
@@ -102,7 +103,8 @@ public class LinearRing extends LineString
    *
    * @return Dimension.FALSE
    */
-  public int getBoundaryDimension() {
+  @Override
+public int getBoundaryDimension() {
     return Dimension.FALSE;
   }
 
@@ -112,7 +114,8 @@ public class LinearRing extends LineString
    *
    * @return true if this ring is closed
    */
-  public boolean isClosed() {
+  @Override
+public boolean isClosed() {
     if (isEmpty()) {
     	// empty LinearRings are closed by definition
       return true;
@@ -121,24 +124,29 @@ public class LinearRing extends LineString
   }
 
 
-  public String getGeometryType() {
+  @Override
+public String getGeometryType() {
     return Geometry.TYPENAME_LINEARRING;
   }
   
-  protected int getTypeCode() {
+  @Override
+protected int getTypeCode() {
     return Geometry.TYPECODE_LINEARRING;
   }
 
-  protected LinearRing copyInternal() {
+  @Override
+protected LinearRing copyInternal() {
     return new LinearRing(points.copy(), factory);
   }
 
-  public LinearRing reverse()
+  @Override
+public LinearRing reverse()
   {
     return (LinearRing) super.reverse();
   }
 
-  public LinearRing reverseInternal() {
+  @Override
+public LinearRing reverseInternal() {
     CoordinateSequence seq = points.copy();
     CoordinateSequences.reverse(seq);
     return getFactory().createLinearRing(seq);

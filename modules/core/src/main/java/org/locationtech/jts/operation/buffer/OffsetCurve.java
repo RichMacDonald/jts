@@ -352,7 +352,8 @@ public class OffsetCurve {
       this.isInCurve = isInCurve;
     }
     
-    public void select(MonotoneChain mc, int segIndex)
+    @Override
+	public void select(MonotoneChain mc, int segIndex)
     {
       /**
        * A curveRingPt segment may match all or only a portion of a single raw segment.

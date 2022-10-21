@@ -129,7 +129,8 @@ public class TopologyPreservingSimplifier
       this.linestringMap = linestringMap;
     }
     
-    protected CoordinateSequence transformCoordinates(CoordinateSequence coords, Geometry parent)
+    @Override
+	protected CoordinateSequence transformCoordinates(CoordinateSequence coords, Geometry parent)
     {
       if (coords.size() == 0) return null;
     	// for linear components (including rings), simplify the linestring
@@ -167,7 +168,8 @@ public class TopologyPreservingSimplifier
      * 
      * geom a geometry of any type 
      */
-    public void filter(Geometry geom)
+    @Override
+	public void filter(Geometry geom)
     {
       if (geom instanceof LineString) {
         LineString line = (LineString) geom;

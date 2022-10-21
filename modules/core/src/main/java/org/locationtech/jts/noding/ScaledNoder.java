@@ -55,14 +55,16 @@ public class ScaledNoder
 
   public boolean isIntegerPrecision() { return scaleFactor == 1.0; }
 
-  public Collection getNodedSubstrings()
+  @Override
+public Collection getNodedSubstrings()
   {
     Collection splitSS = noder.getNodedSubstrings();
     if (isScaled) rescale(splitSS);
     return splitSS;
   }
 
-  public void computeNodes(Collection inputSegStrings)
+  @Override
+public void computeNodes(Collection inputSegStrings)
   {
     Collection intSegStrings = inputSegStrings;
     if (isScaled)

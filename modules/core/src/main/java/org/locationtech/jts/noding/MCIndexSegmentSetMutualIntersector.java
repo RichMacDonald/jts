@@ -95,7 +95,8 @@ public class MCIndexSegmentSetMutualIntersector implements SegmentSetMutualInter
    * @param segStrings set of segments to intersect
    * @param segInt segment intersector to use
    */
-  public void process(Collection segStrings, SegmentIntersector segInt)
+  @Override
+public void process(Collection segStrings, SegmentIntersector segInt)
   {
   	List monoChains = new ArrayList();
     for (Object segString : segStrings) {
@@ -143,7 +144,8 @@ public class MCIndexSegmentSetMutualIntersector implements SegmentSetMutualInter
       this.si = si;
     }
 
-    public void overlap(MonotoneChain mc1, int start1, MonotoneChain mc2, int start2)
+    @Override
+	public void overlap(MonotoneChain mc1, int start1, MonotoneChain mc2, int start2)
     {
       SegmentString ss1 = (SegmentString) mc1.getContext();
       SegmentString ss2 = (SegmentString) mc2.getContext();

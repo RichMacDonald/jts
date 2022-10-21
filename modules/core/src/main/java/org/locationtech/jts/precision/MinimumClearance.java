@@ -236,7 +236,8 @@ public class MinimumClearance
       return minPts;
     }
     
-    public double distance(ItemBoundable b1, ItemBoundable b2) {
+    @Override
+	public double distance(ItemBoundable b1, ItemBoundable b2) {
       FacetSequence fs1 = (FacetSequence) b1.getItem();
       FacetSequence fs2 = (FacetSequence) b2.getItem();
       minDist = Double.MAX_VALUE;

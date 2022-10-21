@@ -104,7 +104,8 @@ public class DistanceOp
    * @return the closest points in the geometries
    * @deprecated renamed to nearestPoints
    */
-  public static Coordinate[] closestPoints(Geometry g0, Geometry g1)
+  @Deprecated
+public static Coordinate[] closestPoints(Geometry g0, Geometry g1)
   {
     DistanceOp distOp = new DistanceOp(g0, g1);
     return distOp.nearestPoints();
@@ -183,7 +184,8 @@ public class DistanceOp
    * @return a pair of {@link Coordinate}s of the nearest points
    * @deprecated renamed to nearestPoints
    */
-  public Coordinate[] closestPoints()
+  @Deprecated
+public Coordinate[] closestPoints()
   {
     return nearestPoints();
   }
@@ -205,7 +207,8 @@ public class DistanceOp
    * @return a pair of {@link GeometryLocation}s for the nearest points
    * @deprecated renamed to nearestLocations
    */
-  public GeometryLocation[] closestLocations()
+  @Deprecated
+public GeometryLocation[] closestLocations()
   {
     return nearestLocations();
   }

@@ -87,7 +87,8 @@ public class JTSVersion {
    *
    * @return the full version number, suitable for display.
    */
-  public String toString()
+  @Override
+public String toString()
   {
     String ver = MAJOR + "." + MINOR + "." + PATCH;
     if (RELEASE_INFO != null && RELEASE_INFO.length() > 0)

@@ -71,7 +71,8 @@ public class DirectedEdge
     }
     computeDirectedLabel();
   }
-  public Edge getEdge() { return edge; }
+  @Override
+public Edge getEdge() { return edge; }
   public void setInResult(boolean isInResult) { this.isInResult = isInResult; }
   public boolean isInResult() { return isInResult; }
   public boolean isVisited() { return isVisited; }
@@ -215,7 +216,8 @@ public class DirectedEdge
     setDepth(oppositePos, oppositeDepth);
   }
 
-  public void print(PrintStream out)
+  @Override
+public void print(PrintStream out)
   {
     super.print(out);
     out.print(" " + depth[Position.LEFT] + "/" + depth[Position.RIGHT]);

@@ -115,7 +115,8 @@ public class GeometryEditPanel extends JPanel
   void initUI() throws Exception {
     this.addComponentListener(new java.awt.event.ComponentAdapter() {
 
-      public void componentResized(ComponentEvent e) {
+      @Override
+	public void componentResized(ComponentEvent e) {
         this_componentResized(e);
       }
     });
@@ -132,12 +133,14 @@ public class GeometryEditPanel extends JPanel
 
   class PopupClickListener extends MouseAdapter
   {
-    public void mousePressed(MouseEvent e)
+    @Override
+	public void mousePressed(MouseEvent e)
     {
       if (e.isPopupTrigger())
         doPopUp(e);
     }
-    public void mouseReleased(MouseEvent e)
+    @Override
+	public void mouseReleased(MouseEvent e)
     {
       if (e.isPopupTrigger())
         doPopUp(e);
@@ -236,7 +239,8 @@ public class GeometryEditPanel extends JPanel
     getGeomModel().geomChanged();
   }
   
-  public String getToolTipText(MouseEvent event) {
+  @Override
+public String getToolTipText(MouseEvent event) {
 //    if (event.getPoint().x < 100) return null;
     Coordinate pt = viewport.toModelCoordinate(event.getPoint());
     double toleranceInModel = AppConstants.TOLERANCE_PIXELS / getViewport().getScale();
@@ -260,7 +264,8 @@ public class GeometryEditPanel extends JPanel
     return writer.writeLocationString(getLayerList(), pt, toleranceInModel);
   }
 
-  public void paintComponent(Graphics g) {
+  @Override
+public void paintComponent(Graphics g) {
     super.paintComponent(g);
     renderMgr.render();
     renderMgr.copyImage(g);
@@ -585,7 +590,8 @@ public class GeometryEditPanel extends JPanel
       }  		
   	}
   	
-    public void render(Graphics2D g2)
+    @Override
+	public void render(Graphics2D g2)
     {
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
           RenderingHints.VALUE_ANTIALIAS_ON);
@@ -784,7 +790,8 @@ public class GeometryEditPanel extends JPanel
   
     }
     
-  	public synchronized void cancel()
+  	@Override
+	public synchronized void cancel()
   	{
   		if (currentRenderer != null)
   			currentRenderer.cancel();

@@ -27,22 +27,27 @@ public class ShapeCollectionPathIterator implements PathIterator {
     
     // initialize with a no-op iterator
     private PathIterator currentPathIterator = new PathIterator() {
-            public int getWindingRule() {
+            @Override
+			public int getWindingRule() {
                 throw new UnsupportedOperationException();
             }
 
-            public boolean isDone() {
+            @Override
+			public boolean isDone() {
                 return true;
             }
 
-            public void next() {
+            @Override
+			public void next() {
             }
 
-            public int currentSegment(float[] coords) {
+            @Override
+			public int currentSegment(float[] coords) {
                 throw new UnsupportedOperationException();
             }
 
-            public int currentSegment(double[] coords) {
+            @Override
+			public int currentSegment(double[] coords) {
                 throw new UnsupportedOperationException();
             }
         };
@@ -63,7 +68,8 @@ public class ShapeCollectionPathIterator implements PathIterator {
         next();
     }
 
-    public int getWindingRule() {
+    @Override
+	public int getWindingRule() {
     	/**
        * WIND_NON_ZERO is more accurate than WIND_EVEN_ODD, and can be comparable
        * in speed. (See http://www.geometryalgorithms.com/Archive/algorithm_0103/algorithm_0103.htm#Winding%20Number)
@@ -74,11 +80,13 @@ public class ShapeCollectionPathIterator implements PathIterator {
       return PathIterator.WIND_EVEN_ODD;
     }
 
-    public boolean isDone() {
+    @Override
+	public boolean isDone() {
         return done;
     }
 
-    public void next() {
+    @Override
+	public void next() {
         currentPathIterator.next();
 
         if (currentPathIterator.isDone() && !shapeIterator.hasNext()) {
@@ -90,11 +98,13 @@ public class ShapeCollectionPathIterator implements PathIterator {
         }
     }
 
-    public int currentSegment(float[] coords) {
+    @Override
+	public int currentSegment(float[] coords) {
         return currentPathIterator.currentSegment(coords);
     }
 
-    public int currentSegment(double[] coords) {
+    @Override
+	public int currentSegment(double[] coords) {
         return currentPathIterator.currentSegment(coords);
     }
 }

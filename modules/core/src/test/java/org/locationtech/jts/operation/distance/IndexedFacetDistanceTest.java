@@ -15,11 +15,13 @@ public class IndexedFacetDistanceTest extends BaseDistanceTest {
     super(name);
   }
 
-  protected Coordinate[] nearestPoints(Geometry g1, Geometry g2) {
+  @Override
+protected Coordinate[] nearestPoints(Geometry g1, Geometry g2) {
     return IndexedFacetDistance.nearestPoints(g1, g2);
   }
 
-  public void testClosestPoints7() {
+  @Override
+public void testClosestPoints7() {
     // skip this test for now, since it relies on checking point-in-polygon
   }
 

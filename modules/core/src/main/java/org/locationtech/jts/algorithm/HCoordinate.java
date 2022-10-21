@@ -36,7 +36,8 @@ public class HCoordinate
    * 
    * @deprecated use {@link Intersection#intersection(Coordinate, Coordinate, Coordinate, Coordinate)}
    */
-  public static Coordinate intersection(
+  @Deprecated
+public static Coordinate intersection(
       Coordinate p1, Coordinate p2,
       Coordinate q1, Coordinate q2)
       throws NotRepresentableException

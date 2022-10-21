@@ -137,7 +137,8 @@ public class GeometryStretcherView
 	    this.index = index;
 	  }
 
-	  public Geometry getGeometry()
+	  @Override
+	public Geometry getGeometry()
 	  {
 	    return getStretchedGeometry(index);
 	  }

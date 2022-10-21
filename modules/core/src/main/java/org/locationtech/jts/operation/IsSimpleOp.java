@@ -80,6 +80,7 @@ import org.locationtech.jts.geomgraph.index.SegmentIntersector;
  * 
  * @deprecated Replaced by org.locationtech.jts.operation.valid.IsSimpleOp
  */
+@Deprecated
 public class IsSimpleOp
 {
   private Geometry inputGeom;
@@ -91,7 +92,8 @@ public class IsSimpleOp
    *
    * @deprecated use IsSimpleOp(Geometry)
    */
-  public IsSimpleOp() {
+  @Deprecated
+public IsSimpleOp() {
   }
 
   /**
@@ -160,7 +162,8 @@ public class IsSimpleOp
    * @return true if the geometry is simple
    * @deprecated use isSimple()
    */
-  public boolean isSimple(LineString geom)
+  @Deprecated
+public boolean isSimple(LineString geom)
   {
     return isSimpleLinearGeometry(geom);
   }
@@ -172,7 +175,8 @@ public class IsSimpleOp
    * @return true if the geometry is simple
    * @deprecated use isSimple()
    */
-  public boolean isSimple(MultiLineString geom)
+  @Deprecated
+public boolean isSimple(MultiLineString geom)
   {
     return isSimpleLinearGeometry(geom);
   }
@@ -181,7 +185,8 @@ public class IsSimpleOp
    * A MultiPoint is simple if it has no repeated points
    * @deprecated use isSimple()
    */
-  public boolean isSimple(MultiPoint mp)
+  @Deprecated
+public boolean isSimple(MultiPoint mp)
   {
     return isSimpleMultiPoint(mp);
   }

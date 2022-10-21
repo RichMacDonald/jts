@@ -61,7 +61,8 @@ public class LineString
    * @throws IllegalArgumentException if too few points are provided
    */
   /** @deprecated Use GeometryFactory instead */
-  public LineString(Coordinate points[], PrecisionModel precisionModel, int SRID)
+  @Deprecated
+public LineString(Coordinate points[], PrecisionModel precisionModel, int SRID)
   {
     super(new GeometryFactory(precisionModel, SRID));
     init(getFactory().getCoordinateSequenceFactory().create(points));
@@ -91,7 +92,8 @@ public class LineString
     this.points = points;
   }
   
-  public Coordinate[] getCoordinates() {
+  @Override
+public Coordinate[] getCoordinates() {
     return points.toCoordinateArray();
   }
 
@@ -103,28 +105,33 @@ public class LineString
       return points.getCoordinate(n);
   }
 
-  public Coordinate getCoordinate()
+  @Override
+public Coordinate getCoordinate()
   {
     if (isEmpty()) return null;
     return points.getCoordinate(0);
   }
 
-  public int getDimension() {
+  @Override
+public int getDimension() {
     return 1;
   }
 
-  public int getBoundaryDimension() {
+  @Override
+public int getBoundaryDimension() {
     if (isClosed()) {
       return Dimension.FALSE;
     }
     return 0;
   }
 
-  public boolean isEmpty() {
+  @Override
+public boolean isEmpty() {
       return points.size() == 0;
   }
 
-  public int getNumPoints() {
+  @Override
+public int getNumPoints() {
       return points.size();
   }
 
@@ -157,7 +164,8 @@ public class LineString
     return isClosed() && isSimple();
   }
 
-  public String getGeometryType() {
+  @Override
+public String getGeometryType() {
     return Geometry.TYPENAME_LINESTRING;
   }
 
@@ -166,7 +174,8 @@ public class LineString
    *
    *@return the length of the linestring
    */
-  public double getLength()
+  @Override
+public double getLength()
   {
    return Length.ofLine(points);
   }
@@ -178,7 +187,8 @@ public class LineString
    * @return the boundary geometry
    * @see Geometry#getBoundary
    */
-  public Geometry getBoundary() {
+  @Override
+public Geometry getBoundary() {
     return (new BoundaryOp(this)).getBoundary();
   }
 
@@ -188,11 +198,13 @@ public class LineString
    *
    * @return a {@link LineString} with coordinates in the reverse order
    */
-  public LineString reverse() {
+  @Override
+public LineString reverse() {
     return (LineString) super.reverse();
   }
 
-  protected LineString reverseInternal()
+  @Override
+protected LineString reverseInternal()
   {
     CoordinateSequence seq = points.copy();
     CoordinateSequences.reverse(seq);
@@ -215,14 +227,16 @@ public class LineString
     return false;
   }
 
-  protected Envelope computeEnvelopeInternal() {
+  @Override
+protected Envelope computeEnvelopeInternal() {
     if (isEmpty()) {
       return new Envelope();
     }
     return points.expandEnvelope(new Envelope());
   }
 
-  public boolean equalsExact(Geometry other, double tolerance) {
+  @Override
+public boolean equalsExact(Geometry other, double tolerance) {
     if (!isEquivalentClass(other)) {
       return false;
     }
@@ -238,13 +252,15 @@ public class LineString
     return true;
   }
 
-  public void apply(CoordinateFilter filter) {
+  @Override
+public void apply(CoordinateFilter filter) {
       for (int i = 0; i < points.size(); i++) {
         filter.filter(points.getCoordinate(i));
       }
   }
 
-  public void apply(CoordinateSequenceFilter filter)
+  @Override
+public void apply(CoordinateSequenceFilter filter)
   {
     if (points.size() == 0)
       return;
@@ -257,11 +273,13 @@ public class LineString
       geometryChanged();
   }
 
-  public void apply(GeometryFilter filter) {
+  @Override
+public void apply(GeometryFilter filter) {
     filter.filter(this);
   }
 
-  public void apply(GeometryComponentFilter filter) {
+  @Override
+public void apply(GeometryComponentFilter filter) {
     filter.filter(this);
   }
 
@@ -272,11 +290,14 @@ public class LineString
    * @return a clone of this instance
    * @deprecated
    */
-  public Object clone() {
+  @Deprecated
+@Override
+public Object clone() {
     return copy();
   }
 
-  protected LineString copyInternal() {
+  @Override
+protected LineString copyInternal() {
     return new LineString(points.copy(), factory);
   }
 
@@ -285,7 +306,8 @@ public class LineString
    * has the first point which is not equal to it's reflected point
    * less than the reflected point.
    */
-  public void normalize()
+  @Override
+public void normalize()
   {
       for (int i = 0; i < points.size() / 2; i++) {
         int j = points.size() - 1 - i;
@@ -301,11 +323,13 @@ public class LineString
       }
   }
 
-  protected boolean isEquivalentClass(Geometry other) {
+  @Override
+protected boolean isEquivalentClass(Geometry other) {
     return other instanceof LineString;
   }
 
-  protected int compareToSameClass(Object o)
+  @Override
+protected int compareToSameClass(Object o)
   {
     LineString line = (LineString) o;
     // MD - optimized implementation
@@ -328,13 +352,15 @@ public class LineString
     return 0;
   }
 
-  protected int compareToSameClass(Object o, CoordinateSequenceComparator comp)
+  @Override
+protected int compareToSameClass(Object o, CoordinateSequenceComparator comp)
   {
     LineString line = (LineString) o;
     return comp.compare(this.points, line.points);
   }
   
-  protected int getTypeCode() {
+  @Override
+protected int getTypeCode() {
     return Geometry.TYPECODE_LINESTRING;
   }
 

@@ -284,7 +284,8 @@ class Edge {
     return ! isShellMerged;
   }
 
-  public String toString() {
+  @Override
+public String toString() {
     
     String ptsStr = toStringPts(pts);
     

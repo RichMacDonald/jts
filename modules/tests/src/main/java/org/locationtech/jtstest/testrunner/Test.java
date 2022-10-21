@@ -119,7 +119,8 @@ public class Test implements Runnable
     arguments.remove(i);
   }
 
-  public void run() {
+  @Override
+public void run() {
     try {
       exception = null;
       passed = computePassed();

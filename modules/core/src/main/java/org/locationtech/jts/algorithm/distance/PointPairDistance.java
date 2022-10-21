@@ -112,7 +112,8 @@ public class PointPairDistance {
       initialize(p0, p1, dist);
   }
 
-  public String toString()
+  @Override
+public String toString()
   {
   	return WKTWriter.toLineString(pt[0], pt[1]);
   }

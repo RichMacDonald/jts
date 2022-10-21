@@ -59,12 +59,14 @@ public class BufferValidator
     public String getName() {
       return name;
     }
-    public String toString() {
+    @Override
+	public String toString() {
       return getName();
     }
     public abstract void test() throws Exception;
     private int priority;
-    public int compareTo(Object o) {
+    @Override
+	public int compareTo(Object o) {
       return priority - ((Test) o).priority;
     }
   }
@@ -123,7 +125,8 @@ public class BufferValidator
   }
   public BufferValidator setExpectedArea(final double expectedArea) {
     return addTest(new Test("Area Test") {
-      public void test() throws Exception {
+      @Override
+	public void test() throws Exception {
         double tolerance =
           Math.abs(
             getBuffer().getArea()
@@ -143,7 +146,8 @@ public class BufferValidator
 
   public BufferValidator setEmptyBufferExpected(final boolean emptyBufferExpected) {
     return addTest(new Test("Empty Buffer Test", 1) {
-      public void test() throws Exception {
+      @Override
+	public void test() throws Exception {
         Assert.assertTrue(
           supplement(
             "Expected buffer "
@@ -156,7 +160,8 @@ public class BufferValidator
 
   public BufferValidator setBufferHolesExpected(final boolean bufferHolesExpected) {
     return addTest(new Test("Buffer Holes Test") {
-      public void test() throws Exception {
+      @Override
+	public void test() throws Exception {
         Assert.assertTrue(
           supplement(
             "Expected buffer "
@@ -218,7 +223,8 @@ public class BufferValidator
 
   private void addContainsTest() {
     addTest(new Test("Contains Test") {
-      public void test() throws Exception {
+      @Override
+	public void test() throws Exception {
         if (getOriginal().getClass() == GeometryCollection.class) {
           return;
         }
@@ -247,7 +253,8 @@ public class BufferValidator
 
   private void addBufferResultValidatorTest() {
     addTest(new Test("BufferResultValidator Test") {
-      public void test() throws Exception {
+      @Override
+	public void test() throws Exception {
         if (getOriginal().getClass() == GeometryCollection.class) {
           return;
         }

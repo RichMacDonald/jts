@@ -40,7 +40,8 @@ implements ItemDistance
    * @return the distance between the geometries
    * @throws ClassCastException if either item is not a Geometry
    */
-  public double distance(ItemBoundable item1, ItemBoundable item2) {
+  @Override
+public double distance(ItemBoundable item1, ItemBoundable item2) {
     if (item1 == item2) return Double.MAX_VALUE;
     Geometry g1 = (Geometry) item1.getItem();
     Geometry g2 = (Geometry) item2.getItem();

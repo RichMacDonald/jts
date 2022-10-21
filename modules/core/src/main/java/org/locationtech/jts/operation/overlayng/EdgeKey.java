@@ -73,7 +73,8 @@ class EdgeKey implements Comparable<EdgeKey> {
     return 0;
   }
   
-  public boolean equals(Object o) {
+  @Override
+public boolean equals(Object o) {
     if (! (o instanceof EdgeKey)) {
       return false;
     }
@@ -89,7 +90,8 @@ class EdgeKey implements Comparable<EdgeKey> {
    * 
    * @return a hashcode for this object
    */
-  public int hashCode() {
+  @Override
+public int hashCode() {
     //Algorithm from Effective Java by Joshua Bloch
     int result = 17;
     result = 37 * result + hashCode(p0x);
@@ -111,7 +113,8 @@ class EdgeKey implements Comparable<EdgeKey> {
     return (int)(f^(f>>>32));
   }
   
-  public String toString() {
+  @Override
+public String toString() {
     return "EdgeKey(" + format(p0x, p0y) 
       + ", " +  format(p1x, p1y) + ")";
   }

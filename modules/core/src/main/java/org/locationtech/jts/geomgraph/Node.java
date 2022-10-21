@@ -34,7 +34,8 @@ public class Node
     label = new Label(0, Location.NONE);
   }
 
-  public Coordinate getCoordinate() { return coord; }
+  @Override
+public Coordinate getCoordinate() { return coord; }
   public EdgeEndStar getEdges() { return edges; }
 
   /**
@@ -55,14 +56,16 @@ public class Node
     return false;
   }
 
-  public boolean isIsolated()
+  @Override
+public boolean isIsolated()
   {
     return (label.getGeometryCount() == 1);
   }
   /**
    * Basic nodes do not compute IMs
    */
-  protected void computeIM(IntersectionMatrix im) {}
+  @Override
+protected void computeIM(IntersectionMatrix im) {}
   /**
    * Add the edge to the list of edges at this node.
    *

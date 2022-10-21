@@ -217,10 +217,12 @@ public class TestCasePanel extends JPanel {
     editPanel.addMouseMotionListener(
       new java.awt.event.MouseMotionAdapter() {
 
-        public void mouseMoved(MouseEvent e) {
+        @Override
+		public void mouseMoved(MouseEvent e) {
           editPanel_mouseMoved(e);
         }
-        public void mouseDragged(MouseEvent e) {
+        @Override
+		public void mouseDragged(MouseEvent e) {
           editPanel_mouseMoved(e);
         }
       });
@@ -235,7 +237,8 @@ public class TestCasePanel extends JPanel {
     txtDesc.addFocusListener(
       new java.awt.event.FocusAdapter() {
 
-        public void focusLost(FocusEvent e) {
+        @Override
+		public void focusLost(FocusEvent e) {
           txtDesc_focusLost(e);
         }
       });

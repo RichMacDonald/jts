@@ -26,7 +26,8 @@ implements GeometryContainer
     this.index = index;
   }
 
-  public Geometry getGeometry()
+  @Override
+public Geometry getGeometry()
   {
     return geomModel.getGeometry(index);
   }
