@@ -24,7 +24,7 @@ public class GeometryInspectorDialog extends JDialog
 {
 
   InspectorPanel inspectPanel;
-  
+
   public GeometryInspectorDialog(Frame frame, String title, boolean modal)
   {
     super(frame, title, modal);
@@ -47,7 +47,7 @@ public class GeometryInspectorDialog extends JDialog
   {
     this(frame, "Geometry Inspector", false);
   }
-  
+
   void initUI() throws Exception
   {
     inspectPanel = new InspectorPanel(false);

@@ -19,7 +19,7 @@ import org.locationtech.jts.shape.fractal.MortonCurveBuilder;
 import org.locationtech.jts.shape.fractal.SierpinskiCarpetBuilder;
 import org.locationtech.jtstest.geomfunction.Metadata;
 
-public class CreateFractalShapeFunctions 
+public class CreateFractalShapeFunctions
 {
 
 	public static Geometry kochSnowflake(Geometry g, int n)
@@ -48,7 +48,7 @@ public class CreateFractalShapeFunctions
     builder.setNumPoints(n);
     return builder.getGeometry();
   }
-  
+
 	@Metadata(description="Generates a Hilbert Curve at a given level")
   public static Geometry hilbertCurveAtLevel(Geometry g,
       @Metadata(title="Level (1-16)")
@@ -60,7 +60,7 @@ public class CreateFractalShapeFunctions
     builder.setLevel(level);
     return builder.getGeometry();
   }
-	
+
   @Metadata(description="Generates a Morton Curve")
   public static Geometry mortonCurve(Geometry g,
       @Metadata(title="Number of points")
@@ -72,7 +72,7 @@ public class CreateFractalShapeFunctions
     builder.setNumPoints(n);
     return builder.getGeometry();
   }
-  
+
   @Metadata(description="Generates a Morton Curve at a given level")
   public static Geometry mortonCurveAtLevel(Geometry g,
       @Metadata(title="Level (1-16)")

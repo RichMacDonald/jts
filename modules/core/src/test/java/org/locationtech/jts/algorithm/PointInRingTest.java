@@ -41,7 +41,7 @@ protected void runPtInRing(int expectedLoc, Coordinate pt, String wkt)
   	 // isPointInRing is not defined for pts on boundary
   	 if (expectedLoc == Location.BOUNDARY)
   		 return;
-  	 
+
     Geometry geom = reader.read(wkt);
     boolean expected = expectedLoc == Location.INTERIOR;
     assertEquals(expected, PointLocation.isInRing(pt, geom.getCoordinates()));

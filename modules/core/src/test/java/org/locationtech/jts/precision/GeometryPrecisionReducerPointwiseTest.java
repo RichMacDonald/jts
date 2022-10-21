@@ -33,7 +33,7 @@ public class GeometryPrecisionReducerPointwiseTest
   {
     super(name);
   }
-  
+
   public void testLineWithCollapse() throws Exception {
     checkReducePointwise(
         "LINESTRING (0 0,  0.1 0,  1 0)",
@@ -71,7 +71,7 @@ public class GeometryPrecisionReducerPointwiseTest
 	}
 
   //=======================================
-  
+
   private void checkReducePointwise(String wkt, String wktExpected) {
     Geometry g  =        read(wkt);
     Geometry gExpected = read(wktExpected);
@@ -79,7 +79,7 @@ public class GeometryPrecisionReducerPointwiseTest
     Geometry gReduce = GeometryPrecisionReducer.reducePointwise(g, pm);
     assertEqualsExactAndHasSameFactory(gExpected, gReduce);
   }
-  
+
   private void assertEqualsExactAndHasSameFactory(Geometry expected, Geometry actual)
   {
     checkEqual(expected, actual);

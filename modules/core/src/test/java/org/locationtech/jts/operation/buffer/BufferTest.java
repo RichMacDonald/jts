@@ -38,7 +38,7 @@ public class BufferTest extends GeometryTestCase {
   {
     testMultiLineString_separateBuffers_floatingSingle();
   }
-  
+
   /**
    * This tests that the algorithm used to generate fillet curves
    * does not suffer from numeric "slop-over".
@@ -49,7 +49,7 @@ public class BufferTest extends GeometryTestCase {
     checkPointBufferSegmentCount(g, 80, 53);
     checkPointBufferSegmentCount(g, 80, 129);
   }
-  
+
   private void checkPointBufferSegmentCount(Geometry g, double dist, int quadSegs) {
     Geometry buf = g.buffer(dist, quadSegs);
     int segsExpected = 4 * quadSegs + 1;
@@ -101,13 +101,13 @@ public class BufferTest extends GeometryTestCase {
       0.01,
       "MULTILINESTRING (( 635074.5418406526 6184832.4888257105, 635074.5681951842 6184832.571842485, 635074.6472587794 6184832.575795664 ), ( 635074.6657069515 6184832.53889932, 635074.6933792098 6184832.451929366, 635074.5642420045 6184832.474330718 ))",
       false);
-    
+
       bv.setBufferHolesExpected(false);
       bv.setEmptyBufferExpected(true);
       bv.setPrecisionModel(new PrecisionModel(PrecisionModel.FLOATING_SINGLE));
       bv.test();
   }
-  
+
   public void testMultiLineString2_buffersTouchToMakeHole_floatingSingle() throws Exception {
     new BufferValidator(
       0.037,
@@ -504,7 +504,7 @@ public class BufferTest extends GeometryTestCase {
     //System.out.println(union);
     assertEquals("POLYGON ((0 0, 0 100, 50 100, 50 150, 150 150, 150 50, 100 50, 100 0, 0 0))", union.toString());
   }
-  
+
   /**
    * This now works since buffer ring orientation is changed to use signed-area test.
    */
@@ -514,7 +514,7 @@ public class BufferTest extends GeometryTestCase {
     Geometry expected = read("POLYGON ((10 10, 30 30, 50 10, 10 10))");
     checkEqual(expected, result);
   }
-  
+
   /**
    * This now works since buffer ring orientation is changed to use signed-area test.
    */
@@ -524,7 +524,7 @@ public class BufferTest extends GeometryTestCase {
     Geometry expected = read("POLYGON ((0 40, 60 40, 60 0, 0 0, 0 40), (10 10, 50 10, 30 30, 10 10))");
     checkEqual(expected, result);
   }
-  
+
   /**
    * Following tests check "inverted ring" issue.
    * https://github.com/locationtech/jts/issues/472
@@ -573,9 +573,9 @@ public class BufferTest extends GeometryTestCase {
     String wkt = "LINESTRING (-20 0, 0 20, 20 0, 0 -20, -20 0)";
     checkBufferHasHole(wkt, 70, false);
   }
-  
+
   //===================================================
-  
+
   private void checkBufferEmpty(String wkt, double dist, boolean isEmptyExpected) {
     Geometry a = read(wkt);
     Geometry result = a.buffer(dist);

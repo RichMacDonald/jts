@@ -14,21 +14,21 @@ package org.locationtech.jtstest.util;
 
 /**
  * Cleans text strings which are supposed
- * to contain valid text for Geometries 
- * (either WKB, WKB, or GML) 
- * 
+ * to contain valid text for Geometries
+ * (either WKB, WKB, or GML)
+ *
  * @author mbdavis
  *
  */
-public class GeometryTextCleaner 
+public class GeometryTextCleaner
 {
 	public static final String WKT_SYMBOLS = "(),.-";
-	
+
 	public static String cleanWKT(String input)
 	{
 		return clean(input, WKT_SYMBOLS);
 	}
-	
+
 	private static String clean(String input, String allowedSymbols)
 	{
 		StringBuilder buf = new StringBuilder();
@@ -39,11 +39,11 @@ public class GeometryTextCleaner
 		}
 		return buf.toString();
 	}
-	
+
 	private static boolean isAllowed(char c, String allowedSymbols)
 	{
 		if (Character.isWhitespace(c) || Character.isLetterOrDigit(c) || (allowedSymbols.indexOf(c) >= 0)) return true;
-		return false;		
+		return false;
 	}
-	
+
 }

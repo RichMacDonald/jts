@@ -24,15 +24,15 @@ import org.locationtech.jts.operation.overlayng.OverlayNGRobust;
 import org.locationtech.jtstest.geomfunction.Metadata;
 
 /**
- * Functions to test using spatial predicates 
+ * Functions to test using spatial predicates
  * as a filter in front of overlay operations
  * to optimize performance.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class OverlayNGOptFunctions {
-  
+
   private static Geometry fastCoversIntersection(Geometry a, Geometry b) {
     IntersectionMatrix im = a.relate(b);
     if (! im.isIntersects()) return createEmpty(a);
@@ -45,7 +45,7 @@ public class OverlayNGOptFunctions {
   private static Geometry createEmpty(Geometry a) {
     return a.getFactory().createEmpty(a.getDimension());
   }
-  
+
   private static Geometry fastCoversDifference(Geometry a, Geometry b) {
     IntersectionMatrix im = a.relate(b);
     if (! im.isIntersects()) return a.copy();
@@ -53,11 +53,11 @@ public class OverlayNGOptFunctions {
     // null indicates full overlay required
     return null;
   }
-  
+
   /**
    * Use spatial predicates as a filter
    * in front of intersection.
-   * 
+   *
    * @param a a geometry
    * @param b a geometry
    * @return the intersection of the geometries
@@ -67,12 +67,12 @@ public class OverlayNGOptFunctions {
     if (intFast != null) return intFast;
     return a.intersection(b);
   }
-  
+
   /**
    * Use prepared geometry spatial predicates as a filter
    * in front of intersection,
    * with the first operand prepared.
-   * 
+   *
    * @param a a geometry to prepare
    * @param b a geometry
    * @return the intersection of the geometries
@@ -83,21 +83,21 @@ public class OverlayNGOptFunctions {
     if (pg.covers(b)) return b.copy();
     return a.intersection(b);
   }
-  
+
   public static Geometry intersectionOrigPrepNoCache(Geometry a, Geometry b) {
     PreparedGeometry pg = (new PreparedGeometryFactory()).create(a);
     if (! pg.intersects(b)) return null;
     if (pg.covers(b)) return b.copy();
     return a.intersection(b);
   }
-  
-  public static Geometry intersectionSR(Geometry a, Geometry b, 
+
+  public static Geometry intersectionSR(Geometry a, Geometry b,
       @Metadata(title="Grid Scale") double scaleFactor) {
     Geometry intFast = fastCoversIntersection(a, b);
     if (intFast != null) return intFast;
     return OverlayNG.overlay(a, b, INTERSECTION, new PrecisionModel(scaleFactor));
   }
-  
+
   public static Geometry intersectionPrepSR(Geometry a, Geometry b,
       @Metadata(title="Grid Scale") double scaleFactor) {
     PreparedGeometry pg = cacheFetch(a);
@@ -105,23 +105,23 @@ public class OverlayNGOptFunctions {
     if (pg.covers(b)) return b.copy();
     return OverlayNG.overlay(a, b, INTERSECTION, new PrecisionModel(scaleFactor));
   }
-  
+
   public static Geometry difference(Geometry a, Geometry b) {
     Geometry intFast = fastCoversDifference(a, b);
     if (intFast != null) return intFast;
     return OverlayNGRobust.overlay(a, b, DIFFERENCE);
   }
-  
+
   public static Geometry intersection(Geometry a, Geometry b) {
     Geometry intFast = fastCoversIntersection(a, b);
     if (intFast != null) return intFast;
     return OverlayNGRobust.overlay(a, b, INTERSECTION);
   }
-  
+
   /**
    * Using auto slows things down quite a bit (due to need to scan to find
    * scale factor), so not recommended.
-   * 
+   *
    * @param a
    * @param b
    * @return
@@ -132,17 +132,17 @@ public class OverlayNGOptFunctions {
     if (pg.covers(b)) return b.copy();
     return OverlayNGRobust.overlay(a, b, OverlayNG.INTERSECTION);
   }
-  
+
   public static Geometry intersectionPrepNoCache(Geometry a, Geometry b) {
     PreparedGeometry pg = (new PreparedGeometryFactory()).create(a);
     if (! pg.intersects(b)) return null;
     if (pg.covers(b)) return b.copy();
     return OverlayNGRobust.overlay(a, b, OverlayNG.INTERSECTION);
   }
-  
+
   private static Geometry cacheKey = null;
   private static PreparedGeometry cache = null;
-  
+
 
   private static PreparedGeometry cacheFetch(Geometry g) {
     if (g != cacheKey) {
@@ -151,5 +151,5 @@ public class OverlayNGOptFunctions {
     }
     return cache;
   }
-  
+
 }

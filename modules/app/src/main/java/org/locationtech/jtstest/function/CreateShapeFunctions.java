@@ -34,45 +34,45 @@ import org.locationtech.jtstest.geomfunction.Metadata;
 
 public class CreateShapeFunctions {
 
-  
+
 	private static final int DEFAULT_POINTSIZE = 100;
-	
+
         public static Geometry fontGlyphSerif(Geometry g, String text)
         {
                 return fontGlyph(g, text, new Font(FontGlyphReader.FONT_SERIF, Font.PLAIN, DEFAULT_POINTSIZE));
         }
-                
-        public static Geometry fontGlyphSerifPointSize(Geometry g, String text, 
+
+        public static Geometry fontGlyphSerifPointSize(Geometry g, String text,
             @Metadata(title="Point size")
             int pointSize)
         {
                 return fontGlyph(g, text, new Font(FontGlyphReader.FONT_SERIF, Font.PLAIN, pointSize));
         }
-                
+
         public static Geometry fontGlyph(Geometry g, String text,
             @Metadata(title="Font name")
             String fontName)
         {
                 return fontGlyph(g, text, new Font(fontName, Font.PLAIN, DEFAULT_POINTSIZE));
         }
-                
+
 	public static Geometry fontGlyphSansSerif(Geometry g, String text)
 	{
 		return fontGlyph(g, text, new Font(FontGlyphReader.FONT_SANSSERIF, Font.PLAIN, DEFAULT_POINTSIZE));
 	}
-		
+
 	public static Geometry fontGlyphMonospaced(Geometry g, String text)
 	{
 		return fontGlyph(g, text, new Font(FontGlyphReader.FONT_MONOSPACED, Font.PLAIN, DEFAULT_POINTSIZE));
 	}
-		
+
 	private static Geometry fontGlyph(Geometry g, String text, Font font) {
 		Envelope env = FunctionsUtil.getEnvelopeOrDefault(g);
 		GeometryFactory geomFact = FunctionsUtil.getFactoryOrDefault(g);
 
 		Geometry textGeom = FontGlyphReader.read(text, font, geomFact);
 		Envelope envText = textGeom.getEnvelopeInternal();
-		
+
 		if (g != null) {
 			// transform to baseline
 			Coordinate baseText0 = new Coordinate(envText.getMinX(), envText.getMinY());
@@ -84,23 +84,23 @@ public class CreateShapeFunctions {
 		}
 		return textGeom;
 	}
-	
+
   public static Geometry grid(Geometry g, int nCells)
   {
     Envelope env = FunctionsUtil.getEnvelopeOrDefault(g);
     GeometryFactory geomFact = FunctionsUtil.getFactoryOrDefault(g);
-    
+
     int nCellsOnSideY = (int) Math.sqrt(nCells);
     int nCellsOnSideX = nCells / nCellsOnSideY;
-    
+
     // alternate: make square cells, with varying grid width/height
     //double extent = env.minExtent();
     //double nCellsOnSide = Math.max(nCellsOnSideY, nCellsOnSideX);
-    
+
     double cellSizeX = env.getWidth() / nCellsOnSideX;
     double cellSizeY = env.getHeight() / nCellsOnSideY;
-    
-    List geoms = new ArrayList(); 
+
+    List geoms = new ArrayList();
 
     for (int i = 0; i < nCellsOnSideX; i++) {
       for (int j = 0; j < nCellsOnSideY; j++) {
@@ -108,7 +108,7 @@ public class CreateShapeFunctions {
         double y = env.getMinY() + j * cellSizeY;
         double x2 = env.getMinX() + (i + 1) * cellSizeX;
         double y2 = env.getMinY() + (j + 1) * cellSizeY;
-      
+
         Envelope cellEnv = new Envelope(x, x2, y, y2);
         geoms.add(geomFact.toGeometry(cellEnv));
       }
@@ -120,26 +120,26 @@ public class CreateShapeFunctions {
   {
     Envelope env = FunctionsUtil.getEnvelopeOrDefault(g);
     GeometryFactory geomFact = FunctionsUtil.getFactoryOrDefault(g);
-    
+
     int nCellsOnSideY = (int) Math.sqrt(nCells);
     int nCellsOnSideX = nCells / nCellsOnSideY;
-    
+
     double cellSizeX = env.getWidth() / (nCellsOnSideX - 1);
     double cellSizeY = env.getHeight() / (nCellsOnSideY - 1);
-    
-    CoordinateList pts = new CoordinateList(); 
+
+    CoordinateList pts = new CoordinateList();
 
     for (int i = 0; i < nCellsOnSideX; i++) {
       for (int j = 0; j < nCellsOnSideY; j++) {
         double x = env.getMinX() + i * cellSizeX;
         double y = env.getMinY() + j * cellSizeY;
-      
+
         pts.add( new Coordinate(x, y) );
       }
     }
     return geomFact.createMultiPointFromCoords(pts.toCoordinateArray());
   }
- 
+
 	public static Geometry supercircle3(Geometry g, int nPts)
 	{
 		return supercircle(g, nPts, 3);
@@ -149,7 +149,7 @@ public class CreateShapeFunctions {
 	{
 		return supercircle(g, nPts, 4);
 	}
-	
+
 	public static Geometry supercircle5(Geometry g, int nPts)
 	{
 		return supercircle(g, nPts, 5);
@@ -160,10 +160,10 @@ public class CreateShapeFunctions {
 		return supercircle(g, nPts, 0.5);
 	}
 
-	
+
 	public static Geometry supercircle(Geometry g,
 	    @Metadata(title="Point count")
-	    int nPts, 
+	    int nPts,
 	    @Metadata(title="Power")
 	    double pow)
 	{
@@ -175,7 +175,7 @@ public class CreateShapeFunctions {
 			gsf.setEnvelope(new Envelope(0, 1, 0, 1));
 		return gsf.createSupercircle(pow);
 	}
-	
+
   public static Geometry ellipse(Geometry g, int nPts)
   {
     GeometricShapeFactory gsf = new GeometricShapeFactory();
@@ -186,8 +186,8 @@ public class CreateShapeFunctions {
       gsf.setEnvelope(new Envelope(0, 1, 0, 1));
     return gsf.createCircle();
   }
-  
-  public static Geometry ellipseRotate(Geometry g, int nPts, 
+
+  public static Geometry ellipseRotate(Geometry g, int nPts,
       @Metadata(title="Angle")
       double ang)
   {
@@ -200,16 +200,16 @@ public class CreateShapeFunctions {
       gsf.setEnvelope(new Envelope(0, 1, 0, 1));
     return gsf.createCircle();
   }
-  
+
   public static Geometry sineStar(Geometry g,
       @Metadata(title="Arm count")
-      int nArms, 
+      int nArms,
       @Metadata(title="Point count")
       int nPts)
   {
 	Envelope env = FunctionsUtil.getEnvelopeOrDefault(g);
 	GeometryFactory geomFact = FunctionsUtil.getFactoryOrDefault(g);
-	
+
 	double size = Math.min(env.getHeight(),  env.getWidth());
     SineStarFactory shape = new SineStarFactory(geomFact);
     shape.setCentre(env.centre());
@@ -219,20 +219,20 @@ public class CreateShapeFunctions {
     shape.setArmLengthRatio(0.5);
     return shape.createSineStar();
   }
-  
+
   public static Geometry comb(Geometry g, int nArms)
   {
 	Envelope env = FunctionsUtil.getEnvelopeOrDefault(g);
 	GeometryFactory geomFact = FunctionsUtil.getFactoryOrDefault(g);
-	
+
 	int npts = 4 * (nArms - 1) + 2 + 2 + 1;
 	Coordinate[] pts = new Coordinate[npts];
 	double armWidth = env.getWidth() / (2 * nArms - 1);
 	double armLen = env.getHeight() - armWidth;
-	
+
 	double xBase = env.getMinX();
 	double yBase = env.getMinY();
-	
+
 	int ipts = 0;
 	for (int i = 0; i < nArms; i++) {
 		double x1 = xBase + i * 2 * armWidth;
@@ -247,22 +247,22 @@ public class CreateShapeFunctions {
 	pts[ipts++] = new Coordinate(env.getMaxX(), yBase);
 	pts[ipts++] = new Coordinate(xBase, yBase);
 	pts[ipts++] = new Coordinate(pts[0]);
-	
+
 	return geomFact.createPolygon(pts);
   }
-  
+
   public static Geometry pointFieldCentroidStar(Geometry ptsGeom)
   {
     Coordinate[] pts = ptsGeom.getCoordinates();
     Geometry centroid = ptsGeom.getCentroid();
     return pointFieldStar(ptsGeom, centroid);
   }
-  
+
   public static Geometry pointFieldStar(Geometry ptsGeom, Geometry centrePt)
   {
     Coordinate[] pts = ptsGeom.getCoordinates();
     Coordinate centre = centrePt.getCoordinate();
-    
+
     List<OrderedPoint> orderedPts = new ArrayList<>();
     for (Coordinate p : pts) {
       double ang = Angle.angle(centre, p);
@@ -279,27 +279,27 @@ public class CreateShapeFunctions {
     ring[n-1] = ring[0].copy();
     return ptsGeom.getFactory().createPolygon(ring);
   }
-  
+
   private static class OrderedPoint implements Comparable {
     Coordinate pt;
     double index;
-    
+
     public OrderedPoint(Coordinate p, double index) {
       this.pt = p;
       this.index = index;
     }
-    
+
     @Override
     public int compareTo(Object o) {
       OrderedPoint other = (OrderedPoint) o;
       return Double.compare(index,  other.index);
     }
   }
-  
+
   @Metadata(description="Construct a spiral")
-  public static Geometry spiral(Geometry geom, 
+  public static Geometry spiral(Geometry geom,
       @Metadata(title="Num Cycles")
-      int nCycles, 
+      int nCycles,
       @Metadata(title="Quadrant Segs")
       int quadrantSegs) {
     Envelope env = FunctionsUtil.getEnvelopeOrDefault(geom);
@@ -307,9 +307,9 @@ public class CreateShapeFunctions {
 
     double width = Math.min(env.getHeight(), env.getWidth())/2;
     double pitch = width / nCycles;
-    
+
     Coordinate centre = env.centre();
-    
+
     CoordinateList inside = new CoordinateList();
     CoordinateList outside = new CoordinateList();
     for (int i = 1; i <= nCycles; i++) {
@@ -327,7 +327,7 @@ public class CreateShapeFunctions {
     return geomFact.createPolygon(all.toCoordinateArray());
   }
 
-  private static Coordinate[] genSpiralCycle(Coordinate centre, 
+  private static Coordinate[] genSpiralCycle(Coordinate centre,
       double radiusStart, double radiusEnd, int quadrantSegs) {
     int nPts = quadrantSegs * 4 + 1;
     Coordinate[] pts = new Coordinate[nPts];
@@ -342,29 +342,29 @@ public class CreateShapeFunctions {
     }
     return pts;
   }
-  
+
   @Metadata(description="Construct a geometry using cubic Bezier curves")
-  public static Geometry bezierCurve(Geometry geom, 
+  public static Geometry bezierCurve(Geometry geom,
       @Metadata(title="Alpha (curveness)")
       double alpha) {
     return CubicBezierCurve.bezierCurve(geom, alpha);
   }
-  
+
   @Metadata(description="Construct a geometry using cubic Bezier curves with a skew")
-  public static Geometry bezierCurveSkew(Geometry geom, 
+  public static Geometry bezierCurveSkew(Geometry geom,
       @Metadata(title="Alpha (curveness)")
       double alpha,
     @Metadata(title="Skew factor")
     double skew) {
     return CubicBezierCurve.bezierCurve(geom, alpha, skew);
   }
-  
+
   @Metadata(description="Construct a geometry using cubic Bezier curves with control points")
   public static Geometry bezierCurveControl(Geometry geom, Geometry controlPoints) {
     return CubicBezierCurve.bezierCurve(geom, controlPoints);
   }
-  
-  public static Geometry nGon(Geometry g, 
+
+  public static Geometry nGon(Geometry g,
       @Metadata(title="Num sides")
       int sides) {
     Envelope env = FunctionsUtil.getEnvelopeOrDefault(g);

@@ -24,20 +24,20 @@ import org.locationtech.jts.geom.util.GeometryMapper.MapOp;
  * Maps the members of a {@link GeometryCollection}
  * into another <tt>GeometryCollection</tt> via a defined
  * mapping function.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class GeometryCollectionMapper 
+public class GeometryCollectionMapper
 {
   public static GeometryCollection map(GeometryCollection gc, MapOp op)
   {
     GeometryCollectionMapper mapper = new GeometryCollectionMapper(op);
     return mapper.map(gc);
   }
-  
+
   private MapOp mapOp = null;
-  
+
   public GeometryCollectionMapper(MapOp mapOp) {
     this.mapOp = mapOp;
   }

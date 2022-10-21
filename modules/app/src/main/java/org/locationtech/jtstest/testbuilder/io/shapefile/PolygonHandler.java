@@ -41,26 +41,26 @@ public class PolygonHandler implements ShapeHandler{
     int myShapeType;
     private PrecisionModel precisionModel = new PrecisionModel();
     private GeometryFactory geometryFactory = new GeometryFactory(precisionModel, 0);
-    
+
     public PolygonHandler()
     {
         myShapeType = 5;
     }
-    
+
       public PolygonHandler(int type) throws InvalidShapefileException
         {
             if  ( (type != 5) &&  (type != 15) &&  (type != 25) )
                 throw new InvalidShapefileException("PolygonHandler constructor - expected type to be 5, 15, or 25.");
-            
+
             myShapeType = type;
     }
-    
+
     //returns true if testPoint is a point in the pointList list.
     boolean pointInList(Coordinate testPoint, Coordinate[] pointList)
     {
         int t, numpoints;
         Coordinate  p;
-        
+
         numpoints = Array.getLength( pointList) ;
         for (t=0;t<numpoints; t++)
         {
@@ -74,61 +74,61 @@ public class PolygonHandler implements ShapeHandler{
         }
         return false;
     }
-    
+
     @Override
 	public Geometry read( EndianDataInputStream file , GeometryFactory geometryFactory, int contentLength)
     throws IOException, InvalidShapefileException
     {
-    
+
     	int actualReadWords = 0; //actual number of words read (word = 16bits)
-        
+
        // file.setLittleEndianMode(true);
-        int shapeType = file.readIntLE();	
+        int shapeType = file.readIntLE();
 		actualReadWords += 2;
-        
+
          if (shapeType ==0)
         {
             return geometryFactory.createMultiPolygon(null); //null shape
         }
-        
+
         if ( shapeType != myShapeType ) {
             throw new InvalidShapefileException
             ("PolygonHandler.read() - got shape type "+shapeType+" but was expecting "+myShapeType);
         }
-        
+
         //bounds
         file.readDoubleLE();
         file.readDoubleLE();
         file.readDoubleLE();
         file.readDoubleLE();
-        
+
 		actualReadWords += 4*4;
- 
-        
+
+
         int partOffsets[];
-        
+
         int numParts = file.readIntLE();
-        int numPoints = file.readIntLE();       
+        int numPoints = file.readIntLE();
 		actualReadWords += 4;
-        
+
         partOffsets = new int[numParts];
-        
+
         for(int i = 0;i<numParts;i++){
             partOffsets[i]=file.readIntLE();
 			actualReadWords += 2;
         }
-        
+
         //LinearRing[] rings = new LinearRing[numParts];
         ArrayList<LinearRing> shells = new ArrayList<>();
         ArrayList<LinearRing> holes = new ArrayList<>();
         Coordinate[] coords = new Coordinate[numPoints];
-        
+
         for(int t=0;t<numPoints;t++)
         {
             coords[t]= new Coordinate(file.readDoubleLE(),file.readDoubleLE());
 			actualReadWords += 8;
         }
-        
+
         if (myShapeType == 15)
         {
                 //z
@@ -141,7 +141,7 @@ public class PolygonHandler implements ShapeHandler{
 				actualReadWords += 4;
             }
         }
-      
+
         if (myShapeType >= 15)
         {
           //  int fullLength = 22 + (2*numParts) + (8*numPoints) + 8 + (4*numPoints)+ 8 + (4*numPoints);
@@ -149,7 +149,7 @@ public class PolygonHandler implements ShapeHandler{
           if (myShapeType == 15)
           {
           		//polyZ (with M)
-			    fullLength = 22 + (2*numParts) + (8*numPoints) + 8 + (4*numPoints)+ 8 + (4*numPoints);         	
+			    fullLength = 22 + (2*numParts) + (8*numPoints) + 8 + (4*numPoints)+ 8 + (4*numPoints);
           }
           else
           {
@@ -166,18 +166,18 @@ public class PolygonHandler implements ShapeHandler{
                          file.readDoubleLE();
 					     actualReadWords += 4;
                     }
-            }            
+            }
         }
-        
-        
+
+
 	//verify that we have read everything we need
 	while (actualReadWords < contentLength)
 	{
-		  int junk = file.readShortBE();	
+		  int junk = file.readShortBE();
 		 actualReadWords += 1;
 	}
-	
-        
+
+
         int offset = 0;
         int start,finish,length;
         for(int part=0;part<numParts;part++){
@@ -203,7 +203,7 @@ public class PolygonHandler implements ShapeHandler{
                 shells.add(ring);
             }
         }
-        
+
         ArrayList<ArrayList<LinearRing>> holesForShells = assignHolesToShells(shells, holes);
 
         Polygon[] polygons = new Polygon[shells.size()];
@@ -249,15 +249,15 @@ public class PolygonHandler implements ShapeHandler{
             tryShell = shells.get(j);
             Envelope tryShellEnv = tryShell.getEnvelopeInternal();
             if (! tryShellEnv.contains(testHoleEnv)) continue;
-            
+
             boolean isContained = false;
             Coordinate[] coordList = tryShell.getCoordinates();
 
-            if (nShells <= 1 
-                || PointLocation.isInRing(testHolePt, coordList) 
+            if (nShells <= 1
+                || PointLocation.isInRing(testHolePt, coordList)
                 || pointInList(testHolePt, coordList))
               isContained = true;
-            
+
             // check if new containing ring is smaller than the current minimum ring
             if (minShell != null)
               minEnv = minShell.getEnvelopeInternal();
@@ -282,7 +282,7 @@ public class PolygonHandler implements ShapeHandler{
 
       /**
        * Finds a object in a list. Should be much faster than indexof
-       * 
+       *
        * @param list
        * @param o
        * @return
@@ -296,26 +296,26 @@ public class PolygonHandler implements ShapeHandler{
         }
         return -1;
       }
-    
-    
+
+
     @Override
 	public int getShapeType(){
         return myShapeType;
     }
     @Override
 	public int getLength(Geometry geometry){
-        
+
          int nrings=0;
-        
+
         for (int t=0;t<geometry.getNumGeometries();t++)
         {
             Polygon p;
             p = (Polygon) geometry.getGeometryN(t);
             nrings = nrings + 1 + p.getNumInteriorRing();
         }
-         
+
          int npoints = geometry.getNumPoints();
-         
+
          if (myShapeType == 15)
          {
              return 22+(2*nrings)+8*npoints + 4*npoints+8 +4*npoints+8;
@@ -324,23 +324,23 @@ public class PolygonHandler implements ShapeHandler{
          {
              return 22+(2*nrings)+8*npoints + 4*npoints+8 ;
          }
-         
-         
+
+
          return 22+(2*nrings)+8*npoints;
     }
-    
-    
+
+
       double[] zMinMax(Geometry g)
     {
         double zmin,zmax;
         boolean validZFound = false;
         Coordinate[] cs = g.getCoordinates();
         double[] result = new double[2];
-        
+
         zmin = Double.NaN;
         zmax = Double.NaN;
         double z;
-        
+
         for (Coordinate element : cs) {
             z= element.getZ() ;
             if (!(Double.isNaN( z ) ))
@@ -359,16 +359,16 @@ public class PolygonHandler implements ShapeHandler{
                     zmax =  z ;
                 }
             }
-           
+
         }
-        
+
         result[0] = (zmin);
         result[1] = (zmax);
         return result;
-        
+
     }
-    
-    
+
+
 }
 
 /*

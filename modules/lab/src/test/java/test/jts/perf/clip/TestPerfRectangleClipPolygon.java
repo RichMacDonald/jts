@@ -12,9 +12,9 @@ import org.locationtech.jts.util.Stopwatch;
 import org.locationtech.jtslab.clip.RectangleClipPolygon;
 
 public class TestPerfRectangleClipPolygon {
-  
+
   static GeometryFactory factory = new GeometryFactory();
-  
+
   public static void main(String[] args) {
     TestPerfRectangleClipPolygon test = new TestPerfRectangleClipPolygon();
     try {
@@ -28,19 +28,19 @@ public class TestPerfRectangleClipPolygon {
     WKTFileReader fileRdr = new WKTFileReader(filename, new WKTReader());
     return fileRdr.read();
   }
-  
+
   private void run() {
     Geometry data = loadData();
-    
+
     System.out.println("Dataset: # geometries = " + data.getNumGeometries()
         + "   # pts = " + data.getNumPoints());
-    
+
     Stopwatch sw = new Stopwatch();
-    
+
     runClip(data);
     System.out.println("Time: " + sw.getTimeString());
   }
-  
+
   private GeometryCollection loadData() {
     List<Geometry> data = null;
     try {
@@ -50,7 +50,7 @@ public class TestPerfRectangleClipPolygon {
     }
     return factory.createGeometryCollection(GeometryFactory.toGeometryArray(data));
   }
-  
+
   private void runClip(Geometry data) {
     Envelope dataEnv = data.getEnvelopeInternal();
 
@@ -70,24 +70,24 @@ public class TestPerfRectangleClipPolygon {
       //rectangleIntersection(rect, geom);
     }
   }
-  
+
   private Geometry clip(Geometry rect, Geometry geom) {
     RectangleClipPolygon clipper = new RectangleClipPolygon(rect);
     return clipper.clip(geom);
   }
-  
+
   private Geometry rectangleIntersection(Geometry rect, Geometry geom) {
     Envelope env = rect.getEnvelopeInternal();
     Geometry result;
     if (env.contains(geom.getEnvelopeInternal())) {
       return geom.copy();
-    }    
+    }
     // Use intersects check first as that is faster
     if (! rect.intersects(geom)) return null;
-    
+
     return rect.intersection(geom);
   }
-  
+
   private Envelope envelope(List<Geometry> world) {
     Envelope env = new Envelope();
     for (Geometry geom : world) {

@@ -26,10 +26,10 @@ import org.locationtech.jtstest.test.Testable;
 public class TestCaseEdit implements Testable {
   private Geometry[] geom = new Geometry[2];
   private Testable testable;
-  
+
   private String opName = "";
   private Geometry resultGeom = null;
-  
+
 
   public TestCaseEdit(PrecisionModel pm) {
     TestCase testCase = new TestCase();
@@ -68,7 +68,7 @@ public class TestCaseEdit implements Testable {
     if (geom == null) return null;
     return (Geometry) geom.clone();
   }
-  
+
   @Override
 public void setGeometry(int i, Geometry geom) {
     testable.setGeometry(i, geom);
@@ -79,20 +79,20 @@ public void setName(String name) {
     testable.setName(name);
   }
 
-  public Geometry getResult() 
+  public Geometry getResult()
   {
     return resultGeom;
   }
-  
+
   public void setResult(Geometry geom)
   {
     resultGeom = geom;
   }
-  
+
   public String getOpName() { return opName; }
-  
+
   public void setOpName(String name) { opName = name; }
-  
+
   @Override
 public Geometry getGeometry(int i) {
 //    return geom[i];
@@ -144,7 +144,7 @@ public void initGeometry() throws ParseException {
     runRelate();
     return testable.getIntersectionMatrix();
   }
-  
+
   void runRelate() {
     Geometry[] geom = getGeometries();
     if (geom[0] == null || geom[1] == null) {

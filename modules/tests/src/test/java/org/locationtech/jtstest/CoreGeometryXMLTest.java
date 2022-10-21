@@ -32,7 +32,7 @@ public class CoreGeometryXMLTest extends TestCase {
     public void testUnit() {
         testFiles("src/test/resources/testxml/general", "src/test/resources/testxml/validate");
     }
-    
+
 //    public void testExternal() {
 //        testFiles("../core/src/test/resources/testxml/external");
 //    }
@@ -61,13 +61,13 @@ public class CoreGeometryXMLTest extends TestCase {
         SimpleReportWriter reportWriter = new SimpleReportWriter(false);
         reportWriter.writeReport(engine);
         System.out.println(reportWriter.writeReport(engine));
-        
+
         boolean failures = engine.getParseExceptionCount() + engine.getFailedCount() + engine.getExceptionCount() > 0;
         assertEquals(failures, false);
     }
 
     static FilenameFilter XML_FILTER = (dir, name) -> name.endsWith(".xml");
-    
+
     private static List<File> filenames(File directory) {
         Assert.isTrue(directory.isDirectory());
         File[] files = directory.listFiles(XML_FILTER);

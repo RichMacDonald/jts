@@ -16,7 +16,7 @@ package org.locationtech.jts.geom;
  * Also provides constants representing the dimensions of the empty geometry and
  * non-empty geometries, and the wildcard constant {@link #DONTCARE} meaning "any dimension".
  * These constants are used as the entries in {@link IntersectionMatrix}s.
- * 
+ *
  * @version 1.7
  */
 public class Dimension {
@@ -55,32 +55,32 @@ public class Dimension {
    * Symbol for the FALSE pattern matrix entry
    */
   public final static char SYM_FALSE = 'F';
-  
+
   /**
    * Symbol for the TRUE pattern matrix entry
    */
   public final static char SYM_TRUE = 'T';
-  
+
   /**
    * Symbol for the DONTCARE pattern matrix entry
    */
   public final static char SYM_DONTCARE = '*';
-  
+
   /**
    * Symbol for the P (dimension 0) pattern matrix entry
    */
   public final static char SYM_P = '0';
-  
+
   /**
    * Symbol for the L (dimension 1) pattern matrix entry
    */
   public final static char SYM_L = '1';
-  
+
   /**
    * Symbol for the A (dimension 2) pattern matrix entry
    */
   public final static char SYM_A = '2';
-  
+
   /**
    *  Converts the dimension value to a dimension symbol, for example, <code>TRUE =&gt; 'T'</code>
    *  .

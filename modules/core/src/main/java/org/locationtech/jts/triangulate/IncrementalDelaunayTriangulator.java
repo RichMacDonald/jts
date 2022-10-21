@@ -23,24 +23,24 @@ import org.locationtech.jts.triangulate.quadedge.Vertex;
 /**
  * Computes a Delaunay Triangulation of a set of {@link Vertex}es, using an
  * incremental insertion algorithm.
- * 
+ *
  * @author Martin Davis
  * @version 1.0
  */
-public class IncrementalDelaunayTriangulator 
+public class IncrementalDelaunayTriangulator
 {
 	private QuadEdgeSubdivision subdiv;
 	/**
 	 * Creates a new triangulator using the given {@link QuadEdgeSubdivision}.
 	 * The triangulator uses the tolerance of the supplied subdivision.
-	 * 
+	 *
 	 * @param subdiv
 	 *          a subdivision in which to build the TIN
 	 */
 	public IncrementalDelaunayTriangulator(QuadEdgeSubdivision subdiv) {
 		this.subdiv = subdiv;
 		boolean isUsingTolerance = subdiv.getTolerance() > 0.0;
-		
+
 	}
 
 	/**
@@ -48,9 +48,9 @@ public class IncrementalDelaunayTriangulator
 	 * unique up to the provided tolerance value. (i.e. no two vertices should be
 	 * closer than the provided tolerance value). They do not have to be rounded
 	 * to the tolerance grid, however.
-	 * 
+	 *
 	 * @param vertices a Collection of Vertex
-	 * 
+	 *
    * @throws LocateFailureException if the location algorithm fails to converge in a reasonable number of iterations
 	 */
 	public void insertSites(Collection vertices) {
@@ -65,7 +65,7 @@ public class IncrementalDelaunayTriangulator
 	 * triangulation, and fixes the affected edges so that the result is still a
 	 * Delaunay triangulation.
 	 * <p>
-	 * 
+	 *
 	 * @return a quadedge containing the inserted vertex
 	 */
 	public QuadEdge insertSite(Vertex v) {
@@ -81,17 +81,17 @@ public class IncrementalDelaunayTriangulator
 
 		if (subdiv.isVertexOfEdge(e, v)) {
 			// point is already in subdivision.
-			return e; 
-		} 
+			return e;
+		}
 		else if (subdiv.isOnEdge(e, v.getCoordinate())) {
-			// the point lies exactly on an edge, so delete the edge 
+			// the point lies exactly on an edge, so delete the edge
 			// (it will be replaced by a pair of edges which have the point as a vertex)
 			e = e.oPrev();
 			subdiv.delete(e.oNext());
 		}
 
 		/**
-		 * Connect the new point to the vertices of the containing triangle 
+		 * Connect the new point to the vertices of the containing triangle
 		 * (or quadrilateral, if the new point fell on an existing edge.)
 		 */
 		QuadEdge base = subdiv.makeEdge(e.orig(), v);

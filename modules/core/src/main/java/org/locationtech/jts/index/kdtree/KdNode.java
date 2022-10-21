@@ -17,7 +17,7 @@ import org.locationtech.jts.geom.Envelope;
 
 /**
  * A node of a {@link KdTree}, which represents one or more points in the same location.
- * 
+ *
  * @author dskea
  */
 public class KdNode {
@@ -30,7 +30,7 @@ public class KdNode {
 
     /**
      * Creates a new KdNode.
-     * 
+     *
      * @param _x coordinate of point
      * @param _y coordinate of point
      * @param data a data objects to associate with this node
@@ -45,7 +45,7 @@ public class KdNode {
 
     /**
      * Creates a new KdNode.
-     * 
+     *
      * @param p point location of new node
      * @param data a data objects to associate with this node
      */
@@ -59,7 +59,7 @@ public class KdNode {
 
     /**
      * Returns the X coordinate of the node
-     * 
+     *
      * @return X coordinate of the node
      */
     public double getX() {
@@ -68,7 +68,7 @@ public class KdNode {
 
     /**
      * Returns the Y coordinate of the node
-     * 
+     *
      * @return Y coordinate of the node
      */
     public double getY() {
@@ -76,12 +76,12 @@ public class KdNode {
     }
 
     /**
-     * Gets the split value at a node, depending on 
+     * Gets the split value at a node, depending on
      * whether the node splits on X or Y.
      * The X (or Y) ordinates of all points in the left subtree
      * are less than the split value, and those
      * in the right subtree are greater than or equal to the split value.
-     * 
+     *
      * @param isSplitOnX whether the node splits on X or Y
      * @return the splitting value
      */
@@ -91,10 +91,10 @@ public class KdNode {
       }
       return p.getY();
     }
-    
+
     /**
      * Returns the location of this node
-     * 
+     *
      * @return p location of this node
      */
     public Coordinate getCoordinate() {
@@ -111,7 +111,7 @@ public class KdNode {
 
     /**
      * Returns the left node of the tree
-     * 
+     *
      * @return left node
      */
     public KdNode getLeft() {
@@ -120,7 +120,7 @@ public class KdNode {
 
     /**
      * Returns the right node of the tree
-     * 
+     *
      * @return right node
      */
     public KdNode getRight() {
@@ -134,7 +134,7 @@ public class KdNode {
 
     /**
      * Returns the number of inserted points that are coincident at this location.
-     * 
+     *
      * @return number of inserted points that this node represents
      */
     public int getCount() {
@@ -143,7 +143,7 @@ public class KdNode {
 
     /**
      * Tests whether more than one point with this value have been inserted (up to the tolerance)
-     * 
+     *
      * @return true if more than one point have been inserted with this value
      */
     public boolean isRepeated() {
@@ -159,11 +159,11 @@ public class KdNode {
     void setRight(KdNode _right) {
         right = _right;
     }
-    
+
     /**
      * Tests whether the node's left subtree may contain values
      * in a given range envelope.
-     * 
+     *
      * @param isSplitOnX whether the node splits on  X or Y
      * @param env the range envelope
      * @return true if the left subtree is in range
@@ -179,11 +179,11 @@ public class KdNode {
       boolean isInRange = envMin < splitValue;
       return isInRange;
     }
-    
+
     /**
      * Tests whether the node's right subtree may contain values
      * in a given range envelope.
-     * 
+     *
      * @param isSplitOnX whether the node splits on  X or Y
      * @param env the range envelope
      * @return true if the right subtree is in range
@@ -201,21 +201,21 @@ public class KdNode {
     }
 
    /**
-    * Tests whether a point is strictly to the left 
+    * Tests whether a point is strictly to the left
     * of the splitting plane for this node.
     * If so it may be in the left subtree of this node,
-    * Otherwise, the point may be in the right subtree. 
+    * Otherwise, the point may be in the right subtree.
     * The point is to the left if its X (or Y) ordinate
     * is less than the split value.
-    * 
+    *
     * @param isSplitOnX whether the node splits on  X or Y
     * @param pt the query point
     * @return true if the point is strictly to the left.
-    * 
+    *
     * @see #splitValue(boolean)
     */
    boolean isPointOnLeft(boolean isSplitOnX, Coordinate pt) {
-      double ptOrdinate;     
+      double ptOrdinate;
       if (isSplitOnX) {
           ptOrdinate = pt.x;
       }
@@ -226,5 +226,5 @@ public class KdNode {
       boolean isInRange = (ptOrdinate < splitValue);
       return isInRange;
     }
-    
+
 }

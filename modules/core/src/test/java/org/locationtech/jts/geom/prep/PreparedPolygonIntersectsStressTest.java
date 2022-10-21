@@ -29,7 +29,7 @@ import junit.textui.TestRunner;
 /**
  * Stress tests {@link PreparedPolygon#intersects(Geometry)}
  * to confirm it finds intersections correctly.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -56,13 +56,13 @@ public class PreparedPolygonIntersectsStressTest extends TestCase
   {
     run(1000);
   }
-  
+
   public void run(int nPts)
   {
 //  	Geometry poly = createCircle(new Coordinate(0, 0), 100, nPts);
   	Geometry poly = createSineStar(new Coordinate(0, 0), 100, nPts);
   	//System.out.println(poly);
-  	
+
     //System.out.println();
     //System.out.println("Running with " + nPts + " points");
     test(poly);
@@ -78,7 +78,7 @@ public class PreparedPolygonIntersectsStressTest extends TestCase
 		// Geometry g = gRect.getExteriorRing();
 		return circle;
 	}
-  
+
   Geometry createSineStar(Coordinate origin, double size, int nPts) {
 		SineStarFactory gsf = new SineStarFactory();
 		gsf.setCentre(origin);
@@ -89,7 +89,7 @@ public class PreparedPolygonIntersectsStressTest extends TestCase
 		Geometry poly = gsf.createSineStar();
 		return poly;
 	}
-  
+
   LineString createTestLine(Envelope env, double size, int nPts)
   {
   	double width = env.getWidth();
@@ -101,7 +101,7 @@ public class PreparedPolygonIntersectsStressTest extends TestCase
     LineString line = createTestLine(basePt, size, nPts);
     return line;
   }
-  
+
   LineString createTestLine(Coordinate base, double size, int nPts)
   {
     GeometricShapeFactory gsf = new GeometricShapeFactory();
@@ -112,26 +112,26 @@ public class PreparedPolygonIntersectsStressTest extends TestCase
 //    System.out.println(circle);
     return (LineString) circle.getBoundary();
   }
-  
+
   public void test(Geometry g) {
   	int count = 0;
   	while (count < MAX_ITER) {
   		count++;
   		LineString line = createTestLine(g.getEnvelopeInternal(), 10, 20);
-      
+
 //      System.out.println("Test # " + count);
 //  		System.out.println(line);
   		testResultsEqual(g, line);
   	}
 	}
-  
-  public void testResultsEqual(Geometry g, LineString line) 
+
+  public void testResultsEqual(Geometry g, LineString line)
   {
 		boolean slowIntersects = g.intersects(line);
 
     PreparedGeometryFactory pgFact = new PreparedGeometryFactory();
     PreparedGeometry prepGeom = pgFact.create(g);
-    
+
 		boolean fastIntersects = prepGeom.intersects(line);
 
 		if (slowIntersects != fastIntersects) {
@@ -139,5 +139,5 @@ public class PreparedPolygonIntersectsStressTest extends TestCase
 			System.out.println("Slow = " + slowIntersects + ", Fast = " + fastIntersects);
 			throw new RuntimeException("Different results found for intersects() !");
 		}
-	}  
+	}
 }

@@ -33,7 +33,7 @@ public class PointExtracter
   /**
    * Extracts the {@link Point} elements from a single {@link Geometry}
    * and adds them to the provided {@link List}.
-   * 
+   *
    * @param geom the geometry from which to extract
    * @param list the list to add the extracted elements to
    */
@@ -46,14 +46,14 @@ public class PointExtracter
   		geom.apply(new PointExtracter(list));
   	}
   	// skip non-Polygonal elemental geometries
-  	
+
     return list;
   }
 
   /**
    * Extracts the {@link Point} elements from a single {@link Geometry}
    * and returns them in a {@link List}.
-   * 
+   *
    * @param geom the geometry from which to extract
    */
   public static List getPoints(Geometry geom) {

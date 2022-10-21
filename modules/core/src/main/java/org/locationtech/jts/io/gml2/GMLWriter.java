@@ -33,25 +33,25 @@ import org.locationtech.jts.util.Assert;
  * Allows specifying the XML prefix, namespace and srsName
  * of the emitted GML.
  * Also allows adding custom root elements
- * to support GML extensions such as KML. 
+ * to support GML extensions such as KML.
  * With appropriate settings for prefix (none) and custom root elements
  * this class can be used to write out geometry in KML format.
  * <p>
  * An example of the output that can be generated is:
- * 
+ *
  * <pre>
  * &lt;gml:LineString xmlns:gml='http://www.opengis.net/gml' srsName='foo'&gt;
  *   &lt;gml:coordinates&gt;
- *     6.03,8.17 7.697,6.959 8.333,5.0 7.697,3.041 6.03,1.83 3.97,1.83 2.303,3.041 1.667,5.0 2.303,6.959 3.97,8.17 
+ *     6.03,8.17 7.697,6.959 8.333,5.0 7.697,3.041 6.03,1.83 3.97,1.83 2.303,3.041 1.667,5.0 2.303,6.959 3.97,8.17
  *   &lt;/gml:coordinates&gt;
  * &lt;/gml:LineString&gt;
  * </pre>
- * 
- * <p>
- * This class does not rely on any external XML libraries. 
  *
- * @author David Zwiers, Vivid Solutions 
- * @author Martin Davis 
+ * <p>
+ * This class does not rely on any external XML libraries.
+ *
+ * @author David Zwiers, Vivid Solutions
+ * @author Martin Davis
  */
 public class GMLWriter {
 	private static final String INDENT = "  ";
@@ -67,9 +67,9 @@ public class GMLWriter {
 	private String prefix = GMLConstants.GML_PREFIX;
 	private String namespace = GMLConstants.GML_NAMESPACE;
 	private String srsName = null;
-	
+
 	private String[] customElements = null;
-	
+
 	/**
 	 * Creates a writer which outputs GML with default settings.
 	 * The defaults are:
@@ -83,9 +83,9 @@ public class GMLWriter {
 	}
 
 	/**
-	 * Creates a writer which may emit the GML namespace prefix 
+	 * Creates a writer which may emit the GML namespace prefix
 	 * declaration in the geometry root element.
-	 * 
+	 *
 	 * @param emitNamespace true if the GML namespace prefix declaration should be written
 	 *  in the geometry root element
 	 */
@@ -94,11 +94,11 @@ public class GMLWriter {
 	}
 
 	/**
-	 * Specifies the namespace prefix to write on each GML tag. 
+	 * Specifies the namespace prefix to write on each GML tag.
 	 * A null or blank prefix may be used to indicate no prefix.
 	 * <p>
 	 * The default is to write <tt>gml:</tt> as the namespace prefix.
-	 * 
+	 *
 	 * @param prefix the namespace prefix to use (<tt>null</tt> or blank if none)
 	 */
 	public void setPrefix(String prefix) {
@@ -106,14 +106,14 @@ public class GMLWriter {
 	}
 
 	/**
-	 * Sets the value of the <tt>srsName</tt> attribute 
+	 * Sets the value of the <tt>srsName</tt> attribute
 	 * to be written into the root geometry tag.
 	 * If the value is <tt>null</tt> or blank no srsName attribute will be written.
-	 * The provided value must be a valid XML attribute value 
+	 * The provided value must be a valid XML attribute value
 	 * - it will not be XML-escaped.
 	 * <p>
 	 * The default is not to write the <tt>srsName</tt> attribute.
-	 * 
+	 *
 	 * @param srsName the srsName attribute value
 	 */
 	public void setSrsName(String srsName) {
@@ -122,10 +122,10 @@ public class GMLWriter {
 
 	/**
 	 * Determines whether a GML namespace declaration will be written in the
-	 * opening tag of geometries.  Useful in XML-aware environments which 
+	 * opening tag of geometries.  Useful in XML-aware environments which
 	 * parse the geometries before use, such as XSLT.
-	 * 
-	 * @param emitNamespace true if the GML namespace prefix declaration 
+	 *
+	 * @param emitNamespace true if the GML namespace prefix declaration
 	 * should be written in the root geometry element
 	 */
 	public void setNamespace(boolean emitNamespace) {
@@ -142,7 +142,7 @@ public class GMLWriter {
 	 * <p>
 	 * For instance, this is useful for adding KML-specific geometry parameters
 	 * such as <tt>&lt;extrude&gt;</tt>
-	 * 
+	 *
 	 * @param customElements a list of the custom element strings, or null if none
 	 */
 	public void setCustomElements(String[] customElements) {
@@ -151,7 +151,7 @@ public class GMLWriter {
 
 	/**
 	 * Sets the starting column index for pretty printing
-	 * 
+	 *
 	 * @param indent
 	 */
 	public void setStartingIndentIndex(int indent) {
@@ -161,8 +161,8 @@ public class GMLWriter {
 	}
 
 	/**
-	 * Sets the number of coordinates printed per line. 
-	 * 
+	 * Sets the number of coordinates printed per line.
+	 *
 	 * @param num
 	 */
 	public void setMaxCoordinatesPerLine(int num) {
@@ -174,11 +174,11 @@ public class GMLWriter {
 
 	/**
 	 * Writes a {@link Geometry} in GML2 format to a String.
-	 * 
+	 *
 	 * @param geom
 	 * @return String GML2 Encoded Geometry
 	 */
-	public String write(Geometry geom) 
+	public String write(Geometry geom)
 	{
 		StringWriter writer = new StringWriter();
 		try {
@@ -192,17 +192,17 @@ public class GMLWriter {
 
 	/**
 	 * Writes a {@link Geometry} in GML2 format into a {@link Writer}.
-	 * 
+	 *
 	 * @param geom Geometry to encode
 	 * @param writer Stream to encode to.
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void write(Geometry geom, Writer writer) throws IOException {
 		write(geom, writer, startingIndentIndex);
 	}
 
 	private void write(Geometry geom, Writer writer, int level)
-			throws IOException 
+			throws IOException
 			{
 		isRootTag = true;
 		if (geom instanceof Point) {
@@ -368,9 +368,9 @@ public class GMLWriter {
 	/**
 	 * Takes a list of coordinates and converts it to GML.<br>
 	 * 2d and 3d aware.
-	 * 
+	 *
 	 * @param coords array of coordinates
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	private void write(Coordinate[] coords, Writer writer, int level)
 			throws IOException {
@@ -435,7 +435,7 @@ public class GMLWriter {
 	private void writeAttributes(Geometry geom, Writer writer) throws IOException {
 		if ((geom == null) || ! isRootTag)
 			return;
-		
+
 		if (emitNamespace) {
 			writer.write(" xmlns"
 					+ ((prefix == null || "".equals(prefix)) ? "" : ":"+prefix )
@@ -450,20 +450,20 @@ public class GMLWriter {
 
 	private void writeCustomElements(Geometry geom, Writer writer) throws IOException {
 		if ((geom == null) || ! isRootTag || (customElements == null)) return;
-		
+
 		for (String customElement : customElements) {
 			writer.write(customElement);
 			writer.write("\n");
 		}
 	}
-	
+
 	private void endGeomTag(String geometryName, Writer writer)
 			throws IOException {
 		writer.write("</" + prefix());
 		writer.write(geometryName);
 		writer.write(">\n");
 	}
-	
+
 	private String prefix()
 	{
 		if (prefix == null || prefix.length() == 0)

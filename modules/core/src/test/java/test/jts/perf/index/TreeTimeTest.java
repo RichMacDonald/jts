@@ -33,7 +33,7 @@ public class TreeTimeTest {
     //List items = IndexTester.createGridItems(n);
     List items = IndexTester.createRandomBoxes(n);
     List queries = IndexTester.createRandomBoxes(n);
-    
+
     System.out.println("----------------------------------------------");
     System.out.println("Dummy run to ensure classes are loaded before real run");
     System.out.println("----------------------------------------------");

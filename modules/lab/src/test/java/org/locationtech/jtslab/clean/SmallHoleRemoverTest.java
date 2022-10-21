@@ -30,37 +30,37 @@ public class SmallHoleRemoverTest extends TestCase {
   }
 
   public void testNoHole() {
-    checkHolesRemoved("POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9))", 
+    checkHolesRemoved("POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9))",
         "POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9))");
-  }  
+  }
   public void testOneLarge() {
-    checkHolesRemoved("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200), (130 180, 175 180, 175 136, 130 136, 130 180))", 
+    checkHolesRemoved("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200), (130 180, 175 180, 175 136, 130 136, 130 180))",
         "POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200), (130 180, 175 180, 175 136, 130 136, 130 180))");
   }
   public void testOneSmall() {
-    checkHolesRemoved("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200), (130 160, 140 150, 130 150, 130 160))", 
+    checkHolesRemoved("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200), (130 160, 140 150, 130 150, 130 160))",
         "POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200))");
   }
   public void testOneLargeOneSmall() {
-    checkHolesRemoved("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200), (130 160, 140 150, 130 150, 130 160), (150 190, 190 190, 190 150, 150 150, 150 190))", 
+    checkHolesRemoved("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200), (130 160, 140 150, 130 150, 130 160), (150 190, 190 190, 190 150, 150 150, 150 190))",
         "POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200), (150 190, 190 190, 190 150, 150 150, 150 190))");
   }
 
 
   public void testOneSmallMP() {
-    checkHolesRemoved("MULTIPOLYGON (((1 9, 9 9, 9 1, 1 1, 1 9), (2 5, 2 2, 12 2, 2 5)), ((21 9, 25 9, 25 5, 21 5, 21 9)))", 
+    checkHolesRemoved("MULTIPOLYGON (((1 9, 9 9, 9 1, 1 1, 1 9), (2 5, 2 2, 12 2, 2 5)), ((21 9, 25 9, 25 5, 21 5, 21 9)))",
         "MULTIPOLYGON (((1 9, 9 9, 9 1, 1 1, 1 9)), ((21 9, 25 9, 25 5, 21 5, 21 9)))");
   }
 
   public void testOneSmallGC() {
-    checkHolesRemoved("GEOMETRYCOLLECTION (POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9), (2 5, 2 2, 12 2, 2 5)), LINESTRING (15 9, 19 5))", 
+    checkHolesRemoved("GEOMETRYCOLLECTION (POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9), (2 5, 2 2, 12 2, 2 5)), LINESTRING (15 9, 19 5))",
         "GEOMETRYCOLLECTION (POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9)), LINESTRING (15 9, 19 5))");
   }
 
   private void checkHolesRemoved(String inputWKT, String expectedWKT) {
     Geometry input = read(inputWKT);
     Geometry expected = read(expectedWKT);
-    
+
     Geometry actual = SmallHoleRemover.clean(input, 100);
     checkEqual(expected, actual);
   }
@@ -81,7 +81,7 @@ public class SmallHoleRemoverTest extends TestCase {
     } catch (ParseException e) {
       throw new RuntimeException(e.getMessage());
     }
-    
+
   }
 
 }

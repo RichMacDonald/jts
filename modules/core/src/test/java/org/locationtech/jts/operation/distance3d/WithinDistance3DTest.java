@@ -21,11 +21,11 @@ import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
 
-public class WithinDistance3DTest extends TestCase 
+public class WithinDistance3DTest extends TestCase
 {
 	static GeometryFactory geomFact = new GeometryFactory();
 	static WKTReader rdr = new WKTReader();
-	
+
 	public static void main(String args[]) {
 		TestRunner.run(WithinDistance3DTest.class);
 	}
@@ -39,7 +39,7 @@ public class WithinDistance3DTest extends TestCase
 		checkWithinDistance(	"POINT EMPTY", "POINT EMPTY",	0);
 		checkWithinDistance(	"LINESTRING EMPTY", "POINT (0 0 0)",	1, true);
 	}
-	
+
 	public void testPointPoint() {
 		checkWithinDistance(	"POINT (0 0 0 )",
 				"POINT (0 0 1 )",
@@ -54,7 +54,7 @@ public class WithinDistance3DTest extends TestCase
 				"POINT (10 20 10 )",
 				14.143);
 	}
-	
+
 	public void testPointSeg() {
 		checkWithinDistance(	"LINESTRING (0 0 0, 10 10 10 )",
 				"POINT (5 5 5 )",
@@ -63,7 +63,7 @@ public class WithinDistance3DTest extends TestCase
 				"POINT (11 11 10 )",
 				0.8, false);
 	}
-	
+
 	public void testCrossSegmentsFlat() {
 		checkWithinDistance(	"LINESTRING (0 0 0, 10 10 0 )",
 				"LINESTRING (10 0 0, 0 10 0 )",
@@ -72,7 +72,7 @@ public class WithinDistance3DTest extends TestCase
 				"LINESTRING (10 0 10, 0 10 10 )",
 		0);
 	}
-	
+
 	public void testCrossSegments() {
 		checkWithinDistance(	"LINESTRING (0 0 0, 10 10 0 )",
 				"LINESTRING (10 0 1, 0 10 1 )",
@@ -84,19 +84,19 @@ public class WithinDistance3DTest extends TestCase
 				"LINESTRING (10 10 20, 20 20 10 )",
 		0);
 	}
-	
+
 	public void testTSegmentsFlat() {
 		checkWithinDistance(	"LINESTRING (10 10 0, 10 20 0 )",
 						"LINESTRING (20 15 0, 25 15 0 )",
 				10);
 	}
-	
+
 	public void testParallelSegmentsFlat() {
 		checkWithinDistance(	"LINESTRING (10 10 0, 20 20 0 )",
 						"LINESTRING (10 20 0, 20 30 0 )",
 						7.0710678118654755);
 	}
-	
+
 	public void testParallelSegments() {
 		checkWithinDistance(	"LINESTRING (0 0 0, 1 0 0 )",
 						"LINESTRING (0 0 1, 1 0 1 )",
@@ -110,101 +110,101 @@ public class WithinDistance3DTest extends TestCase
 				// = distance from LINESTRING (10 10 0, 20 20 0 ) to POINT(10 20 10)
 				// = hypotenuse(7.0710678118654755, 10)
 	}
-	
+
 	public void testLineLine()
 	{
 		checkWithinDistance(	"LINESTRING (0 1 2, 1 1 1, 1 0 2 )",
 				"LINESTRING (0 0 0.1, .5 .5 0, 1 1 0, 1.5 1.5 0, 2 2 0 )",
-				1);		
+				1);
 		checkWithinDistance(	"LINESTRING (10 10 20, 20 20 30, 20 20 1, 30 30 5 )",
 				"LINESTRING (1 80 10, 0 39 5, 39 0 5, 80 1 20)",
-				0.7071067811865476);		
+				0.7071067811865476);
 	}
-	
+
 	public void testPointPolygon()
 	{
 		// point above poly
 		checkWithinDistance(	"POINT (150 150 10)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				10);	
+				10);
 		// point below poly
 		checkWithinDistance(	"POINT (150 150 -10)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				10);				
+				10);
 		// point right of poly in YZ plane
 		checkWithinDistance(	"POINT (10 150 150)",
 				"POLYGON ((0 100 200, 0 200 200, 0 200 100, 0 100 100, 0 100 200))",
-				10);				
+				10);
 	}
-	
+
 	public void testPointPolygonFlat()
 	{
 		// inside
 		checkWithinDistance(	"POINT (150 150 0)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				0);	
+				0);
 		// outside
 		checkWithinDistance(	"POINT (250 250 0)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				70.71067811865476);				
+				70.71067811865476);
 		// on
 		checkWithinDistance(	"POINT (200 200 0)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				0);				
+				0);
 	}
-	
+
 	public void testLinePolygonFlat()
 	{
 		// line inside
 		checkWithinDistance(	"LINESTRING (150 150 0, 160 160 0)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				0);	
+				0);
 		// line outside
 		checkWithinDistance(	"LINESTRING (200 250 0, 260 260 0)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				50);	
+				50);
 		// line touching
 		checkWithinDistance(	"LINESTRING (200 200 0, 260 260 0)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				0);				
+				0);
 	}
-	
+
 	public void testLinePolygonSimple()
 	{
 		// line crossing inside
 		checkWithinDistance(	"LINESTRING (150 150 10, 150 150 -10)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				0);	
+				0);
 		// vertical line above
 		checkWithinDistance(	"LINESTRING (200 200 10, 260 260 100)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				10);	
+				10);
 		// vertical line touching
 		checkWithinDistance(	"LINESTRING (200 200 0, 260 260 100)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				0);				
+				0);
 	}
-	
+
 	String polyHoleFlat = "POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0), (120 180 0, 180 180 0, 180 120 0, 120 120 0, 120 180 0))";
 
 	public void testLinePolygonHoleFlat()
 	{
 		// line crossing hole
-		checkWithinDistance(	"LINESTRING (150 150 10, 150 150 -10)", 	polyHoleFlat, 20, false);	
+		checkWithinDistance(	"LINESTRING (150 150 10, 150 150 -10)", 	polyHoleFlat, 20, false);
 		// line crossing interior
-		checkWithinDistance(	"LINESTRING (110 110 10, 110 110 -10)",		polyHoleFlat, 0);	
+		checkWithinDistance(	"LINESTRING (110 110 10, 110 110 -10)",		polyHoleFlat, 0);
 	}
-	
+
 	public void testPointPolygonHoleFlat()
 	{
 		// point above poly hole
-		checkWithinDistance(	"POINT (130 130 10)", 	polyHoleFlat, 14.143);	
+		checkWithinDistance(	"POINT (130 130 10)", 	polyHoleFlat, 14.143);
 		// point below poly hole
 		checkWithinDistance(	"POINT (130 130 -10)", 	polyHoleFlat, 14.143);
 		// point above poly
 		checkWithinDistance(	"POINT (110 110 100)", 	polyHoleFlat, 100);
 	}
-	
+
 	public void testMultiPoint()
 	{
 		checkWithinDistance(
@@ -213,7 +213,7 @@ public class WithinDistance3DTest extends TestCase
 				1
 				);
 	}
-	
+
 	public void testMultiLineString()
 	{
 		checkWithinDistance(
@@ -222,7 +222,7 @@ public class WithinDistance3DTest extends TestCase
 				1
 				);
 	}
-	
+
 	public void testMultiPolygon()
 	{
 		checkWithinDistance(
@@ -233,17 +233,17 @@ public class WithinDistance3DTest extends TestCase
 				10
 				);
 	}
-	
-	
+
+
 	//==========================================================
 	// Convenience methods
 	//==========================================================
-	
+
 	private void checkWithinDistance(String wkt1, String wkt2, double distance)
 	{
 		checkWithinDistance(wkt1, wkt2, distance, true);
 	}
-	
+
 	private void checkWithinDistance(String wkt1, String wkt2, double distance, boolean expectedResult)
 	{
 		Geometry g1;
@@ -268,5 +268,5 @@ public class WithinDistance3DTest extends TestCase
 		boolean isWithinDist = Distance3DOp.isWithinDistance(g1, g2, distance);
 		assertEquals(expectedResult, isWithinDist);
 	}
-	
+
 }

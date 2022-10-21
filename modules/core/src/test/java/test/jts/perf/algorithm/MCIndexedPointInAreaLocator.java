@@ -37,17 +37,17 @@ import org.locationtech.jts.noding.SegmentString;
  * a {@link Polygonal} geometry, using indexing for efficiency.
  * This algorithm is suitable for use in cases where
  * many points will be tested against a given area.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class MCIndexedPointInAreaLocator 
+public class MCIndexedPointInAreaLocator
 	implements PointOnGeometryLocator
 {
 	private Geometry areaGeom;
 	private MCIndexedGeometry index;
 	private double maxXExtent;
-		
+
 	public MCIndexedPointInAreaLocator(Geometry g)
 	{
 		areaGeom = g;
@@ -57,17 +57,17 @@ public class MCIndexedPointInAreaLocator
     Envelope env = g.getEnvelopeInternal();
 		maxXExtent = env.getMaxX() + 1.0;
 	}
-	
+
 	private void buildIndex(Geometry g)
 	{
 		index = new MCIndexedGeometry(g);
 	}
-		
+
   /**
    * Determines the {@link Location} of a point in an areal {@link Geometry}.
-   * 
+   *
    * @param p the point to test
-   * @return the location of the point in the geometry  
+   * @return the location of the point in the geometry
    */
 	@Override
 	public int locate(Coordinate p)
@@ -77,10 +77,10 @@ public class MCIndexedPointInAreaLocator
 		Envelope rayEnv = new Envelope(p.x, maxXExtent, p.y, p.y);
 		List mcs = index.query(rayEnv);
 		countSegs(rcc, rayEnv, mcs, mcSegCounter);
-		
+
 		return rcc.getLocation();
 	}
-	
+
 	private void countSegs(RayCrossingCounter rcc, Envelope rayEnv, List monoChains, MCSegmentCounter mcSegCounter)
 	{
 		for (Object monoChain : monoChains) {
@@ -90,7 +90,7 @@ public class MCIndexedPointInAreaLocator
 			if (rcc.isOnSegment()) return;
 		}
 	}
-	
+
   static class MCSegmentCounter extends MonotoneChainSelectAction
   {
   	RayCrossingCounter rcc;
@@ -117,7 +117,7 @@ class MCIndexedGeometry
 	{
 		init(geom);
 	}
-	
+
 	private void init(Geometry geom)
 	{
 		List lines = LinearComponentExtracter.getLines(geom);
@@ -127,7 +127,7 @@ class MCIndexedGeometry
 			addLine(pts);
 		}
 	}
-	
+
 	private void addLine(Coordinate[] pts)
 	{
 			SegmentString segStr = new BasicSegmentString(pts, null);
@@ -137,7 +137,7 @@ class MCIndexedGeometry
 	      index.insert(mc.getEnvelope(), mc);
 	    }
 	}
-	
+
 	public List query(Envelope searchEnv)
 	{
 		return index.query(searchEnv);

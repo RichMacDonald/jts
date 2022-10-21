@@ -16,9 +16,9 @@ import test.jts.GeometryTestCase;
 
 /**
  * Tests the behaviour of the {@link GeometryOverlay} class.
- * 
+ *
  * Currently does not test the reading of the system property.
- * 
+ *
  * @author mdavis
  *
  */
@@ -28,12 +28,12 @@ public class GeometryOverlayTest extends GeometryTestCase {
   }
 
   public GeometryOverlayTest(String name) { super(name); }
-  
+
   public void testOverlayNGFixed() {
     GeometryOverlay.setOverlayImpl(GeometryOverlay.OVERLAY_PROPERTY_VALUE_NG);
     PrecisionModel pmFixed = new PrecisionModel(1);
     Geometry expected = read("POLYGON ((1 2, 4 1, 1 1, 1 2))");
-    
+
     checkIntersectionPM(pmFixed, expected);
   }
 
@@ -41,7 +41,7 @@ public class GeometryOverlayTest extends GeometryTestCase {
     GeometryOverlay.setOverlayImpl(GeometryOverlay.OVERLAY_PROPERTY_VALUE_NG);
     PrecisionModel pmFloat = new PrecisionModel();
     Geometry expected = read("POLYGON ((1 1, 1 2, 4 1.25, 4 1, 1 1))");
-    
+
     checkIntersectionPM(pmFloat, expected);
   }
 
@@ -52,7 +52,7 @@ public class GeometryOverlayTest extends GeometryTestCase {
     Geometry actual = a.intersection(b);
     checkEqual(expected, actual);
   }
-  
+
   public void testOverlayOld() {
     // must set overlay method explicitly since order of tests is not deterministic
     GeometryOverlay.setOverlayImpl(GeometryOverlay.OVERLAY_PROPERTY_VALUE_OLD);

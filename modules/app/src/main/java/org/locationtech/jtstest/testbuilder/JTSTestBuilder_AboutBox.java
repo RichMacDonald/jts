@@ -78,15 +78,15 @@ public class JTSTestBuilder_AboutBox extends JDialog implements ActionListener {
         insetsPanel2.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         gridLayout1.setRows(5);
         gridLayout1.setColumns(1);
-        
+
         labelJTS.setFont(new java.awt.Font("Dialog", 1, 16));
         labelJTS.setForeground(Color.blue);
         labelJTS.setText("JTS Topology Suite");
-        
+
         label1.setFont(new java.awt.Font("Dialog", 1, 20));
         label1.setForeground(SystemColor.desktop);
         label1.setText("Test Builder");
-        
+
         label2.setText(version);
         label3.setText(copyright);
         label4.setFont(new java.awt.Font("Dialog", 1, 12));

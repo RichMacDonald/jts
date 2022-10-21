@@ -30,19 +30,19 @@ import org.locationtech.jts.geom.Polygon;
 /**
  * Models a polygonal coverage as a set of unique {@link CoverageEdge}s,
  * linked to the parent rings in the coverage polygons.
- * Each edge has either one or two parent rings, depending on whether 
+ * Each edge has either one or two parent rings, depending on whether
  * it is an inner or outer edge of the coverage.
- * The source coverage is represented as a array of polygonal geometries 
+ * The source coverage is represented as a array of polygonal geometries
  * (either {@link Polygon}s or {@link MultiPolygon}s).
- * 
+ *
  * @author Martin Davis
  *
  */
 class CoverageRingEdges {
-  
+
   /**
    * Create a new instance for a given coverage.
-   * 
+   *
    * @param coverage the set of polygonal geometries in the coverage
    * @return the edges of the coverage
    */
@@ -50,11 +50,11 @@ class CoverageRingEdges {
     CoverageRingEdges edges = new CoverageRingEdges(coverage);
     return edges;
   }
-  
+
   private Geometry[] coverage;
   private Map<LinearRing, List<CoverageEdge>> ringEdgesMap;
   private List<CoverageEdge> edges;
-  
+
   public CoverageRingEdges(Geometry[] coverage) {
     this.coverage = coverage;
     ringEdgesMap = new HashMap<>();
@@ -65,10 +65,10 @@ class CoverageRingEdges {
   public List<CoverageEdge> getEdges() {
     return edges;
   }
-  
+
   /**
    * Selects the edges with a given ring count (which can be 1 or 2).
-   * 
+   *
    * @param ringCount the edge ring count to select (1 or 2)
    * @return the selected edges
    */
@@ -81,7 +81,7 @@ class CoverageRingEdges {
     }
     return result;
   }
-  
+
   private void build() {
     Set<Coordinate> nodes = findNodes(coverage);
     Set<LineSegment> boundarySegs = CoverageBoundarySegmentFinder.findBoundarySegments(coverage);
@@ -95,7 +95,7 @@ class CoverageRingEdges {
         //-- extract holes
         for (int ihole = 0; ihole < poly.getNumInteriorRing(); ihole++) {
           LinearRing hole = poly.getInteriorRingN(ihole);
-          addRingEdges(hole, nodes, boundarySegs, uniqueEdgeMap);         
+          addRingEdges(hole, nodes, boundarySegs, uniqueEdgeMap);
         }
       }
     }
@@ -127,8 +127,8 @@ class CoverageRingEdges {
     return boundarySegs.contains(seg);
   }
 
-  private List<CoverageEdge> extractRingEdges(LinearRing ring, 
-      HashMap<LineSegment, CoverageEdge> uniqueEdgeMap, 
+  private List<CoverageEdge> extractRingEdges(LinearRing ring,
+      HashMap<LineSegment, CoverageEdge> uniqueEdgeMap,
       Set<Coordinate> nodes) {
     List<CoverageEdge> ringEdges = new ArrayList<>();
     int first = findNextNodeIndex(ring, -1, nodes);
@@ -164,7 +164,7 @@ class CoverageRingEdges {
     edge.incRingCount();
     return edge;
   }
-  
+
   private CoverageEdge createEdge(LinearRing ring, int start, int end, HashMap<LineSegment, CoverageEdge> uniqueEdgeMap) {
     CoverageEdge edge;
     LineSegment edgeKey = CoverageEdge.key(ring, start, end);
@@ -186,7 +186,7 @@ class CoverageRingEdges {
     do {
       index = next(index, ring);
       if (index == 0) {
-        if (start < 0 && isScanned0) 
+        if (start < 0 && isScanned0)
           return -1;
         isScanned0 = true;
       }
@@ -218,7 +218,7 @@ class CoverageRingEdges {
 
   /**
    * Recreates the polygon coverage from the current edge values.
-   * 
+   *
    * @return an array of polygonal geometries representing the coverage
    */
   public Geometry[] buildCoverage() {
@@ -263,7 +263,7 @@ class CoverageRingEdges {
     List<CoverageEdge> ringEdges = ringEdgesMap.get(ring);
     CoordinateList ptsList = new CoordinateList();
     for (int i = 0; i < ringEdges.size(); i++) {
-      Coordinate lastPt = ptsList.size() > 0 
+      Coordinate lastPt = ptsList.size() > 0
                             ? ptsList.getCoordinate(ptsList.size() - 1)
                             : null;
       boolean dir = isEdgeDirForward(ringEdges, i, lastPt);

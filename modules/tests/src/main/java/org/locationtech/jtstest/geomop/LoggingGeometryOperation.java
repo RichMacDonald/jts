@@ -17,34 +17,34 @@ import org.locationtech.jtstest.testrunner.Result;
 
 /**
  * A {@link GeometryOperation} which logs
- * the input and output from another 
+ * the input and output from another
  * {@link GeometryOperation}.
  * The log is sent to {@link System#out}.
- * 
+ *
  * @author mbdavis
  *
  */
-public class LoggingGeometryOperation 
+public class LoggingGeometryOperation
  implements GeometryOperation
 {
 	private GeometryOperation geomOp = new GeometryMethodOperation();
-	
+
 	public LoggingGeometryOperation()
 	{
-		
+
 	}
-	
+
   @Override
 public Class getReturnType(String opName)
   {
   	return GeometryMethodOperation.getGeometryReturnType(opName);
   }
-  
+
 	public LoggingGeometryOperation(GeometryOperation geomOp)
 	{
 		this.geomOp = geomOp;
 	}
-	
+
   @Override
 public Result invoke(String opName, Geometry geometry, Object[] args)
   	throws Exception

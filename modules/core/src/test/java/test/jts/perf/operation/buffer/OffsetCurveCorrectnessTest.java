@@ -21,10 +21,10 @@ import org.locationtech.jts.operation.buffer.BufferParameters;
 import org.locationtech.jts.operation.buffer.OffsetCurveBuilder;
 /**
  * Tests self-snapping issues
- * 
+ *
  * @version 1.7
  */
-public class OffsetCurveCorrectnessTest 
+public class OffsetCurveCorrectnessTest
 {
 
   private PrecisionModel precisionModel = new PrecisionModel();
@@ -38,7 +38,7 @@ public class OffsetCurveCorrectnessTest
   	catch (Exception ex) {
   		ex.printStackTrace();
   	}
-  
+
   }
 
   public OffsetCurveCorrectnessTest() {  }
@@ -53,9 +53,9 @@ public class OffsetCurveCorrectnessTest
   	System.out.println(curve);
     //assert(curve.isValid());
   }
-  
-	public static Geometry bufferOffsetCurve(Geometry g, double distance)	
-	{		
+
+	public static Geometry bufferOffsetCurve(Geometry g, double distance)
+	{
     OffsetCurveBuilder ocb = new OffsetCurveBuilder(
         g.getFactory().getPrecisionModel(),
         new BufferParameters());

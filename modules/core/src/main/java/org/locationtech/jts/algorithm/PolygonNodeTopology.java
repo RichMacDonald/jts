@@ -15,19 +15,19 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Quadrant;
 
 /**
- * Functions to compute topological information 
+ * Functions to compute topological information
  * about nodes (ring intersections) in polygonal geometry.
- * 
+ *
  * @author mdavis
  *
  */
-public class PolygonNodeTopology 
+public class PolygonNodeTopology
 {
   /**
    * Check if the segments at a node between two rings (or one ring) cross.
    * The node is topologically valid if the rings do not cross.
-   * This function assumes that the segments are not collinear. 
-   *  
+   * This function assumes that the segments are not collinear.
+   *
    * @param nodePt the node location
    * @param a0 the previous segment endpoint in a ring
    * @param a1 the next segment endpoint in a ring
@@ -43,22 +43,22 @@ public class PolygonNodeTopology
       aHi = a0;
     }
     /**
-     * Find positions of b0 and b1.  
+     * Find positions of b0 and b1.
      * If they are the same they do not cross the other edge
      */
     boolean isBetween0 = isBetween(nodePt, b0, aLo, aHi);
     boolean isBetween1 = isBetween(nodePt, b1, aLo, aHi);
-    
+
     return isBetween0 != isBetween1;
   }
 
   /**
    * Tests whether an segment node-b lies in the interior or exterior
    * of a corner of a ring formed by the two segments a0-node-a1.
-   * The ring interior is assumed to be on the right of the corner 
+   * The ring interior is assumed to be on the right of the corner
    * (i.e. a CW shell or CCW hole).
    * The test segment must not be collinear with the corner segments.
-   * 
+   *
    * @param nodePt the node location
    * @param a0 the first vertex of the corner
    * @param a1 the second vertex of the corner
@@ -78,13 +78,13 @@ public class PolygonNodeTopology
     boolean isInterior = isBetween == isInteriorBetween;
     return isInterior;
   }
-  
+
   /**
    * Tests if an edge p is between edges e0 and e1,
    * where the edges all originate at a common origin.
    * The "inside" of e0 and e1 is the arc which does not include the origin.
    * The edges are assumed to be distinct (non-collinear).
-   * 
+   *
    * @param origin the origin
    * @param p the destination point of edge p
    * @param e0 the destination point of edge e0
@@ -101,23 +101,23 @@ public class PolygonNodeTopology
   /**
    * Tests if the angle with the origin of a vector P is greater than that of the
    * vector Q.
-   * 
+   *
    * @param origin the origin of the vectors
    * @param p the endpoint of the vector P
    * @param q the endpoint of the vector Q
    * @return true if vector P has angle greater than Q
    */
-  private static boolean isAngleGreater(Coordinate origin, Coordinate p, Coordinate q) {      
+  private static boolean isAngleGreater(Coordinate origin, Coordinate p, Coordinate q) {
     int quadrantP = quadrant(origin, p);
     int quadrantQ = quadrant(origin, q);
 
     /**
-     * If the vectors are in different quadrants, 
+     * If the vectors are in different quadrants,
      * that determines the ordering
      */
     if (quadrantP > quadrantQ) return true;
     if (quadrantP < quadrantQ) return false;
-    
+
     //--- vectors are in the same quadrant
     // Check relative orientation of vectors
     // P > Q if it is CCW of Q

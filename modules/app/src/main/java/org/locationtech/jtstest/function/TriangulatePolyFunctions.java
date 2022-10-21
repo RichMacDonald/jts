@@ -18,7 +18,7 @@ import org.locationtech.jts.triangulate.polygon.PolygonHoleJoiner;
 import org.locationtech.jts.triangulate.polygon.PolygonTriangulator;
 
 
-public class TriangulatePolyFunctions 
+public class TriangulatePolyFunctions
 {
   public static Geometry triangulate(Geometry geom)
   {

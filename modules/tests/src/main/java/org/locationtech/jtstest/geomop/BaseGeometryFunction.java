@@ -16,15 +16,15 @@ import org.locationtech.jts.geom.Geometry;
 
 /**
  * A base for implementations of
- * {@link GeometryFunction} which provides most 
+ * {@link GeometryFunction} which provides most
  * of the required structure.
- * Extenders must supply the behaviour for the 
+ * Extenders must supply the behaviour for the
  * actual function invocation.
- * 
+ *
  * @author Martin Davis
  *
  */
-public abstract class BaseGeometryFunction 
+public abstract class BaseGeometryFunction
 implements GeometryFunction, Comparable
 {
   public static boolean isBinaryGeomFunction(GeometryFunction func)
@@ -32,18 +32,18 @@ implements GeometryFunction, Comparable
     return func.getParameterTypes().length >= 1
         && func.getParameterTypes()[0] == Geometry.class;
   }
-  
+
 	protected String category  = null;
 	protected String name;
 	protected String description;
 	protected String[] parameterNames;
 	protected Class[] parameterTypes;
 	protected Class returnType;
-	
+
 	public BaseGeometryFunction(
-			String name, 
-			String[] parameterNames, 
-			Class[] parameterTypes, 
+			String name,
+			String[] parameterNames,
+			Class[] parameterTypes,
 			Class returnType)
 	{
 		this.category = category;
@@ -52,12 +52,12 @@ implements GeometryFunction, Comparable
 		this.parameterTypes = parameterTypes;
 		this.returnType = returnType;
 	}
-	
+
 	public BaseGeometryFunction(
-			String name, 
+			String name,
 			String description,
-			String[] parameterNames, 
-			Class[] parameterTypes, 
+			String[] parameterNames,
+			Class[] parameterTypes,
 			Class returnType)
 	{
 		this.category = category;
@@ -67,33 +67,33 @@ implements GeometryFunction, Comparable
 		this.parameterTypes = parameterTypes;
 		this.returnType = returnType;
 	}
-	
+
 	public String getCategory()
 	{
 		return category;
 	}
-	
+
 	@Override
 	public String getName()
 	{
 		return name;
 	}
-	
+
 	public String getDescription()
 	{
 		return description;
 	}
-	
+
 	@Override
 	public String[] getParameterNames()
 	{
 		return parameterNames;
 	}
-	
+
 	/**
 	 * Gets the types of the other function arguments,
 	 * if any.
-	 * 
+	 *
 	 * @return the types
 	 */
 	@Override
@@ -101,13 +101,13 @@ implements GeometryFunction, Comparable
 	{
 		return parameterTypes;
 	}
-	
+
 	@Override
 	public Class getReturnType()
 	{
 		return returnType;
 	}
-	
+
   @Override
 public boolean isBinary() {
     return parameterTypes.length > 0 && parameterTypes[0] == Geometry.class;
@@ -118,20 +118,20 @@ public boolean isBinary() {
   	if ((args.length <= index) || (args[index] == null)) return null;
   	return (Double) args[index];
   }
-  
+
   protected static Integer getIntegerOrNull(Object[] args, int index)
   {
   	if ((args.length <= index) || (args[index] == null)) return null;
   	return (Integer) args[index];
   }
-  
+
 	@Override
 	public abstract Object invoke(Geometry geom, Object[] args);
-	
+
 	/**
-	 * Two functions are the same if they have the 
+	 * Two functions are the same if they have the
 	 * same signature (name, parameter types and return type).
-	 * 
+	 *
 	 * @param obj
 	 * @return true if this object is the same as the <tt>obj</tt> argument
 	 */
@@ -141,7 +141,7 @@ public boolean isBinary() {
 		if (! (obj instanceof GeometryFunction)) return false;
 		GeometryFunction func = (GeometryFunction) obj;
 		if (! name.equals(func.getName()) || ! returnType.equals(func.getReturnType())) return false;
-		
+
 		Class[] funcParamTypes = func.getParameterTypes();
 		if (parameterTypes.length != funcParamTypes.length) return false;
 		for (int i = 0; i < parameterTypes.length; i++) {
@@ -161,7 +161,7 @@ public boolean isBinary() {
 		return compareTo(returnType, func.getReturnType());
 		//TODO: compare parameter lists as well
 	}
-	
+
 	private static int compareTo(Class c1, Class c2)
 	{
 		return c1.getName().compareTo(c2.getName());

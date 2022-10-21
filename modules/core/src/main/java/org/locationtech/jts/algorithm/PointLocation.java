@@ -18,7 +18,7 @@ import org.locationtech.jts.geom.Location;
 /**
  * Functions for locating points within basic geometric
  * structures such as lines and rings.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -27,7 +27,7 @@ public class PointLocation {
   /**
    * Tests whether a point lies on the line defined by a list of
    * coordinates.
-   * 
+   *
    * @param p the point to test
    * @param line the line coordinates
    * @return true if the point is a vertex of the line or lies in the interior
@@ -48,9 +48,9 @@ public class PointLocation {
   }
 
   /**
-   * Tests whether a point lies on the line defined by a 
+   * Tests whether a point lies on the line defined by a
    * {@link CoordinateSequence}.
-   * 
+   *
    * @param p the point to test
    * @param line the line coordinates
    * @return true if the point is a vertex of the line or lies in the interior
@@ -80,14 +80,14 @@ public class PointLocation {
    * <p>
    * This method does <i>not</i> first check the point against the envelope of
    * the ring.
-   * 
+   *
    * @param p
    *          point to check for ring inclusion
    * @param ring
    *          an array of coordinates representing the ring (which must have
    *          first point identical to last point)
    * @return true if p is inside ring
-   * 
+   *
    * @see PointLocation#locateInRing(Coordinate, Coordinate[])
    */
   public static boolean isInRing(Coordinate p, Coordinate[] ring)
@@ -101,7 +101,7 @@ public class PointLocation {
    * <p>
    * This method does <i>not</i> first check the point against the envelope of
    * the ring.
-   * 
+   *
    * @param p
    *          point to check for ring inclusion
    * @param ring

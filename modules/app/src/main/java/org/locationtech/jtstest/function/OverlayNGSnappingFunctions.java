@@ -41,7 +41,7 @@ public class OverlayNGSnappingFunctions {
     SnappingNoder snapNoder = new SnappingNoder(tolerance);
     return new ValidatingNoder(snapNoder);
   }
-  
+
 
 
   public static Geometry unaryUnion(Geometry a, double tolerance) {
@@ -56,17 +56,17 @@ public class OverlayNGSnappingFunctions {
       public boolean isFloatingPrecision() {
         return true;
       }
-      
+
     };
     UnaryUnionOp op = new UnaryUnionOp(a);
     op.setUnionFunction(unionSRFun);
     return op.union();
   }
-  
+
   private static Geometry unionNoValid(Geometry a, Geometry b, double tolerance) {
     return OverlayNG.overlay(a, b, UNION, null, new SnappingNoder(tolerance) );
   }
-  
+
   public static Geometry unaryUnionNoValid(Geometry a, double tolerance) {
     UnionStrategy unionSRFun = new UnionStrategy() {
 
@@ -79,7 +79,7 @@ public class OverlayNGSnappingFunctions {
       public boolean isFloatingPrecision() {
         return true;
       }
-      
+
     };
     UnaryUnionOp op = new UnaryUnionOp(a);
     op.setUnionFunction(unionSRFun);

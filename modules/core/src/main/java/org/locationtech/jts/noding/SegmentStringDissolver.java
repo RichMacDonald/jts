@@ -21,14 +21,14 @@ import org.locationtech.jts.geom.CoordinateArrays;
  * Dissolves a noded collection of {@link SegmentString}s to produce
  * a set of merged linework with unique segments.
  * A custom {@link SegmentStringMerger} merging strategy
- * can be supplied.  
+ * can be supplied.
  * This strategy will be called when two identical (up to orientation)
  * strings are dissolved together.
  * The default merging strategy is simply to discard one of the merged strings.
  * <p>
  * A common use for this class is to merge noded edges
  * while preserving topological labelling.
- * This requires a custom merging strategy to be supplied 
+ * This requires a custom merging strategy to be supplied
  * to merge the topology labels appropriately.
  *
  * @version 1.7
@@ -37,13 +37,13 @@ import org.locationtech.jts.geom.CoordinateArrays;
 public class SegmentStringDissolver
 {
 	/**
-	 * A merging strategy which can be used to update the context data of {@link SegmentString}s 
+	 * A merging strategy which can be used to update the context data of {@link SegmentString}s
 	 * which are merged during the dissolve process.
-	 * 
+	 *
 	 * @author mbdavis
 	 *
 	 */
-  public interface SegmentStringMerger 
+  public interface SegmentStringMerger
   {
     /**
      * Updates the context data of a SegmentString

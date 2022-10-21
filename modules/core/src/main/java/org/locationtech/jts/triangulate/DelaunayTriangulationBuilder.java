@@ -31,13 +31,13 @@ import org.locationtech.jts.triangulate.quadedge.Vertex;
 
 /**
  * A utility class which creates Delaunay Triangulations
- * from collections of points and extract the resulting 
- * triangulation edges or triangles as geometries. 
- * 
+ * from collections of points and extract the resulting
+ * triangulation edges or triangles as geometries.
+ *
  * @author Martin Davis
  *
  */
-public class DelaunayTriangulationBuilder 
+public class DelaunayTriangulationBuilder
 {
 	/**
 	 * Extracts the unique {@link Coordinate}s from the given {@link Geometry}.
@@ -48,11 +48,11 @@ public class DelaunayTriangulationBuilder
 	{
 		if (geom == null)
 			return new CoordinateList();
-		
+
 		Coordinate[] coords = geom.getCoordinates();
 		return unique(coords);
 	}
-	
+
 	public static CoordinateList unique(Coordinate[] coords)
 	{
 	  Coordinate[] coordsCopy = CoordinateArrays.copyDeep(coords);
@@ -60,7 +60,7 @@ public class DelaunayTriangulationBuilder
 		CoordinateList coordList = new CoordinateList(coordsCopy, false);
 		return coordList;
 	}
-	
+
 	/**
 	 * Converts all {@link Coordinate}s in a collection to {@link Vertex}es.
 	 * @param coords the coordinates to convert
@@ -78,7 +78,7 @@ public class DelaunayTriangulationBuilder
 
 	/**
 	 * Computes the {@link Envelope} of a collection of {@link Coordinate}s.
-	 * 
+	 *
 	 * @param coords a List of Coordinates
 	 * @return the envelope of the set of coordinates
 	 */
@@ -91,11 +91,11 @@ public class DelaunayTriangulationBuilder
 		}
 		return env;
 	}
-	
+
 	private Collection siteCoords;
 	private double tolerance = 0.0;
 	private QuadEdgeSubdivision subdiv = null;
-	
+
 	/**
 	 * Creates a new triangulation builder.
 	 *
@@ -103,11 +103,11 @@ public class DelaunayTriangulationBuilder
 	public DelaunayTriangulationBuilder()
 	{
 	}
-	
+
 	/**
 	 * Sets the sites (vertices) which will be triangulated.
 	 * All vertices of the given geometry will be used as sites.
-	 * 
+	 *
 	 * @param geom the geometry from which the sites will be extracted.
 	 */
 	public void setSites(Geometry geom)
@@ -115,11 +115,11 @@ public class DelaunayTriangulationBuilder
 		// remove any duplicate points (they will cause the triangulation to fail)
 		siteCoords = extractUniqueCoordinates(geom);
 	}
-	
+
 	/**
 	 * Sets the sites (vertices) which will be triangulated
 	 * from a collection of {@link Coordinate}s.
-	 * 
+	 *
 	 * @param coords a collection of Coordinates.
 	 */
 	public void setSites(Collection coords)
@@ -127,33 +127,33 @@ public class DelaunayTriangulationBuilder
 		// remove any duplicate points (they will cause the triangulation to fail)
 		siteCoords = unique(CoordinateArrays.toCoordinateArray(coords));
 	}
-	
+
 	/**
 	 * Sets the snapping tolerance which will be used
 	 * to improved the robustness of the triangulation computation.
 	 * A tolerance of 0.0 specifies that no snapping will take place.
-	 * 
+	 *
 	 * @param tolerance the tolerance distance to use
 	 */
 	public void setTolerance(double tolerance)
 	{
 		this.tolerance = tolerance;
 	}
-	
+
 	private void create()
 	{
 		if (subdiv != null) return;
-		
+
 		Envelope siteEnv = envelope(siteCoords);
 		List vertices = toVertices(siteCoords);
 		subdiv = new QuadEdgeSubdivision(siteEnv, tolerance);
 		IncrementalDelaunayTriangulator triangulator = new IncrementalDelaunayTriangulator(subdiv);
 		triangulator.insertSites(vertices);
 	}
-	
+
 	/**
 	 * Gets the {@link QuadEdgeSubdivision} which models the computed triangulation.
-	 * 
+	 *
 	 * @return the subdivision containing the triangulation
 	 */
 	public QuadEdgeSubdivision getSubdivision()
@@ -161,10 +161,10 @@ public class DelaunayTriangulationBuilder
 		create();
 		return subdiv;
 	}
-	
+
 	/**
 	 * Gets the edges of the computed triangulation as a {@link MultiLineString}.
-	 * 
+	 *
 	 * @param geomFact the geometry factory to use to create the output
 	 * @return the edges of the triangulation
 	 */
@@ -173,11 +173,11 @@ public class DelaunayTriangulationBuilder
 		create();
 		return subdiv.getEdges(geomFact);
 	}
-	
+
 	/**
-	 * Gets the faces of the computed triangulation as a {@link GeometryCollection} 
+	 * Gets the faces of the computed triangulation as a {@link GeometryCollection}
 	 * of {@link Polygon}.
-	 * 
+	 *
 	 * @param geomFact the geometry factory to use to create the output
 	 * @return the faces of the triangulation
 	 */

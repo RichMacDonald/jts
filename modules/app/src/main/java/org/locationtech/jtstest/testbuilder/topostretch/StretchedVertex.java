@@ -24,28 +24,28 @@ import org.locationtech.jts.math.Vector2D;
  * Models a vertex of a Geometry which will be stretched
  * due to being too near other segments and vertices.
  * <p>
- * Currently for simplicity a vertex is assumed to 
+ * Currently for simplicity a vertex is assumed to
  * be near only one segment or other vertex.
  * This is sufficient for most cases.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class StretchedVertex 
+public class StretchedVertex
 {
-	// TODO: also provide information about the segments around the facet the vertex is near to, to allow smarter adjustment 
-	
+	// TODO: also provide information about the segments around the facet the vertex is near to, to allow smarter adjustment
+
 	private Coordinate vertexPt;
 	private Coordinate nearPt = null;
   private Coordinate[] nearPts = null;
   private int nearIndex = -1;
 	private LineSegment nearSeg = null;
-	private Coordinate stretchedPt = null; 
-	
+	private Coordinate stretchedPt = null;
+
 	/**
 	 * Creates a vertex which lies near a vertex
 	 */
-	public StretchedVertex(Coordinate vertexPt,  
+	public StretchedVertex(Coordinate vertexPt,
       Coordinate nearPt, Coordinate[] nearPts, int nearIndex)
 	{
 		this.vertexPt = vertexPt;
@@ -53,7 +53,7 @@ public class StretchedVertex
     this.nearPts = nearPts;
     this.nearIndex = nearIndex;
 	}
-	
+
 	/**
 	 * Creates a vertex for a point which lies near a line segment
 	 * @param vertexPt
@@ -61,30 +61,30 @@ public class StretchedVertex
 	 * @param parentIndex
 	 * @param nearSeg
 	 */
-	public StretchedVertex(Coordinate vertexPt, 
+	public StretchedVertex(Coordinate vertexPt,
 			LineSegment nearSeg)
 	{
 		this.vertexPt = vertexPt;
 		this.nearSeg = nearSeg;
 	}
-	
+
 	public Coordinate getVertexCoordinate()
 	{
 		return vertexPt;
 	}
-	
+
 	/**
 	 * Gets the point which this near vertex will be stretched to
 	 * (by a given distance)
-	 * 
-	 * @param dist the distance to adjust the point by 
+	 *
+	 * @param dist the distance to adjust the point by
 	 * @return the stretched coordinate
 	 */
 	public Coordinate getStretchedVertex(double dist)
 	{
-		if (stretchedPt != null) 
+		if (stretchedPt != null)
 			return stretchedPt;
-		
+
 		if (nearPt != null) {
 			stretchedPt = displaceFromVertex(nearPt, dist);
 //			stretchedPt = displaceFromPoint(nearPt, dist);
@@ -95,26 +95,26 @@ public class StretchedVertex
 		}
 		return stretchedPt;
 	}
-	
+
   private boolean isNearRing()
   {
     return CoordinateArrays.isRing(nearPts);
   }
-  
+
   private Coordinate getNearRingPoint(int i)
   {
     int index = i;
-    if (i < 0) 
-      index = i + nearPts.length -1; 
-    else if (i >= nearPts.length - 1) 
-      index = i - (nearPts.length - 1); 
+    if (i < 0)
+      index = i + nearPts.length -1;
+    else if (i >= nearPts.length - 1)
+      index = i - (nearPts.length - 1);
     return nearPts[index];
   }
-  
+
 	private Coordinate displaceFromPoint(Coordinate nearPt, double dist)
 	{
 		LineSegment seg = new LineSegment(nearPt, vertexPt);
-		
+
 		// compute an adjustment which displaces in the direction of the nearPt-vertexPt vector
 		// TODO: make this robust!
 		double len = seg.getLength();
@@ -122,39 +122,39 @@ public class StretchedVertex
 		Coordinate strPt = seg.pointAlong(frac);
 		return strPt;
 	}
-	
+
 	private Coordinate displaceFromSeg(LineSegment nearSeg, double dist)
 	{
 		double frac = nearSeg.projectionFactor(vertexPt);
-		
+
 		// displace away from the segment on the same side as the original point
 		int side = nearSeg.orientationIndex(vertexPt);
 		if (side == Orientation.RIGHT)
 			dist = -dist;
-		
+
 		return nearSeg.pointAlongOffset(frac, dist);
 	}
-  
+
   private Coordinate displaceFromVertex(Coordinate nearPt, double dist)
   {
     // handle linestring endpoints - do simple displacement
-    if (! isNearRing() 
+    if (! isNearRing()
         && nearIndex == 0 || nearIndex >= nearPts.length -1) {
       return displaceFromPoint(nearPt, dist);
     }
-      
+
     // analyze corner to see how to displace the vertex
     // find corner points
     Coordinate p1 = getNearRingPoint(nearIndex - 1);
     Coordinate p2 = getNearRingPoint(nearIndex + 1);
-    
+
     // if vertexPt is identical to an arm of the corner, just displace the point
     if (p1.equals2D(vertexPt) || p2.equals2D(vertexPt))
       return displaceFromPoint(nearPt, dist);
-    
+
     return displaceFromCornerAwayFromArms(nearPt, p1, p2, dist);
   }
-  
+
   private Coordinate displaceFromCornerOriginal(Coordinate nearPt, Coordinate p1, Coordinate p2, double dist)
   {
     // if corner is nearly flat, just displace point
@@ -163,14 +163,14 @@ public class StretchedVertex
       return displaceFromFlatCorner(p1, p2, dist);
 
     Coordinate[] corner = orientCorner(nearPt, p1, p2);
-    
+
     // find quadrant of corner that vertex pt lies in
     int quadrant = quadrant(vertexPt, nearPt, corner);
-    
+
     Vector2D normOffset = normalizedOffset(nearPt, p1, p2);
     Vector2D baseOffset = normOffset.multiply(dist);
     Vector2D rotatedOffset = baseOffset.rotateByQuarterCircle(quadrant);
-    
+
     return rotatedOffset.translate(vertexPt);
     //return null;
   }
@@ -191,19 +191,19 @@ public class StretchedVertex
   }
 
   private static final double MAX_ARM_NEARNESS_ANG = 20.0 / 180.0 * Math.PI;
-  
+
   private static double maxAngleToBisector(double ang)
   {
     double relAng = ang / 2 - MAX_ARM_NEARNESS_ANG;
     if (relAng < 0) return 0;
     return relAng;
   }
-  
+
   /**
    * Displaces a vertex from a corner,
    * with angle limiting
    * used to ensure that the displacement is not close to the arms of the corner.
-   * 
+   *
    * @param nearPt
    * @param p1
    * @param p2
@@ -214,25 +214,25 @@ public class StretchedVertex
   {
     Coordinate[] corner = orientCorner(nearPt, p1, p2);
     boolean isInsideCorner = isInsideCorner(vertexPt, nearPt, corner[0], corner[1]);
-    
+
     Vector2D u1 = Vector2D.create(nearPt, corner[0]).normalize();
     Vector2D u2 = Vector2D.create(nearPt, corner[1]).normalize();
     double cornerAng = u1.angle(u2);
-    
+
     double maxAngToBisec = maxAngleToBisector(cornerAng);
-    
+
     Vector2D bisec = u2.rotate(cornerAng / 2);
     if (! isInsideCorner) {
       bisec = bisec.multiply(-1);
       double outerAng = 2 * Math.PI - cornerAng;
       maxAngToBisec = maxAngleToBisector(outerAng);
     }
-    
+
     Vector2D pointwiseDisplacement = Vector2D.create(nearPt, vertexPt).normalize();
     double stretchAng = pointwiseDisplacement.angleTo(bisec);
     double stretchAngClamp = MathUtil.clamp(stretchAng, -maxAngToBisec, maxAngToBisec);
     Vector2D cornerDisplacement = bisec.rotate(-stretchAngClamp).multiply(dist);
- 
+
     return cornerDisplacement.translate(vertexPt);
   }
 
@@ -243,7 +243,7 @@ public class StretchedVertex
   }
 
   private static final double POINT_LINE_FLATNESS_RATIO = 0.01;
-  
+
   private static boolean isFlat(Coordinate p, Coordinate p1, Coordinate p2)
   {
   	double dist = Distance.pointToSegment(p, p1, p2);
@@ -252,11 +252,11 @@ public class StretchedVertex
   		return true;
   	return false;
   }
-  
+
   /**
-   * 
+   *
    * @param pt
-   * @param cornerBase the two vertices defining the 
+   * @param cornerBase the two vertices defining the
    * @param corner the two vertices defining the arms of the corner, oriented CW
    * @return the quadrant the pt lies in
    */
@@ -274,7 +274,7 @@ public class StretchedVertex
 	else
 		return 2;
   }
-  
+
   private static Coordinate rotateToQuadrant(Coordinate v, int quadrant)
   {
   	switch (quadrant) {
@@ -285,10 +285,10 @@ public class StretchedVertex
   	}
   	return null;
   }
-  
+
   /**
    * Returns an array of pts such that p0 - p[0] - [p1] is CW.
-   * 
+   *
    * @param p0
    * @param p1
    * @param p2
@@ -304,13 +304,13 @@ public class StretchedVertex
     else {
     	orient = new Coordinate[] { p2, p1 };
     }
-    
+
     return orient;
   }
-  
+
   /**
    * Returns an array of pts such that p0 - p[0] - [p1] is CW.
-   * 
+   *
    * @param p0
    * @param p1
    * @param p2
@@ -323,7 +323,7 @@ public class StretchedVertex
   	Vector2D offset = u1.add(u2).normalize();
     return offset;
   }
-  
+
   private Coordinate displaceFromFlatCorner(Coordinate p1, Coordinate p2, double dist)
   {
   	// compute perpendicular bisector of p1-p2

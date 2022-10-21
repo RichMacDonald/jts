@@ -27,20 +27,20 @@ import org.locationtech.jts.util.Assert;
 
 
 /**
- * Extracts atomic elements from 
- * input geometries or collections, 
+ * Extracts atomic elements from
+ * input geometries or collections,
  * recording the dimension found.
- * Empty geometries are discarded since they 
+ * Empty geometries are discarded since they
  * do not contribute to the result of {@link UnaryUnionOp}.
- * 
+ *
  * @author Martin Davis
  *
  */
-class InputExtracter implements GeometryFilter 
+class InputExtracter implements GeometryFilter
 {
   /**
    * Extracts elements from a collection of geometries.
-   * 
+   *
    * @param geoms a collection of geometries
    * @return an extracter over the geometries
    */
@@ -49,10 +49,10 @@ class InputExtracter implements GeometryFilter
     extracter.add(geoms);
     return extracter;
   }
-  
+
   /**
    * Extracts elements from a geometry.
-   * 
+   *
    * @param geoms a geometry to extract from
    * @return an extracter over the geometry
    */
@@ -61,55 +61,55 @@ class InputExtracter implements GeometryFilter
     extracter.add(geom);
     return extracter;
   }
-  
+
   private GeometryFactory geomFactory = null;
   private List<Polygon> polygons = new ArrayList<>();
   private List<LineString> lines = new ArrayList<>();
   private List<Point> points = new ArrayList<>();
-  
+
   /**
    * The default dimension for an empty GeometryCollection
    */
   private int dimension = Dimension.FALSE;
-  
+
   public InputExtracter() {
-    
+
   }
-  
+
   /**
    * Tests whether there were any non-empty geometries extracted.
-   * 
+   *
    * @return true if there is a non-empty geometry present
    */
   public boolean isEmpty() {
-    return polygons.isEmpty() 
+    return polygons.isEmpty()
         && lines.isEmpty()
         && points.isEmpty();
   }
-  
+
   /**
    * Gets the maximum dimension extracted.
-   * 
+   *
    * @return the maximum extracted dimension
    */
   public int getDimension() {
     return dimension;
   }
-  
+
   /**
    * Gets the geometry factory from the extracted geometry,
    * if there is one.
    * If an empty collection was extracted, will return <code>null</code>.
-   * 
+   *
    * @return a geometry factory, or null if one could not be determined
    */
   public GeometryFactory getFactory() {
     return geomFactory;
   }
-  
+
   /**
    * Gets the extracted atomic geometries of the given dimension <code>dim</code>.
-   * 
+   *
    * @param dim the dimension of geometry to return
    * @return a list of the extracted geometries of dimension dim.
    */
@@ -122,30 +122,30 @@ class InputExtracter implements GeometryFilter
     Assert.shouldNeverReachHere("Invalid dimension: "  + dim);
     return null;
   }
-  
+
   private void add(Collection<Geometry> geoms) {
     for (Geometry geom : geoms) {
       add(geom);
     }
   }
-  
+
   private void add(Geometry geom) {
     if (geomFactory == null)
       geomFactory = geom.getFactory();
-    
+
     geom.apply(this);
   }
 
   @Override
   public void filter(Geometry geom) {
     recordDimension( geom.getDimension() );
-    
+
     /**
      * Don't keep empty geometries
      */
-    if ((geom instanceof GeometryCollection) || geom.isEmpty()) 
+    if ((geom instanceof GeometryCollection) || geom.isEmpty())
       return;
-    
+
     if (geom instanceof Polygon) {
       polygons.add((Polygon) geom);
       return;

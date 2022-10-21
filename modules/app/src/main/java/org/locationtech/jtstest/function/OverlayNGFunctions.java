@@ -24,7 +24,7 @@ import org.locationtech.jts.operation.union.UnionStrategy;
 import org.locationtech.jtstest.geomfunction.Metadata;
 
 public class OverlayNGFunctions {
-  
+
   public static Geometry difference(Geometry a, Geometry b) {
     return OverlayNG.overlay(a, b, DIFFERENCE );
   }
@@ -59,13 +59,13 @@ public class OverlayNGFunctions {
       public boolean isFloatingPrecision() {
         return true;
       }
-      
+
     };
     UnaryUnionOp op = new UnaryUnionOp(a);
     op.setUnionFunction(unionSRFun);
     return op.union();
   }
-  
+
   @Metadata(description="Fast Union of a fully-noded coverage (polygons or lines)")
   public static Geometry unionCoverage(Geometry geom) {
     Geometry cov = OverlayNGSRFunctions.extractHomo(geom);

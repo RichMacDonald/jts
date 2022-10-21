@@ -19,11 +19,11 @@ import org.locationtech.jts.io.WKTWriter;
 
 /**
  * Models the location of a point on a Geometry
- * 
+ *
  * @author Martin Davis
  *
  */
-public class GeometryLocation 
+public class GeometryLocation
 {
   /**
    * The top-level geometry containing the location
@@ -33,35 +33,35 @@ public class GeometryLocation
    * The Geometry component containing the location
    */
   private Geometry component;
-  
+
   /**
    * The path of indexes to the component containing the location
    */
   private int[] componentPath;
-  
+
   /**
    * The index of the vertex or segment the location occurs on
    */
   private int index;
-  
+
   /**
    * Indicates whether this location is a vertex of the geometry
    */
   private boolean isVertex = true;
-  
+
   /**
    * The actual coordinate for the location
    */
   private Coordinate pt;
-  
-  public GeometryLocation(Geometry parent, Geometry component, int[] componentPath) 
+
+  public GeometryLocation(Geometry parent, Geometry component, int[] componentPath)
   {
     this.parent = parent;
     this.component = component;
     this.componentPath = componentPath;
   }
 
-  public GeometryLocation(Geometry parent, Geometry component, int index, Coordinate pt) 
+  public GeometryLocation(Geometry parent, Geometry component, int index, Coordinate pt)
   {
     this.parent = parent;
     this.component = component;
@@ -70,7 +70,7 @@ public class GeometryLocation
   }
 
   public GeometryLocation(Geometry parent, Geometry component, int segmentIndex, boolean isVertex,
-      Coordinate pt) 
+      Coordinate pt)
   {
     this.parent = parent;
     this.component = component;
@@ -80,7 +80,7 @@ public class GeometryLocation
   }
 
   public GeometryLocation(Geometry parent, Geometry component, int[] componentPath, int segmentIndex, boolean isVertex,
-      Coordinate pt) 
+      Coordinate pt)
   {
     this.parent = parent;
     this.component = component;
@@ -90,25 +90,25 @@ public class GeometryLocation
     this.pt = pt;
   }
 
-  public Geometry getComponent() 
+  public Geometry getComponent()
   {
   	return component;
   }
-  
+
   public Coordinate getCoordinate() { return pt; }
-  
+
   public boolean isVertex() { return isVertex; }
-  
+
   public Geometry insert()
   {
     return GeometryVertexInserter.insert(parent, (LineString) component, index, pt);
   }
-  
+
   public Geometry delete()
   {
     return GeometryVertexDeleter.delete(parent, (LineString) component, index);
   }
-  
+
   public double getLength()
   {
     if (isVertex()) return 0;
@@ -120,7 +120,7 @@ public String toString()
   {
     return pt.toString();
   }
-  
+
   public String pathString()
   {
 		StringBuilder buf = new StringBuilder();
@@ -132,11 +132,11 @@ public String toString()
 		}
 		return buf.toString();
   }
-  
+
 	public String toFacetString()
 	{
 		StringBuilder buf = new StringBuilder();
-		
+
 		// facet index
 		buf.append("[");
 		for (int i = 0; i < componentPath.length; i++) {
@@ -151,9 +151,9 @@ public String toString()
 			buf.append("-" + (index + 1));
 		}
 		buf.append("]  ");
-		
+
 		// facet value
-    buf.append(isVertex() ? 
+    buf.append(isVertex() ?
         WKTWriter.toPoint(pt)
         : WKTWriter.toLineString(pt, component.getCoordinates()[index + 1]));
 

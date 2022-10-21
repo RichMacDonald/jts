@@ -24,7 +24,7 @@ import org.locationtech.jtstest.util.StringUtil;
 /**
  * A {@link GeometryFunction} which calls a static
  * {@link Method}.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -34,37 +34,37 @@ public class StaticMethodGeometryFunction
   private static final String PARAM_NAME_TEXT = "Text";
   private static final String PARAM_NAME_COUNT = "Count";
   private static final String PARAM_NAME_DISTANCE = "Distance";
-  
+
   private static final String FUNCTIONS_SUFFIX = "Functions";
-	
+
 	public static StaticMethodGeometryFunction createFunction(Method method)
 	{
 		Assert.isTrue(Geometry.class.isAssignableFrom((method.getParameterTypes())[0]));
-		
+
 		Class<?> clz = method.getDeclaringClass();
-		
+
 		String category = extractCategory(ClassUtil.getClassname(clz));
 		String funcName = method.getName();
 		String description = extractDescription(method);
 		String[] paramNames = extractParamNames(method);
 		Class<?>[] paramTypes = extractParamTypes(method);
 		Class<?> returnType = method.getReturnType();
-		
-		return new StaticMethodGeometryFunction(category, funcName, 
+
+		return new StaticMethodGeometryFunction(category, funcName,
 				description,
 				paramNames, paramTypes,
-				returnType, method);    
+				returnType, method);
 	}
-	
+
 	private static String extractCategory(String className)
 	{
 		String trim = StringUtil.removeFromEnd(className, FUNCTIONS_SUFFIX);
 		return trim;
 	}
-	
+
 	/**
 	 * Java doesn't permit accessing the original code parameter names, unfortunately.
-	 * 
+	 *
 	 * @param method
 	 * @return
 	 */
@@ -83,7 +83,7 @@ public class StaticMethodGeometryFunction
 		}
 		return name;
 	}
-	
+
 	private static String[] defaultParamNames(Method method) {
 	  int firstScalarIndex = firstScalarParamIndex(method);
 	   // Synthesize default names
@@ -120,7 +120,7 @@ public class StaticMethodGeometryFunction
     String desc = (doc == null) ? "" : doc.description();
     return desc;
 	}
-	
+
 	private static Class<?>[] extractParamTypes(Method method)
 	{
 		Class<?>[] methodParamTypes = method.getParameterTypes();
@@ -130,7 +130,7 @@ public class StaticMethodGeometryFunction
 		return types;
 	}
 
-	 
+
   private static boolean extractRequiredB(Method method) {
     Annotation[][] anno = method.getParameterAnnotations();
     if (anno.length <= 1) return false;
@@ -141,15 +141,15 @@ public class StaticMethodGeometryFunction
     }
     return isRequired;
   }
-  
+
   private Method method;
 
 	public StaticMethodGeometryFunction(
 			String category,
-			String name, 
+			String name,
 			String description,
-			String[] parameterNames, 
-			Class<?>[] parameterTypes, 
+			String[] parameterNames,
+			Class<?>[] parameterTypes,
 			Class<?> returnType,
 			Method method)
 	{
@@ -159,14 +159,14 @@ public class StaticMethodGeometryFunction
 	}
 
   @Override
-public Object invoke(Geometry g, Object[] arg) 
+public Object invoke(Geometry g, Object[] arg)
   {
     return invoke(method, null, createFullArgs(g, arg));
   }
 
   /**
    * Creates an arg array which includes the target geometry as the first argument
-   * 
+   *
    * @param g
    * @param arg
    * @return
@@ -174,7 +174,7 @@ public Object invoke(Geometry g, Object[] arg)
   private static Object[] createFullArgs(Geometry g, Object[] arg)
   {
   	int fullArgLen = 1;
-  	if (arg != null) 
+  	if (arg != null)
   		fullArgLen = arg.length + 1;
   	Object[] fullArg = new Object[fullArgLen];
   	fullArg[0] = g;
@@ -183,7 +183,7 @@ public Object invoke(Geometry g, Object[] arg)
   	}
   	return fullArg;
   }
-  
+
   public static Object invoke(Method method, Object target, Object[] args)
   {
     Object result;
@@ -202,7 +202,7 @@ public Object invoke(Geometry g, Object[] arg)
     }
     return result;
   }
-  
+
   private static String invocationErrMsg(InvocationTargetException ex)
   {
     Throwable targetEx = ex.getTargetException();
@@ -211,7 +211,7 @@ public Object invoke(Geometry g, Object[] arg)
     targetEx.getMessage();
     return msg;
   }
-  
+
   public static String getClassname(Class<?> javaClass)
   {
     String jClassName = javaClass.getName();

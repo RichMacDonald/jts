@@ -10,7 +10,7 @@ public class OrdinateFormatTest extends TestCase {
   }
 
   public OrdinateFormatTest(String name) { super(name); }
-  
+
   public void testLargeNumber() {
     // ensure scientific notation is not used
     checkFormat(1234567890.0, "1234567890");
@@ -64,19 +64,19 @@ public class OrdinateFormatTest extends TestCase {
     String actual = OrdinateFormat.DEFAULT.format(d);
     assertEquals(expected, actual);
   }
-  
+
   private void checkFormat(double d, int maxFractionDigits, String expected) {
     OrdinateFormat format = OrdinateFormat.create(maxFractionDigits);
     String actual = format.format(d);
     assertEquals(expected, actual);
   }
-  
+
   private void checkFormatAllLocales(double d, int maxFractionDigits, String expected) {
     OrdinateFormat format = OrdinateFormat.create(maxFractionDigits);
     String actual = format.format(d);
     assertEquals(expected, actual);
   }
-  
+
   private void checkFormatLocales(double d, int maxFractionDigits, String expected) {
     OrdinateFormat format = OrdinateFormat.create(maxFractionDigits);
     String actual = format.format(d);

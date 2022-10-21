@@ -43,19 +43,19 @@ public class SVGTestWriter {
         Geometry gb = testable.getGeometry(1);
         return write(ga, gb, testable.getName(), testable.getDescription() );
     }
-    
+
     public String write(Geometry ga, Geometry gb, String name, String description) {
         StringBuffer text = new StringBuffer();
-        
+
         Envelope env = sceneEnv(ga, gb);
         Coordinate centre = env.centre();
-        
+
         int DIM = 1000;
         String wh = "width='" + DIM + "' height='" + DIM + "'";
         String viewBox = env.getMinX() + " " + env.getMinY() + " " + env.getWidth() + " " + env.getHeight();
         // transform to flip the Y axis to match SVG
         String trans = String.format("translate(0 %f) scale( 1 -1 ) translate(0 %f)", centre.y, -centre.y);
-        
+
         text.append("<?xml version='1.0' standalone='no'?>\n");
         text.append("<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>\n");
         text.append("<svg " + wh + " viewBox='" + viewBox + "'  version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>\n");
@@ -94,7 +94,7 @@ public class SVGTestWriter {
       text.append(write(g));
       text.append("\n</g>\n");
     }
-    
+
     private String write(Geometry geometry) {
         if (geometry == null) {
             return "";

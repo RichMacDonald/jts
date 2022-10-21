@@ -29,14 +29,14 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 import org.locationtech.jts.util.Stopwatch;
 
 
-public class PreparedPolygonIntersectsPerfTest 
+public class PreparedPolygonIntersectsPerfTest
 {
   static final int MAX_ITER = 10;
-  
+
   static final int NUM_AOI_PTS = 2000;
   static final int NUM_LINES = 10000;
   static final int NUM_LINE_PTS = 100;
-  
+
   static PrecisionModel pm = new PrecisionModel();
   static GeometryFactory fact = new GeometryFactory(pm, 0);
   static WKTReader wktRdr = new WKTReader(fact);
@@ -67,7 +67,7 @@ public class PreparedPolygonIntersectsPerfTest
     test(8000);
     */
   }
-  
+
   public void test(int nPts)
   {
 //  	Geometry poly = createCircle(new Coordinate(0, 0), 100, nPts);
@@ -75,9 +75,9 @@ public class PreparedPolygonIntersectsPerfTest
 //  	System.out.println(poly);
 //  	Geometry target = sinePoly.getBoundary();
   	Geometry target = sinePoly;
-  	
+
     List lines = createLines(target.getEnvelopeInternal(), NUM_LINES, 1.0, NUM_LINE_PTS);
-    
+
     System.out.println();
     //System.out.println("Running with " + nPts + " points");
     test(target, lines);
@@ -104,7 +104,7 @@ public class PreparedPolygonIntersectsPerfTest
 		Geometry poly = gsf.createSineStar();
 		return poly;
 	}
-  
+
   List createLines(Envelope env, int nItems, double size, int nPts)
   {
     int nCells = (int) Math.sqrt(nItems);
@@ -124,7 +124,7 @@ public class PreparedPolygonIntersectsPerfTest
   	}
   	return geoms;
   }
-  
+
   Geometry createLine(Coordinate base, double size, int nPts)
   {
     SineStarFactory gsf = new SineStarFactory();
@@ -135,7 +135,7 @@ public class PreparedPolygonIntersectsPerfTest
 //    System.out.println(circle);
     return circle.getBoundary();
   }
-  
+
   public void test(Geometry g, List lines)
   {
     System.out.println("AOI # pts: " + g.getNumPoints()
@@ -156,7 +156,7 @@ public class PreparedPolygonIntersectsPerfTest
 
 
   public int testOriginal(int iter, Geometry g, List lines)
-  { 
+  {
 	  if (iter == 0) System.out.println("Using original JTS algorithm");
   	int count = 0;
   	for (Object line2 : lines) {
@@ -166,51 +166,51 @@ public class PreparedPolygonIntersectsPerfTest
   	}
   	return count;
   }
-  
+
   public int testPrepGeomCached(int iter, Geometry g, List lines)
-  { 
+  {
 	  if (iter == 0) System.out.println("Using cached Prepared Geometry");
    PreparedGeometryFactory pgFact = new PreparedGeometryFactory();
     PreparedGeometry prepGeom = pgFact.create(g);
-    
+
   	int count = 0;
   	for (Object line2 : lines) {
   		LineString line = (LineString) line2;
-  		
+
   		if (prepGeom.intersects(line))
   			count++;
   	}
   	return count;
   }
-  
+
   /**
    * Tests using PreparedGeometry, but creating a new
    * PreparedGeometry object each time.
-   * This tests whether there is a penalty for using 
-   * the PG algorithm as a complete replacement for 
+   * This tests whether there is a penalty for using
+   * the PG algorithm as a complete replacement for
    * the original algorithm.
-   *  
+   *
    * @param g
    * @param lines
    * @return the count
    */
   public int testPrepGeomNotCached(int iter, Geometry g, List lines)
-  { 
+  {
   	if (iter == 0) System.out.println("Using NON-CACHED Prepared Geometry");
     PreparedGeometryFactory pgFact = new PreparedGeometryFactory();
 //    PreparedGeometry prepGeom = pgFact.create(g);
-    
+
   	int count = 0;
   	for (Object line2 : lines) {
   		LineString line = (LineString) line2;
-  		
+
   		// test performance of creating the prepared geometry each time
       PreparedGeometry prepGeom = pgFact.create(g);
-      
+
   		if (prepGeom.intersects(line))
   			count++;
   	}
   	return count;
   }
-  
+
 }

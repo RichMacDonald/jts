@@ -33,13 +33,13 @@ public class DeleteByBoxTool extends BoxBandTool {
   }
 
   @Override
-protected void gestureFinished() 
-  {      
+protected void gestureFinished()
+  {
     Envelope env = getBox().getEnvelopeInternal();
     Geometry g = geomModel().getGeometry();
-    
+
     Geometry edit = null;
-    
+
     if (isRightButton()) {
       edit = GeometryBoxDeleter.deleteVertices(g, env);
     }
@@ -49,7 +49,7 @@ protected void gestureFinished()
     else {
       edit = GeometryBoxDeleter.deleteComponents(g, env, false);
     }
-    
+
     geomModel().setGeometry(edit);
   }
 

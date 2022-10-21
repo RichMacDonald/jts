@@ -15,7 +15,7 @@ package org.locationtech.jts.triangulate.quadedge;
 /**
  * Interface for classes which process triangles visited during traversals of a
  * {@link QuadEdgeSubdivision}
- * 
+ *
  * @author Martin Davis
  */
 public interface TraversalVisitor {
@@ -28,7 +28,7 @@ public interface TraversalVisitor {
      * visit the neighbouring triangle is the terminating condition for many traversal algorithms.
      * In particular, if the neighbour triangle has already been visited, it should not be visited
      * again.
-     * 
+     *
      * @param currTri the current triangle being processed
      * @param edgeIndex the index of the edge in the current triangle being traversed
      * @param neighbTri a neighbouring triangle next in line to visit

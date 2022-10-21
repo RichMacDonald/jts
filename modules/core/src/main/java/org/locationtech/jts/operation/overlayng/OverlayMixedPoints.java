@@ -37,12 +37,12 @@ import org.locationtech.jts.util.Assert;
  * <p>
  * Input semantics are:
  * <ul>
- * <li>Duplicates are removed from Point output 
+ * <li>Duplicates are removed from Point output
  * <li>Non-point output is rounded and noded using the given precision model
  * </ul>
  * Output semantics are:
  * <ul>
- * <ii>An empty result is an empty atomic geometry 
+ * <ii>An empty result is an empty atomic geometry
  *     with dimension determined by the inputs and the operation,
  *     as per overlay semantics<li>
  * </ul>
@@ -51,11 +51,11 @@ import org.locationtech.jts.util.Assert;
  * <li>Input points are not included in the noding of the non-point input geometry
  * (in particular, they do not participate in snap-rounding if that is used).
  * <li>If the non-point input geometry is not included in the output
- * it is not rounded and noded.  This means that points 
+ * it is not rounded and noded.  This means that points
  * are compared to the non-rounded geometry.
  * This will be apparent in the result.
  * </ul>
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -72,7 +72,7 @@ class OverlayMixedPoints {
   private final Geometry geomNonPointInput;
   private final GeometryFactory geometryFactory;
   private final boolean isPointRHS;
-  
+
   private Geometry geomNonPoint;
   private int geomNonPointDim;
   private PointOnGeometryLocator locator;
@@ -96,23 +96,23 @@ class OverlayMixedPoints {
       this.isPointRHS = true;
     }
   }
-  
+
   public Geometry getResult() {
     // reduce precision of non-point input, if required
     geomNonPoint = prepareNonPoint(geomNonPointInput);
     geomNonPointDim = geomNonPoint.getDimension();
     locator = createLocator(geomNonPoint);
-    
+
     Coordinate[] coords = extractCoordinates(geomPoint, pm);
 
     switch (opCode) {
-    case OverlayNG.INTERSECTION: 
+    case OverlayNG.INTERSECTION:
       return computeIntersection(coords);
-    case OverlayNG.UNION: 
-    case OverlayNG.SYMDIFFERENCE: 
+    case OverlayNG.UNION:
+    case OverlayNG.SYMDIFFERENCE:
       // UNION and SYMDIFFERENCE have same output
       return computeUnion(coords);
-    case OverlayNG.DIFFERENCE: 
+    case OverlayNG.DIFFERENCE:
       return computeDifference(coords);
     }
     Assert.shouldNeverReachHere("Unknown overlay op code");
@@ -133,7 +133,7 @@ class OverlayMixedPoints {
     if (resultDim == 0) {
       return geomInput;
     }
-    
+
     // Node and round the non-point geometry for output
     Geometry geomPrep = OverlayNG.union(geomNonPointInput, pm);
     return geomPrep;
@@ -153,7 +153,7 @@ class OverlayMixedPoints {
     if (geomNonPointDim == 2) {
       resultPolyList = extractPolygons(geomNonPoint);
     }
-    
+
     return OverlayUtil.createResultGeometry(resultPolyList, resultLineList, resultPointList, geometryFactory);
   }
 
@@ -163,7 +163,7 @@ class OverlayMixedPoints {
     }
     return createPointResult(findPoints(false, coords));
   }
-  
+
   private Geometry createPointResult(List<Point> points) {
     if (points.size() == 0) {
       return geometryFactory.createEmpty(0);
@@ -186,11 +186,11 @@ class OverlayMixedPoints {
     }
     return createPoints(resultCoords);
   }
-  
+
   private List<Point> createPoints(Set<Coordinate> coords) {
     List<Point> points = new ArrayList<>();
     for (Coordinate coord : coords) {
-      Point point = geometryFactory.createPoint(coord); 
+      Point point = geometryFactory.createPoint(coord);
       points.add(point);
     }
     return points;
@@ -207,15 +207,15 @@ class OverlayMixedPoints {
   /**
    * Copy the non-point input geometry if not
    * already done by precision reduction process.
-   * 
+   *
    * @return a copy of the non-point geometry
    */
   private Geometry copyNonPoint() {
-    if (geomNonPointInput != geomNonPoint) 
+    if (geomNonPointInput != geomNonPoint)
       return geomNonPoint;
     return geomNonPoint.copy();
   }
-  
+
   private static Coordinate[] extractCoordinates(Geometry points, PrecisionModel pm) {
     CoordinateList coords = new CoordinateList();
     points.apply((CoordinateFilter) coord -> {
@@ -224,7 +224,7 @@ class OverlayMixedPoints {
       });
     return coords.toCoordinateArray();
   }
-  
+
   private static List<Polygon> extractPolygons(Geometry geom) {
     List<Polygon> list = new ArrayList<>();
     for (int i = 0; i < geom.getNumGeometries(); i++) {

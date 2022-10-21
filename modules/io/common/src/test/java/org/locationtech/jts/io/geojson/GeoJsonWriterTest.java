@@ -109,7 +109,7 @@ public class GeoJsonWriterTest extends GeometryTestCase {
   }
 
   // empty atomic geometries are not supported in GeoJSON
-  
+
   public void testMultiPointEmpty() throws ParseException {
     runTest("MULTIPOINT EMPTY", "{'type':'MultiPoint','coordinates':[]}");
   }
@@ -133,7 +133,7 @@ public class GeoJsonWriterTest extends GeometryTestCase {
     System.out.println('"' + json.replace('"', '\'') + '"');
     //checkEqual(result, expected);
   }
- 
+
   private void runTest(String wkt, String expectedGeojson) throws ParseException {
     runTest(wkt, 0, false, false, expectedGeojson);
   }

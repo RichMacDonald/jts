@@ -44,7 +44,7 @@ public class BoundaryOp
 {
   /**
    * Computes a geometry representing the boundary of a geometry.
-   * 
+   *
    * @param g the input geometry
    * @return the computed boundary
    */
@@ -53,11 +53,11 @@ public class BoundaryOp
     BoundaryOp bop = new BoundaryOp(g);
     return bop.getBoundary();
   }
-  
+
   /**
    * Computes a geometry representing the boundary of a geometry,
    * using an explicit {@link BoundaryNodeRule}.
-   * 
+   *
    * @param g the input geometry
    * @param bnRule the Boundary Node Rule to use
    * @return the computed boundary
@@ -67,18 +67,18 @@ public class BoundaryOp
     BoundaryOp bop = new BoundaryOp(g, bnRule);
     return bop.getBoundary();
   }
-  
+
   /**
    * Tests if a geometry has a boundary (it is non-empty).
    * The semantics are:
    * <ul>
-   * <li>Empty geometries do not have boundaries. 
+   * <li>Empty geometries do not have boundaries.
    * <li>Points do not have boundaries.
-   * <li>For linear geometries the existence of the boundary 
+   * <li>For linear geometries the existence of the boundary
    * is determined by the {@link BoundaryNodeRule}.
    * <li>Non-empty polygons always have a boundary.
    * </ul>
-   * 
+   *
    * @param geom the geometry providing the boundary
    * @param boundaryNodeRule  the Boundary Node Rule to use
    * @return true if the boundary exists
@@ -98,14 +98,14 @@ public class BoundaryOp
     }
     return true;
   }
-  
+
   private Geometry geom;
   private GeometryFactory geomFact;
   private BoundaryNodeRule bnRule;
 
   /**
    * Creates a new instance for the given geometry.
-   * 
+   *
    * @param geom the input geometry
    */
   public BoundaryOp(Geometry geom)
@@ -115,7 +115,7 @@ public class BoundaryOp
 
   /**
    * Creates a new instance for the given geometry.
-   * 
+   *
    * @param geom the input geometry
    * @param bnRule the Boundary Node Rule to use
    */
@@ -128,7 +128,7 @@ public class BoundaryOp
 
   /**
    * Gets the computed boundary.
-   * 
+   *
    * @return the boundary geometry
    */
   public Geometry getBoundary()

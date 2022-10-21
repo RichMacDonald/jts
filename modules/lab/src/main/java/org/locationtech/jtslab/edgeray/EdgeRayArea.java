@@ -21,19 +21,19 @@ public class EdgeRayArea {
     EdgeRayArea area = new EdgeRayArea(geom);
     return area.getArea();
   }
-  
+
   private Geometry geom;
 
   public EdgeRayArea(Geometry geom) {
     this.geom = geom;
   }
-  
+
   public double getArea() {
     Polygon poly = (Polygon) geom;
     CoordinateSequence seq = poly.getExteriorRing().getCoordinateSequence();
     boolean isCW = ! Orientation.isCCW(seq);
     // TODO: for now assume poly is CW
-    
+
     // scan every segment
     double area = 0;
     for (int i = 1; i < seq.size(); i++) {

@@ -26,85 +26,85 @@ import org.locationtech.jtstest.geomfunction.Metadata;
 
 public class ConstructionFunctions {
   public static Geometry octagonalEnvelope(Geometry g) { return OctagonalEnvelope.octagonalEnvelope(g); }
-  
+
   public static Geometry minimumDiameter(Geometry g) {      return (new MinimumDiameter(g)).getDiameter();  }
   public static double minimumDiameterLength(Geometry g) {      return (new MinimumDiameter(g)).getDiameter().getLength();  }
 
   public static Geometry minimumRectangle(Geometry g) { return (new MinimumDiameter(g)).getMinimumRectangle();  }
-  
+
   public static Geometry minimumBoundingCircle(Geometry g) { return (new MinimumBoundingCircle(g)).getCircle();  }
   public static double minimumBoundingCircleDiameterLen(Geometry g) {      return 2 * (new MinimumBoundingCircle(g)).getRadius();  }
 
   public static Geometry maximumDiameter(Geometry g) {      return (new MinimumBoundingCircle(g)).getMaximumDiameter();  }
-  public static double maximumDiameterLength(Geometry g) {  
+  public static double maximumDiameterLength(Geometry g) {
     return (new MinimumBoundingCircle(g)).getMaximumDiameter().getLength();
   }
-  
+
   public static Geometry boundary(Geometry g) {      return g.getBoundary();  }
   public static Geometry convexHull(Geometry g) {      return g.convexHull();  }
   public static Geometry centroid(Geometry g) {      return g.getCentroid();  }
   public static Geometry interiorPoint(Geometry g) {      return g.getInteriorPoint();  }
 
   public static Geometry densify(Geometry g, double distance) { return Densifier.densify(g, distance); }
-  
+
   //--------------------------------------------
-  
+
   @Metadata(description="Constructs the Maximum Inscribed Circle of a polygonal geometry")
   public static Geometry maximumInscribedCircle(Geometry g,
       @Metadata(title="Distance tolerance")
-      double tolerance) { 
-    MaximumInscribedCircle mic = new MaximumInscribedCircle(g, tolerance); 
+      double tolerance) {
+    MaximumInscribedCircle mic = new MaximumInscribedCircle(g, tolerance);
     Coordinate center = mic.getCenter().getCoordinate();
     Coordinate radiusPt = mic.getRadiusPoint().getCoordinate();
     LineString radiusLine = g.getFactory().createLineString(new Coordinate[] { center, radiusPt });
     return circleByRadiusLine(radiusLine, 60);
   }
-  
+
   @Metadata(description="Constructs the center point of the Maximum Inscribed Circle of a polygonal geometry")
   public static Geometry maximumInscribedCircleCenter(Geometry g,
       @Metadata(title="Distance tolerance")
-      double tolerance) { 
-    return MaximumInscribedCircle.getCenter(g, tolerance); 
+      double tolerance) {
+    return MaximumInscribedCircle.getCenter(g, tolerance);
   }
-  
+
   @Metadata(description="Constructs a radius line of the Maximum Inscribed Circle of a polygonal geometry")
   public static Geometry maximumInscribedCircleRadius(Geometry g,
       @Metadata(title="Distance tolerance")
-      double tolerance) { 
-    MaximumInscribedCircle mic = new MaximumInscribedCircle(g, tolerance); 
-    return mic.getRadiusLine(); 
+      double tolerance) {
+    MaximumInscribedCircle mic = new MaximumInscribedCircle(g, tolerance);
+    return mic.getRadiusLine();
   }
 
   @Metadata(description="Computes the radius of the Maximum Inscribed Circle of a polygonal geometry")
   public static double maximumInscribedCircleRadiusLen(Geometry g,
       @Metadata(title="Distance tolerance")
-      double tolerance) { 
-    MaximumInscribedCircle mic = new MaximumInscribedCircle(g, tolerance); 
-    return mic.getRadiusLine().getLength(); 
+      double tolerance) {
+    MaximumInscribedCircle mic = new MaximumInscribedCircle(g, tolerance);
+    return mic.getRadiusLine().getLength();
   }
 
   //--------------------------------------------
-  
+
   @Metadata(description="Constructs the Largest Empty Circle in a set of obstacles")
   public static Geometry largestEmptyCircle(Geometry g,
       @Metadata(title="Distance tolerance")
-      double tolerance) { 
+      double tolerance) {
     LineString radiusLine = LargestEmptyCircle.getRadiusLine(g, tolerance);
     return circleByRadiusLine(radiusLine, 60);
   }
-  
+
   @Metadata(description="Computes a radius line of the Largest Empty Circle in a set of obstacles")
-  public static Geometry largestEmptyCircleCenter(Geometry g, 
+  public static Geometry largestEmptyCircleCenter(Geometry g,
       @Metadata(title="Distance tolerance")
-      double tolerance) { 
-    return LargestEmptyCircle.getCenter(g, tolerance); 
+      double tolerance) {
+    return LargestEmptyCircle.getCenter(g, tolerance);
   }
-  
+
   @Metadata(description="Computes a radius line of the Largest Empty Circle in a set of obstacles")
-  public static Geometry largestEmptyCircleRadius(Geometry g, 
+  public static Geometry largestEmptyCircleRadius(Geometry g,
       @Metadata(title="Distance tolerance")
-      double tolerance) { 
-    return LargestEmptyCircle.getRadiusLine(g, tolerance); 
+      double tolerance) {
+    return LargestEmptyCircle.getRadiusLine(g, tolerance);
   }
 
   //--------------------------------------------
@@ -117,7 +117,7 @@ public class ConstructionFunctions {
     Coordinate center = radiusPts[0];
     Coordinate radiusPt = radiusPts[1];
     double dist = radiusPt.distance(center);
-    
+
     double angInc = 2 * Math.PI / (nPts - 1);
     Coordinate[] circlePts = new Coordinate[nPts + 1];
     circlePts[0] = radiusPt.copy();
@@ -130,47 +130,47 @@ public class ConstructionFunctions {
     }
     return radiusLine.getFactory().createPolygon(circlePts);
   }
- 
-  public static Geometry concaveHullByLen(Geometry geom, 
+
+  public static Geometry concaveHullByLen(Geometry geom,
       @Metadata(title="Length")
       double maxLen) {
     return ConcaveHull.concaveHullByLength(geom, maxLen);
   }
-  
-  public static Geometry concaveHullWithHolesByLen(Geometry geom, 
+
+  public static Geometry concaveHullWithHolesByLen(Geometry geom,
       @Metadata(title="Length")
       double maxLen) {
     return ConcaveHull.concaveHullByLength(geom, maxLen, true);
   }
-  
-  public static Geometry concaveHullByLenRatio(Geometry geom, 
+
+  public static Geometry concaveHullByLenRatio(Geometry geom,
       @Metadata(title="Length Ratio")
       double maxLen) {
     return ConcaveHull.concaveHullByLengthRatio(geom, maxLen);
   }
-  
-  public static Geometry concaveHullWithHolesByLenRatio(Geometry geom, 
+
+  public static Geometry concaveHullWithHolesByLenRatio(Geometry geom,
       @Metadata(title="Length Ratio")
       double maxLen) {
     return ConcaveHull.concaveHullByLengthRatio(geom, maxLen, true);
   }
-  
+
   public static double concaveHullLenGuess(Geometry geom) {
     return ConcaveHull.uniformGridEdgeLength(geom);
   }
-  
+
   /**
    * A concaveness measure defined in terms of the perimeter length
    * relative to the convex hull perimeter.
    * <pre>
    * C = ( P(geom) - P(CH) ) / P(CH)
    * </pre>
-   * Concaveness values are >= 0.  
-   * A convex polygon has C = 0. 
+   * Concaveness values are >= 0.
+   * A convex polygon has C = 0.
    * A higher concaveness indicates a more concave polygon.
    * <p>
    * Originally defined by Park & Oh, 2012.
-   * 
+   *
    * @param geom a polygonal geometry
    * @return the concaveness measure of the geometry
    */
@@ -178,5 +178,5 @@ public class ConstructionFunctions {
     double convexLen = geom.convexHull().getLength();
     return (geom.getLength() - convexLen) / convexLen;
   }
-  
+
 }

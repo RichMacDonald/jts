@@ -35,7 +35,7 @@ import org.locationtech.jts.index.intervalrtree.SortedPackedIntervalRTree;
  * many points will be tested against a given area.
  * <p>
  * The Location is computed precisely, in that points
- * located on the geometry boundary or segments will 
+ * located on the geometry boundary or segments will
  * return {@link Location#BOUNDARY}.
  * <p>
  * {@link Polygonal} and {@link LinearRing} geometries
@@ -49,48 +49,48 @@ import org.locationtech.jts.index.intervalrtree.SortedPackedIntervalRTree;
  * @author Martin Davis
  *
  */
-public class IndexedPointInAreaLocator 
+public class IndexedPointInAreaLocator
   implements PointOnGeometryLocator
 {
-  
+
   private Geometry geom;
   private volatile IntervalIndexedGeometry index = null;
-  
+
   /**
    * Creates a new locator for a given {@link Geometry}.
    * Geometries containing {@link Polygon}s and {@link LinearRing} geometries
    * are supported.
-   * 
+   *
    * @param g the Geometry to locate in
    */
   public IndexedPointInAreaLocator(Geometry g)
   {
     geom = g;
   }
-    
+
   /**
    * Determines the {@link Location} of a point in an areal {@link Geometry}.
-   * 
+   *
    * @param p the point to test
-   * @return the location of the point in the geometry  
+   * @return the location of the point in the geometry
    */
   @Override
 public int locate(Coordinate p)
   {
     // avoid calling synchronized method improves performance
     if (index == null) createIndex();
-    
+
     RayCrossingCounter rcc = new RayCrossingCounter(p);
-    
+
     SegmentVisitor visitor = new SegmentVisitor(rcc);
     index.query(p.y, p.y, visitor);
-  
+
     /*
      // MD - slightly slower alternative
     List segs = index.query(p.y, p.y);
     countSegs(rcc, segs);
     */
-    
+
     return rcc.getLocation();
   }
 
@@ -104,17 +104,17 @@ public int locate(Coordinate p)
       geom = null;
     }
   }
-  
+
   private static class SegmentVisitor
     implements ItemVisitor
   {
     private final RayCrossingCounter counter;
-    
+
     public SegmentVisitor(RayCrossingCounter counter)
     {
       this.counter = counter;
     }
-    
+
     @Override
 	public void visitItem(Object item)
     {
@@ -122,7 +122,7 @@ public int locate(Coordinate p)
       counter.countSegment(seg.getCoordinate(0), seg.getCoordinate(1));
     }
   }
-  
+
   private static class IntervalIndexedGeometry
   {
     private final boolean isEmpty;
@@ -137,7 +137,7 @@ public int locate(Coordinate p)
         init(geom);
       }
     }
-    
+
     private void init(Geometry geom)
     {
       List lines = LinearComponentExtracter.getLines(geom);
@@ -146,12 +146,12 @@ public int locate(Coordinate p)
         //-- only include rings of Polygons or LinearRings
         if (! line.isClosed())
           continue;
-        
+
         Coordinate[] pts = line.getCoordinates();
         addLine(pts);
       }
     }
-    
+
     private void addLine(Coordinate[] pts)
     {
       for (int i = 1; i < pts.length; i++) {
@@ -161,20 +161,20 @@ public int locate(Coordinate p)
         index.insert(min, max, seg);
       }
     }
-    
+
     public List query(double min, double max)
     {
-     if (isEmpty) 
+     if (isEmpty)
         return new ArrayList();
-      
+
       ArrayListVisitor visitor = new ArrayListVisitor();
       index.query(min, max, visitor);
       return visitor.getItems();
     }
-    
+
     public void query(double min, double max, ItemVisitor visitor)
     {
-      if (isEmpty) 
+      if (isEmpty)
         return;
       index.query(min, max, visitor);
     }

@@ -30,53 +30,53 @@ import org.locationtech.jtstest.testbuilder.ui.render.GeometryPainter;
 public class FunctionsUtil {
 
 	public static final Envelope DEFAULT_ENVELOPE = new Envelope(0, 100, 0, 100);
-	
+
 	public static Envelope getEnvelopeOrDefault(Geometry g)
 	{
 		if (g == null) return DEFAULT_ENVELOPE;
 		return g.getEnvelopeInternal();
 	}
-	
+
   public static GeometryFactory getFactoryOrDefault(Geometry g)
   {
     if (g == null) return JTSTestBuilder.getGeometryFactory();
     return g.getFactory();
   }
-  
+
   public static GeometryFactory getFactoryOrDefault(Geometry g1, Geometry g2)
   {
     if (g1 != null) return g1.getFactory();
     if (g2 != null) return g2.getFactory();
-    return JTSTestBuilder.getGeometryFactory(); 
+    return JTSTestBuilder.getGeometryFactory();
   }
-  
+
   public static boolean isShowingIndicators() {
     return JTSTestBuilderFrame.isShowingIndicators();
   }
-  
+
   public static void showIndicator(Geometry geom)
   {
     showIndicator(geom, AppConstants.INDICATOR_LINE_CLR);
   }
-  
+
   public static void showIndicator(Geometry geom, Color lineClr)
   {
     if (! isShowingIndicators()) return;
-    
+
     GeometryEditPanel panel = JTSTestBuilderFrame
     .instance().getTestCasePanel()
     .getGeometryEditPanel();
     Graphics2D gr = (Graphics2D) panel.getGraphics();
-    GeometryPainter.paint(geom, panel.getViewport(), gr, 
-        lineClr, 
+    GeometryPainter.paint(geom, panel.getViewport(), gr,
+        lineClr,
         AppConstants.INDICATOR_FILL_CLR);
   }
-  
+
   public static Geometry buildGeometry(List geoms, Geometry parentGeom)
   {
     if (geoms.size() <= 0)
       return null;
-    if (geoms.size() == 1) 
+    if (geoms.size() == 1)
       return (Geometry) geoms.get(0);
     // if parent was a GC, ensure returning a GC
     if (parentGeom != null && parentGeom.getGeometryType().equals("GeometryCollection"))
@@ -84,25 +84,25 @@ public class FunctionsUtil {
     // otherwise return MultiGeom
     return getFactoryOrDefault(parentGeom).buildGeometry(geoms);
   }
-  
+
   public static Geometry buildGeometry(Geometry[] geoms)
   {
     GeometryFactory gf = JTSTestBuilder.getGeometryFactory();
     if (geoms.length > 0) {
       gf = getFactoryOrDefault(geoms[0]);
     }
-    
+
     List<Geometry> geomList = new ArrayList<>();
     for (Geometry geom : geoms) {
       if (geom != null) {
         geomList.add(geom);
-        if (gf == null) 
+        if (gf == null)
           gf = geom.getFactory();
       }
     }
     return gf.buildGeometry(geomList);
   }
-  
+
   public static Geometry buildGeometry(Geometry a, Geometry b) {
     Geometry[] geoms = toGeometryArray(a, b);
     return getFactoryOrDefault(a, b).createGeometryCollection(geoms);  }
@@ -117,7 +117,7 @@ public class FunctionsUtil {
     if (b != null) geoms[size] = b;
     return geoms;
   }
-  
+
   public static List<Geometry> elements(Geometry g)
   {
     List<Geometry> comp = new ArrayList<>();

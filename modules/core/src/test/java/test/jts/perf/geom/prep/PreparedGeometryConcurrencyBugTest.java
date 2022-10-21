@@ -21,10 +21,10 @@ import org.locationtech.jts.io.WKTReader;
 /**
  * Tests race condition in {@link org.locationtech.jts.index.intervalrtree.SortedPackedIntervalRTree}.
  * See https://github.com/locationtech/jts/pull/746
- * 
+ *
  * To achieve maximum reproducibility
  * please run this test JVM option " -Djava.compiler=NONE ".
- * 
+ *
  */
 public class PreparedGeometryConcurrencyBugTest {
     private final PreparedGeometry preparedGeometry;

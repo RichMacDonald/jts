@@ -21,7 +21,7 @@ import org.locationtech.jtstest.testbuilder.geom.SegmentClipper;
 import org.locationtech.jtstest.testbuilder.ui.Viewport;
 
 
-public abstract class SegmentStyle 
+public abstract class SegmentStyle
 extends LineStringStyle
 {
 
@@ -31,7 +31,7 @@ extends LineStringStyle
   @Override
 protected void paintLineString(LineString lineString, int lineType, Viewport viewport, Graphics2D graphics) throws Exception {
     for (int i = 0; i < lineString.getNumPoints() - 1; i++) {
-      paint(i, 
+      paint(i,
           lineString.getCoordinateN(i),
           lineString.getCoordinateN(i + 1),
           lineType, viewport, graphics);
@@ -42,7 +42,7 @@ protected void paintLineString(LineString lineString, int lineType, Viewport vie
       ) throws Exception {
     // cull non-visible segments
     if (! viewport.intersectsInModel(p0, p1)) return;
-    
+
     // clip to viewport if needed
     if (! viewport.containsInModel(p0, p1)) {
       p0 = new Coordinate(p0);
@@ -54,7 +54,7 @@ protected void paintLineString(LineString lineString, int lineType, Viewport vie
   }
 
   /**
-   * 
+   *
    * @param p0 the origin of the line segment, in view space
    * @param p1 the termination of the line segment, in view space
    * @param viewport

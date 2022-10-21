@@ -26,11 +26,11 @@ public class Item {
   public Envelope getEnvelope() {
     return env;
   }
-  
+
   public Object getItem() {
     return item;
   }
-  
+
   @Override
 public String toString() {
     return "Item: " + env.toString();

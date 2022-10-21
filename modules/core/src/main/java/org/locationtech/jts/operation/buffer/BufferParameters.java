@@ -12,7 +12,7 @@
 package org.locationtech.jts.operation.buffer;
 
 /**
- * A value class containing the parameters which 
+ * A value class containing the parameters which
  * specify how a buffer should be constructed.
  * <p>
  * The parameters allow control over:
@@ -23,11 +23,11 @@ package org.locationtech.jts.operation.buffer;
  * <li>Mitre limit
  * <li>whether the buffer is single-sided
  * </ul>
- * 
+ *
  * @author Martin Davis
  *
  */
-public class BufferParameters 
+public class BufferParameters
 {
   /**
    * Specifies a round line buffer end cap style.
@@ -41,7 +41,7 @@ public class BufferParameters
    * Specifies a square line buffer end cap style.
    */
   public static final int CAP_SQUARE = 3;
-  
+
   /**
    * Specifies a round join style.
    */
@@ -68,13 +68,13 @@ public class BufferParameters
    * Allows fairly pointy mitres.
    */
   public static final double DEFAULT_MITRE_LIMIT = 5.0;
-  
+
   /**
    * The default simplify factor
    * Provides an accuracy of about 1%, which matches the accuracy of the default Quadrant Segments parameter.
    */
   public static final double DEFAULT_SIMPLIFY_FACTOR = 0.01;
-  
+
 
   private int quadrantSegments = DEFAULT_QUADRANT_SEGMENTS;
   private int endCapStyle = CAP_ROUND;
@@ -82,7 +82,7 @@ public class BufferParameters
   private double mitreLimit = DEFAULT_MITRE_LIMIT;
   private boolean isSingleSided = false;
   private double simplifyFactor = DEFAULT_SIMPLIFY_FACTOR;
-  
+
   /**
    * Creates a default set of parameters
    *
@@ -93,10 +93,10 @@ public class BufferParameters
   /**
    * Creates a set of parameters with the
    * given quadrantSegments value.
-   * 
+   *
    * @param quadrantSegments the number of quadrant segments to use
    */
-  public BufferParameters(int quadrantSegments) 
+  public BufferParameters(int quadrantSegments)
   {
     setQuadrantSegments(quadrantSegments);
   }
@@ -104,12 +104,12 @@ public class BufferParameters
   /**
    * Creates a set of parameters with the
    * given quadrantSegments and endCapStyle values.
-   * 
+   *
    * @param quadrantSegments the number of quadrant segments to use
    * @param endCapStyle the end cap style to use
    */
   public BufferParameters(int quadrantSegments,
-      int endCapStyle) 
+      int endCapStyle)
   {
     setQuadrantSegments(quadrantSegments);
     setEndCapStyle(endCapStyle);
@@ -118,7 +118,7 @@ public class BufferParameters
   /**
    * Creates a set of parameters with the
    * given parameter values.
-   * 
+   *
    * @param quadrantSegments the number of quadrant segments to use
    * @param endCapStyle the end cap style to use
    * @param joinStyle the join style to use
@@ -127,7 +127,7 @@ public class BufferParameters
   public BufferParameters(int quadrantSegments,
       int endCapStyle,
       int joinStyle,
-      double mitreLimit) 
+      double mitreLimit)
   {
     setQuadrantSegments(quadrantSegments);
     setEndCapStyle(endCapStyle);
@@ -138,14 +138,14 @@ public class BufferParameters
   /**
    * Gets the number of quadrant segments which will be used
    * to approximate angle fillets in round endcaps and joins.
-   * 
+   *
    * @return the number of quadrant segments
    */
   public int getQuadrantSegments()
   {
     return quadrantSegments;
   }
-  
+
   /**
    * Sets the number of line segments in a quarter-circle
    * used to approximate angle fillets in round endcaps and joins.
@@ -156,10 +156,10 @@ public class BufferParameters
    * The default value of 8 gives less than 2% error in the buffer distance.
    * For a error of &lt; 1%, use QS = 12.
    * For a error of &lt; 0.1%, use QS = 18.
-   * The error is always less than the buffer distance 
+   * The error is always less than the buffer distance
    * (in other words, the computed buffer curve is always inside the true
    * curve).
-   * 
+   *
    * @param quadSegs the number of segments in a fillet for a circle quadrant
    */
   public void setQuadrantSegments(int quadSegs)
@@ -170,7 +170,7 @@ public class BufferParameters
   /**
    * Computes the maximum distance error due to a given level
    * of approximation to a true arc.
-   * 
+   *
    * @param quadSegs the number of segments used to approximate a quarter-circle
    * @return the error of approximation
    */
@@ -179,17 +179,17 @@ public class BufferParameters
     double alpha = Math.PI / 2.0 / quadSegs;
     return 1 - Math.cos(alpha / 2.0);
   }
-  
+
   /**
    * Gets the end cap style.
-   * 
+   *
    * @return the end cap style code
    */
   public int getEndCapStyle()
   {
     return endCapStyle;
   }
-  
+
   /**
    * Specifies the end cap style of the generated buffer.
    * The styles supported are {@link #CAP_ROUND}, {@link #CAP_FLAT}, and {@link #CAP_SQUARE}.
@@ -201,48 +201,48 @@ public class BufferParameters
   {
     this.endCapStyle = endCapStyle;
   }
-  
+
   /**
    * Gets the join style.
-   * 
+   *
    * @return the join style code
    */
   public int getJoinStyle()
   {
     return joinStyle;
   }
-  
+
   /**
    * Sets the join style for outside (reflex) corners between line segments.
    * The styles supported are {@link #JOIN_ROUND},
    * {@link #JOIN_MITRE} and {link JOIN_BEVEL}.
    * The default is {@link #JOIN_ROUND}.
-   * 
+   *
    * @param joinStyle the code for the join style
    */
   public void setJoinStyle(int joinStyle)
   {
     this.joinStyle = joinStyle;
   }
-  
+
   /**
    * Gets the mitre ratio limit.
-   * 
+   *
    * @return the limit value
    */
   public double getMitreLimit()
   {
     return mitreLimit;
   }
-  
+
   /**
    * Sets the limit on the mitre ratio used for very sharp corners.
    * The mitre ratio is the ratio of the distance from the corner
    * to the end of the mitred offset corner.
-   * When two line segments meet at a sharp angle, 
+   * When two line segments meet at a sharp angle,
    * a miter join will extend far beyond the original geometry.
    * (and in the extreme case will be infinitely far.)
-   * To prevent unreasonable geometry, the mitre limit 
+   * To prevent unreasonable geometry, the mitre limit
    * allows controlling the maximum length of the join corner.
    * Corners with a ratio which exceed the limit will be beveled.
    *
@@ -262,13 +262,13 @@ public class BufferParameters
    * <li>a positive distance indicates the left-hand side
    * <li>a negative distance indicates the right-hand side
    * </ul>
-   * The single-sided buffer of point geometries is 
+   * The single-sided buffer of point geometries is
    * the same as the regular buffer.
    * <p>
-   * The End Cap Style for single-sided buffers is 
-   * always ignored, 
-   * and forced to the equivalent of <tt>CAP_FLAT</tt>. 
-   * 
+   * The End Cap Style for single-sided buffers is
+   * always ignored,
+   * and forced to the equivalent of <tt>CAP_FLAT</tt>.
+   *
    * @param isSingleSided true if a single-sided buffer should be constructed
    */
   public void setSingleSided(boolean isSingleSided)
@@ -278,7 +278,7 @@ public class BufferParameters
 
   /**
    * Tests whether the buffer is to be generated on a single side only.
-   * 
+   *
    * @return true if the generated buffer is to be single-sided
    */
   public boolean isSingleSided() {
@@ -287,13 +287,13 @@ public class BufferParameters
 
   /**
    * Gets the simplify factor.
-   * 
+   *
    * @return the simplify factor
    */
   public double getSimplifyFactor() {
     return simplifyFactor;
   }
-  
+
   /**
    * Sets the factor used to determine the simplify distance tolerance
    * for input simplification.
@@ -301,14 +301,14 @@ public class BufferParameters
    * Generally the simplify factor should be greater than 0.
    * Values between 0.01 and .1 produce relatively good accuracy for the generate buffer.
    * Larger values sacrifice accuracy in return for performance.
-   * 
+   *
    * @param simplifyFactor a value greater than or equal to zero.
    */
   public void setSimplifyFactor(double simplifyFactor)
   {
     this.simplifyFactor = simplifyFactor < 0 ? 0 : simplifyFactor;
   }
-  
+
   public BufferParameters copy() {
     BufferParameters bp = new BufferParameters();
     bp.quadrantSegments = quadrantSegments;

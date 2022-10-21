@@ -9,7 +9,7 @@ import org.locationtech.jts.io.WKTReader;
 import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 
-public class OverlayMiscTest extends GeometryTestCase 
+public class OverlayMiscTest extends GeometryTestCase
 {
   public static void main(String args[]) {
     TestRunner.run(OverlayMiscTest.class);
@@ -19,7 +19,7 @@ public class OverlayMiscTest extends GeometryTestCase
   {
     super(name);
   }
-  
+
   public void testNoding() throws Exception {
     Geometry a = read("LINESTRING(0 0, 100 100)");
     Geometry b = read("LINESTRING(0 100, 100 0)");

@@ -84,7 +84,7 @@ public class LineSegment
   public double minX() {
     return Math.min(p0.x, p1.x);
   }
-  
+
   /**
    * Gets the maximum X ordinate.
    * @return the maximum X ordinate
@@ -100,7 +100,7 @@ public class LineSegment
   public double minY() {
     return Math.min(p0.y, p1.y);
   }
-  
+
   /**
    * Gets the maximum Y ordinate.
    * @return the maximum Y ordinate
@@ -164,7 +164,7 @@ public class LineSegment
     // points lie on opposite sides ==> indeterminate orientation
     return 0;
   }
-  
+
   /**
    * Determines the orientation index of a {@link Coordinate} relative to this segment.
    * The orientation index is as defined in {@link Orientation#index(Coordinate, Coordinate, Coordinate)}.
@@ -174,14 +174,14 @@ public class LineSegment
    * @return 1 (LEFT) if <code>p</code> is to the left of this segment
    * @return -1 (RIGHT) if <code>p</code> is to the right of this segment
    * @return 0 (COLLINEAR) if <code>p</code> is collinear with this segment
-   * 
+   *
    * @see Orientation#index(Coordinate, Coordinate, Coordinate)
    */
   public int orientationIndex(Coordinate p)
   {
     return Orientation.index(p0, p1, p);
   }
-  
+
   /**
    * Reverses the direction of the line segment.
    */
@@ -274,7 +274,7 @@ public class LineSegment
    * A fraction of <code>0.0</code> returns the start point of the segment;
    * a fraction of <code>1.0</code> returns the end point of the segment.
    * If the fraction is &lt; 0.0 or &gt; 1.0 the point returned
-   * will lie before the start or beyond the end of the segment. 
+   * will lie before the start or beyond the end of the segment.
    *
    * @param segmentLengthFraction the fraction of the segment length along the line
    * @return the point at that distance
@@ -289,7 +289,7 @@ public class LineSegment
 
   /**
    * Computes the {@link Coordinate} that lies a given
-   * fraction along the line defined by this segment and offset from 
+   * fraction along the line defined by this segment and offset from
    * the segment by a given distance.
    * A fraction of <code>0.0</code> offsets from the start point of the segment;
    * a fraction of <code>1.0</code> offsets from the end point of the segment.
@@ -300,7 +300,7 @@ public class LineSegment
    * @param offsetDistance the distance the point is offset from the segment
    *    (positive is to the left, negative is to the right)
    * @return the point at that distance and offset
-   * 
+   *
    * @throws IllegalStateException if the segment has zero length
    */
   public Coordinate pointAlongOffset(double segmentLengthFraction, double offsetDistance)
@@ -308,7 +308,7 @@ public class LineSegment
   	// the point on the segment line
     double segx = p0.x + segmentLengthFraction * (p1.x - p0.x);
     double segy = p0.y + segmentLengthFraction * (p1.y - p0.y);
-    
+
     double dx = p1.x - p0.x;
     double dy = p1.y - p0.y;
     double len = Math.sqrt(dx * dx + dy * dy);
@@ -322,7 +322,7 @@ public class LineSegment
       ux = offsetDistance * dx / len;
       uy = offsetDistance * dy / len;
     }
-    
+
     // the offset point is the seg point plus the offset vector rotated 90 degrees CCW
     double offsetx = segx - uy;
     double offsety = segy + ux;
@@ -342,7 +342,7 @@ public class LineSegment
    * <p>
    * The projection factor will lie in the range <tt>(-inf, +inf)</tt>,
    * or be <code>NaN</code> if the line segment has zero length..
-   * 
+   *
    * @param p the point to compute the factor for
    * @return the projection factor for the point
    */
@@ -364,25 +364,25 @@ public class LineSegment
     double dx = p1.x - p0.x;
     double dy = p1.y - p0.y;
     double len = dx * dx + dy * dy;
-    
+
     // handle zero-length segments
     if (len <= 0.0) return Double.NaN;
-    
+
     double r = ( (p.x - p0.x) * dx + (p.y - p0.y) * dy )
               / len;
     return r;
   }
 
   /**
-   * Computes the fraction of distance (in <tt>[0.0, 1.0]</tt>) 
+   * Computes the fraction of distance (in <tt>[0.0, 1.0]</tt>)
    * that the projection of a point occurs along this line segment.
    * If the point is beyond either ends of the line segment,
    * the closest fractional value (<tt>0.0</tt> or <tt>1.0</tt>) is returned.
    * <p>
-   * Essentially, this is the {@link #projectionFactor} clamped to 
+   * Essentially, this is the {@link #projectionFactor} clamped to
    * the range <tt>[0.0, 1.0]</tt>.
    * If the segment has zero length, 1.0 is returned.
-   *  
+   *
    * @param inputPt the point
    * @return the fraction along the line segment the projection of the point occurs
    */
@@ -444,9 +444,9 @@ public class LineSegment
 
     return new LineSegment(newp0, newp1);
   }
-  
+
   /**
-   * Computes the {@link LineSegment} that is offset from 
+   * Computes the {@link LineSegment} that is offset from
    * the segment by a given distance.
    * The computed segment is offset to the left of the line if the offset distance is
    * positive, to the right if negative.
@@ -454,7 +454,7 @@ public class LineSegment
    * @param offsetDistance the distance the point is offset from the segment
    *    (positive is to the left, negative is to the right)
    * @return a line segment offset by the specified distance
-   * 
+   *
    * @throws IllegalStateException if the segment has zero length
    */
   public LineSegment offset(double offsetDistance) {
@@ -462,11 +462,11 @@ public class LineSegment
     Coordinate offset1 = pointAlongOffset(1, offsetDistance);
     return new LineSegment(offset0, offset1);
   }
-  
+
   /**
    * Computes the reflection of a point in the line defined
    * by this line segment.
-   * 
+   *
    * @param p the point to reflect
    * @return the reflected point
    */
@@ -475,22 +475,22 @@ public class LineSegment
     double A = p1.getY() - p0.getY();
     double B = p0.getX() - p1.getX();
     double C = p0.getY() * (p1.getX() - p0.getX()) - p0.getX()*( p1.getY() - p0.getY() );
-    
+
     // compute reflected point
     double A2plusB2 = A*A + B*B;
     double A2subB2 = A*A - B*B;
-    
+
     double x = p.getX();
     double y = p.getY();
     double rx = ( -A2subB2*x - 2*A*B*y - 2*A*C ) / A2plusB2;
     double ry = ( A2subB2*y - 2*A*B*x - 2*B*C ) / A2plusB2;
-    
+
     Coordinate coord = p.copy();
     coord.setX(rx);
     coord.setY(ry);
     return coord;
   }
-  
+
   /**
    * Computes the closest point on this line segment to another point.
    * @param p the point to find the closest point to
@@ -510,7 +510,7 @@ public class LineSegment
   }
   /**
    * Computes the closest points on two line segments.
-   * 
+   *
    * @param line the segment to find the closest point to
    * @return a pair of Coordinates which are the closest points on the line segments
    */
@@ -564,15 +564,15 @@ public class LineSegment
   /**
    * Computes an intersection point between two line segments, if there is one.
    * There may be 0, 1 or many intersection points between two segments.
-   * If there are 0, null is returned. If there is 1 or more, 
-   * exactly one of them is returned 
-   * (chosen at the discretion of the algorithm).  
+   * If there are 0, null is returned. If there is 1 or more,
+   * exactly one of them is returned
+   * (chosen at the discretion of the algorithm).
    * If more information is required about the details of the intersection,
    * the {@link RobustLineIntersector} class should be used.
    *
    * @param line a line segment
    * @return an intersection point, or <code>null</code> if there is none
-   * 
+   *
    * @see RobustLineIntersector
    */
   public Coordinate intersection(LineSegment line)
@@ -587,18 +587,18 @@ public class LineSegment
   /**
    * Computes the intersection point of the lines of infinite extent defined
    * by two line segments (if there is one).
-   * There may be 0, 1 or an infinite number of intersection points 
+   * There may be 0, 1 or an infinite number of intersection points
    * between two lines.
-   * If there is a unique intersection point, it is returned. 
+   * If there is a unique intersection point, it is returned.
    * Otherwise, <tt>null</tt> is returned.
    * If more information is required about the details of the intersection,
    * the {@link RobustLineIntersector} class should be used.
    *
    * @param line a line segment defining an straight line with infinite extent
-   * @return an intersection point, 
+   * @return an intersection point,
    * or <code>null</code> if there is no point of intersection
    * or an infinite number of intersection points
-   * 
+   *
    * @see RobustLineIntersector
    */
   public Coordinate lineIntersection(LineSegment line)
@@ -609,7 +609,7 @@ public class LineSegment
 
   /**
    * Creates a LineString with the same coordinates as this segment
-   * 
+   *
    * @param geomFactory the geometry factory to use
    * @return a LineString with the same geometry as this segment
    */
@@ -617,7 +617,7 @@ public class LineSegment
   {
     return geomFactory.createLineString(new Coordinate[] { p0, p1 });
   }
-  
+
   /**
    *  Returns <code>true</code> if <code>other</code> has the same values for
    *  its points.
@@ -637,7 +637,7 @@ public boolean equals(Object o) {
 
   /**
    * Gets a hashcode for this object.
-   * 
+   *
    * @return a hashcode for this object
    */
   @Override
@@ -654,7 +654,7 @@ public int hashCode() {
     long bits0 = java.lang.Double.doubleToLongBits(p0.x);
     bits0 ^= java.lang.Double.doubleToLongBits(p0.y) * 31;
     int hash0 = (((int) bits0) ^ ((int) (bits0  >> 32)));
-    
+
     long bits1 = java.lang.Double.doubleToLongBits(p1.x);
     bits1 ^= java.lang.Double.doubleToLongBits(p1.y) * 31;
     int hash1 = (((int) bits1) ^ ((int) (bits1  >> 32)));
@@ -662,7 +662,7 @@ public int hashCode() {
     // XOR is supposed to be a good way to combine hashcodes
     return hash0 ^ hash1;
   }
-  
+
   /**
    *  Compares this object with the specified object for order.
    *  Uses the standard lexicographic ordering for the points in the LineSegment.

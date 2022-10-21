@@ -137,37 +137,37 @@ public class AffineTransformationTest
 
   public void testCompose1()
   {
-    AffineTransformation t0 = AffineTransformation.translationInstance(10, 0); 
+    AffineTransformation t0 = AffineTransformation.translationInstance(10, 0);
     t0.rotate(Math.PI /2);
     t0.translate(0, -10);
-    
+
     AffineTransformation t1 = AffineTransformation.translationInstance(0, 0);
     t1.rotate(Math.PI /2);
-    
+
     checkTransformation(t0, t1);
   }
-  
+
   public void testCompose2()
   {
-    AffineTransformation t0 = AffineTransformation.reflectionInstance(0, 0, 1, 0); 
+    AffineTransformation t0 = AffineTransformation.reflectionInstance(0, 0, 1, 0);
     t0.reflect(0, 0, 0, -1);
-    
+
     AffineTransformation t1 = AffineTransformation.rotationInstance(Math.PI);
-    
+
     checkTransformation(t0, t1);
   }
-  
+
   public void testComposeRotation1()
   {
-    AffineTransformation t0 = AffineTransformation.rotationInstance(1, 10, 10); 
-    
+    AffineTransformation t0 = AffineTransformation.rotationInstance(1, 10, 10);
+
     AffineTransformation t1 = AffineTransformation.translationInstance(-10, -10);
     t1.rotate(1);
     t1.translate(10, 10);
-    
+
     checkTransformation(t0, t1);
   }
-  
+
   public void testLineString() throws IOException, ParseException, NoninvertibleTransformationException {
 	  checkTransformation("LINESTRING (1 2, 10 20, 100 200)");
 		}
@@ -195,29 +195,29 @@ public class AffineTransformationTest
   {
 	  checkTransformation("MULTIPOLYGON ( ((0 0, 100 0, 100 100, 0 100, 0 0), (1 1, 1 10, 10 10, 10 1, 1 1) ), ((200 200, 200 250, 250 250, 250 200, 200 200)) )");
   }
-  
+
   public void testGeometryCollection()
   throws IOException, ParseException, NoninvertibleTransformationException
   {
 	  checkTransformation("GEOMETRYCOLLECTION ( POINT ( 1 1), LINESTRING (0 0, 10 10), POLYGON ((0 0, 100 0, 100 100, 0 100, 0 0)) )");
   }
-  
+
   public void testNestedGeometryCollection()
   throws IOException, ParseException, NoninvertibleTransformationException
   {
 	  checkTransformation("GEOMETRYCOLLECTION ( POINT (20 20), GEOMETRYCOLLECTION ( POINT ( 1 1), LINESTRING (0 0, 10 10), POLYGON ((0 0, 100 0, 100 100, 0 100, 0 0)) ) )");
   }
-  
+
   public void testCompose3()
   {
-    AffineTransformation t0 = AffineTransformation.reflectionInstance(0, 10, 10, 0); 
+    AffineTransformation t0 = AffineTransformation.reflectionInstance(0, 10, 10, 0);
     t0.translate(-10, -10);
-    
+
     AffineTransformation t1 = AffineTransformation.reflectionInstance(0, 0, -1, 1);
-    
+
     checkTransformation(t0, t1);
   }
-  
+
   /**
    * Checks that a transformation produces the expected result
    * @param x the input pt x
@@ -233,7 +233,7 @@ public class AffineTransformationTest
     trans.transform(p, p2);
     assertEquals(xp, p2.x, .00005);
     assertEquals(yp, p2.y, .00005);
-    
+
     // if the transformation is invertible, test the inverse
     try {
       AffineTransformation invTrans = trans.getInverse();
@@ -241,18 +241,18 @@ public class AffineTransformationTest
       invTrans.transform(p2, pInv);
       assertEquals(x, pInv.x, .00005);
       assertEquals(y, pInv.y, .00005);
-      
+
       double det = trans.getDeterminant();
       double detInv = invTrans.getDeterminant();
       assertEquals(det, 1.0 / detInv, .00005);
-     
+
     }
     catch (NoninvertibleTransformationException ex) {
     }
   }
-  
+
   static WKTReader rdr = new WKTReader();
-  
+
   void checkTransformation(String geomStr) throws IOException, ParseException,
       NoninvertibleTransformationException {
     Geometry geom = rdr.read(geomStr);
@@ -267,7 +267,7 @@ public class AffineTransformationTest
     boolean isEqual = geom.equalsExact(transGeom, 0.0005);
     assertTrue(isEqual);
   }
-  
+
   void checkTransformation(AffineTransformation trans0, AffineTransformation trans1)
   {
     double[] m0 = trans0.getMatrixEntries();

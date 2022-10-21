@@ -5,7 +5,7 @@ import org.locationtech.jts.io.ParseException;
 import org.locationtech.jts.io.WKTReader;
 
 public class TestUtil {
-  
+
   public static Geometry readWKT(String wkt) {
     WKTReader reader = new WKTReader();
     try {

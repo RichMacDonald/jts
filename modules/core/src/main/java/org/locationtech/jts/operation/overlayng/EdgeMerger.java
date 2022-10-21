@@ -20,7 +20,7 @@ import org.locationtech.jts.util.Assert;
 
 /**
  * Performs merging on the noded edges of the input geometries.
- * Merging takes place on edges which are coincident 
+ * Merging takes place on edges which are coincident
  * (i.e. have the same coordinate list, modulo direction).
  * The following situations can occur:
  * <ul>
@@ -28,12 +28,12 @@ import org.locationtech.jts.util.Assert;
  * <li>Coincident edges from the same area geometry indicate a topology collapse.
  * In this case the topology locations are "summed" to provide a final
  * assignment of side location
- * <li>Coincident edges from the same linear geometry can simply be merged 
+ * <li>Coincident edges from the same linear geometry can simply be merged
  * using the same ON location
  * </ul>
- * 
+ *
  * The merging attempts to preserve the direction of linear
- * edges if possible (which is the case if there is 
+ * edges if possible (which is the case if there is
  * no other coincident edge, or if all coincident edges have the same direction).
  * This ensures that the overlay output line direction will be as consistent
  * as possible with input lines.
@@ -42,12 +42,12 @@ import org.locationtech.jts.util.Assert;
  * This means that for polygon-line overlay
  * the result lines will be in the same order as in the input
  * (possibly with multiple result lines for a single input line).
- * 
+ *
  * @author mdavis
  *
  */
 class EdgeMerger {
- 
+
   public static List<Edge> merge(List<Edge> edges) {
     // use a list to collect the final edges, to preserve order
     List<Edge> mergedEdges = new ArrayList<>();
@@ -65,12 +65,12 @@ class EdgeMerger {
       }
       else {
         // found an existing edge
-        
+
         // Assert: edges are identical (up to direction)
         // this is a fast (but incomplete) sanity check
         Assert.isTrue(baseEdge.size() == edge.size(),
             "Merge of edges of different sizes - probable noding error.");
-        
+
         baseEdge.merge(edge);
         //Debug.println("edge merged: " + existing);
         //Debug.println(edge.toLineString());

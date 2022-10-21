@@ -28,31 +28,31 @@ import org.locationtech.jts.geom.util.GeometryEditor;
  * If the box completely contains one or more components
  * (including polygon holes), those components are deleted
  * and the operation stops.
- * Otherwise if the box contains a subset of vertices 
- * from a component, those vertices are deleted. 
+ * Otherwise if the box contains a subset of vertices
+ * from a component, those vertices are deleted.
  * When deleting vertices only <i>one</i> component of the geometry
  * is modified (the first one found which has vertices in the box).
- * 
+ *
  * @author Martin Davis
  *
  */
-public class GeometryBoxDeleter 
+public class GeometryBoxDeleter
 {
-  public static Geometry deleteComponentsAndVertices(Geometry geom, 
+  public static Geometry deleteComponentsAndVertices(Geometry geom,
       Envelope env)
   {
     return deleteComponentsAndVertices(geom, env, false);
   }
-  
-  public static Geometry deleteComponentsAndVertices(Geometry geom, 
+
+  public static Geometry deleteComponentsAndVertices(Geometry geom,
       Envelope env, boolean deleteIntersectingComponents)
   {
     Geometry gComp = deleteComponents(geom, env, deleteIntersectingComponents);
     if (gComp != geom) return gComp;
-    
+
     // if deleting by intersection, don't continue to delete vertices
     if (deleteIntersectingComponents) return geom;
-    
+
     // otherwise, try and edit vertices
     Geometry gVert = deleteVertices(geom, env);
     if (gVert != geom) return gVert;
@@ -60,7 +60,7 @@ public class GeometryBoxDeleter
     // no edits - return original
     return geom;
   }
-  
+
   public static Geometry deleteComponents(Geometry geom, Envelope env, boolean deleteIntersecting)
   {
     GeometryEditor editor = new GeometryEditor();
@@ -69,7 +69,7 @@ public class GeometryBoxDeleter
     if (compOp.isEdited()) return compEditGeom;
     return geom;
   }
-  
+
   public static Geometry deleteVertices(Geometry geom, Envelope env)
   {
     GeometryEditor editor = new GeometryEditor();
@@ -78,7 +78,7 @@ public class GeometryBoxDeleter
     if (vertexOp.isEdited()) return vertexEditGeom;
     return geom;
   }
-  
+
   private static class BoxDeleteComponentOperation
     implements GeometryEditor.GeometryEditorOperation
   {
@@ -86,18 +86,18 @@ public class GeometryBoxDeleter
     private boolean isEdited = false;
     private boolean deleteIntersecting;
     private PreparedGeometry envPrepGeom;
-    
+
     public BoxDeleteComponentOperation(Envelope env)
     {
       this(env, false);
     }
-    
+
     public BoxDeleteComponentOperation(Envelope env, boolean deleteIntersecting)
     {
       this.env = env;
       this.deleteIntersecting = deleteIntersecting;
     }
-    
+
     public boolean isEdited() { return isEdited; }
 
     @Override
@@ -105,10 +105,10 @@ public class GeometryBoxDeleter
     {
       // Allow any number of components to be deleted
       //if (isEdited) return geometry;
-      
+
       // only edit individual components
       if (geometry.getNumGeometries() > 1) return geometry;
-      
+
       boolean isDeleted = false;
       if (deleteIntersecting) {
         isDeleted = getEnvelopeGeometry(factory).intersects(geometry);
@@ -116,14 +116,14 @@ public class GeometryBoxDeleter
       else {
         isDeleted = env.contains(geometry.getEnvelopeInternal());
       }
-          
+
       if (isDeleted) {
           isEdited = true;
           return null;
       }
       return geometry;
     }
-    
+
     private PreparedGeometry getEnvelopeGeometry(GeometryFactory geomFactory) {
       if (envPrepGeom == null) {
         Geometry envGeom = geomFactory.toGeometry(env);
@@ -132,20 +132,20 @@ public class GeometryBoxDeleter
       return envPrepGeom;
     }
   }
-  
+
   private static class BoxDeleteVertexOperation
     extends GeometryEditor.CoordinateOperation
   {
     private Envelope env;
     private boolean isEdited = false;
-    
+
     public BoxDeleteVertexOperation(Envelope env)
     {
       this.env = env;
     }
-    
+
     public boolean isEdited() { return isEdited; }
-  
+
     @Override
 	public Coordinate[] edit(Coordinate[] coords,
         Geometry geometry)
@@ -153,10 +153,10 @@ public class GeometryBoxDeleter
       if (isEdited || ! hasVertexInBox(coords))
         return coords;
       // only delete vertices of first component found
-      
+
       int minLen = 2;
       if (geometry instanceof LinearRing) minLen = 4;
-      
+
       Coordinate[] newPts = new Coordinate[coords.length];
       int newIndex = 0;
       for (Coordinate coord : coords) {
@@ -166,7 +166,7 @@ public class GeometryBoxDeleter
       }
       Coordinate[] nonNullPts = CoordinateArrays.removeNull(newPts);
       Coordinate[] finalPts = nonNullPts;
-      
+
       // close ring if required
       if (geometry instanceof LinearRing) {
         if (nonNullPts.length > 1 && ! nonNullPts[nonNullPts.length - 1].equals2D(nonNullPts[0])) {
@@ -176,15 +176,15 @@ public class GeometryBoxDeleter
           finalPts = ringPts;
         }
       }
-      
+
       // don't change if would make geometry invalid
       if (finalPts.length < minLen)
         return coords;
 
       isEdited = true;
-      return finalPts; 
+      return finalPts;
     }
-    
+
     private boolean hasVertexInBox(Coordinate[] coords)
     {
       for (Coordinate coord : coords) {
@@ -196,5 +196,5 @@ public class GeometryBoxDeleter
     }
   }
 
-  
+
 }

@@ -19,7 +19,7 @@ public class ResultGeometryContainer
 implements GeometryContainer
 {
   private GeometryEditModel geomModel;
-  
+
   public ResultGeometryContainer(GeometryEditModel geomModel) {
     this.geomModel = geomModel;
    }

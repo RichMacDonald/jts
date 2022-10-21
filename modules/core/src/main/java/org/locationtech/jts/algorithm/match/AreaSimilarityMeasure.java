@@ -21,11 +21,11 @@ import org.locationtech.jts.geom.Geometry;
  * Higher measures indicate a great degree of similarity.
  * <p>
  * NOTE: Currently experimental and incomplete.
- * 
+ *
  * @author mbdavis
  *
  */
-public class AreaSimilarityMeasure 
+public class AreaSimilarityMeasure
 	implements SimilarityMeasure
 {
 	/*
@@ -35,21 +35,21 @@ public class AreaSimilarityMeasure
 		return gv.measure();
 	}
 	*/
-	
+
   /**
    * Creates a new instance.
    */
 	public AreaSimilarityMeasure()
 	{
 	}
-	
+
 	@Override
 	public double measure(Geometry g1, Geometry g2)
-	{		
+	{
 		double areaInt = g1.intersection(g2).getArea();
 		double areaUnion = g1.union(g2).getArea();
 		return areaInt / areaUnion;
 	}
-	
-	
+
+
 }

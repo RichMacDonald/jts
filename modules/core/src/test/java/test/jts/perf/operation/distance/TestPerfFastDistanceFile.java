@@ -20,7 +20,7 @@ import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.util.Stopwatch;
 
 
-public class TestPerfFastDistanceFile 
+public class TestPerfFastDistanceFile
 {
   public static void main(String[] args) {
     TestPerfFastDistanceFile test = new TestPerfFastDistanceFile();
@@ -43,10 +43,10 @@ public class TestPerfFastDistanceFile
   public void test()
   throws Exception
 {
-    
+
 //    List geoms = loadWKT("C:\\data\\martin\\proj\\jts\\sandbox\\jts\\testdata\\africa.wkt");
     List geoms = loadWKT("C:\\data\\martin\\proj\\jts\\sandbox\\jts\\testdata\\world.wkt");
-    
+
 //  testAllDistances(geoms, 100);
 
   testAllDistances(geoms, 1);
@@ -68,13 +68,13 @@ public class TestPerfFastDistanceFile
   void testAllDistances(List geoms, int maxToScan)
   {
     Stopwatch sw = new Stopwatch();
-    
+
     computeAllDistances(geoms, maxToScan);
 //  computePairDistance(geoms, 1, 3);
 //  computePairDistance(geoms, 55, 77);
-    
+
     System.out.println("Count = " + maxToScan
-        + "   Finished in " + sw.getTimeString());    
+        + "   Finished in " + sw.getTimeString());
   }
 
   void computeAllDistances(List geoms, int maxToScan) {
@@ -107,10 +107,10 @@ public class TestPerfFastDistanceFile
     }
   }
 
-  
+
   static final int MAX_ITER = 10;
-  
-  void computePairDistance(List geoms, int i, int j) 
+
+  void computePairDistance(List geoms, int i, int j)
   {
     for (int n = 0; n < MAX_ITER; n++ ) {
       Geometry g1 = (Geometry) geoms.get(i);
@@ -121,9 +121,9 @@ public class TestPerfFastDistanceFile
 //      double dist = BranchAndBoundFacetDistance.distance(g1, g2);
     }
   }
-  
-  
+
+
 
 }
-  
-  
+
+

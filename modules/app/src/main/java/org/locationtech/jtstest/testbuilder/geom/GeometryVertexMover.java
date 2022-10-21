@@ -16,7 +16,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.util.GeometryEditor;
 
-public class GeometryVertexMover 
+public class GeometryVertexMover
 {
 
   public static Geometry move(Geometry geom, Coordinate fromLoc, Coordinate toLoc)
@@ -25,34 +25,34 @@ public class GeometryVertexMover
     editor.setCopyUserData(true);
     return editor.edit(geom, new MoveVertexOperation(fromLoc, toLoc));
   }
-  
+
   private static class MoveVertexOperation
     extends GeometryEditor.CoordinateOperation
   {
     private Coordinate fromLoc;
     private Coordinate toLoc;
-    
+
     public MoveVertexOperation(Coordinate fromLoc, Coordinate toLoc)
     {
       this.fromLoc = fromLoc;
       this.toLoc = toLoc;
     }
-    
+
     @Override
 	public Coordinate[] edit(Coordinate[] coords,
         Geometry geometry)
     {
       Coordinate[] newPts = new Coordinate[coords.length];
       for (int i = 0; i < coords.length; i++) {
-        newPts[i] = 
-          (coords[i].equals2D(fromLoc)) 
+        newPts[i] =
+          (coords[i].equals2D(fromLoc))
             ? (Coordinate) toLoc.clone()
                 : (Coordinate) coords[i].clone();
-                   
+
       }
       return newPts;
     }
   }
 
-  
+
 }

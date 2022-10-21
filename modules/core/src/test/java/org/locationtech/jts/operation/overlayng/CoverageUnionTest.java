@@ -10,7 +10,7 @@ public class CoverageUnionTest extends GeometryTestCase
   public static void main(String args[]) {
     TestRunner.run(CoverageUnionTest.class);
   }
-  
+
   public CoverageUnionTest(String name) {
     super(name);
   }
@@ -54,7 +54,7 @@ public class CoverageUnionTest extends GeometryTestCase
   }
 
   /**
-   * Overlapping lines are noded with common portions merged 
+   * Overlapping lines are noded with common portions merged
    */
   public void testLinesOverlapping( ) {
     checkUnion("MULTILINESTRING ((1 1, 2 1, 3 1), (4 1, 3 1, 2 1))",

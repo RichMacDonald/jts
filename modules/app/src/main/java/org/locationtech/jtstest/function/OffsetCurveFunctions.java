@@ -26,14 +26,14 @@ public class OffsetCurveFunctions {
     return OffsetCurve.getCurve(geom, distance);
   }
 
-  public static Geometry offsetCurveWithParams(Geometry geom,       
+  public static Geometry offsetCurveWithParams(Geometry geom,
       Double distance,
       @Metadata(title="Quadrant Segs")
-      Integer quadrantSegments, 
+      Integer quadrantSegments,
       @Metadata(title="NOT USED")
-      Integer capStyle, 
+      Integer capStyle,
       @Metadata(title="Join style")
-      Integer joinStyle, 
+      Integer joinStyle,
       @Metadata(title="Mitre limit")
       Double mitreLimit)
   {
@@ -47,14 +47,14 @@ public class OffsetCurveFunctions {
     return GeometryCombiner.combine(curve1, curve2);
   }
 
-  public static Geometry offsetCurveBothWithParams(Geometry geom,       
+  public static Geometry offsetCurveBothWithParams(Geometry geom,
       Double distance,
       @Metadata(title="Quadrant Segs")
-      Integer quadrantSegments, 
+      Integer quadrantSegments,
       @Metadata(title="NOT USED")
-      Integer capStyle, 
+      Integer capStyle,
       @Metadata(title="Join style")
-      Integer joinStyle, 
+      Integer joinStyle,
       @Metadata(title="Mitre limit")
       Double mitreLimit)
   {

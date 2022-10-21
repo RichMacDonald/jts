@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 
 import org.locationtech.jts.geom.Geometry;
 
-public class ClassUtil 
+public class ClassUtil
 {
   public static String getClassname(Class clz)
   {
@@ -28,7 +28,7 @@ public class ClassUtil
     return jClassName.substring(lastDotPos + 1);
   }
 
-  public static String[] getStringArrayClassField(Class clz, String name) 
+  public static String[] getStringArrayClassField(Class clz, String name)
   {
   	try {
   		Field field = clz.getField(name);
@@ -38,8 +38,8 @@ public class ClassUtil
   	catch (NoSuchFieldException | IllegalAccessException ex) {  	}
 		return null;
   }
-  
-  public static String getStringClassField(Class clz, String name) 
+
+  public static String getStringClassField(Class clz, String name)
   {
   	try {
   		Field[] f = clz.getDeclaredFields();
@@ -50,18 +50,18 @@ public class ClassUtil
   	catch (NoSuchFieldException | IllegalAccessException ex) {  	}
 		return null;
   }
-  
+
   public static Object dynamicCall(String clzName, String methodName, Class[] methodParamTypes, Object[] methodArgs)
       throws ClassNotFoundException, SecurityException, NoSuchMethodException,
       IllegalArgumentException, InstantiationException, IllegalAccessException,
       InvocationTargetException
   {
     Class clz = Class.forName(clzName);
-    
+
     Class[] constParTypes = { String.class, String.class };
     Constructor constr = clz.getConstructor();
     Object dummyto = constr.newInstance();
-    
+
     Method meth = clz.getMethod(methodName, methodParamTypes);
     Object result = meth.invoke(dummyto, methodArgs);
     return result;
@@ -71,11 +71,11 @@ public class ClassUtil
     if ((clz == Double.class) || (clz == double.class) || (clz == Integer.class) || (clz == int.class)) return true;
     return false;
   }
-  
+
   /**
    * Converts a number-like object to a Double.
    * If the object cannot be converted null is returned.
-   * 
+   *
    * @param o a number-like object
    * @return the value of the number, or null
    */

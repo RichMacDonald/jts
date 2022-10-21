@@ -28,22 +28,22 @@ import org.locationtech.jts.triangulate.tri.Tri;
  * The priority is on performance rather than triangulation quality,
  * so that the output may contain many narrow triangles.
  * <p>
- * Holes are handled by joining them to the shell to form a 
+ * Holes are handled by joining them to the shell to form a
  * (self-touching) polygon shell with no holes.
  * Although invalid, this can be triangulated effectively.
  * <P>
  * For better-quality triangulation use {@link ConstrainedDelaunayTriangulator}.
- * 
+ *
  * @see ConstrainedDelaunayTriangulator
- * 
+ *
  * @author Martin Davis
  *
  */
 public class PolygonTriangulator {
-  
+
   /**
    * Computes a triangulation of each polygon in a geometry.
-   * 
+   *
    * @param geom a geometry containing polygons
    * @return a GeometryCollection containing the triangle polygons
    */
@@ -51,14 +51,14 @@ public class PolygonTriangulator {
     PolygonTriangulator triangulator = new PolygonTriangulator(geom);
     return triangulator.getResult();
   }
-  
+
   private final GeometryFactory geomFact;
   private final Geometry inputGeom;
   private List<Tri> triList;
 
   /**
    * Constructs a new triangulator.
-   * 
+   *
    * @param inputGeom the input geometry
    */
   public PolygonTriangulator(Geometry inputGeom) {
@@ -68,24 +68,24 @@ public class PolygonTriangulator {
 
   /**
    * Gets the triangulation as a {@link GeometryCollection} of triangular {@link Polygon}s.
-   * 
+   *
    * @return a collection of the result triangle polygons
    */
   public Geometry getResult() {
     compute();
     return Tri.toGeometry(triList, geomFact);
   }
-  
+
   /**
    * Gets the triangulation as a list of {@link Tri}s.
-   * 
+   *
    * @return the list of Tris in the triangulation
    */
   public List<Tri> getTriangles() {
     compute();
     return triList;
   }
-  
+
   private void compute() {
     @SuppressWarnings("unchecked")
     List<Polygon> polys = PolygonExtracter.getPolygons(inputGeom);
@@ -96,21 +96,21 @@ public class PolygonTriangulator {
       triList.addAll(polyTriList);
     }
   }
- 
+
   /**
    * Computes the triangulation of a single polygon
-   * 
+   *
    * @return GeometryCollection of triangular polygons
    */
   private List<Tri> triangulatePolygon(Polygon poly) {
     /**
      * Normalize to ensure that shell and holes have canonical orientation.
-     * 
+     *
      * TODO: perhaps better to just correct orientation of rings?
      */
     Polygon polyNorm = (Polygon) poly.norm();
     Coordinate[] polyShell = PolygonHoleJoiner.join(polyNorm);
-    
+
     List<Tri> triList = PolygonEarClipper.triangulate(polyShell);
     //Tri.validate(triList);
 

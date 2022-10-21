@@ -25,7 +25,7 @@ package org.locationtech.jtstest.testbuilder.io.shapefile;
  */
 public class ShapefileException extends Exception{
     public ShapefileException(){
-    }    
+    }
     public ShapefileException(String s){
         super(s);
     }

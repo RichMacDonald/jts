@@ -23,11 +23,11 @@ class OverlayEdge extends HalfEdge {
 
   /**
    * Creates a single OverlayEdge.
-   * 
+   *
    * @param pts
-   * @param lbl 
+   * @param lbl
    * @param direction
-   * 
+   *
    * @return a new edge based on the given coordinates and direction
    */
   public static OverlayEdge createEdge(Coordinate[] pts, OverlayLabel lbl, boolean direction)
@@ -53,18 +53,18 @@ class OverlayEdge extends HalfEdge {
     e0.link(e1);
     return e0;
   }
-  
+
   /**
    * Gets a {@link Comparator} which sorts by the origin Coordinates.
-   * 
+   *
    * @return a Comparator sorting by origin coordinate
    */
   public static Comparator<OverlayEdge> nodeComparator() {
     return Comparator.comparing(OverlayEdge::orig);
   }
-  
+
   private Coordinate[] pts;
-  
+
   /**
    * <code>true</code> indicates direction is forward along segString
    * <code>false</code> is reverse direction
@@ -106,7 +106,7 @@ class OverlayEdge extends HalfEdge {
 public Coordinate directionPt() {
     return dirPt;
   }
-  
+
   public OverlayLabel getLabel() {
     return label;
   }
@@ -118,11 +118,11 @@ public Coordinate directionPt() {
   public Coordinate getCoordinate() {
     return orig();
   }
-  
+
   public Coordinate[] getCoordinates() {
     return pts;
   }
-  
+
   public Coordinate[] getCoordinatesOriented() {
     if (direction) {
       return pts;
@@ -131,14 +131,14 @@ public Coordinate directionPt() {
     CoordinateArrays.reverse(copy);
     return copy;
   }
-  
+
   /**
    * Adds the coordinates of this edge to the given list,
    * in the direction of the edge.
    * Duplicate coordinates are removed
-   * (which means that this is safe to use for a path 
+   * (which means that this is safe to use for a path
    * of connected edges in the topology graph).
-   * 
+   *
    * @param coords the coordinate list to add to
    */
   public void addCoordinates(CoordinateList coords)
@@ -159,40 +159,40 @@ public Coordinate directionPt() {
       }
     }
   }
-  
+
   /**
    * Gets the symmetric pair edge of this edge.
-   * 
+   *
    * @return the symmetric pair edge
    */
   public OverlayEdge symOE() {
     return (OverlayEdge) sym();
   }
-  
+
   /**
    * Gets the next edge CCW around the origin of this edge,
    * with the same origin.
    * If the origin vertex has degree 1 then this is the edge itself.
-   * 
+   *
    * @return the next edge around the origin
    */
   public OverlayEdge oNextOE() {
     return (OverlayEdge) oNext();
   }
-  
+
   public boolean isInResultArea() {
     return isInResultArea;
   }
-  
+
   public boolean isInResultAreaBoth() {
     return isInResultArea && symOE().isInResultArea;
   }
-  
+
   public void unmarkFromResultAreaBoth() {
     isInResultArea = false;
     symOE().isInResultArea = false;
   }
-  
+
   public void markInResultArea() {
     isInResultArea  = true;
   }
@@ -201,7 +201,7 @@ public Coordinate directionPt() {
     isInResultArea  = true;
     symOE().isInResultArea = true;
   }
-  
+
   public boolean isInResultLine() {
     return isInResultLine;
   }
@@ -210,7 +210,7 @@ public Coordinate directionPt() {
     isInResultLine  = true;
     symOE().isInResultLine = true;
   }
-  
+
   public boolean isInResult() {
     return isInResultArea || isInResultLine;
   }
@@ -223,20 +223,20 @@ public Coordinate directionPt() {
     // Assert: e.orig() == this.dest();
     nextResultEdge = e;
   }
-  
+
   public OverlayEdge nextResult() {
     return nextResultEdge;
   }
-  
+
   public boolean isResultLinked() {
     return nextResultEdge != null;
   }
-  
+
   void setNextResultMax(OverlayEdge e) {
     // Assert: e.orig() == this.dest();
     nextResultMaxEdge = e;
   }
-  
+
   public OverlayEdge nextResultMax() {
     return nextResultMaxEdge;
   }
@@ -244,28 +244,28 @@ public Coordinate directionPt() {
   public boolean isResultMaxLinked() {
     return nextResultMaxEdge != null;
   }
-  
+
   public boolean isVisited() {
     return isVisited;
   }
-  
+
   private void markVisited() {
     isVisited = true;
   }
-  
+
   public void markVisitedBoth() {
     markVisited();
     symOE().markVisited();
   }
-  
+
   public void setEdgeRing(OverlayEdgeRing edgeRing) {
     this.edgeRing = edgeRing;
-  } 
-  
+  }
+
   public OverlayEdgeRing getEdgeRing() {
     return edgeRing;
-  } 
-  
+  }
+
   public MaximalEdgeRing getEdgeRingMax() {
     return maxEdgeRing;
   }
@@ -285,14 +285,14 @@ public String toString() {
     return "OE( "+ WKTWriter.format(orig)
         + dirPtStr
         + " .. " + WKTWriter.format(dest)
-        + " ) " 
-        + label.toString(direction) 
+        + " ) "
+        + label.toString(direction)
         + resultSymbol()
         + " / Sym: " + symOE().getLabel().toString(symOE().direction)
         + symOE().resultSymbol()
         ;
   }
-  
+
   private String resultSymbol() {
     if (isInResultArea) return " resA";
     if (isInResultLine) return " resL";

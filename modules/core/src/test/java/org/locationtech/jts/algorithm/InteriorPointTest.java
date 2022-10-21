@@ -47,7 +47,7 @@ public class InteriorPointTest extends GeometryTestCase
   public void testPolygonZeroArea() {
     checkInteriorPoint(read("POLYGON ((10 10, 10 10, 10 10, 10 10))"), new Coordinate(10, 10));
   }
-  
+
   public void testAll() throws Exception
   {
     checkInteriorPointFile(TestFiles.getResourceFilePath("world.wkt"));
@@ -91,7 +91,7 @@ public class InteriorPointTest extends GeometryTestCase
     Point ip = g.getInteriorPoint();
     assertTrue(g.contains(ip));
   }
-  
+
   private void checkInteriorPoint(Geometry g, Coordinate expectedPt)
   {
     Point ip = g.getInteriorPoint();

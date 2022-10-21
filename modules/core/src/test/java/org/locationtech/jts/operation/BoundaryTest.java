@@ -126,43 +126,43 @@ public class BoundaryTest
   {
     checkHasBoundary( "POINT (0 0)", false);
   }
-  
+
   public void testHasBoundaryPointEmpty()
       throws Exception
   {
     checkHasBoundary( "POINT EMPTY", false);
   }
-  
+
   public void testHasBoundaryRingClosed()
       throws Exception
   {
     checkHasBoundary( "LINESTRING (100 100, 20 20, 200 20, 100 100)", false);
   }
-  
+
   public void testHasBoundaryMultiLineStringClosed()
       throws Exception
   {
     checkHasBoundary( "MULTILINESTRING ((0 0, 0 1), (0 1, 1 1, 1 0, 0 0))", false);
   }
-  
+
   public void testHasBoundaryMultiLineStringOpen()
       throws Exception
   {
     checkHasBoundary( "MULTILINESTRING ((0 0, 0 2), (0 1, 1 1, 1 0, 0 0))");
   }
-  
+
   public void testHasBoundaryPolygon()
       throws Exception
   {
     checkHasBoundary( "POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9))");
   }
-  
+
   public void testHasBoundaryPolygonEmpty()
       throws Exception
   {
     checkHasBoundary( "POLYGON EMPTY", false);
   }
-  
+
   private void runBoundaryTest(String wkt, BoundaryNodeRule bnRule, String wktExpected)
       throws ParseException
   {
@@ -180,16 +180,16 @@ public class BoundaryTest
   {
     checkHasBoundary(wkt, BoundaryNodeRule.MOD2_BOUNDARY_RULE, true);
   }
-  
+
   private void checkHasBoundary(String wkt, boolean expected)
   {
     checkHasBoundary(wkt, BoundaryNodeRule.MOD2_BOUNDARY_RULE, expected);
   }
-  
+
   private void checkHasBoundary(String wkt, BoundaryNodeRule bnRule, boolean expected)
   {
     Geometry g = read(wkt);
     assertEquals(expected, BoundaryOp.hasBoundary(g, bnRule));
   }
-  
+
 }

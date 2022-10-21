@@ -19,16 +19,16 @@ import oracle.sql.STRUCT;
 
 
 /**
- * 
- * Does round trip testing by creating the oracle object, then decoding it. 
- * 
+ *
+ * Does round trip testing by creating the oracle object, then decoding it.
+ *
  * These tests do not include insert / delete / select operations.
- * 
- * NOTE: This test does require a precision to be used during the comparison, 
- * as points are rounded somewhat when creating the oracle struct. 
+ *
+ * NOTE: This test does require a precision to be used during the comparison,
+ * as points are rounded somewhat when creating the oracle struct.
  * (One less decimal than a java double).
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class StaticMultiLineStringTest extends ConnectedTestCase {
 
@@ -41,7 +41,7 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single line string
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSingleMultiLineStringRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -54,15 +54,15 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiLineString pt = (MultiLineString) pg.create();
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		MultiLineString pt2 = (MultiLineString) or.read(st);
-		
+
 //		System.out.println((pt==null?"NULL":pt.toString()));
 //		System.out.println((pt2==null?"NULL":pt2.toString()));
 		assertTrue("The input MultiLineString is not the same as the output MultiLineString",pt.equals(pt2));
@@ -70,7 +70,7 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 100 non overlapping line strings
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testGridMultiLineStringsRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -81,7 +81,7 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(10);
 		grid.setNumberRows(10);
-		
+
 		MultiLineString[] pt = new MultiLineString[100];
 		STRUCT[] st = new STRUCT[100];
 
@@ -92,9 +92,9 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<100){
 			pg.setBoundingBox(grid.createEnv());
@@ -102,7 +102,7 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 			st[i] = ow.write(pt[i], getConnection());
 			i++;
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<100 && pt[i] != null){
@@ -116,7 +116,7 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 8 overlapping line strings (4 distinct line strings)
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testOverlappingMultiLineStringsRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -127,7 +127,7 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(2);
 		grid.setNumberRows(2);
-		
+
 		MultiLineString[] pt = new MultiLineString[4];
 		STRUCT[] st = new STRUCT[8];
 
@@ -138,9 +138,9 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<8){
 			pg.setBoundingBox(grid.createEnv());
@@ -152,7 +152,7 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 			if(pt[j]!=null)
 				st[i++] = ow.write(pt[j], getConnection());
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<8 && pt[i%4] != null){
@@ -166,7 +166,7 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single line string with lotsa points
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSingleMultiLineStringManyPointRoundTrip() throws SQLException{
 		if(getConnection()==null){
@@ -180,13 +180,13 @@ public class StaticMultiLineStringTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiLineString pt = (MultiLineString) pg.create();
 //		System.out.println((pt==null?"NULL":pt.toString()));
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		MultiLineString pt2 = (MultiLineString) or.read(st);
 

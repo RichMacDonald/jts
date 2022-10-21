@@ -18,7 +18,7 @@ import test.jts.GeometryTestCase;
 
 /**
  * Tests {@link PointLocation#isOnLine(Coordinate, Coordinate[])}.
- * 
+ *
  * @version 1.15
  */
 public class PointLocationOnLineTest extends GeometryTestCase {
@@ -46,7 +46,7 @@ public class PointLocationOnLineTest extends GeometryTestCase {
   void checkOnLine(double x, double y, String wktLine, boolean expected) {
     LineString line = (LineString) read(wktLine);
     assertTrue(expected == PointLocation.isOnLine(new Coordinate(x,y), line.getCoordinates()));
-    
+
     assertTrue(expected == PointLocation.isOnLine(new Coordinate(x,y), line.getCoordinateSequence()));
   }
 

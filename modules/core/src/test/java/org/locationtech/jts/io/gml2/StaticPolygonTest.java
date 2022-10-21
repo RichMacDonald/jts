@@ -22,9 +22,9 @@ import org.xml.sax.SAXException;
 
 
 /**
- * Round trip testing for GML reading and writing. 
+ * Round trip testing for GML reading and writing.
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class StaticPolygonTest extends WritingTestCase {
 
@@ -37,25 +37,25 @@ public class StaticPolygonTest extends WritingTestCase {
 
 	/**
 	 * Round Trip test for a single polygon
-	 * @throws IOException 
-	 * @throws ParserConfigurationException 
-	 * @throws SAXException 
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
 	 */
 	public void testSinglePolygonNoHoleRoundTrip() throws IOException, SAXException, ParserConfigurationException{
 		PolygonGenerator pg = new PolygonGenerator();
 		pg.setGeometryFactory(geometryFactory);
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberPoints(10);
-		
+
 		Polygon pt = (Polygon) pg.create();
 		checkRoundTrip(pt);
 	}
 
 	/**
 	 * Round Trip test for a single polygon with lots of points
-	 * @throws IOException 
-	 * @throws ParserConfigurationException 
-	 * @throws SAXException 
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
 	 */
 	public void testSinglePolygonManyPointsNoHoleRoundTrip() throws IOException, SAXException, ParserConfigurationException{
 		PolygonGenerator pg = new PolygonGenerator();
@@ -63,16 +63,16 @@ public class StaticPolygonTest extends WritingTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setGenerationAlgorithm(PolygonGenerator.BOX);
 		pg.setNumberPoints(1000);
-		
+
 		Polygon pt = (Polygon) pg.create();
 		checkRoundTrip(pt);
 	}
 
 	/**
 	 * Round Trip test for a single polygon
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	public void testSinglePolygonHolesRoundTrip() throws SAXException, IOException, ParserConfigurationException{
 		PolygonGenerator pg = new PolygonGenerator();
@@ -80,16 +80,16 @@ public class StaticPolygonTest extends WritingTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberPoints(10);
 		pg.setNumberHoles(4);
-		
+
 		Polygon pt = (Polygon) pg.create();
 		checkRoundTrip(pt);
 	}
 
 	/**
 	 * Round Trip test for a single polygon with lots of points
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	public void testSinglePolygonManyPointsHolesRoundTrip() throws SAXException, IOException, ParserConfigurationException{
 		PolygonGenerator pg = new PolygonGenerator();
@@ -98,16 +98,16 @@ public class StaticPolygonTest extends WritingTestCase {
 		pg.setGenerationAlgorithm(PolygonGenerator.BOX);
 		pg.setNumberPoints(1000);
 		pg.setNumberHoles(4);
-		
+
 		Polygon pt = (Polygon) pg.create();
 		checkRoundTrip(pt);
 	}
 
 	/**
 	 * Round Trip test for a single polygon with lots of points
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	public void testSinglePolygonManyPointsManyHolesRoundTrip() throws SAXException, IOException, ParserConfigurationException{
 		PolygonGenerator pg = new PolygonGenerator();
@@ -116,7 +116,7 @@ public class StaticPolygonTest extends WritingTestCase {
 		pg.setGenerationAlgorithm(PolygonGenerator.BOX);
 		pg.setNumberPoints(100);
 		pg.setNumberHoles(100);
-		
+
 		Polygon pt = (Polygon) pg.create();
 		checkRoundTrip(pt);
 	}

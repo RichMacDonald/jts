@@ -103,24 +103,24 @@ public abstract class AbstractIndexedLineTest extends TestCase {
 
   public void testIndexOfAfterSquare()
   {
-  	runIndexOfAfterTest("LINESTRING (0 0, 0 10, 10 10, 10 0, 0 0)", 
+  	runIndexOfAfterTest("LINESTRING (0 0, 0 10, 10 10, 10 0, 0 0)",
   			"POINT (0 0)");
   }
-  
+
   public void testIndexOfAfterRibbon()
   {
-    runIndexOfAfterTest("LINESTRING (0 0, 0 60, 50 60, 50 20, -20 20)", 
+    runIndexOfAfterTest("LINESTRING (0 0, 0 60, 50 60, 50 20, -20 20)",
     "POINT (0 20)");
-    runIndexOfAfterTest("LINESTRING (0 0, 0 60, 50 60, 50 20, -20 20)", 
+    runIndexOfAfterTest("LINESTRING (0 0, 0 60, 50 60, 50 20, -20 20)",
         "POINT (0 20)", "POINT (30 60)");
   }
-  
+
   public void testIndexOfAfterBeyondEndRibbon()
   {
-    runIndexOfAfterTest("LINESTRING (0 0, 0 60, 50 60, 50 20, -20 20)", 
+    runIndexOfAfterTest("LINESTRING (0 0, 0 60, 50 60, 50 20, -20 20)",
         "POINT (-30 20)", "POINT (-20 20)");
   }
-  
+
   public void testOffsetStartPoint()
   {
     runOffsetTest("LINESTRING (0 0, 10 10, 20 20)", "POINT(0 0)", 1.0, "POINT (-0.7071067811865475 0.7071067811865475)");
@@ -128,7 +128,7 @@ public abstract class AbstractIndexedLineTest extends TestCase {
     runOffsetTest("LINESTRING (0 0, 10 10, 20 20)", "POINT(10 10)", 5.0, "POINT (6.464466094067262 13.535533905932738)");
     runOffsetTest("LINESTRING (0 0, 10 10, 20 20)", "POINT(10 10)", -5.0, "POINT (13.535533905932738 6.464466094067262)");
   }
-  
+
   public void testOffsetStartPointRepeatedPoint()
   {
     runOffsetTest("LINESTRING (0 0, 10 10, 10 10, 20 20)", "POINT(0 0)", 1.0, "POINT (-0.7071067811865475 0.7071067811865475)");
@@ -147,7 +147,7 @@ public abstract class AbstractIndexedLineTest extends TestCase {
     runOffsetTest("MULTILINESTRING ((0 0, 10 0), (10 0, 20 0))", "POINT(10 0)", -1.0, "POINT (10 -1)");
     runOffsetTest("MULTILINESTRING ((0 0, 10 0), (10 0, 20 0))", "POINT(20 0)", 1.0, "POINT (20 1)");
   }
-  
+
   protected Geometry read(String wkt)
   {
     try {
@@ -201,7 +201,7 @@ public abstract class AbstractIndexedLineTest extends TestCase {
       boolean resultOK = indexOfAfterCheck(input, testPt);
       assertTrue(resultOK);
     }
-  
+
   protected void runIndexOfAfterTest(String inputStr,
       String testPtWKT, String afterPtWKT)
 //        throws Exception
@@ -214,23 +214,23 @@ public abstract class AbstractIndexedLineTest extends TestCase {
       boolean resultOK = indexOfAfterCheck(input, testPt, afterPt);
       assertTrue(resultOK);
     }
-  
+
   /**
    * Checks that the point computed by <tt>indexOfAfter</tt>
    * is the same as the input point.
-   * (This should be the case for all except pathological cases, 
-   * such as the input test point being beyond the end of the line). 
-   * 
+   * (This should be the case for all except pathological cases,
+   * such as the input test point being beyond the end of the line).
+   *
    * @param input geometry
    * @param testPt test point
    * @return true if the result of indexOfAfter is the same as the input point
    */
   protected abstract boolean indexOfAfterCheck(Geometry input, Coordinate testPt);
-  
+
   protected abstract boolean indexOfAfterCheck(Geometry input, Coordinate testPt, Coordinate afterPt);
 
   static final double TOLERANCE_DIST = 0.001;
-  
+
   protected void runOffsetTest(String inputWKT,
       String testPtWKT, double offsetDistance, String expectedPtWKT)
 //        throws Exception
@@ -241,13 +241,13 @@ public abstract class AbstractIndexedLineTest extends TestCase {
       Coordinate testPt = testPoint.getCoordinate();
       Coordinate expectedPt = expectedPoint.getCoordinate();
       Coordinate offsetPt = extractOffsetAt(input, testPt, offsetDistance);
-      
+
       boolean isOk = offsetPt.distance(expectedPt) < TOLERANCE_DIST;
       if (! isOk)
         System.out.println("Expected = " + expectedPoint + "  Actual = " + offsetPt);
       assertTrue(isOk);
     }
-  
+
   protected abstract Coordinate extractOffsetAt(Geometry input, Coordinate testPt, double offsetDistance);
 
 }

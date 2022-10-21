@@ -49,7 +49,7 @@ public class TestCaseList {
 
   /**
    * A shim for ArrayList.add(Object, int)
-   * 
+   *
    * @param list ArrayList to add to
    * @param o object to add
    * @param index index to add at
@@ -60,7 +60,7 @@ public class TestCaseList {
     if (index >= list.size()) {
       return;
     }
-    
+
     int n = list.size();
     // move elements up to make room for new element
     for (int i = n-1; i > index; i--) {

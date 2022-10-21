@@ -27,7 +27,7 @@ import org.locationtech.jts.geom.util.GeometryMapper;
  * The Bezier control points are determined from the segments of the geometry
  * and the alpha control parameter controlling curvedness, and
  * the optional skew parameter controlling the shape of the curve at vertices.
- * The Bezier Curves are created to be C2-continuous (smooth) 
+ * The Bezier Curves are created to be C2-continuous (smooth)
  * at each input vertex.
  * <p>
  * Alternatively, the Bezier control points can be supplied explicitly.
@@ -41,7 +41,7 @@ public class CubicBezierCurve {
    * Creates a geometry of linearized Cubic Bezier Curves
    * defined by the segments of the input and a parameter
    * controlling how curved the result should be.
-   * 
+   *
    * @param geom the geometry defining the curve
    * @param alpha curvedness parameter (0 is linear, 1 is round, >1 is increasingly curved)
    * @return the linearized curved geometry
@@ -50,13 +50,13 @@ public class CubicBezierCurve {
     CubicBezierCurve curve = new CubicBezierCurve(geom, alpha);
     return curve.getResult();
   }
-  
+
   /**
    * Creates a geometry of linearized Cubic Bezier Curves
    * defined by the segments of the input and a parameter
    * controlling how curved the result should be, with a skew factor
    * affecting the curve shape at each vertex.
-   * 
+   *
    * @param geom the geometry defining the curve
    * @param alpha curvedness parameter (0 is linear, 1 is round, >1 is increasingly curved)
    * @param skew the skew parameter (0 is none, positive skews towards longer side, negative towards shorter
@@ -66,18 +66,18 @@ public class CubicBezierCurve {
     CubicBezierCurve curve = new CubicBezierCurve(geom, alpha, skew);
     return curve.getResult();
   }
-  
+
   /**
    * Creates a geometry of linearized Cubic Bezier Curves
    * defined by the segments of the input
    * and a list (or lists) of control points.
    * <p>
-   * Typically the control point geometry 
+   * Typically the control point geometry
    * is a {@link LineString} or {@link MultiLineString}
    * containing an element for each line or ring in the input geometry.
-   * The list of control points for each linear element must contain two 
+   * The list of control points for each linear element must contain two
    * vertices for each segment (and thus <code>2 * npts - 2</code>).
-   * 
+   *
    * @param geom the geometry defining the curve
    * @param controlPoints a geometry containing the control point elements.
    * @return the linearized curved geometry
@@ -86,7 +86,7 @@ public class CubicBezierCurve {
     CubicBezierCurve curve = new CubicBezierCurve(geom, controlPoints);
     return curve.getResult();
   }
-  
+
   private double minSegmentLength = 0.0;
   private int numVerticesPerSegment = 16;
 
@@ -95,7 +95,7 @@ public class CubicBezierCurve {
   private double skew = 0;
   private Geometry controlPoints = null;
   private final GeometryFactory geomFactory;
-  
+
   private Coordinate[] bezierCurvePts;
   private double[][] interpolationParam;
   private int controlPointIndex = 0;
@@ -117,7 +117,7 @@ public class CubicBezierCurve {
   /**
    * Creates a new instance producing a Bezier curve defined by a geometry,
    * an alpha curvedness value, and a skew factor.
-   * 
+   *
    * @param geom geometry defining curve
    * @param alpha curvedness parameter (0 is linear, 1 is round, >1 is increasingly curved)
    * @param skew the skew parameter (0 is none, positive skews towards longer side, negative towards shorter
@@ -129,17 +129,17 @@ public class CubicBezierCurve {
     this.alpha = alpha;
     this.skew  = skew;
   }
-  
+
   /**
    * Creates a new instance producing a Bezier curve defined by a geometry,
    * and a list (or lists) of control points.
    * <p>
-   * Typically the control point geometry 
+   * Typically the control point geometry
    * is a {@link LineString} or {@link MultiLineString}
    * containing an element for each line or ring in the input geometry.
-   * The list of control points for each linear element must contain two 
+   * The list of control points for each linear element must contain two
    * vertices for each segment (and thus <code>2 * npts - 2</code>).
-   * 
+   *
    * @param geom geometry defining curve
    * @param controlPoints the geometry containing the control points
    */
@@ -148,10 +148,10 @@ public class CubicBezierCurve {
     this.geomFactory = geom.getFactory();
     this.controlPoints = controlPoints;
   }
-  
+
   /**
    * Gets the computed linearized Bezier curve geometry.
-   * 
+   *
    * @return a linearized curved geometry
    */
   public Geometry getResult() {
@@ -164,12 +164,12 @@ public class CubicBezierCurve {
         }
         if (geom instanceof Polygon ) {
           return bezierPolygon((Polygon) geom);
-        } 
+        }
         //-- Points
         return geom.copy();
       });
   }
-  
+
   private LineString bezierLine(LineString ls) {
     Coordinate[] coords = ls.getCoordinates();
     CoordinateList curvePts = bezierCurve(coords, false);
@@ -183,7 +183,7 @@ public class CubicBezierCurve {
     curvePts.closeRing();
     return geomFactory.createLinearRing(curvePts.toCoordinateArray());
   }
-  
+
   private Polygon bezierPolygon(Polygon poly) {
     LinearRing shell = bezierRing(poly.getExteriorRing());
     LinearRing[] holes = null;
@@ -195,7 +195,7 @@ public class CubicBezierCurve {
     }
     return geomFactory.createPolygon(shell, holes);
   }
-  
+
   private CoordinateList bezierCurve(Coordinate[] coords, boolean isRing) {
     Coordinate[] control = controlPoints(coords, isRing);
     CoordinateList curvePts = new CoordinateList();
@@ -205,7 +205,7 @@ public class CubicBezierCurve {
     }
     return curvePts;
   }
-  
+
   private Coordinate[] controlPoints(Coordinate[] coords, boolean isRing) {
     if (controlPoints != null) {
       if (controlPointIndex >= controlPoints.getNumGeometries()) {
@@ -213,7 +213,7 @@ public class CubicBezierCurve {
       }
       Geometry ctrlPtsGeom = controlPoints.getGeometryN(controlPointIndex++);
       Coordinate[] ctrlPts = ctrlPtsGeom.getCoordinates();
-      
+
       int expectedNum1 = 2 * coords.length - 2;
       int expectedNum2 = isRing ? coords.length - 1 : coords.length;
       if (expectedNum1 != ctrlPts.length && expectedNum2 != ctrlPts.length) {
@@ -243,15 +243,15 @@ public class CubicBezierCurve {
       }
     }
   }
-  
+
   //-- chosen to make curve at right-angle corners roughly circular
   private static final double CIRCLE_LEN_FACTOR = 3.0 / 8.0;
-  
+
   /**
    * Creates control points for each vertex of curve.
-   * The control points are collinear with each vertex, 
+   * The control points are collinear with each vertex,
    * thus providing C1-continuity.
-   * By default the control vectors are the same length, 
+   * By default the control vectors are the same length,
    * which provides C2-continuity (same curvature on each
    * side of vertex.
    * The alpha parameter controls the length of the control vectors.
@@ -260,7 +260,7 @@ public class CubicBezierCurve {
    * Alpha > 1 starts to distort the curve and may introduce self-intersections.
    * <p>
    * The control point array contains a pair of coordinates for each input segment.
-   * 
+   *
    * @param coords
    * @param isRing
    * @param alpha determines the curviness
@@ -268,14 +268,14 @@ public class CubicBezierCurve {
    */
   private Coordinate[] controlPoints(Coordinate[] coords, boolean isRing, double alpha, double skew) {
     int N = coords.length;
-    int start = 1; 
+    int start = 1;
     int end = N - 1;
     if (isRing) {
       N = coords.length - 1;
       start = 0;
       end = N;
     }
-    
+
     int nControl = 2 * coords.length - 2;
     Coordinate[] ctrl = new Coordinate[nControl];
     for (int i = start; i < end; i++) {
@@ -289,16 +289,16 @@ public class CubicBezierCurve {
       double angBisect = Angle.bisector(v0, v1, v2);
       double ang0 = angBisect - orient * Angle.PI_OVER_2;
       double ang1 = angBisect + orient * Angle.PI_OVER_2;
-      
+
       double dist0 = v1.distance(v0);
       double dist1 = v1.distance(v2);
       double lenBase = Math.min(dist0, dist1);
-      
+
       double intAngAbs = Math.abs(interiorAng);
-      
+
       //-- make acute corners sharper by shortening tangent vectors
       double sharpnessFactor = intAngAbs >= Angle.PI_OVER_2 ? 1 : intAngAbs / Angle.PI_OVER_2;
-      
+
       double len = alpha * CIRCLE_LEN_FACTOR * sharpnessFactor * lenBase;
       double stretch0 = 1;
       double stretch1 = 1;
@@ -307,10 +307,10 @@ public class CubicBezierCurve {
         int skewIndex = dist0 > dist1 ? 0 : 1;
         if (skew < 0) skewIndex = 1 - skewIndex;
         if (skewIndex == 0) {
-          stretch0 += Math.abs(skew) * stretch; 
+          stretch0 += Math.abs(skew) * stretch;
         }
         else {
-          stretch1 += Math.abs(skew) * stretch; 
+          stretch1 += Math.abs(skew) * stretch;
         }
       }
       Coordinate ctl0 = Angle.project(v1, ang0, stretch0 * len);
@@ -321,7 +321,7 @@ public class CubicBezierCurve {
       int i0 = index < 0 ? nControl - 1 : index;
       ctrl[i0] = ctl0;
       ctrl[index + 1] = ctl1;
-     
+
       //System.out.println(WKTWriter.toLineString(v1, ctl0));
       //System.out.println(WKTWriter.toLineString(v1, ctl1));
     }
@@ -335,22 +335,22 @@ public class CubicBezierCurve {
    * Sets the end control points for a line.
    * Produce a symmetric curve for the first and last segments
    * by using mirrored control points for start and end vertex.
-   * 
+   *
    * @param coords
    * @param ctrl
    */
   private void setLineEndControlPoints(Coordinate[] coords, Coordinate[] ctrl) {
     int N = ctrl.length;
     ctrl[0] = mirrorControlPoint(ctrl[1], coords[1], coords[0]);
-    ctrl[N - 1] = mirrorControlPoint(ctrl[N - 2], 
+    ctrl[N - 1] = mirrorControlPoint(ctrl[N - 2],
         coords[coords.length - 1], coords[coords.length - 2]);
   }
 
   /**
    * Creates a control point aimed at the control point at the opposite end of the segment.
-   * 
+   *
    * Produces overly flat results, so not used currently.
-   * 
+   *
    * @param c
    * @param p1
    * @param p0
@@ -388,7 +388,7 @@ public class CubicBezierCurve {
 
   /**
    * Calculates vertices along a cubic Bezier curve.
-   * 
+   *
    * @param p0 start point
    * @param p1   end point
    * @param ctrl1 first control point
@@ -396,9 +396,9 @@ public class CubicBezierCurve {
    * @param param interpolation parameters
    * @param curve array to hold generated points
    */
-  private void cubicBezier(final Coordinate p0, 
-      final Coordinate p1, final Coordinate ctrl1, 
-      final Coordinate ctrl2, double[][] param, 
+  private void cubicBezier(final Coordinate p0,
+      final Coordinate p1, final Coordinate ctrl1,
+      final Coordinate ctrl2, double[][] param,
       Coordinate[] curve) {
 
     int n = curve.length;
@@ -437,5 +437,5 @@ public class CubicBezierCurve {
     }
     return param;
   }
-  
+
 }

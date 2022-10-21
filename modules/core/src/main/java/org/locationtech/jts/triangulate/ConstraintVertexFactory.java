@@ -17,7 +17,7 @@ import org.locationtech.jts.geom.Coordinate;
 
 /**
  * An interface for factories which create a {@link ConstraintVertex}
- * 
+ *
  * @author Martin Davis
  */
 public interface ConstraintVertexFactory {

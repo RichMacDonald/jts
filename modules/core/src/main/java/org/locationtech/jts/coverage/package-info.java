@@ -20,12 +20,12 @@
  * This is the case if no polygon has a boundary which intersects the interior of another polygon.
  * <li>Where polygons are adjacent (their boundaries intersect), the vertices
  * (and thus line segments) of the common boundary match exactly.
- * </ol> 
+ * </ol>
  * <p>
- * Coverage algorithms (such as {@link CoverageUnion}) 
+ * Coverage algorithms (such as {@link CoverageUnion})
  * generally require the input coverage to be valid to produce correct results.
  * Coverages can be validated using {@link CoverageValidator}.
- * 
- * 
+ *
+ *
  */
 package org.locationtech.jts.coverage;

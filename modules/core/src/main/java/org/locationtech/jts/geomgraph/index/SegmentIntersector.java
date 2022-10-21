@@ -22,10 +22,10 @@ import org.locationtech.jts.geomgraph.Node;
 /**
  * Computes the intersection of line segments,
  * and adds the intersection to the edges containing the segments.
- * 
+ *
  * @version 1.7
  */
-public class SegmentIntersector 
+public class SegmentIntersector
 {
 
   public static boolean isAdjacentSegments(int i1, int i2)
@@ -69,7 +69,7 @@ public class SegmentIntersector
       bdyNodes[0] = bdyNodes0;
       bdyNodes[1] = bdyNodes1;
   }
-  
+
   public boolean isDone() {
 	  return false;
   }
@@ -166,12 +166,12 @@ public class SegmentIntersector
         hasIntersection = true;
         /**
          * In certain cases two line segments test as having a proper intersection
-         * via the robust orientation check, but due to roundoff 
+         * via the robust orientation check, but due to roundoff
          * the computed intersection point is equal to an endpoint.
          * If the endpoint is a boundary point
          * the computed point must be included as a node.
-         * If it is not a boundary point the intersection 
-         * is recorded as properInterior by logic below. 
+         * If it is not a boundary point the intersection
+         * is recorded as properInterior by logic below.
          */
         boolean isBoundaryPt = isBoundaryPoint(li, bdyNodes);
         boolean isNotProper = ! li.isProper() || isBoundaryPt;

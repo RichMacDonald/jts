@@ -66,7 +66,7 @@ public class LocationIndexedLine
    * line will be returned.
    * The computed point is offset to the left of the line if the offset distance is
    * positive, to the right if negative.
-   * 
+   *
    * The Z-ordinate of the computed point will be interpolated from
    * the Z-ordinates of the line segment containing it, if they exist.
    *
@@ -113,7 +113,7 @@ public class LocationIndexedLine
   {
     return LocationIndexOfPoint.indexOf(linearGeom, pt);
   }
-  
+
   /**
    * Finds the index for a point on the line
    * which is greater than the given index.

@@ -28,9 +28,9 @@ public class MonotoneChainBuilder {
   /**
    * Computes a list of the {@link MonotoneChain}s
    * for a list of coordinates.
-   * 
+   *
    * @param pts the list of points to compute chains for
-   * @return a list of the monotone chains for the points 
+   * @return a list of the monotone chains for the points
    */
   public static List getChains(Coordinate[] pts)
   {
@@ -39,12 +39,12 @@ public class MonotoneChainBuilder {
 
   /**
    * Computes a list of the {@link MonotoneChain}s
-   * for a list of coordinates, 
+   * for a list of coordinates,
    * attaching a context data object to each.
-   * 
+   *
    * @param pts the list of points to compute chains for
    * @param context a data object to attach to each chain
-   * @return a list of the monotone chains for the points 
+   * @return a list of the monotone chains for the points
    */
   public static List getChains(Coordinate[] pts, Object context)
   {
@@ -66,10 +66,10 @@ public class MonotoneChainBuilder {
    * starting at a given point.
    * Repeated points (0-length segments) are included
    * in the monotone chain returned.
-   * 
+   *
    * @param pts the points to scan
    * @param start the index of the start of this chain
-   * @return the index of the last point in the monotone chain 
+   * @return the index of the last point in the monotone chain
    * starting at <code>start</code>.
    */
   private static int findChainEnd(Coordinate[] pts, int start)

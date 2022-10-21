@@ -24,7 +24,7 @@ import org.locationtech.jts.geom.util.GeometryTransformer;
 
 /**
  * Densifies a {@link Geometry} by inserting extra vertices along the line segments
- * contained in the geometry. 
+ * contained in the geometry.
  * All segments in the created densified geometry will be <b>no longer</b>
  * than the given distance tolerance
  * (that is, all segments in the output will have length less than or equal to
@@ -38,14 +38,14 @@ import org.locationtech.jts.geom.util.GeometryTransformer;
  * <p>
  * <b>Note:</b> At some future point this class will
  * offer a variety of densification strategies.
- * 
+ *
  * @author Martin Davis
  */
 public class Densifier {
 	/**
 	 * Densifies a geometry using a given distance tolerance,
    * and respecting the input geometry's {@link PrecisionModel}.
-	 * 
+	 *
 	 * @param geom the geometry to densify
 	 * @param distanceTolerance the distance tolerance to densify
 	 * @return the densified geometry
@@ -58,7 +58,7 @@ public class Densifier {
 
 	/**
 	 * Densifies a list of coordinates.
-	 * 
+	 *
 	 * @param pts the coordinate list
 	 * @param distanceTolerance the densify tolerance
 	 * @return the densified coordinate sequence
@@ -72,11 +72,11 @@ public class Densifier {
 			seg.p1 = pts[i + 1];
 			coordList.add(seg.p0, false);
 			double len = seg.getLength();
-			
+
 			// check if no densification is required
 			if (len <= distanceTolerance)
 			  continue;
-			
+
 			// densify the segment
 			int densifiedSegCount = (int) Math.ceil(len / distanceTolerance);
 			double densifiedSegLen = len / densifiedSegCount;
@@ -91,7 +91,7 @@ public class Densifier {
 			}
 		}
 		// this check handles empty sequences
-		if (pts.length > 0) 
+		if (pts.length > 0)
 		  coordList.add(pts[pts.length - 1], false);
 		return coordList.toCoordinateArray();
 	}
@@ -107,7 +107,7 @@ public class Densifier {
 
 	/**
 	 * Creates a new densifier instance.
-	 * 
+	 *
 	 * @param inputGeom
 	 */
 	public Densifier(Geometry inputGeom) {
@@ -118,7 +118,7 @@ public class Densifier {
 	 * Sets the distance tolerance for the densification. All line segments
 	 * in the densified geometry will be no longer than the distance tolerance.
 	 * The distance tolerance must be positive.
-	 * 
+	 *
 	 * @param distanceTolerance
 	 *          the densification tolerance to use
 	 */
@@ -130,16 +130,16 @@ public class Densifier {
 
 	/**
 	 * Sets whether polygonal results are processed to ensure they are valid.
-	 * 
+	 *
 	 * @param isValidated true if the results should be validated
 	 */
 	public void setValidate(boolean isValidated) {
 	  this.isValidated  = isValidated;
 	}
-	
+
 	/**
 	 * Gets the densified geometry.
-	 * 
+	 *
 	 * @return the densified geometry
 	 */
 	public Geometry getResultGeometry() {
@@ -149,12 +149,12 @@ public class Densifier {
 	static class DensifyTransformer extends GeometryTransformer {
 	  double distanceTolerance;
     private boolean isValidated;
-	  
+
 	  DensifyTransformer(double distanceTolerance, boolean isValidated) {
 	    this.distanceTolerance = distanceTolerance;
 	    this.isValidated = isValidated;
     }
-	  
+
 		@Override
 		protected CoordinateSequence transformCoordinates(
 				CoordinateSequence coords, Geometry parent) {
@@ -191,7 +191,7 @@ public class Densifier {
 		 * the topology. Note this only works for area geometries, since buffer
 		 * always returns areas. This also may return empty geometries, if the input
 		 * has no actual area.
-		 * 
+		 *
 		 * @param roughAreaGeom
 		 *          an area geometry possibly containing self-intersections
 		 * @return a valid area geometry

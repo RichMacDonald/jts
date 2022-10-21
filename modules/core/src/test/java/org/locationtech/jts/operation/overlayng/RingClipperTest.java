@@ -89,10 +89,10 @@ public class RingClipperTest extends GeometryTestCase {
   private void checkClip(String wkt, Envelope clipEnv, String wktExpected) {
     Geometry line = read(wkt);
     Geometry expected = read(wktExpected);
-    
+
     RingClipper clipper = new RingClipper(clipEnv);
     Coordinate[] pts = clipper.clip(line.getCoordinates());
-    
+
     LineString result = line.getFactory().createLineString(pts);
     checkEqual(expected, result);
   }

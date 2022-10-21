@@ -28,15 +28,15 @@ import org.locationtech.jtstest.testbuilder.model.TestBuilderModel;
 /**
  * @version 1.7
  */
-public class StatsPanel 
-extends JPanel 
+public class StatsPanel
+extends JPanel
 {
 	TestBuilderModel tbModel = null;
-	
+
 	JScrollPane jScrollPane1 = new JScrollPane();
 	JTextArea txtStats = new JTextArea();
   BorderLayout tabPanelLayout = new BorderLayout();
-	
+
 	public StatsPanel() {
 		try {
 			jbInit();
@@ -44,9 +44,9 @@ extends JPanel
 			ex.printStackTrace();
 		}
 	}
-	
+
   void jbInit() throws Exception {
-    
+
     this.setLayout(tabPanelLayout);
 
     txtStats.setWrapStyleWord(true);
@@ -54,16 +54,16 @@ extends JPanel
     txtStats.setBackground(AppColors.BACKGROUND);
 
     this.add(jScrollPane1, BorderLayout.CENTER);
-    
+
     jScrollPane1.setBorder(BorderFactory.createLoweredBevelBorder());
     jScrollPane1.getViewport().add(txtStats, null);
   }
-  
+
 	public void setModel(TestBuilderModel tbModel)
 	{
 		this.tbModel = tbModel;
 	}
-	
+
   public void refresh()
   {
     StringBuffer buf = new StringBuffer();
@@ -75,7 +75,7 @@ extends JPanel
 
     setString(buf.toString());
   }
-  
+
   private void writeGeomStats(LayerList lyrList, StringBuffer buf) {
     for (int i = 0; i < lyrList.size(); i++) {
       Layer lyr = lyrList.getLayer(i);
@@ -93,11 +93,11 @@ extends JPanel
     buf.append("    " + GeometryUtil.metricsSummary(g));
     buf.append("\n");
   }
-  
+
   private void setString(String s)
   {
     txtStats.setText(s);
   }
 
-  
+
 }

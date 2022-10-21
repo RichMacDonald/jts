@@ -34,12 +34,12 @@ import org.locationtech.jts.geom.util.PolygonExtracter;
  * which do not intersect any other input geometry.
  * <p>
  * Non-sparse sets are computed correctly, but may be slower than using cascaded union.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class PartitionedUnion {
-  
+
   public static Geometry union(Geometry geoms)
   {
     List polys = PolygonExtracter.getPolygons(geoms);
@@ -48,21 +48,21 @@ public class PartitionedUnion {
   }
 
   private Geometry[] inputPolys;
-  
+
   public PartitionedUnion(Collection<Geometry> polys)
   {
     this.inputPolys = toArray(polys);
   }
-  
+
   private static Geometry[] toArray(Collection<Geometry> polys) {
     return polys.toArray(new Geometry[0]);
   }
-  
+
   public Geometry union()
   {
     if (inputPolys.length == 0)
       return null;
-    
+
     SpatialPartition part = new SpatialPartition(inputPolys, (i, j) -> {
          //return inputPolys[i].intersects(inputPolys[j]);
         //*
@@ -70,7 +70,7 @@ public class PartitionedUnion {
          return pg.intersects(inputPolys[j]);
          //*/
       });
-    
+
     //--- compute union of each set
     GeometryFactory geomFactory = inputPolys[0].getFactory();
     List<Geometry> unionGeoms = new ArrayList<>();

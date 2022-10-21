@@ -29,7 +29,7 @@ import org.locationtech.jts.geom.Geometry;
  * A dimension may be specified for the coordinates in the sequence,
  * which may be 2 or 3.
  * The actual coordinates will always have 3 ordinates,
- * but the dimension is useful as metadata in some situations. 
+ * but the dimension is useful as metadata in some situations.
  *
  * @version 1.7
  */
@@ -49,7 +49,7 @@ public class CoordinateArraySequence
    * Allowable values are 0 or 1.
    */
   private int measures = 0;
-  
+
   private Coordinate[] coordinates;
 
   /**
@@ -66,7 +66,7 @@ public class CoordinateArraySequence
   }
 
   /**
-   * Constructs a sequence based on the given array 
+   * Constructs a sequence based on the given array
    * of {@link Coordinate}s (the
    * array is not copied).
    *
@@ -74,15 +74,15 @@ public class CoordinateArraySequence
    * @param dimension the dimension of the coordinates
    */
   public CoordinateArraySequence(Coordinate[] coordinates, int dimension) {
-    this(coordinates, dimension, CoordinateArrays.measures(coordinates));    
+    this(coordinates, dimension, CoordinateArrays.measures(coordinates));
   }
-  
+
   /**
-   * Constructs a sequence based on the given array 
+   * Constructs a sequence based on the given array
    * of {@link Coordinate}s (the array is not copied).
    * <p>
    * It is your responsibility to ensure the array contains Coordinates of the
-   * indicated dimension and measures (See 
+   * indicated dimension and measures (See
    * {@link CoordinateArrays#enforceConsistency(Coordinate[])} ).</p>
    *
    * @param coordinates the coordinate array that will be referenced.
@@ -157,7 +157,7 @@ public class CoordinateArraySequence
       return;
     }
     dimension = coordSeq.getDimension();
-    measures = coordSeq.getMeasures();    
+    measures = coordSeq.getMeasures();
     coordinates = new Coordinate[coordSeq.size()];
 
     for (int i = 0; i < coordinates.length; i++) {
@@ -173,7 +173,7 @@ public int getDimension()
   {
     return dimension;
   }
-  
+
   @Override
   public int getMeasures()
   {
@@ -242,7 +242,7 @@ public double getZ(int index)
     }
 
   }
-  
+
   /**
    * @see org.locationtech.jts.geom.CoordinateSequence#getM(int)
    */
@@ -253,9 +253,9 @@ public double getM(int index) {
     }
     else {
         return Double.NaN;
-    }    
+    }
   }
-  
+
   /**
    * @see org.locationtech.jts.geom.CoordinateSequence#getOrdinate(int, int)
    */

@@ -23,30 +23,30 @@ import org.locationtech.jts.geom.util.PolygonExtracter;
 import org.locationtech.jtstest.geomfunction.Metadata;
 
 public class CoverageFunctions {
-  
+
   public static Geometry validatePolygon(Geometry geom, Geometry adjacentPolys) {
     return CoveragePolygonValidator.validate(geom, toGeometryArray(adjacentPolys));
   }
-  
-  public static Geometry validatePolygonWithGaps(Geometry geom, Geometry adjacentPolys, 
+
+  public static Geometry validatePolygonWithGaps(Geometry geom, Geometry adjacentPolys,
       @Metadata(title="Gap width")
       double gapWidth) {
     return CoveragePolygonValidator.validate(geom, toGeometryArray(adjacentPolys), gapWidth);
   }
-  
+
   public static Geometry validateCoverage(Geometry geom) {
     Geometry[] invalid = CoverageValidator.validate(toGeometryArray(geom));
     return FunctionsUtil.buildGeometry(invalid);
   }
 
-  public static Geometry validateCoverageWithGaps(Geometry geom, 
+  public static Geometry validateCoverageWithGaps(Geometry geom,
       @Metadata(title="Gap width")
       double gapWidth) {
     Geometry[] invalid = CoverageValidator.validate(toGeometryArray(geom), gapWidth);
     return FunctionsUtil.buildGeometry(invalid);
   }
 
-  public static Geometry findGaps(Geometry geom, 
+  public static Geometry findGaps(Geometry geom,
       @Metadata(title="Gap width")
       double gapWidth) {
     return CoverageGapFinder.findGaps(toGeometryArray(geom),gapWidth);
@@ -57,27 +57,27 @@ public class CoverageFunctions {
     Geometry[] cov = toGeometryArray(coverage);
     return CoverageUnion.union(cov);
   }
-  
+
   @Metadata(description="Simplify a coverage")
   public static Geometry simplify(Geometry coverage, double tolerance) {
     Geometry[] cov = toGeometryArray(coverage);
     Geometry[] result =  CoverageSimplifier.simplify(cov, tolerance);
     return FunctionsUtil.buildGeometry(result);
   }
-  
+
   @Metadata(description="Simplify inner edges of a coverage")
   public static Geometry simplifyinner(Geometry coverage, double tolerance) {
     Geometry[] cov = toGeometryArray(coverage);
     Geometry[] result =  CoverageSimplifier.simplifyInner(cov, tolerance);
     return FunctionsUtil.buildGeometry(result);
   }
-  
+
   static Geometry extractPolygons(Geometry geom) {
     List components = PolygonExtracter.getPolygons(geom);
     Geometry result = geom.getFactory().buildGeometry(components);
     return result;
   }
-  
+
   private static Geometry[] toGeometryArray(Geometry geom) {
     Geometry[] geoms = new Geometry[geom.getNumGeometries()];
     for (int i = 0; i < geom.getNumGeometries(); i++) {
@@ -85,5 +85,5 @@ public class CoverageFunctions {
     }
     return geoms;
   }
-  
+
 }

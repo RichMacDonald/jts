@@ -8,10 +8,10 @@ import org.locationtech.jts.index.strtree.STRtree;
 import org.locationtech.jts.util.Stopwatch;
 
 public class RtreeStressTest {
-  
+
   private static final int NUM_ITEMS = 1000;
   private static final int NUM_QUERY = 100000;
-  
+
   private static final double BASE_MIN = -1000;
   private static final double BASE_MAX = 1000;
   private static final double SIZE_MAX = 100;
@@ -23,19 +23,19 @@ public class RtreeStressTest {
   }
   HPRtree hpRtree;
   STRtree stRtree;
-  
+
   private void run() {
     hpRtree = new HPRtree();
     stRtree = new STRtree();
-    
+
     //loadRandom(NUM_ITEMS);
     loadGrid(NUM_ITEMS);
-    
+
     Stopwatch sw = new Stopwatch();
     //hpRtree.build();
     stRtree.build();
     System.out.println("Build time: " + sw.getTimeString());
-    
+
     Stopwatch sw2 = new Stopwatch();
     for (int i = 0; i < NUM_QUERY; i++) {
       queryRandom();
@@ -45,35 +45,35 @@ public class RtreeStressTest {
 
   private void queryRandom() {
     Envelope env = randomEnvelope(BASE_MIN, BASE_MAX, 10 * SIZE_MAX);
-    
+
     CountItemVisitor hpVisitor = new CountItemVisitor();
     hpRtree.query(env, hpVisitor);
-    
+
     //List hpResult = hpRtree.query(env);
     List hprResult = null;
-    
+
     //CountItemVisitor stVisitor = new CountItemVisitor();
     //stRtree.query(env, stVisitor);
 
     //List strResult = stRtree.query(env);
     List strResult = null;
-    
+
     checkResults(hprResult, strResult);
   }
 
   private void checkResults(List hprResult, List strResult) {
     if ((hprResult == null) || (strResult == null)) return;
-    
-    System.out.println("Result size: HPR = " + hprResult.size() 
+
+    System.out.println("Result size: HPR = " + hprResult.size()
     + " - STR = " + strResult.size());
 
     if (hprResult.size() != strResult.size()) {
-      System.out.println("Result sizes are not equal: HPR = " + hprResult.size() 
+      System.out.println("Result sizes are not equal: HPR = " + hprResult.size()
       + " - STR = " + strResult.size());
     }
 
   }
-  
+
   private void loadRandom(int numItems) {
     for (int i = 0; i < numItems; i++) {
       Envelope env = randomEnvelope(BASE_MIN, BASE_MAX, SIZE_MAX);
@@ -87,7 +87,7 @@ public class RtreeStressTest {
     for (int i = 0; i < numSide; i++) {
       for (int j = 0; j < numSide; j++) {
         Envelope env = new Envelope(
-            BASE_MIN, BASE_MIN + i * gridSize, 
+            BASE_MIN, BASE_MIN + i * gridSize,
             BASE_MIN, BASE_MIN + j * gridSize);
         insert(env, i + "-" + j);
       }
@@ -116,6 +116,6 @@ public class RtreeStressTest {
     double del = x2 - x1;
     return x1 + del * Math.random();
   }
-  
-  
+
+
 }

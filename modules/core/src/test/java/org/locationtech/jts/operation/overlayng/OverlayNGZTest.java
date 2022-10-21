@@ -25,7 +25,7 @@ public class OverlayNGZTest extends GeometryTestCase
   public OverlayNGZTest(String name) {
     super(name);
   }
-  
+
   public void testPointXYPointDifference() {
     checkDifference("MULTIPOINT ((1 1), (5 5))", "POINT Z (5 5 99)",
         "POINT Z(1 1 99)");
@@ -88,7 +88,7 @@ public class OverlayNGZTest extends GeometryTestCase
     checkDifference("LINESTRING Z (0 5 0, 10 5 10)", "POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9))",
         "MULTILINESTRING Z((0 5 0, 1 5 1), (9 5 9, 10 5 10))");
   }
-  
+
   public void testLineXYPolygonDifference() {
     checkDifference("LINESTRING (0 5, 10 5)", "POLYGON Z ((1 9 50, 9 9 90, 9 1 50, 1 1 10, 1 9 50))",
         "MULTILINESTRING Z((0 5 50, 1 5 30), (9 5 70, 10 5 50))");
@@ -111,18 +111,18 @@ public class OverlayNGZTest extends GeometryTestCase
   }
 
   //=================================================
-  
+
   private void checkIntersection(String wktA, String wktB, String wktExpected) {
     checkOverlay(OverlayNG.INTERSECTION, wktA, wktB, wktExpected);
   }
   private void checkDifference(String wktA, String wktB, String wktExpected) {
     checkOverlay(OverlayNG.DIFFERENCE, wktA, wktB, wktExpected);
   }
-  
+
   private void checkUnion(String wktA, String wktB, String wktExpected) {
     checkOverlay(OverlayNG.UNION, wktA, wktB, wktExpected);
   }
-  
+
   private void checkOverlay(int opCode, String wktA, String wktB, String wktExpected) {
     Geometry a = read(wktA);
     Geometry b = read(wktB);

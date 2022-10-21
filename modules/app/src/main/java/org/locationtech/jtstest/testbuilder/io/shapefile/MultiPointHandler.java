@@ -41,29 +41,29 @@ public class MultiPointHandler  implements ShapeHandler  {
     int myShapeType= -1;
     private PrecisionModel precisionModel = new PrecisionModel();
     private GeometryFactory geometryFactory = new GeometryFactory(precisionModel, 0);
-    
+
     /** Creates new MultiPointHandler */
     public MultiPointHandler() {
         myShapeType = 8;
     }
-    
+
         public MultiPointHandler(int type) throws InvalidShapefileException
         {
             if  ( (type != 8) &&  (type != 18) &&  (type != 28) )
                 throw new InvalidShapefileException("Multipointhandler constructor - expected type to be 8, 18, or 28");
-            
+
         myShapeType = type;
     }
-    
+
     @Override
 	public Geometry read(EndianDataInputStream file,GeometryFactory geometryFactory,int contentLength) throws IOException,InvalidShapefileException{
         //file.setLittleEndianMode(true);
-	
+
 		int actualReadWords = 0; //actual number of words read (word = 16bits)
-	
-        int shapeType = file.readIntLE();  
+
+        int shapeType = file.readIntLE();
 		actualReadWords += 2;
-        
+
         if (shapeType ==0)
             return geometryFactory.createMultiPointFromCoords(null);
         if (shapeType != myShapeType)
@@ -75,16 +75,16 @@ public class MultiPointHandler  implements ShapeHandler  {
         file.readDoubleLE();
         file.readDoubleLE();
         file.readDoubleLE();
-        
+
 		actualReadWords += 4*4;
-        
-        int numpoints = file.readIntLE(); 
+
+        int numpoints = file.readIntLE();
 		actualReadWords += 2;
-	 
+
         Coordinate[] coords = new Coordinate[numpoints];
         for (int t=0;t<numpoints;t++)
-        {    
-          
+        {
+
                 double x = file.readDoubleLE();
                 double y = file.readDoubleLE();
 				actualReadWords += 8;
@@ -96,14 +96,14 @@ public class MultiPointHandler  implements ShapeHandler  {
             file.readDoubleLE();
 			actualReadWords += 8;
             for (int t=0;t<numpoints;t++)
-            { 
+            {
                        double z =  file.readDoubleLE();//z
 						actualReadWords += 4;
                        coords[t].setZ(z);
             }
         }
-        
-        
+
+
         if (myShapeType >= 18)
         {
            // int fullLength = numpoints * 8 + 20 +8 +4*numpoints + 8 +4*numpoints;
@@ -118,41 +118,41 @@ public class MultiPointHandler  implements ShapeHandler  {
 				//multipoint M (with M)
 				fullLength = 20 + (numpoints * 8)  +8 +4*numpoints;
 			}
-			
+
             if (contentLength >= fullLength)  //is the M portion actually there?
             {
                 file.readDoubleLE(); //m min/max
                 file.readDoubleLE();
 				actualReadWords += 8;
                 for (int t=0;t<numpoints;t++)
-                { 
+                {
                             file.readDoubleLE();//m
 							actualReadWords += 4;
                 }
             }
         }
-        
+
 	//verify that we have read everything we need
 	while (actualReadWords < contentLength)
 	{
-		  int junk2 = file.readShortBE();	
+		  int junk2 = file.readShortBE();
 		  actualReadWords += 1;
 	}
-	
+
         return geometryFactory.createMultiPointFromCoords(coords);
     }
-    
+
     double[] zMinMax(Geometry g)
     {
         double zmin,zmax;
         boolean validZFound = false;
         Coordinate[] cs = g.getCoordinates();
         double[] result = new double[2];
-        
+
         zmin = Double.NaN;
         zmax = Double.NaN;
         double z;
-        
+
         for (Coordinate element : cs) {
             z= element.getZ();
             if (!(Double.isNaN( z ) ))
@@ -171,17 +171,17 @@ public class MultiPointHandler  implements ShapeHandler  {
                     zmax =  z ;
                 }
             }
-           
+
         }
-        
+
         result[0] = (zmin);
         result[1] = (zmax);
         return result;
-        
+
     }
-    
-    
-    
+
+
+
     /**
      * Returns the shapefile shape type value for a point
      * @return int Shapefile.POINT
@@ -190,7 +190,7 @@ public class MultiPointHandler  implements ShapeHandler  {
 	public  int getShapeType(){
         return myShapeType;
     }
-    
+
     /**
      * Calcuates the record length of this object.
      * @return int The length of the record that this shapepoint will take up in a shapefile
@@ -198,12 +198,12 @@ public class MultiPointHandler  implements ShapeHandler  {
     @Override
 	public int getLength(Geometry geometry){
         MultiPoint mp = (MultiPoint) geometry;
-    
+
         if (myShapeType == 8)
             return mp.getNumGeometries() * 8 + 20;
         if (myShapeType == 28)
             return mp.getNumGeometries() * 8 + 20 +8 +4*mp.getNumGeometries();
-        
+
         return mp.getNumGeometries() * 8 + 20 +8 +4*mp.getNumGeometries() + 8 +4*mp.getNumGeometries() ;
     }
 }

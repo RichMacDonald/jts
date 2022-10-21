@@ -20,27 +20,27 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
 
 /**
- * A noder which extracts boundary line segments 
+ * A noder which extracts boundary line segments
  * as {@link SegmentString}s.
  * Boundary segments are those which are not duplicated in the input.
  * It is appropriate for use with valid polygonal coverages.
  * <p>
- * No precision reduction is carried out. 
+ * No precision reduction is carried out.
  * If that is required, another noder must be used (such as a snap-rounding noder),
  * or the input must be precision-reduced beforehand.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class BoundarySegmentNoder implements Noder {
 
   private List<SegmentString> segList;
-  
+
   /**
    * Creates a new segment-dissolving noder.
    */
   public BoundarySegmentNoder() {
-    
+
   }
 
   @Override
@@ -55,7 +55,7 @@ public class BoundarySegmentNoder implements Noder {
       addSegments( ss, segSet );
     }
   }
-  
+
   private static void addSegments(SegmentString segString, HashSet<Segment> segSet) {
     for (int i = 0; i < segString.size() - 1; i++) {
       Coordinate p0 = segString.getCoordinate(i);
@@ -69,7 +69,7 @@ public class BoundarySegmentNoder implements Noder {
       }
     }
   }
-  
+
   private static List<SegmentString> extractSegments(HashSet<Segment> segSet) {
     List<SegmentString> segList = new ArrayList<>();
     for (Segment seg : segSet) {
@@ -92,18 +92,18 @@ public class BoundarySegmentNoder implements Noder {
     private SegmentString segStr;
     private int index;
 
-    public Segment(Coordinate p0, Coordinate p1, 
+    public Segment(Coordinate p0, Coordinate p1,
         SegmentString segStr, int index) {
       super(p0, p1);
       this.segStr = segStr;
       this.index = index;
       normalize();
     }
-    
+
     public SegmentString getSegmentString() {
       return segStr;
     }
-    
+
     public int getIndex() {
       return index;
     }

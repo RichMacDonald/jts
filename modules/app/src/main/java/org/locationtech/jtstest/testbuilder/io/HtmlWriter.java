@@ -317,7 +317,7 @@ public class HtmlWriter {
   }
 
   private String htmlTitle(PrecisionModel precisionModel) {
-    String html = "Precision Model: scale=" + precisionModel.getScale()         
+    String html = "Precision Model: scale=" + precisionModel.getScale()
          + StringUtil.newLine;
     html = "<div class='precisionModel'>" + html + "</div>";
     return html;
@@ -341,7 +341,7 @@ public class HtmlWriter {
         showingAB, imageWidth, imageHeight, zoomToFullExtent);
   }
 */
-  
+
   private void createGifFile(String filenameNoPath, Geometry a,
       Geometry b,
       Geometry result,

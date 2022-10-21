@@ -33,9 +33,9 @@ import org.locationtech.jts.geom.PrecisionModel;
  * Supports use of an {@link InStream}, which allows easy use
  * with arbitrary byte stream sources.
  * <p>
- * This class reads the format describe in {@link WKBWriter}.  
+ * This class reads the format describe in {@link WKBWriter}.
  * It partially handles
- * the <b>Extended WKB</b> format used by PostGIS, 
+ * the <b>Extended WKB</b> format used by PostGIS,
  * by parsing and storing optional SRID values.
  * If a SRID is not specified in an element geometry, it is inherited
  * from the parent's SRID.
@@ -50,7 +50,7 @@ import org.locationtech.jts.geom.PrecisionModel;
  * and non-closed rings are closed).
  * <p>
  * The reader handles most errors caused by malformed or malicious WKB data.
- * It checks for obviously excessive values of the fields 
+ * It checks for obviously excessive values of the fields
  * <code>numElems</code>, <code>numRings</code>, and <code>numCoords</code>.
  * It also checks that the reader does not read beyond the end of the data supplied.
  * A {@link ParseException} is thrown if this situation is detected.
@@ -59,7 +59,7 @@ import org.locationtech.jts.geom.PrecisionModel;
  * geometries. This class is not thread-safe; each thread should create its own
  * instance.
  * <p>
- * As of version 1.15, the reader can read geometries following the OGC 06-103r4 
+ * As of version 1.15, the reader can read geometries following the OGC 06-103r4
  * Simple Features Access 1.2.1 specification,
  * which aligns with the ISO 19125 standard.
  * This format is used by Spatialite and Geopackage.
@@ -72,7 +72,7 @@ import org.locationtech.jts.geom.PrecisionModel;
  * <p>
  * Note that the {@link WKBWriter} is not changed and still writes the PostGIS EWKB
  * geometry format.
- * 
+ *
  * @see WKBWriter for a formal format specification
  */
 public class WKBReader
@@ -152,7 +152,7 @@ public class WKBReader
    * @throws ParseException if the WKB is ill-formed
    */
   public Geometry read(byte[] bytes) throws ParseException
-  {  
+  {
     // possibly reuse the ByteArrayInStream?
     // don't throw IOExceptions, since we are not doing any I/O
     try {
@@ -190,7 +190,7 @@ public class WKBReader
     dis.setInStream(is);
     return readGeometry(0);
   }
-  
+
   private int readNumField(String fieldName) throws IOException, ParseException {
     // num field is unsigned int, but Java has only signed int
     int num = dis.readInt();
@@ -199,7 +199,7 @@ public class WKBReader
     }
     return num;
   }
-  
+
   private Geometry readGeometry(int SRID)
   throws IOException, ParseException
   {
@@ -227,9 +227,9 @@ public class WKBReader
 
 
     int typeInt = dis.readInt();
-    
+
     /**
-     * To get geometry type mask out EWKB flag bits, 
+     * To get geometry type mask out EWKB flag bits,
      * and use only low 3 digits of type word.
      * This supports both EWKB and ISO/OGC.
      */
@@ -278,7 +278,7 @@ public class WKBReader
       case WKBConstants.wkbGeometryCollection :
         geom = readGeometryCollection(SRID);
         break;
-      default: 
+      default:
         throw new ParseException("Unknown WKB type " + geometryType);
     }
     setSRID(geom, SRID);
@@ -332,7 +332,7 @@ public class WKBReader
     // empty polygon
     if (numRings <= 0)
       return factory.createPolygon();
-    
+
     LinearRing shell = readLinearRing();
     for (int i = 0; i < numRings - 1; i++) {
       holes[i] = readLinearRing();
@@ -411,7 +411,7 @@ public class WKBReader
     if (isStrict || seq.size() == 0 || seq.size() >= 2) return seq;
     return CoordinateSequences.extend(csFactory, seq, 2);
   }
-  
+
   private CoordinateSequence readCoordinateSequenceRing(int size) throws IOException, ParseException
   {
     CoordinateSequence seq = readCoordinateSequence(size);
@@ -423,7 +423,7 @@ public class WKBReader
    * Reads a coordinate value with the specified dimensionality.
    * Makes the X and Y ordinates precise according to the precision model
    * in use.
-   * @throws ParseException 
+   * @throws ParseException
    */
   private void readCoordinate() throws IOException, ParseException
   {

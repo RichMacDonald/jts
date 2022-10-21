@@ -37,15 +37,15 @@ import org.locationtech.jtstest.util.ExceptionFormatter;
 /**
  * @version 1.7
  */
-public class ResultWKTPanel 
-extends JPanel 
+public class ResultWKTPanel
+extends JPanel
 {
 	TestBuilderModel tbModel = null;
 	String opName;
-	
+
 	JScrollPane jScrollPane1 = new JScrollPane();
 	JTextArea txtResult = new JTextArea();
-	
+
   JPanel labelPanel = new JPanel();
   JLabel functionLabel = new JLabel();
   JLabel timeLabel = new JLabel();
@@ -60,7 +60,7 @@ extends JPanel
   GridLayout rButtonPanelLayout = new GridLayout();
   BorderLayout rPanelLayout = new BorderLayout();
   BorderLayout tabPanelLayout = new BorderLayout();
-		
+
 	public ResultWKTPanel() {
 		try {
 			jbInit();
@@ -68,21 +68,21 @@ extends JPanel
 			ex.printStackTrace();
 		}
 	}
-	
+
   void jbInit() throws Exception {
-    
+
     this.setLayout(tabPanelLayout);
-   
+
     jScrollPane1.setBorder(BorderFactory.createLoweredBevelBorder());
-    
-    JButton copyButton = SwingUtil.createButton(AppIcons.COPY, "Copy Result (Ctl-click for formatted)", 
+
+    JButton copyButton = SwingUtil.createButton(AppIcons.COPY, "Copy Result (Ctl-click for formatted)",
         (ActionListener) this::rCopyButton_actionPerformed);
     JButton copyToTestButton = SwingUtil.createButton(AppIcons.COPY_TO_TEST, "Copy Result to new Test",
         (ActionListener) e -> JTSTestBuilderFrame.instance().copyResultToTest());
-    JButton btnClearResult = SwingUtil.createButton(AppIcons.CUT, "Clear Result",         
+    JButton btnClearResult = SwingUtil.createButton(AppIcons.CUT, "Clear Result",
         (ActionListener) e -> JTSTestBuilder.controller().clearResult());
 
-    
+
     rButtonPanelLayout = new GridLayout(3,1);
     rButtonPanelLayout.setVgap(1);
     rButtonPanelLayout.setHgap(1);
@@ -90,20 +90,20 @@ extends JPanel
     rButtonPanel.add(copyButton);
     rButtonPanel.add(copyToTestButton);
     rButtonPanel.add(btnClearResult);
-    
+
     panelLHBtns.setLayout(rPanelLayout);
     panelLHBtns.add(rButtonPanel, BorderLayout.NORTH);
-    
+
     txtResult.setWrapStyleWord(true);
     txtResult.setLineWrap(true);
     txtResult.setBackground(AppColors.BACKGROUND);
-    
+
     labelPanel.setLayout(labelPanelLayout);
     //labelPanel.setBorder(BorderFactory.createEmptyBorder(0,4,2,2));
     labelPanel.add(functionLabel);
     labelPanel.add(timeLabel);
     labelPanel.add(memoryLabel);
-    
+
     functionLabel.setText(" ");
     functionLabel.setHorizontalAlignment(SwingConstants.CENTER);
 //    functionLabel.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -131,8 +131,8 @@ extends JPanel
     this.add(labelPanel, BorderLayout.NORTH);
     this.add(panelLHBtns, BorderLayout.WEST);
     this.add(panelRHBtns, BorderLayout.EAST);
-    
-    
+
+
     jScrollPane1.getViewport().add(txtResult, null);
 
   }
@@ -141,22 +141,22 @@ extends JPanel
 	{
 		this.tbModel = tbModel;
 	}
-	
+
   public void setOpName(String opName)
   {
       this.opName = opName;
   }
-  
+
   public void setRunningTime(String time)
   {
     setExecutedTime(time);
   }
-  
+
   public void setExecutedTime(String time)
   {
     functionLabel.setText(opName);
     timeLabel.setText(time);
-    memoryLabel.setText(Memory.usedTotalString());   
+    memoryLabel.setText(Memory.usedTotalString());
   }
 
   public void setResult(Object o)
@@ -174,40 +174,40 @@ extends JPanel
       setString(o.toString());
     }
   }
-  
+
   public void clearResult()
   {
     functionLabel.setText("");
     setString("");
   }
-  
+
   private void setGeometry(Geometry g)
   {
     String  str = tbModel.getResultDisplayString(g);
     txtResult.setText(str);
     txtResult.setBackground(AppColors.BACKGROUND);
   }
-  
+
   private void setString(String s)
   {
     txtResult.setText(s);
     txtResult.setBackground(AppColors.BACKGROUND);
   }
-  
+
   private void setError(Throwable ex)
   {
     String exStr = ExceptionFormatter.getFullString(ex);
     txtResult.setText(exStr);
     txtResult.setBackground(Color.pink);
   }
-  
+
   void rCopyButton_actionPerformed(ActionEvent e) {
     boolean isFormatted = 0 != (e.getModifiers() & ActionEvent.CTRL_MASK);
     tbModel.copyResult(isFormatted);
   }
-  
+
   void copyToTestButton_actionPerformed(ActionEvent e) {
     JTSTestBuilderFrame.instance().copyResultToTest();
   }
-  
+
 }

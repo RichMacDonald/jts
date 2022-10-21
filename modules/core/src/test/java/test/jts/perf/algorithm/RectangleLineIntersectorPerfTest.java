@@ -36,38 +36,38 @@ public class RectangleLineIntersectorPerfTest
   }
 
   private GeometryFactory geomFact = new GeometryFactory();
-  
+
   private double baseX = 0;
   private double baseY = 0;
   private double rectSize = 100;
   private int numPts = 1000;
   private Envelope rectEnv;
   private Coordinate[] pts;
-  
+
   public RectangleLineIntersectorPerfTest()
   {
-    
+
   }
-  
+
   public void init(int nPts)
   {
     rectEnv = createRectangle();
     pts = createTestPoints(nPts);
   }
-  
+
   public void runBoth(int nPts)
   {
     init(nPts);
     run(true, false);
     run(false, true);
   }
-  
+
   public void run(boolean useSegInt, boolean useSideInt)
   {
     if (useSegInt) System.out.println("Using Segment Intersector");
     if (useSideInt) System.out.println("Using Side Intersector");
     System.out.println("# pts: " + pts.length);
-        
+
     RectangleLineIntersector rectSegIntersector = new RectangleLineIntersector(rectEnv);
     SimpleRectangleIntersector rectSideIntersector = new SimpleRectangleIntersector(rectEnv);
 
@@ -76,14 +76,14 @@ public class RectangleLineIntersectorPerfTest
     for (int i = 0; i < pts.length; i++) {
       for (int j = 0; j < pts.length; j++) {
         if (i == j) continue;
-        
+
         boolean segResult = false;
         if (useSegInt)
           segResult = rectSegIntersector.intersects(pts[i], pts[j]);
         boolean sideResult = false;
         if (useSideInt)
           sideResult = rectSideIntersector.intersects(pts[i], pts[j]);
-        
+
         if (useSegInt && useSideInt)
         {
           if (segResult != sideResult)
@@ -91,18 +91,18 @@ public class RectangleLineIntersectorPerfTest
         }
       }
     }
-    
+
     System.out.println("Finished in " + sw.getTimeString());
     System.out.println();
   }
-  
+
   private Coordinate[] createTestPoints(int nPts)
   {
     Point pt = geomFact.createPoint(new Coordinate(baseX, baseY));
     Geometry circle = pt.buffer(2 * rectSize, nPts/4);
     return circle.getCoordinates();
   }
-  
+
   private Envelope createRectangle()
   {
      Envelope rectEnv = new Envelope(
@@ -110,13 +110,13 @@ public class RectangleLineIntersectorPerfTest
         new Coordinate(baseX + rectSize, baseY + rectSize));
      return rectEnv;
   }
-  
+
 }
 
 /**
  * Tests intersection of a segment against a rectangle
  * by computing intersection against all side segments.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -138,7 +138,7 @@ class SimpleRectangleIntersector
     this.rectEnv = rectEnv;
     initCorners(rectEnv);
   }
-  
+
   private void initCorners(Envelope rectEnv)
   {
     corner[0] = new Coordinate(rectEnv.getMaxX(), rectEnv.getMaxY());
@@ -146,7 +146,7 @@ class SimpleRectangleIntersector
     corner[2] = new Coordinate(rectEnv.getMinX(), rectEnv.getMinY());
     corner[3] = new Coordinate(rectEnv.getMaxX(), rectEnv.getMinY());
   }
-  
+
   public boolean intersects(Coordinate p0, Coordinate p1)
   {
     Envelope segEnv = new Envelope(p0, p1);

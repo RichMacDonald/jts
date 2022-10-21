@@ -28,7 +28,7 @@ public class CoordinateXYZM extends Coordinate {
 
   /**
    * Constructs a CoordinateXYZM instance with the given ordinates and measure.
-   * 
+   *
    * @param x the X ordinate
    * @param y the Y ordinate
    * @param z the Z ordinate
@@ -41,17 +41,17 @@ public class CoordinateXYZM extends Coordinate {
 
   /**
    * Constructs a CoordinateXYZM instance with the ordinates of the given Coordinate.
-   * 
+   *
    * @param coord the coordinate providing the ordinates
    */
   public CoordinateXYZM(Coordinate coord) {
     super(coord);
     m = getM();
   }
-  
+
   /**
    * Constructs a CoordinateXYZM instance with the ordinates of the given CoordinateXYZM.
-   * 
+   *
    * @param coord the coordinate providing the ordinates
    */
   public CoordinateXYZM(CoordinateXYZM coord) {
@@ -61,17 +61,17 @@ public class CoordinateXYZM extends Coordinate {
 
   /**
    * Creates a copy of this CoordinateXYZM.
-   * 
+   *
    * @return a copy of this CoordinateXYZM
    */
   @Override
 public CoordinateXYZM copy() {
     return new CoordinateXYZM(this);
   }
-  
+
   /**
    * Create a new Coordinate of the same type as this Coordinate, but with no values.
-   * 
+   *
    * @return a new Coordinate
    */
   @Override
@@ -104,7 +104,7 @@ public double getOrdinate(int ordinateIndex)
     }
     throw new IllegalArgumentException("Invalid ordinate index: " + ordinateIndex);
   }
-  
+
   @Override
   public void setCoordinate(Coordinate other)
   {
@@ -113,7 +113,7 @@ public double getOrdinate(int ordinateIndex)
     z = other.getZ();
     m = other.getM();
   }
-  
+
   @Override
   public void setOrdinate(int ordinateIndex, double value) {
       switch (ordinateIndex) {
@@ -133,7 +133,7 @@ public double getOrdinate(int ordinateIndex)
         throw new IllegalArgumentException("Invalid ordinate index: " + ordinateIndex);
     }
   }
-  
+
   @Override
 public String toString() {
     return "(" + x + ", " + y + ", " + getZ() + " m="+getM()+")";

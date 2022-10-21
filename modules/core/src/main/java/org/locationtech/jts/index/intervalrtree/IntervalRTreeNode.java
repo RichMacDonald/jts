@@ -18,19 +18,19 @@ import org.locationtech.jts.index.ItemVisitor;
 import org.locationtech.jts.io.WKTWriter;
 
 
-public abstract class IntervalRTreeNode 
+public abstract class IntervalRTreeNode
 {
 	protected double min = Double.POSITIVE_INFINITY;
 	protected double max = Double.NEGATIVE_INFINITY;
 
 	public double getMin() { return min; }
 	public double getMax() { return max; }
-	
+
 	public abstract void query(double queryMin, double queryMax, ItemVisitor visitor);
-	
+
 	protected boolean intersects(double queryMin, double queryMax)
 	{
-		if (min > queryMax 
+		if (min > queryMax
 				|| max < queryMin)
 			return false;
 		return true;
@@ -41,7 +41,7 @@ public abstract class IntervalRTreeNode
 	{
 		return WKTWriter.toLineString(new Coordinate(min, 0), new Coordinate(max, 0));
 	}
-  
+
   public static class NodeComparator implements Comparator
   {
     @Override

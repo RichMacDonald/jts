@@ -16,7 +16,7 @@ import org.locationtech.jts.math.DD;
 
 /**
  * Implements basic computational geometry algorithms using {@link DD} arithmetic.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -27,11 +27,11 @@ public class CGAlgorithmsDD
   /**
    * Returns the index of the direction of the point {@code q} relative to
    * a vector specified by {@code p1-p2}.
-   * 
+   *
    * @param p1 the origin point of the vector
    * @param p2 the final point of the vector
    * @param q the point to compute the direction to
-   * 
+   *
    * @return {@code 1} if q is counter-clockwise (left) from p1-p2
    *         {@code -1} if q is clockwise (right) from p1-p2
    *         {@code 0} if q is collinear with p1-p2
@@ -40,18 +40,18 @@ public class CGAlgorithmsDD
   {
     return orientationIndex(p1.x, p1.y, p2.x, p2.y, q.x, q.y);
   }
-  
+
   /**
    * Returns the index of the direction of the point {@code q} relative to
    * a vector specified by {@code p1-p2}.
-   * 
+   *
    * @param p1x the x ordinate of the vector origin point
    * @param p1y the y ordinate of the vector origin point
    * @param p2x the x ordinate of the vector final point
    * @param p2y the y ordinate of the vector final point
    * @param qx the x ordinate of the query point
    * @param qy the y ordinate of the query point
-   * 
+   *
    * @return 1 if q is counter-clockwise (left) from p1-p2
    *        -1 if q is clockwise (right) from p1-p2
    *         0 if q is collinear with p1-p2
@@ -64,7 +64,7 @@ public class CGAlgorithmsDD
     // avoids use of slow extended-precision arithmetic in many cases
     int index = orientationIndexFilter(p1x, p1y, p2x, p2y, qx, qy);
     if (index <= 1) return index;
-    
+
     // normalize coordinates
     DD dx1 = DD.valueOf(p2x).selfAdd(-p1x);
     DD dy1 = DD.valueOf(p2y).selfAdd(-p1y);
@@ -74,11 +74,11 @@ public class CGAlgorithmsDD
     // sign of determinant - unrolled for performance
     return dx1.selfMultiply(dy2).selfSubtract(dy1.selfMultiply(dx2)).signum();
   }
-  
+
   /**
    * Computes the sign of the determinant of the 2x2 matrix
    * with the given entries.
-   * 
+   *
    * @return -1 if the determinant is negative,
    *          1 if the determinant is positive,
    *          0 if the determinant is 0.
@@ -92,7 +92,7 @@ public class CGAlgorithmsDD
   /**
    * Computes the sign of the determinant of the 2x2 matrix
    * with the given entries.
-   * 
+   *
    * @return -1 if the determinant is negative,
    *          1 if the determinant is positive,
    *          0 if the determinant is 0.
@@ -120,14 +120,14 @@ public class CGAlgorithmsDD
    * If the orientation can be computed safely using standard DP
    * arithmetic, this routine returns the orientation index.
    * Otherwise, a value i > 1 is returned.
-   * In this case the orientation index must 
+   * In this case the orientation index must
    * be computed using some other more robust method.
-   * The filter is fast to compute, so can be used to 
+   * The filter is fast to compute, so can be used to
    * avoid the use of slower robust methods except when they are really needed,
    * thus providing better average performance.
    * <p>
    * Uses an approach due to Jonathan Shewchuk, which is in the public domain.
-   * 
+   *
    * @param pax A coordinate
    * @param pay A coordinate
    * @param pbx B coordinate
@@ -138,7 +138,7 @@ public class CGAlgorithmsDD
    * @return i > 1 if the orientation index cannot be computed safely
    */
   private static int orientationIndexFilter(double pax, double pay,
-      double pbx, double pby, double pcx, double pcy) 
+      double pbx, double pby, double pcx, double pcy)
   {
     double detsum;
 
@@ -180,7 +180,7 @@ public class CGAlgorithmsDD
    * using DD arithmetic.
    * If the lines are parallel (either identical
    * or separate) a null value is returned.
-   * 
+   *
    * @param p1 an endpoint of line segment 1
    * @param p2 an endpoint of line segment 1
    * @param q1 an endpoint of line segment 2

@@ -27,21 +27,21 @@ import org.locationtech.jtstest.util.ExceptionFormatter;
 /**
  * @version 1.7
  */
-public class ResultValuePanel 
-extends JPanel 
+public class ResultValuePanel
+extends JPanel
 {
 	TestBuilderModel tbModel = null;
   Object currResult = null;
- 
-  
+
+
   JPanel labelPanel = new JPanel();
   JLabel resultLabel = new JLabel();
   BorderLayout labelPanelLayout = new BorderLayout();
-  
+
 	JScrollPane jScrollPane1 = new JScrollPane();
 	JTextArea txtResult = new JTextArea();
   BorderLayout tabPanelLayout = new BorderLayout();
-	
+
 	public ResultValuePanel() {
 		try {
 			jbInit();
@@ -49,9 +49,9 @@ extends JPanel
 			ex.printStackTrace();
 		}
 	}
-	
+
   void jbInit() throws Exception {
-    
+
     this.setLayout(tabPanelLayout);
 
     txtResult.setWrapStyleWord(true);
@@ -65,22 +65,22 @@ extends JPanel
 
     this.add(jScrollPane1, BorderLayout.CENTER);
     this.add(labelPanel, BorderLayout.NORTH);
-    
+
     jScrollPane1.setBorder(BorderFactory.createLoweredBevelBorder());
     jScrollPane1.getViewport().add(txtResult, null);
   }
-  
+
 	public void setModel(TestBuilderModel tbModel)
 	{
 		this.tbModel = tbModel;
 	}
-	
+
   public void setResult(String opName, String execTime, Object o)
   {
     currResult = o;
     resultLabel.setText("Value of: " + opName
         + "    ( " + execTime + " )");
-    
+
     if (o == null) {
       setString("");
     }
@@ -97,7 +97,7 @@ extends JPanel
     txtResult.setText(s);
     txtResult.setBackground(AppColors.BACKGROUND);
   }
-  
+
   public void setError(Throwable ex)
   {
     String exStr = ExceptionFormatter.getFullString(ex);
@@ -105,5 +105,5 @@ extends JPanel
     txtResult.setBackground(Color.pink);
   }
 
-  
+
 }

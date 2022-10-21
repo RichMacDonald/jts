@@ -16,7 +16,7 @@ public class RectangleIntersectsTest extends GeometryTestCase {
   }
 
   public RectangleIntersectsTest(String name) { super(name); }
-  
+
   public void testXYZM() throws ParseException {
     GeometryFactory geomFact = new GeometryFactory(PackedCoordinateSequenceFactory.DOUBLE_FACTORY);
     WKTReader rdr = new WKTReader(geomFact);

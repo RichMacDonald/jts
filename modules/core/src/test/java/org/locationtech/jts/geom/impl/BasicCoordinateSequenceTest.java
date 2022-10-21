@@ -52,7 +52,7 @@ public class BasicCoordinateSequenceTest extends TestCase {
     assertTrue(s1.getCoordinate(0).equals(s2.getCoordinate(0)));
     assertTrue(s1.getCoordinate(0) != s2.getCoordinate(0));
   }
-  
+
   /**
    * A simple test that using CoordinateXYM works
    * for creation and running a basic function.

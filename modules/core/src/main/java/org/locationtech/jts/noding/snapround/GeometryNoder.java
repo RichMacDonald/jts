@@ -29,16 +29,16 @@ import org.locationtech.jts.noding.SegmentString;
  * Nodes the linework in a list of {@link Geometry}s using Snap-Rounding
  * to a given {@link PrecisionModel}.
  * <p>
- * Input coordinates do not need to be rounded to the 
- * precision model.  
+ * Input coordinates do not need to be rounded to the
+ * precision model.
  * All output coordinates are rounded to the precision model.
  * <p>
  * This class does <b>not</b> dissolve the output linework,
- * so there may be duplicate linestrings in the output.  
+ * so there may be duplicate linestrings in the output.
  * Subsequent processing (e.g. polygonization) may require
  * the linework to be unique.  Using <code>UnaryUnion</code> is one way
  * to do this (although this is an inefficient approach).
- * 
+ *
  */
 public class GeometryNoder
 {
@@ -49,7 +49,7 @@ public class GeometryNoder
   /**
    * Creates a new noder which snap-rounds to a grid specified
    * by the given {@link PrecisionModel}.
-   * 
+   *
    * @param pm the precision model for the grid to snap-round to
    */
   public GeometryNoder(PrecisionModel pm) {
@@ -58,17 +58,17 @@ public class GeometryNoder
 
   /**
    * Sets whether noding validity is checked after noding is performed.
-   * 
+   *
    * @param isValidityChecked
    */
   public void setValidate(boolean isValidityChecked)
   {
   	this.isValidityChecked = isValidityChecked;
   }
-  
+
   /**
-   * Nodes the linework of a set of Geometrys using SnapRounding. 
-   * 
+   * Nodes the linework of a set of Geometrys using SnapRounding.
+   *
    * @param geoms a Collection of Geometrys of any type
    * @return a List of LineStrings representing the noded linework of the input
    */

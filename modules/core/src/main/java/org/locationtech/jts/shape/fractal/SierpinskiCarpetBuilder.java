@@ -24,21 +24,21 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.shape.GeometricShapeBuilder;
 
 
-public class SierpinskiCarpetBuilder 
+public class SierpinskiCarpetBuilder
 extends GeometricShapeBuilder
-{	
+{
 	public SierpinskiCarpetBuilder(GeometryFactory geomFactory)
 	{
 		super(geomFactory);
 	}
-	
+
 	public static int recursionLevelForSize(int numPts)
 	{
 		double pow4 = numPts / 3;
 		double exp = Math.log(pow4)/Math.log(4);
 		return (int) exp;
 	}
-	
+
 	@Override
 	public Geometry getGeometry()
 	{
@@ -50,17 +50,17 @@ extends GeometricShapeBuilder
 		return geomFactory.createPolygon(
 				shell, holes);
 	}
-	
-	private LinearRing[] getHoles(int n, double originX, double originY, double width) 
+
+	private LinearRing[] getHoles(int n, double originX, double originY, double width)
 	{
 		List holeList = new ArrayList();
-		
+
 		addHoles(n, originX, originY, width, holeList );
-		
+
 		return GeometryFactory.toLinearRingArray(holeList);
 	}
 
-	private void addHoles(int n, double originX, double originY, double width, List holeList) 
+	private void addHoles(int n, double originX, double originY, double width, List holeList)
 	{
 		if (n < 0) return;
 		int n2 = n - 1;
@@ -68,7 +68,7 @@ extends GeometricShapeBuilder
 		addHoles(n2, originX, 									originY, widthThird, holeList);
 		addHoles(n2, originX + widthThird, 			originY, widthThird, holeList);
 		addHoles(n2, originX + 2 * widthThird, 	originY, widthThird, holeList);
-		
+
 		addHoles(n2, originX, 									originY + widthThird, widthThird, holeList);
 		addHoles(n2, originX + 2 * widthThird, 	originY + widthThird, widthThird, holeList);
 
@@ -89,8 +89,8 @@ extends GeometricShapeBuilder
         new Coordinate(x, y + width),
         new Coordinate(x, y)
         }	;
-		return geomFactory.createLinearRing(pts); 
+		return geomFactory.createLinearRing(pts);
 	}
-	
+
 
 }

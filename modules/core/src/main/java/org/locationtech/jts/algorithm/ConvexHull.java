@@ -136,7 +136,7 @@ public class ConvexHull
    * Note that even if the method used to determine the polygon vertices
    * is not 100% robust, this does not affect the robustness of the convex hull.
    * <p>
-   * To satisfy the requirements of the Graham Scan algorithm, 
+   * To satisfy the requirements of the Graham Scan algorithm,
    * the returned array has at least 3 entries.
    *
    * @param pts the points to reduce
@@ -156,8 +156,7 @@ public class ConvexHull
 //    System.out.println(ring);
 
     // add points defining polygon
-    TreeSet reducedSet = new TreeSet();
-    reducedSet.addAll(Arrays.asList(polyPts));
+    TreeSet reducedSet = new TreeSet(Arrays.asList(polyPts));
     /**
      * Add all unique points not in the interior poly.
      * CGAlgorithms.isPointInRing is not defined for points actually on the ring,
@@ -170,10 +169,10 @@ public class ConvexHull
       }
     }
     Coordinate[] reducedPts = CoordinateArrays.toCoordinateArray(reducedSet);
-    
-    // ensure that computed array has at least 3 points (not necessarily unique)  
+
+    // ensure that computed array has at least 3 points (not necessarily unique)
     if (reducedPts.length < 3)
-      return padArray3(reducedPts); 
+      return padArray3(reducedPts);
     return reducedPts;
   }
 
@@ -189,7 +188,7 @@ public class ConvexHull
     }
     return pad;
   }
-    
+
   private Coordinate[] preSort(Coordinate[] pts) {
     Coordinate t;
 
@@ -213,7 +212,7 @@ public class ConvexHull
 
   /**
    * Uses the Graham Scan algorithm to compute the convex hull vertices.
-   * 
+   *
    * @param c a list of points, with at least 3 entries
    * @return a Stack containing the ordered points of the convex hull ring
    */
@@ -227,7 +226,7 @@ public class ConvexHull
       p = (Coordinate) ps.pop();
       // check for empty stack to guard against robustness problems
       while (
-          ! ps.empty() && 
+          ! ps.empty() &&
           Orientation.index((Coordinate) ps.peek(), p, c[i]) > 0) {
         p = (Coordinate) ps.pop();
       }

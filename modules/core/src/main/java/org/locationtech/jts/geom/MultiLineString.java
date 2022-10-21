@@ -121,7 +121,7 @@ protected MultiLineString reverseInternal() {
     }
     return new MultiLineString(lineStrings, factory);
   }
-  
+
   @Override
 protected MultiLineString copyInternal() {
     LineString[] lineStrings = new LineString[this.geometries.length];

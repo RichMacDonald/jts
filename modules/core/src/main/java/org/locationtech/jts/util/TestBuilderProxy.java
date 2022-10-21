@@ -22,12 +22,12 @@ import org.locationtech.jts.geom.Geometry;
  * <p>
  * This class is somewhat experimental at the moment, so
  * is not recommended for production use.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class TestBuilderProxy {
-  
+
   private static final String CLASS_FUNCTIONS_UTIL = "org.locationtech.jtstest.function.FunctionsUtil";
   private static Class<?> tbClass;
   private static Method methodShowIndicator;
@@ -49,21 +49,21 @@ public class TestBuilderProxy {
   /**
    * Tests whether the proxy is active (i.e. the TestBuilder is available).
    * This allows avoiding expensive geometry materialization if not needed.
-   * 
+   *
    * @return true if the proxy is active
    */
   public static boolean isActive() {
     init();
     return tbClass != null;
   }
-  
+
   // TODO: expose an option in the TestBuilder to make this inactive
   // This will avoid a huge performance hit if the visualization is not needed
 
   public static void showIndicator(Geometry geom) {
     init();
     if (methodShowIndicator == null) return;
-    
+
     try {
       methodShowIndicator.invoke(null, geom);
     } catch (Exception e) {
@@ -74,7 +74,7 @@ public class TestBuilderProxy {
   public static void showIndicator(Geometry geom, Color lineClr) {
     init();
     if (methodShowIndicatorLine == null) return;
-    
+
     try {
       methodShowIndicatorLine.invoke(null, geom, lineClr);
     } catch (Exception e) {

@@ -155,7 +155,7 @@ public class TriangleTest extends GeometryTestCase
     checkCentroid("POLYGON((10 10, 20 10, 15 20, 10 10))", new Coordinate(
         (10.0 + 20.0 + 15.0) / 3.0, (10.0 + 10.0 + 20.0) / 3.0));
   }
-  
+
   public void checkCentroid(String wkt, Coordinate expectedValue)
       throws Exception
   {
@@ -213,7 +213,7 @@ public class TriangleTest extends GeometryTestCase
 
     double length = Triangle.longestSideLength(pt[0], pt[1], pt[2]);
     //System.out.println("(Static) longestSideLength = " + length);
-    assertEquals(expectedValue, length, 0.00000001); 
+    assertEquals(expectedValue, length, 0.00000001);
 
     // Test Instance version
     //
@@ -222,14 +222,14 @@ public class TriangleTest extends GeometryTestCase
     //System.out.println("(Instance) longestSideLength = " + length);
     assertEquals(expectedValue, length, 0.00000001);
   }
-  
+
   //===============================================================
-  
+
   public void testIsCCW() {
     checkIsCCW("POLYGON ((30 90, 80 50, 20 20, 30 90))", false);
     checkIsCCW("POLYGON ((90 90, 20 40, 10 10, 90 90))", true);
   }
-  
+
   public void checkIsCCW(String wkt, boolean expectedValue)
   {
     Coordinate[] pt = read(wkt).getCoordinates();
@@ -238,22 +238,22 @@ public class TriangleTest extends GeometryTestCase
   }
 
   //===============================================================
-  
+
   public void testIntersects() {
     checkIntersects("POLYGON ((30 90, 80 50, 20 20, 30 90))", "POINT (70 20)", false);
     // triangle vertex
     checkIntersects("POLYGON ((30 90, 80 50, 20 20, 30 90))", "POINT (30 90)", true);
     checkIntersects("POLYGON ((30 90, 80 50, 20 20, 30 90))", "POINT (40 40)", true);
-    
+
     // on an edge
     checkIntersects("POLYGON ((30 90, 70 50, 71.5 16.5, 30 90))", "POINT (50 70)", true);
   }
-  
+
   public void checkIntersects(String wktTri, String wktPt, boolean expectedValue)
   {
     Coordinate[] tri = read(wktTri).getCoordinates();
     Coordinate pt = read(wktPt).getCoordinate();
-    
+
     boolean actual = Triangle.intersects(tri[0], tri[1], tri[2], pt);
     assertEquals(expectedValue, actual);
   }

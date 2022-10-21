@@ -21,7 +21,7 @@ package org.locationtech.jts.geom;
  *  and which does not itself contain any components.
  * (For instance, all the {@link LinearRing}s in {@link Polygon}s are visited,
  * but in a {@link MultiPolygon} the {@link Polygon}s themselves are not visited.)
- * Thus the only classes of Geometry which must be 
+ * Thus the only classes of Geometry which must be
  * handled as arguments to {@link #filter}
  * are {@link LineString}s, {@link LinearRing}s and {@link Point}s.
  *  <p>

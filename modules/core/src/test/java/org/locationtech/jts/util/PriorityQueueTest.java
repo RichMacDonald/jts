@@ -37,30 +37,30 @@ public class PriorityQueueTest
     q.add(Integer.valueOf(-1));
     checkOrder(q);
   }
-  
+
   public void testOrderRandom1() throws Exception {
     PriorityQueue q = new PriorityQueue();
     addRandomItems(q, 100);
     checkOrder(q);
   }
-  
+
   private void addRandomItems(PriorityQueue q, int num)
   {
     for (int i = 0 ; i < num; i++) {
       q.add(Integer.valueOf((int) (num * Math.random())));
     }
   }
-  
+
   private void checkOrder(PriorityQueue q)
   {
     Comparable curr = null;
-    
+
     while (! q.isEmpty()) {
       Comparable next = (Comparable) q.poll();
       //System.out.println(next);
       if (curr == null)
         curr = next;
-      else 
+      else
         assertTrue(next.compareTo(curr) >= 0);
     }
   }

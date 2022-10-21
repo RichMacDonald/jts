@@ -63,7 +63,7 @@ public String writeReport(TestEngine engine) {
     reportBuf.write(message.toString());
   }
 
-  public void reportOnTest(Test test) 
+  public void reportOnTest(Test test)
   {
     String id = test.getGeometryIndex() + " " + test.getOperation();
     for (int i = 0; i < test.getArgumentCount(); i++) {

@@ -67,7 +67,7 @@ public class VWSimplifierTest
         .test();
   }
 
- 
+
 }
 
 class VWSimplifierResult

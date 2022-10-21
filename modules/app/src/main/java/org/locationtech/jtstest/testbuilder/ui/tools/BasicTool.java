@@ -36,7 +36,7 @@ public abstract class BasicTool implements Tool
   private PrecisionModel gridPM;
 
   private GeometryEditPanel panel;
-  
+
   public BasicTool() {
   }
 
@@ -76,7 +76,7 @@ public void keyTyped(KeyEvent e)  {  }
 public void mouseMoved(MouseEvent e) {  }
   @Override
 public void mouseWheelMoved(MouseWheelEvent e) {  }
-  
+
   @Override
 public Cursor getCursor()
   {
@@ -85,11 +85,11 @@ public Cursor getCursor()
 
   /**
    * Called when tool is activated.
-   * 
+   *
    * If subclasses override this method they must call <tt>super.activate()</tt>.
    */
   @Override
-public void activate(GeometryEditPanel panel) 
+public void activate(GeometryEditPanel panel)
   {
     this.panel = panel;
   	gridPM = getViewport().getGridPrecisionModel();
@@ -98,9 +98,9 @@ public void activate(GeometryEditPanel panel)
     this.panel.addMouseMotionListener(this);
     this.panel.addMouseWheelListener(this);
   }
- 
+
   @Override
-public void deactivate() 
+public void deactivate()
   {
     this.panel.removeMouseListener(this);
     this.panel.removeMouseMotionListener(this);
@@ -113,53 +113,53 @@ public void deactivate()
     //return JTSTestBuilderFrame.instance().getTestCasePanel().getGeometryEditPanel();
     return panel;
   }
-  
+
   protected GeometryEditModel geomModel()
   {
     // this should probably be passed in during setup
     return JTSTestBuilder.model().getGeometryEditModel();
   }
-  
+
   private Viewport getViewport()
   {
     return panel().getViewport();
   }
-  
+
   Point2D toView(Coordinate modePt)
   {
     return getViewport().toView(modePt);
   }
-  
+
   double toView(double distance)
   {
     return getViewport().toView(distance);
   }
-  
+
   Point2D toModel(java.awt.Point viewPt)
   {
     return getViewport().toModel(viewPt);
   }
-  
+
   Coordinate toModelCoordinate(java.awt.Point viewPt)
   {
     return getViewport().toModelCoordinate(viewPt);
   }
-  
+
   double toModel(double viewDist)
   {
     return viewDist / getViewport().getScale();
   }
-  
+
   double getModelSnapTolerance()
   {
     return toModel(AppConstants.TOLERANCE_PIXELS);
   }
-  
+
   protected Coordinate toModelSnapped(Point2D p)
   {
-  	return toModelSnappedIfCloseToViewGrid(p);  
+  	return toModelSnappedIfCloseToViewGrid(p);
   }
-  
+
   protected Coordinate toModelSnappedToViewGrid(Point2D p)
   {
   	// snap to view grid
@@ -167,25 +167,25 @@ public void deactivate()
   	gridPM.makePrecise(pModel);
   	return pModel;
   }
-  
+
   protected Coordinate toModelSnappedIfCloseToViewGrid(Point2D p)
   {
   	// snap to view grid if close to view grid point
   	Coordinate pModel = getViewport().toModelCoordinate(p);
   	Coordinate pSnappedModel = new Coordinate(pModel);
   	gridPM.makePrecise(pSnappedModel);
-  	
+
   	double tol = getModelSnapTolerance();
   	if (pModel.distance(pSnappedModel) <= tol)
   		return pSnappedModel;
   	return pModel;
   }
-  
+
   protected double gridSize()
   {
     return getViewport().getGridSizeModel();
   }
-  
+
   /*
   protected Coordinate toModelSnappedToDrawingGrid(Point2D p)
   {

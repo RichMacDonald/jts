@@ -39,14 +39,14 @@ public class SegmentNode
 
   /**
    * Gets the {@link Coordinate} giving the location of this node.
-   * 
+   *
    * @return the coordinate of the node
    */
-  public Coordinate getCoordinate() 
+  public Coordinate getCoordinate()
   {
     return coord;
   }
-  
+
   public boolean isInterior() { return isInterior; }
 
   public boolean isEndPoint(int maxSegmentIndex)
@@ -74,7 +74,7 @@ public int compareTo(Object obj)
     // this guards against a robustness problem where the octants are not reliable
     if (! isInterior) return -1;
     if (! other.isInterior) return 1;
-    
+
     return SegmentPointComparator.compare(segmentOctant, coord, other.coord);
     //return segment.compareNodePosition(this, other);
   }
@@ -84,7 +84,7 @@ public int compareTo(Object obj)
     out.print(coord);
     out.print(" seg # = " + segmentIndex);
   }
-  
+
   @Override
 public String toString() {
     return segmentIndex + ":" + coord.toString();

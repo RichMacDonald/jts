@@ -22,7 +22,7 @@ public class RectangleClipPolygonTest extends GeometryTestCase {
   public static void main(String args[]) {
     TestRunner.run(RectangleClipPolygonTest.class);
   }
-  
+
   public RectangleClipPolygonTest(String name) {
     super(name);
   }
@@ -34,7 +34,7 @@ public class RectangleClipPolygonTest extends GeometryTestCase {
         "POLYGON ((150 200, 200 200, 200 150, 150 150, 150 200))"
         );
   }
-  
+
   public void testOutside() {
     checkClip(
         "POLYGON ((250 250, 250 150, 150 150, 150 250, 250 250))",
@@ -42,7 +42,7 @@ public class RectangleClipPolygonTest extends GeometryTestCase {
         "POLYGON EMPTY"
         );
   }
-  
+
   public void testMultiOneOutside() {
     checkClip(
         "POLYGON ((250 250, 250 150, 150 150, 150 250, 250 250))",
@@ -50,14 +50,14 @@ public class RectangleClipPolygonTest extends GeometryTestCase {
         "POLYGON ((200 200, 200 250, 250 250, 250 200, 200 200))"
         );
   }
-  
+
   private void checkClip(String rectWKT, String inputWKT, String expectedWKT) {
     Geometry rect = read(rectWKT);
     Geometry input = read(inputWKT);
     Geometry expected = read(expectedWKT);
-    
+
     Geometry result = RectangleClipPolygon.clip(input, rect);
-    
+
     checkEqual(expected, result);
   }
 }

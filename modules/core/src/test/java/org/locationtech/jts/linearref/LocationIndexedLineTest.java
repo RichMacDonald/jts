@@ -70,17 +70,17 @@ protected Geometry indicesOfThenExtract(Geometry input, Geometry subLine)
 protected boolean indexOfAfterCheck(Geometry linearGeom, Coordinate testPt)
   {
     LocationIndexedLine indexedLine = new LocationIndexedLine(linearGeom);
-    
+
     // check locations are consecutive
     LinearLocation loc1 = indexedLine.indexOf(testPt);
     LinearLocation loc2 = indexedLine.indexOfAfter(testPt, loc1);
     if (loc2.compareTo(loc1) <= 0 ) return false;
-    
+
     // check extracted points are the same as the input
     Coordinate pt1 = indexedLine.extractPoint(loc1);
     Coordinate pt2 = indexedLine.extractPoint(loc2);
     if (! pt1.equals2D(testPt) || ! pt2.equals2D(testPt)) return false;
-    
+
     return true;
   }
 
@@ -88,12 +88,12 @@ protected boolean indexOfAfterCheck(Geometry linearGeom, Coordinate testPt)
 protected boolean indexOfAfterCheck(Geometry linearGeom, Coordinate testPt, Coordinate afterPt)
   {
     LocationIndexedLine indexedLine = new LocationIndexedLine(linearGeom);
-    
+
     // check that computed location is after check location
     LinearLocation afterLoc = indexedLine.indexOf(afterPt);
     LinearLocation testLoc = indexedLine.indexOfAfter(testPt, afterLoc);
     if (testLoc.compareTo(afterLoc) < 0 ) return false;
-    
+
     return true;
   }
 

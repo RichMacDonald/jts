@@ -137,7 +137,7 @@ protected MultiPolygon reverseInternal() {
     }
     return new MultiPolygon(polygons, factory);
   }
-  
+
   @Override
 protected MultiPolygon copyInternal() {
     Polygon[] polygons = new Polygon[this.geometries.length];

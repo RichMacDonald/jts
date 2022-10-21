@@ -38,11 +38,11 @@ import org.xml.sax.helpers.XMLReaderFactory;
 /**
  * An example of using the {@link GMLHandler} class
  * to read geometry data out of KML files.
- * 
+ *
  * @author mbdavis
  *
  */
-public class KMLReaderExample 
+public class KMLReaderExample
 {
   public static void main(String[] args)
   throws Exception
@@ -56,27 +56,27 @@ public class KMLReaderExample
 class KMLReader
 {
 	private String filename;
-	
+
 	public KMLReader(String filename)
 	{
 		this.filename = filename;
 	}
-	
+
 	public void read()
 	throws IOException, SAXException
 	{
-    XMLReader xr; 
-    
+    XMLReader xr;
+
     xr = XMLReaderFactory.createXMLReader();
     //xr = new org.apache.xerces.parsers.SAXParser();
     KMLHandler kmlHandler = new KMLHandler();
     xr.setContentHandler(kmlHandler);
     xr.setErrorHandler(kmlHandler);
-    
+
     Reader r = new BufferedReader(new FileReader(filename));
     LineNumberReader myReader = new LineNumberReader(r);
     xr.parse(new InputSource(myReader));
-    
+
     List geoms = kmlHandler.getGeometries();
 	}
 }
@@ -84,20 +84,20 @@ class KMLReader
 class KMLHandler extends DefaultHandler
 {
 	private List geoms = new ArrayList();
-	
+
 	private GMLHandler currGeomHandler;
 	private String lastEltName = null;
 	private GeometryFactory fact = new FixingGeometryFactory();
-	
+
 	public KMLHandler()
 	{
 	}
-	
+
 	public List getGeometries()
 	{
 		return geoms;
 	}
-	
+
   /**
    *  SAX handler. Handle state and state transitions based on an element
    *  starting.
@@ -121,9 +121,9 @@ public void startElement(String uri, String name, String qName,
 			//System.out.println(name);
 		}
 	}
-  
+
 	@Override
-	public void characters(char[] ch, int start, int length) throws SAXException 
+	public void characters(char[] ch, int start, int length) throws SAXException
 	{
     if (currGeomHandler != null) {
     	currGeomHandler.characters(ch, start, length);
@@ -135,14 +135,14 @@ public void startElement(String uri, String name, String qName,
     	}
     }
 	}
-	
+
 	@Override
 	public void ignorableWhitespace(char[] ch, int start, int length)
 	throws SAXException {
     if (currGeomHandler != null)
     	currGeomHandler.ignorableWhitespace(ch, start, length);
 	}
-	
+
   /**
    *  SAX handler - handle state information and transitions based on ending
    *  elements.
@@ -176,18 +176,18 @@ public void endElement(String uri, String name, String qName)
 /**
  * A GeometryFactory extension which fixes structurally bad coordinate sequences
  * used to create LinearRings.
- * 
+ *
  * @author mbdavis
- * 
+ *
  */
 class FixingGeometryFactory extends GeometryFactory
 {
 	@Override
 	public LinearRing createLinearRing(CoordinateSequence cs)
 	{
-		if (cs.getCoordinate(0).equals(cs.getCoordinate(cs.size() - 1))) 
+		if (cs.getCoordinate(0).equals(cs.getCoordinate(cs.size() - 1)))
 			return super.createLinearRing(cs);
-			
+
 			// add a new coordinate to close the ring
 			CoordinateSequenceFactory csFact = getCoordinateSequenceFactory();
 			CoordinateSequence csNew = csFact.create(cs.size() + 1, cs.getDimension());
@@ -196,5 +196,5 @@ class FixingGeometryFactory extends GeometryFactory
 			return super.createLinearRing(csNew);
 	}
 
-	
+
 }

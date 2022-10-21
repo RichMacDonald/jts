@@ -25,7 +25,7 @@ import org.locationtech.jtstest.util.ClassUtil;
 import org.locationtech.jtstest.util.io.WKBDumper;
 
 
-public class WriterFunctions 
+public class WriterFunctions
 {
   public static String writeKML(Geometry geom)
   {
@@ -33,7 +33,7 @@ public class WriterFunctions
     KMLWriter writer = new KMLWriter();
     return writer.write(geom);
   }
-  
+
   public static String writeGML(Geometry geom)
   {
     if (geom == null) return "";
@@ -44,33 +44,33 @@ public class WriterFunctions
   {
     if (g == null) return "";
     // call dynamically to avoid dependency on OraWriter
-    String sql = (String) ClassUtil.dynamicCall("com.vividsolutions.jts.io.oracle.OraWriter", 
-        "writeSQL", 
-        new Class[] { Geometry.class }, 
+    String sql = (String) ClassUtil.dynamicCall("com.vividsolutions.jts.io.oracle.OraWriter",
+        "writeSQL",
+        new Class[] { Geometry.class },
         new Object[] { g });
     return sql;
     //return (new OraWriter(null)).writeSQL(g);
   }
-  
+
   public static String writeWKB(Geometry g)
   {
     if (g == null) return "";
     return WKBWriter.toHex((new WKBWriter().write(g)));
   }
-  
+
   public static String dumpWKB(Geometry g)
   {
     if (g == null) return "";
     byte[] wkb = (new WKBWriter().write(g));
     return WKBDumper.dump(wkb);
   }
-  
+
   public static String writeGeoJSON(Geometry g)
   {
     if (g == null) return "";
     return (new GeoJsonWriter().write(g));
   }
-  
+
   public static String writeGeoJSONFixDecimal(Geometry g,
       @Metadata(title="Num Decimals")
       int numDecimals)

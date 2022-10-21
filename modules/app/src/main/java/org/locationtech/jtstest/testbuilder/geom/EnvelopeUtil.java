@@ -14,7 +14,7 @@ package org.locationtech.jtstest.testbuilder.geom;
 
 import org.locationtech.jts.geom.Envelope;
 
-public class EnvelopeUtil 
+public class EnvelopeUtil
 {
 	public static double minExtent(Envelope env)
 	{

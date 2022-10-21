@@ -24,7 +24,7 @@ import org.locationtech.jts.util.Debug;
 /**
  * Validates that the result of an overlay operation is
  * geometrically correct, within a determined tolerance.
- * Uses fuzzy point location to find points which are 
+ * Uses fuzzy point location to find points which are
  * definitely in either the interior or exterior of the result
  * geometry, and compares these results with the expected ones.
  * <p>
@@ -51,7 +51,7 @@ public class OverlayResultValidator
   	return Math.min(GeometrySnapper.computeSizeBasedSnapTolerance(g0),
   			GeometrySnapper.computeSizeBasedSnapTolerance(g1));
   }
-  
+
   private static final double TOLERANCE = 0.000001;
 
   private Geometry[] geom;
@@ -62,11 +62,11 @@ public class OverlayResultValidator
 
   private List testCoords = new ArrayList();
 
-  public OverlayResultValidator(Geometry a, Geometry b, Geometry result) 
+  public OverlayResultValidator(Geometry a, Geometry b, Geometry result)
   {
   	/**
   	 * The tolerance to use needs to depend on the size of the geometries.
-  	 * It should not be more precise than double-precision can support. 
+  	 * It should not be more precise than double-precision can support.
   	 */
     boundaryDistanceTolerance = computeBoundaryDistanceTolerance(a, b);
     geom = new Geometry[] { a, b, result };
@@ -92,7 +92,7 @@ public class OverlayResultValidator
     System.out.println("Result");
     System.out.println(geom[2]);
     */
-    
+
     return isValid;
   }
 
@@ -147,9 +147,9 @@ public class OverlayResultValidator
     boolean resultInInterior = (location[2] == Location.INTERIOR);
     // MD use simpler: boolean isValid = (expectedInterior == resultInInterior);
     boolean isValid = ! (expectedInterior ^ resultInInterior);
-    
+
     if (! isValid) reportResult(location, expectedInterior);
-    
+
     return isValid;
  }
 

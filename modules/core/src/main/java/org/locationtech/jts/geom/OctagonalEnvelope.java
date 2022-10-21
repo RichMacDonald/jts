@@ -31,7 +31,7 @@ public class OctagonalEnvelope
   public static Geometry octagonalEnvelope(Geometry geom) {
     return (new OctagonalEnvelope(geom)).toGeometry(geom.getFactory());
   }
-  
+
   private static double computeA(double x, double y)
   {
     return x + y;
@@ -43,7 +43,7 @@ public class OctagonalEnvelope
   }
 
   private static double SQRT2 = Math.sqrt(2.0);
-  
+
   // initialize in the null state
   private double minX = Double.NaN;
   private double maxX;
@@ -63,7 +63,7 @@ public class OctagonalEnvelope
 
   /**
    * Creates a new null bounding octagon bounding a {@link Coordinate}
-   * 
+   *
    * @param p the coordinate to bound
    */
   public OctagonalEnvelope(Coordinate p)
@@ -73,7 +73,7 @@ public class OctagonalEnvelope
 
   /**
    * Creates a new null bounding octagon bounding a pair of {@link Coordinate}s
-   * 
+   *
    * @param p0 a coordinate to bound
    * @param p1 a coordinate to bound
    */
@@ -248,15 +248,14 @@ public class OctagonalEnvelope
   {
     if (isNull() || other.isNull() || (minX > other.maxX) || (maxX < other.minX)) return false;
     if ((minY > other.maxY) || (maxY < other.minY) || (minA > other.maxA) || (maxA < other.minA)) return false;
-    if (minB > other.maxB) return false;
-    if (maxB < other.minB) return false;
+    if ((minB > other.maxB) || (maxB < other.minB)) return false;
     return true;
   }
 
   public boolean intersects(Coordinate p)
   {
     if ((minX > p.x) || (maxX < p.x) || (minY > p.y) || (maxY < p.y)) return false;
-    
+
     double A = computeA(p.x, p.y);
     double B = computeB(p.x, p.y);
     if ((minA > A) || (maxA < A) || (minB > B) || (maxB < B)) return false;
@@ -332,11 +331,11 @@ public class OctagonalEnvelope
   implements GeometryComponentFilter
   {
     OctagonalEnvelope oe;
-    
+
     BoundingOctagonComponentFilter(OctagonalEnvelope oe) {
       this.oe = oe;
     }
-    
+
      @Override
 	public void filter(Geometry geom)
      {

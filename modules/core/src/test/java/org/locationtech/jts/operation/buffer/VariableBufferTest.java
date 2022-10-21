@@ -26,7 +26,7 @@ public class VariableBufferTest extends GeometryTestCase {
   public static void main(String[] args) {
     junit.textui.TestRunner.run(VariableBufferTest.class);
   }
-  
+
   public void testZeroWidth() {
     checkBuffer("LINESTRING( 0 0, 6 6, 10 10)",
         0, 0,
@@ -74,7 +74,7 @@ public class VariableBufferTest extends GeometryTestCase {
         );
   }
 
-  private void checkBuffer(String wkt, double startDist, double endDist, 
+  private void checkBuffer(String wkt, double startDist, double endDist,
       String wktExpected) {
     Geometry geom = read(wkt);
     Geometry result = VariableBuffer.buffer(geom, startDist, endDist);

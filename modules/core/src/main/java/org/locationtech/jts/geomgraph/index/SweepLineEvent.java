@@ -16,7 +16,7 @@ package org.locationtech.jts.geomgraph.index;
  */
 public class SweepLineEvent
   implements Comparable
-{ 
+{
   private static final int INSERT = 1;
   private static final int DELETE = 2;
 
@@ -29,7 +29,7 @@ public class SweepLineEvent
 
   /**
    * Creates an INSERT event.
-   * 
+   *
    * @param label the edge set label for this object
    * @param x the event location
    * @param obj the object being inserted
@@ -44,7 +44,7 @@ public class SweepLineEvent
 
   /**
    * Creates a DELETE event.
-   * 
+   *
    * @param x the event location
    * @param insertEvent the corresponding INSERT event
    */

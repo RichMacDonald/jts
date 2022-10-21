@@ -46,13 +46,13 @@ import org.xml.sax.SAXException;
  *  &lt;/LineString&gt;
  * </pre>
  *
- * The reader ignores namespace prefixes, 
+ * The reader ignores namespace prefixes,
  * and disables both the validation and namespace options on the <tt>SAXParser</tt>.
- * This class requires the presence of a SAX Parser available via the 
+ * This class requires the presence of a SAX Parser available via the
  * {@link javax.xml.parsers.SAXParserFactory#newInstance()}
  * method.
  * <p>
- * A specification of the GML XML format 
+ * A specification of the GML XML format
  * can be found at the OGC web site: <a href='http://www.opengeospatial.org/'>http://www.opengeospatial.org/</a>.
  * <p>
  * It is the caller's responsibility to ensure that the supplied {@link PrecisionModel}
@@ -63,10 +63,10 @@ import org.xml.sax.SAXException;
  * To parse and build geometry directly from a SAX stream, see {@link GMLHandler}.
  *
  * @author David Zwiers, Vivid Solutions.
- * 
+ *
  * @see GMLHandler
  */
-public class GMLReader 
+public class GMLReader
 {
 
 	/**
@@ -77,7 +77,7 @@ public class GMLReader
 	 * @param gml The GML String to parse
 	 * @param geometryFactory When null, a default will be used.
 	 * @return the resulting JTS Geometry
-	 * 
+	 *
 	 * @throws ParserConfigurationException
 	 * @throws IOException
 	 * @throws SAXException

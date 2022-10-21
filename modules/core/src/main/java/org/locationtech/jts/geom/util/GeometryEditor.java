@@ -30,13 +30,13 @@ import org.locationtech.jts.util.Assert;
 
 
 /**
- * A class which supports creating new {@link Geometry}s 
+ * A class which supports creating new {@link Geometry}s
  * which are modifications of existing ones,
  * maintaining the same type structure.
  * Geometry objects are intended to be treated as immutable.
  * This class "modifies" Geometrys
  * by traversing them, applying a user-defined
- * {@link GeometryEditorOperation}, {@link CoordinateSequenceOperation} or {@link CoordinateOperation}  
+ * {@link GeometryEditorOperation}, {@link CoordinateSequenceOperation} or {@link CoordinateOperation}
  * and creating new Geometrys with the same structure but
  * (possibly) modified components.
  * <p>
@@ -59,18 +59,18 @@ import org.locationtech.jts.util.Assert;
  * <p>
  * This class supports creating an edited Geometry
  * using a different <code>GeometryFactory</code> via the {@link #GeometryEditor(GeometryFactory)}
- * constructor.  
- * Examples of situations where this is required is if the geometry is 
+ * constructor.
+ * Examples of situations where this is required is if the geometry is
  * transformed to a new SRID and/or a new PrecisionModel.
  * <p>
  * <b>Usage Notes</b>
  * <ul>
  * <li>The resulting Geometry is not checked for validity.
- * If validity needs to be enforced, the new Geometry's 
+ * If validity needs to be enforced, the new Geometry's
  * {@link Geometry#isValid} method should be called.
  * <li>By default the UserData of the input geometry is not copied to the result.
  * </ul>
- * 
+ *
  * @see GeometryTransformer
  * @see Geometry#isValid
  *
@@ -107,14 +107,14 @@ public class GeometryEditor
   /**
    * Sets whether the User Data is copied to the edit result.
    * Only the object reference is copied.
-   * 
+   *
    * @param isUserDataCopied true if the input user data should be copied.
    */
   public void setCopyUserData(boolean isUserDataCopied)
   {
     this.isUserDataCopied = isUserDataCopied;
   }
-  
+
   /**
    * Edit the input {@link Geometry} with the given edit operation.
    * Clients can create subclasses of {@link GeometryEditorOperation} or
@@ -128,14 +128,14 @@ public class GeometryEditor
   {
     // nothing to do
     if (geometry == null) return null;
-    
+
     Geometry result = editInternal(geometry, operation);
     if (isUserDataCopied) {
       result.setUserData(geometry.getUserData());
     }
     return result;
   }
-  
+
   private Geometry editInternal(Geometry geometry, GeometryEditorOperation operation)
   {
     // if client did not supply a GeometryFactory, use the one from the input Geometry
@@ -195,7 +195,7 @@ public class GeometryEditor
     // MD - not sure why this is done - could just check original collection?
     GeometryCollection collectionForType = (GeometryCollection) operation.edit(collection,
         factory);
-    
+
     // edit the component geometries
     ArrayList geometries = new ArrayList();
     for (int i = 0; i < collectionForType.getNumGeometries(); i++) {
@@ -250,9 +250,9 @@ public class GeometryEditor
   /**
    * A GeometryEditorOperation which does not modify
    * the input geometry.
-   * This can be used for simple changes of 
+   * This can be used for simple changes of
    * GeometryFactory (including PrecisionModel and SRID).
-   * 
+   *
    * @author mbdavis
    *
    */
@@ -265,7 +265,7 @@ public class GeometryEditor
   		return geometry;
   	}
   }
-  
+
   /**
    * A {@link GeometryEditorOperation} which edits the coordinate list of a {@link Geometry}.
    * Operates on Geometry subclasses which contains a single coordinate list.
@@ -310,7 +310,7 @@ public class GeometryEditor
     public abstract Coordinate[] edit(Coordinate[] coordinates,
                                       Geometry geometry);
   }
-  
+
   /**
    * A {@link GeometryEditorOperation} which edits the {@link CoordinateSequence}
    * of a {@link Geometry}.

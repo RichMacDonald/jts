@@ -111,7 +111,7 @@ public class DirectedEdgeStar
   /**
    * Returns the zero-based index of the given DirectedEdge, after sorting in ascending order
    * by angle with the positive x-axis.
-   */  
+   */
   public int getIndex(DirectedEdge dirEdge)
   {
     sortEdges();
@@ -125,32 +125,32 @@ public class DirectedEdgeStar
   /**
    * Returns value of i modulo the number of edges in this DirectedEdgeStar
    * (i.e. the remainder when i is divided by the number of edges)
-   * 
+   *
    * @param i an integer (positive, negative or zero)
    */
   public int getIndex(int i)
   {
     int modi = i % outEdges.size();
-    //I don't think modi can be 0 (assuming i is positive) [Jon Aquino 10/28/2003] 
+    //I don't think modi can be 0 (assuming i is positive) [Jon Aquino 10/28/2003]
     if (modi < 0) modi += outEdges.size();
     return modi;
   }
 
   /**
-   * Returns the {@link DirectedEdge} on the left-hand (CCW) 
-   * side of the given {@link DirectedEdge} 
-   * (which must be a member of this DirectedEdgeStar). 
+   * Returns the {@link DirectedEdge} on the left-hand (CCW)
+   * side of the given {@link DirectedEdge}
+   * (which must be a member of this DirectedEdgeStar).
    */
   public DirectedEdge getNextEdge(DirectedEdge dirEdge)
   {
     int i = getIndex(dirEdge);
     return outEdges.get(getIndex(i + 1));
   }
-  
+
   /**
-   * Returns the {@link DirectedEdge} on the right-hand (CW) 
-   * side of the given {@link DirectedEdge} 
-   * (which must be a member of this DirectedEdgeStar). 
+   * Returns the {@link DirectedEdge} on the right-hand (CW)
+   * side of the given {@link DirectedEdge}
+   * (which must be a member of this DirectedEdgeStar).
    */
   public DirectedEdge getNextCWEdge(DirectedEdge dirEdge)
   {

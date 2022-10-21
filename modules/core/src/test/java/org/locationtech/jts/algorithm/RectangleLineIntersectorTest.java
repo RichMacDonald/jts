@@ -40,39 +40,39 @@ extends TestCase
 /**
  * Tests optimized RectangleLineIntersector against
  * a brute force approach (which is assumed to be correct).
- * 
+ *
  * @author Martin Davis
  *
  */
 class RectangleLineIntersectorValidator
 {
   private GeometryFactory geomFact = new GeometryFactory();
-  
+
   private double baseX = 0;
   private double baseY = 0;
   private double rectSize = 100;
   private Envelope rectEnv;
   private Coordinate[] pts;
-  private boolean isValid = true; 
-    
+  private boolean isValid = true;
+
   public RectangleLineIntersectorValidator()
   {
-    
+
   }
-  
+
   public void init(int nPts)
   {
     rectEnv = createRectangle();
     pts = createTestPoints(nPts);
-    
+
   }
-  
+
   public boolean validate()
   {
     run(true, true);
     return isValid;
   }
-  
+
   public void run(boolean useSegInt, boolean useSideInt)
   {
     RectangleLineIntersector rectSegIntersector = new RectangleLineIntersector(rectEnv);
@@ -81,14 +81,14 @@ class RectangleLineIntersectorValidator
     for (int i = 0; i < pts.length; i++) {
       for (int j = 0; j < pts.length; j++) {
         if (i == j) continue;
-        
+
         boolean segResult = false;
         if (useSegInt)
           segResult = rectSegIntersector.intersects(pts[i], pts[j]);
         boolean sideResult = false;
         if (useSideInt)
           sideResult = rectSideIntersector.intersects(pts[i], pts[j]);
-        
+
         if (useSegInt && useSideInt)
         {
           if (segResult != sideResult)
@@ -97,14 +97,14 @@ class RectangleLineIntersectorValidator
       }
     }
   }
-  
+
   private Coordinate[] createTestPoints(int nPts)
   {
     Point pt = geomFact.createPoint(new Coordinate(baseX, baseY));
     Geometry circle = pt.buffer(2 * rectSize, nPts/4);
     return circle.getCoordinates();
   }
-  
+
   private Envelope createRectangle()
   {
      Envelope rectEnv = new Envelope(
@@ -112,7 +112,7 @@ class RectangleLineIntersectorValidator
         new Coordinate(baseX + rectSize, baseY + rectSize));
      return rectEnv;
   }
-  
+
 }
 
 class SimpleRectangleIntersector
@@ -133,7 +133,7 @@ class SimpleRectangleIntersector
     this.rectEnv = rectEnv;
     initCorners(rectEnv);
   }
-  
+
   private void initCorners(Envelope rectEnv)
   {
     corner[0] = new Coordinate(rectEnv.getMaxX(), rectEnv.getMaxY());
@@ -141,7 +141,7 @@ class SimpleRectangleIntersector
     corner[2] = new Coordinate(rectEnv.getMinX(), rectEnv.getMinY());
     corner[3] = new Coordinate(rectEnv.getMaxX(), rectEnv.getMinY());
   }
-  
+
   public boolean intersects(Coordinate p0, Coordinate p1)
   {
     Envelope segEnv = new Envelope(p0, p1);

@@ -17,7 +17,7 @@ import org.locationtech.jts.math.MathUtil;
 import org.locationtech.jts.util.IntArrayList;
 
 /**
- * A semi-static spatial index for points which occur 
+ * A semi-static spatial index for points which occur
  * in a spatially-coherent sequence.
  * In particular, this is suitable for indexing the vertices
  * of a {@link LineString} or {@link Polygon} ring.
@@ -26,23 +26,23 @@ import org.locationtech.jts.util.IntArrayList;
  * Coordinates can be removed via the {@link #remove(int)} method.
  * <p>
  * Note that this index queries only the individual points
- * of the input coordinate sequence, 
+ * of the input coordinate sequence,
  * <b>not</b> any line segments which might be lie between them.
  * <p>
- * The input coordinate array is read-only, 
+ * The input coordinate array is read-only,
  * and is not changed when vertices are removed.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class VertexSequencePackedRtree {
-  
+
   /**
    * Number of items/nodes in a parent node.
    * Determined empirically.  Performance is not too sensitive to this.
    */
   private static final int NODE_CAPACITY = 16;
-  
+
   private Coordinate[] items;
   private int[] levelOffset;
   private int nodeCapacity  = NODE_CAPACITY;
@@ -52,7 +52,7 @@ public class VertexSequencePackedRtree {
   /**
    * Creates a new tree over the given sequence of coordinates.
    * The sequence should be spatially coherent to provide query performance.
-   * 
+   *
    * @param pts a sequence of points
    */
   public VertexSequencePackedRtree(Coordinate[] pts) {
@@ -64,7 +64,7 @@ public class VertexSequencePackedRtree {
   public Envelope[] getBounds() {
     return bounds.clone();
   }
-  
+
   private void build() {
     levelOffset = computeLevelOffsets();
     bounds = createBounds();
@@ -73,11 +73,11 @@ public class VertexSequencePackedRtree {
   /**
    * Computes the level offsets.
    * This is the position in the <tt>bounds</tt> array of each level.
-   * 
+   *
    * The levelOffsets array includes a sentinel value of offset[0] = 0.
    * The top level is always of size 1,
    * and so also indicates the total number of bounds.
-   * 
+   *
    * @return the level offsets
    */
   private int[] computeLevelOffsets() {
@@ -96,20 +96,20 @@ public class VertexSequencePackedRtree {
   private int levelNodeCount(int numNodes) {
     return MathUtil.ceil(numNodes, nodeCapacity);
   }
-  
+
   private Envelope[] createBounds() {
     int boundsSize = levelOffset[levelOffset.length - 1] + 1;
     Envelope[] bounds = new Envelope[boundsSize];
     fillItemBounds(bounds);
-    
+
     for (int lvl = 1; lvl < levelOffset.length; lvl++) {
       fillLevelBounds(lvl, bounds);
     }
     return bounds;
   }
-  
+
   private void fillLevelBounds(int lvl, Envelope[] bounds) {
-    int levelStart = levelOffset[lvl - 1]; 
+    int levelStart = levelOffset[lvl - 1];
     int levelEnd = levelOffset[lvl];
     int nodeStart = levelStart;
     int levelBoundIndex = levelOffset[lvl];
@@ -139,7 +139,7 @@ public class VertexSequencePackedRtree {
     }
     return env;
   }
-  
+
   private static Envelope computeItemEnvelope(Coordinate[] items, int start, int end) {
     Envelope env = new Envelope();
     for (int i = start; i < end; i++) {
@@ -147,14 +147,14 @@ public class VertexSequencePackedRtree {
     }
     return env;
   }
-  
+
   //------------------------
 
   /**
    * Queries the index to find all items which intersect an extent.
    * The query result is a list of the indices of input coordinates
    * which intersect the extent.
-   * 
+   *
    * @param queryEnv the query extent
    * @return an array of the indices of the input coordinates
    */
@@ -165,14 +165,14 @@ public class VertexSequencePackedRtree {
     int[] result = resultList.toArray();
     return result;
   }
-  
+
   private void queryNode(Envelope queryEnv, int level, int nodeIndex, IntArrayList resultList) {
     int boundsIndex = levelOffset[level] + nodeIndex;
     Envelope nodeEnv = bounds[boundsIndex];
     //--- node is empty
     if ((nodeEnv == null) || ! queryEnv.intersects(nodeEnv))
       return;
-    
+
     int childNodeIndex = nodeIndex * nodeCapacity;
     if (level == 0) {
       queryItemRange(queryEnv, childNodeIndex, resultList);
@@ -182,14 +182,14 @@ public class VertexSequencePackedRtree {
     }
   }
 
-  private void queryNodeRange(Envelope queryEnv, int level, int nodeStartIndex, IntArrayList resultList) {  
+  private void queryNodeRange(Envelope queryEnv, int level, int nodeStartIndex, IntArrayList resultList) {
     int levelMax = levelSize(level);
     for (int i = 0; i < nodeCapacity; i++) {
       int index = nodeStartIndex + i;
-      if (index >= levelMax) 
+      if (index >= levelMax)
         return;
       queryNode(queryEnv, level, index, resultList);
-    }    
+    }
   }
 
   private int levelSize(int level) {
@@ -199,33 +199,33 @@ public class VertexSequencePackedRtree {
   private void queryItemRange(Envelope queryEnv, int itemIndex, IntArrayList resultList) {
     for (int i = 0; i < nodeCapacity; i++) {
       int index = itemIndex + i;
-      if (index >= items.length) 
+      if (index >= items.length)
         return;
       Coordinate p = items[index];
-      if (! isRemoved[index]         
+      if (! isRemoved[index]
           && queryEnv.contains(p))
         resultList.add(index);
     }
   }
 
   //------------------------
-  
+
   /**
    * Removes the input item at the given index from the spatial index.
    * This does not change the underlying coordinate array.
-   * 
+   *
    * @param index the index of the item in the input
    */
   public void remove(int index) {
     isRemoved[index] = true;
-    
+
     //--- prune the item parent node if all its items are removed
     int nodeIndex = index / nodeCapacity;
     if (! isItemsNodeEmpty(nodeIndex))
       return;
-    
+
     bounds[nodeIndex] = null;
-    
+
     if (levelOffset.length <= 2)
       return;
 
@@ -235,10 +235,10 @@ public class VertexSequencePackedRtree {
       return;
     int nodeIndex1 = levelOffset[1] + nodeLevelIndex;
     bounds[nodeIndex1] = null;
-    
+
     //TODO: propagate removal up the tree nodes?
   }
-  
+
   private boolean isNodeEmpty(int level, int index) {
     int start = index * nodeCapacity;
     int end = MathUtil.clampMax(start + nodeCapacity, levelOffset[level]);

@@ -369,7 +369,7 @@ public class CoordinateArrays {
   /**
    * Tests whether {@link Coordinate#equals(Object)} returns true for any two consecutive Coordinates
    * in the given array.
-   * 
+   *
    * @param coord an array of coordinates
    * @return true if the array has repeated points
    */
@@ -381,7 +381,7 @@ public class CoordinateArrays {
     }
     return false;
   }
-  
+
   /**
    * Returns either the given coordinate array if its length is greater than the
    * given amount, or an empty coordinate array.
@@ -407,7 +407,7 @@ public class CoordinateArrays {
 
   /**
    * Tests whether an array has any repeated or invalid coordinates.
-   * 
+   *
    * @param coord an array of coordinates
    * @return true if the array contains repeated or invalid coordinates
    * @see Coordinate#isValid()
@@ -420,16 +420,16 @@ public class CoordinateArrays {
     }
     return false;
   }
-  
+
   /**
    * If the coordinate array argument has repeated or invalid points,
    * constructs a new array containing no repeated points.
    * Otherwise, returns the argument.
-   * 
+   *
    * @param coord an array of coordinates
    * @return the array with repeated and invalid coordinates removed
    * @see #hasRepeatedOrInvalidPoints(Coordinate[])
-   * @see Coordinate#isValid() 
+   * @see Coordinate#isValid()
    */
   public static Coordinate[] removeRepeatedOrInvalidPoints(Coordinate[] coord) {
     if (!hasRepeatedOrInvalidPoints(coord)) return coord;
@@ -440,7 +440,7 @@ public class CoordinateArrays {
     }
     return coordList.toCoordinateArray();
   }
-  
+
   /**
    * Collapses a coordinate array to remove all null elements.
    *
@@ -469,7 +469,7 @@ public class CoordinateArrays {
   public static void reverse(Coordinate[] coord) {
     if (coord.length <= 1)
       return;
-    
+
     int last = coord.length - 1;
     int mid = last / 2;
     for (int i = 0; i <= mid; i++) {

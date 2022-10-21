@@ -29,30 +29,30 @@ import org.locationtech.jts.geom.util.LinearComponentExtracter;
 /**
  * Stretches the vertices and segments of a @link Geometry}
  * to make the topology more visible.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class TopologyStretcher 
+public class TopologyStretcher
 {
 	private double stretchDistance = 0.1;
-	
+
 	private Geometry[] inputGeoms;
 	private List[] modifiedCoords;
-	
+
 	public TopologyStretcher(Geometry g)
 	{
 		inputGeoms = new Geometry[1];
 		inputGeoms[0] = g;
 	}
-	
+
 	public TopologyStretcher(Geometry g1, Geometry g2)
 	{
 		inputGeoms = new Geometry[2];
 		inputGeoms[0] = g1;
 		inputGeoms[1] = g2;
 	}
-	
+
   public int numVerticesInMask(Envelope mask)
   {
     VertexInMaskCountCoordinateFilter filter = new VertexInMaskCountCoordinateFilter(mask);
@@ -60,25 +60,25 @@ public class TopologyStretcher
     if (inputGeoms[1] != null) inputGeoms[1].apply(filter);
     return filter.getCount();
   }
-  
+
   public Geometry[] stretch(double nearnessTol, double stretchDistance)
   {
     return stretch(nearnessTol, stretchDistance, null);
   }
-  
+
   public Geometry[] stretch(double nearnessTol, double stretchDistance, Envelope mask)
   {
 		this.stretchDistance = stretchDistance;
 		Collection linestrings = extractLineStrings(inputGeoms, mask);
 		Coordinate[] pts = extractPoints(inputGeoms, mask);
-		
+
 		List nearVerts = StretchedVertexFinder.findNear(linestrings, nearnessTol, mask, pts);
-		
+
 		Map coordinateMoves = getCoordinateMoves(nearVerts);
-		
+
 		Geometry[] strGeoms = new Geometry[inputGeoms.length];
 		modifiedCoords = new List[inputGeoms.length];
-		
+
 		for (int i = 0; i < inputGeoms.length; i++) {
 			Geometry geom = inputGeoms[i];
 			if (geom != null) {
@@ -90,17 +90,17 @@ public class TopologyStretcher
 		}
 		return strGeoms;
 	}
-	
+
 	/**
 	 * Gets the {@link Coordinate}s in each stretched geometry which were modified  (if any).
-	 * 
+	 *
 	 * @return lists of Coordinates, one for each input geometry
 	 */
 	public List[] getModifiedCoordinates()
 	{
 		return modifiedCoords;
 	}
-	
+
   private List extractLineStrings(Geometry[] geom, Envelope mask)
   {
     List lines = new ArrayList();
@@ -108,7 +108,7 @@ public class TopologyStretcher
     for (Geometry element : geom) {
       if ((element == null) || (mask != null && ! mask.intersects(element.getEnvelopeInternal())))
         continue;
-      
+
       element.apply(lineExtracter);
     }
     if (mask != null) {
@@ -122,14 +122,14 @@ public class TopologyStretcher
     }
     return lines;
   }
-  
+
   private Coordinate[] extractPoints(Geometry[] geom, Envelope mask)
   {
     List<Coordinate> ptsList = new ArrayList<>();
     for (Geometry element : geom) {
       if ((element == null) || (mask != null && ! mask.intersects(element.getEnvelopeInternal())))
         continue;
-      
+
       Coordinate[] geomPts = element.getCoordinates();
       for (Coordinate p : geomPts) {
         if (mask == null || mask.contains(p))
@@ -138,7 +138,7 @@ public class TopologyStretcher
     }
     return CoordinateArrays.toCoordinateArray(ptsList);
   }
-  
+
 	private Map getCoordinateMoves(List nearVerts)
 	{
 		Map moves = new TreeMap();
@@ -152,25 +152,25 @@ public class TopologyStretcher
 		}
 		return moves;
 	}
-	
+
 	private static class VertexInMaskCountCoordinateFilter
   implements CoordinateFilter
   {
     private Envelope mask;
     private int count = 0;
-    
+
     public VertexInMaskCountCoordinateFilter(Envelope mask)
     {
       this.mask = mask;
     }
-    
+
     @Override
 	public void filter(Coordinate coord)
     {
       if (mask.contains(coord))
         count++;
     }
-    
+
     public int getCount() { return count; }
   }
 }

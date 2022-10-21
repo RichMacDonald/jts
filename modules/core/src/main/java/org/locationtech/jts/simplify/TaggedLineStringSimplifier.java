@@ -57,7 +57,7 @@ public class TaggedLineStringSimplifier
   /**
    * Simplifies the given {@link TaggedLineString}
    * using the distance tolerance specified.
-   * 
+   *
    * @param line the linestring to simplify
    */
   void simplify(TaggedLineString line)
@@ -138,7 +138,7 @@ public class TaggedLineStringSimplifier
    * replacing them with a line between the endpoints.
    * The input and output indexes are updated
    * to reflect this.
-   * 
+   *
    * @param start the start index of the flattened section
    * @param end the end index of the flattened section
    * @return the new segment created

@@ -16,7 +16,7 @@ import org.locationtech.jts.geom.Geometry;
 /**
  * A {@link ResultMatcher} which always passes.
  * This is useful if the expected result of an operation is not known.
- * 
+ *
  * @author mbdavis
  *
  */
@@ -25,16 +25,16 @@ public class NullResultMatcher
 {
 	/**
 	 * Always reports a match.
-	 * 
+	 *
 	 * @return true always
 	 */
 	@Override
-	public boolean isMatch(Geometry geom, String opName, Object[] args, 
+	public boolean isMatch(Geometry geom, String opName, Object[] args,
 			Result actualResult, Result expectedResult,
 			double tolerance)
 	{
 		return true;
 	}
 
-	
+
 }

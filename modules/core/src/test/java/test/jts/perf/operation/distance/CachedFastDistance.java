@@ -15,11 +15,11 @@ package test.jts.perf.operation.distance;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.operation.distance.IndexedFacetDistance;
 
-public class CachedFastDistance 
+public class CachedFastDistance
 {
   private static Geometry cacheGeom = null;
   private static IndexedFacetDistance fastDistanceOp;
-  
+
   public CachedFastDistance() {
   }
 

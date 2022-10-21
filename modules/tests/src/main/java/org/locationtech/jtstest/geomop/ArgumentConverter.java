@@ -12,13 +12,13 @@
 
 package org.locationtech.jtstest.geomop;
 
-public class ArgumentConverter 
+public class ArgumentConverter
 {
 	public ArgumentConverter()
 	{
-		
+
 	}
-	
+
   public Object[] convert(Class[] parameterTypes, Object[] args)
   {
   	Object[] actualArgs = new Object[args.length];

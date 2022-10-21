@@ -22,19 +22,19 @@ import org.locationtech.jts.index.chain.MonotoneChainSelectAction;
 import org.locationtech.jts.index.strtree.STRtree;
 
 /**
- * A spatial index over a segment sequence 
+ * A spatial index over a segment sequence
  * using {@link MonotoneChain}s.
- * 
+ *
  * @author mdavis
  *
  */
 class SegmentMCIndex {
   private STRtree index;
-  
+
   public SegmentMCIndex(Coordinate[] segs) {
     index = buildIndex(segs);
   }
-  
+
   private STRtree buildIndex(Coordinate[] segs) {
     STRtree index = new STRtree();
     List<MonotoneChain> segChains = MonotoneChainBuilder.getChains(segs, segs);

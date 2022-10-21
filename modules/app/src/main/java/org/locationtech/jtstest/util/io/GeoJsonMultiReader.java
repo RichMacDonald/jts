@@ -33,7 +33,7 @@ public class GeoJsonMultiReader {
     this.geomFact = geomFact;
     rdr = new GeoJsonReader(geomFact);
   }
-  
+
   public List<Geometry> readList(String s) throws ParseException {
     if (isFeatureCollection(s)) {
       return readFeatureCollectionList(s);
@@ -76,11 +76,11 @@ public class GeoJsonMultiReader {
     }
     return geoms;
   }
-  
+
   /**
    * Extracts all Geometry object substrings and reads them
    * @param s
-   * @throws ParseException 
+   * @throws ParseException
    */
   private Geometry readFeatureCollection(String s) throws ParseException {
     List<Geometry> geoms = readFeatureCollectionList(s);

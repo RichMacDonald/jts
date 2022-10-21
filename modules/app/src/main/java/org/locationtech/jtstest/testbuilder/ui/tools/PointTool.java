@@ -17,7 +17,7 @@ import org.locationtech.jtstest.testbuilder.model.GeometryType;
 /**
  * @version 1.7
  */
-public class PointTool extends AbstractDrawTool 
+public class PointTool extends AbstractDrawTool
 {
     private static PointTool singleton = null;
 
@@ -27,12 +27,12 @@ public class PointTool extends AbstractDrawTool
         return singleton;
     }
 
-    private PointTool() 
+    private PointTool()
     {
     	setClickCountToFinishGesture(1);
     	setDrawBandLines(false);
     }
-    
+
     @Override
 	protected int getGeometryType()
     {

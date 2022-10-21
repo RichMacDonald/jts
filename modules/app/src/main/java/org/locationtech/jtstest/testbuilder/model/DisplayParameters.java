@@ -14,7 +14,7 @@ package org.locationtech.jtstest.testbuilder.model;
 import org.locationtech.jtstest.testbuilder.AppConstants;
 
 public class DisplayParameters {
-  
+
   protected static boolean showingGrid = true;
   protected static boolean showingCoordinates = true;
   protected static boolean isMagnifyingTopology = false;

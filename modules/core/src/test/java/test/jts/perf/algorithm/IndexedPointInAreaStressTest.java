@@ -29,7 +29,7 @@ public class IndexedPointInAreaStressTest extends TestCase {
   }
 
 	PrecisionModel pmFixed_1 = new PrecisionModel(1.0);
-	
+
 	public IndexedPointInAreaStressTest(String name) {
 		super(name);
 	}
@@ -39,20 +39,20 @@ public class IndexedPointInAreaStressTest extends TestCase {
 		// Use fixed PM to try and get at least some points hitting the boundary
 		GeometryFactory geomFactory = new GeometryFactory(pmFixed_1);
 //		GeometryFactory geomFactory = new GeometryFactory();
-		
+
 		PerturbedGridPolygonBuilder gridBuilder = new PerturbedGridPolygonBuilder(geomFactory);
 		gridBuilder.setNumLines(20);
 		gridBuilder.setLineWidth(10.0);
     gridBuilder.setSeed(1185072199562L);
 		Geometry area = gridBuilder.getGeometry();
-		
-//    PointInAreaLocator pia = new IndexedPointInAreaLocator(area); 
-    PointOnGeometryLocator pia = new IndexedPointInAreaLocator(area); 
+
+//    PointInAreaLocator pia = new IndexedPointInAreaLocator(area);
+    PointOnGeometryLocator pia = new IndexedPointInAreaLocator(area);
 
 		PointInAreaStressTester gridTester = new PointInAreaStressTester(geomFactory, area);
 		gridTester.setNumPoints(100000);
 		gridTester.setPIA(pia);
-		
+
 		boolean isCorrect = gridTester.run();
 		assertTrue(isCorrect);
 	}

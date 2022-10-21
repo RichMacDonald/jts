@@ -31,7 +31,7 @@ import org.locationtech.jts.util.Assert;
  * because the STR algorithm operates on both nodes and
  * data, both of which are treated as Boundables.
  * <p>
- * This class is thread-safe.  Building the tree is synchronized, 
+ * This class is thread-safe.  Building the tree is synchronized,
  * and querying is stateless.
  *
  * @see STRtree
@@ -42,7 +42,7 @@ import org.locationtech.jts.util.Assert;
 public abstract class AbstractSTRtree implements Serializable {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -3886435814360241337L;
 
@@ -68,13 +68,13 @@ public abstract class AbstractSTRtree implements Serializable {
    * Set to <tt>null</tt> when index is built, to avoid retaining memory.
    */
   private ArrayList itemBoundables = new ArrayList();
-  
+
   private int nodeCapacity;
 
   private static final int DEFAULT_NODE_CAPACITY = 10;
 
   /**
-   * Constructs an AbstractSTRtree with the 
+   * Constructs an AbstractSTRtree with the
    * default node capacity.
    */
   public AbstractSTRtree() {
@@ -84,7 +84,7 @@ public abstract class AbstractSTRtree implements Serializable {
   /**
    * Constructs an AbstractSTRtree with the specified maximum number of child
    * nodes that a node may have
-   * 
+   *
    * @param nodeCapacity the maximum number of child nodes in a node
    */
   public AbstractSTRtree(int nodeCapacity) {
@@ -184,18 +184,18 @@ public abstract class AbstractSTRtree implements Serializable {
 
   /**
    * Gets the root node of the tree.
-   * 
+   *
    * @return the root node
    */
-  public AbstractNode getRoot() 
+  public AbstractNode getRoot()
   {
     build();
-    return root; 
+    return root;
   }
 
   /**
    * Returns the maximum number of child nodes that a node may have.
-   * 
+   *
    * @return the node capacity
    */
   public int getNodeCapacity() { return nodeCapacity; }
@@ -204,7 +204,7 @@ public abstract class AbstractSTRtree implements Serializable {
    * Tests whether the index contains any items.
    * This method does not build the index,
    * so items can still be inserted after it has been called.
-   * 
+   *
    * @return true if the index does not contain any items
    */
   public boolean isEmpty()
@@ -212,7 +212,7 @@ public abstract class AbstractSTRtree implements Serializable {
     if (! built) return itemBoundables.isEmpty();
     return root.isEmpty();
   }
-  
+
   protected int size() {
     if (isEmpty()) {
       return 0;
@@ -341,15 +341,15 @@ public abstract class AbstractSTRtree implements Serializable {
   }
 
   /**
-   * Gets a tree structure (as a nested list) 
+   * Gets a tree structure (as a nested list)
    * corresponding to the structure of the items and nodes in this tree.
    * <p>
-   * The returned {@link List}s contain either {@link Object} items, 
+   * The returned {@link List}s contain either {@link Object} items,
    * or Lists which correspond to subtrees of the tree
    * Subtrees which do not contain any items are not included.
    * <p>
    * Builds the tree if necessary.
-   * 
+   *
    * @return a List of items and/or Lists
    */
   public List itemsTree()
@@ -361,8 +361,8 @@ public abstract class AbstractSTRtree implements Serializable {
       return new ArrayList();
     return valuesTree;
   }
-  
-  private List itemsTree(AbstractNode node) 
+
+  private List itemsTree(AbstractNode node)
   {
     List valuesTreeForNode = new ArrayList();
     for (Object element : node.getChildBoundables()) {
@@ -380,7 +380,7 @@ public abstract class AbstractSTRtree implements Serializable {
         Assert.shouldNeverReachHere();
       }
     }
-    if (valuesTreeForNode.size() <= 0) 
+    if (valuesTreeForNode.size() <= 0)
       return null;
     return valuesTreeForNode;
   }

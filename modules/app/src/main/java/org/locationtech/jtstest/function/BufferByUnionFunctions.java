@@ -25,9 +25,9 @@ import org.locationtech.jtstest.geomfunction.Metadata;
 
 
 public class BufferByUnionFunctions {
-	
-	public static Geometry componentBuffers(Geometry g, double distance)	
-	{		
+
+	public static Geometry componentBuffers(Geometry g, double distance)
+	{
 		List bufs = new ArrayList();
 		for (Iterator it = new GeometryCollectionIterator(g); it.hasNext(); ) {
 			Geometry comp = (Geometry) it.next();
@@ -37,16 +37,16 @@ public class BufferByUnionFunctions {
     return FunctionsUtil.getFactoryOrDefault(g)
     				.createGeometryCollection(GeometryFactory.toGeometryArray(bufs));
 	}
-	
-	public static Geometry bufferByComponents(Geometry g, double distance)	
+
+	public static Geometry bufferByComponents(Geometry g, double distance)
 	{
 		return componentBuffers(g, distance).union();
 	}
-	
+
 	/**
 	 * Buffer polygons by buffering the individual boundary segments and
 	 * either unioning or differencing them.
-	 * 
+	 *
 	 * @param g
 	 * @param distance
 	 * @return the buffer geometry
@@ -56,11 +56,11 @@ public class BufferByUnionFunctions {
     Geometry segs = LineHandlingFunctions.extractSegments(g);
     double posDist = Math.abs(distance);
     Geometry segBuf = bufferByComponents(segs, posDist);
-    if (distance < 0.0) 
+    if (distance < 0.0)
       return g.difference(segBuf);
     return g.union(segBuf);
   }
-  
+
   public static Geometry bufferBySections(Geometry g, double distance,
       @Metadata(title="Section Size")
       int maxChainSize)
@@ -70,11 +70,11 @@ public class BufferByUnionFunctions {
     Geometry segs = LineHandlingFunctions.extractChains(g, maxChainSize);
     double posDist = Math.abs(distance);
     Geometry segBuf = bufferByComponents(segs, posDist);
-    if (distance < 0.0) 
+    if (distance < 0.0)
       return OverlayNGRobust.overlay(g, segBuf, OverlayNG.DIFFERENCE);
     return OverlayNGRobust.overlay(g, segBuf, OverlayNG.UNION);
   }
-  
+
   public static Geometry sectionBuffers(Geometry g, double distance,
       @Metadata(title="Section Size")
       int maxChainSize)

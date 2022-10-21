@@ -24,9 +24,9 @@ import java.util.List;
  * be the projection of 2-D objects on an axis).
  * It supports range searching
  * (where the range may be a single point).
- * This structure is dynamic - 
- * new items can be added at any time,   
- * and it will support deletion of items 
+ * This structure is dynamic -
+ * new items can be added at any time,
+ * and it will support deletion of items
  * (although this is not currently implemented).
  * <p>
  * This implementation does not require specifying the extent of the inserted
@@ -135,7 +135,7 @@ if (newSize <= oldSize) {
     Interval insertInterval = ensureExtent(itemInterval, minExtent);
     return root.remove(insertInterval, item);
   }
-  
+
   public Iterator iterator()
   {
     List foundItems = new ArrayList();
@@ -149,10 +149,10 @@ if (newSize <= oldSize) {
   }
 
   /**
-   * Queries the tree to find all candidate items which 
+   * Queries the tree to find all candidate items which
    * may overlap the query interval.
    * If the query interval is <tt>null</tt>, all items in the tree are found.
-   * 
+   *
    * min and max may be the same value
    */
   public List query(Interval interval)
@@ -170,7 +170,7 @@ if (newSize <= oldSize) {
    * Adds items in the tree which potentially overlap the query interval
    * to the given collection.
    * If the query interval is <tt>null</tt>, add all items in the tree.
-   * 
+   *
    * @param interval a query interval, or null
    * @param foundItems the candidate items found
    */

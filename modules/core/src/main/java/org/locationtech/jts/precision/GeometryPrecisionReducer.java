@@ -23,9 +23,9 @@ import org.locationtech.jts.geom.util.GeometryEditor;
  * <p>
  * By default the geometry precision model is not changed.
  * This can be overridden by using {@link #setChangePrecisionModel(boolean)}.
- *  
+ *
  * <h4>Topological Precision Reduction</h4>
- * 
+ *
  * The default mode of operation ensures the reduced result is topologically valid
  * (i.e. {@link Geometry#isValid()} is true).
  * To ensure this polygonal geometry is reduced in a topologically valid fashion
@@ -36,21 +36,21 @@ import org.locationtech.jts.geom.util.GeometryEditor;
  * Duplicate vertices are removed.
  * This mode is invoked by the static method {@link #reduce(Geometry, PrecisionModel)}.
  * <p>
- * Normally, collapsed linear components (e.g. lines collapsing to a point) 
- * are not included in the result. 
- * This behavior can be changed 
+ * Normally, collapsed linear components (e.g. lines collapsing to a point)
+ * are not included in the result.
+ * This behavior can be changed
  * by setting {@link #setRemoveCollapsedComponents(boolean)} to <code>false</code>,
  * or by using the static method {@link #reduceKeepCollapsed(Geometry, PrecisionModel)}.
  * <p>
- * In general input must be valid geometry, or an {@link IllegalArgumentException} 
+ * In general input must be valid geometry, or an {@link IllegalArgumentException}
  * will be thrown. However if the invalidity is "mild" or very small then it
  * may be eliminated by precision reduction.
- * 
- * 
+ *
+ *
  * <h4>Pointwise Precision Reduction</h4>
- * 
+ *
  * Alternatively, geometry can be reduced pointwise by using {@link #setPointwise(boolean)}.
- * Linear and point geometry are always reduced pointwise (i.e. without further change to 
+ * Linear and point geometry are always reduced pointwise (i.e. without further change to
  * topology or structure), since this does not change validity.
  * Invalid inputs are allowed.
  * Duplicate vertices are preserved.
@@ -66,12 +66,12 @@ public class GeometryPrecisionReducer
 	/**
 	 * Reduces precision of a geometry, ensuring output geometry is valid.
    * Collapsed linear and polygonal components are removed.
-   * Duplicate vertices are removed. 
+   * Duplicate vertices are removed.
    * The geometry precision model is not changed.
    * <p>
-   * Invalid input geometry may cause an error, 
+   * Invalid input geometry may cause an error,
    * unless the invalidity is below the scale of the precision reduction.
-	 * 
+	 *
 	 * @param g the geometry to reduce
 	 * @param precModel the precision model to use
 	 * @return the reduced geometry
@@ -82,16 +82,16 @@ public class GeometryPrecisionReducer
 		GeometryPrecisionReducer reducer = new GeometryPrecisionReducer(precModel);
 		return reducer.reduce(g);
 	}
-	
+
   /**
    * Reduces precision of a geometry, ensuring output polygonal geometry is valid,
    * and preserving collapsed linear elements.
    * Duplicate vertices are removed.
    * The geometry precision model is not changed.
    * <p>
-   * Invalid input geometry may cause an error, 
+   * Invalid input geometry may cause an error,
    * unless the invalidity is below the scale of the precision reduction.
-   * 
+   *
    * @param g the geometry to reduce
    * @param precModel the precision model to use
    * @return the reduced geometry
@@ -102,17 +102,17 @@ public class GeometryPrecisionReducer
     reducer.setRemoveCollapsedComponents(false);
     return reducer.reduce(geom);
   }
-  
+
 	/**
-	 * Reduce precision of a geometry in a pointwise way. 
-   * All input geometry elements are preserved in the output, 
+	 * Reduce precision of a geometry in a pointwise way.
+   * All input geometry elements are preserved in the output,
    * including invalid polygons and collapsed polygons and linestrings.
    * The output may not be valid, due to collapse or self-intersection.
    * Duplicate vertices are not removed.
    * The geometry precision model is not changed.
    * <p>
    * Invalid input geometry is allowed.
-	 * 
+	 *
 	 * @param g the geometry to reduce
 	 * @param precModel the precision model to use
 	 * @return the reduced geometry
@@ -123,7 +123,7 @@ public class GeometryPrecisionReducer
 		reducer.setPointwise(true);
 		return reducer.reduce(g);
 	}
-	
+
   private PrecisionModel targetPM;
   private boolean removeCollapsed = true;
   private boolean changePrecisionModel = false;
@@ -151,7 +151,7 @@ public class GeometryPrecisionReducer
    * Sets whether the {@link PrecisionModel} of the new reduced Geometry
    * will be changed to be the {@link PrecisionModel} supplied to
    * specify the precision reduction.
-   * <p>  
+   * <p>
    * The default is to <b>not</b> change the precision model
    *
    * @param changePrecisionModel if <code>true</code> the precision model of the created Geometry will be the
@@ -163,13 +163,13 @@ public class GeometryPrecisionReducer
   }
 
   /**
-   * Sets whether the precision reduction will be done 
-   * in pointwise fashion only.  
+   * Sets whether the precision reduction will be done
+   * in pointwise fashion only.
    * Pointwise precision reduction reduces the precision
    * of the individual coordinates only, but does
    * not attempt to recreate valid topology.
    * This is only relevant for geometries containing polygonal components.
-   * 
+   *
    * @param isPointwise if reduction should be done pointwise only
    */
   public void setPointwise(boolean isPointwise)
@@ -178,9 +178,9 @@ public class GeometryPrecisionReducer
   }
 
   /**
-   * Reduces the precision of a geometry, 
+   * Reduces the precision of a geometry,
    * according to the specified strategy of this reducer.
-   * 
+   *
    * @param geom the geometry to reduce
    * @return the precision-reduced geometry
    * @throws IllegalArgumentException if the reduction fails due to invalid input geometry is invalid
@@ -194,18 +194,18 @@ public class GeometryPrecisionReducer
     else {
       reduced = PrecisionReducerTransformer.reduce(geom, targetPM, removeCollapsed);
     }
-    
+
     // TODO: incorporate this in the Transformer above
     if (changePrecisionModel) {
       return changePM(reduced, targetPM);
     }
     return reduced;
   }
-  
+
   /**
    * Duplicates a geometry to one that uses a different PrecisionModel,
    * without changing any coordinate values.
-   * 
+   *
    * @param geom the geometry to duplicate
    * @param newPM the precision model to use
    * @return the geometry value with a new precision model
@@ -216,7 +216,7 @@ public class GeometryPrecisionReducer
   	// this operation changes the PM for the entire geometry tree
   	return geomEditor.edit(geom, new GeometryEditor.NoOpGeometryOperation());
   }
-  
+
   private GeometryEditor createEditor(GeometryFactory geomFactory, PrecisionModel newPM)
   {
     // no need to change if precision model is the same
@@ -227,14 +227,14 @@ public class GeometryPrecisionReducer
   	GeometryEditor geomEdit = new GeometryEditor(newFactory);
     return geomEdit;
   }
-  
+
   private GeometryFactory createFactory(GeometryFactory inputFactory, PrecisionModel pm)
   {
-    GeometryFactory newFactory 
-  	= new GeometryFactory(pm, 
+    GeometryFactory newFactory
+  	= new GeometryFactory(pm,
   			inputFactory.getSRID(),
   			inputFactory.getCoordinateSequenceFactory());
     return newFactory;
   }
-  
+
 }

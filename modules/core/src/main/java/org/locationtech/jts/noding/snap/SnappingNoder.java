@@ -33,18 +33,18 @@ import org.locationtech.jts.noding.SegmentString;
  * <p>
  * The snap tolerance should be chosen to be as small as possible
  * while still producing a correct result.
- * It probably only needs to be small enough to eliminate 
+ * It probably only needs to be small enough to eliminate
  * "nearly-coincident" segments, for which intersection points cannot be computed accurately.
  * This implies a factor of about 10e-12
- * smaller than the magnitude of the segment coordinates. 
+ * smaller than the magnitude of the segment coordinates.
  * <p>
  * With an appropriate snap tolerance this algorithm appears to be very robust.
- * So far no failure cases have been found, 
+ * So far no failure cases have been found,
  * given a small enough snap tolerance.
  * <p>
- * The correctness of the output is not verified by this noder. 
+ * The correctness of the output is not verified by this noder.
  * If required this can be done by {@link org.locationtech.jts.noding.ValidatingNoder}.
- * 
+ *
  * @version 1.17
  */
 public class SnappingNoder
@@ -56,7 +56,7 @@ public class SnappingNoder
 
   /**
    * Creates a snapping noder using the given snap distance tolerance.
-   * 
+   *
    * @param snapTolerance points are snapped if within this distance
    */
   public SnappingNoder(double snapTolerance) {
@@ -66,7 +66,7 @@ public class SnappingNoder
 
   /**
    * Gets the noded result.
-   * 
+   *
 	 * @return a Collection of NodedSegmentStrings representing the substrings
 	 */
   @Override
@@ -77,7 +77,7 @@ public Collection getNodedSubstrings()
 
   /**
    * Computes the noding of a set of {@link SegmentString}s.
-   * 
+   *
    * @param inputSegStrings a Collection of SegmentStrings
    */
   @Override
@@ -90,7 +90,7 @@ public void computeNodes(Collection inputSegStrings)
   private List<NodedSegmentString> snapVertices(Collection<SegmentString> segStrings) {
     //Stopwatch sw = new Stopwatch(); sw.start();
     seedSnapIndex(segStrings);
-    
+
     List<NodedSegmentString> nodedStrings = new ArrayList<>();
     for (SegmentString ss : segStrings) {
       nodedStrings.add( snapVertices(ss) );
@@ -100,17 +100,17 @@ public void computeNodes(Collection inputSegStrings)
   }
 
   /**
-   * Seeds the snap index with a small set of vertices 
+   * Seeds the snap index with a small set of vertices
    * chosen quasi-randomly using a low-discrepancy sequence.
-   * Seeding the snap index KdTree induces a more balanced tree. 
+   * Seeding the snap index KdTree induces a more balanced tree.
    * This prevents monotonic runs of vertices
    * unbalancing the tree and causing poor query performance.
-   *  
+   *
    * @param segStrings the segStrings to be noded
    */
   private void seedSnapIndex(Collection<SegmentString> segStrings) {
     final int SEED_SIZE_FACTOR = 100;
-      
+
     for (SegmentString ss : segStrings) {
       Coordinate[] pts = ss.getCoordinates();
       int numPtsToLoad = pts.length / SEED_SIZE_FACTOR;
@@ -122,12 +122,12 @@ public void computeNodes(Collection inputSegStrings)
       }
     }
   }
-  
+
   private NodedSegmentString snapVertices(SegmentString ss) {
     Coordinate[] snapCoords = snap(ss.getCoordinates());
     return new NodedSegmentString(snapCoords, ss.getData());
   }
-  
+
   private Coordinate[] snap(Coordinate[] coords) {
     CoordinateList snapCoords = new CoordinateList();
     for (Coordinate coord : coords) {
@@ -136,7 +136,7 @@ public void computeNodes(Collection inputSegStrings)
     }
     return snapCoords.toCoordinateArray();
   }
-  
+
   /**
    * Computes all interior intersections in the collection of {@link SegmentString}s,
    * and returns their {@link Coordinate}s.
@@ -149,7 +149,7 @@ public void computeNodes(Collection inputSegStrings)
   {
     SnappingIntersectionAdder intAdder = new SnappingIntersectionAdder(snapTolerance, snapIndex);
     /**
-     * Use an overlap tolerance to ensure all 
+     * Use an overlap tolerance to ensure all
      * possible snapped intersections are found
      */
     MCIndexNoder noder = new MCIndexNoder( intAdder, 2 * snapTolerance );

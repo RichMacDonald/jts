@@ -71,7 +71,7 @@ public class GeoJsonTest extends GeometryTestCase {
   }
 
   // empty atomic geometries are not supported in GeoJSON
-  
+
   public void testMultiPointEmpty() throws ParseException {
     runTest("MULTIPOINT EMPTY");
   }

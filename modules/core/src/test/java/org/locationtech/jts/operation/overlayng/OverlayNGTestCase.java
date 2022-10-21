@@ -9,7 +9,7 @@ import org.locationtech.jts.geom.PrecisionModel;
 import test.jts.GeometryTestCase;
 
 class OverlayNGTestCase extends GeometryTestCase {
-  
+
   protected OverlayNGTestCase(String name) {
     super(name);
   }
@@ -17,11 +17,11 @@ class OverlayNGTestCase extends GeometryTestCase {
   protected void checkIntersection(String wktA, String wktB, String wktExpected) {
     checkOverlay(wktA, wktB, INTERSECTION, wktExpected);
   }
-  
+
   protected void checkUnion(String wktA, String wktB, String wktExpected) {
     checkOverlay(wktA, wktB, UNION, wktExpected);
   }
-  
+
   protected void checkOverlay(String wktA, String wktB, int overlayOp, String wktExpected) {
     Geometry a = read(wktA);
     Geometry b = read(wktB);

@@ -26,40 +26,40 @@ import org.locationtech.jts.geom.Polygonal;
  * <p>
  * This class handles polygonal geometries with any number of shells and holes.
  * The orientation of the shell and hole rings is unimportant.
- * In order to compute a correct location for a given polygonal geometry, 
+ * In order to compute a correct location for a given polygonal geometry,
  * it is essential that <b>all</b> segments are counted which
  * <ul>
- * <li>touch the ray 
+ * <li>touch the ray
  * <li>lie in in any ring which may contain the point
  * </ul>
  * The only exception is when the point-on-segment situation is detected, in which
  * case no further processing is required.
- * The implication of the above rule is that segments 
+ * The implication of the above rule is that segments
  * which can be a priori determined to <i>not</i> touch the ray
- * (i.e. by a test of their bounding box or Y-extent) 
+ * (i.e. by a test of their bounding box or Y-extent)
  * do not need to be counted.  This allows for optimization by indexing.
  * <p>
  * This implementation uses the extended-precision orientation test,
- * to provide maximum robustness and consistency within 
+ * to provide maximum robustness and consistency within
  * other algorithms.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class RayCrossingCounter 
+public class RayCrossingCounter
 {
 	/**
 	 * Determines the {@link Location} of a point in a ring.
 	 * This method is an exemplar of how to use this class.
-	 * 
+	 *
 	 * @param p the point to test
-	 * @param ring an array of Coordinates forming a ring 
+	 * @param ring an array of Coordinates forming a ring
 	 * @return the location of the point in the ring
 	 */
-	public static int locatePointInRing(Coordinate p, Coordinate[] ring) 
+	public static int locatePointInRing(Coordinate p, Coordinate[] ring)
 	{
 		RayCrossingCounter counter = new RayCrossingCounter(p);
-	
+
     for (int i = 1; i < ring.length; i++) {
       Coordinate p1 = ring[i];
       Coordinate p2 = ring[i-1];
@@ -69,10 +69,10 @@ public class RayCrossingCounter
     }
     return counter.getLocation();
 	}
-	
+
 	 /**
-   * Determines the {@link Location} of a point in a ring. 
-   * 
+   * Determines the {@link Location} of a point in a ring.
+   *
    * @param p
    *            the point to test
    * @param ring
@@ -102,28 +102,28 @@ public class RayCrossingCounter
 	private int crossingCount = 0;
 	// true if the test point lies on an input segment
 	private boolean isPointOnSegment = false;
-	
+
 	public RayCrossingCounter(Coordinate p)
 	{
 		this.p = p;
 	}
-	
+
 	/**
 	 * Counts a segment
-	 * 
+	 *
 	 * @param p1 an endpoint of the segment
 	 * @param p2 another endpoint of the segment
 	 */
 	public void countSegment(Coordinate p1, Coordinate p2) {
 		/**
-		 * For each segment, check if it crosses 
+		 * For each segment, check if it crosses
 		 * a horizontal ray running from the test point in the positive x direction.
 		 */
-		
+
 		// check if the segment is strictly to the left of the test point
 		if (p1.x < p.x && p2.x < p.x)
 			return;
-		
+
 		// check if the point is equal to the current ring vertex
 		if (p.x == p2.x && p.y == p2.y) {
 			isPointOnSegment = true;
@@ -156,7 +156,7 @@ public class RayCrossingCounter
 		 * final endpoint
 		 * </ul>
 		 */
-		if (((p1.y > p.y) && (p2.y <= p.y)) 
+		if (((p1.y > p.y) && (p2.y <= p.y))
 				|| ((p2.y > p.y) && (p1.y <= p.y))) {
       int orient = Orientation.index(p1, p2, p);
       if (orient == Orientation.COLLINEAR) {
@@ -173,33 +173,33 @@ public class RayCrossingCounter
       }
 		}
 	}
-	
+
 /**
  * Reports whether the point lies exactly on one of the supplied segments.
  * This method may be called at any time as segments are processed.
- * If the result of this method is <tt>true</tt>, 
+ * If the result of this method is <tt>true</tt>,
  * no further segments need be supplied, since the result
  * will never change again.
- * 
+ *
  * @return true if the point lies exactly on a segment
  */
 	public boolean isOnSegment() { return isPointOnSegment; }
-	
+
 	/**
-	 * Gets the {@link Location} of the point relative to 
+	 * Gets the {@link Location} of the point relative to
 	 * the ring, polygon
 	 * or multipolygon from which the processed segments were provided.
 	 * <p>
-	 * This method only determines the correct location 
-	 * if <b>all</b> relevant segments must have been processed. 
-	 * 
+	 * This method only determines the correct location
+	 * if <b>all</b> relevant segments must have been processed.
+	 *
 	 * @return the Location of the point
 	 */
-	public int getLocation() 
+	public int getLocation()
 	{
 		if (isPointOnSegment)
 			return Location.BOUNDARY;
-		
+
     // The point is in the interior of the ring if the number of X-crossings is
 		// odd.
     if ((crossingCount % 2) == 1) {
@@ -207,15 +207,15 @@ public class RayCrossingCounter
     }
     return Location.EXTERIOR;
 	}
-    
+
 	/**
-	 * Tests whether the point lies in or on 
+	 * Tests whether the point lies in or on
 	 * the ring, polygon
 	 * or multipolygon from which the processed segments were provided.
 	 * <p>
-	 * This method only determines the correct location 
-	 * if <b>all</b> relevant segments must have been processed. 
-	 * 
+	 * This method only determines the correct location
+	 * if <b>all</b> relevant segments must have been processed.
+	 *
 	 * @return true if the point lies in or on the supplied polygon
 	 */
 	public boolean isPointInPolygon()

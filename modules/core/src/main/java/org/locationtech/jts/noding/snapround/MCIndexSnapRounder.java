@@ -27,7 +27,7 @@ import org.locationtech.jts.noding.SegmentString;
 /**
  * Uses Snap Rounding to compute a rounded,
  * fully noded arrangement from a set of {@link SegmentString}s.
- * Implements the Snap Rounding technique described in 
+ * Implements the Snap Rounding technique described in
  * papers by Hobby, Guibas &amp; Marimont, and Goodrich et al.
  * Snap Rounding assumes that all vertices lie on a uniform grid;
  * hence the precision model of the input must be fixed precision,
@@ -35,10 +35,10 @@ import org.locationtech.jts.noding.SegmentString;
  * <p>
  * This implementation uses a monotone chains and a spatial index to
  * speed up the intersection tests.
- * 
+ *
  * <h3>KNOWN BUGS</h3>
  * This implementation is not fully robust.
- * 
+ *
  * @deprecated Not robust. Use {@link SnapRoundingNoder} instead.
  *
  * @version 1.7
@@ -91,7 +91,7 @@ public void computeNodes(Collection inputSegmentStrings)
     }
   }
 */
-  
+
   private void snapRound(Collection segStrings, LineIntersector li)
   {
     List intersections = findInteriorIntersections(segStrings, li);
@@ -141,7 +141,7 @@ public void computeNodes(Collection inputSegmentStrings)
   }
 
   /**
-   * Snaps segments to the vertices of a Segment String.  
+   * Snaps segments to the vertices of a Segment String.
    */
   private void computeVertexSnaps(NodedSegmentString e)
   {

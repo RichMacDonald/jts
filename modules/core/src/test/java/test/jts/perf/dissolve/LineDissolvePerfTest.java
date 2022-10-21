@@ -30,7 +30,7 @@ import test.jts.perf.PerformanceTestRunner;
 import test.jts.util.IOUtil;
 
 
-public class LineDissolvePerfTest  extends PerformanceTestCase 
+public class LineDissolvePerfTest  extends PerformanceTestCase
 {
   public static void main(String args[]) {
     PerformanceTestRunner.run(LineDissolvePerfTest.class);
@@ -43,14 +43,14 @@ public class LineDissolvePerfTest  extends PerformanceTestCase
   }
 
   Collection data;
-  
+
   @Override
 public void setUp() throws IOException, ParseException
   {
     System.out.println("Loading data...");
     data = IOUtil.readWKTFile("/Users/mdavis/myproj/jts/svn/jts-topo-suite/trunk/jts/testdata/world.wkt");
   }
-  
+
   public void runDissolver_World()
   {
     LineDissolver dis = new LineDissolver();
@@ -59,18 +59,18 @@ public void setUp() throws IOException, ParseException
     System.out.println();
     System.out.println(Memory.allString());
   }
-  
+
   public void runBruteForce_World()
   {
     Geometry result = dissolveLines(data);
     System.out.println(Memory.allString());
   }
-  
+
   private Geometry dissolveLines(Collection lines) {
     Geometry linesGeom = extractLines(lines);
     return dissolveLines(linesGeom);
   }
-  
+
   private Geometry dissolveLines(Geometry lines) {
     Geometry dissolved = lines.union();
     LineMerger merger = new LineMerger();
@@ -92,5 +92,5 @@ public void setUp() throws IOException, ParseException
     }
     return factory.buildGeometry(geoms);
   }
-  
+
 }

@@ -10,29 +10,29 @@ import org.locationtech.jts.shape.random.RandomPointsBuilder;
 import org.locationtech.jts.triangulate.VoronoiDiagramBuilder;
 
 public class RandomPolygonBuilder {
-  
+
   public static Geometry build(int npts) {
     RandomPolygonBuilder builder = new RandomPolygonBuilder(npts);
     return builder.createPolygon();
   }
-  
+
   private Envelope extent = new Envelope(0,100,0,100);
   private GeometryFactory geomFact = new GeometryFactory();
   private int npts;
   private Geometry voronoi;
-  
+
   public RandomPolygonBuilder(int npts) {
     this.npts = npts;
     Geometry sites = randomPoints(extent, npts);
     voronoi = voronoiDiagram(sites, extent);
   }
-  
+
   public Geometry createPolygon() {
     Geometry cellsSelect = select(voronoi, npts / 2);
     Geometry poly = cellsSelect.union();
     return poly;
   }
-  
+
   private Geometry select(Geometry geoms, int n) {
     List<Geometry> selection = new ArrayList<>();
     // add all the geometries
@@ -53,14 +53,14 @@ public class RandomPolygonBuilder {
     shapeBuilder.setNumPoints(nPts);
     return shapeBuilder.getGeometry();
   }
-  
+
   public Geometry voronoiDiagram(Geometry sitesGeom, Envelope extent)
   {
     VoronoiDiagramBuilder builder = new VoronoiDiagramBuilder();
     builder.setSites(sitesGeom);
     builder.setClipEnvelope(extent);
     builder.setTolerance(.0001);
-    Geometry diagram = builder.getDiagram( sitesGeom.getFactory() ); 
+    Geometry diagram = builder.getDiagram( sitesGeom.getFactory() );
     return diagram;
   }
 }

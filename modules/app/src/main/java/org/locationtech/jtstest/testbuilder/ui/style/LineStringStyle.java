@@ -29,16 +29,16 @@ public abstract class LineStringStyle
 	public static final int LINE = 1;
 	public static final int POLY_SHELL = 2;
 	public static final int POLY_HOLE = 3;
-	
+
   public LineStringStyle() {
   }
 
   @Override
-public void paint(Geometry geom, Viewport viewport, Graphics2D g) 
+public void paint(Geometry geom, Viewport viewport, Graphics2D g)
     throws Exception
   {
     // cull non-visible geometries
-    if (! viewport.intersectsInModel(geom.getEnvelopeInternal())) 
+    if (! viewport.intersectsInModel(geom.getEnvelopeInternal()))
       return;
 
     if (geom instanceof LineString) {
@@ -48,7 +48,7 @@ public void paint(Geometry geom, Viewport viewport, Graphics2D g)
       }
       paintLineString(lineString, LINE, viewport, g);
     }
-    
+
     if ((geom instanceof Point) || (geom instanceof MultiPoint))
       return;
 
@@ -68,16 +68,16 @@ public void paint(Geometry geom, Viewport viewport, Graphics2D g)
     }
   }
 
-  public void paint(LineString line, int lineType, Viewport viewport, Graphics2D g) 
+  public void paint(LineString line, int lineType, Viewport viewport, Graphics2D g)
   throws Exception
   {
     // cull non-visible geometries
-    if (! viewport.intersectsInModel(line.getEnvelopeInternal())) 
+    if (! viewport.intersectsInModel(line.getEnvelopeInternal()))
       return;
-    
+
     paintLineString(line, lineType, viewport, g);
   }
-  
+
   protected abstract void paintLineString(LineString lineString,
   		int lineType,
       Viewport viewport, Graphics2D graphics)

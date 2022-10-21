@@ -14,7 +14,7 @@ package test.jts.perf;
 
 /**
  * An example of the usage of the {@link PerformanceTestRunner}.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -38,28 +38,28 @@ public void setUp()
   {
     // read data and allocate resources here
   }
-  
+
   @Override
 public void startRun(int size)
   {
     System.out.println("Running with size " + size);
     iter = 0;
   }
-  
+
   private int iter = 0;
-  
+
   public void runTest1()
   {
     System.out.println("Test 1 : Iter # " + iter++);
     // do test work here
   }
-  
+
   public void runTest2()
   {
     System.out.println("Test 2 : Iter # " + iter++);
     // do test work here
   }
-  
+
   @Override
 public void tearDown()
   {

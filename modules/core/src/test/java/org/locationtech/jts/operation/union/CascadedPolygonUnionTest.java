@@ -26,14 +26,14 @@ import test.jts.util.IOUtil;
 /**
  * Large-scale tests of {@link CascadedPolygonUnion}
  * using synthetic datasets.
- * 
+ *
  * @author mbdavis
  *
  */
-public class CascadedPolygonUnionTest extends TestCase 
+public class CascadedPolygonUnionTest extends TestCase
 {
 	GeometryFactory geomFact = new GeometryFactory();
-	
+
   public CascadedPolygonUnionTest(String name) {
     super(name);
   }
@@ -41,7 +41,7 @@ public class CascadedPolygonUnionTest extends TestCase
   public static void main(String[] args) {
     junit.textui.TestRunner.run(CascadedPolygonUnionTest.class);
   }
-  
+
   public void testBoxes()
   throws Exception
   {
@@ -58,35 +58,35 @@ public class CascadedPolygonUnionTest extends TestCase
   throws Exception
   {
   	Collection geoms = createDiscs(5, 0.7);
-  	
+
   	//System.out.println(geomFact.buildGeometry(geoms));
-  	
+
   	runTest(geoms,
   			CascadedPolygonUnionTester.MIN_SIMILARITY_MEAURE);
   }
 
-  
+
   public void testDiscs2()
   throws Exception
   {
   	Collection geoms = createDiscs(5, 0.55);
-  	
+
   	//System.out.println(geomFact.buildGeometry(geoms));
-  	
+
   	runTest(geoms,
   			CascadedPolygonUnionTester.MIN_SIMILARITY_MEAURE);
   }
 
-  
+
   // TODO: add some synthetic tests
-  
+
   private static CascadedPolygonUnionTester tester = new CascadedPolygonUnionTester();
-  
-  private void runTest(Collection geoms, double minimumMeasure) 
+
+  private void runTest(Collection geoms, double minimumMeasure)
   {
   	assertTrue(tester.test(geoms, minimumMeasure));
   }
-  
+
   private Collection createDiscs(int num, double radius)
   {
   	List geoms = new ArrayList();

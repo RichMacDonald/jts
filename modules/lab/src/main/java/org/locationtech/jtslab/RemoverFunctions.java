@@ -19,6 +19,6 @@ public class RemoverFunctions {
   {
     return SmallHoleRemover.clean(geom, areaTolerance);
   }
-  
+
 
 }

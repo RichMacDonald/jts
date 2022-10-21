@@ -15,7 +15,7 @@ import org.locationtech.jts.index.ItemVisitor;
 
 class CountItemVisitor implements ItemVisitor {
   public int count = 0;
-  
+
   @Override
   public void visitItem(Object item) {
     count++;

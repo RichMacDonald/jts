@@ -34,7 +34,7 @@ import org.locationtech.jts.io.ParseException;
 /**
  * Reads a GeoJSON Geometry from a JSON fragment into a {@link Geometry}.
  * <p>
- * The current GeoJSON specification is 
+ * The current GeoJSON specification is
  * <a href='https://tools.ietf.org/html/rfc7946'>https://tools.ietf.org/html/rfc7946</a>.
  * An older specification is on the GeoJSON web site:
  * <a href='http://geojson.org/geojson-spec.html'>http://geojson.org/geojson-spec.html</a>.
@@ -47,10 +47,10 @@ import org.locationtech.jts.io.ParseException;
  * {@link PrecisionModel} matches the precision of the incoming data. If a lower
  * precision for the data is required, a subsequent process must be run on the
  * data to reduce its precision.
- * 
+ *
  * @author Martin Davis
  * @author Paul Howells, Vivid Solutions.
- * 
+ *
  */
 public class GeoJsonReader {
 
@@ -70,7 +70,7 @@ public class GeoJsonReader {
   /**
    * This constructor accepts a <code>GeometryFactory</code> that is used
    * to create the output geometries and to override the GeoJson CRS.
-   * 
+   *
    * @param geometryFactory
    *          a GeometryFactory
    */
@@ -81,12 +81,12 @@ public class GeoJsonReader {
   /**
    * Reads a GeoJson Geometry from a <tt>String</tt> into a single
    * {@link Geometry}.
-   * 
-   * 
+   *
+   *
    * @param json
    *          The GeoJson String to parse
    * @return the resulting JTS Geometry
-   * 
+   *
    * @throws ParseException
    *           throws a ParseException if the JSON string cannot be parsed
    */
@@ -98,12 +98,12 @@ public class GeoJsonReader {
   /**
    * Reads a GeoJson Geometry from a {@link Reader} into a single
    * {@link Geometry}.
-   * 
-   * 
+   *
+   *
    * @param reader
    *          The input source
    * @return The resulting JTS Geometry
-   * 
+   *
    * @throws ParseException
    *           throws a ParseException if the JSON string cannot be parsed as a Geometry
    */
@@ -119,7 +119,7 @@ public class GeoJsonReader {
     }catch (org.json.simple.parser.ParseException | IOException e) {
       throw new ParseException(e);
     }
-    
+
     GeometryFactory geometryFactory = null;
     if (this.gf == null) {
       geometryFactory = this.getGeometryFactory(geometryMap);
@@ -438,7 +438,7 @@ public class GeoJsonReader {
     @SuppressWarnings("unchecked")
     Map<String, Object> crsMap = (Map<String, Object>) geometryMap.get(GeoJsonConstants.NAME_CRS);
     Integer srid = null;
-    
+
     if (crsMap != null) {
 
       try {

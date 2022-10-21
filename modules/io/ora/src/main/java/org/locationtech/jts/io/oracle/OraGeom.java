@@ -28,16 +28,16 @@ import org.locationtech.jts.geom.Polygon;
  * Represents the contents of an Oracle SDO_GEOMETRY structure.
  * Also provides code values and convenience methods for working
  * with SDO_GEOMETRY values.
- * 
+ *
  * @author Martin Davis
  *
  */
 class OraGeom
 {
-	public static final int NULL_DIMENSION = -1;	
+	public static final int NULL_DIMENSION = -1;
 
 	private static NumberFormat fmt = new DecimalFormat("0.################");
-	  
+
 	public static final String SQL_NULL = "NULL";
 
   int gType;
@@ -85,19 +85,19 @@ class OraGeom
   {
     return lrsDim;
   }
-  
+
   public boolean isCompactPoint()
   {
     return lrsDim == 0 && geomType == OraGeom.GEOM_TYPE.POINT && point != null && elemInfo == null;
   }
-  
+
   public boolean isEqual(OraGeom og)
   {
-    
+
 //    if (srid != og.srid) return false;
-    
+
     // assume is defined by elemInfo and ordinates
-    if ((gType != og.gType) || ! isEqual(point, og.point) || ! isEqual(elemInfo, og.elemInfo) || ! isEqual(ordinates, og.ordinates)) 
+    if ((gType != og.gType) || ! isEqual(point, og.point) || ! isEqual(elemInfo, og.elemInfo) || ! isEqual(ordinates, og.ordinates))
       return false;
     return true;
   }
@@ -110,9 +110,9 @@ class OraGeom
     if (a1.length != a2.length) return false;
     for (int i = 0; i < a1.length; i++) {
       // check NaN == NaN
-      if (Double.isNaN(a1[i]) && Double.isNaN(a2[i])) 
+      if (Double.isNaN(a1[i]) && Double.isNaN(a2[i]))
     	  continue;
-      if (a1[i] != a2[i]) 
+      if (a1[i] != a2[i])
     	  return false;
     }
     return true;
@@ -128,46 +128,46 @@ class OraGeom
     }
     return true;
   }
-  
+
   @Override
 public String toString()
   {
 	  return toSQLString();
 	  /*
-	  return "GTYPE=" + gType 
+	  return "GTYPE=" + gType
 			  + " SRID=" + srid
 			  + " ELEM_INFO=" + toStringElemInfo(elemInfo)
 			  + " ORDS=" + toString(ordinates);
 			  */
   }
-  
+
   public String toSQLString()
   {
   	StringBuilder buf = new StringBuilder();
   	buf.append("SDO_GEOMETRY(");
-  	
+
   	buf.append(gType);
   	buf.append(",");
-  	
+
   	buf.append(srid >= 0 ? String.valueOf(srid) : SQL_NULL);
   	buf.append(",");
-  	
+
   	buf.append(toStringPointType());
   	buf.append(",");
-  	
+
   	buf.append(toStringElemInfo());
   	buf.append(",");
-  	
+
   	buf.append(toStringOrdinates());
   	buf.append(")");
-  	
+
   	return buf.toString();
   }
-  
+
   private String toString(double[] ordinates)
   {
     if (ordinates == null) return SQL_NULL;
-    
+
     StringBuilder buf = new StringBuilder();
     for (int i = 0; i < ordinates.length; i++) {
       if (i > 0) {
@@ -186,7 +186,7 @@ public String toString()
 	 if (Double.isNaN(d)) return SQL_NULL;
 	 return fmt.format(d);
   }
-  
+
   public static String toStringElemInfo(int[] elemInfo)
   {
     if (elemInfo == null) return "null";
@@ -202,30 +202,30 @@ public String toString()
     }
     return buf.toString();
   }
-  
+
   private Object toStringOrdinates() {
 	  if (ordinates == null) {
 		 return SQL_NULL;
 	  }
-	  return "SDO_ORDINATE_ARRAY(" + toString(ordinates) + ")"; 
+	  return "SDO_ORDINATE_ARRAY(" + toString(ordinates) + ")";
   }
 
   private Object toStringElemInfo() {
 	  if (elemInfo == null) {
 		 return SQL_NULL;
 	  }
-	  return "SDO_ELEM_INFO_ARRAY(" + toStringElemInfo(elemInfo) + ")"; 
+	  return "SDO_ELEM_INFO_ARRAY(" + toStringElemInfo(elemInfo) + ")";
   }
 
   private Object toStringPointType() {
 	  if (point == null) {
 		 return SQL_NULL;
 	  }
-	  return "SDO_POINT_TYPE(" 
+	  return "SDO_POINT_TYPE("
 	  	+ number(point[0]) + ","
 	  	+ number(point[1]) + ","
 	  	+ number(point[2])
-	  	+ ")"; 
+	  	+ ")";
   }
 
 public int startingOffset(int elemIndex)
@@ -242,7 +242,7 @@ public int startingOffset(int elemIndex)
    *
    * @param elemIndex index of the triplet to read
    * @return ETYPE for indicated triplet, or -1 if the triplet index is out of range
-   * 
+   *
    * @see ETYPE
    */
   public int eType(int elemIndex)
@@ -284,7 +284,7 @@ public int startingOffset(int elemIndex)
   }
   /**
    * Computes the SDO_GTYPE code for the given D, L, and TT components.
-   * 
+   *
    * @param dim the coordinate dimension
    * @param lrsDim the measure dimension
    * @param geomType the geometry type code
@@ -298,14 +298,14 @@ public int startingOffset(int elemIndex)
   /**
    * Returns the GTYPE GEOM_TYPE code
    * corresponding to the geometry type.
-   * 
+   *
    * @see OraGeom.GEOM_TYPE
    *
    * @param geom the geometry to compute the GEOM_TYPE for
    * @return geom type code, if known, or UNKNOWN
    */
   static int geomType(Geometry geom) {
-    if (geom == null) { 
+    if (geom == null) {
     } else if (geom instanceof Point) {
         return OraGeom.GEOM_TYPE.POINT;
     } else if (geom instanceof LineString) {
@@ -321,15 +321,15 @@ public int startingOffset(int elemIndex)
     } else if (geom instanceof GeometryCollection) {
         return OraGeom.GEOM_TYPE.COLLECTION;
     }
-    return OraGeom.GEOM_TYPE.UNKNOWN_GEOMETRY; 
+    return OraGeom.GEOM_TYPE.UNKNOWN_GEOMETRY;
   }
 
   /**
-   * Extracts the coordinate dimension containing the Measure value from 
+   * Extracts the coordinate dimension containing the Measure value from
    * an SDO_GTYPE code.
    * For a measured geometry this is 0, 3 or 4.  0 indicates that the last dimension is the measure dimension
    * For an non-measured geometry this is 0.
-   * 
+   *
    * @param gType an SDO_GTYPE code
    * @return the Measure dimension
    */
@@ -339,7 +339,7 @@ public int startingOffset(int elemIndex)
 
   /**
    * Extracts the coordinate dimension from an SDO_GTYPE code.
-   * 
+   *
    * @param gType an SDO_GTYPE code
    * @return the coordinate dimension
    */
@@ -349,7 +349,7 @@ public int startingOffset(int elemIndex)
 
   /**
    * Extracts the GEOM_TYPE code from an SDO_GTYPE code.
-   * 
+   *
    * @param gType an SDO_GTYPE code
    * @return the GEOM_TYPE code
    */
@@ -407,20 +407,20 @@ public int startingOffset(int elemIndex)
 
   /**
    * Codes used in SDO_INTERPRETATION attribute.
-   * 
+   *
    * @author Martin Davis
    *
    */
   static final class INTERP {
-    
+
     public static final int POINT         = 1;
-    
-    public static final int LINESTRING    = 1;  
-    
-    public static final int POLYGON       = 1;  
-    
-    public static final int RECTANGLE     = 3;  
-        
+
+    public static final int LINESTRING    = 1;
+
+    public static final int POLYGON       = 1;
+
+    public static final int RECTANGLE     = 3;
+
   }
 
   /**
@@ -428,28 +428,28 @@ public int startingOffset(int elemIndex)
    * These are used in the last two digits in a GTYPE value.
    */
   static final class GEOM_TYPE {
-  
+
     /** <code>TT</code> code representing Unknown type */
     public static final int UNKNOWN_GEOMETRY       = 00;
-  
+
     /** <code>TT</code> code representing Point */
     public static final int POINT         = 01;
-  
+
     /** <code>TT</code> code representing Line (or Curve) */
-    public static final int LINE          = 02;  
-      
+    public static final int LINE          = 02;
+
     /** <code>TT</code> code representing Polygon */
     public static final int POLYGON       = 03;
-  
+
     /** <code>TT</code> code representing Collection */
-    public static final int COLLECTION    = 04;   
-  
+    public static final int COLLECTION    = 04;
+
     /** <code>TT</code> code representing MultiPoint */
-    public static final int MULTIPOINT    = 05;       
-  
+    public static final int MULTIPOINT    = 05;
+
     /** <code>TT</code> code representing MultiLine (or MultiCurve) */
     public static final int MULTILINE     = 06;
-  
+
     /** <code>TT</code> code representing MULTIPOLYGON */
     public static final int MULTIPOLYGON  = 07;
   }
@@ -462,25 +462,25 @@ public int startingOffset(int elemIndex)
   {
     /** <code>ETYPE</code> code representing Point */
     public static final int POINT = 1;
-  
+
     /** <code>ETYPE</code> code representing Line */
     public static final int LINE = 2;
-  
-    /** <code>ETYPE</code> code representing Polygon ring 
+
+    /** <code>ETYPE</code> code representing Polygon ring
      *  Shell or hole is determined by orientation (CCW or CW).
-     *  Now deprecated. 
+     *  Now deprecated.
      */
     public static final int POLYGON = 3;
-  
+
     /**
      * <code>ETYPE</code> code representing exterior counterclockwise polygon ring
      */
     public static final int POLYGON_EXTERIOR = 1003;
-  
+
     /** <code>ETYPE</code> code representing interior clockwise polygon ring */
     public static final int POLYGON_INTERIOR = 2003;
   }
-  
+
   /**
    * Oracle types used by SDO_GEOMETRY
    */
@@ -488,7 +488,7 @@ public int startingOffset(int elemIndex)
   public static final String TYPE_ELEM_INFO_ARRAY = "MDSYS.SDO_ELEM_INFO_ARRAY";
   public static final String TYPE_ORDINATE_ARRAY = "MDSYS.SDO_ORDINATE_ARRAY";
   public static final String TYPE_POINT_TYPE = "MDSYS.SDO_POINT_TYPE";
-  
+
   /**
    * Value indicating a Null SRID.
    */

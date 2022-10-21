@@ -26,18 +26,18 @@ import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.GeometryTransformer;
 
 /**
- * Snaps the vertices and segments of a {@link Geometry} 
+ * Snaps the vertices and segments of a {@link Geometry}
  * to another Geometry's vertices.
  * A snap distance tolerance is used to control where snapping is performed.
- * Snapping one geometry to another can improve 
+ * Snapping one geometry to another can improve
  * robustness for overlay operations by eliminating
- * nearly-coincident edges 
+ * nearly-coincident edges
  * (which cause problems during noding and intersection calculation).
  * It can also be used to eliminate artifacts such as narrow slivers, spikes and gores.
  * <p>
- * Too much snapping can result in invalid topology 
+ * Too much snapping can result in invalid topology
  * being created, so the number and location of snapped vertices
- * is decided using heuristics to determine when it 
+ * is decided using heuristics to determine when it
  * is safe to snap.
  * This can result in some potential snaps being omitted, however.
  *
@@ -50,22 +50,22 @@ public class GeometrySnapper
 
   /**
    * Estimates the snap tolerance for a Geometry, taking into account its precision model.
-   * 
+   *
    * @param g a Geometry
    * @return the estimated snap tolerance
    */
   public static double computeOverlaySnapTolerance(Geometry g)
   {
 		double snapTolerance = computeSizeBasedSnapTolerance(g);
-		
+
 		/**
-		 * Overlay is carried out in the precision model 
-		 * of the two inputs.  
+		 * Overlay is carried out in the precision model
+		 * of the two inputs.
 		 * If this precision model is of type FIXED, then the snap tolerance
-		 * must reflect the precision grid size.  
-		 * Specifically, the snap tolerance should be at least 
+		 * must reflect the precision grid size.
+		 * Specifically, the snap tolerance should be at least
 		 * the distance from a corner of a precision grid cell
-		 * to the centre point of the cell.  
+		 * to the centre point of the cell.
 		 */
 		PrecisionModel pm = g.getPrecisionModel();
 		if (pm.getType() == PrecisionModel.FIXED) {
@@ -91,7 +91,7 @@ public class GeometrySnapper
 
   /**
    * Snaps two geometries together with a given tolerance.
-   * 
+   *
    * @param g0 a geometry to snap
    * @param g1 a geometry to snap
    * @param snapTolerance the tolerance to use
@@ -102,7 +102,7 @@ public class GeometrySnapper
     Geometry[] snapGeom = new Geometry[2];
     GeometrySnapper snapper0 = new GeometrySnapper(g0);
     snapGeom[0] = snapper0.snapTo(g1, snapTolerance);
-    
+
     /**
      * Snap the second geometry to the snapped first geometry
      * (this strategy minimizes the number of possible different points in the result)
@@ -116,7 +116,7 @@ public class GeometrySnapper
   }
   /**
    * Snaps a geometry to itself.
-   * Allows optionally cleaning the result to ensure it is 
+   * Allows optionally cleaning the result to ensure it is
    * topologically valid
    * (which fixes issues such as topology collapses in polygonal inputs).
    * <p>
@@ -132,12 +132,12 @@ public class GeometrySnapper
     GeometrySnapper snapper0 = new GeometrySnapper(geom);
     return snapper0.snapToSelf(snapTolerance, cleanResult);
   }
-  
+
   private Geometry srcGeom;
 
   /**
    * Creates a new snapper acting on the given geometry
-   * 
+   *
    * @param srcGeom the geometry to snap
    */
   public GeometrySnapper(Geometry srcGeom)
@@ -166,7 +166,7 @@ public class GeometrySnapper
    * Snaps the vertices in the component {@link LineString}s
    * of the source geometry
    * to the vertices of the same geometry.
-   * Allows optionally cleaning the result to ensure it is 
+   * Allows optionally cleaning the result to ensure it is
    * topologically valid
    * (which fixes issues such as topology collapses in polygonal inputs).
    *
@@ -196,7 +196,7 @@ public class GeometrySnapper
     ptSet.addAll(Arrays.asList(pts));
     return (Coordinate[]) ptSet.toArray(new Coordinate[0]);
   }
-  
+
   /**
    * Computes the snap tolerance based on the input geometries.
    *

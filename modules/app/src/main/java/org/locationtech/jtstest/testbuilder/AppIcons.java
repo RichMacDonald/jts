@@ -15,26 +15,26 @@ import javax.swing.ImageIcon;
 
 public class AppIcons {
   public final static ImageIcon APP = load("app-icon.gif");
-  
+
   public final static ImageIcon ADD = load("Plus.png");
   public final static ImageIcon ADD_SMALL = load("Plus_small.png");
   public final static ImageIcon DELETE = load("Delete.png");
   public final static ImageIcon DELETE_SMALL = load("Delete_small.png");
-  
+
   public final static ImageIcon EXECUTE = load("Execute.png");
   public final static ImageIcon SAVE_IMAGE = load("SaveImage.png");
   public final static ImageIcon UNDO = load("Undo.png");
   public final static ImageIcon CLEAR = load("Delete_small.png");
   public final static ImageIcon GEOM_INSPECT = load("InspectGeometry.png");
   public final static ImageIcon GEOM_EXCHANGE = load("ExchangeGeoms.png");
-  
+
   public final static ImageIcon GEOFUNC_BINARY = load("BinaryGeomFunction.png");
-  
+
   public final static ImageIcon DOWN = load("Down.png");
   public final static ImageIcon UP = load("Up.png");
   public final static ImageIcon LEFT = load("Left.png");
   public final static ImageIcon RIGHT = load("Right.png");
-  
+
   public final static ImageIcon ZOOM = load("Magnify.png");
   public final static ImageIcon COPY_TO_TEST = load("CopyToTest.png");
   public final static ImageIcon COPY = load("Copy.png");
@@ -42,7 +42,7 @@ public class AppIcons {
   public final static ImageIcon CUT = load("Delete_small.png");
   public final static ImageIcon GEOM_LOAD = load("LoadWKTToTest.png");
   public final static ImageIcon MOVE = load("Move.png");
-  
+
   public final static ImageIcon ICON_COLLECTION 	= load("Icon_GeomCollection.png");
   public final static ImageIcon ICON_COLLECTION_B 	= load("Icon_GeomCollection_B.png");
   public final static ImageIcon ICON_LINEARRING 	= load("Icon_LinearRing.png");
@@ -53,7 +53,7 @@ public class AppIcons {
   public final static ImageIcon ICON_POINT_B 	= load("Icon_Point_B.png");
   public final static ImageIcon ICON_POLYGON 	= load("Icon_Polygon.png");
   public final static ImageIcon ICON_POLYGON_B 	= load("Icon_Polygon_B.png");
-  
+
   public static ImageIcon load(String filename) {
     return new ImageIcon(AppIcons.class.getResource(filename));
   }

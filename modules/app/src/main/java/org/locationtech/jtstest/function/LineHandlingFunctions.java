@@ -24,7 +24,7 @@ import org.locationtech.jts.operation.linemerge.LineMerger;
 import org.locationtech.jts.operation.linemerge.LineSequencer;
 
 public class LineHandlingFunctions {
-	
+
   public static Geometry mergeLines(Geometry g)
   {
     LineMerger merger = new LineMerger();
@@ -32,12 +32,12 @@ public class LineHandlingFunctions {
     Collection lines = merger.getMergedLineStrings();
     return g.getFactory().buildGeometry(lines);
   }
-  
+
   public static Geometry sequenceLines(Geometry g)
   {
     return LineSequencer.sequence(g);
   }
-  
+
   public static Geometry extractLines(Geometry g)
   {
     List lines = LinearComponentExtracter.getLines(g);
@@ -51,7 +51,7 @@ public class LineHandlingFunctions {
       LineString line = (LineString) line2;
       for (int i = 1; i < line.getNumPoints(); i++) {
         LineString seg = g.getFactory().createLineString(
-            new Coordinate[] { line.getCoordinateN(i-1), line.getCoordinateN(i) }       
+            new Coordinate[] { line.getCoordinateN(i-1), line.getCoordinateN(i) }
           );
         segments.add(seg);
       }
@@ -71,11 +71,11 @@ public class LineHandlingFunctions {
     }
     return g.getFactory().buildGeometry(chains);
   }
-  
+
   private static LineString extractChain(LineString line, int index, int maxChainSize)
   {
     int size = maxChainSize + 1;
-    if (index + size > line.getNumPoints()) 
+    if (index + size > line.getNumPoints())
       size = line.getNumPoints() - index;
     Coordinate[] pts = new Coordinate[size];
     for (int i = 0; i < size; i++) {
@@ -83,7 +83,7 @@ public class LineHandlingFunctions {
     }
     return line.getFactory().createLineString(pts);
   }
-  
+
   public static Geometry dissolve(Geometry geom)
   {
     return LineDissolver.dissolve(geom);

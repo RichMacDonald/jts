@@ -16,13 +16,13 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.math.Vector3D;
 
 /**
- * Basic computational geometry algorithms 
+ * Basic computational geometry algorithms
  * for geometry and coordinates defined in 3-dimensional Cartesian space.
- * 
+ *
  * @author mdavis
  *
  */
-public class CGAlgorithms3D 
+public class CGAlgorithms3D
 {
 	private CGAlgorithms3D() {}
 
@@ -31,7 +31,7 @@ public class CGAlgorithms3D
 		// default to 2D distance if either Z is not set
 		if (Double.isNaN(p0.getZ()) || Double.isNaN(p1.getZ()))
 			return p0.distance(p1);
-		
+
 	    double dx = p0.x - p1.x;
 	    double dy = p0.y - p1.y;
 	    double dz = p0.getZ() - p1.getZ();
@@ -46,15 +46,15 @@ public class CGAlgorithms3D
 
 	    // otherwise use comp.graphics.algorithms Frequently Asked Questions method
 	    /*
-	     * (1) r = AC dot AB 
-	     *         --------- 
-	     *         ||AB||^2 
-	     *         
-	     * r has the following meaning: 
-	     *   r=0 P = A 
-	     *   r=1 P = B 
-	     *   r<0 P is on the backward extension of AB 
-	     *   r>1 P is on the forward extension of AB 
+	     * (1) r = AC dot AB
+	     *         ---------
+	     *         ||AB||^2
+	     *
+	     * r has the following meaning:
+	     *   r=0 P = A
+	     *   r=1 P = B
+	     *   r<0 P is on the backward extension of AB
+	     *   r>1 P is on the forward extension of AB
 	     *   0<r<1 P is interior to AB
 	     */
 
@@ -79,11 +79,11 @@ public class CGAlgorithms3D
 	    double dz = p.getZ() - qz;
 	    return Math.sqrt(dx*dx + dy*dy + dz*dz);
 	}
-	
+
 
 	/**
 	 * Computes the distance between two 3D segments.
-	 * 
+	 *
 	 * @param A the start point of the first segment
 	 * @param B the end point of the first segment
 	 * @param C the start point of the second segment
@@ -91,7 +91,7 @@ public class CGAlgorithms3D
 	 * @return the distance between the segments
 	 */
 	public static double distanceSegmentSegment(
-			Coordinate A, Coordinate B, Coordinate C, Coordinate D) 
+			Coordinate A, Coordinate B, Coordinate C, Coordinate D)
 	{
 		/*
 		  This calculation is susceptible to round off errors when
@@ -102,7 +102,7 @@ public class CGAlgorithms3D
 		      return distancePointSegment(A, C, D);
 	    if (C.equals3D(B))
 		      return distancePointSegment(C, A, B);
-	    
+
 	    /*
 	      Algorithm derived from http://softsurfer.com/Archive/algorithm_0106/algorithm_0106.htm
 	     */
@@ -111,11 +111,11 @@ public class CGAlgorithms3D
 		double c = Vector3D.dot(C, D, C, D);
 		double d = Vector3D.dot(A, B, C, A);
 		double e = Vector3D.dot(C, D, C, A);
-		
+
 		double denom = a*c - b*b;
 	    if (Double.isNaN(denom))
 	    	throw new IllegalArgumentException("Ordinates must not be NaN");
-		
+
 		double s;
 		double t;
 		if (denom <= 0.0) {
@@ -127,18 +127,18 @@ public class CGAlgorithms3D
 			// choose largest denominator for optimal numeric conditioning
 			if (b > c)
 				t = d/b;
-			else 
+			else
 				t = e/c;
 		}
 		else {
 			s = (b*e - c*d) / denom;
 			t = (a*e - b*d) / denom;
 		}
-		if (s < 0) 
+		if (s < 0)
 			return distancePointSegment(A, C, D);
 		else if (s > 1)
 			return distancePointSegment(B, C, D);
-		else if (t < 0)	
+		else if (t < 0)
 			return distancePointSegment(C, A, B);
 		else if(t > 1) {
 			return distancePointSegment(D, A, B);
@@ -154,10 +154,10 @@ public class CGAlgorithms3D
 		double x2 = C.x + t * (D.x - C.x);
 		double y2 = C.y + t * (D.y - C.y);
 		double z2 = C.getZ() + t * (D.getZ() - C.getZ());
-		
+
 		// length (p1-p2)
 		return distance(new Coordinate(x1, y1, z1), new Coordinate(x2, y2, z2));
 	}
 
-	
+
 }

@@ -49,22 +49,22 @@ public class IndexTester {
     System.out.print(index.toString() + "           ");
     System.gc();
     Stopwatch sw = new Stopwatch();
-    
+
     sw.start();
     loadTree(items);
     String loadTime = sw.getTimeString();
     result.loadMilliseconds = sw.getTime();
-    
+
     System.gc();
-    
+
     Stopwatch sw2 = new Stopwatch();
-    
+
     //runGridQuery(1000);
     //runQuery(items);
     runQuery(queries);
-    
+
     String queryTime = sw2.getTimeString();
-    
+
     result.queryMilliseconds = sw.getTime();
     System.out.println("  Load Time = " + loadTime + "  Query Time = " + queryTime);
     return result;
@@ -90,11 +90,11 @@ public class IndexTester {
     return items;
   }
   private static final int SEED = 613;
-  
+
   public static List createRandomBoxes(int n) {
     return createRandomBoxes(SEED, n);
   }
-  
+
   public static List createRandomBoxes(int seed, int n) {
     Random random = new Random(seed);
     ArrayList items = new ArrayList();
@@ -103,7 +103,7 @@ public class IndexTester {
     }
     return items;
   }
-  
+
   private static Envelope createBox(Random random) {
     double minX = randomDouble(random, -100, 100);
     double minY = randomDouble(random, -100, 100);
@@ -115,7 +115,7 @@ public class IndexTester {
   private static double randomDouble(Random random, double min, double max) {
     return min + random.nextDouble() * (max - min);
   }
-  
+
   void loadTree(List items)
   {
     for (Object item2 : items) {
@@ -124,7 +124,7 @@ public class IndexTester {
     }
     index.finishInserting();
   }
-  
+
   void runQuery(List queries)
   {
     double querySize = 0.0;
@@ -136,7 +136,7 @@ public class IndexTester {
     }
     System.out.println("Avg query size = " + querySize / queries.size());
   }
-  
+
   void runGridQuery(int nGridCells)
   {
     int cellSize = (int) Math.sqrt(NUM_ITEMS);

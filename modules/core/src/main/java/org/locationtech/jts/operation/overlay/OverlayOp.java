@@ -47,31 +47,31 @@ public class OverlayOp
  * The spatial functions supported by this class.
  * These operations implement various boolean combinations of the resultants of the overlay.
  */
-	
+
   /**
    * The code for the Intersection overlay operation.
    */
   public static final int INTERSECTION  = 1;
-  
+
   /**
    * The code for the Union overlay operation.
    */
   public static final int UNION         = 2;
-  
+
   /**
    *  The code for the Difference overlay operation.
    */
   public static final int DIFFERENCE    = 3;
-  
+
   /**
    *  The code for the Symmetric Difference overlay operation.
    */
   public static final int SYMDIFFERENCE = 4;
 
   /**
-   * Computes an overlay operation for 
+   * Computes an overlay operation for
    * the given geometry arguments.
-   * 
+   *
    * @param geom0 the first geometry argument
    * @param geom1 the second geometry argument
    * @param opCode the code for the desired overlay operation
@@ -87,12 +87,12 @@ public class OverlayOp
 
   /**
    * Tests whether a point with a given topological {@link Label}
-   * relative to two geometries is contained in 
+   * relative to two geometries is contained in
    * the result of overlaying the geometries using
    * a given overlay operation.
    * <p>
    * The method handles arguments of {@link Location#NONE} correctly
-   * 
+   *
    * @param label the topological label of the point
    * @param opCode the code for the overlay operation to test
    * @return true if the label locations correspond to the overlayOpCode
@@ -106,14 +106,14 @@ public class OverlayOp
 
   /**
    * Tests whether a point with given {@link Location}s
-   * relative to two geometries is contained in 
+   * relative to two geometries is contained in
    * the result of overlaying the geometries using
    * a given overlay operation.
    * <p>
    * The method handles arguments of {@link Location#NONE} correctly
    *
-   * @param loc0 the code for the location in the first geometry 
-   * @param loc1 the code for the location in the second geometry 
+   * @param loc0 the code for the location in the first geometry
+   * @param loc1 the code for the location in the second geometry
    * @param overlayOpCode the code for the overlay operation to test
    * @return true if the locations correspond to the overlayOpCode
    */
@@ -151,7 +151,7 @@ public class OverlayOp
   /**
    * Constructs an instance to compute a single overlay operation
    * for the given geometries.
-   * 
+   *
    * @param g0 the first geometry argument
    * @param g1 the second geometry argument
    */
@@ -170,7 +170,7 @@ public class OverlayOp
    * Gets the result of the overlay for a given overlay operation.
    * <p>
    * Note: this method can be called once only.
-   * 
+   *
    * @param overlayOpCode the overlay operation to perform
    * @return the compute result geometry
    * @throws TopologyException if a robustness problem is encountered
@@ -183,7 +183,7 @@ public class OverlayOp
 
   /**
    * Gets the graph constructed to compute the overlay.
-   * 
+   *
    * @return the overlay graph
    */
   public PlanarGraph getGraph() { return graph; }
@@ -217,13 +217,13 @@ public class OverlayOp
 
     /**
      * Check that the noding completed correctly.
-     * 
-     * This test is slow, but necessary in order to catch robustness failure 
+     *
+     * This test is slow, but necessary in order to catch robustness failure
      * situations.
-     * If an exception is thrown because of a noding failure, 
+     * If an exception is thrown because of a noding failure,
      * then snapping will be performed, which will hopefully avoid the problem.
-     * In the future hopefully a faster check can be developed.  
-     * 
+     * In the future hopefully a faster check can be developed.
+     *
      */
     EdgeNodingValidator.checkValid(edgeList.getEdges());
 
@@ -495,7 +495,7 @@ public class OverlayOp
     /*
     int nPoly0 = arg[0].getGeometry().getNumGeometries();
     int nPoly1 = arg[1].getGeometry().getNumGeometries();
-    System.out.println("# isolated nodes= " + nodeCount 
+    System.out.println("# isolated nodes= " + nodeCount
     		+ "   # poly[0] = " + nPoly0
     		+ "   # poly[1] = " + nPoly1);
     */
@@ -507,7 +507,7 @@ public class OverlayOp
   private void labelIncompleteNode(Node n, int targetIndex)
   {
     int loc = ptLocator.locate(n.getCoordinate(), arg[targetIndex].getGeometry());
-  	
+
   	// MD - 2008-10-24 - experimental for now
 //    int loc = arg[targetIndex].locate(n.getCoordinate());
     n.getLabel().setLocation(targetIndex, loc);
@@ -600,12 +600,12 @@ public class OverlayOp
     List geomList = new ArrayList(resultPointList);
     geomList.addAll(resultLineList);
     geomList.addAll(resultPolyList);
-    
+
     //*
     if (geomList.isEmpty())
     	return createEmptyResult(opcode, arg[0].getGeometry(), arg[1].getGeometry(), geomFact);
     //*/
-    
+
     // build the most specific geometry possible
     return geomFact.buildGeometry(geomList);
   }
@@ -613,7 +613,7 @@ public class OverlayOp
   /**
    * Creates an empty result geometry of the appropriate dimension,
    * based on the given overlay operation and the dimensions of the inputs.
-   * The created geometry is always an atomic geometry, 
+   * The created geometry is always an atomic geometry,
    * not a collection.
    * <p>
    * The empty result is constructed using the following rules:
@@ -624,7 +624,7 @@ public class OverlayOp
    * <li>{@link #SYMDIFFERENCE} - result has the dimension of the highest input dimension
    * (since the symmetric Difference is the union of the differences).
    * </ul>
-   * 
+   *
    * @param overlayOpCode the code for the overlay operation being performed
    * @param a an input geometry
    * @param b an input geometry
@@ -641,24 +641,24 @@ public class OverlayOp
      */
     return result =  geomFact.createEmpty(resultDim);
   }
-  
+
   private static int resultDimension(int opCode, Geometry g0, Geometry g1)
   {
   	int dim0 = g0.getDimension();
   	int dim1 = g1.getDimension();
-  	
+
   	int resultDimension = -1;
   	switch (opCode) {
-  	case INTERSECTION: 
+  	case INTERSECTION:
   		resultDimension = Math.min(dim0, dim1);
   		break;
-  	case UNION: 
+  	case UNION:
   		resultDimension = Math.max(dim0, dim1);
   		break;
-  	case DIFFERENCE: 
+  	case DIFFERENCE:
   		resultDimension = dim0;
   		break;
-  	case SYMDIFFERENCE: 
+  	case SYMDIFFERENCE:
   	  /**
   	   * This result is chosen because
   	   * <pre>

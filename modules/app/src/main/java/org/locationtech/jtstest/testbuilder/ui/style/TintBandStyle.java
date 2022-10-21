@@ -26,9 +26,9 @@ import org.locationtech.jtstest.testbuilder.ui.render.GeometryPainter;
 
 /**
  * WIP
- * 
+ *
  * Idea: draw inside buffer instead of band - avoids need for different op.
- * 
+ *
  * @author mdavis
  *
  */
@@ -42,15 +42,15 @@ public class TintBandStyle implements Style
   @Override
 public void paint(Geometry geom, Viewport viewport, Graphics2D g2d)
   {
-    if (! (geom instanceof Polygon)) 
+    if (! (geom instanceof Polygon))
       return;
-    
+
     Geometry band = computeBand((Polygon) geom, 10);
     if (band == null)
       return;
     GeometryPainter.paint(band, viewport, g2d, null, TINT_BAND_SHADE);
   }
-  
+
   private Geometry computeBand(Polygon poly, double dist) {
     try {
       Geometry insideBuffer = poly.buffer(-dist);

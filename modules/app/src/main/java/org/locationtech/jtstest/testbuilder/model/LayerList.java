@@ -23,14 +23,14 @@ import org.locationtech.jtstest.testbuilder.geom.GeometryLocation;
 import org.locationtech.jtstest.testbuilder.geom.SegmentExtracter;
 
 
-public class LayerList 
+public class LayerList
 {
   public static LayerList createFixed() {
     LayerList list = new LayerList();
     list.initFixed();
     return list;
   }
-  
+
   public static LayerList create(LayerList l1, LayerList l2, LayerList l3) {
     LayerList list = new LayerList();
     list.add(l1);
@@ -38,14 +38,14 @@ public class LayerList
     list.add(l3);
     return list;
   }
-  
+
   public static final int LYR_A = 0;
   public static final int LYR_B = 1;
   public static final int LYR_RESULT = 2;
-  
+
   private List<Layer> layers = new ArrayList<>();
-  
-  public LayerList() 
+
+  public LayerList()
   {
   }
 
@@ -54,16 +54,16 @@ public class LayerList
     layers.add(new Layer("B"));
     layers.add(new Layer("Result"));
   }
-  
+
   public int size() { return layers.size(); }
-  
+
   public Layer getLayer(int i)
-  { 
+  {
     return layers.get(i);
   }
-  
+
   /**
-   * 
+   *
    * @param pt
    * @param tolerance
    * @return component found, or null
@@ -84,7 +84,7 @@ public class LayerList
     }
     return null;
   }
-  
+
   public Geometry[] getComponents(Geometry aoi, boolean isSegments)
   {
     Geometry comp[] = new Geometry[2];
@@ -101,7 +101,7 @@ public class LayerList
     }
     return comp;
   }
-  
+
   private Geometry extractComponents(Geometry parentGeom, Geometry aoi)
   {
     ComponentLocater locater = new ComponentLocater(parentGeom);
@@ -109,7 +109,7 @@ public class LayerList
     List geoms = extractLocationGeometry(locs);
     if (geoms.size() <= 0)
       return null;
-    if (geoms.size() == 1) 
+    if (geoms.size() == 1)
       return (Geometry) geoms.get(0);
     // if parent was a GC, ensure returning a GC
     if (parentGeom.getGeometryType().equals("GeometryCollection"))
@@ -117,7 +117,7 @@ public class LayerList
     // otherwise return MultiGeom
     return parentGeom.getFactory().buildGeometry(geoms);
   }
-  
+
   private List extractLocationGeometry(List locs)
   {
     List geoms = new ArrayList();
@@ -155,15 +155,15 @@ public class LayerList
   public void addTop(Layer lyr) {
     layers.add(0, lyr);
   }
-  
+
   public void addBottom(Layer lyr) {
     layers.add(lyr);
   }
-  
+
   public void add(LayerList lyrList) {
     layers.addAll(lyrList.layers);
   }
-  
+
   public void moveUp(Layer lyr) {
     int i = layers.indexOf(lyr);
     if (i <= 0) return;

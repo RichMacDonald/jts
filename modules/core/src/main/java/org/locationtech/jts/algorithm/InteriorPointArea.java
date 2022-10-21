@@ -33,10 +33,10 @@ import org.locationtech.jts.util.Assert;
  * For each input polygon:
  * <ul>
  * <li>Determine a horizontal scan line on which the interior
- * point will be located. 
+ * point will be located.
  * To increase the chance of the scan line
  * having non-zero-width intersection with the polygon
- * the scan line Y ordinate is chosen to be near the centre of the polygon's 
+ * the scan line Y ordinate is chosen to be near the centre of the polygon's
  * Y extent but distinct from all of vertex Y ordinates.
  * <li>Compute the sections of the scan line
  * which lie in the interior of the polygon.
@@ -46,10 +46,10 @@ import org.locationtech.jts.util.Assert;
  * The final interior point is chosen as
  * the one occurring in the widest interior section.
  * <p>
- * This algorithm is a tradeoff between performance 
+ * This algorithm is a tradeoff between performance
  * and point quality (where points further from the geometry
  * boundary are considered to be higher quality)
- * Priority is given to performance. 
+ * Priority is given to performance.
  * This means that the computed interior point
  * may not be suitable for some uses
  * (such as label positioning).
@@ -70,11 +70,11 @@ import org.locationtech.jts.util.Assert;
  * @version 1.17
  */
 public class InteriorPointArea {
-  
+
   /**
    * Computes an interior point for the
    * polygonal components of a Geometry.
-   * 
+   *
    * @param geom the geometry to compute
    * @return the computed interior point,
    * or <code>null</code> if the geometry has no polygonal components
@@ -83,7 +83,7 @@ public class InteriorPointArea {
     InteriorPointArea intPt = new InteriorPointArea(geom);
     return intPt.getInteriorPoint();
   }
-  
+
   private static double avg(double a, double b) {
     return (a + b) / 2.0;
   }
@@ -93,7 +93,7 @@ public class InteriorPointArea {
 
   /**
    * Creates a new interior point finder for an areal geometry.
-   * 
+   *
    * @param g an areal geometry
    */
   public InteriorPointArea(Geometry g) {
@@ -102,7 +102,7 @@ public class InteriorPointArea {
 
   /**
    * Gets the computed interior point.
-   * 
+   *
    * @return the coordinate of an interior point
    *  or <code>null</code> if the input geometry is empty
    */
@@ -111,10 +111,10 @@ public class InteriorPointArea {
   }
 
   /**
-   * Processes a geometry to determine 
+   * Processes a geometry to determine
    * the best interior point for
    * all component polygons.
-   * 
+   *
    * @param geom the geometry to process
    */
   private void process(Geometry geom) {
@@ -135,7 +135,7 @@ public class InteriorPointArea {
    * Computes an interior point of a component Polygon
    * and updates current best interior point
    * if appropriate.
-   * 
+   *
    * @param polygon the polygon to process
    */
   private void processPolygon(Polygon polygon) {
@@ -152,7 +152,7 @@ public class InteriorPointArea {
    * Computes an interior point in a single {@link Polygon},
    * as well as the width of the scan-line section it occurs in
    * to allow choosing the widest section occurrence.
-   * 
+   *
    * @author mdavis
    *
    */
@@ -164,7 +164,7 @@ public class InteriorPointArea {
 
     /**
      * Creates a new InteriorPointPolygon instance.
-     * 
+     *
      * @param polygon the polygon to test
      */
     public InteriorPointPolygon(Polygon polygon) {
@@ -174,7 +174,7 @@ public class InteriorPointArea {
 
     /**
      * Gets the computed interior point.
-     * 
+     *
      * @return the interior point coordinate,
      *  or <code>null</code> if the input geometry is empty
      */
@@ -185,7 +185,7 @@ public class InteriorPointArea {
     /**
      * Gets the width of the scanline section containing the interior point.
      * Used to determine the best point to use.
-     * 
+     *
      * @return the width
      */
     public double getWidth() {
@@ -194,19 +194,19 @@ public class InteriorPointArea {
 
     /**
      * Compute the interior point.
-     * 
+     *
      */
     public void process() {
       /**
        * This results in returning a null Coordinate
        */
       if (polygon.isEmpty()) return;
-      
+
       /**
        * set default interior point in case polygon has zero area
        */
       interiorPoint = new Coordinate(polygon.getCoordinate());
-      
+
       List<Double> crossings = new ArrayList<>();
       scanRing(polygon.getExteriorRing(), crossings);
       for (int i = 0; i < polygon.getNumInteriorRing(); i++) {
@@ -232,7 +232,7 @@ public class InteriorPointArea {
       // skip non-crossing segments
       if (!intersectsHorizontalLine(p0, p1, scanY) || ! isEdgeCrossingCounted(p0, p1, scanY) )
         return;
-        
+
       // edge intersects scan line, so add a crossing
       double xInt = intersection(p0, p1, scanY);
       crossings.add(xInt);
@@ -243,16 +243,16 @@ public class InteriorPointArea {
      * Finds the midpoint of the widest interior section.
      * Sets the {@link #interiorPoint} location
      * and the {@link #interiorSectionWidth}
-     * 
+     *
      * @param crossings the list of scan-line crossing X ordinates
      */
     private void findBestMidpoint(List<Double> crossings) {
       // zero-area polygons will have no crossings
       if (crossings.size() == 0) return;
-      
+
       // TODO: is there a better way to verify the crossings are correct?
       Assert.isTrue(0 == crossings.size() % 2, "Interior Point robustness failure: odd number of scanline crossings");
-      
+
       crossings.sort(Double::compare);
       /*
        * Entries in crossings list are expected to occur in pairs representing a
@@ -271,13 +271,13 @@ public class InteriorPointArea {
         }
       }
     }
-    
+
     /**
      * Tests if an edge intersection contributes to the crossing count.
      * Some crossing situations are not counted,
-     * to ensure that the list of crossings 
-     * captures strict inside/outside topology. 
-     * 
+     * to ensure that the list of crossings
+     * captures strict inside/outside topology.
+     *
      * @param p0 an endpoint of the segment
      * @param p1 an endpoint of the segment
      * @param scanY the Y-ordinate of the horizontal line
@@ -296,14 +296,14 @@ public class InteriorPointArea {
         return false;
       return true;
     }
-    
+
     /**
-     * Computes the intersection of a segment with a horizontal line. 
+     * Computes the intersection of a segment with a horizontal line.
      * The segment is expected to cross the horizontal line
      * - this condition is not checked.
      * Computation uses regular double-precision arithmetic.
      * Test seems to indicate this is as good as using DD arithmetic.
-     * 
+     *
      * @param p0 an endpoint of the segment
      * @param p1 an endpoint of the segment
      * @param Y  the Y-ordinate of the horizontal line
@@ -315,7 +315,7 @@ public class InteriorPointArea {
 
       if ( x0 == x1 )
         return x0;
-      
+
       // Assert: segDX is non-zero, due to previous equality test
       double segDX = x1 - x0;
       double segDY = p1.getY() - p0.getY();
@@ -323,10 +323,10 @@ public class InteriorPointArea {
       double x = x0 + ((Y - p0.getY()) / m);
       return x;
     }
-    
+
     /**
      * Tests if an envelope intersects a horizontal line.
-     * 
+     *
      * @param env the envelope to test
      * @param y the Y-ordinate of the horizontal line
      * @return true if the envelope and line intersect
@@ -336,10 +336,10 @@ public class InteriorPointArea {
         return false;
       return true;
     }
-    
+
     /**
      * Tests if a line segment intersects a horizontal line.
-     * 
+     *
      * @param p0 a segment endpoint
      * @param p1 a segment endpoint
      * @param y the Y-ordinate of the horizontal line
@@ -353,14 +353,14 @@ public class InteriorPointArea {
       // segment must intersect line
       return true;
     }
-    
+
     /*
     // for testing only
     private static void checkIntersectionDD(Coordinate p0, Coordinate p1, double scanY, double xInt) {
       double xIntDD = intersectionDD(p0, p1, scanY);
       System.out.println(
           ((xInt != xIntDD) ? ">>" : "")
-          + "IntPt x - DP: " + xInt + ", DD: " + xIntDD 
+          + "IntPt x - DP: " + xInt + ", DD: " + xIntDD
           + "   y: " + scanY + "   " + WKTWriter.toLineString(p0, p1) );
     }
 
@@ -370,7 +370,7 @@ public class InteriorPointArea {
 
       if ( x0 == x1 )
         return x0;
-      
+
       DD segDX = DD.valueOf(x1).selfSubtract(x0);
       // Assert: segDX is non-zero, due to previous equality test
       DD segDY = DD.valueOf(p1.getY()).selfSubtract(p0.getY());
@@ -382,19 +382,19 @@ public class InteriorPointArea {
     }
   */
   }
-  
+
   /**
-   * Finds a safe scan line Y ordinate by projecting 
+   * Finds a safe scan line Y ordinate by projecting
    * the polygon segments
    * to the Y axis and finding the
-   * Y-axis interval which contains the centre of the Y extent. 
+   * Y-axis interval which contains the centre of the Y extent.
    * The centre of
    * this interval is returned as the scan line Y-ordinate.
    * <p>
    * Note that in the case of (degenerate, invalid)
    * zero-area polygons the computed Y value
    * may be equal to a vertex Y-ordinate.
-   * 
+   *
    * @author mdavis
    *
    */

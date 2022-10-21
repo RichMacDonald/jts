@@ -41,11 +41,11 @@ public class TestListPanel extends JPanel {
     BorderLayout borderLayout2 = new BorderLayout();
 
     private class TestListCellRenderer extends JLabel implements ListCellRenderer {
-      
+
         private static final String INDEX_SEP = " - ";
         private static final String GEOM_SEP = " / ";
         private static final String DESC_SEP = " -- ";
-        
+
         /*
         private final ImageIcon tickIcon =
             new ImageIcon(this.getClass().getResource("tickShaded.gif"));
@@ -53,7 +53,7 @@ public class TestListPanel extends JPanel {
             new ImageIcon(this.getClass().getResource("crossShaded.gif"));
         private final ImageIcon clearIcon = new ImageIcon(this.getClass().getResource("clear.gif"));
          */
-        
+
         @Override
 		public Component getListCellRendererComponent(
             JList list,
@@ -75,7 +75,7 @@ public class TestListPanel extends JPanel {
             setFont(list.getFont());
             return this;
         }
-        
+
         private String testName(Testable testCase)
         {
           String name = testCase.getName();
@@ -91,23 +91,23 @@ public class TestListPanel extends JPanel {
           	nameFinal.append(DESC_SEP).append(name);
           return "<html>" + nameFinal.append("<html>").toString();
         }
-        
+
         private String testCaseSignatureHTML(Testable testCase)
         {
           String sig0 = geometrySignature(testCase.getGeometry(0));
           String sig1 = geometrySignature(testCase.getGeometry(1));
           Object sep = sig0.length() > 0 && sig1.length() > 0 ? GEOM_SEP : "";
-        	return "<font color='blue'>" + sig0 + "</font>" 
+        	return "<font color='blue'>" + sig0 + "</font>"
         	      + sep
         	      + "<font color='red'>" + sig1 + "</font>";
         }
-        
+
         private String geometrySignature(Geometry geom)
         {
           // visual indication of null geometry
-        	if (geom == null) 
-        		return ""; 
-        	
+        	if (geom == null)
+        		return "";
+
         	StringBuilder sig = new StringBuilder().append(geom.getGeometryType());
         	if (geom instanceof GeometryCollection) {
         		sig.append("[").append(geom.getNumGeometries()).append("]");

@@ -32,7 +32,7 @@ public class LineStringExtracter
   /**
    * Extracts the {@link LineString} elements from a single {@link Geometry}
    * and adds them to the provided {@link List}.
-   * 
+   *
    * @param geom the geometry from which to extract
    * @param lines the list to add the extracted LineStrings to
    * @return the list argument
@@ -46,14 +46,14 @@ public class LineStringExtracter
   		geom.apply(new LineStringExtracter(lines));
   	}
   	// skip non-LineString elemental geometries
-  	
+
     return lines;
   }
 
   /**
    * Extracts the {@link LineString} elements from a single {@link Geometry}
    * and returns them in a {@link List}.
-   * 
+   *
    * @param geom the geometry from which to extract
    * @return a list containing the linear elements
    */
@@ -65,7 +65,7 @@ public class LineStringExtracter
   /**
    * Extracts the {@link LineString} elements from a single {@link Geometry}
    * and returns them as either a {@link LineString} or {@link MultiLineString}.
-   * 
+   *
    * @param geom the geometry from which to extract
    * @return a linear geometry
   */
@@ -75,7 +75,7 @@ public class LineStringExtracter
   }
 
   private List comps;
-  
+
   /**
    * Constructs a filter with a list in which to store the elements found.
    */

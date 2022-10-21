@@ -16,13 +16,13 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.math.Matrix;
 
 /**
- * Builds an {@link AffineTransformation} defined by a set of control vectors. 
- * A control vector consists of a source point and a destination point, 
+ * Builds an {@link AffineTransformation} defined by a set of control vectors.
+ * A control vector consists of a source point and a destination point,
  * which is the image of the source point under the desired transformation.
  * <p>
- * A transformation is well-defined 
- * by a set of three control vectors 
- * if and only if the source points are not collinear. 
+ * A transformation is well-defined
+ * by a set of three control vectors
+ * if and only if the source points are not collinear.
  * (In particular, the degenerate situation
  * where two or more source points are identical will not produce a well-defined transformation).
  * A well-defined transformation exists and is unique.
@@ -48,16 +48,16 @@ public class AffineTransformationBuilder
   private Coordinate dest0;
   private Coordinate dest1;
   private Coordinate dest2;
-  
+
   // the matrix entries for the transformation
   private double m00, m01, m02, m10, m11, m12;
-  
- 
+
+
   /**
    * Constructs a new builder for
-   * the transformation defined by the given 
+   * the transformation defined by the given
    * set of control point mappings.
-   * 
+   *
    * @param src0 a control point
    * @param src1 a control point
    * @param src2 a control point
@@ -79,12 +79,12 @@ public class AffineTransformationBuilder
     this.dest1 = dest1;
     this.dest2 = dest2;
   }
-    
+
   /**
    * Computes the {@link AffineTransformation}
    * determined by the control point mappings,
    * or <code>null</code> if the control vectors do not determine a well-defined transformation.
-   * 
+   *
    * @return an affine transformation, or null if the control vectors do not determine a well-defined transformation
    */
   public AffineTransformation getTransformation()
@@ -95,13 +95,13 @@ public class AffineTransformationBuilder
       return new AffineTransformation(m00, m01, m02, m10, m11, m12);
     return null;
   }
-    
+
   /**
-   * Computes the transformation matrix by 
+   * Computes the transformation matrix by
    * solving the two systems of linear equations
    * defined by the control point mappings,
    * if this is possible.
-   * 
+   *
    * @return true if the transformation matrix is solvable
    */
   private boolean compute()
@@ -112,7 +112,7 @@ public class AffineTransformationBuilder
     m00 = row0[0];
     m01 = row0[1];
     m02 = row0[2];
-    
+
     double[] by = { dest0.y, dest1.y, dest2.y };
     double[] row1 = solve(by);
     if (row1 == null) return false;
@@ -125,7 +125,7 @@ public class AffineTransformationBuilder
   /**
    * Solves the transformation matrix system of linear equations
    * for the given right-hand side vector.
-   * 
+   *
    * @param b the vector for the right-hand side of the system
    * @return the solution vector, or <code>null</code> if no solution could be determined
    */

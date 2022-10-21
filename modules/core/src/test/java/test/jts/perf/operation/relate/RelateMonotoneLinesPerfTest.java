@@ -28,17 +28,17 @@ import test.jts.util.IOUtil;
  * Tests the performance of {@link RelateOp} (via {@link Geometry#intersects(Geometry)}
  * on monotone linestrings, to confirm that the Monotone Chain comparison logic
  * is working as expected.
- * (In particular, Monotone Chains can be tested for intersections very efficiently, 
+ * (In particular, Monotone Chains can be tested for intersections very efficiently,
  * since the monotone property allows subchain envelopes to be computed dynamically,
  * and thus binary search can be used to determine if two monotone chains intersect).
- * This should result in roughly linear performance for testing intersection of 
+ * This should result in roughly linear performance for testing intersection of
  * chains (since the construction of the chain dominates the computation).
  * This test demonstrates that this occurs in practice.
- * 
+ *
  * @author mdavis
  *
  */
-public class RelateMonotoneLinesPerfTest  extends PerformanceTestCase 
+public class RelateMonotoneLinesPerfTest  extends PerformanceTestCase
 {
   private static final int DENSIFY_FACTOR = 1000;
 
@@ -54,17 +54,17 @@ public class RelateMonotoneLinesPerfTest  extends PerformanceTestCase
 
   LineString line1;
   LineString line2;
-  
+
   @Override
 public void startRun(int runSize) {
     int nVertices = runSize * DENSIFY_FACTOR;
     line1 = createLine("LINESTRING (0 0, 100 100)", nVertices);
     line2 = createLine("LINESTRING (0 1, 100 99)", nVertices );
-    
+
     // force compilation of intersects code
     line1.intersects(line2);
   }
-  
+
   private LineString createLine(String wkt, int nVertices) {
     double distanceTolerance = 100.0 / nVertices;
     Geometry line = IOUtil.read(wkt);
@@ -101,7 +101,7 @@ public void tearDown() {
     }
     return timeFactor;
   }
-  
 
-  
+
+
 }

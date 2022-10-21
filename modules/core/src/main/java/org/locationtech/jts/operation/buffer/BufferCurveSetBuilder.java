@@ -46,7 +46,7 @@ import org.locationtech.jts.noding.SegmentString;
  * @version 1.7
  */
 public class BufferCurveSetBuilder {
-  
+
   private Geometry inputGeom;
   private double distance;
   private OffsetCurveBuilder curveBuilder;
@@ -67,19 +67,19 @@ public class BufferCurveSetBuilder {
   }
 
   /**
-   * Sets whether the offset curve is generated 
+   * Sets whether the offset curve is generated
    * using the inverted orientation of input rings.
    * This allows generating a buffer(0) polygon from the smaller lobes
    * of self-crossing rings.
-   * 
+   *
    * @param isInvertOrientation true if input ring orientation should be inverted
    */
   void setInvertOrientation(boolean isInvertOrientation) {
     this.isInvertOrientation = isInvertOrientation;
   }
-  
+
   /**
-   * Computes orientation of a ring using a signed-area orientation test. 
+   * Computes orientation of a ring using a signed-area orientation test.
    * For invalid (self-crossing) rings this ensures the largest enclosed area
    * is taken to be the interior of the ring.
    * This produces a more sensible result when
@@ -87,7 +87,7 @@ public class BufferCurveSetBuilder {
    * For buffer  use the lower robustness of orientation-by-area
    * doesn't matter, since narrow or flat rings
    * produce an acceptable offset curve for either orientation.
-   * 
+   *
    * @param coord the ring coordinates
    * @return true if the ring is CCW
    */
@@ -97,7 +97,7 @@ public class BufferCurveSetBuilder {
     if (isInvertOrientation) return ! isCCW;
     return isCCW;
   }
-  
+
   /**
    * Computes the set of raw offset curves for the buffer.
    * Each offset curve has an attached {@link Label} indicating
@@ -158,7 +158,7 @@ public class BufferCurveSetBuilder {
   private void addPoint(Point p)
   {
     // a zero or negative width buffer of a point is empty
-    if (distance <= 0.0) 
+    if (distance <= 0.0)
       return;
     Coordinate[] coord = p.getCoordinates();
     // skip if coordinate is invalid
@@ -167,19 +167,19 @@ public class BufferCurveSetBuilder {
     Coordinate[] curve = curveBuilder.getLineCurve(coord, distance);
     addCurve(curve, Location.EXTERIOR, Location.INTERIOR);
   }
-  
+
   private void addLineString(LineString line)
   {
     if (curveBuilder.isLineOffsetEmpty(distance)) return;
-    
+
     Coordinate[] coord = clean(line.getCoordinates());
-    
+
     /**
-     * Rings (closed lines) are generated with a continuous curve, 
-     * with no end arcs. This produces better quality linework, 
+     * Rings (closed lines) are generated with a continuous curve,
+     * with no end arcs. This produces better quality linework,
      * and avoids noding issues with arcs around almost-parallel end segments.
      * See JTS #523 and #518.
-     * 
+     *
      * Singled-sided buffers currently treat rings as if they are lines.
      */
     if (CoordinateArrays.isRing(coord) && ! curveBuilder.getBufferParameters().isSingleSided()) {
@@ -190,13 +190,13 @@ public class BufferCurveSetBuilder {
       addCurve(curve, Location.EXTERIOR, Location.INTERIOR);
     }
     // TESTING
-    //Coordinate[] curveTrim = BufferCurveLoopPruner.prune(curve); 
+    //Coordinate[] curveTrim = BufferCurveLoopPruner.prune(curve);
     //addCurve(curveTrim, Location.EXTERIOR, Location.INTERIOR);
   }
-  
+
   /**
    * Keeps only valid coordinates, and removes repeated points.
-   * 
+   *
    * @param coordinates the coordinates to clean
    * @return an array of clean coordinates
    */
@@ -249,11 +249,11 @@ public class BufferCurveSetBuilder {
             Location.EXTERIOR);
     }
   }
-  
+
   private void addRingBothSides(Coordinate[] coord, double distance)
   {
     addRingSide(coord, distance,
-      Position.LEFT, 
+      Position.LEFT,
       Location.EXTERIOR, Location.INTERIOR);
     /* Add the opposite side of the ring
     */
@@ -261,13 +261,13 @@ public class BufferCurveSetBuilder {
       Position.RIGHT,
       Location.INTERIOR, Location.EXTERIOR);
   }
-  
+
   /**
    * Adds an offset curve for one side of a ring.
    * The side and left and right topological location arguments
    * are provided as if the ring is oriented CW.
    * (If the ring is in the opposite orientation,
-   * this is detected and 
+   * this is detected and
    * the left and right locations are interchanged and the side is flipped.)
    *
    * @param coord the coordinates of the ring (must not contain repeated points)
@@ -281,21 +281,21 @@ public class BufferCurveSetBuilder {
     // don't bother adding ring if it is "flat" and will disappear in the output
     if (offsetDistance == 0.0 && coord.length < LinearRing.MINIMUM_VALID_SIZE)
       return;
-    
+
     int leftLoc  = cwLeftLoc;
     int rightLoc = cwRightLoc;
     boolean isCCW = isRingCCW(coord);
-    if (coord.length >= LinearRing.MINIMUM_VALID_SIZE 
+    if (coord.length >= LinearRing.MINIMUM_VALID_SIZE
       && isCCW) {
       leftLoc = cwRightLoc;
       rightLoc = cwLeftLoc;
       side = Position.opposite(side);
     }
     Coordinate[] curve = curveBuilder.getRingCurve(coord, side, offsetDistance);
-    
+
     /**
      * If the offset curve has inverted completely it will produce
-     * an unwanted artifact in the result, so skip it. 
+     * an unwanted artifact in the result, so skip it.
      */
     if (isRingCurveInverted(coord, offsetDistance, curve)) {
       return;
@@ -309,13 +309,13 @@ public class BufferCurveSetBuilder {
   private static final double NEARNESS_FACTOR = 0.99;
 
   /**
-   * Tests whether the offset curve for a ring is fully inverted. 
-   * An inverted ("inside-out") curve occurs in some specific situations 
+   * Tests whether the offset curve for a ring is fully inverted.
+   * An inverted ("inside-out") curve occurs in some specific situations
    * involving a buffer distance which should result in a fully-eroded (empty) buffer.
-   * It can happen that the sides of a small, convex polygon 
+   * It can happen that the sides of a small, convex polygon
    * produce offset segments which all cross one another to form
    * a curve with inverted orientation.
-   * This happens at buffer distances slightly greater than the distance at 
+   * This happens at buffer distances slightly greater than the distance at
    * which the buffer should disappear.
    * The inverted curve will produce an incorrect non-empty buffer (for a shell)
    * or an incorrect hole (for a hole).
@@ -324,29 +324,29 @@ public class BufferCurveSetBuilder {
    * for efficiency and correctness.
    * <p>
    * See https://github.com/locationtech/jts/issues/472
-   * 
+   *
    * @param inputPts the input ring
    * @param distance the buffer distance
    * @param curvePts the generated offset curve
    * @return true if the offset curve is inverted
    */
   private static boolean isRingCurveInverted(Coordinate[] inputPts, double distance, Coordinate[] curvePts) {
-    
+
     /**
      * Only proper rings can invert.
      */
-    
+
    /**
      * Heuristic based on low chance that a ring with many vertices will invert.
      * This low limit ensures this test is fairly efficient.
      */
     /**
      * Don't check curves which are much larger than the input.
-     * This improves performance by avoiding checking some concave inputs 
+     * This improves performance by avoiding checking some concave inputs
      * (which can produce fillet arcs with many more vertices)
      */
     if ((distance == 0.0) || (inputPts.length <= 3) || (inputPts.length >= MAX_INVERTED_RING_SIZE) || (curvePts.length > INVERTED_CURVE_VERTEX_FACTOR * inputPts.length)) return false;
-    
+
     /**
      * Check if the curve vertices are all closer to the input ring
      * than the buffer distance.
@@ -360,7 +360,7 @@ public class BufferCurveSetBuilder {
 
   /**
    * Computes the maximum distance out of a set of points to a linestring.
-   * 
+   *
    * @param pts the points
    * @param line the linestring vertices
    * @return the maximum distance
@@ -379,7 +379,7 @@ public class BufferCurveSetBuilder {
   /**
    * Tests whether a ring buffer is eroded completely (is empty)
    * based on simple heuristics.
-   * 
+   *
    * The ringCoord is assumed to contain no repeated points.
    * It may be degenerate (i.e. contain only 1, 2, or 3 points).
    * In this case it has no area, and hence has a minimum diameter of 0.

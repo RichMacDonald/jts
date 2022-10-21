@@ -73,8 +73,8 @@ public class MonotoneChainIndexer {
     } while (start < pts.length - 1);
     // copy list to an array of ints, for efficiency
     return startIndexList.toArray();
-  }  
-  
+  }
+
   public int[] OLDgetChainStartIndices(Coordinate[] pts)
   {
     // find the startpoint (and endpoints) of all monotone chains in this edge

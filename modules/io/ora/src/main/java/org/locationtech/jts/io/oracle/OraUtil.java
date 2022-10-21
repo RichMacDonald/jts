@@ -24,16 +24,16 @@ import oracle.sql.StructDescriptor;
 
 /**
  * Utility methods for working with Oracle structures.
- * 
+ *
  * @author Martin Davis
- * 
+ *
  */
 public class OraUtil
 {
   /**
-   * Converts an Oracle <code>Datum</code> into an <code>int</code> value, 
+   * Converts an Oracle <code>Datum</code> into an <code>int</code> value,
    * with a default value used if the datum is NULL.
-   * 
+   *
    * @param datum the Oracle Datum
    * @param defaultValue the value to use for NULLs
    * @return an integer value
@@ -48,9 +48,9 @@ public class OraUtil
   }
 
   /**
-   * Converts an Oracle <code>ARRAY</code> into a <code>int</code> array, 
+   * Converts an Oracle <code>ARRAY</code> into a <code>int</code> array,
    * with a default value used to represent NULL values.
-   * 
+   *
    * @param array an Oracle ARRAY of integer values
    * @param defaultValue the value to use for NULL values
    * @return an array of ints

@@ -12,25 +12,25 @@
 package org.locationtech.jts.geom;
 
 /**
- * Models a <b>Dimensionally Extended Nine-Intersection Model (DE-9IM)</b> matrix. 
+ * Models a <b>Dimensionally Extended Nine-Intersection Model (DE-9IM)</b> matrix.
  * DE-9IM matrix values (such as "212FF1FF2")
- * specify the topological relationship between two {@link Geometry}s. 
+ * specify the topological relationship between two {@link Geometry}s.
  * This class can also represent matrix patterns (such as "T*T******")
  * which are used for matching instances of DE-9IM matrices.
  * <p>
  * DE-9IM matrices are 3x3 matrices with integer entries.
- * The matrix indices {0,1,2} represent the topological locations 
- * that occur in a geometry (Interior, Boundary, Exterior).  
- * These are provided by the constants 
+ * The matrix indices {0,1,2} represent the topological locations
+ * that occur in a geometry (Interior, Boundary, Exterior).
+ * These are provided by the constants
  * {@link Location#INTERIOR}, {@link Location#BOUNDARY}, and {@link Location#EXTERIOR}.
  * <p>
- * When used to specify the topological relationship between two geometries, 
+ * When used to specify the topological relationship between two geometries,
  * the matrix entries represent the possible dimensions of each intersection:
  * {@link Dimension#A} = 2, {@link Dimension#L} = 1, {@link Dimension#P} = 0 and {@link Dimension#FALSE} = -1.
- * When used to represent a matrix pattern entries can have the additional values 
- * {@link Dimension#TRUE} {"T") and {@link Dimension#DONTCARE} ("*"). 
+ * When used to represent a matrix pattern entries can have the additional values
+ * {@link Dimension#TRUE} {"T") and {@link Dimension#DONTCARE} ("*").
  * <p>
- * For a description of the DE-9IM and the spatial predicates derived from it, 
+ * For a description of the DE-9IM and the spatial predicates derived from it,
  * see the following references:
  * <ul>
  * <li><i><a href="http://www.opengis.org/techno/specs.htm">
@@ -129,7 +129,7 @@ public class IntersectionMatrix implements Cloneable {
     }
     return false;
   }
-  
+
   /**
    *  Tests if the dimension value satisfies the dimension symbol.
    *
@@ -149,10 +149,7 @@ public class IntersectionMatrix implements Cloneable {
     if ((requiredDimensionSymbol == Dimension.SYM_FALSE && actualDimensionValue == Dimension.FALSE) || (requiredDimensionSymbol == Dimension.SYM_P && actualDimensionValue == Dimension.P)) {
       return true;
     }
-    if (requiredDimensionSymbol == Dimension.SYM_L && actualDimensionValue == Dimension.L) {
-      return true;
-    }
-    if (requiredDimensionSymbol == Dimension.SYM_A && actualDimensionValue == Dimension.A) {
+    if ((requiredDimensionSymbol == Dimension.SYM_L && actualDimensionValue == Dimension.L) || (requiredDimensionSymbol == Dimension.SYM_A && actualDimensionValue == Dimension.A)) {
       return true;
     }
     return false;
@@ -276,9 +273,9 @@ public class IntersectionMatrix implements Cloneable {
   /**
    *  Returns the value of one of this matrix
    *  entries.
-   *  The value of the provided index is one of the 
-   *  values from the {@link Location} class.  
-   *  The value returned is a constant 
+   *  The value of the provided index is one of the
+   *  values from the {@link Location} class.
+   *  The value returned is a constant
    *  from the {@link Dimension} class.
    *
    *@param  row     the row of this <code>IntersectionMatrix</code>, indicating
@@ -456,10 +453,10 @@ public class IntersectionMatrix implements Cloneable {
   }
 
   /**
-   *  Tests whether the argument dimensions are equal and 
+   *  Tests whether the argument dimensions are equal and
    *  this matrix matches the pattern <tt>[T*F**FFF*]</tt>.
    *  <p>
-   *  <b>Note:</b> This pattern differs from the one stated in 
+   *  <b>Note:</b> This pattern differs from the one stated in
    *  <i>Simple feature access - Part 1: Common architecture</i>.
    *  That document states the pattern as <tt>[TFFFTFFFT]</tt>.  This would
    *  specify that
@@ -500,13 +497,13 @@ public class IntersectionMatrix implements Cloneable {
   public boolean isOverlaps(int dimensionOfGeometryA, int dimensionOfGeometryB) {
     if ((dimensionOfGeometryA == Dimension.P && dimensionOfGeometryB == Dimension.P) ||
         (dimensionOfGeometryA == Dimension.A && dimensionOfGeometryB == Dimension.A)) {
-      return isTrue(matrix[Location.INTERIOR][Location.INTERIOR]) 
-          && isTrue(matrix[Location.INTERIOR][Location.EXTERIOR]) 
+      return isTrue(matrix[Location.INTERIOR][Location.INTERIOR])
+          && isTrue(matrix[Location.INTERIOR][Location.EXTERIOR])
           && isTrue(matrix[Location.EXTERIOR][Location.INTERIOR]);
     }
     if (dimensionOfGeometryA == Dimension.L && dimensionOfGeometryB == Dimension.L) {
-      return matrix[Location.INTERIOR][Location.INTERIOR] == 1 
-         && isTrue(matrix[Location.INTERIOR][Location.EXTERIOR]) 
+      return matrix[Location.INTERIOR][Location.INTERIOR] == 1
+         && isTrue(matrix[Location.INTERIOR][Location.EXTERIOR])
          && isTrue(matrix[Location.EXTERIOR][Location.INTERIOR]);
     }
     return false;

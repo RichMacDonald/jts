@@ -62,7 +62,7 @@ public class FilesUtil {
     }
     return filenames;
   }
-  
+
   public static List expand(File fileOrDir, String fileExtension) {
     List filenames = new ArrayList();
     if (fileOrDir.isDirectory()) {

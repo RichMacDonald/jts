@@ -21,9 +21,9 @@ import org.locationtech.jts.geom.Geometry;
  * A measure of 1.0 indicates that the input geometries are identical
  * A measure of 0.0 indicates that the geometries
  * have essentially no similarity.
- * The precise definition of "identical" and "no similarity" may depend on the 
+ * The precise definition of "identical" and "no similarity" may depend on the
  * exact algorithm being used.
- * 
+ *
  * @author mbdavis
  *
  */

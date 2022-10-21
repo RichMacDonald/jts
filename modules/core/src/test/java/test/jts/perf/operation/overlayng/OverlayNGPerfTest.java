@@ -14,33 +14,33 @@ import org.locationtech.jts.operation.overlayng.OverlayNG;
 import test.jts.perf.PerformanceTestCase;
 import test.jts.perf.PerformanceTestRunner;
 
-public class OverlayNGPerfTest 
+public class OverlayNGPerfTest
 extends PerformanceTestCase
 {
   private static final int PREC_SCALE_FACTOR = 1000000;
 
   private static final int N_ITER = 1;
-  
+
   static double ORG_X = 100;
   static double ORG_Y = ORG_X;
   static double SIZE = 2 * ORG_X;
   static int N_ARMS = 6;
   static double ARM_RATIO = 0.3;
-  
+
   static int GRID_SIZE = 20;
   static double GRID_CELL_SIZE = SIZE / GRID_SIZE;
-  
+
   static int NUM_CASES = GRID_SIZE * GRID_SIZE;
-  
+
   private Geometry geomA;
   private Geometry[] geomB;
 
   private PrecisionModel precisionModel;
-  
+
   public static void main(String args[]) {
     PerformanceTestRunner.run(OverlayNGPerfTest.class);
   }
-  
+
   public OverlayNGPerfTest(String name) {
     super(name);
     setRunSize(new int[] { 100, 1000, 10000, 100000, 200000 });
@@ -54,12 +54,12 @@ public void setUp()
     System.out.println("OverlaySR perf test");
     System.out.println("SineStar: origin: ("
         + ORG_X + ", " + ORG_Y + ")  size: " + SIZE
-        + "  # arms: " + N_ARMS + "  arm ratio: " + ARM_RATIO);   
+        + "  # arms: " + N_ARMS + "  arm ratio: " + ARM_RATIO);
     System.out.println("# Iterations: " + N_ITER);
     System.out.println("# B geoms: " + NUM_CASES);
     System.out.println("Precision scale: " + PREC_SCALE_FACTOR);
   }
-  
+
   @Override
 public void startRun(int npts)
   {
@@ -70,21 +70,21 @@ public void startRun(int npts)
 
     int nptsB = npts / NUM_CASES;
     if (nptsB < 10 ) nptsB = 10;
-    
+
     geomB =  createTestGeoms(nptsB);
 
     System.out.println("\n-------  Running with A: # pts = " + npts + "   B # pts = " +  nptsB);
-    
+
     if (npts == 999) {
       System.out.println(geomA);
-      
+
       for (Geometry g : geomB) {
         System.out.println(g);
       }
     }
 
   }
-  
+
   private Geometry[] createTestGeoms(int npts) {
     Geometry[] geoms = new Geometry[ NUM_CASES ];
     int index = 0;
@@ -104,64 +104,64 @@ public void startRun(int npts)
     for (Geometry b : geomB) {
       geomA.intersection(b);
     }
-  }  
-  
+  }
+
   public void xrunUnionNG()
   {
     for (Geometry b : geomB) {
       OverlayNG.overlay(geomA, b, UNION, precisionModel);
     }
   }
-  
+
   public void xrunUnionOLD()
   {
     for (Geometry b : geomB) {
       geomA.union(b);
     }
   }
-  
+
   public void runIntersectionOLDOpt()
   {
     for (Geometry b : geomB) {
       intersectionOpt(geomA, b);
     }
   }
-  
+
   public void runIntersectionNG()
   {
     for (Geometry b : geomB) {
       OverlayNG.overlay(geomA, b, INTERSECTION, precisionModel);
     }
-  }  
-  
+  }
+
   public void runIntersectionNGFloating()
   {
     for (Geometry b : geomB) {
       intersectionNGFloating(geomA, b);
     }
-  }  
-  
+  }
+
   public void runIntersectionNGOpt()
   {
     for (Geometry b : geomB) {
       intersectionNGOpt(geomA, b);
     }
   }
-  
+
   public void xrunIntersectionNGNoClip()
   {
     for (Geometry b : geomB) {
       intersectionNGNoClip(geomA, b);
     }
   }
-  
+
   public void xrunIntersectionNGPrepNoCache()
   {
     for (Geometry b : geomB) {
       intersectionNGPrepNoCache(geomA, b);
     }
   }
-  
+
   /**
    * Switching input order doesn't make much difference.
    * Update: actually it looks like having the smaller geometry
@@ -173,7 +173,7 @@ public void startRun(int npts)
       intersectionNGPrepNoCache(b, geomA);
     }
   }
-  
+
   public Geometry intersectionNGOpt(Geometry a, Geometry b) {
     Geometry intFast = fastIntersect(a, b);
     if (intFast != null) return intFast;
@@ -198,24 +198,24 @@ public void startRun(int npts)
     if (pg.covers(b)) return b.copy();
     return OverlayNG.overlay(a, b, OverlayNG.INTERSECTION, precisionModel);
   }
-  
+
   public Geometry intersectionNGPrepNoCache(Geometry a, Geometry b) {
     Geometry intFast = fastintersectsPrepNoCache(a, b);
     if (intFast != null) return intFast;
- 
+
     return OverlayNG.overlay(a, b, OverlayNG.INTERSECTION, precisionModel);
   }
 
   private Geometry fastintersectsPrepNoCache(Geometry a, Geometry b) {
     PreparedGeometry aPG = (new PreparedGeometryFactory()).create(a);
-    
+
     if (! aPG.intersects(b)) {
       return a.getFactory().createEmpty(a.getDimension());
     }
     if (aPG.covers(b)) {
       return b.copy();
     }
-    if (b.covers(a)) { 
+    if (b.covers(a)) {
       return a.copy();
     }
     // null indicates full overlay required
@@ -224,20 +224,20 @@ public void startRun(int npts)
 
   private static Geometry fastIntersect(Geometry a, Geometry b) {
     IntersectionMatrix im = a.relate(b);
-    if (! im.isIntersects()) 
+    if (! im.isIntersects())
       return a.getFactory().createEmpty(a.getDimension());
-    if (im.isCovers()) 
+    if (im.isCovers())
       return b.copy();
-    if (im.isCoveredBy()) 
+    if (im.isCoveredBy())
       return a.copy();
     // null indicates full overlay required
     return null;
   }
-  
+
   /**
    * Use spatial predicates as a filter
    * in front of intersection.
-   * 
+   *
    * @param a a geometry
    * @param b a geometry
    * @return the intersection of the geometries
@@ -247,7 +247,7 @@ public void startRun(int npts)
     if (intFast != null) return intFast;
     return a.intersection(b);
   }
-  
+
   public Geometry intersectionOptPrepNoCache(Geometry a, Geometry b) {
     Geometry intFast = fastintersectsPrepNoCache(a, b);
     if (intFast != null) return intFast;
@@ -258,7 +258,7 @@ public void startRun(int npts)
    * Use prepared geometry spatial predicates as a filter
    * in front of intersection,
    * with the first operand prepared.
-   * 
+   *
    * @param a a geometry to prepare
    * @param b a geometry
    * @return the intersection of the geometries
@@ -269,10 +269,10 @@ public void startRun(int npts)
     if (pg.covers(b)) return b.copy();
     return a.intersection(b);
   }
-  
+
   private static Geometry cacheKey = null;
   private static PreparedGeometry cache = null;
-  
+
 
   private static PreparedGeometry cacheFetch(Geometry g) {
     if (g != cacheKey) {

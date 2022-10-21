@@ -29,11 +29,11 @@ import org.locationtech.jts.geom.LineString;
  * @version 1.7
  */
 public class InteriorPointLine {
-  
+
   /**
    * Computes an interior point for the
    * linear components of a Geometry.
-   * 
+   *
    * @param geom the geometry to compute
    * @return the computed interior point,
    * or <code>null</code> if the geometry has no linear components
@@ -42,7 +42,7 @@ public class InteriorPointLine {
     InteriorPointLine intPt = new InteriorPointLine(geom);
     return intPt.getInteriorPoint();
   }
-  
+
   private Coordinate centroid;
   private double minDistance = Double.MAX_VALUE;
 

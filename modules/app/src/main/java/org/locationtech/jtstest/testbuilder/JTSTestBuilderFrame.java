@@ -47,15 +47,15 @@ import org.locationtech.jtstest.util.StringUtil;
 
 /**
  * The main frame for the JTS Test Builder.
- * 
+ *
  * @version 1.7
  */
-public class JTSTestBuilderFrame extends JFrame 
+public class JTSTestBuilderFrame extends JFrame
 {
-    
+
   private static JTSTestBuilderFrame singleton = null;
   static boolean isShowingIndicators = true;
-  
+
   TestBuilderModel tbModel;
 
   private JTSTestBuilderMenuBar tbMenuBar = new JTSTestBuilderMenuBar(this);
@@ -89,7 +89,7 @@ public class JTSTestBuilderFrame extends JFrame
   private JFileChooser pngFileChooser;
   private JFileChooser fileAndDirectoryChooser = new JFileChooser();
   private JFileChooser directoryChooser = new JFileChooser();
-  
+
   /**
    *  Construct the frame
    */
@@ -132,7 +132,7 @@ public class JTSTestBuilderFrame extends JFrame
       pngFileChooser.setSelectedFile(new File("geoms.png"));
     }
   }
-  
+
   public static JTSTestBuilderFrame instance() {
     if (singleton == null) {
       new JTSTestBuilderFrame();
@@ -141,10 +141,10 @@ public class JTSTestBuilderFrame extends JFrame
   }
   /**
    * Tests if the TestBuilder is running.
-   * Useful to allow functions to decide whether to show indicators 
+   * Useful to allow functions to decide whether to show indicators
    * (if functions are running under JtsOpCmd, they should not show indicators
    * since that seriously impacts performance).
-   * 
+   *
    * @return true if there is a TestBuilder instance running
    */
   public static boolean isRunning() {
@@ -153,7 +153,7 @@ public class JTSTestBuilderFrame extends JFrame
   public static boolean isShowingIndicators() {
     return isRunning() && isShowingIndicators;
   }
-  
+
   public static GeometryEditPanel getGeometryEditPanel()
   {
     return instance().getTestCasePanel().getGeometryEditPanel();
@@ -168,7 +168,7 @@ public class JTSTestBuilderFrame extends JFrame
   {
     return tbModel;
   }
-  
+
   public void setModel(TestBuilderModel model)
   {
   	tbModel = model;
@@ -178,17 +178,17 @@ public class JTSTestBuilderFrame extends JFrame
     resultWKTPanel.setModel(model);
     resultValuePanel.setModel(model);
     statsPanel.setModel(model);
-    
+
     model.getGeometryEditModel().addGeometryListener(
         this::model_geometryChanged);
-    
+
     testListPanel.populateList();
     //layerListPanel.init(getModel().getLayers());
     layerListPanel.populateList();
     updateTestCaseView();
     updatePrecisionModelDescription();
   }
-  
+
   public static void reportException(Exception e) {
   	SwingUtil.reportException(instance(), e);
   }
@@ -196,11 +196,11 @@ public class JTSTestBuilderFrame extends JFrame
   public void setCursorWait() {
     setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
   }
-  
+
   public void setCursorNormal() {
     setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
   }
-  
+
   public void setCurrentTestCase(TestCaseEdit testCase) {
     tbModel.cases().setCurrent(testCase);
     updateTestCaseView();
@@ -218,15 +218,15 @@ public class JTSTestBuilderFrame extends JFrame
   public ResultValuePanel getResultValuePanel() {
     return resultValuePanel;
   }
-  
+
   public InfoPanel getLogPanel() {
     return logPanel;
   }
-  
+
   public CommandPanel getCommandPanel() {
     return commandPanel;
   }
-  
+
   /**
    *  File | Exit action performed
    */
@@ -238,12 +238,12 @@ public class JTSTestBuilderFrame extends JFrame
   {
     inputTabbedPane.setSelectedIndex(inputTabbedPane.indexOfTab(name));
   }
-  
+
   public void showGeomsTab()
   {
     showTab(AppStrings.TAB_LABEL_INPUT);
   }
-  
+
   public void showResultWKTTab()
   {
     showTab(AppStrings.TAB_LABEL_RESULT);
@@ -252,12 +252,12 @@ public class JTSTestBuilderFrame extends JFrame
   {
     showTab(AppStrings.TAB_LABEL_VALUE);
   }
-  
+
   public void showInfoTab()
   {
     showTab(AppStrings.TAB_LABEL_LOG);
   }
-  
+
   public void openXmlFilesAndDirectories(File[] files) throws Exception {
     if (files.length == 1) {
       fileChooser.setSelectedFile(files[0]);
@@ -291,22 +291,22 @@ protected void processWindowEvent(WindowEvent e) {
   }
   public void updateTestCases()
   {
-    testListPanel.populateList();    
+    testListPanel.populateList();
     updateTestCaseView();
   }
-  
-  public void copyResultToTest() 
+
+  public void copyResultToTest()
   {
     Object currResult = tbModel.getResult();
     if (! (currResult instanceof Geometry))
       return;
-    tbModel.addCase(new Geometry[] { (Geometry) currResult, null }, 
+    tbModel.addCase(new Geometry[] { (Geometry) currResult, null },
         "Result of " + tbModel.getOpName());
     updateTestCaseView();
-    testListPanel.populateList();  
+    testListPanel.populateList();
   }
-  
-  public void inspectResult() 
+
+  public void inspectResult()
   {
     Object currResult = tbModel.getResult();
     if (! (currResult instanceof Geometry))
@@ -345,7 +345,7 @@ protected void processWindowEvent(WindowEvent e) {
     }
   }
 
-  public String getRunXml() 
+  public String getRunXml()
   {
   	return XMLTestWriter.getRunXml(tbModel.getTestCaseList(), tbModel.getPrecisionModel());
   }
@@ -387,7 +387,7 @@ protected void processWindowEvent(WindowEvent e) {
     this.setSize(new Dimension(800, 800));
     this.setTitle("JTS TestBuilder");
     this.setJMenuBar(tbMenuBar.getMenuBar());
-   
+
     fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
     fileChooser.setMultiSelectionEnabled(false);
     fileAndDirectoryChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -396,24 +396,24 @@ protected void processWindowEvent(WindowEvent e) {
     directoryChooser.setMultiSelectionEnabled(false);
     //Center the window
     //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    
+
     //---------------------------------------------------
-    
+
     wktPanel.setMinimumSize(new Dimension(111, 0));
     wktPanel.setPreferredSize(new Dimension(600, 100));
     testPanel.setLayout(gridBagLayout2);
     gridLayout1.setRows(4);
     gridLayout1.setColumns(1);
-    
+
     panelTop.setLayout(borderLayout2);
     panelTop.setMinimumSize(new Dimension(431, 0));
     panelTop.add(testCasePanel, BorderLayout.CENTER);
-    
+
     panelBottom.setLayout(borderLayout3);
     panelBottom.setMinimumSize(new Dimension(431, 0));
     panelBottom.add(tbToolBar.getToolBar(), BorderLayout.NORTH);
     panelBottom.add(inputTabbedPane, BorderLayout.CENTER);
-      
+
     //---- Input tabs
     inputTabbedPane.setTabPlacement(JTabbedPane.LEFT);
     inputTabbedPane.add(testListPanel, AppStrings.TAB_LABEL_CASES);
@@ -426,10 +426,10 @@ protected void processWindowEvent(WindowEvent e) {
     inputTabbedPane.add(logPanel, AppStrings.TAB_LABEL_LOG);
     inputTabbedPane.add(commandPanel,  AppStrings.TAB_LABEL_COMMAND);
     inputTabbedPane.setSelectedIndex(1);
-    inputTabbedPane.addChangeListener(e -> updateStatsPanelIfVisible());   
-    
+    inputTabbedPane.addChangeListener(e -> updateStatsPanelIfVisible());
+
     //--- main frame
-  
+
     jSplitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
     jSplitPane1.setPreferredSize(new Dimension(601, 690));
     jSplitPane1.setBorder(new EmptyBorder(2,2,2,2));
@@ -437,7 +437,7 @@ protected void processWindowEvent(WindowEvent e) {
     jSplitPane1.setDividerLocation(500);
     jSplitPane1.add(panelTop, JSplitPane.TOP);
     jSplitPane1.add(panelBottom, JSplitPane.BOTTOM);
-    
+
     /*
     border4 = BorderFactory.createBevelBorder(BevelBorder.LOWERED, Color.white,
         Color.white, new Color(93, 93, 93), new Color(134, 134, 134));
@@ -453,16 +453,16 @@ protected void processWindowEvent(WindowEvent e) {
   {
     return tbToolBar;
   }
-  
+
   private void updateStatsPanelIfVisible()
   {
     int index = inputTabbedPane.getSelectedIndex();
     if (index < 0) return;
     if (inputTabbedPane.getComponent(index) == statsPanel) {
-      statsPanel.refresh();         
-    }   
+      statsPanel.refresh();
+    }
   }
-  
+
   public void geometryChanged() {
     testCasePanel.relatePanel.clearResults();
     testCasePanel.setTestCase(currentCase());
@@ -491,7 +491,7 @@ protected void processWindowEvent(WindowEvent e) {
   public void updateLayerList() {
     layerListPanel.updateList();
   }
-  
+
   private void reportProblemsParsingXmlTestFile(List parsingProblems) {
     if (parsingProblems.isEmpty()) {
       return;

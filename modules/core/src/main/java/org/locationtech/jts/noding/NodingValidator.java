@@ -29,7 +29,7 @@ public class NodingValidator {
   private LineIntersector li = new RobustLineIntersector();
 
   private Collection segStrings;
-  
+
   private static final GeometryFactory fact = new GeometryFactory();
 
   public NodingValidator(Collection segStrings)

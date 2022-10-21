@@ -29,7 +29,7 @@ public class TitleElement {
 
   private Viewport viewport;
   private String title = "";
-  
+
   private Font font = new Font(FontGlyphReader.FONT_SANSERIF, Font.BOLD, DEFAULT_FONT_SIZE);
   private int borderSize = 1;
 
@@ -57,39 +57,39 @@ public class TitleElement {
   public void setTitle(String title) {
     this.title = title;
   }
-  
+
   public void paint(Graphics2D g) {
-    
+
     g.setFont(font);
-    
+
     int textWidth = (int) g.getFontMetrics().getStringBounds(title, g).getWidth();
     int width = textWidth + 2 * BOX_MARGIN;
-    
+
     int lineHeight = DEFAULT_FONT_SIZE;
     int height = lineHeight + 2 * BOX_MARGIN;
-    
+
     Rectangle box = new Rectangle(
-        0, 
+        0,
         0,
         width, height);
 
     drawBox(box, g);
-    
+
     g.setPaint(Color.BLACK);
     g.drawString(title, BOX_MARGIN, lineHeight + BOX_MARGIN);
   }
 
-  private void drawBox(Rectangle box, Graphics2D g) {    
+  private void drawBox(Rectangle box, Graphics2D g) {
     g.setPaint(fillClr);
     g.fill(box);
-    
+
     if (isBorderEnabled && borderSize > 0) {
       Stroke strokeBox = new BasicStroke(borderSize, // Width of stroke
           BasicStroke.CAP_BUTT,  // End cap style
           BasicStroke.JOIN_MITER, // Join style
           10,                  // Miter limit
           null, // Dash pattern
-          0);                   // Dash phase 
+          0);                   // Dash phase
       g.setStroke(strokeBox);
       g.setPaint(borderColor);
       g.draw(box);

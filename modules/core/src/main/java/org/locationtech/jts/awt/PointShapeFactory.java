@@ -19,18 +19,18 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * An interface for classes which create {@link Shape}s to represent 
+ * An interface for classes which create {@link Shape}s to represent
  * {@link Point}
  * geometries. Java2D does not provide an actual point shape, so some other
  * shape must be used to render points (e.g. such as a Rectangle or Ellipse).
- * 
+ *
  * @author Martin Davis
- * 
+ *
  */
 public interface PointShapeFactory {
   /**
    * Creates a shape representing a {@link Point}.
-   * 
+   *
    * @param point
    *          the location of the point
    * @return a shape
@@ -48,14 +48,14 @@ public interface PointShapeFactory {
 
     /**
      * Creates a new factory for points with default size.
-     * 
+     *
      */
     public BasePointShapeFactory() {
     }
 
     /**
      * Creates a factory for points of given size.
-     * 
+     *
      * @param size
      *          the size of the points
      */
@@ -65,7 +65,7 @@ public interface PointShapeFactory {
 
     /**
      * Creates a shape representing a point.
-     * 
+     *
      * @param point
      *          the location of the point
      * @return a shape
@@ -77,14 +77,14 @@ public interface PointShapeFactory {
   public static class Point extends BasePointShapeFactory {
     /**
      * Creates a new factory for points with default size.
-     * 
+     *
      */
     public Point() {
     }
 
     /**
      * Creates a factory for points of given size.
-     * 
+     *
      * @param size
      *          the size of the points
      */
@@ -94,7 +94,7 @@ public interface PointShapeFactory {
 
     /**
      * Creates a shape representing a point.
-     * 
+     *
      * @param point
      *          the location of the point
      * @return a shape
@@ -110,18 +110,18 @@ public interface PointShapeFactory {
       return pointMarker;
     }
   }
-  
+
   public static class Square extends BasePointShapeFactory {
     /**
      * Creates a new factory for squares with default size.
-     * 
+     *
      */
     public Square() {
     }
 
     /**
      * Creates a factory for squares of given size.
-     * 
+     *
      * @param size
      *          the size of the points
      */
@@ -131,7 +131,7 @@ public interface PointShapeFactory {
 
     /**
      * Creates a shape representing a point.
-     * 
+     *
      * @param point
      *          the location of the point
      * @return a shape
@@ -150,18 +150,18 @@ public interface PointShapeFactory {
       return pointMarker;
     }
   }
-  
+
   public static class Star extends BasePointShapeFactory {
     /**
      * Creates a new factory for points with default size.
-     * 
+     *
      */
     public Star() {
     }
 
     /**
      * Creates a factory for points of given size.
-     * 
+     *
      * @param size
      *          the size of the points
      */
@@ -171,7 +171,7 @@ public interface PointShapeFactory {
 
     /**
      * Creates a shape representing a point.
-     * 
+     *
      * @param point
      *          the location of the point
      * @return a shape
@@ -193,18 +193,18 @@ public interface PointShapeFactory {
       return path;
     }
   }
-  
+
   public static class Triangle extends BasePointShapeFactory {
     /**
      * Creates a new factory for points with default size.
-     * 
+     *
      */
     public Triangle() {
     }
 
     /**
      * Creates a factory for points of given size.
-     * 
+     *
      * @param size
      *          the size of the points
      */
@@ -214,7 +214,7 @@ public interface PointShapeFactory {
 
     /**
      * Creates a shape representing a point.
-     * 
+     *
      * @param point
      *          the location of the point
      * @return a shape
@@ -235,14 +235,14 @@ public interface PointShapeFactory {
   public static class Circle extends BasePointShapeFactory {
     /**
      * Creates a new factory for points with default size.
-     * 
+     *
      */
     public Circle() {
     }
 
     /**
      * Creates a factory for points of given size.
-     * 
+     *
      * @param size
      *          the size of the points
      */
@@ -252,7 +252,7 @@ public interface PointShapeFactory {
 
     /**
      * Creates a shape representing a point.
-     * 
+     *
      * @param point
      *          the location of the point
      * @return a shape
@@ -275,14 +275,14 @@ public interface PointShapeFactory {
   public static class Cross extends BasePointShapeFactory {
     /**
      * Creates a new factory for points with default size.
-     * 
+     *
      */
     public Cross() {
     }
 
     /**
      * Creates a factory for points of given size.
-     * 
+     *
      * @param size
      *          the size of the points
      */
@@ -292,7 +292,7 @@ public interface PointShapeFactory {
 
     /**
      * Creates a shape representing a point.
-     * 
+     *
      * @param point
      *          the location of the point
      * @return a shape
@@ -332,14 +332,14 @@ public interface PointShapeFactory {
   public static class X extends BasePointShapeFactory {
     /**
      * Creates a new factory for points with default size.
-     * 
+     *
      */
     public X() {
     }
 
     /**
      * Creates a factory for points of given size.
-     * 
+     *
      * @param size
      *          the size of the points
      */
@@ -349,7 +349,7 @@ public interface PointShapeFactory {
 
     /**
      * Creates a shape representing a point.
-     * 
+     *
      * @param point
      *          the location of the point
      * @return a shape

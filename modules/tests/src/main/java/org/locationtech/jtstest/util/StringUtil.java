@@ -36,7 +36,7 @@ import org.locationtech.jts.util.Assert;
  *
  * @version 1.7
  */
-public class StringUtil 
+public class StringUtil
 {
     public final static String newLine = System.getProperty("line.separator");
 
@@ -48,10 +48,10 @@ public class StringUtil
     		return s.substring(0, subLoc);
     	return s;
     }
-    
+
   	/**
   	 * Capitalizes the given string.
-  	 * 
+  	 *
   	 * @param s the string to capitalize
   	 * @return the capitalized string
   	 */
@@ -69,7 +69,7 @@ public class StringUtil
         } catch (NumberFormatException e) {
             return false;
         }
-    }   
+    }
 
     /**
      *  Returns an throwable's stack trace

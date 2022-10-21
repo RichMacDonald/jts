@@ -18,10 +18,10 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jtstest.testbuilder.geom.SegmentClipper;
 
 /**
- * Determines a label point for a LineString, 
+ * Determines a label point for a LineString,
  * subject to a constraint envelope.
  * The constraint is typically a viewport.
- * 
+ *
  * @author mdavis
  *
  */
@@ -34,13 +34,13 @@ public class LineLabelBaseline {
 
   private Envelope constraintEnv;
   private LineString line;
-  
+
   public LineLabelBaseline(LineString line, Envelope constraintEnv) {
     this.line = line;
     this.constraintEnv = constraintEnv;
   }
 
-  public LineSegment getBaseline() {    
+  public LineSegment getBaseline() {
     // iterate over line to find first visible clip segment
     for (int i = 0; i < line.getNumPoints() - 1; i++) {
       Coordinate seg0 = line.getCoordinateN(i);
@@ -48,7 +48,7 @@ public class LineLabelBaseline {
       LineSegment seg = clip(seg0, seg1);
       if (seg != null) return seg;
     }
-    
+
     return null;
     //TODO: find clip segment with midpoint closest to window centre?
     //TODO: handle case where start segment of line is almost out of view

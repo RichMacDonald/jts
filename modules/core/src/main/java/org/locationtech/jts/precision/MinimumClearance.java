@@ -33,17 +33,17 @@ import org.locationtech.jts.operation.distance.FacetSequenceTreeBuilder;
  * what magnitude of perturbation of
  * the vertices of a geometry can be tolerated
  * before the geometry becomes topologically invalid.
- * The smaller the Minimum Clearance distance, 
+ * The smaller the Minimum Clearance distance,
  * the less vertex perturbation the geometry can tolerate
  * before becoming invalid.
  * <p>
  * The concept was introduced by Thompson and Van Oosterom
  * [TV06], based on earlier work by Milenkovic [Mi88].
  * <p>
- * The Minimum Clearance of a geometry G 
+ * The Minimum Clearance of a geometry G
  * is defined to be the value <i>r</i>
  * such that "the movement of all points by a distance
- * of <i>r</i> in any direction will 
+ * of <i>r</i> in any direction will
  * guarantee to leave the geometry valid" [TV06].
  * An equivalent constructive definition [Mi88] is that
  * <i>r</i> is the largest value such:
@@ -58,12 +58,12 @@ import org.locationtech.jts.operation.distance.FacetSequenceTreeBuilder;
  * <center><img src='doc-files/minClearance.png' alt='minimum clearance'></center>
  * <p>
  * If G has only a single vertex (i.e. is a
- * {@link Point}), the value of the minimum clearance 
+ * {@link Point}), the value of the minimum clearance
  * is {@link Double#MAX_VALUE}.
  * <p>
- * If G is a {@link Puntal} or {@link Lineal} geometry, 
+ * If G is a {@link Puntal} or {@link Lineal} geometry,
  * then in fact no amount of perturbation
- * will render the geometry invalid.  
+ * will render the geometry invalid.
  * In this case a Minimum Clearance is still computed
  * based on the vertex and segment distances
  * according to the constructive definition.
@@ -71,42 +71,42 @@ import org.locationtech.jts.operation.distance.FacetSequenceTreeBuilder;
  * It is possible for no Minimum Clearance to exist.
  * For instance, a {@link MultiPoint} with all members identical
  * has no Minimum Clearance
- * (i.e. no amount of perturbation will cause 
+ * (i.e. no amount of perturbation will cause
  * the member points to become non-identical).
  * Empty geometries also have no such distance.
  * The lack of a meaningful MinimumClearance distance is detected
- * and suitable values are returned by 
+ * and suitable values are returned by
  * {@link #getDistance()} and {@link #getLine()}.
  * <p>
- * The computation of Minimum Clearance utilizes 
+ * The computation of Minimum Clearance utilizes
  * the {@link STRtree#nearestNeighbour(ItemDistance)}
  * method to provide good performance even for
  * large inputs.
  * <p>
- * An interesting note is that for the case of {@link MultiPoint}s, 
+ * An interesting note is that for the case of {@link MultiPoint}s,
  * the computed Minimum Clearance line
- * effectively determines the Nearest Neighbours in the collection. 
+ * effectively determines the Nearest Neighbours in the collection.
  *
  * <h3>References</h3>
  * <ul>
- * <li>[Mi88] Milenkovic, V. J., 
- * <i>Verifiable implementations of geometric algorithms 
+ * <li>[Mi88] Milenkovic, V. J.,
+ * <i>Verifiable implementations of geometric algorithms
  * using finite precision arithmetic</i>.
  * in Artificial Intelligence, 377-401. 1988
  * <li>[TV06] Thompson, Rod and van Oosterom, Peter,
  * <i>Interchange of Spatial Data-Inhibiting Factors</i>,
  * Agile 2006, Visegrad, Hungary. 2006
  * </ul>
- * 
+ *
  * @author Martin Davis
  *
  */
-public class MinimumClearance 
+public class MinimumClearance
 {
   /**
-   * Computes the Minimum Clearance distance for 
+   * Computes the Minimum Clearance distance for
    * the given Geometry.
-   * 
+   *
    * @param g the input geometry
    * @return the Minimum Clearance distance
    */
@@ -115,12 +115,12 @@ public class MinimumClearance
     MinimumClearance rp = new MinimumClearance(g);
     return rp.getDistance();
   }
-  
+
   /**
    * Gets a LineString containing two points
    * which are at the Minimum Clearance distance
    * for the given Geometry.
-   * 
+   *
    * @param g the input geometry
    * @return the value of the minimum clearance distance
    * or <tt>LINESTRING EMPTY</tt> if no Minimum Clearance distance exists
@@ -130,29 +130,29 @@ public class MinimumClearance
     MinimumClearance rp = new MinimumClearance(g);
     return rp.getLine();
   }
-  
+
   private Geometry inputGeom;
   private double minClearance;
   private Coordinate[] minClearancePts;
-  
+
   /**
    * Creates an object to compute the Minimum Clearance
    * for the given Geometry
-   * 
+   *
    * @param geom the input geometry
    */
   public MinimumClearance(Geometry geom)
   {
     inputGeom = geom;
   }
-  
+
   /**
    * Gets the Minimum Clearance distance.
    * <p>
-   * If no distance exists 
+   * If no distance exists
    * (e.g. in the case of two identical points)
    * <tt>Double.MAX_VALUE</tt> is returned.
-   * 
+   *
    * @return the value of the minimum clearance distance
    * or <tt>Double.MAX_VALUE</tt> if no Minimum Clearance distance exists
    */
@@ -161,15 +161,15 @@ public class MinimumClearance
     compute();
     return minClearance;
   }
-  
+
   /**
    * Gets a LineString containing two points
    * which are at the Minimum Clearance distance.
    * <p>
-   * If no distance could be found 
+   * If no distance could be found
    * (e.g. in the case of two identical points)
    * <tt>LINESTRING EMPTY</tt> is returned.
-   * 
+   *
    * @return the value of the minimum clearance distance
    * or <tt>LINESTRING EMPTY</tt> if no Minimum Clearance distance exists
    */
@@ -181,23 +181,23 @@ public class MinimumClearance
       return inputGeom.getFactory().createLineString();
     return inputGeom.getFactory().createLineString(minClearancePts);
   }
-  
+
   private void compute()
   {
     // already computed
     if (minClearancePts != null) return;
-    
+
     // initialize to "No Distance Exists" state
     minClearancePts = new Coordinate[2];
     minClearance = Double.MAX_VALUE;
-    
+
     // handle empty geometries
     if (inputGeom.isEmpty()) {
       return;
     }
-    
+
     STRtree geomTree = FacetSequenceTreeBuilder.build(inputGeom);
-    
+
     Object[] nearest = geomTree.nearestNeighbour(new MinClearanceDistance());
     MinClearanceDistance mcd = new MinClearanceDistance();
     minClearance = mcd.distance(
@@ -205,11 +205,11 @@ public class MinimumClearance
         (FacetSequence) nearest[1]);
     minClearancePts = mcd.getCoordinates();
   }
-  
+
   /**
    * Implements the MinimumClearance distance function:
    * <ul>
-   * <li>dist(p1, p2) = 
+   * <li>dist(p1, p2) =
    * <ul>
    * <li>p1 != p2 : p1.distance(p2)
    * <li>p1 == p2 : Double.MAX
@@ -221,7 +221,7 @@ public class MinimumClearance
    * </ul>
    * </ul>
    * Also computes the values of the nearest points, if any.
-   * 
+   *
    * @author Martin Davis
    *
    */
@@ -230,12 +230,12 @@ public class MinimumClearance
   {
     private double minDist = Double.MAX_VALUE;
     private Coordinate[] minPts = new Coordinate[2];
-    
+
     public Coordinate[] getCoordinates()
     {
       return minPts;
     }
-    
+
     @Override
 	public double distance(ItemBoundable b1, ItemBoundable b2) {
       FacetSequence fs1 = (FacetSequence) b1.getItem();
@@ -243,9 +243,9 @@ public class MinimumClearance
       minDist = Double.MAX_VALUE;
       return distance(fs1, fs2);
     }
-    
+
     public double distance(FacetSequence fs1, FacetSequence fs2) {
-      
+
       // compute MinClearance distance metric
 
       vertexDistance(fs1, fs2);
@@ -255,7 +255,7 @@ public class MinimumClearance
       segmentDistance(fs2, fs1);
       return minDist;
     }
-    
+
     private double vertexDistance(FacetSequence fs1, FacetSequence fs2) {
       for (int i1 = 0; i1 < fs1.size(); i1++) {
         for (int i2 = 0; i2 < fs2.size(); i2++) {
@@ -275,16 +275,16 @@ public class MinimumClearance
       }
       return minDist;
      }
-      
+
      private double segmentDistance(FacetSequence fs1, FacetSequence fs2) {
         for (int i1 = 0; i1 < fs1.size(); i1++) {
           for (int i2 = 1; i2 < fs2.size(); i2++) {
-            
+
             Coordinate p = fs1.getCoordinate(i1);
-            
+
             Coordinate seg0 = fs2.getCoordinate(i2-1);
             Coordinate seg1 = fs2.getCoordinate(i2);
-            
+
             if ((!p.equals2D(seg0) && !p.equals2D(seg1))) {
               double d = Distance.pointToSegment(p, seg0, seg1);
               if (d < minDist) {
@@ -298,18 +298,18 @@ public class MinimumClearance
         }
         return minDist;
        }
-     
+
      private void updatePts(Coordinate p, Coordinate seg0, Coordinate seg1)
      {
        minPts[0] = p;
        LineSegment seg = new LineSegment(seg0, seg1);
-       minPts[1] = new Coordinate(seg.closestPoint(p));       
+       minPts[1] = new Coordinate(seg.closestPoint(p));
      }
 
-       
+
      }
-  
-    
+
+
   }
-  
+
 

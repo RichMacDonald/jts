@@ -19,12 +19,12 @@ import org.locationtech.jts.precision.CommonBitsRemover;
 /**
  * Performs an overlay operation using snapping and enhanced precision
  * to improve the robustness of the result.
- * This class <i>always</i> uses snapping.  
- * This is less performant than the standard JTS overlay code, 
+ * This class <i>always</i> uses snapping.
+ * This is less performant than the standard JTS overlay code,
  * and may even introduce errors which were not present in the original data.
- * For this reason, this class should only be used 
- * if the standard overlay code fails to produce a correct result. 
- *  
+ * For this reason, this class should only be used
+ * if the standard overlay code fails to produce a correct result.
+ *
  * @author Martin Davis
  * @version 1.7
  */
@@ -55,7 +55,7 @@ public class SnapOverlayOp
   {
      return overlayOp(g0, g1, OverlayOp.SYMDIFFERENCE);
   }
-  
+
 
   private Geometry[] geom = new Geometry[2];
   private double snapTolerance;
@@ -66,7 +66,7 @@ public class SnapOverlayOp
     geom[1] = g2;
     computeSnapTolerance();
   }
-  private void computeSnapTolerance() 
+  private void computeSnapTolerance()
   {
 		snapTolerance = GeometrySnapper.computeOverlaySnapTolerance(geom[0], geom[1]);
 
@@ -78,9 +78,9 @@ public class SnapOverlayOp
 //  	Geometry[] selfSnapGeom = new Geometry[] { selfSnap(geom[0]), selfSnap(geom[1])};
     Geometry[] prepGeom = snap(geom);
     Geometry result = OverlayOp.overlayOp(prepGeom[0], prepGeom[1], opCode);
-    return prepareResult(result);	
+    return prepareResult(result);
   }
-  
+
   private Geometry selfSnap(Geometry geom)
   {
     GeometrySnapper snapper0 = new GeometrySnapper(geom);
@@ -89,14 +89,14 @@ public class SnapOverlayOp
     //System.out.println();
     return snapGeom;
   }
-  
+
   private Geometry[] snap(Geometry[] geom)
   {
     Geometry[] remGeom = removeCommonBits(geom);
-  	
+
   	// MD - testing only
 //  	Geometry[] remGeom = geom;
-    
+
     Geometry[] snapGeom = GeometrySnapper.snap(remGeom[0], remGeom[1], snapTolerance);
     // MD - may want to do this at some point, but it adds cycles
 //    checkValid(snapGeom[0]);

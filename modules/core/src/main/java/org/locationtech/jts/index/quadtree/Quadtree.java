@@ -22,7 +22,7 @@ import org.locationtech.jts.index.ItemVisitor;
 import org.locationtech.jts.index.SpatialIndex;
 /**
  * A Quadtree is a spatial index structure for efficient range querying
- * of items bounded by 2D rectangles.  
+ * of items bounded by 2D rectangles.
  * {@link Geometry}s can be indexed by using their
  * {@link Envelope}s.
  * Any type of Object can also be indexed as
@@ -32,12 +32,12 @@ import org.locationtech.jts.index.SpatialIndex;
  * for range rectangle queries.  The various query methods return a list of
  * all items which <i>may</i> intersect the query rectangle.  Note that
  * it may thus return items which do <b>not</b> in fact intersect the query rectangle.
- * A secondary filter is required to test for actual intersection 
- * between the query rectangle and the envelope of each candidate item. 
- * The secondary filter may be performed explicitly, 
- * or it may be provided implicitly by subsequent operations executed on the items 
- * (for instance, if the index query is followed by computing a spatial predicate 
- * between the query geometry and tree items, 
+ * A secondary filter is required to test for actual intersection
+ * between the query rectangle and the envelope of each candidate item.
+ * The secondary filter may be performed explicitly,
+ * or it may be provided implicitly by subsequent operations executed on the items
+ * (for instance, if the index query is followed by computing a spatial predicate
+ * between the query geometry and tree items,
  * the envelope intersection check is performed automatically.
  * <p>
  * This implementation does not require specifying the extent of the inserted
@@ -117,7 +117,7 @@ public class Quadtree
 
   /**
    * Tests whether the index contains any items.
-   * 
+   *
    * @return true if the index does not contain any items
    */
   public boolean isEmpty()
@@ -125,7 +125,7 @@ public class Quadtree
     if (root == null) return true;
     return root.isEmpty();
   }
-  
+
   /**
    * Returns the number of items in the tree.
    *
@@ -175,14 +175,14 @@ public boolean remove(Envelope itemEnv, Object item)
 
   /**
    * Queries the tree and returns items which may lie in the given search envelope.
-   * Precisely, the items that are returned are all items in the tree 
+   * Precisely, the items that are returned are all items in the tree
    * whose envelope <b>may</b> intersect the search Envelope.
    * Note that some items with non-intersecting envelopes may be returned as well;
    * the client is responsible for filtering these out.
    * In most situations there will be many items in the tree which do not
    * intersect the search envelope and which are not returned - thus
-   * providing improved performance over a simple linear scan.    
-   * 
+   * providing improved performance over a simple linear scan.
+   *
    * @param searchEnv the envelope of the desired query area.
    * @return a List of items which may intersect the search envelope
    */
@@ -200,14 +200,14 @@ public List query(Envelope searchEnv)
 
   /**
    * Queries the tree and visits items which may lie in the given search envelope.
-   * Precisely, the items that are visited are all items in the tree 
+   * Precisely, the items that are visited are all items in the tree
    * whose envelope <b>may</b> intersect the search Envelope.
    * Note that some items with non-intersecting envelopes may be visited as well;
    * the client is responsible for filtering these out.
    * In most situations there will be many items in the tree which do not
    * intersect the search envelope and which are not visited - thus
-   * providing improved performance over a simple linear scan.    
-   * 
+   * providing improved performance over a simple linear scan.
+   *
    * @param searchEnv the envelope of the desired query area.
    * @param visitor a visitor object which is passed the visited items
    */

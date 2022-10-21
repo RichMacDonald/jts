@@ -24,7 +24,7 @@ import org.locationtech.jts.io.WKTWriter;
 /**
  * Stress test for accuracy of various line intersection implementations.
  * The test is to compute the intersection point of pairs of line segments
- * with realistically large ordinate values, 
+ * with realistically large ordinate values,
  * for angles of incidence which become increasingly close to parallel.
  * The measure of accuracy is the sum of the distances of the computed point from the two lines.
  * <p>
@@ -42,19 +42,19 @@ import org.locationtech.jts.io.WKTWriter;
  * <li>DP-CB accuracy is better than DP, but degrades significantly as angle becomes closer to parallel
  * <li>DD is (presumably) the most accurate
  * <ul>
- * 
- * 
+ *
+ *
  * @author Martin Davis
  *
  */
 public class IntersectionStressTest {
-    
+
   private static final int MAX_ITER = 1000;
   private static final double ORDINATE_MAGNITUDE = 1000000;
   private static final double SEG_LEN = 100;
   // make results reproducible
   static Random randGen = new Random(123456);
-  
+
   Map<String, Double> distMap = new HashMap<>();
 
   private boolean verbose = false;
@@ -70,13 +70,13 @@ public class IntersectionStressTest {
     run(0.999999);
     run(0.99999999);
   }
-  
+
   /**
    * Run tests for a given incident angle factor.
    * The angle between the segments is <code>PI * incidentAngleFactor</code>.
    * A factor closer to 1 means the segments are more nearly parallel.
    * A factor of 1 means they are parallel.
-   * 
+   *
    * @param incidentAngleFactor the factor of PI between the two segments
    */
   private void run(double incidentAngleFactor) {
@@ -89,17 +89,17 @@ public class IntersectionStressTest {
 
   private void doIntersectionTest(int i, double incidentAngleFactor) {
     Coordinate basePt = randomCoordinate();
-    
+
     double baseAngle = 2 * Math.PI * randGen.nextDouble();
-    
+
     Coordinate p1 = computeVector(basePt, baseAngle, 0.1 * SEG_LEN);
     Coordinate p2 = computeVector(basePt, baseAngle, 1.1 * SEG_LEN);
-    
-    double angleBetween = baseAngle + incidentAngleFactor * Math.PI; 
-    
+
+    double angleBetween = baseAngle + incidentAngleFactor * Math.PI;
+
     Coordinate q1 = computeVector(basePt, angleBetween, 0.1 * SEG_LEN);
     Coordinate q2 = computeVector(basePt, angleBetween, 1.1 * SEG_LEN);
-    
+
     Coordinate intPt = IntersectionAlgorithms.intersectionBasic(p1, p2, q1, q2);
     Coordinate intPtDD = CGAlgorithmsDD.intersection(p1, p2, q1, q2);
     Coordinate intPtCB = IntersectionAlgorithms.intersectionCB(p1, p2, q1, q2);
@@ -114,14 +114,14 @@ public class IntersectionStressTest {
     printStats("Cond  ", intPtCond, p1, p2, q1, q2);
     printStats("DD    ", intPtDD, p1, p2, q1, q2);
   }
-  
+
   private void printStats(String tag, Coordinate intPt, Coordinate p1, Coordinate p2, Coordinate q1, Coordinate q2) {
-    double distP = Distance.pointToLinePerpendicular(intPt, p1, p2);    
+    double distP = Distance.pointToLinePerpendicular(intPt, p1, p2);
     double distQ = Distance.pointToLinePerpendicular(intPt, q1, q2);
     addStat(tag, distP);
     addStat(tag, distQ);
     if (verbose ) {
-      System.out.println(tag + " : " 
+      System.out.println(tag + " : "
           + WKTWriter.toPoint(intPt)
           + " -- Dist P = " + distP + "    Dist Q = " + distQ);
     }
@@ -135,7 +135,7 @@ public class IntersectionStressTest {
     distTotal += dist;
     distMap.put(tag, distTotal);
   }
-  
+
   private void printAverage() {
     System.out.println("Average distance from lines");
     for (String key : distMap.keySet()) {

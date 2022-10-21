@@ -22,13 +22,13 @@ public class ByteArrayInStream
 	/*
 	 * Implementation improvement suggested by Andrea Aime - Dec 15 2007
 	 */
-	
+
   private byte[] buffer;
 	private int position;
 
 	/**
 	 * Creates a new stream based on the given buffer.
-	 * 
+	 *
 	 * @param buffer the bytes to read
 	 */
 	public ByteArrayInStream(final byte[] buffer) {
@@ -37,7 +37,7 @@ public class ByteArrayInStream
 
 	/**
 	 * Sets this stream to read from the given buffer
-	 * 
+	 *
 	 * @param buffer the bytes to read
 	 */
 	public void setBytes(final byte[] buffer) {
@@ -48,7 +48,7 @@ public class ByteArrayInStream
 	/**
 	 * Reads up to <tt>buf.length</tt> bytes from the stream
 	 * into the given byte buffer.
-	 * 
+	 *
 	 * @param buf the buffer to place the read bytes into
    * @return the number of bytes read
 	 */
@@ -65,7 +65,7 @@ public class ByteArrayInStream
 			}
 		}
 		else {
-			System.arraycopy(buffer, position, buf, 0, numToRead);			
+			System.arraycopy(buffer, position, buf, 0, numToRead);
 		}
 		position += numToRead;
 		return numToRead;

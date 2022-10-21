@@ -19,12 +19,12 @@ import org.locationtech.jts.io.WKTReader;
 
 /**
  * Reads a geometry from a string in either WKT or WKB format.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class WKTorBReader {
-  
+
   public static Geometry read(String geomStr, GeometryFactory geomfact) {
     WKTorBReader rdr = new WKTorBReader(geomfact);
     try {
@@ -34,7 +34,7 @@ public class WKTorBReader {
       throw new RuntimeException(ex.getMessage());
     }
   }
-  
+
   public static boolean isWKB(String str) {
     return isHex(str, MAX_CHARS_TO_CHECK);
   }
@@ -59,11 +59,11 @@ public class WKTorBReader {
 
   private static final int MAX_CHARS_TO_CHECK = 6;
   private GeometryFactory geomFactory;
-  
+
   public WKTorBReader(GeometryFactory geomFact) {
     this.geomFactory = geomFact;
   }
-  
+
   public Geometry read(String geomStr) throws ParseException {
     String trimStr = geomStr.trim();
     if (isWKB(trimStr)) {
@@ -72,14 +72,14 @@ public class WKTorBReader {
     return readWKT(trimStr, geomFactory);
 
   }
-  
+
   public static Geometry readWKT(String wkt, GeometryFactory geomFact)
-  throws ParseException 
+  throws ParseException
   {
     WKTReader rdr = new WKTReader(geomFact);
     return rdr.read(wkt);
   }
-  
+
   public static Geometry readWKBHex(String wkb, GeometryFactory geomFact)
   throws ParseException
   {

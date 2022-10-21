@@ -83,7 +83,7 @@ public Geometry getBoundary() {
 public MultiPoint reverse() {
     return (MultiPoint) super.reverse();
   }
-  
+
   @Override
 protected MultiPoint reverseInternal() {
     Point[] points = new Point[this.geometries.length];
@@ -111,7 +111,7 @@ public boolean equalsExact(Geometry other, double tolerance) {
   protected Coordinate getCoordinate(int n) {
     return ((Point) geometries[n]).getCoordinate();
   }
-  
+
   @Override
 protected MultiPoint copyInternal() {
     Point[] points = new Point[this.geometries.length];
@@ -120,7 +120,7 @@ protected MultiPoint copyInternal() {
     }
     return new MultiPoint(points, factory);
   }
-  
+
   @Override
 protected int getTypeCode() {
     return Geometry.TYPECODE_MULTIPOINT;

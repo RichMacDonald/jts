@@ -41,7 +41,7 @@ import org.locationtech.jts.geom.util.GeometryCombiner;
  * and thus may group disjoint polygons which can lie far apart.
  * It may also occur in real world data which contains many disjoint polygons
  * (e.g. polygons representing parcels on different street blocks).
- * 
+ *
  * <h2>Algorithm</h2>
  * The overlap region is determined as the common envelope of intersection.
  * The input polygons are partitioned into two sets:
@@ -50,49 +50,49 @@ import org.locationtech.jts.geom.util.GeometryCombiner;
  * <li>Disjoint: Polygons which are disjoint from (lie wholly outside) the overlap region
  * </ul>
  * The Overlapping set is fully unioned, and then combined with the Disjoint set.
- * Performing a simple combine works because 
+ * Performing a simple combine works because
  * the disjoint polygons do not interact with each
  * other (since the inputs are valid MultiPolygons).
- * They also do not interact with the Overlapping polygons, 
+ * They also do not interact with the Overlapping polygons,
  * since they are outside their envelope.
- * 
+ *
  * <h2>Discussion</h2>
- * In general the Overlapping set of polygons will 
+ * In general the Overlapping set of polygons will
  * extend beyond the overlap envelope.  This means that the union result
  * will extend beyond the overlap region.
- * There is a small chance that the topological 
+ * There is a small chance that the topological
  * union of the overlap region will shift the result linework enough
  * that the result geometry intersects one of the Disjoint geometries.
- * This situation is detected and if it occurs 
+ * This situation is detected and if it occurs
  * is remedied by falling back to performing a full union of the original inputs.
  * Detection is done by a fairly efficient comparison of edge segments which
  * extend beyond the overlap region.  If any segments have changed
  * then there is a risk of introduced intersections, and full union is performed.
  * <p>
- * This situation has not been observed in JTS using floating precision, 
- * but it could happen due to snapping.  It has been observed 
+ * This situation has not been observed in JTS using floating precision,
+ * but it could happen due to snapping.  It has been observed
  * in other APIs (e.g. GEOS) due to more aggressive snapping.
  * It is more likely to happen if a Snap-Rounding overlay is used.
  * <p>
  * <b>NOTE: Test has shown that using this heuristic impairs performance.
  * It has been removed from use.</b>
- * 
- * 
+ *
+ *
  * @author mbdavis
- * 
+ *
  * @deprecated due to impairing performance
  *
  */
 @Deprecated
-public class OverlapUnion 
+public class OverlapUnion
 {
   /**
    * Union a pair of geometries,
    * using the more performant overlap union algorithm if possible.
-   * 
+   *
    * @param g0 a geometry to union
    * @param g1 a geometry to union
-   * @param unionFun 
+   * @param unionFun
    * @return the union of the inputs
    */
 	public static Geometry union(Geometry g0, Geometry g1, UnionStrategy unionFun)
@@ -100,9 +100,9 @@ public class OverlapUnion
 		OverlapUnion union = new OverlapUnion(g0, g1, unionFun);
 		return union.union();
 	}
-	
+
 	private GeometryFactory geomFactory;
-	
+
 	private Geometry g0;
 	private Geometry g1;
 
@@ -110,10 +110,10 @@ public class OverlapUnion
 
   private UnionStrategy unionFun;
 
-	
+
   /**
    * Creates a new instance for unioning the given geometries.
-   * 
+   *
    * @param g0 a geometry to union
    * @param g1 a geometry to union
    */
@@ -121,7 +121,7 @@ public class OverlapUnion
 	{
 		this(g0, g1, CascadedPolygonUnion.CLASSIC_UNION);
 	}
-	
+
 	public OverlapUnion(Geometry g0, Geometry g1, UnionStrategy unionFun) {
     this.g0 = g0;
     this.g1 = g1;
@@ -131,14 +131,14 @@ public class OverlapUnion
 
   /**
    * Unions the input geometries,
-   * using the more performant overlap union algorithm if possible.	 
-   * 
+   * using the more performant overlap union algorithm if possible.
+   *
    * @return the union of the inputs
 	 */
 	public Geometry union()
 	{
     Envelope overlapEnv = overlapEnvelope(g0,  g1);
-    
+
     /**
      * If no overlap, can just combine the geometries
      */
@@ -147,15 +147,15 @@ public class OverlapUnion
       Geometry g1Copy = g1.copy();
       return GeometryCombiner.combine(g0Copy, g1Copy);
     }
-    
+
     List<Geometry> disjointPolys = new ArrayList<>();
-    
+
     Geometry g0Overlap = extractByEnvelope(overlapEnv, g0, disjointPolys);
     Geometry g1Overlap = extractByEnvelope(overlapEnv, g1, disjointPolys);
-    
+
 //    System.out.println("# geoms in common: " + intersectingPolys.size());
-    Geometry unionGeom = unionFull(g0Overlap, g1Overlap); 
-    
+    Geometry unionGeom = unionFull(g0Overlap, g1Overlap);
+
     Geometry result = null;
     isUnionSafe = isBorderSegmentsSame(unionGeom, overlapEnv);
     if (! isUnionSafe) {
@@ -174,34 +174,34 @@ public class OverlapUnion
 	 * Allows checking whether the optimized
 	 * or full union was performed.
 	 * Used for unit testing.
-	 * 
+	 *
 	 * @return true if the optimized union was performed
 	 */
 	boolean isUnionOptimized() {
 	  return isUnionSafe;
 	}
-	
+
   private static Envelope overlapEnvelope(Geometry g0, Geometry g1) {
     Envelope g0Env = g0.getEnvelopeInternal();
     Envelope g1Env = g1.getEnvelopeInternal();
     Envelope overlapEnv = g0Env.intersection(g1Env);
     return overlapEnv;
   }
-  
+
   private Geometry combine(Geometry unionGeom, List<Geometry> disjointPolys) {
     if (disjointPolys.size() <= 0)
       return unionGeom;
-    
+
     disjointPolys.add(unionGeom);
     Geometry result = GeometryCombiner.combine(disjointPolys);
     return result;
   }
 
-  private Geometry extractByEnvelope(Envelope env, Geometry geom, 
+  private Geometry extractByEnvelope(Envelope env, Geometry geom,
       List<Geometry> disjointGeoms)
   {
     List<Geometry> intersectingGeoms = new ArrayList<>();
-    for (int i = 0; i < geom.getNumGeometries(); i++) { 
+    for (int i = 0; i < geom.getNumGeometries(); i++) {
       Geometry elem = geom.getGeometryN(i);
       if (elem.getEnvelopeInternal().intersects(env)) {
         intersectingGeoms.add(elem);
@@ -213,33 +213,33 @@ public class OverlapUnion
     }
     return geomFactory.buildGeometry(intersectingGeoms);
   }
-  
+
   private Geometry unionFull(Geometry geom0, Geometry geom1) {
     // if both are empty collections, just return a copy of one of them
-    if (geom0.getNumGeometries() == 0 
+    if (geom0.getNumGeometries() == 0
         && geom1.getNumGeometries() == 0)
       return geom0.copy();
-    
+
     Geometry union = unionFun.union(geom0, geom1);
     return union;
   }
-  
+
   private boolean isBorderSegmentsSame(Geometry result, Envelope env) {
     List<LineSegment> segsBefore = extractBorderSegments(g0, g1, env);
-    
+
     List<LineSegment> segsAfter = new ArrayList<>();
     extractBorderSegments(result, env, segsAfter);
 
     //System.out.println("# seg before: " + segsBefore.size() + " - # seg after: " + segsAfter.size());
     return isEqual(segsBefore, segsAfter);
   }
-  
+
   private boolean isEqual(List<LineSegment> segs0, List<LineSegment> segs1) {
     if (segs0.size() != segs1.size())
       return false;
-    
+
     Set<LineSegment> segIndex = new HashSet<>(segs0);
-    
+
     for (LineSegment seg : segs1) {
       if (! segIndex.contains(seg)) {
         //System.out.println("Found changed border seg: " + seg);
@@ -256,7 +256,7 @@ public class OverlapUnion
       extractBorderSegments(geom1, env, segs);
     return segs;
   }
-  
+
   private static boolean intersects(Envelope env, Coordinate p0, Coordinate p1) {
     return env.intersects(p0) || env.intersects(p1);
   }
@@ -279,7 +279,7 @@ public class OverlapUnion
       @Override
 	public void filter(CoordinateSequence seq, int i) {
         if (i <= 0) return;
-        
+
         // extract LineSegment
         Coordinate p0 = seq.getCoordinate(i - 1);
         Coordinate p1 = seq.getCoordinate(i);
@@ -295,7 +295,7 @@ public class OverlapUnion
 
       @Override
 	public boolean isGeometryChanged() {   return false;   }
-      
+
     });
   }
 

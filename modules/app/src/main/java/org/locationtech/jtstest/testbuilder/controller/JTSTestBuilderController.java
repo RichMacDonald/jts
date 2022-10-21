@@ -45,21 +45,21 @@ import org.locationtech.jtstest.testbuilder.ui.tools.Tool;
 import org.locationtech.jtstest.testbuilder.ui.tools.ZoomTool;
 
 
-public class JTSTestBuilderController 
-{ 
+public class JTSTestBuilderController
+{
   private static ResultController resultController = new ResultController();
 
   /*
   private static boolean autoZoomOnNextChange = false;
 
-  
+
   public static void requestAutoZoom()
   {
     autoZoomOnNextChange  = true;
   }
   */
   public JTSTestBuilderController() {
-    
+
   }
   public static ResultController resultController() {
     return resultController;
@@ -76,7 +76,7 @@ public class JTSTestBuilderController
 
   public static JTSTestBuilderToolBar toolbar() {
     return frame().getToolbar();
-  }  
+  }
 
   public static JTSTestBuilderFrame frame() {
     return JTSTestBuilderFrame.instance();
@@ -85,11 +85,11 @@ public class JTSTestBuilderController
   public GeometryEditModel geomEditModel() {
     return JTSTestBuilder.model().getGeometryEditModel();
   }
-  
+
   public void reportException(Exception e) {
     SwingUtil.reportException(frame(), e);
   }
-  
+
   public void geometryChanged()
   {
     if (spatialFunctionPanel().isAutoExecute()) {
@@ -97,13 +97,13 @@ public class JTSTestBuilderController
     }
     geometryViewChanged();
   }
-  
+
   public void geometryViewChanged()
   {
     editPanel().updateView();
     //TODO: provide autoZoom checkbox on Edit tab to control autozooming (default = on)
   }
-  
+
   public Geometry getGeometryA() {
     return geomEditModel().getGeometry(0);
   }
@@ -115,32 +115,32 @@ public class JTSTestBuilderController
   public void exchangeGeometry() {
     geomEditModel().exchangeGeometry();
   }
-  
+
   public void addTestCase(Geometry[] geom, String name)
   {
     model().addCase(geom, name);
     JTSTestBuilderFrame.instance().updateTestCases();
     JTSTestBuilderFrame.instance().showGeomsTab();
   }
-  
+
   public void extractComponentsToTestCase(Coordinate pt)
   {
     double toleranceInModel = editPanel().getToleranceInModel();
     LayerList lyrList = model().getLayers();
     Geometry comp = lyrList.getComponent(pt, toleranceInModel);
-    if (comp == null) 
+    if (comp == null)
       return;
     model().addCase(new Geometry[] { comp, null });
     JTSTestBuilderFrame.instance().updateTestCases();
   }
-  
+
   public void extractComponentsToTestCase(Geometry aoi, boolean isSegments)
   {
     //double toleranceInModel = JTSTestBuilderFrame.getGeometryEditPanel().getToleranceInModel();
     LayerList lyrList = model().getLayers();
     Geometry[] comp;
     comp = lyrList.getComponents(aoi, isSegments);
-    if (comp == null) 
+    if (comp == null)
       return;
     model().addCase(comp);
     JTSTestBuilderFrame.instance().updateTestCases();
@@ -153,14 +153,14 @@ public class JTSTestBuilderController
     double toleranceInModel = editPanel().getToleranceInModel();
     LayerList lyrList = model().getLayers();
     Geometry comp = lyrList.getComponent(pt, toleranceInModel);
-    if (comp == null) 
+    if (comp == null)
       return;
     SwingUtil.copyToClipboard(comp, false);
   }
-  
+
   public void setFocusGeometry(int index) {
     model().getGeometryEditModel().setEditGeomIndex(index);
-    toolbar().setFocusGeometry(index);    
+    toolbar().setFocusGeometry(index);
   }
 
   public void inspectGeometry()
@@ -179,14 +179,14 @@ public class JTSTestBuilderController
     Geometry geometry = model().getCurrentCase().getGeometry(geomIndex);
     TestBuilderDialogs.inspectGeometry(frame(), geomIndex, geometry);
   }
-  
+
   public void clearResult()
   {
     frame().getResultWKTPanel().clearResult();
     model().setResult(null);
     editPanel().updateView();
   }
-  
+
   public void setResult(String opName, Object result) {
     model().setResult(result);
     model().setOpName(opName);
@@ -195,18 +195,18 @@ public class JTSTestBuilderController
     frame().getResultWKTPanel().setResult(result);
     geometryViewChanged();
   }
-  
+
   public void setCommandErr(String msg) {
     frame().getCommandPanel().setError(msg);
   }
-  
+
   public void saveImageAsPNG() {
     //JTSTestBuilderFrame.instance().actionSaveImageAsPNG();
     JFileChooser pngFileChooser = TestBuilderDialogs.getSavePNGFileChooser();
     try {
-      String fullFileName = SwingUtil.chooseFilenameWithConfirm(frame(), pngFileChooser);  
+      String fullFileName = SwingUtil.chooseFilenameWithConfirm(frame(), pngFileChooser);
       if (fullFileName == null) return;
-        ImageUtil.writeImage(editPanel(), 
+        ImageUtil.writeImage(editPanel(),
             fullFileName,
             ImageUtil.IMAGE_FORMAT_NAME_PNG);
     }
@@ -214,26 +214,26 @@ public class JTSTestBuilderController
       reportException(x);
     }
   }
-  
+
   public void saveImageToClipboard() {
     try {
-      ImageUtil.saveImageToClipboard(editPanel(), 
+      ImageUtil.saveImageToClipboard(editPanel(),
           ImageUtil.IMAGE_FORMAT_NAME_PNG);
     }
     catch (Exception x) {
       reportException(x);
     }
   }
-  
+
   public void updateLayerList() {
     JTSTestBuilderFrame.instance().updateLayerList();
   }
-  
-  
-  //================================
-      
 
-  
+
+  //================================
+
+
+
   private void setTool(Tool tool) {
     editPanel().setCurrentTool(tool);
   }
@@ -300,7 +300,7 @@ public class JTSTestBuilderController
   public void zoomToInputB() {
     editPanel().zoomToGeometry(1);
   }
-  
+
   public void caseMoveToPrev(boolean isZoom) {
     model().cases().prevCase();
     frame().updateTestCaseView();
@@ -317,45 +317,45 @@ public class JTSTestBuilderController
     model().cases().copyCase();
     frame().updateTestCases();
   }
-  
+
   public void caseCreateNew() {
     model().cases().createNew();
     frame().showGeomsTab();
     frame().updateTestCases();
   }
-  
+
   public void caseDelete() {
     model().cases().deleteCase();
     frame().updateTestCases();
   }
-  
+
   //========================================
-  
+
   public void displayInfo(Coordinate modelPt)
   {
     displayInfo( editPanel().getInfo(modelPt) );
   }
-  
+
   public void displayInfo(String s)
   {
     displayInfo(s, true);
   }
-  
+
   public void displayInfo(String s, boolean showTab)
   {
     frame().getLogPanel().addInfo(s);
     if (showTab) frame().showInfoTab();
   }
-  
+
   //========================================
-  
+
   public void setViewStyle(ViewStyle viewStyle) {
     editPanel().setViewStyle(viewStyle);
     geometryViewChanged();
   }
 
   //=============================================
-  
+
   public void removeDuplicatePoints() {
     CleanDuplicatePoints clean = new CleanDuplicatePoints();
     Geometry cleanGeom = clean.clean(model().getGeometryEditModel().getGeometry(0));

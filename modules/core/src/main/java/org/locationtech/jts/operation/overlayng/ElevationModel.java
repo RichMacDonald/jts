@@ -24,33 +24,33 @@ import org.locationtech.jts.math.MathUtil;
  * <p>
  * The model divides the extent of the input geometry(s)
  * into an NxM grid.
- * The default grid size is 3x3.  
+ * The default grid size is 3x3.
  * If the input has no extent in the X or Y dimension,
  * that dimension is given grid size 1.
  * The elevation of each grid cell is computed as the average of the Z values
- * of the input vertices in that cell (if any). 
+ * of the input vertices in that cell (if any).
  * If a cell has no input vertices within it, it is assigned
  * the average elevation over all cells.
  * <p>
  * If no input vertices have Z values, the model does not assign a Z value.
  * <p>
- * The elevation of an arbitrary location is determined as the 
+ * The elevation of an arbitrary location is determined as the
  * Z value of the nearest grid cell.
  * <p>
  * An elevation model can be used to populate missing Z values
  * in an overlay result geometry.
- *  
+ *
  * @author Martin Davis
  *
  */
 class ElevationModel {
-  
+
   private static final int DEFAULT_CELL_NUM = 3;
 
   /**
    * Creates an elevation model from two geometries (which may be null).
-   * 
-   * @param geom1 an input geometry 
+   *
+   * @param geom1 an input geometry
    * @param geom2 an input geometry, or null
    * @return the elevation model computed from the geometries
    */
@@ -64,7 +64,7 @@ class ElevationModel {
     if (geom2 != null) model.add(geom2);
     return model;
   }
-  
+
   private Envelope extent;
   private int numCellX;
   private int numCellY;
@@ -77,7 +77,7 @@ class ElevationModel {
 
   /**
    * Creates a new elevation model covering an extent by a grid of given dimensions.
-   * 
+   *
    * @param extent the XY extent to cover
    * @param numCellX the number of grid cells in the X dimension
    * @param numCellY the number of grid cells in the Y dimension
@@ -86,7 +86,7 @@ class ElevationModel {
     this.extent = extent;
     this.numCellX = numCellX;
     this.numCellY = numCellY;
-    
+
     cellSizeX = extent.getWidth() / numCellX;
     cellSizeY = extent.getHeight() / numCellY;
     if(cellSizeX <= 0.0) {
@@ -97,10 +97,10 @@ class ElevationModel {
     }
     cells = new ElevationCell[numCellX][numCellY];
   }
-  
+
   /**
    * Updates the model using the Z values of a given geometry.
-   * 
+   *
    * @param geom the geometry to scan for Z values
    */
   public void add(Geometry geom) {
@@ -130,10 +130,10 @@ class ElevationModel {
       public boolean isGeometryChanged() {
         return false;
       }
-      
+
     });
   }
-  
+
   protected void add(double x, double y, double z) {
     if (Double.isNaN(z))
       return;
@@ -141,12 +141,12 @@ class ElevationModel {
     ElevationCell cell = getCell(x, y, true);
     cell.add(z);
   }
-  
+
   private void init() {
     isInitialized = true;
     int numCells = 0;
     double sumZ = 0.0;
-    
+
     for (ElevationCell[] cell2 : cells) {
       for (int j = 0; j < cells[0].length; j++) {
         ElevationCell cell = cell2[j];
@@ -162,43 +162,43 @@ class ElevationModel {
       averageZ = sumZ / numCells;
     }
   }
-  
+
   /**
    * Gets the model Z value at a given location.
    * If the location lies outside the model grid extent,
    * this returns the Z value of the nearest grid cell.
-   * If the model has no elevation computed (i.e. due 
+   * If the model has no elevation computed (i.e. due
    * to empty input), the value is returned as {@link Double#NaN}.
-   * 
+   *
    * @param x the x ordinate of the location
    * @param y the y ordinate of the location
    * @return the computed model Z value
    */
   public double getZ(double x, double y) {
-    if (! isInitialized) 
+    if (! isInitialized)
       init();
     ElevationCell cell = getCell(x, y, false);
-    if (cell == null) 
+    if (cell == null)
       return averageZ;
     return cell.getZ();
   }
-  
+
   /**
    * Computes Z values for any missing Z values in a geometry,
    * using the computed model.
    * If the model has no Z value, or the geometry coordinate dimension
    * does not include Z, the geometry is not updated.
-   * 
+   *
    * @param geom the geometry to populate Z values for
    */
   public void populateZ(Geometry geom) {
     // short-circuit if no Zs are present in model
     if (! hasZValue)
       return;
-    
-    if (! isInitialized) 
+
+    if (! isInitialized)
       init();
-    
+
     geom.apply(new CoordinateSequenceFilter() {
 
       private boolean isDone = false;
@@ -228,10 +228,10 @@ class ElevationModel {
         // geometry extent is not changed
         return false;
       }
-      
+
     });
   }
-  
+
   private ElevationCell getCell(double x, double y, boolean isCreateIfMissing) {
     int ix = 0;
     if (numCellX > 1) {
@@ -261,13 +261,13 @@ class ElevationModel {
       numZ++;
       sumZ += z;
     }
-    
+
     public void compute() {
       avgZ = Double.NaN;
-      if (numZ > 0) 
+      if (numZ > 0)
         avgZ = sumZ / numZ;
     }
-    
+
     public double getZ() {
       return avgZ;
     }

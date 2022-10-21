@@ -88,19 +88,19 @@ public class ExtendedCoordinateSequence
    */
   @Override
 public int getDimension() { return 4; }
-  
+
   @Override
   public int getMeasures()
   {
     return 1;
   }
-  
+
   @Override
   public Coordinate createCoordinate()
   {
     return new ExtendedCoordinate();
   }
-  
+
   @Override
 public Coordinate getCoordinate(int i) {
     return coordinates[i];
@@ -163,16 +163,16 @@ public double getOrdinate(int index, int ordinateIndex)
 public void setOrdinate(int index, int ordinateIndex, double value)
   {
     switch (ordinateIndex) {
-      case CoordinateSequence.X:  
+      case CoordinateSequence.X:
         coordinates[index].x = value;
         break;
-      case CoordinateSequence.Y:  
+      case CoordinateSequence.Y:
         coordinates[index].y = value;
         break;
-      case CoordinateSequence.Z:  
+      case CoordinateSequence.Z:
         coordinates[index].setZ(value);
         break;
-      case CoordinateSequence.M:  
+      case CoordinateSequence.M:
         coordinates[index].setM(value);
         break;
     }
@@ -186,7 +186,7 @@ public void setOrdinate(int index, int ordinateIndex, double value)
 public Object clone() {
     return copy();
   }
-  
+
   @Override
 public ExtendedCoordinateSequence copy() {
 	  ExtendedCoordinate[] cloneCoordinates = new ExtendedCoordinate[size()];

@@ -19,14 +19,14 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryCollection;
 
 /**
- * Methods to map various collections 
- * of {@link Geometry}s  
+ * Methods to map various collections
+ * of {@link Geometry}s
  * via defined mapping functions.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class GeometryMapper 
+public class GeometryMapper
 {
   /**
    * Maps the members of a {@link Geometry}
@@ -35,7 +35,7 @@ public class GeometryMapper
    * <tt>null</tt> results are skipped.
    * In the case of hierarchical {@link GeometryCollection}s,
    * only the first level of members are mapped.
-   *  
+   *
    * @param geom the input atomic or composite geometry
    * @param op the mapping operation
    * @return a result collection or geometry of most specific type
@@ -50,7 +50,7 @@ public class GeometryMapper
     }
     return geom.getFactory().buildGeometry(mapped);
   }
-  
+
   public static Collection map(Collection geoms, MapOp op)
   {
     List mapped = new ArrayList();
@@ -62,7 +62,7 @@ public class GeometryMapper
     }
     return mapped;
   }
-  
+
   /**
    * Maps the atomic elements of a {@link Geometry}
    * (which may be atomic or composite)
@@ -71,7 +71,7 @@ public class GeometryMapper
    * of the most specific type.
    * <tt>null</tt> and empty values returned from the mapping operation
    * are discarded.
-   * 
+   *
    * @param geom the geometry to map
    * @param emptyDim the dimension of empty geometry to create
    * @param op the mapping operation
@@ -89,7 +89,7 @@ public class GeometryMapper
       return mapped.get(0);
     return geom.getFactory().buildGeometry(mapped);
   }
-  
+
   private static void flatMap(Geometry geom, MapOp op, List<Geometry> mapped)
   {
     for (int i = 0; i < geom.getNumGeometries(); i++) {
@@ -105,7 +105,7 @@ public class GeometryMapper
       }
     }
   }
-  
+
   private static void addFlat(Geometry geom, List<Geometry> geomList) {
     if (geom.isEmpty()) return;
     if (geom instanceof GeometryCollection) {
@@ -117,20 +117,20 @@ public class GeometryMapper
       geomList.add(geom);
     }
   }
-  
+
   /**
    * An interface for geometry functions that map a geometry input to a geometry output.
-   * The output may be <tt>null</tt> if there is no valid output value for 
+   * The output may be <tt>null</tt> if there is no valid output value for
    * the given input value.
-   * 
+   *
    * @author Martin Davis
    *
    */
-  public interface MapOp 
+  public interface MapOp
   {
     /**
      * Maps a geometry value into another value.
-     * 
+     *
      * @param geom the input geometry
      * @return a result geometry
      */

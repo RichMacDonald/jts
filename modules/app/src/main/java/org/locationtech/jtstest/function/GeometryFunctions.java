@@ -27,17 +27,17 @@ import org.locationtech.jts.geom.Polygon;
 
 /**
  * Implementations for various geometry functions.
- * 
+ *
  * @author Martin Davis
- * 
+ *
  */
-public class GeometryFunctions 
+public class GeometryFunctions
 {
 	public static String lengthDescription = "Computes the length of perimeter of a Geometry";
 	public static double length(Geometry g)				{		return g.getLength();	}
   public static double area(Geometry g)         {   return g.getArea(); }
   public static double SRID(Geometry g)         {   return g.getSRID(); }
-  
+
   public static boolean isEmpty(Geometry g)    {   return g.isEmpty();  }
   public static boolean isSimple(Geometry g)    {   return g.isSimple();  }
 	public static boolean isValid(Geometry g)			{		return g.isValid();	}
@@ -46,14 +46,14 @@ public class GeometryFunctions
 		if (g instanceof LineString) return ((LineString) g).isClosed();
 		if (g instanceof MultiLineString) return ((MultiLineString) g).isClosed();
 		// other geometry types are defined to be closed
-		return true;	
+		return true;
 		}
-	
+
   public static Geometry copy(Geometry g)       { return g.copy(); }
   public static Geometry envelope(Geometry g) 	{ return g.getEnvelope();  }
   public static Geometry reverse(Geometry g)    { return g.reverse();  }
-  public static Geometry normalize(Geometry g) 
-  {      
+  public static Geometry normalize(Geometry g)
+  {
   	Geometry gNorm = g.copy();
   	gNorm.normalize();
     return gNorm;
@@ -110,13 +110,13 @@ public class GeometryFunctions
 		Coordinate[] pts = g.getCoordinates();
 		return g.getFactory().createMultiPointFromCoords(pts);
 	}
-	
+
 	public static Geometry addHoles(Geometry g, Geometry holeGeom) {
 	  //TODO: support adding to MultiPolygon
 	  Polygon poly = (Polygon) g;
 	  LinearRing shell = poly.getExteriorRing();
 	  List<LinearRing> holes = new ArrayList<>();
-	  
+
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
       holes.add(poly.getInteriorRingN(i));
     }
@@ -124,7 +124,7 @@ public class GeometryFunctions
       Polygon holePoly = (Polygon) holeGeom.getGeometryN(i);
       holes.add(holePoly.getExteriorRing());
     }
-	  
+
     return g.getFactory().createPolygon(shell, GeometryFactory.toLinearRingArray(holes));
 	}
 }

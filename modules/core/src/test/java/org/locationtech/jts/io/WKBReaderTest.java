@@ -24,7 +24,7 @@ import org.locationtech.jts.geom.impl.PackedCoordinateSequenceFactory;
 
 /**
  * Tests for reading WKB.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -214,14 +214,14 @@ public class WKBReaderTest  extends TestCase
   /**
    * Tests WKB that requests a huge number of points.
    * Not yet implemented satisfactorily.
-   * 
+   *
    * @throws ParseException
    */
   public void testHugeNumberOfPoints() throws ParseException
   {
     /*
      * 0: 00 - XDR (Big endian)
-     * 1: 00000003 - POLYGON ( 3 ) 
+     * 1: 00000003 - POLYGON ( 3 )
      * 5: 00000001 - Num Rings = 1
      * 9: 40590000 - Num Points = 1079574528
      */
@@ -232,35 +232,35 @@ public class WKBReaderTest  extends TestCase
   {
     /*
      * 0: 01 - NDR (Little endian)
-     * 1: 02000000 - LINESTRING ( 2 ) 
+     * 1: 02000000 - LINESTRING ( 2 )
      * 5: 0000FFFF - Num Points = -65536     * 0: 00 - XDR (Big endian)
      */
     checkWKBParseException("01020000000000FFFF");
   }
-  
+
   public void testNumElementsNegative() throws ParseException
   {
     /*
      * 0: 00 - XDR (Big endian)
-     * 1: 00000004 - MULTIPOINT ( 4 ) 
+     * 1: 00000004 - MULTIPOINT ( 4 )
      * 5: FFFFFFFF - Num Elements = -1     * 0: 01 - NDR (Little endian)
      */
     checkWKBParseException("0000000004FFFFFFFF000000000140590000000000004059000000000000000000000140690000000000004059000000000000");
   }
-  
+
   public void testNumRingsNegative() throws ParseException
   {
     /*
      * 0: 00 - XDR (Big endian)
-     * 1: 00000004 - MULTIPOINT ( 4 ) 
+     * 1: 00000004 - MULTIPOINT ( 4 )
      * 5: FFFFFFFF - Num Elements = -1     * 0: 01 - NDR (Little endian)
      */
     checkWKBParseException("0000000003FFFFFFFF0000000440590000000000004069000000000000405900000000000040590000000000004069000000000000405900000000000040590000000000004069000000000000");
   }
-  
+
   //======================================
-  
-  private void checkWKBParseException(String wkbHex) 
+
+  private void checkWKBParseException(String wkbHex)
   {
     try {
       checkWKBGeometry(wkbHex, "");
@@ -285,7 +285,7 @@ public class WKBReaderTest  extends TestCase
       useRdr = rdrM;
 
     Geometry expected = useRdr.read(expectedWKT);
-    
+
    boolean isEqual = (expected.compareTo(g2, comp2) == 0);
     if (!isEqual) {System.out.println(g2);System.out.println(expected);}
     assertTrue(isEqual);

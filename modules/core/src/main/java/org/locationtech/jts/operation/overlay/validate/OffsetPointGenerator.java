@@ -21,7 +21,7 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.util.LinearComponentExtracter;
 
 /**
- * Generates points offset by a given distance 
+ * Generates points offset by a given distance
  * from both sides of the midpoint of
  * all segments in a {@link Geometry}.
  * Can be used to generate probe points for
@@ -37,9 +37,9 @@ import org.locationtech.jts.geom.util.LinearComponentExtracter;
 public class OffsetPointGenerator
 {
   private Geometry g;
-  private boolean doLeft = true; 
+  private boolean doLeft = true;
   private boolean doRight = true;
-  
+
   public OffsetPointGenerator(Geometry g)
   {
     this.g = g;
@@ -47,7 +47,7 @@ public class OffsetPointGenerator
 
   /**
    * Set the sides on which to generate offset points.
-   * 
+   *
    * @param doLeft
    * @param doRight
    */
@@ -56,7 +56,7 @@ public class OffsetPointGenerator
     this.doLeft = doLeft;
     this.doRight = doRight;
   }
-  
+
   /**
    * Gets the computed offset points.
    *
@@ -83,10 +83,10 @@ public class OffsetPointGenerator
   }
 
   /**
-   * Generates the two points which are offset from the 
+   * Generates the two points which are offset from the
    * midpoint of the segment <tt>(p0, p1)</tt> by the
    * <tt>offsetDistance</tt>.
-   * 
+   *
    * @param p0 the first point of the segment to offset from
    * @param p1 the second point of the segment to offset from
    */
@@ -106,7 +106,7 @@ public class OffsetPointGenerator
       Coordinate offsetLeft = new Coordinate(midX - uy, midY + ux);
       offsetPts.add(offsetLeft);
     }
-    
+
     if (doRight) {
       Coordinate offsetRight = new Coordinate(midX + uy, midY - ux);
       offsetPts.add(offsetRight);

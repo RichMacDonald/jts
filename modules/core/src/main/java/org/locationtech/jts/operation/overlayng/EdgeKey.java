@@ -18,18 +18,18 @@ import org.locationtech.jts.io.OrdinateFormat;
 /**
  * A key for sorting and comparing edges in a noded arrangement.
  * Relies on the fact that in a correctly noded arrangement
- * edges are identical (up to direction) 
- * if they have their first segment in common. 
- * 
+ * edges are identical (up to direction)
+ * if they have their first segment in common.
+ *
  * @author mdavis
  *
  */
 class EdgeKey implements Comparable<EdgeKey> {
-  
+
   public static EdgeKey create(Edge edge) {
     return new EdgeKey(edge);
   }
-    
+
   private double p0x;
   private double p0y;
   private double p1x;
@@ -42,12 +42,12 @@ class EdgeKey implements Comparable<EdgeKey> {
   private void initPoints(Edge edge) {
     boolean direction = edge.direction();
     if (direction) {
-      init(edge.getCoordinate(0), 
+      init(edge.getCoordinate(0),
           edge.getCoordinate(1));
     }
     else {
       int len = edge.size();
-      init( edge.getCoordinate(len - 1), 
+      init( edge.getCoordinate(len - 1),
           edge.getCoordinate(len - 2) );
     }
   }
@@ -72,22 +72,22 @@ class EdgeKey implements Comparable<EdgeKey> {
     if (p1y > ek.p1y) return 1;
     return 0;
   }
-  
+
   @Override
 public boolean equals(Object o) {
     if (! (o instanceof EdgeKey)) {
       return false;
     }
     EdgeKey ek = (EdgeKey) o;
-    return p0x == ek.p0x 
+    return p0x == ek.p0x
         && p0y == ek.p0y
         && p1x == ek.p1x
         && p1y == ek.p1y;
   }
-  
+
   /**
    * Gets a hashcode for this object.
-   * 
+   *
    * @return a hashcode for this object
    */
   @Override
@@ -100,11 +100,11 @@ public int hashCode() {
     result = 37 * result + hashCode(p1y);
     return result;
   }
-  
+
   /**
    * Computes a hash code for a double value, using the algorithm from
    * Joshua Bloch's book <i>Effective Java"</i>
-   * 
+   *
    * @param x the value to compute for
    * @return a hashcode for x
    */
@@ -112,13 +112,13 @@ public int hashCode() {
     long f = Double.doubleToLongBits(x);
     return (int)(f^(f>>>32));
   }
-  
+
   @Override
 public String toString() {
-    return "EdgeKey(" + format(p0x, p0y) 
+    return "EdgeKey(" + format(p0x, p0y)
       + ", " +  format(p1x, p1y) + ")";
   }
-  
+
   private String format(double x, double y) {
     return OrdinateFormat.DEFAULT.format(x) + " " + OrdinateFormat.DEFAULT.format(y);
   }

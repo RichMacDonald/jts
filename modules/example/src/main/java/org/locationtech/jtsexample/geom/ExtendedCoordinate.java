@@ -51,7 +51,7 @@ public class ExtendedCoordinate
     super(coord);
     m = coord.m;
   }
-  
+
   @Override
 public ExtendedCoordinate copy() {
     return new ExtendedCoordinate(this);
@@ -95,7 +95,7 @@ public void setM(double m) { this.m = m; }
       throw new IllegalArgumentException("Invalid ordinate index: " + ordinateIndex);
     }
   }
-  
+
   @Override
   public double getOrdinate(int ordinateIndex)
   {
@@ -107,7 +107,7 @@ public void setM(double m) { this.m = m; }
     }
     throw new IllegalArgumentException("Invalid ordinate index: " + ordinateIndex);
   }
-  
+
   @Override
 public String toString()
   {

@@ -27,7 +27,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.TopologyException;
 
 class OverlayEdgeRing {
-  
+
   private OverlayEdge startEdge;
   private LinearRing ring;
   private boolean isHole;
@@ -45,11 +45,11 @@ class OverlayEdgeRing {
   public LinearRing getRing() {
     return ring;
   }
-  
+
   private Envelope getEnvelope() {
     return ring.getEnvelopeInternal();
   }
-  
+
   /**
    * Tests whether this ring is a hole.
    * @return <code>true</code> if this ring is a hole
@@ -58,29 +58,29 @@ class OverlayEdgeRing {
   {
     return isHole;
   }
-  
+
   /**
    * Sets the containing shell ring of a ring that has been determined to be a hole.
-   * 
+   *
    * @param shell the shell ring
    */
   public void setShell(OverlayEdgeRing shell) {
     this.shell = shell;
     if (shell != null) shell.addHole(this);
   }
-  
+
   /**
    * Tests whether this ring has a shell assigned to it.
-   * 
+   *
    * @return true if the ring has a shell
    */
   public boolean hasShell() {
     return shell != null;
   }
-  
+
   /**
    * Gets the shell for this ring.  The shell is the ring itself if it is not a hole, otherwise its parent shell.
-   * 
+   *
    * @return the shell for this ring
    */
   public OverlayEdgeRing getShell() {
@@ -100,10 +100,10 @@ class OverlayEdgeRing {
       //edges.add(de);
 //Debug.println(de);
 //Debug.println(de.getEdge());
-      
+
       // only valid for polygonal output
       //Assert.isTrue(edge.getLabel().isBoundaryEither());
-      
+
       edge.addCoordinates(pts);
       edge.setEdgeRing(this);
       if (edge.nextResult() == null)
@@ -114,7 +114,7 @@ class OverlayEdgeRing {
     pts.closeRing();
     return pts.toCoordinateArray();
   }
-  
+
   private void computeRing(Coordinate[] ringPts, GeometryFactory geometryFactory) {
     if (ring != null) return;   // don't compute more than once
     ring = geometryFactory.createLinearRing(ringPts);
@@ -131,7 +131,7 @@ class OverlayEdgeRing {
   {
     return ringPts;
   }
-  
+
   /**
    * Finds the innermost enclosing shell OverlayEdgeRing
    * containing this OverlayEdgeRing, if any.
@@ -144,16 +144,16 @@ class OverlayEdgeRing {
    * is known to be properly contained in a shell
    * (which is guaranteed to be the case if the hole does not touch its shell)
    * <p>
-   * To improve performance of this function the caller should 
+   * To improve performance of this function the caller should
    * make the passed shellList as small as possible (e.g.
    * by using a spatial index filter beforehand).
-   * 
+   *
    * @return containing EdgeRing or null if no containing EdgeRing is found
    */
   public OverlayEdgeRing findEdgeRingContaining(List<OverlayEdgeRing> erList)
   {
     OverlayEdgeRing minContainingRing = null;
-    
+
     for (OverlayEdgeRing edgeRing: erList) {
       if (edgeRing.contains(this)) {
         if (minContainingRing == null
@@ -171,19 +171,19 @@ class OverlayEdgeRing {
     }
     return locator;
   }
-  
+
   public int locate(Coordinate pt) {
     /**
      * Use an indexed point-in-polygon for performance
      */
     return getLocator().locate(pt);
   }
-  
+
   /**
    * Tests if an edgeRing is properly contained in this ring.
    * Relies on property that edgeRings never overlap (although they may
    * touch at single vertices).
-   * 
+   *
    * @param ring ring to test
    * @return true if ring is properly contained
    */
@@ -196,7 +196,7 @@ class OverlayEdgeRing {
       return false;
     return isPointInOrOut(ring);
   }
-  
+
   private boolean isPointInOrOut(OverlayEdgeRing ring) {
     // in most cases only one or two points will be checked
     for (Coordinate pt : ring.getCoordinates()) {

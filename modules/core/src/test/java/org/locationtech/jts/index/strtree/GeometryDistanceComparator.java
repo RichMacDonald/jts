@@ -21,13 +21,13 @@ import org.locationtech.jts.geom.Point;
  * The Class GeometryDistanceComparator.
  */
 public class GeometryDistanceComparator implements Comparator<Geometry>, Serializable{
-	
+
 	/** The normal order. */
 	boolean normalOrder;
 
 	/** The query center. */
 	Point queryCenter;
-	
+
 	/**
 	 * Instantiates a new Geometry distance comparator.
 	 *
@@ -39,7 +39,7 @@ public class GeometryDistanceComparator implements Comparator<Geometry>, Seriali
 		this.queryCenter = queryCenter;
 		this.normalOrder = normalOrder;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */

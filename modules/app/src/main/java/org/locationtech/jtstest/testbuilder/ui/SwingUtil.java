@@ -48,7 +48,7 @@ public class SwingUtil {
   public static  FileFilter PNG_FILE_FILTER = createFileFilter("PNG File (*.png)", ".png");
 
     /**
-     * 
+     *
      * Example usage:
      * <pre>
      * SwingUtil.createFileFilter("JEQL script (*.jql)", "jql")
@@ -74,7 +74,7 @@ public class SwingUtil {
     }
 
     /**
-     * 
+     *
      * @param comp
      * @param fileChooser
      * @return filename chosen, or
@@ -108,7 +108,7 @@ public class SwingUtil {
     }
     return true;
   }
-    
+
   public static void setEnabledWithBackground(Component comp, boolean isEnabled)
   {
     comp.setEnabled(isEnabled);
@@ -117,7 +117,7 @@ public class SwingUtil {
     else
       comp.setBackground(SystemColor.control);
   }
-  
+
   public static Object coerce(Object val, Class clz) {
     if ((val == null) || (val.getClass() == clz)) return val;
     if (val instanceof String && (clz == Double.class || clz == double.class))
@@ -126,7 +126,7 @@ public class SwingUtil {
       return convertInteger((String) val);
     return val;
   }
-  
+
   public static Integer convertInteger(String str) {
     int val = 0;
     try {
@@ -135,7 +135,7 @@ public class SwingUtil {
     }
     return val;
   }
-  
+
   public static Double convertDouble(String str) {
     double val = 0;
     try {
@@ -144,7 +144,7 @@ public class SwingUtil {
     }
     return val;
   }
-  
+
   public static Integer getInteger(JTextField txt, Integer defaultVal) {
     String str = txt.getText();
     if (str.trim().length() <= 0)
@@ -157,7 +157,7 @@ public class SwingUtil {
     }
     return val;
   }
-  
+
   public static Double getDouble(JTextField txt, Double defaultVal) {
     String str = txt.getText();
     if (str.trim().length() <= 0)
@@ -170,23 +170,23 @@ public class SwingUtil {
     }
     return val;
   }
-  
+
   public static String value(JTextComponent txt) {
     return txt.getText();
   }
-  
+
   public static Object value(JComboBox cb, Object[] val)
   {
   	int selIndex = cb.getSelectedIndex();
-  	if (selIndex == -1) 
+  	if (selIndex == -1)
   		return null;
   	return val[selIndex];
   }
-  
+
   public static void copyToClipboard(Object o, boolean isFormatted)
   {
     if (o == null) return;
-    
+
   	if (o instanceof Geometry) {
   		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(
   				new GeometryTransferable((Geometry) o, isFormatted), null);
@@ -214,7 +214,7 @@ public class SwingUtil {
 		}
 		return null;
 	}
-  
+
   public static Transferable getContents(Clipboard clipboard) {
     try {
         return clipboard.getContents(null);
@@ -222,7 +222,7 @@ public class SwingUtil {
         return null;
     }
   }
-    
+
   public static void reportException(Component c, Exception e) {
     JOptionPane.showMessageDialog(c, StringUtil.wrap(e.toString(), 80), "Exception",
         JOptionPane.ERROR_MESSAGE);
@@ -251,7 +251,7 @@ public class SwingUtil {
   public static JButton createButton(String title, ImageIcon icon, String tip, ActionListener action ) {
     return createButton(title, icon, tip, action, false);
   }
-    
+
   public static JButton createButton(String title, ImageIcon icon, String tip, ActionListener action, boolean isFocusable ) {
     JButton btn = new JButton();
     if (title != null) btn.setText(title);
@@ -281,7 +281,7 @@ public class SwingUtil {
   {
     tabPane.setSelectedIndex(tabPane.indexOfTab(tabName));
   }
-  
+
   public static void setAntiAlias(Graphics2D g, boolean isOn) {
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
         isOn ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF);

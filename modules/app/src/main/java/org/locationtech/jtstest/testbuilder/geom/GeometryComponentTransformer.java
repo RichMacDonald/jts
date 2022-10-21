@@ -19,11 +19,11 @@ import org.locationtech.jts.geom.util.GeometryEditor;
 
 /**
  * Transforms a component in a geometry.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class GeometryComponentTransformer 
+public class GeometryComponentTransformer
 {
 
   public static Geometry transform(Geometry geom, AffineTransformation trans)
@@ -32,7 +32,7 @@ public class GeometryComponentTransformer
     geomTrans.apply(trans);
     return geomTrans;
   }
-  
+
   public static Geometry transform(Geometry geom, Geometry component, AffineTransformation trans)
   {
     GeometryEditor editor = new GeometryEditor();
@@ -41,25 +41,25 @@ public class GeometryComponentTransformer
     if (compOp.isEdited()) return compEditGeom;
     return geom;
   }
-  
+
   private static class TransformOperation
     implements GeometryEditor.GeometryEditorOperation
   {
     private Geometry component;
     private boolean isEdited = false;
     private AffineTransformation trans;
-    
+
     public TransformOperation(Geometry component, AffineTransformation trans)
     {
       this.component = component;
       this.trans = trans;
     }
-    
+
     public boolean isEdited() { return isEdited; }
 
     @Override
 	public Geometry edit(Geometry geometry, GeometryFactory factory)
-    {               
+    {
       if (geometry == component) {
           isEdited = true;
           Geometry compTrans = component.copy();
@@ -68,8 +68,8 @@ public class GeometryComponentTransformer
       }
       return geometry;
     }
-    
+
   }
-  
-  
+
+
 }

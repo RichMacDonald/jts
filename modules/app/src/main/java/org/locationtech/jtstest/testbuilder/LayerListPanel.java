@@ -43,12 +43,12 @@ import org.locationtech.jtstest.testbuilder.ui.SwingUtil;
  * @version 1.7
  */
 public class LayerListPanel extends JPanel {
-  
+
   private static final int TAB_INDEX_LAYER = 0;
 
   private static final String LBL_LAYER = "Style";
   private static final String LBL_VIEW = "View";
-  
+
   JPanel listPanel = new JPanel();
   Box buttonPanel = Box.createVerticalBox();
   JTabbedPane tabPane = new JTabbedPane();
@@ -79,7 +79,7 @@ public class LayerListPanel extends JPanel {
     //setSize(300, 250);
     setBackground(AppColors.BACKGROUND);
     setLayout(new BorderLayout());
-    
+
     JPanel panelLeft = new JPanel();
     panelLeft.setLayout(new BorderLayout());
 
@@ -96,25 +96,25 @@ public class LayerListPanel extends JPanel {
     panelLeft.add(jScrollPane1, BorderLayout.CENTER);
     panelLeft.add(buttonPanel, BorderLayout.EAST);
 
-    btnCopy = SwingUtil.createButton(AppIcons.ADD, 
+    btnCopy = SwingUtil.createButton(AppIcons.ADD,
         "Copy layer to a new layer",
             (ActionListener) e -> layerCopy());
     buttonPanel.add(btnCopy);
-    
-    btnPaste = SwingUtil.createButton(AppIcons.PASTE, 
+
+    btnPaste = SwingUtil.createButton(AppIcons.PASTE,
         "Paste geometry into layer",
             (ActionListener) e -> layerPaste(focusLayer));
     buttonPanel.add(btnPaste);
-    btnUp = SwingUtil.createButton(AppIcons.UP, 
+    btnUp = SwingUtil.createButton(AppIcons.UP,
         "Move layer up",
             (ActionListener) e -> layerUp(focusLayer));
     buttonPanel.add(btnUp);
-    btnDown = SwingUtil.createButton(AppIcons.DOWN, 
+    btnDown = SwingUtil.createButton(AppIcons.DOWN,
         "Move layer down",
             (ActionListener) e -> layerDown(focusLayer));
     buttonPanel.add(btnDown);
-    
-    btnDelete = SwingUtil.createButton(AppIcons.DELETE, 
+
+    btnDelete = SwingUtil.createButton(AppIcons.DELETE,
         AppStrings.TIP_LAYER_CLEAR,
             (ActionListener) e -> {
 			    if (SwingUtil.isCtlKeyPressed(e)) {
@@ -125,12 +125,12 @@ public class LayerListPanel extends JPanel {
 			    }
 			 });
     buttonPanel.add(btnDelete);
-    
+
     add(panelLeft, BorderLayout.WEST);
-    
+
     lyrStylePanel = new LayerStylePanel();
     GeometryViewStylePanel viewStylePanel = new GeometryViewStylePanel();
-    //add(lyrStylePanel, BorderLayout.CENTER);    
+    //add(lyrStylePanel, BorderLayout.CENTER);
 
     //tabFunctions.setBackground(jTabbedPane1.getBackground());
     JScrollPane scrollPane = new JScrollPane();
@@ -152,11 +152,11 @@ public class LayerListPanel extends JPanel {
     //tabPane.setTitleAt(0, LBL_LAYER + " - " + title);
     //SwingUtil.showTab(tabPane, LBL_LAYER_STYLE);
   }
-  
+
   public void populateList() {
     listPanel.removeAll();
     layerItems.clear();
-    
+
     addLayers(JTSTestBuilder.model().getLayersTop());
     addLayers(JTSTestBuilder.model().getLayers());
     addLayers(JTSTestBuilder.model().getLayersBase());
@@ -177,7 +177,7 @@ public class LayerListPanel extends JPanel {
       layerItems.add(item);
     }
   }
-  
+
   public void setLayerFocus(LayerItemPanel layerItem) {
     for (LayerItemPanel item : layerItems) {
       item.setFocusLayer(false);
@@ -212,38 +212,38 @@ public class LayerListPanel extends JPanel {
   private void layerDelete(Layer lyr) {
     // don't remove if non-empty
     if (lyr.hasGeometry()) return;
-    
+
     JTSTestBuilder.model().layerDelete(lyr);
     populateList();
     JTSTestBuilder.controller().geometryViewChanged();
   }
-  
+
   private void layerUp(Layer lyr) {
     JTSTestBuilder.model().layerUp(lyr);
     populateList();
     setLayerFocus(findLayerItem(lyr));
     JTSTestBuilder.controller().geometryViewChanged();
   }
-  
+
   private void layerDown(Layer lyr) {
     JTSTestBuilder.model().layerDown(lyr);
     populateList();
     setLayerFocus(findLayerItem(lyr));
     JTSTestBuilder.controller().geometryViewChanged();
   }
-  
+
   private void layerClear(Layer lyr) {
     StaticGeometryContainer src = (StaticGeometryContainer) lyr.getSource();
     src.setGeometry(null);
     updateButtons(focusLayer);
     JTSTestBuilder.controller().geometryViewChanged();
   }
-  
+
   protected void layerPaste(Layer lyr) {
     try {
       // don't paste into non-empty layers to avoid losing data
       if (lyr.hasGeometry()) return;
-      
+
       Geometry geom = JTSTestBuilder.model().readGeometryFromClipboard();
       // this will error if layer is not modifiable
       StaticGeometryContainer src = (StaticGeometryContainer) lyr.getSource();
@@ -259,13 +259,13 @@ public class LayerListPanel extends JPanel {
 class LayerItemPanel extends JPanel {
   private static Font FONT_FOCUS = new java.awt.Font("Dialog", Font.BOLD, 12);
   private static Font FONT_NORMAL = new java.awt.Font("Dialog", Font.PLAIN, 12);
-  
+
   private Border BORDER_CONTROL = BorderFactory.createLineBorder(CLR_CONTROL);
   private Border BORDER_HIGHLIGHT = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
-  
+
   private static final Color CLR_CONTROL = AppColors.BACKGROUND;
   private static final Color CLR_HIGHLIGHT = ColorUtil.darker(CLR_CONTROL, .95);
-  
+
   private Layer layer;
   private JCheckBox checkbox;
   private LayerListPanel lyrListPanel;
@@ -290,7 +290,7 @@ class LayerItemPanel extends JPanel {
 public String getToolTipText(MouseEvent e) {
     return layer.getNameInfo();
   }
-  
+
   public Layer getLayer() {
     return layer;
   }
@@ -302,16 +302,16 @@ public String getToolTipText(MouseEvent e) {
     revalidate();
     this.hasFocus = hasFocus;
   }
-  
+
   public boolean isFocusLayer() {
     return hasFocus;
   }
-  
+
   public void update() {
     LayerStyleSwatchControl.update(swatch, layer);
     lblName.setText( layer.getName());
   }
-  
+
   private void uiInit() throws Exception {
     setSize(250, 250);
     setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -319,7 +319,7 @@ public String getToolTipText(MouseEvent e) {
     //setOpaque(true);
     setAlignmentX(Component.LEFT_ALIGNMENT);
     setBorder(BORDER_CONTROL);
-    
+
     checkbox = new JCheckBox();
     add(checkbox);
     checkbox.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -327,7 +327,7 @@ public String getToolTipText(MouseEvent e) {
     checkbox.setSelected(layer.isEnabled());
     checkbox.setOpaque(false);
 
-    
+
     lblName = new LayerName(layer);
     lblName.setAlignmentX(Component.LEFT_ALIGNMENT);
     lblName.setMinimumSize(new Dimension(100,12));
@@ -335,19 +335,19 @@ public String getToolTipText(MouseEvent e) {
     lblName.setMaximumSize(new Dimension(100,12));
     lblName.setFont(FONT_NORMAL);
     lblName.addMouseListener(new HighlightMouseListener(this));
-    lblName.addMouseListener(new MouseAdapter()  
-    {  
+    lblName.addMouseListener(new MouseAdapter()
+    {
       @Override
-	public void mouseClicked(MouseEvent e)  
-      {  
+	public void mouseClicked(MouseEvent e)
+      {
         lyrListPanel.setLayerFocus(self);
       }
-    }); 
-    
+    });
+
     swatch = LayerStyleSwatchControl.create(layer);
     add(swatch);
     add(Box.createRigidArea(new Dimension(4,0)));
-    
+
     namePanel = new JPanel();
     add(namePanel);
     namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
@@ -359,7 +359,7 @@ public String getToolTipText(MouseEvent e) {
     namePanel.setMaximumSize(new Dimension(100,14));
     //namePanel.setBorder(BORDER_HIGHLIGHT);;
     namePanel.addMouseListener(new HighlightMouseListener(this));
-    
+
     namePanel.add(lblName);
   }
 
@@ -369,14 +369,14 @@ public String getToolTipText(MouseEvent e) {
     repaint();
     JTSTestBuilder.controller().geometryViewChanged();
   }
-  
+
   class HighlightMouseListener extends MouseAdapter {
     private LayerItemPanel comp;
 
     HighlightMouseListener(LayerItemPanel comp) {
       this.comp = comp;
     }
-    
+
     @Override
 	public void mouseEntered(MouseEvent e) {
       if (comp.isFocusLayer()) return;
@@ -402,7 +402,7 @@ class LayerName extends JLabel {
   public LayerName(Layer layer) {
     super(layer.getName());
     this.layer = layer;
-    setToolTipText(layer.getName()); 
+    setToolTipText(layer.getName());
   }
 
   @Override
@@ -415,10 +415,10 @@ class LayerStyleSwatchControl extends JPanel {
 
   public static LayerStyleSwatchControl create(Layer layer) {
     LayerStyleSwatchControl ctl = new LayerStyleSwatchControl(layer);
-    //update(ctl, layer);  
+    //update(ctl, layer);
     return ctl;
   }
-  
+
   private Layer layer;
 
   public LayerStyleSwatchControl(Layer layer) {
@@ -428,16 +428,16 @@ class LayerStyleSwatchControl extends JPanel {
     setPreferredSize(dim);
     setMaximumSize(dim);
     setOpaque(true);
-    setToolTipText(layer.getName()); 
+    setToolTipText(layer.getName());
   }
 
   @Override
 public String getToolTipText(MouseEvent e) {
     return layer.getNameSummary();
   }
-  
+
   public static void update(JPanel ctl, Layer layer) {
-    
+
     Color fillClr = Color.WHITE;
     if (layer.getGeometryStyle().isFilled())
       fillClr = layer.getGeometryStyle().getFillColor();
@@ -445,14 +445,14 @@ public String getToolTipText(MouseEvent e) {
     int lineWidth = 1;
     if (layer.getGeometryStyle().getStrokeWidth() > 1)
       lineWidth = 2;
-    
+
     /*
     Graphics2D gr = (Graphics2D) ctl.getGraphics();
     gr.setColor(fillClr);
     gr.setPaint(fillClr);
     gr.fillRect(0, 0, 10, 10);
 */
-    ctl.setBackground( fillClr );  
+    ctl.setBackground( fillClr );
     ctl.setBorder(BorderFactory.createLineBorder(layer.getGeometryStyle().getLineColor(), lineWidth));
   }
 }

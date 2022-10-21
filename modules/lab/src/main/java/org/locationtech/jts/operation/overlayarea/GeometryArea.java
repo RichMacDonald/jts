@@ -18,34 +18,34 @@ import org.locationtech.jts.geom.GeometryFilter;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
 
-/** 
+/**
  * Computes the area of a geometry using the {@link EdgeVector} summing
- * approach. 
+ * approach.
  * This provides a validation of the correctness of the {@link OverlayArea} approach.
  * It is not intended to replace the standard polygon area computation.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class GeometryArea {
-  
+
   public static double area(Geometry geom) {
     GeometryArea area = new GeometryArea(geom);
     return area.getArea();
   }
-  
+
   private Geometry geom;
 
   public GeometryArea(Geometry geom) {
     this.geom = geom;
   }
 
-  private double getArea() {   
+  private double getArea() {
     PolygonAreaFilter filter = new PolygonAreaFilter();
     geom.apply(filter);
     return filter.area;
   }
-  
+
   private class PolygonAreaFilter implements GeometryFilter {
     double area = 0;
     @Override
@@ -55,7 +55,7 @@ public class GeometryArea {
       }
     }
   }
-  
+
   private double areaPolygon(Polygon geom) {
     double area = areaRing(geom.getExteriorRing());
     for (int i = 0; i < geom.getNumInteriorRing(); i++) {
@@ -64,12 +64,12 @@ public class GeometryArea {
     }
     return area;
   }
-  
+
   public double areaRing(LinearRing ring) {
     // TODO: handle hole rings, multiPolygons
     CoordinateSequence seq = ring.getCoordinateSequence();
     boolean isCW = ! Orientation.isCCW(seq);
-    
+
     // scan every segment
     double area = 0;
     for (int i = 1; i < seq.size(); i++) {

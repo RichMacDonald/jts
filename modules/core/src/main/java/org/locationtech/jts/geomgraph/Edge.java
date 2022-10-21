@@ -254,7 +254,7 @@ public boolean equals(Object o)
     }
     return result;
   }
-  
+
   /**
    * Check if coordinate sequences of the Edges are identical.
    *

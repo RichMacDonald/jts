@@ -32,9 +32,9 @@ import org.locationtech.jts.triangulate.tri.Tri;
 
 
 /**
- * Constructs an approximation to the medial axis of a Polygon, 
+ * Constructs an approximation to the medial axis of a Polygon,
  * as a set of linestrings representing the medial axis graph.
- * 
+ *
  * @author mdavis
  *
  */
@@ -44,7 +44,7 @@ public class ApproximateMedialAxis {
     ApproximateMedialAxis tt = new ApproximateMedialAxis((Polygon) geom);
     return tt.compute();
   }
-  
+
   /*
    //-- Testing only
   public static Geometry axisPointSegment(Geometry pt, Geometry seg) {
@@ -54,7 +54,7 @@ public class ApproximateMedialAxis {
     return pt.getFactory().createPoint(axisPt);
   }
   */
-  
+
   private Polygon inputPolygon;
   private GeometryFactory geomFact;
 
@@ -65,15 +65,15 @@ public class ApproximateMedialAxis {
     this.inputPolygon = polygon;
     geomFact = inputPolygon.getFactory();
   }
-  
+
   private Geometry compute() {
     ConstrainedDelaunayTriangulator cdt = new ConstrainedDelaunayTriangulator(inputPolygon);
     List<Tri> tris = cdt.getTriangles();
-    
+
     List<LineString> lines = constructLines(tris);
     return geomFact.createMultiLineString(GeometryFactory.toLineStringArray(lines));
   }
-  
+
   private List<LineString> constructLines(List<Tri> tris)
   {
     List<LineString> lines = new ArrayList<>();
@@ -101,7 +101,7 @@ public class ApproximateMedialAxis {
 
   private LineString constructLeafLine(Tri triStart) {
     int eAdj = indexOfAdjacent(triStart);
-    
+
     int vOpp = Tri.oppVertex(eAdj);
     Coordinate startPt = triStart.getCoordinate(vOpp);
     Coordinate edgePt = angleBisector(triStart, vOpp);
@@ -111,10 +111,10 @@ public class ApproximateMedialAxis {
 
   private LineString constructPath(AxisNode node) {
     Tri tri = node.getTri();
-    int freeEdge = node.getNonPathEdge();      
+    int freeEdge = node.getNonPathEdge();
     //Coordinate exitPt = node.getPathPoint(freeEdge);
     Coordinate startPt = node.createPathPoint(freeEdge);
-    
+
     Tri triNext = tri.getAdjacent(freeEdge);
     /**
      * If next tri is a node as well, queue it.
@@ -127,26 +127,26 @@ public class ApproximateMedialAxis {
     }
     return constructPath(tri, freeEdge, startPt, null);
   }
-  
-  private LineString constructPath(Tri triStart, int eStart, 
+
+  private LineString constructPath(Tri triStart, int eStart,
       Coordinate p0, Coordinate p1)
   {
     ArrayList<Coordinate> pts = new ArrayList<>();
     if (p0 != null) pts.add(p0);
     if (p1 != null) pts.add(p1);
-    
+
     Tri triNext = triStart.getAdjacent(eStart);
     int eAdjNext = triNext.getIndex(triStart);
     extendPath(triNext, eAdjNext, pts);
-    
+
     return geomFact.createLineString(CoordinateArrays.toCoordinateArray(pts));
   }
-  
+
   private void extendPath(Tri tri, int edgeEntry, List<Coordinate> pts) {
     //if (pts.size() > 100) return;
-    
+
     //TODO: make this iterative instead of recursive
-    
+
     int numAdj = tri.numAdjacent();
     if (numAdj == 3) {
       addNodePathPoint(tri, edgeEntry, pts.get(pts.size() - 1));
@@ -157,7 +157,7 @@ public class ApproximateMedialAxis {
       //-- leaf node - should never happen, has already been processed
       return;
     }
-    
+
     //--- now are only dealing with 2-Adj triangles
     int eAdj = indexOfAdjacentOther(tri, edgeEntry);
     if (false && isTube(tri, eAdj)) {
@@ -168,7 +168,7 @@ public class ApproximateMedialAxis {
      Tri tri2 = tri.getAdjacent(eAdj);
       Coordinate p = exitPointTube(tri, tri2);
       pts.add(p);
-      
+
       int eAdj2 = tri2.getIndex(tri);
       int eOpp2 = indexOfAdjacentOther(tri2, eAdj2);
       Tri triN = tri2.getAdjacent(eOpp2);
@@ -196,7 +196,7 @@ public class ApproximateMedialAxis {
     node.addPathPoint(edgeEntry, pt);
     nodeQue.add(node);
   }
-  
+
   private Coordinate exitPointWedge(Tri tri, int eExit) {
     int eBdy = indexOfNonAdjacent(tri);
     Coordinate pt = tri.getCoordinate(Tri.oppVertex(eBdy));
@@ -207,23 +207,23 @@ public class ApproximateMedialAxis {
       p1 = tri.getCoordinate(eBdy);
     }
     /**
-     * Midpoint produces a straighter line in nearly-parallel corridors, 
-     * but is more see-sawed elsewhere. 
+     * Midpoint produces a straighter line in nearly-parallel corridors,
+     * but is more see-sawed elsewhere.
      */
-    
+
     return tri.midpoint(eExit);
     //return medialAxisPoint(pt, p0, p1);
   }
 
   /**
    * Computes medial axis point on exit edge of a "tube".
-   * 
-   * @param tri1 the first triangle in the tube 
+   *
+   * @param tri1 the first triangle in the tube
    * @param tri2 the second triangle in the tube
    * @return medial axis exit point of tube
    */
   private Coordinate exitPointTube(Tri tri1, Tri tri2) {
-    
+
     int eBdy1 = indexOfNonAdjacent(tri1);
     int eBdy2 = indexOfNonAdjacent(tri2);
     //--- Case eBdy1 is eEntry.next
@@ -231,7 +231,7 @@ public class ApproximateMedialAxis {
     Coordinate p01 = tri1.getCoordinate(Tri.next(eBdy1));
     Coordinate p10 = tri2.getCoordinate(Tri.next(eBdy2));
     Coordinate p11 = tri2.getCoordinate(eBdy2);
-    
+
     int eAdj1 = tri1.getIndex(tri2);
     if (Tri.next(eBdy1) != eAdj1) {
       p00 = tri1.getCoordinate(Tri.next(eBdy1));
@@ -246,10 +246,10 @@ public class ApproximateMedialAxis {
   private static final double MEDIAL_AXIS_EPS = .01;
 
   /**
-   * Computes the approximate point where the medial axis  
+   * Computes the approximate point where the medial axis
    * between two line segments
    * intersects the line between the ends of the segments.
-   * 
+   *
    * @param p00 the start vertex of segment 0
    * @param p01 the end vertex of segment 0
    * @param p10 the start vertex of segment 1
@@ -257,7 +257,7 @@ public class ApproximateMedialAxis {
    * @return the approximate medial axis point
    */
   private static Coordinate medialAxisPoint(
-      Coordinate p00, Coordinate p01, 
+      Coordinate p00, Coordinate p01,
       Coordinate p10, Coordinate p11) {
     double endFrac0 = 0;
     double endFrac1 = 1;
@@ -274,7 +274,7 @@ public class ApproximateMedialAxis {
         endFrac1 = midFrac;
        }
       else {
-        endFrac0 = midFrac;       
+        endFrac0 = midFrac;
       }
       eps = Math.abs(dist0 - dist1) / edgeLen;
     }
@@ -283,10 +283,10 @@ public class ApproximateMedialAxis {
   }
 
   /**
-   * Computes the approximate point where the medial axis 
+   * Computes the approximate point where the medial axis
    * between a point and a line segment
    * intersects the line between the point and the segment endpoint
-   * 
+   *
    * @param p the point
    * @param p0 the first vertex of the segment
    * @param p1 the second vertex of the segment
@@ -308,7 +308,7 @@ public class ApproximateMedialAxis {
         endFrac1 = midFrac;
        }
       else {
-        endFrac0 = midFrac;       
+        endFrac0 = midFrac;
       }
       eps = Math.abs(distSeg - distPt) / edgeLen;
     }
@@ -319,7 +319,7 @@ public class ApproximateMedialAxis {
   /**
    * Tests if a triangle and its adjacent tri form a "tube",
    * where the opposite edges of the triangles are on the boundary.
-   * 
+   *
    * @param tri the triangle to test
    * @param eAdj the edge adjacent to the next triangle
    * @return true if the two triangles form a tube
@@ -332,14 +332,14 @@ public class ApproximateMedialAxis {
     int eBdy = indexOfNonAdjacent(tri);
     int vOppBdy = Tri.oppVertex(eBdy);
     Coordinate pOppBdy = tri.getCoordinate(vOppBdy);
-    
+
     int eBdyN = indexOfNonAdjacent(triNext);
     int vOppBdyN = Tri.oppVertex(eBdyN);
     Coordinate pOppBdyN = triNext.getCoordinate(vOppBdyN);
-    
+
     return ! pOppBdy.equals2D(pOppBdyN);
   }
-  
+
   private static int indexOfAdjacent(Tri tri) {
     for (int i = 0; i < 3; i++) {
       if (tri.hasAdjacent(i))
@@ -347,7 +347,7 @@ public class ApproximateMedialAxis {
     }
     return -1;
   }
-  
+
   private static int indexOfAdjacentOther(Tri tri, int e) {
     for (int i = 0; i < 3; i++) {
       if (i != e && tri.hasAdjacent(i))
@@ -355,7 +355,7 @@ public class ApproximateMedialAxis {
     }
     return -1;
   }
-  
+
   private static int indexOfNonAdjacent(Tri tri) {
     for (int i = 0; i < 3; i++) {
       if (! tri.hasAdjacent(i))
@@ -374,7 +374,7 @@ public class ApproximateMedialAxis {
 }
 
 class AxisNode {
-  
+
   private Tri tri;
   /**
    * Axis path points along tri edges
@@ -383,11 +383,11 @@ class AxisNode {
   private Coordinate p1;
   private Coordinate p2;
   private boolean isLinesAdded = false;
-  
+
   public AxisNode(Tri tri) {
     this.tri = tri;
   }
-  
+
   public Tri getTri() {
     return tri;
   }
@@ -399,13 +399,13 @@ class AxisNode {
     case 2: p2 = p;
     }
   }
-  
+
   public Coordinate createPathPoint(int edgeIndex) {
     Coordinate pt = tri.midpoint(edgeIndex);
     addPathPoint(edgeIndex, pt);
     return pt;
   }
-  
+
   public Coordinate getPathPoint(int edgeIndex) {
     switch (edgeIndex) {
     case 0: return p0;
@@ -414,7 +414,7 @@ class AxisNode {
     }
     return null;
   }
-  
+
   public boolean isPathComplete() {
     return numPaths() == 3;
   }
@@ -426,14 +426,14 @@ class AxisNode {
     if (p2 != null) num++;
     return num;
   }
-  
+
   public int getNonPathEdge() {
     if (p0 == null) return 0;
     if (p1 == null) return 1;
     if (p2 == null) return 2;
     return -1;
   }
-  
+
   public void addInternalLines(List<LineString> lines, GeometryFactory geomFact) {
     //Assert.assertTrue( isPathComplete() );
     if (isLinesAdded) return;
@@ -446,7 +446,7 @@ class AxisNode {
     }
     isLinesAdded = true;
   }
-  
+
   /*
   //--- Using cc int point isn't as good as midpoint
   private void fillEdgePoints(int longEdge, Coordinate cc) {
@@ -454,7 +454,7 @@ class AxisNode {
     if (p1 == null) p1 = medialPoint(1, longEdge, cc);
     if (p2 == null) p2 = medialPoint(2, longEdge, cc);
   }
-  
+
   private Coordinate medialPoint(int edge, int longEdge, Coordinate cc) {
     if (edge != longEdge) {
       return tri.midpoint(edge);
@@ -463,20 +463,20 @@ class AxisNode {
         tri.getEdgeStart(edge), tri.getEdgeEnd(edge),
         tri.getCoordinate( Tri.oppVertex(edge) ), cc);
   }
-  
+
   private Coordinate intersection(Coordinate p00, Coordinate p01, Coordinate p10, Coordinate p11) {
     LineIntersector li = new RobustLineIntersector();
     li.computeIntersection(p00, p01, p10, p11);
     return li.getIntersection(0);
   }
 */
-  
+
   private void addInternalLinesToEdge(List<LineString> lines, GeometryFactory geomFact) {
     int nodeEdge = longEdge();
     Coordinate nodePt = getPathPoint(nodeEdge);
     addInternalLines(nodePt, nodeEdge, lines, geomFact);
   }
-  
+
   private void addInternalLines(Coordinate p, int skipEdge, List<LineString> lines, GeometryFactory geomFact) {
     if (skipEdge != 0) addLine(p0, p, geomFact, lines);
     if (skipEdge != 1) addLine(p1, p, geomFact, lines);
@@ -484,12 +484,12 @@ class AxisNode {
   }
 
   private boolean intersects(Coordinate p) {
-    return Triangle.intersects(tri.getCoordinate(0), 
+    return Triangle.intersects(tri.getCoordinate(0),
         tri.getCoordinate(1), tri.getCoordinate(2), p);
   }
 
   private Coordinate circumcentre() {
-    return Triangle.circumcentre(tri.getCoordinate(0), 
+    return Triangle.circumcentre(tri.getCoordinate(0),
         tri.getCoordinate(1), tri.getCoordinate(2));
   }
 
@@ -507,17 +507,17 @@ class AxisNode {
     }
     return e;
   }
-  
+
   private double edgeLen(int i) {
     return tri.getCoordinate(i).distance(tri.getCoordinate(Tri.next(i)));
   }
-  
-  private static void addLine(Coordinate p0, Coordinate p1, 
+
+  private static void addLine(Coordinate p0, Coordinate p1,
       GeometryFactory geomFact, List<LineString> lines) {
     LineString line = geomFact.createLineString(new Coordinate[] {
       p0.copy(), p1.copy()
     });
     lines.add(line);
   }
-  
+
 }

@@ -17,11 +17,11 @@ import org.locationtech.jts.geom.CoordinateList;
 import org.locationtech.jts.geom.Triangle;
 
 /**
- * Simplifies a linestring (sequence of points) using the 
+ * Simplifies a linestring (sequence of points) using the
  * Visvalingam-Whyatt algorithm.
- * The Visvalingam-Whyatt algorithm simplifies geometry 
+ * The Visvalingam-Whyatt algorithm simplifies geometry
  * by removing vertices while trying to minimize the area changed.
- * 
+ *
  * @version 1.7
  */
 class VWLineSimplifier
@@ -100,9 +100,9 @@ class VWLineSimplifier
       }
       return first;
     }
-    
+
     public static double MAX_AREA = Double.MAX_VALUE;
-    
+
     private Coordinate pt;
     private VWLineSimplifier.VWVertex prev;
     private VWLineSimplifier.VWVertex next;

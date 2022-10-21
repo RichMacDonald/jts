@@ -22,30 +22,30 @@ import org.locationtech.jts.geom.Coordinate;
 /**
  * A graph comprised of {@link HalfEdge}s.
  * It supports tracking the vertices in the graph
- * via edges incident on them, 
+ * via edges incident on them,
  * to allow efficient lookup of edges and vertices.
  * <p>
- * This class may be subclassed to use a 
+ * This class may be subclassed to use a
  * different subclass of HalfEdge,
  * by overriding {@link #createEdge(Coordinate)}.
  * If additional logic is required to initialize
  * edges then {@link EdgeGraph#addEdge(Coordinate, Coordinate)}
  * can be overridden as well.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class EdgeGraph 
+public class EdgeGraph
 {
   private Map vertexMap = new HashMap();
-  
+
   public EdgeGraph() {
   }
 
   /**
    * Creates a single HalfEdge.
    * Override to use a different HalfEdge subclass.
-   * 
+   *
    * @param orig the origin location
    * @return a new HalfEdge with the given origin
    */
@@ -56,7 +56,7 @@ public class EdgeGraph
 
   /**
    * Creates a HalfEge pair, using the HalfEdge type of the graph subclass.
-   * 
+   *
    * @param p0
    * @param p1
    * @return
@@ -68,26 +68,26 @@ public class EdgeGraph
     e0.link(e1);
     return e0;
   }
-  
+
   /**
    * Adds an edge between the coordinates orig and dest
    * to this graph.
    * Only valid edges can be added (in particular, zero-length segments cannot be added)
-   * 
+   *
    * @param orig the edge origin location
    * @param dest the edge destination location.
    * @return the created edge
    * @return null if the edge was invalid and not added
-   * 
+   *
    * @see #isValidEdge(Coordinate, Coordinate)
    */
   public HalfEdge addEdge(Coordinate orig, Coordinate dest) {
     if (! isValidEdge(orig, dest)) return null;
-    
+
     /**
      * Attempt to find the edge already in the graph.
      * Return it if found.
-     * Otherwise, use a found edge with same origin (if any) to construct new edge. 
+     * Otherwise, use a found edge with same origin (if any) to construct new edge.
      */
     HalfEdge eAdj = (HalfEdge) vertexMap.get(orig);
     HalfEdge eSame = null;
@@ -97,14 +97,14 @@ public class EdgeGraph
     if (eSame != null) {
       return eSame;
     }
-    
+
     HalfEdge e = insert(orig, dest, eAdj);
     return e;
   }
 
   /**
    * Tests if the given coordinates form a valid edge (with non-zero length).
-   * 
+   *
    * @param orig the start coordinate
    * @param dest the end coordinate
    * @return true if the edge formed is valid
@@ -116,7 +116,7 @@ public class EdgeGraph
 
   /**
    * Inserts an edge not already present into the graph.
-   * 
+   *
    * @param orig the edge origin location
    * @param dest the edge destination location
    * @param eAdj an existing edge with same orig (if any)
@@ -132,7 +132,7 @@ public class EdgeGraph
       // add halfedges to to map
       vertexMap.put(orig, e);
     }
-    
+
     HalfEdge eAdjDest = (HalfEdge) vertexMap.get(dest);
     if (eAdjDest != null) {
       eAdjDest.insert(e.sym());
@@ -146,7 +146,7 @@ public class EdgeGraph
   /**
    * Gets all {@link HalfEdge}s in the graph.
    * Both edges of edge pairs are included.
-   * 
+   *
    * @return a collection of the graph edges
    */
   public Collection getVertexEdges()
@@ -157,7 +157,7 @@ public class EdgeGraph
   /**
    * Finds an edge in this graph with the given origin
    * and destination, if one exists.
-   * 
+   *
    * @param orig the origin location
    * @param dest the destination location.
    * @return an edge with the given orig and dest, or null if none exists

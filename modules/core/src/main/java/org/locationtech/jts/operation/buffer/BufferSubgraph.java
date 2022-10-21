@@ -215,7 +215,7 @@ class BufferSubgraph
     }
     // MD - testing  Result: breaks algorithm
     //if (startEdge == null) return;
-    
+
     // only compute string append if assertion would fail
     if (startEdge == null)
     	throw new TopologyException("unable to find edge to compute depths at " + n.getCoordinate());

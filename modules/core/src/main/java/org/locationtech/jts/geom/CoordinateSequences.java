@@ -23,13 +23,13 @@ public class CoordinateSequences {
 
   /**
    * Reverses the coordinates in a sequence in-place.
-   * 
+   *
    * @param seq the coordinate sequence to reverse
    */
   public static void reverse(CoordinateSequence seq)
   {
     if (seq.size() <= 1) return;
-    
+
     int last = seq.size() - 1;
     int mid = last / 2;
     for (int i = 0; i <= mid; i++) {
@@ -53,7 +53,7 @@ public class CoordinateSequences {
       seq.setOrdinate(j, dim, tmp);
     }
   }
-  
+
   /**
    * Copies a section of a {@link CoordinateSequence} to another {@link CoordinateSequence}.
    * The sequences may have different dimensions;
@@ -76,7 +76,7 @@ public class CoordinateSequences {
    * Copies a coordinate of a {@link CoordinateSequence} to another {@link CoordinateSequence}.
    * The sequences may have different dimensions;
    * in this case only the common dimensions are copied.
-   * 
+   *
    * @param src the sequence to copy from
    * @param srcPos the source coordinate to copy
    * @param dest the sequence to copy to
@@ -89,37 +89,37 @@ public class CoordinateSequences {
 			dest.setOrdinate(destPos, dim, src.getOrdinate(srcPos, dim));
 		}
   }
-  
+
   /**
    * Tests whether a {@link CoordinateSequence} forms a valid {@link LinearRing},
    * by checking the sequence length and closure
-   * (whether the first and last points are identical in 2D). 
+   * (whether the first and last points are identical in 2D).
    * Self-intersection is not checked.
-   * 
+   *
    * @param seq the sequence to test
    * @return true if the sequence is a ring
    * @see LinearRing
    */
-  public static boolean isRing(CoordinateSequence seq) 
+  public static boolean isRing(CoordinateSequence seq)
   {
   	int n = seq.size();
   	if (n == 0) return true;
   	// too few points
-  	if (n <= 3) 
+  	if (n <= 3)
   		return false;
   	// test if closed
   	return seq.getOrdinate(0, CoordinateSequence.X) == seq.getOrdinate(n-1, CoordinateSequence.X)
   		&& seq.getOrdinate(0, CoordinateSequence.Y) == seq.getOrdinate(n-1, CoordinateSequence.Y);
   }
-  
+
   /**
-   * Ensures that a CoordinateSequence forms a valid ring, 
+   * Ensures that a CoordinateSequence forms a valid ring,
    * returning a new closed sequence of the correct length if required.
-   * If the input sequence is already a valid ring, it is returned 
+   * If the input sequence is already a valid ring, it is returned
    * without modification.
-   * If the input sequence is too short or is not closed, 
+   * If the input sequence is too short or is not closed,
    * it is extended with one or more copies of the start point.
-   * 
+   *
    * @param fact the CoordinateSequenceFactory to use to create the new sequence
    * @param seq the sequence to test
    * @return the original sequence, if it was a valid ring, or a new sequence which is valid.
@@ -128,18 +128,18 @@ public class CoordinateSequences {
   {
   	int n = seq.size();
   	// empty sequence is valid
-  	if (n == 0) return seq; 
+  	if (n == 0) return seq;
   	// too short - make a new one
-  	if (n <= 3) 
+  	if (n <= 3)
   		return createClosedRing(fact, seq, 4);
-  	
+
   	boolean isClosed = seq.getOrdinate(0, CoordinateSequence.X) == seq.getOrdinate(n-1, CoordinateSequence.X)
 		&& seq.getOrdinate(0, CoordinateSequence.Y) == seq.getOrdinate(n-1, CoordinateSequence.Y);
   	if (isClosed) return seq;
   	// make a new closed ring
   	return createClosedRing(fact, seq, n+1);
   }
-  
+
   private static CoordinateSequence createClosedRing(CoordinateSequenceFactory fact, CoordinateSequence seq, int size)
   {
     CoordinateSequence newseq = fact.create(size, seq.getDimension());
@@ -150,7 +150,7 @@ public class CoordinateSequences {
       copy(seq, 0, newseq, i, 1);
     return newseq;
   }
-  
+
   public static CoordinateSequence extend(CoordinateSequenceFactory fact, CoordinateSequence seq, int size)
   {
     CoordinateSequence newseq = fact.create(size, seq.getDimension());
@@ -167,11 +167,11 @@ public class CoordinateSequences {
   /**
    * Tests whether two {@link CoordinateSequence}s are equal.
    * To be equal, the sequences must be the same length.
-   * They do not need to be of the same dimension, 
+   * They do not need to be of the same dimension,
    * but the ordinate values for the smallest dimension of the two
    * must be equal.
-   * Two <code>NaN</code> ordinates values are considered to be equal. 
-   * 
+   * Two <code>NaN</code> ordinates values are considered to be equal.
+   *
    * @param cs1 a CoordinateSequence
    * @param cs2 a CoordinateSequence
    * @return true if the sequences are equal in the common dimensions
@@ -194,21 +194,21 @@ public class CoordinateSequences {
     }
     return true;
   }
-  
+
   /**
    * Creates a string representation of a {@link CoordinateSequence}.
    * The format is:
    * <pre>
    *   ( ord0,ord1.. ord0,ord1,...  ... )
    * </pre>
-   * 
+   *
    * @param cs the sequence to output
    * @return the string representation of the sequence
    */
   public static String toString(CoordinateSequence cs)
   {
     int size = cs.size();
-    if (size == 0) 
+    if (size == 0)
       return "()";
     int dim = cs.getDimension();
     StringBuilder builder = new StringBuilder();

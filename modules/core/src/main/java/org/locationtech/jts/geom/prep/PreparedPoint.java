@@ -19,7 +19,7 @@ import org.locationtech.jts.geom.Puntal;
  * A prepared version for {@link Puntal} geometries.
  * <p>
  * Instances of this class are thread-safe.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -40,10 +40,10 @@ public class PreparedPoint
 public boolean intersects(Geometry g)
   {
   	if (! envelopesIntersect(g)) return false;
-  	
+
   	/**
   	 * This avoids computing topology for the test geometry
   	 */
     return isAnyTargetComponentInTest(g);
-  }  
+  }
 }

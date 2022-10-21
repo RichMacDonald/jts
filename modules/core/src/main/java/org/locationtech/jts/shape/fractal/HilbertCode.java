@@ -18,30 +18,30 @@ import org.locationtech.jts.geom.Coordinate;
  * Encodes points as the index along finite planar Hilbert curves.
  * <p>
  * The planar Hilbert Curve is a continuous space-filling curve.
- * In the limit the Hilbert curve has infinitely many vertices and fills 
+ * In the limit the Hilbert curve has infinitely many vertices and fills
  * the space of the unit square.
- * A sequence of finite approximations to the infinite Hilbert curve 
+ * A sequence of finite approximations to the infinite Hilbert curve
  * is defined by the level number.
- * The finite Hilbert curve at level n H<sub>n</sub> contains 2<sup>n + 1</sup> points. 
- * Each finite Hilbert curve defines an ordering of the 
+ * The finite Hilbert curve at level n H<sub>n</sub> contains 2<sup>n + 1</sup> points.
+ * Each finite Hilbert curve defines an ordering of the
  * points in the 2-dimensional range square containing the curve.
- * Curves fills the range square of side 2<sup>level</sup>. 
+ * Curves fills the range square of side 2<sup>level</sup>.
  * Curve points have ordinates in the range [0, 2<sup>level</sup> - 1].
  * The index of a point along a Hilbert curve is called the Hilbert code.
  * The code for a given point is specific to the level chosen.
  * <p>
- * This implementation represents codes using 32-bit integers.  
+ * This implementation represents codes using 32-bit integers.
  * This allows levels 0 to 16 to be handled.
  * The class supports encoding points in the range of a given level curve
  * and decoding the point for a given code value.
  * <p>
  * The Hilbert order has the property that it tends to preserve locality.
  * This means that codes which are near in value will have spatially proximate
- * points.  The converse is not always true - the delta between 
- * codes for nearby points is not always small.  But the average delta 
- * is small enough that the Hilbert order is an effective way of linearizing space 
- * to support range queries. 
- * 
+ * points.  The converse is not always true - the delta between
+ * codes for nearby points is not always small.  But the average delta
+ * is small enough that the Hilbert order is an effective way of linearizing space
+ * to support range queries.
+ *
  * @author Martin Davis
  *
  * @see HilbertCurveBuilder
@@ -53,11 +53,11 @@ public class HilbertCode
    * The maximum curve level that can be represented.
    */
   public static final int MAX_LEVEL = 16;
-  
+
   /**
    * The number of points in the curve for the given level.
    * The number of points is 2<sup>2 * level</sup>.
-   * 
+   *
    * @param level the level of the curve
    * @return the number of points
    */
@@ -65,12 +65,12 @@ public class HilbertCode
     checkLevel(level);
     return (int) Math.pow(2, 2 *level);
   }
-  
+
   /**
-   * The maximum ordinate value for points 
+   * The maximum ordinate value for points
    * in the curve for the given level.
    * The maximum ordinate is 2<sup>level</sup> - 1.
-   * 
+   *
    * @param level the level of the curve
    * @return the maximum ordinate value
    */
@@ -78,11 +78,11 @@ public class HilbertCode
     checkLevel(level);
     return (int) Math.pow(2, level) - 1;
   }
-  
+
   /**
-   * The level of the finite Hilbert curve which contains at least 
+   * The level of the finite Hilbert curve which contains at least
    * the given number of points.
-   * 
+   *
    * @param numPoints the number of points required
    * @return the level of the curve
    */
@@ -93,7 +93,7 @@ public class HilbertCode
     if (size < numPoints) level += 1;
     return level;
   }
-  
+
   private static void checkLevel(int level) {
     if (level > MAX_LEVEL) {
       throw new IllegalArgumentException("Level must be in range 0 to " + MAX_LEVEL);
@@ -102,10 +102,10 @@ public class HilbertCode
 
   /**
    * Encodes a point (x,y)
-   * in the range of the the Hilbert curve at a given level 
+   * in the range of the the Hilbert curve at a given level
    * as the index of the point along the curve.
    * The index will lie in the range [0, 2<sup>level + 1</sup>].
-   * 
+   *
    * @param level the level of the Hilbert curve
    * @param x the x ordinate of the point
    * @param y the y ordinate of the point
@@ -117,10 +117,10 @@ public class HilbertCode
     // domain)
 
     int lvl = levelClamp(level);
-    
+
     x = x << (16 - lvl);
     y = y << (16 - lvl);
-    
+
     long a = x ^ y;
     long b = 0xFFFF ^ a;
     long c = 0xFFFF ^ (x | y);
@@ -177,9 +177,9 @@ public class HilbertCode
   }
 
   /**
-   * Clamps a level to the range valid for 
+   * Clamps a level to the range valid for
    * the index algorithm used.
-   * 
+   *
    * @param level the level of a Hilbert curve
    * @return a valid level
    */
@@ -189,12 +189,12 @@ public class HilbertCode
     lvl = lvl > MAX_LEVEL ? MAX_LEVEL : lvl;
     return lvl;
   }
-  
+
   /**
-   * Computes the point on a Hilbert curve 
+   * Computes the point on a Hilbert curve
    * of given level for a given code index.
    * The point ordinates will lie in the range [0, 2<sup>level</sup></i> - 1].
-   * 
+   *
    * @param level the Hilbert curve level
    * @param index the index of the point on the curve
    * @return the point on the Hilbert curve
@@ -202,7 +202,7 @@ public class HilbertCode
   public static Coordinate decode(int level, int index) {
     checkLevel(level);
     int lvl = levelClamp(level);
-    
+
     index = index << (32 - 2 * lvl);
 
     long i0 = deinterleave(index);
@@ -218,7 +218,7 @@ public class HilbertCode
 
     long x = (a ^ i1) >> (16 - lvl);
     long y = (a ^ i0 ^ i1) >> (16 - lvl);
-    
+
     return new Coordinate(x, y);
   }
 

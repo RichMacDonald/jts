@@ -18,11 +18,11 @@ import junit.textui.TestRunner;
 /**
  * Various tests involving computing known mathematical quantities
  * using the basic {@link DD} arithmetic operations.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class DDComputeTest 
+public class DDComputeTest
   extends TestCase
 {
 	public static void main(String args[]) {
@@ -40,12 +40,12 @@ public class DDComputeTest
 		//System.out.println("Difference from DoubleDouble.E = " + err);
 		assertTrue(err < 64 * DD.EPS);
 	}
-	
+
   /**
 	 * Uses Taylor series to compute e
-	 * 
+	 *
 	 * e = 1 + 1 + 1/2! + 1/3! + 1/4! + ...
-	 * 
+	 *
 	 * @return an approximation to e
 	 */
 	private DD computeEByTaylorSeries()
@@ -64,7 +64,7 @@ public class DDComputeTest
 		}
 		return s;
 	}
-	
+
 	public void testPiByMachin()
 	{
     //System.out.println("--------------------------------");
@@ -74,20 +74,20 @@ public class DDComputeTest
 		//System.out.println("Difference from DoubleDouble.PI = " + err);
 		assertTrue(err < 8 * DD.EPS);
 	}
-	
+
 
 	/**
 	 * Uses Machin's arctangent formula to compute Pi:
 	 *
    *    Pi / 4  =  4 arctan(1/5) - arctan(1/239)
-   *    
+   *
 	 * @return an approximation to Pi
 	 */
 	private DD computePiByMachin()
 	{
 		DD t1 = DD.valueOf(1.0).divide(DD.valueOf(5.0));
 		DD t2 = DD.valueOf(1.0).divide(DD.valueOf(239.0));
-		
+
 		DD pi4 = (DD.valueOf(4.0)
 												.multiply(arctan(t1)))
 												.subtract(arctan(t2));
@@ -95,12 +95,12 @@ public class DDComputeTest
 		//System.out.println("Computed value = " + pi);
 		return pi;
 	}
-	
+
 	/**
 	 * Computes the arctangent based on the Taylor series expansion
    *
    *    arctan(x) = x - x^3 / 3 + x^5 / 5 - x^7 / 7 + ...
-   *    
+   *
 	 * @param x the argument
 	 * @return an approximation to the arctangent of the input
 	 */
@@ -124,7 +124,7 @@ public class DDComputeTest
 	    t = t.multiply(t2);
 	    sign = -sign;
 	  }
-	  //System.out.println("Computed DD.atan(): " + at 
+	  //System.out.println("Computed DD.atan(): " + at
 	  //		+ "    Math.atan = " + Math.atan(x.doubleValue()));
 	  return at;
 	}

@@ -38,7 +38,7 @@ public class RelateTest
 
   /**
    * From GEOS #572
-   * 
+   *
    * The cause is that the longer line nodes the single-segment line.
    * The node then tests as not lying precisely on the original longer line.
    */
@@ -56,7 +56,7 @@ public class RelateTest
    * Tests case where segments intersect properly, but computed intersection point
    * snaps to a boundary endpoint due to roundoff.
    * Fixed by detecting that computed intersection snapped to a boundary node.
-   * 
+   *
    * See https://lists.osgeo.org/pipermail/postgis-users/2022-February/045266.html
    */
   public void testIntersectsSnappedEndpoint1()
@@ -65,22 +65,22 @@ public class RelateTest
     String b = "LINESTRING (-29802.795222153436 138520.05937757515, -29802.23305474065 138518.7938969792)";
     runRelateTest(a, b,  "F01FF0102"    );
   }
-  
+
   /**
    * Tests case where segments intersect properly, but computed intersection point
    * snaps to a boundary endpoint due to roundoff.
    * Fixed by detecting that computed intersection snapped to a boundary node.
-   * 
+   *
    * See https://lists.osgeo.org/pipermail/postgis-users/2022-February/045277.html
-   */  
+   */
   public void testIntersectsSnappedEndpoint2()
   {
     String a = "LINESTRING (-57.2681216 49.4063466, -57.267725199999994 49.406617499999996, -57.26747895046037 49.406750916517765)";
     String b = "LINESTRING (-57.267475399999995 49.4067465, -57.2675701 49.406864299999995, -57.267989 49.407135399999994)";
     runRelateTest(a, b,  "FF10F0102"  );
   }
-  
-  
+
+
   void runRelateTest(String wkt1, String wkt2, String expectedIM)
   {
     Geometry g1 = read(wkt1);

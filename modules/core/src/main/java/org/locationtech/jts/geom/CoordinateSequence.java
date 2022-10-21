@@ -18,15 +18,15 @@ import org.locationtech.jts.geom.impl.PackedCoordinateSequenceFactory;
  * The internal representation of a list of coordinates inside a Geometry.
  * <p>
  * This allows Geometries to store their
- * points using something other than the JTS {@link Coordinate} class. 
+ * points using something other than the JTS {@link Coordinate} class.
  * For example, a storage-efficient implementation
  * might store coordinate sequences as an array of x's
- * and an array of y's. 
+ * and an array of y's.
  * Or a custom coordinate class might support extra attributes like M-values.
  * <p>
  * Implementing a custom coordinate storage structure
  * requires implementing the {@link CoordinateSequence} and
- * {@link CoordinateSequenceFactory} interfaces. 
+ * {@link CoordinateSequenceFactory} interfaces.
  * To use the custom CoordinateSequence, create a
  * new {@link GeometryFactory} parameterized by the CoordinateSequenceFactory
  * The {@link GeometryFactory} can then be used to create new {@link Geometry}s.
@@ -48,7 +48,7 @@ public interface CoordinateSequence
 
   /** Standard ordinate index value for, where Y is 1 */
   int Y = 1;
-  
+
   /**
    * Standard ordinate index value for, where Z is 2.
    *
@@ -78,7 +78,7 @@ public interface CoordinateSequence
   /**
    * Returns the number of measures included in {@link #getDimension()} for each coordinate for this
    * sequence.
-   * 
+   *
    * For a measured coordinate sequence a non-zero value is returned.
    * <ul>
    * <li>For XY sequence measures is zero</li>
@@ -93,11 +93,11 @@ public interface CoordinateSequence
   default int getMeasures() {
     return 0;
   }
-  
+
   /**
    * Checks {@link #getDimension()} and {@link #getMeasures()} to determine if {@link #getZ(int)}
    * is supported.
-   * 
+   *
    * @return true if {@link #getZ(int)} is supported.
    */
   default boolean hasZ() {
@@ -129,7 +129,7 @@ public interface CoordinateSequence
   default Coordinate createCoordinate() {
     return Coordinates.create(getDimension(), getMeasures());
   }
-  
+
   /**
    * Returns (possibly a copy of) the i'th coordinate in this sequence.
    * Whether or not the Coordinate returned is the actual underlying
@@ -198,7 +198,7 @@ public interface CoordinateSequence
 
   /**
    * Returns ordinate M of the specified coordinate if available.
-   * 
+   *
    * @param index  the coordinate index in the sequence
    * @return the value of the M ordinate in the index'th coordinate, or Double.NaN if not defined.
    */
@@ -212,7 +212,7 @@ public interface CoordinateSequence
         return Double.NaN;
     }
   }
-  
+
   /**
    * Returns the ordinate of a coordinate in this sequence.
    * Ordinate indices 0 and 1 are assumed to be X and Y.
@@ -268,11 +268,11 @@ public interface CoordinateSequence
    * Called by Geometry#clone.
    *
    * @return a copy of the coordinate sequence containing copies of all points
-   * @deprecated Recommend {@link #copy()} 
+   * @deprecated Recommend {@link #copy()}
    */
   @Deprecated
 Object clone();
-  
+
   /**
    * Returns a deep copy of this collection.
    *

@@ -22,10 +22,10 @@ import org.locationtech.jts.util.Stopwatch;
  * Intended to test the robustness of buffering.
  * Repeated buffering tends to generate challenging
  * somewhat pathological linework, which stresses the buffer algorithm.
- * 
+ *
  * @version 1.7
  */
-public class IteratedBufferStressTest 
+public class IteratedBufferStressTest
 {
 
   private PrecisionModel precisionModel = new PrecisionModel();
@@ -40,10 +40,10 @@ public class IteratedBufferStressTest
   	catch (Exception ex) {
   		ex.printStackTrace();
   	}
-  
+
   }
 
-  String inputWKT = 
+  String inputWKT =
   	"POLYGON ((110 320, 190 220, 60 200, 180 120, 120 40, 290 150, 410 40, 410 230, 500 340, 320 310, 260 370, 220 310, 110 320), (220 260, 250 180, 290 220, 360 150, 350 250, 260 280, 220 260))";
 
   public IteratedBufferStressTest() {  }
@@ -63,13 +63,13 @@ public class IteratedBufferStressTest
   		System.out.println();
   	}
   }
-  
+
   Geometry doBuffer(Geometry g, double dist)
   {
 		System.out.println("Buffering with dist = " + dist);
 		Geometry buf = g.buffer(dist);
 		System.out.println("Buffer result has " + buf.getNumPoints() + " vertices");
-		
+
 		System.out.println(buf);
 		return buf;
 

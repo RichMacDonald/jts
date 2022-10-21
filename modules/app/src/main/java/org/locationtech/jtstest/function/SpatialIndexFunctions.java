@@ -43,7 +43,7 @@ public class SpatialIndexFunctions
   public static Geometry kdTreeQuery(Geometry pts, Geometry queryEnv, double tolerance)
   {
     KdTree index = buildKdTree(pts, tolerance);
-    // if no query env provided query everything inserted 
+    // if no query env provided query everything inserted
     if (queryEnv == null) queryEnv = pts;
     List result = index.query(queryEnv.getEnvelopeInternal());
     Coordinate[] resultCoords = KdTree.toCoordinates(result);
@@ -52,14 +52,14 @@ public class SpatialIndexFunctions
 
   private static KdTree indexKDcache = null;
   private static Geometry indexKDGeom = null;
-  
+
   public static Geometry kdTreeQueryCached(Geometry pts, Geometry queryEnv, double tolerance)
   {
     if (indexKDGeom != pts || indexKDcache == null) {
       indexKDcache = buildKdTree(pts, tolerance);
       indexKDGeom = pts;
     }
-    // if no query env provided query everything inserted 
+    // if no query env provided query everything inserted
     if (queryEnv == null) queryEnv = pts;
     List result = indexKDcache.query(queryEnv.getEnvelopeInternal());
     Coordinate[] resultCoords = KdTree.toCoordinates(result);
@@ -69,7 +69,7 @@ public class SpatialIndexFunctions
   public static Geometry kdTreeQueryRepeated(Geometry pts, Geometry queryEnv, double tolerance)
   {
     KdTree index = buildKdTree(pts, tolerance);
-    // if no query env provided query everything inserted 
+    // if no query env provided query everything inserted
     if (queryEnv == null) queryEnv = pts;
     List result = index.query(queryEnv.getEnvelopeInternal());
     Coordinate[] resultCoords = KdTree.toCoordinates(result, true);
@@ -83,18 +83,18 @@ public class SpatialIndexFunctions
   public static Geometry kdTreeGraph(Geometry geom) {
     return kdTreeGraph(geom, buildKdTree(geom, 0));
   }
-  
+
   private static Geometry kdTreeGraph(Geometry geom, KdTree index) {
     KdNode root = index.getRoot();
     List<Geometry> edges = new ArrayList<>();
-    
+
     double x = geom.getEnvelopeInternal().centre().getX();
     double xInc = geom.getEnvelopeInternal().getWidth() / 2;
     addGraphEdges(root, true, 0, x, xInc, edges, geom.getFactory());
     return geom.getFactory().buildGeometry(edges);
   }
-  
-  private static void addGraphEdges(KdNode node, 
+
+  private static void addGraphEdges(KdNode node,
       boolean isXLevel, int depth, double x, double xInc,
       List<Geometry> edges, GeometryFactory factory) {
     double xInc2 = xInc / 2;
@@ -121,7 +121,7 @@ public class SpatialIndexFunctions
   public static Geometry kdTreeSplits(Geometry geom) {
     return kdTreeSplits(geom, buildKdTree(geom, 0));
   }
-  
+
   public static Geometry kdTreeSplitsSeed(Geometry geom) {
     return kdTreeSplits(geom, buildKdTreeSeed(geom, 0));
   }
@@ -130,17 +130,17 @@ public class SpatialIndexFunctions
     Envelope extent = geom.getEnvelopeInternal();
     KdNode root = index.getRoot();
     List<Geometry> splits = new ArrayList<>();
-    
+
     addSplits(root, true, extent, splits, geom.getFactory());
     return geom.getFactory().buildGeometry(splits);
   }
-  
+
   private static void addSplits(KdNode node, boolean isXLevel, Envelope extent, List<Geometry> splits,
       GeometryFactory factory) {
     double splitVal = node.splitValue(isXLevel);
     Geometry splitLine = createSplitLine(extent, splitVal, isXLevel, factory);
     splits.add(splitLine);
-    
+
     KdNode left = node.getLeft();
     if (left != null) {
       addSplits(left, ! isXLevel, splitExtent(extent, splitVal, isXLevel, true), splits, factory);
@@ -172,14 +172,14 @@ public class SpatialIndexFunctions
     return new Envelope(xMin, xMax, yMin, yMax);
   }
 
-  private static Geometry createSplitLine(Envelope extent, double splitVal, 
+  private static Geometry createSplitLine(Envelope extent, double splitVal,
       boolean isXLevel, GeometryFactory factory) {
-    
+
     double x1 = isXLevel ? splitVal : extent.getMinX();
     double y1 = isXLevel ? extent.getMinY() : splitVal;
     double x2 = isXLevel ? splitVal : extent.getMaxX();
     double y2 = isXLevel ? extent.getMaxY() : splitVal;
-    
+
     Coordinate[] pts = { new Coordinate(x1, y1), new Coordinate(x2, y2) };
     return factory.createLineString(pts);
   }
@@ -192,11 +192,11 @@ public class SpatialIndexFunctions
     }
     return index;
   }
-  
+
   private static KdTree buildKdTreeSeed(Geometry geom, double tolerance) {
     final KdTree tree = new KdTree(tolerance);
     Coordinate[] pt = geom.getCoordinates();
-    
+
     //-- seed the tree with some randomly selected points
     int numSeed = pt.length / 100;
     double rand = 0;
@@ -211,7 +211,7 @@ public class SpatialIndexFunctions
     }
     return tree;
   }
-  
+
   public static Geometry strTreeBounds(Geometry geoms)
   {
     STRtree index = new STRtree();
@@ -225,7 +225,7 @@ public class SpatialIndexFunctions
       GeometryFactory factory) {
     // don't include bounds of leaf nodes
     if (! (bnd instanceof AbstractNode)) return;
-    
+
     Envelope env = (Envelope) bnd.getBounds();
     bounds.add(factory.toGeometry(env));
     if (bnd instanceof AbstractNode) {
@@ -242,7 +242,7 @@ public class SpatialIndexFunctions
   {
     HPRtree index = new HPRtree();
     loadIndex(geoms, index);
-    // if no query env provided query everything inserted 
+    // if no query env provided query everything inserted
     if (queryEnv == null) queryEnv = geoms;
     List result = index.query(queryEnv.getEnvelopeInternal());
     return geoms.getFactory().buildGeometry(result);
@@ -250,7 +250,7 @@ public class SpatialIndexFunctions
 
   private static HPRtree indexHPRcache = null;
   private static Geometry indexHPRGeom = null;
-  
+
   public static Geometry hprTreeQueryCached(Geometry geoms, Geometry queryEnv)
   {
     if (indexHPRGeom != geoms || indexHPRcache == null) {
@@ -258,7 +258,7 @@ public class SpatialIndexFunctions
       loadIndex(geoms, indexHPRcache);
       indexHPRGeom = geoms;
     }
-    // if no query env provided query everything inserted 
+    // if no query env provided query everything inserted
     if (queryEnv == null) queryEnv = geoms;
     List result = indexHPRcache.query(queryEnv.getEnvelopeInternal());
     return geoms.getFactory().buildGeometry(result);
@@ -285,10 +285,10 @@ public class SpatialIndexFunctions
     }
     return geoms.getFactory().createGeometryCollection(polys);
   }
-  
+
   private static STRtree indexSTRcache = null;
   private static Geometry indexSTRGeom = null;
-  
+
   public static Geometry strTreeQueryCached(Geometry geoms, Geometry queryEnv)
   {
     if (indexSTRGeom != geoms || indexSTRcache == null) {
@@ -296,22 +296,22 @@ public class SpatialIndexFunctions
       loadIndex(geoms, indexSTRcache);
       indexSTRGeom = geoms;
     }
-    // if no query env provided query everything inserted 
+    // if no query env provided query everything inserted
     if (queryEnv == null) queryEnv = geoms;
     List result = indexSTRcache.query(queryEnv.getEnvelopeInternal());
     return geoms.getFactory().buildGeometry(result);
   }
-  
+
   public static Geometry strTreeQuery(Geometry geoms, Geometry queryEnv)
   {
     STRtree index = new STRtree();
     loadIndex(geoms, index);
-    // if no query env provided query everything inserted 
+    // if no query env provided query everything inserted
     if (queryEnv == null) queryEnv = geoms;
     List result = index.query(queryEnv.getEnvelopeInternal());
     return geoms.getFactory().buildGeometry(result);
   }
-  
+
   public static Geometry strTreeNN(Geometry geoms, Geometry geom)
   {
     STRtree index = new STRtree();
@@ -338,11 +338,11 @@ public class SpatialIndexFunctions
     Geometry geometryCollection = geoms.getFactory().buildGeometry(knnGeoms);
     return geometryCollection;
   }
-  
+
   public static Geometry quadTreeQuery(Geometry geoms, Geometry queryEnv)
   {
     Quadtree index = buildQuadtree(geoms);
-    // if no query env provided query everything inserted 
+    // if no query env provided query everything inserted
     if (queryEnv == null) queryEnv = geoms;
     List result = index.query(queryEnv.getEnvelopeInternal());
     return geoms.getFactory().buildGeometry(result);
@@ -357,7 +357,7 @@ public class SpatialIndexFunctions
       });
     return index;
   }
-  
+
   public static Geometry monotoneChains(Geometry geom) {
     Coordinate[] pts = geom.getCoordinates();
     List<MonotoneChain> chains = MonotoneChainBuilder.getChains(pts);
@@ -369,7 +369,7 @@ public class SpatialIndexFunctions
     }
     return geom.getFactory().buildGeometry(lines);
   }
-  
+
   /*
   public static Geometry sprTreeBounds(Geometry geom)
   {

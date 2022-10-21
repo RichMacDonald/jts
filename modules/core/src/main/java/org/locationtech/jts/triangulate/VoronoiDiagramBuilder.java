@@ -35,21 +35,21 @@ import org.locationtech.jts.triangulate.quadedge.QuadEdgeSubdivision;
  * <li> an envelope supplied by {@link #setClipEnvelope(Envelope)}
  * <li> an envelope determined by the input sites
  * </ul>
- * The <tt>userData</tt> attribute of each face <tt>Polygon</tt> is set to 
+ * The <tt>userData</tt> attribute of each face <tt>Polygon</tt> is set to
  * the <tt>Coordinate</tt>  of the corresponding input site.
  * This allows using a <tt>Map</tt> to link faces to data associated with sites.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class VoronoiDiagramBuilder 
+public class VoronoiDiagramBuilder
 {
 	private Collection siteCoords;
 	private double tolerance = 0.0;
 	private QuadEdgeSubdivision subdiv = null;
 	private Envelope clipEnv = null;
-	private Envelope diagramEnv = null; 
-	
+	private Envelope diagramEnv = null;
+
 	/**
 	 * Creates a new Voronoi diagram builder.
 	 *
@@ -57,11 +57,11 @@ public class VoronoiDiagramBuilder
 	public VoronoiDiagramBuilder()
 	{
 	}
-	
+
 	/**
 	 * Sets the sites (point or vertices) which will be diagrammed.
 	 * All vertices of the given geometry will be used as sites.
-	 * 
+	 *
 	 * @param geom the geometry from which the sites will be extracted.
 	 */
 	public void setSites(Geometry geom)
@@ -69,11 +69,11 @@ public class VoronoiDiagramBuilder
 		// remove any duplicate points (they will cause the triangulation to fail)
 		siteCoords = DelaunayTriangulationBuilder.extractUniqueCoordinates(geom);
 	}
-	
+
 	/**
 	 * Sets the sites (point or vertices) which will be diagrammed
 	 * from a collection of {@link Coordinate}s.
-	 * 
+	 *
 	 * @param coords a collection of Coordinates.
 	 */
 	public void setSites(Collection coords)
@@ -81,12 +81,12 @@ public class VoronoiDiagramBuilder
 		// remove any duplicate points (they will cause the triangulation to fail)
 		siteCoords = DelaunayTriangulationBuilder.unique(CoordinateArrays.toCoordinateArray(coords));
 	}
-	
+
 	/**
 	 * Sets the envelope to clip the diagram to.
 	 * The diagram will be clipped to the larger
 	 * of this envelope or an envelope surrounding the sites.
-	 * 
+	 *
 	 * @param clipEnv the clip envelope.
 	 */
 	public void setClipEnvelope(Envelope clipEnv)
@@ -97,22 +97,22 @@ public class VoronoiDiagramBuilder
 	 * Sets the snapping tolerance which will be used
 	 * to improved the robustness of the triangulation computation.
 	 * A tolerance of 0.0 specifies that no snapping will take place.
-	 * 
+	 *
 	 * @param tolerance the tolerance distance to use
 	 */
 	public void setTolerance(double tolerance)
 	{
 		this.tolerance = tolerance;
 	}
-	
+
 	private void create()
 	{
 		if (subdiv != null) return;
-		
+
 		diagramEnv = clipEnv;
 		if (diagramEnv == null) {
-		  /** 
-		   * If no user-provided clip envelope, 
+		  /**
+		   * If no user-provided clip envelope,
 		   * use one which encloses all the sites,
 		   * with a 50% buffer around the edges.
 		   */
@@ -127,10 +127,10 @@ public class VoronoiDiagramBuilder
 		IncrementalDelaunayTriangulator triangulator = new IncrementalDelaunayTriangulator(subdiv);
 		triangulator.insertSites(vertices);
 	}
-	
+
 	/**
 	 * Gets the {@link QuadEdgeSubdivision} which models the computed diagram.
-	 * 
+	 *
 	 * @return the subdivision containing the triangulation
 	 */
 	public QuadEdgeSubdivision getSubdivision()
@@ -138,15 +138,15 @@ public class VoronoiDiagramBuilder
 		create();
 		return subdiv;
 	}
-	
+
 	/**
-	 * Gets the faces of the computed diagram as a {@link GeometryCollection} 
+	 * Gets the faces of the computed diagram as a {@link GeometryCollection}
 	 * of {@link Polygon}s, clipped as specified.
 	 * <p>
-	 * The <tt>userData</tt> attribute of each face <tt>Polygon</tt> is set to 
+	 * The <tt>userData</tt> attribute of each face <tt>Polygon</tt> is set to
 	 * the <tt>Coordinate</tt>  of the corresponding input site.
 	 * This allows using a <tt>Map</tt> to link faces to data associated with sites.
-	 * 
+	 *
 	 * @param geomFact the geometry factory to use to create the output
 	 * @return a <tt>GeometryCollection</tt> containing the face <tt>Polygon</tt>s of the diagram
 	 */
@@ -154,11 +154,11 @@ public class VoronoiDiagramBuilder
 	{
 		create();
 		Geometry polys = subdiv.getVoronoiDiagram(geomFact);
-		
+
 		// clip polys to diagramEnv
 		return clipGeometryCollection(polys, diagramEnv);
 	}
-	
+
 	private static Geometry clipGeometryCollection(Geometry geom, Envelope clipEnv)
 	{
 		Geometry clipPoly = geom.getFactory().toGeometry(clipEnv);

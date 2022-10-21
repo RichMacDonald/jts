@@ -20,7 +20,7 @@ import junit.textui.TestRunner;
 /**
  * Test {@link PackedCoordinateSequence.Float}
  * using the {@link CoordinateSequenceTestBase}
- * 
+ *
  * @version 1.7
  */
 public class PackedCoordinateSequenceFloatTest

@@ -19,7 +19,7 @@ import junit.framework.TestCase;
 
 
 public class OraWriterSQLTest extends TestCase {
-	
+
 	public static void main(String[] args) {
 		junit.textui.TestRunner.run(OraWriterSQLTest.class);
 	}
@@ -46,7 +46,7 @@ public class OraWriterSQLTest extends TestCase {
 	}
 
 	//============================================================
-	
+
 	private void checkValue(String wkt, String sqlExpected) {
 		checkValue(wkt, true, -1, sqlExpected);
 	}
@@ -59,12 +59,12 @@ public class OraWriterSQLTest extends TestCase {
 	    catch (ParseException e) {
 	      throw new RuntimeException(e);
 	    }
-	    
+
 	    final OraWriter oraWriter = new OraWriter();
-	    if (targetDim > -1) 
+	    if (targetDim > -1)
 	    	oraWriter.setDimension(targetDim);
 	    oraWriter.setOptimizePoint(isOptimizePoint);
-	    
+
 	    String sql = oraWriter.writeSQL(geom);
 	    boolean isEqual = sql.equals(sqlExpected);
 	    if (! isEqual) {

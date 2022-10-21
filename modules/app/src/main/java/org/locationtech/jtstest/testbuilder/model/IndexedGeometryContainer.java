@@ -20,7 +20,7 @@ implements GeometryContainer
 {
   private GeometryEditModel geomModel;
   private int index;
-  
+
   public IndexedGeometryContainer(GeometryEditModel geomModel, int index) {
     this.geomModel = geomModel;
     this.index = index;

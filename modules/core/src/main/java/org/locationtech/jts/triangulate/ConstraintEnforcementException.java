@@ -17,7 +17,7 @@ import org.locationtech.jts.io.WKTWriter;
 
 /**
  * Indicates a failure during constraint enforcement.
- * 
+ *
  * @author Martin Davis
  * @version 1.0
  */
@@ -35,7 +35,7 @@ public class ConstraintEnforcementException extends RuntimeException {
 
     /**
      * Creates a new instance with a given message.
-     * 
+     *
      * @param msg a string
      */
     public ConstraintEnforcementException(String msg) {
@@ -44,7 +44,7 @@ public class ConstraintEnforcementException extends RuntimeException {
 
     /**
      * Creates a new instance with a given message and approximate location.
-     * 
+     *
      * @param msg a string
      * @param pt the location of the error
      */
@@ -55,7 +55,7 @@ public class ConstraintEnforcementException extends RuntimeException {
 
     /**
      * Gets the approximate location of this error.
-     * 
+     *
      * @return a location
      */
     public Coordinate getCoordinate() {

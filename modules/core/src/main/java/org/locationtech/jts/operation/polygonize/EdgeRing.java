@@ -51,10 +51,10 @@ class EdgeRing {
    * is known to be properly contained in a shell
    * (which is guaranteed to be the case if the hole does not touch its shell)
    * <p>
-   * To improve performance of this function the caller should 
+   * To improve performance of this function the caller should
    * make the passed shellList as small as possible (e.g.
    * by using a spatial index filter beforehand).
-   * 
+   *
    * @return containing EdgeRing, or null if no containing EdgeRing is found
    */
   public static EdgeRing findEdgeRingContaining(EdgeRing testEr, List erList)
@@ -71,7 +71,7 @@ class EdgeRing {
     }
     return minContainingRing;
   }
-  
+
   /**
    * Traverses a ring of DirectedEdges, accumulating them into a list.
    * This assumes that all dangling directed edges have been removed
@@ -92,16 +92,16 @@ class EdgeRing {
     } while (de != startDE);
     return edges;
   }
-  
+
   private GeometryFactory factory;
 
   private List deList = new ArrayList();
   private DirectedEdge lowestEdge = null;
-  
+
   // cache the following data for efficiency
   private LinearRing ring = null;
   private IndexedPointInAreaLocator locator;
-  
+
   private Coordinate[] ringPts = null;
   private List holes;
   private EdgeRing shell;
@@ -125,7 +125,7 @@ class EdgeRing {
       Assert.isTrue(de == startDE || ! de.isInRing(), "found DE already in ring");
     } while (de != startDE);
   }
-  
+
   /**
    * Adds a {@link DirectedEdge} which is known to form part of this ring.
    * @param de the {@link DirectedEdge} to add.
@@ -143,7 +143,7 @@ class EdgeRing {
   {
     return isHole;
   }
-  
+
   /**
    * Computes whether this ring is a hole.
    * Due to the way the edges in the polygonization graph are linked,
@@ -197,7 +197,7 @@ class EdgeRing {
 
   /**
    * Tests if the {@link LinearRing} ring formed by this edge ring is topologically valid.
-   * 
+   *
    * @return true if the ring is valid
    */
   public boolean isValid()
@@ -227,19 +227,19 @@ class EdgeRing {
     }
     return locator;
   }
-  
+
   public int locate(Coordinate pt) {
     /**
      * Use an indexed point-in-polygon for performance
      */
     return getLocator().locate(pt);
   }
-  
+
   /**
    * Tests if an edgeRing is properly contained in this ring.
    * Relies on property that edgeRings never overlap (although they may
    * touch at single vertices).
-   * 
+   *
    * @param ring ring to test
    * @return true if ring is properly contained
    */
@@ -252,7 +252,7 @@ class EdgeRing {
       return false;
     return isPointInOrOut(ring);
   }
-  
+
   private boolean isPointInOrOut(EdgeRing ring) {
     // in most cases only one or two points will be checked
     for (Coordinate pt : ring.getCoordinates()) {
@@ -267,7 +267,7 @@ class EdgeRing {
     }
     return false;
   }
-  
+
   /**
    * Computes the list of coordinates which are contained in this ring.
    * The coordinates are computed once only and cached.
@@ -303,7 +303,7 @@ class EdgeRing {
 
   /**
    * Returns this ring as a {@link LinearRing}, or null if an Exception occurs while
-   * creating it (such as a topology problem). 
+   * creating it (such as a topology problem).
    */
   public LinearRing getRing()
   {
@@ -322,7 +322,7 @@ class EdgeRing {
   private Envelope getEnvelope() {
     return getRing().getEnvelopeInternal();
   }
-  
+
   private static void addEdge(Coordinate[] coords, boolean isForward, CoordinateList coordList)
   {
     if (isForward) {
@@ -339,25 +339,25 @@ class EdgeRing {
 
   /**
    * Sets the containing shell ring of a ring that has been determined to be a hole.
-   * 
+   *
    * @param shell the shell ring
    */
   public void setShell(EdgeRing shell) {
     this.shell = shell;
   }
-  
+
   /**
    * Tests whether this ring has a shell assigned to it.
-   * 
+   *
    * @return true if the ring has a shell
    */
   public boolean hasShell() {
     return shell != null;
   }
-  
+
   /**
    * Gets the shell for this ring.  The shell is the ring itself if it is not a hole, otherwise its parent shell.
-   * 
+   *
    * @return the shell for this ring
    */
   public EdgeRing getShell() {
@@ -367,30 +367,30 @@ class EdgeRing {
   /**
    * Tests whether this ring is an outer hole.
    * A hole is an outer hole if it is not contained by a shell.
-   * 
+   *
    * @return true if the ring is an outer hole.
    */
   public boolean isOuterHole() {
     if (! isHole) return false;
     return ! hasShell();
   }
-  
+
   /**
    * Tests whether this ring is an outer shell.
-   * 
+   *
    * @return true if the ring is an outer shell.
    */
   public boolean isOuterShell() {
     return getOuterHole() != null;
   }
-  
+
   /**
    * Gets the outer hole of a shell, if it has one.
    * An outer hole is one that is not contained
-   * in any other shell.  
+   * in any other shell.
    * Each disjoint connected group of shells
    * is surrounded by an outer hole.
-   * 
+   *
    * @return the outer hole edge ring, or null
    */
   public EdgeRing getOuterHole()
@@ -408,7 +408,7 @@ class EdgeRing {
       EdgeRing adjRing = ((PolygonizeDirectedEdge) de.getSym()).getRing();
       if (adjRing.isOuterHole()) return adjRing;
     }
-    return null;    
+    return null;
   }
 
   /**
@@ -420,7 +420,7 @@ class EdgeRing {
     for (Object element : deList) {
       PolygonizeDirectedEdge de = (PolygonizeDirectedEdge) element;
       EdgeRing adjShell = ((PolygonizeDirectedEdge) de.getSym()).getRing().getShell();
-      
+
       if (adjShell != null && adjShell.isIncludedSet()) {
         // adjacent ring has been processed, so set included to inverse of adjacent included
         setIncluded(! adjShell.isIncluded());
@@ -431,14 +431,14 @@ class EdgeRing {
 
   /**
    * Gets a string representation of this object.
-   * 
-   * @return a string representing the object 
+   *
+   * @return a string representing the object
    */
   @Override
 public String toString() {
     return WKTWriter.toLineString(new CoordinateArraySequence(getCoordinates()));
   }
-  
+
   /**
    * @return whether the ring has been processed
    */
@@ -457,7 +457,7 @@ public String toString() {
    * Compares EdgeRings based on their envelope,
    * using the standard lexicographic ordering.
    * This ordering is sufficient to make edge ring sorting deterministic.
-   * 
+   *
    * @author mbdavis
    *
    */
@@ -468,7 +468,7 @@ public String toString() {
       EdgeRing r1 = (EdgeRing) obj1;
       return r0.getRing().getEnvelope().compareTo(r1.getRing().getEnvelope());
     }
-    
+
   }
 
 }

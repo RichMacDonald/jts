@@ -44,7 +44,7 @@ public abstract class CoordinateSequenceTestBase
   public CoordinateSequenceTestBase(String name) { super(name); }
 
   abstract CoordinateSequenceFactory getCSFactory();
-  
+
   public void testZeroLength()
   {
     CoordinateSequence seq = getCSFactory().create(0, 3);
@@ -108,7 +108,7 @@ public abstract class CoordinateSequenceTestBase
     CoordinateSequence seq2 = deserialize(data);
     assertTrue(isEqual(seq2, coords));
   }
-  
+
   private static byte[] serialize(CoordinateSequence seq) throws IOException {
     ByteArrayOutputStream bos = new ByteArrayOutputStream();
     ObjectOutputStream oos = new ObjectOutputStream(bos);
@@ -157,7 +157,7 @@ public abstract class CoordinateSequenceTestBase
   /**
    * Tests for equality using all supported accessors,
    * to provides test coverage for them.
-   * 
+   *
    * @param seq
    * @param coords
    * @return
@@ -165,11 +165,11 @@ public abstract class CoordinateSequenceTestBase
   boolean isEqual(CoordinateSequence seq, Coordinate[] coords)
   {
     if (seq.size() != coords.length) return false;
-    
+
     // carefully get coordinate of the same type as the sequence
     Coordinate p = seq.createCoordinate();
     for (int i = 0; i < seq.size(); i++) {
-      
+
 
       // Ordinate named getters
       if (!coords[i].equals(seq.getCoordinate(i)) || !isEqual(coords[i].x,seq.getX(i)) || !isEqual(coords[i].y,seq.getY(i))) return false;
@@ -191,8 +191,7 @@ public abstract class CoordinateSequenceTestBase
 
       // Coordinate getter
       seq.getCoordinate(i, p);
-      if (!isEqual(coords[i].x,p.x)) return false;
-      if (!isEqual(coords[i].y,p.y)) return false;
+      if (!isEqual(coords[i].x,p.x) || !isEqual(coords[i].y,p.y)) return false;
       if (seq.hasZ()) {
         if (!isEqual(coords[i].getZ(),p.getZ())) return false;
       }

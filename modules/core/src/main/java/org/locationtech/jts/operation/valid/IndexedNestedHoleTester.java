@@ -29,10 +29,10 @@ import org.locationtech.jts.index.strtree.STRtree;
  * (so they are properly nested, and there are no duplicate holes).
  * <p>
  * The situation where every vertex of a hole touches another hole
- * is invalid because either the hole is nested, 
+ * is invalid because either the hole is nested,
  * or else it disconnects the polygon interior.
  * This class detects the nested situation.
- * The disconnected interior situation must be checked elsewhere. 
+ * The disconnected interior situation must be checked elsewhere.
  *
  * @version 1.7
  */
@@ -61,7 +61,7 @@ class IndexedNestedHoleTester
 
   /**
    * Gets a point on a nested hole, if one exists.
-   * 
+   *
    * @return a point on a nested hole, or null if none are nested
    */
   public Coordinate getNestedPoint() { return nestedPt; }
@@ -88,7 +88,7 @@ class IndexedNestedHoleTester
         if (PolygonTopologyAnalyzer.isRingNested(hole, testHole)) {
           //TODO: find a hole point known to be inside
           nestedPt = hole.getCoordinateN(0);
-          return true;  
+          return true;
         }
       }
     }

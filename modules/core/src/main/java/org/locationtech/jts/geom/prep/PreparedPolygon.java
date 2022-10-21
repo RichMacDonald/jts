@@ -27,11 +27,11 @@ import org.locationtech.jts.operation.predicate.RectangleIntersects;
  * A prepared version for {@link Polygonal} geometries.
  * This class supports both {@link Polygon}s and {@link MultiPolygon}s.
  * <p>
- * This class does <b>not</b> support MultiPolygons which are non-valid 
- * (e.g. with overlapping elements). 
+ * This class does <b>not</b> support MultiPolygons which are non-valid
+ * (e.g. with overlapping elements).
  * <p>
  * Instances of this class are thread-safe and immutable.
- * 
+ *
  * @author mbdavis
  *
  */
@@ -50,51 +50,51 @@ public class PreparedPolygon
 
   /**
    * Gets the indexed intersection finder for this geometry.
-   * 
+   *
    * @return the intersection finder
    */
   public synchronized FastSegmentSetIntersectionFinder getIntersectionFinder()
   {
   	/**
-  	 * MD - Another option would be to use a simple scan for 
-  	 * segment testing for small geometries.  
-  	 * However, testing indicates that there is no particular advantage 
+  	 * MD - Another option would be to use a simple scan for
+  	 * segment testing for small geometries.
+  	 * However, testing indicates that there is no particular advantage
   	 * to this approach.
   	 */
   	if (segIntFinder == null)
   		segIntFinder = new FastSegmentSetIntersectionFinder(SegmentStringUtil.extractSegmentStrings(getGeometry()));
   	return segIntFinder;
   }
-  
+
   public synchronized PointOnGeometryLocator getPointLocator()
   {
   	if (pia == null)
       pia = new IndexedPointInAreaLocator(getGeometry());
- 		
+
     return pia;
   }
-  
+
   @Override
 public boolean intersects(Geometry g)
   {
   	// envelope test
   	if (! envelopesIntersect(g)) return false;
-  	
+
     // optimization for rectangles
     if (isRectangle) {
       return RectangleIntersects.intersects((Polygon) getGeometry(), g);
     }
-    
+
     return PreparedPolygonIntersects.intersects(this, g);
   }
-  
+
   @Override
 public boolean contains(Geometry g)
   {
     // short-circuit test
-    if (! envelopeCovers(g)) 
+    if (! envelopeCovers(g))
     	return false;
-  	
+
     // optimization for rectangles
     if (isRectangle) {
       return RectangleContains.contains((Polygon) getGeometry(), g);
@@ -102,21 +102,21 @@ public boolean contains(Geometry g)
 
     return PreparedPolygonContains.contains(this, g);
   }
-  
+
   @Override
 public boolean containsProperly(Geometry g)
   {
     // short-circuit test
-    if (! envelopeCovers(g)) 
+    if (! envelopeCovers(g))
     	return false;
     return PreparedPolygonContainsProperly.containsProperly(this, g);
   }
-  
+
   @Override
 public boolean covers(Geometry g)
   {
     // short-circuit test
-    if (! envelopeCovers(g)) 
+    if (! envelopeCovers(g))
     	return false;
     // optimization for rectangle arguments
     if (isRectangle) {

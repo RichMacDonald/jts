@@ -20,9 +20,9 @@ import java.util.List;
  * P. Rigaux, Michel Scholl and Agnes Voisard. Spatial Databases With
  * Application To GIS. Morgan Kaufmann, San Francisco, 2002.
  * <p>
- * This class is thread-safe.  Building the tree is synchronized, 
+ * This class is thread-safe.  Building the tree is synchronized,
  * and querying is stateless.
- * 
+ *
  * @see STRtree
  *
  * @version 1.7
@@ -34,12 +34,12 @@ public class SIRtree extends AbstractSTRtree {
       ((Interval)((Boundable)o2).getBounds()).getCentre());
 
   private IntersectsOp intersectsOp = (aBounds, bBounds) -> ((Interval)aBounds).intersects((Interval)bBounds);
-  
+
   /**
    * Constructs an SIRtree with the default node capacity.
    */
   public SIRtree() { this(10); }
-   
+
   /**
    * Constructs an SIRtree with the given maximum number of child nodes that
    * a node may have

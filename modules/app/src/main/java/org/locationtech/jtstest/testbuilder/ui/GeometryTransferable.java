@@ -20,16 +20,16 @@ import java.io.IOException;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jtstest.testbuilder.io.IOUtil;
 
-public class GeometryTransferable implements Transferable 
+public class GeometryTransferable implements Transferable
 {
   public static final DataFlavor GEOMETRY_FLAVOR =
     new DataFlavor(Geometry.class, "Geometry");
-  
+
   private Geometry geom;
   private boolean isFormatted;
-  
-  private static final DataFlavor[] flavors = { 
-  	DataFlavor.stringFlavor,       
+
+  private static final DataFlavor[] flavors = {
+  	DataFlavor.stringFlavor,
   	GEOMETRY_FLAVOR };
 
   public GeometryTransferable(Geometry geom) {

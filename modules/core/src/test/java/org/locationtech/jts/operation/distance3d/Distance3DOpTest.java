@@ -24,11 +24,11 @@ import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
 
-public class Distance3DOpTest extends TestCase 
+public class Distance3DOpTest extends TestCase
 {
 	static GeometryFactory geomFact = new GeometryFactory();
 	static WKTReader rdr = new WKTReader();
-	
+
 	public static void main(String args[]) {
 		TestRunner.run(Distance3DOpTest.class);
 	}
@@ -42,12 +42,12 @@ public class Distance3DOpTest extends TestCase
 	{
 		checkDistance(	"LINESTRING (250 250 0, 260 260 0)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				70.71067811865476);	
-		
+				70.71067811865476);
+
 		testLinePolygonFlat();
 	}
 	*/
-	
+
 	public void testEmpty()
 	{
 		checkDistance(	"POINT EMPTY", "POINT EMPTY",	0);
@@ -143,9 +143,9 @@ public class Distance3DOpTest extends TestCase
 	}
 
 	/**
-	 * Many of these tests exhibit robustness errors 
+	 * Many of these tests exhibit robustness errors
 	 * due to numerical roundoff in the distance algorithm mathematics.
-	 * This happens when computing nearly-coincident lines 
+	 * This happens when computing nearly-coincident lines
 	 * with very large ordinate values
 	 */
 	public void testCrossSegmentsRobust() {
@@ -213,15 +213,15 @@ public class Distance3DOpTest extends TestCase
 		// point above poly
 		checkDistance(	"POINT (150 150 10)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				10);	
+				10);
 		// point below poly
 		checkDistance(	"POINT (150 150 -10)",
 				"POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0))",
-				10);				
+				10);
 		// point right of poly in YZ plane
 		checkDistance(	"POINT (10 150 150)",
 				"POLYGON ((0 100 200, 0 200 200, 0 200 100, 0 100 100, 0 100 200))",
-				10);				
+				10);
 	}
 
 	public void testPointPolygonFlat()
@@ -309,7 +309,7 @@ public class Distance3DOpTest extends TestCase
 				coord(110, 110, 100), coord(110, 110, 100));
 	}
 
-	String poly2HoleFlat = "POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0), (110 110 0, 110 130 0, 130 130 0, 130 110 0, 110 110 0), (190 110 0, 170 110 0, 170 130 0, 190 130 0, 190 110 0))";	
+	String poly2HoleFlat = "POLYGON ((100 200 0, 200 200 0, 200 100 0, 100 100 0, 100 200 0), (110 110 0, 110 130 0, 130 130 0, 130 110 0, 110 110 0), (190 110 0, 170 110 0, 170 130 0, 190 130 0, 190 110 0))";
 
 	/**
 	 * A case proving that polygon/polygon distance requires

@@ -23,7 +23,7 @@ import org.locationtech.jts.geom.Envelope;
  * to those which intersect an envelope.
  * This creates zero or more sections of the input segment sequences,
  * containing only line segments which intersect the limit envelope.
- * Segments are not clipped, since that can move 
+ * Segments are not clipped, since that can move
  * line segments enough to alter topology,
  * and it happens in the overlay in any case.
  * This can substantially reduce the number of vertices which need to be
@@ -32,7 +32,7 @@ import org.locationtech.jts.geom.Envelope;
  * This optimization is only applicable to Line geometries,
  * since it does not maintain the closed topology of rings.
  * Polygonal geometries are optimized using the {@link RingClipper}.
- * 
+ *
  * @author Martin Davis
  *
  * @see RingClipper
@@ -45,16 +45,16 @@ public class LineLimiter {
 
   /**
    * Creates a new limiter for a given envelope.
-   * 
+   *
    * @param env the envelope to limit to
    */
   public LineLimiter(Envelope env) {
     this.limitEnv = env;
   }
-  
+
   /**
    * Limits a list of segments.
-   * 
+   *
    * @param pts the segment sequence to limit
    * @return the sections which intersect the limit envelope
    */
@@ -62,9 +62,9 @@ public class LineLimiter {
     lastOutside = null;
     ptList = null;
     sections = new ArrayList<>();
-    
+
     for (Coordinate p : pts) {
-      if ( limitEnv.intersects(p) ) 
+      if ( limitEnv.intersects(p) )
         addPoint(p);
       else {
         addOutside(p);
@@ -92,7 +92,7 @@ public class LineLimiter {
     }
     lastOutside = p;
   }
-  
+
   private boolean isLastSegmentIntersecting(Coordinate p) {
     if (lastOutside == null) {
       // last point must have been inside
@@ -115,10 +115,10 @@ public class LineLimiter {
       ptList.add(lastOutside, false);
     }
     lastOutside = null;
-  }  
-  
+  }
+
   private void finishSection() {
-    if (ptList == null) 
+    if (ptList == null)
       return;
     // finish off this section
     if (lastOutside != null) {

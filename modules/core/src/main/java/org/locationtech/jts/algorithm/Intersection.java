@@ -23,24 +23,24 @@ import org.locationtech.jts.geom.Coordinate;
  * to ensure that the computed value is very close to the correct value.
  * <p>
  * The Z-ordinate is ignored, and not populated.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class Intersection {
-  
+
   /**
    * Computes the intersection point of two lines.
-   * If the lines are parallel or collinear this case is detected 
+   * If the lines are parallel or collinear this case is detected
    * and <code>null</code> is returned.
-   * 
+   *
    * @param p1 an endpoint of line 1
    * @param p2 an endpoint of line 1
    * @param q1 an endpoint of line 2
    * @param q2 an endpoint of line 2
    * @return the intersection point between the lines, if there is one,
    * or null if the lines are parallel or collinear
-   * 
+   *
    * @see CGAlgorithmsDD#intersection(Coordinate, Coordinate, Coordinate, Coordinate)
    */
   public static Coordinate intersection(Coordinate p1, Coordinate p2, Coordinate q1, Coordinate q2) {
@@ -62,7 +62,7 @@ public class Intersection {
 
     double midx = (intMinX + intMaxX) / 2.0;
     double midy = (intMinY + intMaxY) / 2.0;
-    
+
     // condition ordinate values by subtracting midpoint
     double p1x = p1.x - midx;
     double p1y = p1.y - midy;
@@ -72,23 +72,23 @@ public class Intersection {
     double q1y = q1.y - midy;
     double q2x = q2.x - midx;
     double q2y = q2.y - midy;
-     
+
     // unrolled computation using homogeneous coordinates eqn
     double px = p1y - p2y;
     double py = p2x - p1x;
     double pw = p1x * p2y - p2x * p1y;
-    
+
     double qx = q1y - q2y;
     double qy = q2x - q1x;
     double qw = q1x * q2y - q2x * q1y;
-    
+
     double x = py * qw - qy * pw;
     double y = qx * pw - px * qw;
     double w = px * qy - qx * py;
-    
+
     double xInt = x/w;
     double yInt = y/w;
-    
+
     // check for parallel lines
     if ((Double.isNaN(xInt)) || (Double.isInfinite(xInt)
         || Double.isNaN(yInt)) || (Double.isInfinite(yInt))) {
@@ -106,7 +106,7 @@ public class Intersection {
    * <li>the line or the segment are degenerate (have zero length)
    * </ul>
    * If the segment is collinear with the line the first segment endpoint is returned.
-   * 
+   *
    * @param line1 a point on the line
    * @param line2 a point on the line
    * @param seg1 an endpoint of the line segment
@@ -116,7 +116,7 @@ public class Intersection {
   public static Coordinate lineSegment(Coordinate line1, Coordinate line2, Coordinate seg1, Coordinate seg2) {
     int orientS1 = Orientation.index(line1, line2, seg1);
     if (orientS1 == 0) return seg1.copy();
-    
+
     int orientS2 = Orientation.index(line1, line2, seg2);
     if (orientS2 == 0) return seg2.copy();
 
@@ -126,14 +126,14 @@ public class Intersection {
     if ((orientS1 > 0 && orientS2 > 0) || (orientS1 < 0 && orientS2 < 0)) {
       return null;
     }
-    
+
     /**
      * The segment intersects the line.
      * The full line-line intersection is used to compute the intersection point.
      */
     Coordinate intPt = intersection(line1, line2, seg1, seg2);
     if (intPt != null) return intPt;
-    
+
     /**
      * Due to robustness failure it is possible the intersection computation will return null.
      * In this case choose the closest point

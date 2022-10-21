@@ -20,11 +20,11 @@ public class CoverageSimplifierTest extends GeometryTestCase {
   public static void main(String args[]) {
     TestRunner.run(CoverageSimplifierTest.class);
   }
-  
+
   public CoverageSimplifierTest(String name) {
     super(name);
   }
-  
+
   public void testNoopSimple2() {
     checkNoop(readArray(
         "POLYGON ((100 100, 200 200, 300 100, 200 101, 100 100))",
@@ -55,7 +55,7 @@ public class CoverageSimplifierTest extends GeometryTestCase {
   }
 
   //---------------------------------------------
-  
+
   public void testSimple2() {
     checkResult(readArray(
         "POLYGON ((100 100, 200 200, 300 100, 200 101, 100 100))",
@@ -77,7 +77,7 @@ public class CoverageSimplifierTest extends GeometryTestCase {
   }
 
   /**
-   * Checks that a polygon on the edge of the coverage does not collapse 
+   * Checks that a polygon on the edge of the coverage does not collapse
    * under maximal simplification
    */
   public void testMultiEdgeRingNoCollapse() {
@@ -103,7 +103,7 @@ public class CoverageSimplifierTest extends GeometryTestCase {
   }
 
   //---------------------------------
-  
+
   public void testInnerSimple() {
     checkResultInner(readArray(
         "POLYGON ((50 50, 50 150, 100 190, 100 200, 200 200, 160 150, 120 120, 90 80, 50 50))",
@@ -113,7 +113,7 @@ public class CoverageSimplifierTest extends GeometryTestCase {
             "POLYGON ((50 50, 50 150, 100 190, 100 200, 200 200, 50 50))",
             "POLYGON ((200 200, 50 50, 100 0, 170 50, 250 100, 200 200))" )
     );
-    
+
   }
   //=================================
 
@@ -122,12 +122,12 @@ public class CoverageSimplifierTest extends GeometryTestCase {
     Geometry[] actual = CoverageSimplifier.simplify(input, 0);
     checkEqual(input, actual);
   }
-  
+
   private void checkResult(Geometry[] input, double tolerance, Geometry[] expected) {
     Geometry[] actual = CoverageSimplifier.simplify(input, tolerance);
     checkEqual(expected, actual);
   }
-  
+
   private void checkResultInner(Geometry[] input, double tolerance, Geometry[] expected) {
     Geometry[] actual = CoverageSimplifier.simplifyInner(input, tolerance);
     checkEqual(expected, actual);

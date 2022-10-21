@@ -18,34 +18,34 @@ import org.locationtech.jts.geom.Geometry;
 
 
 /**
- * This class should be used to generate a grid of bounding boxes, 
+ * This class should be used to generate a grid of bounding boxes,
  * most useful when creating multiple geometries.
  *
- * Successive calls to create() will walk the user though the grid. 
+ * Successive calls to create() will walk the user though the grid.
  * Use canCreate() and reset() to control the walk through the grid.
- * 
+ *
  * @see #canCreate()
  * @see #reset()
- * 
- * @author David Zwiers, Vivid Solutions. 
+ *
+ * @author David Zwiers, Vivid Solutions.
  */
 public class GridGenerator extends GeometryGenerator {
 
 	protected int numberColumns = 1;
 	protected int numberRows = 1;
 	protected int index = 0;
-	
+
 	/**
 	 * Sets some default values.
 	 */
 	public GridGenerator(){
 		dimensions = 2;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @see org.locationtech.jts.generator.GeometryGenerator#create()
-	 * 
+	 *
 	 * @throws NoSuchElementException when all the grids have been created (@see #create())
 	 * @throws NullPointerException when either the Geometry Factory, or the Bounding Box are undefined.
 	 */
@@ -54,11 +54,11 @@ public class GridGenerator extends GeometryGenerator {
 		return geometryFactory.toGeometry(createEnv());
 	}
 	/**
-	 * 
-	 * @return Envelope 
-	 * 
+	 *
+	 * @return Envelope
+	 *
 	 * @see org.locationtech.jts.generator.GeometryGenerator#create()
-	 * 
+	 *
 	 * @throws NoSuchElementException when all the grids have been created (@see #create())
 	 * @throws NullPointerException when either the Geometry Factory, or the Bounding Box are undefined.
 	 */
@@ -75,26 +75,26 @@ public class GridGenerator extends GeometryGenerator {
 
 		double x = boundingBox.getMinX(); // base x
 		double dx = boundingBox.getMaxX()-x;
-		
+
 		double y = boundingBox.getMinY(); // base y
 		double dy = boundingBox.getMaxY()-y;
-		
+
 		int row = numberRows==1?0:index / numberColumns;
 		int col = numberColumns==1?0:index % numberColumns;
-		
+
 		double sx,sy; // size of a step
 		sx = dx/numberColumns;
 		sy = dy/numberRows;
-		
+
 		double minx, miny;
 		minx = x+col*sx;
 		miny = y+row*sy;
-		
+
 		Envelope box = new Envelope(geometryFactory.getPrecisionModel().makePrecise(minx),
 									geometryFactory.getPrecisionModel().makePrecise(minx+sx),
 									geometryFactory.getPrecisionModel().makePrecise(miny),
 									geometryFactory.getPrecisionModel().makePrecise(miny+sy));
-		
+
 		index++;
 		return box;
 	}
@@ -105,7 +105,7 @@ public class GridGenerator extends GeometryGenerator {
 	public boolean canCreate(){
 		return (numberColumns*numberRows)>index;
 	}
-	
+
 	/**
 	 * Resets the grid counter
 	 */
@@ -153,5 +153,5 @@ public class GridGenerator extends GeometryGenerator {
 			throw new IndexOutOfBoundsException("Index sizes must be positive, non zero");
 		this.numberRows = numberRows;
 	}
-	
+
 }

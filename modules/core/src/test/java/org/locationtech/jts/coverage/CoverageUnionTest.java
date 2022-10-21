@@ -21,11 +21,11 @@ public class CoverageUnionTest extends GeometryTestCase
   public static void main(String args[]) {
     TestRunner.run(CoverageUnionTest.class);
   }
-  
+
   public CoverageUnionTest(String name) {
     super(name);
   }
-  
+
   public void testChessboard4() {
     checkUnion(
         "MULTIPOLYGON (((1 9, 5 9, 5 5, 1 5, 1 9)), ((5 9, 9 9, 9 5, 5 5, 5 9)), ((1 5, 5 5, 5 1, 1 1, 1 5)), ((5 5, 9 5, 9 1, 5 1, 5 5)))",

@@ -40,7 +40,7 @@ import org.locationtech.jtstest.testbuilder.event.GeometryFunctionListener;
  * @version 1.7
  */
 public class GeometryFunctionTreePanel extends JPanel {
-  
+
   JScrollPane jScrollPane = new JScrollPane();
 
 	JTree tree = new JTree();
@@ -84,7 +84,7 @@ public class GeometryFunctionTreePanel extends JPanel {
         //String name = StringUtil.capitalize(func.getName());
         String name = func.getName();
 				setText(name);
-				setToolTipText(GeometryFunctionUtil.toolTipText(func)); 
+				setToolTipText(GeometryFunctionUtil.toolTipText(func));
 			} else {
 				setToolTipText(null); // no tool tip
 			}

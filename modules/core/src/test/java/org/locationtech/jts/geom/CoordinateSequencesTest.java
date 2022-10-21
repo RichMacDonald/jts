@@ -59,7 +59,7 @@ public class CoordinateSequencesTest extends TestCase {
     CoordinateSequences.copy(cs3D,  0, cs2D, 0, cs2D.size());
     assertTrue(CoordinateSequences.isEqual(cs2D, cs3D));
  }
-  
+
 
   public void testScrollRing() {
     System.out.println("Testing scrolling of closed ring");

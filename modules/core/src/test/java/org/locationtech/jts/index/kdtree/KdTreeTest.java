@@ -53,47 +53,47 @@ public class KdTreeTest extends TestCase {
 
   public void testMultiplePoint() {
     testQuery("MULTIPOINT ( (1 1), (2 2) )", 0,
-        new Envelope(0, 10, 0, 10), 
+        new Envelope(0, 10, 0, 10),
         "MULTIPOINT ( (1 1), (2 2) )");
   }
 
   public void testSubset() {
-    testQuery("MULTIPOINT ( (1 1), (2 2), (3 3), (4 4) )", 
-        0, 
+    testQuery("MULTIPOINT ( (1 1), (2 2), (3 3), (4 4) )",
+        0,
         new Envelope(1.5, 3.4, 1.5, 3.5),
         "MULTIPOINT ( (2 2), (3 3) )");
   }
 
   public void testToleranceFailure() {
-    testQuery("MULTIPOINT ( (0 0), (-.1 1), (.1 1) )", 
-        1, 
+    testQuery("MULTIPOINT ( (0 0), (-.1 1), (.1 1) )",
+        1,
         new Envelope(-9, 9, -9, 9),
         "MULTIPOINT ( (0 0), (-.1 1) )");
   }
-  
+
   public void testTolerance2() {
-    testQuery("MULTIPOINT ((10 60), (20 60), (30 60), (30 63))", 
-        9, 
+    testQuery("MULTIPOINT ((10 60), (20 60), (30 60), (30 63))",
+        9,
         new Envelope(0,99, 0, 99),
         "MULTIPOINT ((10 60), (20 60), (30 60))");
   }
-  
+
   public void testTolerance2_perturbedY() {
-    testQuery("MULTIPOINT ((10 60), (20 61), (30 60), (30 63))", 
-        9, 
+    testQuery("MULTIPOINT ((10 60), (20 61), (30 60), (30 63))",
+        9,
         new Envelope(0,99, 0, 99),
         "MULTIPOINT ((10 60), (20 61), (30 60))");
   }
-  
+
   public void testSnapToNearest() {
-    testQueryRepeated("MULTIPOINT ( (10 60), (20 60), (16 60))", 
-        5, 
+    testQueryRepeated("MULTIPOINT ( (10 60), (20 60), (16 60))",
+        5,
         new Envelope(0,99, 0, 99),
         "MULTIPOINT ( (10 60), (20 60), (20 60))");
   }
-  
+
   public void testSizeDepth() {
-    KdTree index = build("MULTIPOINT ( (10 60), (20 60), (16 60), (1 1), (23 400))", 
+    KdTree index = build("MULTIPOINT ( (10 60), (20 60), (16 60), (1 1), (23 400))",
         0);
     int size = index.size();
     assertEquals(5, size);
@@ -102,7 +102,7 @@ public class KdTreeTest extends TestCase {
     assertTrue( depth > 1 );
     assertTrue( depth <= size );
   }
-  
+
   private void testQuery(String wktInput, double tolerance,
       Envelope queryEnv, String wktExpected) {
     KdTree index = build(wktInput, tolerance);
@@ -127,10 +127,10 @@ public class KdTreeTest extends TestCase {
 
     Arrays.sort(result);
     Arrays.sort(expectedCoord);
-    
+
     assertTrue("Result count = " + result.length + ", expected count = " + expectedCoord.length,
         result.length == expectedCoord.length);
-    
+
     boolean isMatch = CoordinateArrays.equals(result, expectedCoord);
     assertTrue("Expected result coordinates not found", isMatch);
   }
@@ -141,13 +141,13 @@ public class KdTreeTest extends TestCase {
 
     Arrays.sort(result);
     Arrays.sort(expectedCoord);
-    
+
     assertTrue("Result count = " + result.length + ", expected count = " + expectedCoord.length,
         result.length == expectedCoord.length);
-    
+
     boolean isMatch = CoordinateArrays.equals(result, expectedCoord);
     assertTrue("Expected result coordinates not found", isMatch);
-    
+
     // test queries for points
     for (Coordinate p : expectedCoord) {
       KdNode node = index.query(p);

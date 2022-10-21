@@ -26,24 +26,24 @@ import org.locationtech.jts.geom.Coordinate;
 /**
  * A {@link Shape} which represents a polygon which may contain holes.
  * Provided because the standard AWT Polygon class does not support holes.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class PolygonShape implements Shape 
+public class PolygonShape implements Shape
 {
   // use a GeneralPath with a winding rule, since it supports floating point coordinates
     private GeneralPath polygonPath;
     private GeneralPath ringPath;
-    
+
     /**
      * Creates a new polygon {@link Shape}.
-     * 
-     * @param shellVertices the vertices of the shell 
+     *
+     * @param shellVertices the vertices of the shell
      * @param holeVerticesCollection a collection of Coordinate[] for each hole
      */
     public PolygonShape(Coordinate[] shellVertices,
-        Collection holeVerticesCollection) 
+        Collection holeVerticesCollection)
     {
         polygonPath = toPath(shellVertices);
 
@@ -53,7 +53,7 @@ public class PolygonShape implements Shape
         }
     }
 
-    public PolygonShape() 
+    public PolygonShape()
     {
     }
 
@@ -67,7 +67,7 @@ public class PolygonShape implements Shape
     		ringPath.lineTo((float) p.getX(), (float) p.getY());
     	}
     }
-    
+
     void endRing()
     {
       ringPath.closePath();
@@ -79,12 +79,12 @@ public class PolygonShape implements Shape
     	}
     	ringPath = null;
     }
-    
+
     /**
-     * Creates a GeneralPath representing a polygon ring 
+     * Creates a GeneralPath representing a polygon ring
      * having the given coordinate sequence.
      * Uses the GeneralPath.WIND_EVEN_ODD winding rule.
-     * 
+     *
      * @param coordinates a coordinate sequence
      * @return the path for the coordinate sequence
      */

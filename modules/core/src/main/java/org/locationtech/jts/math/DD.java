@@ -14,8 +14,8 @@ package org.locationtech.jts.math;
 import java.io.Serializable;
 
 /**
- * Implements extended-precision floating-point numbers 
- * which maintain 106 bits (approximately 30 decimal digits) of precision. 
+ * Implements extended-precision floating-point numbers
+ * which maintain 106 bits (approximately 30 decimal digits) of precision.
  * <p>
  * A DoubleDouble uses a representation containing two double-precision values.
  * A number x is represented as a pair of doubles, x.hi and x.lo,
@@ -23,30 +23,30 @@ import java.io.Serializable;
  * <pre>
  *    |x.lo| &lt;= 0.5*ulp(x.hi)
  * </pre>
- * and ulp(y) means "unit in the last place of y".  
- * The basic arithmetic operations are implemented using 
+ * and ulp(y) means "unit in the last place of y".
+ * The basic arithmetic operations are implemented using
  * convenient properties of IEEE-754 floating-point arithmetic.
  * <p>
- * The range of values which can be represented is the same as in IEEE-754.  
- * The precision of the representable numbers 
+ * The range of values which can be represented is the same as in IEEE-754.
+ * The precision of the representable numbers
  * is twice as great as IEEE-754 double precision.
  * <p>
  * The correctness of the arithmetic algorithms relies on operations
  * being performed with standard IEEE-754 double precision and rounding.
- * This is the Java standard arithmetic model, but for performance reasons 
+ * This is the Java standard arithmetic model, but for performance reasons
  * Java implementations are not
- * constrained to using this standard by default.  
+ * constrained to using this standard by default.
  * Some processors (notably the Intel Pentium architecture) perform
  * floating point operations in (non-IEEE-754-standard) extended-precision.
  * A JVM implementation may choose to use the non-standard extended-precision
  * as its default arithmetic mode.
  * To prevent this from happening, this code uses the
- * Java <tt>strictfp</tt> modifier, 
- * which forces all operations to take place in the standard IEEE-754 rounding model. 
+ * Java <tt>strictfp</tt> modifier,
+ * which forces all operations to take place in the standard IEEE-754 rounding model.
  * <p>
- * The API provides both a set of value-oriented operations 
+ * The API provides both a set of value-oriented operations
  * and a set of mutating operations.
- * Value-oriented operations treat DoubleDouble values as 
+ * Value-oriented operations treat DoubleDouble values as
  * immutable; operations on them return new objects carrying the result
  * of the operation.  This provides a simple and safe semantics for
  * writing DoubleDouble expressions.  However, there is a performance
@@ -69,28 +69,28 @@ import java.io.Serializable;
  *     a.selfAdd(3.0);
  * </pre>
  * <p>
- * This implementation uses algorithms originally designed variously by 
- * Knuth, Kahan, Dekker, and Linnainmaa.  
- * Douglas Priest developed the first C implementation of these techniques. 
+ * This implementation uses algorithms originally designed variously by
+ * Knuth, Kahan, Dekker, and Linnainmaa.
+ * Douglas Priest developed the first C implementation of these techniques.
  * Other more recent C++ implementation are due to Keith M. Briggs and David Bailey et al.
- * 
+ *
  * <h3>References</h3>
  * <ul>
  * <li>Priest, D., <i>Algorithms for Arbitrary Precision Floating Point Arithmetic</i>,
- * in P. Kornerup and D. Matula, Eds., Proc. 10th Symposium on Computer Arithmetic, 
+ * in P. Kornerup and D. Matula, Eds., Proc. 10th Symposium on Computer Arithmetic,
  * IEEE Computer Society Press, Los Alamitos, Calif., 1991.
- * <li>Yozo Hida, Xiaoye S. Li and David H. Bailey, 
- * <i>Quad-Double Arithmetic: Algorithms, Implementation, and Application</i>, 
+ * <li>Yozo Hida, Xiaoye S. Li and David H. Bailey,
+ * <i>Quad-Double Arithmetic: Algorithms, Implementation, and Application</i>,
  * manuscript, Oct 2000; Lawrence Berkeley National Laboratory Report BNL-46996.
- * <li>David Bailey, <i>High Precision Software Directory</i>; 
+ * <li>David Bailey, <i>High Precision Software Directory</i>;
  * <tt>http://crd.lbl.gov/~dhbailey/mpdist/index.html</tt>
  * </ul>
- * 
- * 
+ *
+ *
  * @author Martin Davis
  *
  */
-public strictfp final class DD 
+public strictfp final class DD
   implements Serializable, Comparable, Cloneable
 {
   /**
@@ -99,79 +99,79 @@ public strictfp final class DD
   public static final DD PI = new DD(
       3.141592653589793116e+00,
       1.224646799147353207e-16);
-  
+
   /**
    * The value nearest to the constant 2 * Pi.
-   */ 
+   */
   public static final DD TWO_PI = new DD(
       6.283185307179586232e+00,
       2.449293598294706414e-16);
-  
+
   /**
    * The value nearest to the constant Pi / 2.
    */
   public static final DD PI_2 = new DD(
       1.570796326794896558e+00,
       6.123233995736766036e-17);
-  
+
   /**
-   * The value nearest to the constant e (the natural logarithm base). 
+   * The value nearest to the constant e (the natural logarithm base).
    */
   public static final DD E = new DD(
       2.718281828459045091e+00,
       1.445646891729250158e-16);
-  
+
   /**
    * A value representing the result of an operation which does not return a valid number.
    */
   public static final DD NaN = new DD(Double.NaN, Double.NaN);
-  
+
   /**
    * The smallest representable relative difference between two {link @ DoubleDouble} values
    */
   public static final double EPS = 1.23259516440783e-32;  /* = 2^-106 */
-  
+
   private static DD createNaN()
   {
-    return new DD(Double.NaN, Double.NaN); 
+    return new DD(Double.NaN, Double.NaN);
   }
-  
+
   /**
    * Converts the string argument to a DoubleDouble number.
-   * 
+   *
    * @param str a string containing a representation of a numeric value
    * @return the extended precision version of the value
    * @throws NumberFormatException if <tt>s</tt> is not a valid representation of a number
    */
-  public static DD valueOf(String str) 
+  public static DD valueOf(String str)
   throws NumberFormatException
-  { 
-    return parse(str); 
+  {
+    return parse(str);
     }
-  
+
   /**
    * Converts the <tt>double</tt> argument to a DoubleDouble number.
-   * 
+   *
    * @param x a numeric value
    * @return the extended precision version of the value
    */
   public static DD valueOf(double x) { return new DD(x); }
-  
+
   /**
    * The value to split a double-precision value on during multiplication
    */
   private static final double SPLIT = 134217729.0D; // 2^27+1, for IEEE double
-  
+
   /**
    * The high-order component of the double-double precision value.
    */
   private double hi = 0.0;
-  
+
   /**
    * The low-order component of the double-double precision value.
    */
   private double lo = 0.0;
-  
+
   /**
    * Creates a new DoubleDouble with value 0.0.
    */
@@ -179,41 +179,41 @@ public strictfp final class DD
   {
     init(0.0);
   }
-  
+
   /**
    * Creates a new DoubleDouble with value x.
-   * 
+   *
    * @param x the value to initialize
    */
   public DD(double x)
   {
     init(x);
   }
-  
+
   /**
    * Creates a new DoubleDouble with value (hi, lo).
-   * 
-   * @param hi the high-order component 
-   * @param lo the high-order component 
+   *
+   * @param hi the high-order component
+   * @param lo the high-order component
    */
   public DD(double hi, double lo)
   {
     init(hi, lo);
   }
-  
+
   /**
    * Creates a new DoubleDouble with value equal to the argument.
-   * 
+   *
    * @param dd the value to initialize
    */
   public DD(DD dd)
   {
     init(dd);
   }
-  
+
   /**
    * Creates a new DoubleDouble with value equal to the argument.
-   * 
+   *
    * @param str the value to initialize by
    * @throws NumberFormatException if <tt>str</tt> is not a valid representation of a number
    */
@@ -222,10 +222,10 @@ public strictfp final class DD
   {
     this(parse(str));
   }
-  
+
   /**
    * Creates a new DoubleDouble with the value of the argument.
-   * 
+   *
    * @param dd the DoubleDouble value to copy
    * @return a copy of the input value
    */
@@ -233,10 +233,10 @@ public strictfp final class DD
   {
     return new DD(dd);
   }
-  
+
   /**
    * Creates and returns a copy of this value.
-   * 
+   *
    * @return a copy of this value
    */
   @Override
@@ -250,31 +250,31 @@ public Object clone()
       return null;
     }
   }
-  
+
   private void init(double x)
   {
     this.hi = x;
     this.lo = 0.0;
   }
-  
+
   private void init(double hi, double lo)
   {
     this.hi = hi;
-    this.lo = lo;   
+    this.lo = lo;
   }
-  
+
   private void init(DD dd)
   {
     hi = dd.hi;
     lo = dd.lo;
   }
-  
+
   /*
   double getHighComponent() { return hi; }
-  
+
   double getLowComponent() { return lo; }
   */
-  
+
   // Testing only - should not be public
   /*
   public void RENORM()
@@ -285,7 +285,7 @@ public Object clone()
     lo = err;
   }
   */
-  
+
   /**
    * Set the value for the DD object. This method supports the mutating
    * operations concept described in the class documentation (see above).
@@ -296,7 +296,7 @@ public Object clone()
     init(value);
     return this;
   }
-  
+
   /**
    * Set the value for the DD object. This method supports the mutating
    * operations concept described in the class documentation (see above).
@@ -307,36 +307,36 @@ public Object clone()
     init(value);
     return this;
   }
-  
+
 
   /**
    * Returns a new DoubleDouble whose value is <tt>(this + y)</tt>.
-   * 
+   *
    * @param y the addend
    * @return <tt>(this + y)</tt>
-   */ 
+   */
   public DD add(DD y)
   {
     return copy(this).selfAdd(y);
   }
-  
+
   /**
    * Returns a new DoubleDouble whose value is <tt>(this + y)</tt>.
-   * 
+   *
    * @param y the addend
    * @return <tt>(this + y)</tt>
-   */ 
+   */
   public DD add(double y)
   {
     return copy(this).selfAdd(y);
   }
-  
+
   /**
    * Adds the argument to the value of <tt>this</tt>.
-   * To prevent altering constants, 
-   * this method <b>must only</b> be used on values known to 
-   * be newly created. 
-   * 
+   * To prevent altering constants,
+   * this method <b>must only</b> be used on values known to
+   * be newly created.
+   *
    * @param y the addend
    * @return this object, increased by y
    */
@@ -344,13 +344,13 @@ public Object clone()
   {
     return selfAdd(y.hi, y.lo);
   }
-  
+
   /**
    * Adds the argument to the value of <tt>this</tt>.
-   * To prevent altering constants, 
-   * this method <b>must only</b> be used on values known to 
-   * be newly created. 
-   * 
+   * To prevent altering constants,
+   * this method <b>must only</b> be used on values known to
+   * be newly created.
+   *
    * @param y the addend
    * @return this object, increased by y
    */
@@ -369,30 +369,30 @@ public Object clone()
     return this;
     // return selfAdd(y, 0.0);
   }
-  
+
   private DD selfAdd(double yhi, double ylo)
   {
     double H, h, T, t, S, s, e, f;
-    S = hi + yhi; 
-    T = lo + ylo; 
-    e = S - hi; 
-    f = T - lo; 
-    s = S-e; 
-    t = T-f; 
-    s = (yhi-e)+(hi-s); 
-    t = (ylo-f)+(lo-t); 
+    S = hi + yhi;
+    T = lo + ylo;
+    e = S - hi;
+    f = T - lo;
+    s = S-e;
+    t = T-f;
+    s = (yhi-e)+(hi-s);
+    t = (ylo-f)+(lo-t);
     e = s+T; H = S+e; h = e+(S-H); e = t+h;
-  
+
     double zhi = H + e;
     double zlo = e + (H - zhi);
     hi = zhi;
     lo = zlo;
     return this;
   }
-  
+
   /**
    * Computes a new DoubleDouble object whose value is <tt>(this - y)</tt>.
-   * 
+   *
    * @param y the subtrahend
    * @return <tt>(this - y)</tt>
    */
@@ -400,10 +400,10 @@ public Object clone()
   {
     return add(y.negate());
   }
-  
+
   /**
    * Computes a new DoubleDouble object whose value is <tt>(this - y)</tt>.
-   * 
+   *
    * @param y the subtrahend
    * @return <tt>(this - y)</tt>
    */
@@ -411,14 +411,14 @@ public Object clone()
   {
     return add(-y);
   }
-  
-  
+
+
   /**
    * Subtracts the argument from the value of <tt>this</tt>.
-   * To prevent altering constants, 
-   * this method <b>must only</b> be used on values known to 
-   * be newly created. 
-   * 
+   * To prevent altering constants,
+   * this method <b>must only</b> be used on values known to
+   * be newly created.
+   *
    * @param y the addend
    * @return this object, decreased by y
    */
@@ -427,13 +427,13 @@ public Object clone()
     if (isNaN()) return this;
     return selfAdd(-y.hi, -y.lo);
   }
-  
+
   /**
    * Subtracts the argument from the value of <tt>this</tt>.
-   * To prevent altering constants, 
-   * this method <b>must only</b> be used on values known to 
-   * be newly created. 
-   * 
+   * To prevent altering constants,
+   * this method <b>must only</b> be used on values known to
+   * be newly created.
+   *
    * @param y the addend
    * @return this object, decreased by y
    */
@@ -442,10 +442,10 @@ public Object clone()
     if (isNaN()) return this;
     return selfAdd(-y, 0.0);
   }
-  
+
   /**
    * Returns a new DoubleDouble whose value is <tt>-this</tt>.
-   * 
+   *
    * @return <tt>-this</tt>
    */
   public DD negate()
@@ -453,10 +453,10 @@ public Object clone()
     if (isNaN()) return this;
     return new DD(-hi, -lo);
   }
-  
+
   /**
    * Returns a new DoubleDouble whose value is <tt>(this * y)</tt>.
-   * 
+   *
    * @param y the multiplicand
    * @return <tt>(this * y)</tt>
    */
@@ -465,10 +465,10 @@ public Object clone()
     if (y.isNaN()) return createNaN();
     return copy(this).selfMultiply(y);
   }
-  
+
   /**
    * Returns a new DoubleDouble whose value is <tt>(this * y)</tt>.
-   * 
+   *
    * @param y the multiplicand
    * @return <tt>(this * y)</tt>
    */
@@ -477,13 +477,13 @@ public Object clone()
     if (Double.isNaN(y)) return createNaN();
     return copy(this).selfMultiply(y, 0.0);
   }
-  
+
   /**
    * Multiplies this object by the argument, returning <tt>this</tt>.
-   * To prevent altering constants, 
-   * this method <b>must only</b> be used on values known to 
-   * be newly created. 
-   * 
+   * To prevent altering constants,
+   * this method <b>must only</b> be used on values known to
+   * be newly created.
+   *
    * @param y the value to multiply by
    * @return this object, multiplied by y
    */
@@ -491,13 +491,13 @@ public Object clone()
   {
     return selfMultiply(y.hi, y.lo);
   }
-  
+
   /**
    * Multiplies this object by the argument, returning <tt>this</tt>.
-   * To prevent altering constants, 
-   * this method <b>must only</b> be used on values known to 
-   * be newly created. 
-   * 
+   * To prevent altering constants,
+   * this method <b>must only</b> be used on values known to
+   * be newly created.
+   *
    * @param y the value to multiply by
    * @return this object, multiplied by y
    */
@@ -505,24 +505,24 @@ public Object clone()
   {
     return selfMultiply(y, 0.0);
   }
-  
+
   private DD selfMultiply(double yhi, double ylo)
   {
     double hx, tx, hy, ty, C, c;
     C = SPLIT * hi; hx = C-hi; c = SPLIT * yhi;
-    hx = C-hx; tx = hi-hx; hy = c-yhi; 
+    hx = C-hx; tx = hi-hx; hy = c-yhi;
     C = hi*yhi; hy = c-hy; ty = yhi-hy;
     c = ((((hx*hy-C)+hx*ty)+tx*hy)+tx*ty)+(hi*ylo+lo*yhi);
-    double zhi = C+c; hx = C-zhi; 
+    double zhi = C+c; hx = C-zhi;
     double zlo = c+hx;
     hi = zhi;
     lo = zlo;
     return this;
   }
-  
+
   /**
    * Computes a new DoubleDouble whose value is <tt>(this / y)</tt>.
-   * 
+   *
    * @param y the divisor
    * @return a new object with the value <tt>(this / y)</tt>
    */
@@ -533,31 +533,31 @@ public Object clone()
     tc = C-hc; hy = u-y.hi; U = C * y.hi; hy = u-hy; ty = y.hi-hy;
     u = (((hc*hy-U)+hc*ty)+tc*hy)+tc*ty;
     c = ((((hi-U)-u)+lo)-C*y.lo)/y.hi;
-    u = C+c; 
-    
-    double zhi = u; 
+    u = C+c;
+
+    double zhi = u;
     double zlo = (C-u)+c;
     return new DD(zhi, zlo);
   }
-  
+
   /**
    * Computes a new DoubleDouble whose value is <tt>(this / y)</tt>.
-   * 
+   *
    * @param y the divisor
    * @return a new object with the value <tt>(this / y)</tt>
    */
   public DD divide(double y)
   {
     if (Double.isNaN(y)) return createNaN();
-    return copy(this).selfDivide(y, 0.0);  
+    return copy(this).selfDivide(y, 0.0);
   }
 
   /**
    * Divides this object by the argument, returning <tt>this</tt>.
-   * To prevent altering constants, 
-   * this method <b>must only</b> be used on values known to 
-   * be newly created. 
-   * 
+   * To prevent altering constants,
+   * this method <b>must only</b> be used on values known to
+   * be newly created.
+   *
    * @param y the value to divide by
    * @return this object, divided by y
    */
@@ -565,13 +565,13 @@ public Object clone()
   {
     return selfDivide(y.hi, y.lo);
   }
-  
+
   /**
    * Divides this object by the argument, returning <tt>this</tt>.
-   * To prevent altering constants, 
-   * this method <b>must only</b> be used on values known to 
-   * be newly created. 
-   * 
+   * To prevent altering constants,
+   * this method <b>must only</b> be used on values known to
+   * be newly created.
+   *
    * @param y the value to divide by
    * @return this object, divided by y
    */
@@ -579,7 +579,7 @@ public Object clone()
   {
     return selfDivide(y, 0.0);
   }
-  
+
   private DD selfDivide(double yhi, double ylo)
   {
     double hc, tc, hy, ty, C, c, U, u;
@@ -587,45 +587,45 @@ public Object clone()
     tc = C-hc; hy = u-yhi; U = C * yhi; hy = u-hy; ty = yhi-hy;
     u = (((hc*hy-U)+hc*ty)+tc*hy)+tc*ty;
     c = ((((hi-U)-u)+lo)-C*ylo)/yhi;
-    u = C+c; 
-    
-    hi = u; 
+    u = C+c;
+
+    hi = u;
     lo = (C-u)+c;
     return this;
   }
-  
+
   /**
    * Returns a DoubleDouble whose value is  <tt>1 / this</tt>.
-   * 
+   *
    * @return the reciprocal of this value
    */
   public DD reciprocal()
   {
     double  hc, tc, hy, ty, C, c, U, u;
-    C = 1.0/hi; 
-    c = SPLIT*C; 
-    hc =c-C;  
+    C = 1.0/hi;
+    c = SPLIT*C;
+    hc =c-C;
     u = SPLIT*hi;
     hc = c-hc; tc = C-hc; hy = u-hi; U = C*hi; hy = u-hy; ty = hi-hy;
     u = (((hc*hy-U)+hc*ty)+tc*hy)+tc*ty;
     c = ((((1.0-U)-u))-C*lo)/hi;
-    
-    double  zhi = C+c; 
+
+    double  zhi = C+c;
     double  zlo = (C-zhi)+c;
     return new DD(zhi, zlo);
   }
-  
+
   /**
-   * Returns the largest (closest to positive infinity) 
-   * value that is not greater than the argument 
+   * Returns the largest (closest to positive infinity)
+   * value that is not greater than the argument
    * and is equal to a mathematical integer.
    * Special cases:
    * <ul>
    * <li>If this value is NaN, returns NaN.
    * </ul>
-   * 
-   * @return the largest (closest to positive infinity) 
-   * value that is not greater than the argument 
+   *
+   * @return the largest (closest to positive infinity)
+   * value that is not greater than the argument
    * and is equal to a mathematical integer.
    */
   public DD floor()
@@ -637,20 +637,20 @@ public Object clone()
     if (fhi == hi) {
       flo = Math.floor(lo);
     }
-      // do we need to renormalize here?    
-    return new DD(fhi, flo); 
+      // do we need to renormalize here?
+    return new DD(fhi, flo);
   }
-  
+
   /**
-   * Returns the smallest (closest to negative infinity) value 
-   * that is not less than the argument and is equal to a mathematical integer. 
+   * Returns the smallest (closest to negative infinity) value
+   * that is not less than the argument and is equal to a mathematical integer.
    * Special cases:
    * <ul>
    * <li>If this value is NaN, returns NaN.
    * </ul>
-   * 
-   * @return the smallest (closest to negative infinity) value 
-   * that is not less than the argument and is equal to a mathematical integer. 
+   *
+   * @return the smallest (closest to negative infinity) value
+   * that is not less than the argument and is equal to a mathematical integer.
    */
   public DD ceil()
   {
@@ -662,9 +662,9 @@ public Object clone()
       flo = Math.ceil(lo);
       // do we need to renormalize here?
     }
-    return new DD(fhi, flo); 
+    return new DD(fhi, flo);
   }
-  
+
   /**
    * Returns an integer indicating the sign of this value.
    * <ul>
@@ -673,7 +673,7 @@ public Object clone()
    * <li>if this value is = 0, returns 0
    * <li>if this value is NaN, returns 0
    * </ul>
-   * 
+   *
    * @return an integer indicating the sign of this value
    */
   public int signum()
@@ -684,7 +684,7 @@ public Object clone()
     if (lo < 0) return -1;
     return 0;
   }
-  
+
   /**
    * Rounds this value to the nearest integer.
    * The value is rounded to an integer by adding 1/2 and taking the floor of the result.
@@ -702,33 +702,33 @@ public Object clone()
     DD plus5 = this.add(0.5);
     return plus5.floor();
   }
-  
+
   /**
    * Returns the integer which is largest in absolute value and not further
-   * from zero than this value.  
+   * from zero than this value.
    * Special cases:
    * <ul>
    * <li>If this value is NaN, returns NaN.
    * </ul>
-   *  
+   *
    * @return the integer which is largest in absolute value and not further from zero than this value
    */
   public DD trunc()
   {
     if (isNaN()) return NaN;
-    if (isPositive()) 
+    if (isPositive())
       return floor();
-    else 
+    else
       return ceil();
   }
-  
+
   /**
    * Returns the absolute value of this value.
    * Special cases:
    * <ul>
    * <li>If this value is NaN, it is returned.
    * </ul>
-   * 
+   *
    * @return the absolute value of this value
    */
   public DD abs()
@@ -738,45 +738,45 @@ public Object clone()
       return negate();
     return new DD(this);
   }
-  
+
   /**
    * Computes the square of this value.
-   * 
+   *
    * @return the square of this value.
    */
   public DD sqr()
   {
     return this.multiply(this);
   }
-  
+
   /**
    * Squares this object.
-   * To prevent altering constants, 
-   * this method <b>must only</b> be used on values known to 
-   * be newly created. 
-   * 
+   * To prevent altering constants,
+   * this method <b>must only</b> be used on values known to
+   * be newly created.
+   *
    * @return the square of this value.
    */
   public DD selfSqr()
   {
     return this.selfMultiply(this);
   }
-  
+
   /**
    * Computes the square of this value.
-   * 
+   *
    * @return the square of this value.
    */
   public static DD sqr(double x)
   {
     return valueOf(x).selfMultiply(x);
   }
-  
+
   /**
    * Computes the positive square root of this value.
    * If the number is NaN or negative, NaN is returned.
-   * 
-   * @return the positive square root of this number. 
+   *
+   * @return the positive square root of this number.
    * If the argument is NaN or less than zero, the result is NaN.
    */
   public DD sqrt()
@@ -800,23 +800,23 @@ public Object clone()
 
     double x = 1.0 / Math.sqrt(hi);
     double ax = hi * x;
-    
+
     DD axdd = valueOf(ax);
     DD diffSq = this.subtract(axdd.sqr());
     double d2 = diffSq.hi * (x * 0.5);
-    
+
     return axdd.add(d2);
   }
-  
+
   public static DD sqrt(double x)
   {
     return valueOf(x).sqrt();
   }
-  
+
   /**
    * Computes the value of this number raised to an integral power.
    * Follows semantics of Java Math.pow as closely as possible.
-   * 
+   *
    * @param exp the integer exponent
    * @return x raised to the integral power exp
    */
@@ -824,7 +824,7 @@ public Object clone()
   {
     if (exp == 0.0)
       return valueOf(1.0);
-    
+
     DD r = new DD(this);
     DD s = valueOf(1.0);
     int n = Math.abs(exp);
@@ -848,10 +848,10 @@ public Object clone()
       return s.reciprocal();
     return s;
   }
-  
+
   /**
    * Computes the determinant of the 2x2 matrix with the given entries.
-   * 
+   *
    * @param x1 a double value
    * @param y1 a double value
    * @param x2 a double value
@@ -862,10 +862,10 @@ public Object clone()
   {
     return determinant(valueOf(x1), valueOf(y1), valueOf(x2), valueOf(y2) );
   }
-  
+
   /**
    * Computes the determinant of the 2x2 matrix with the given entries.
-   * 
+   *
    * @param x1 a matrix entry
    * @param y1 a matrix entry
    * @param x2 a matrix entry
@@ -877,7 +877,7 @@ public Object clone()
     DD det = x1.multiply(y2).selfSubtract(y1.multiply(x2));
     return det;
   }
-  
+
   /*------------------------------------------------------------
    *   Ordering Functions
    *------------------------------------------------------------
@@ -885,7 +885,7 @@ public Object clone()
 
   /**
    * Computes the minimum of this and another DD number.
-   * 
+   *
    * @param x a DD number
    * @return the minimum of the two numbers
    */
@@ -897,10 +897,10 @@ public Object clone()
       return x;
     }
   }
-  
+
   /**
    * Computes the maximum of this and another DD number.
-   * 
+   *
    * @param x a DD number
    * @return the maximum of the two numbers
    */
@@ -917,72 +917,72 @@ public Object clone()
    *   Conversion Functions
    *------------------------------------------------------------
    */
-  
+
   /**
    * Converts this value to the nearest double-precision number.
-   * 
+   *
    * @return the nearest double-precision number to this value
    */
   public double doubleValue()
   {
     return hi + lo;
   }
-     
+
   /**
    * Converts this value to the nearest integer.
-   * 
+   *
    * @return the nearest integer to this value
    */
   public int intValue()
   {
     return (int) hi;
   }
-  
+
   /*------------------------------------------------------------
    *   Predicates
    *------------------------------------------------------------
    */
-  
+
   /**
    * Tests whether this value is equal to 0.
-   * 
+   *
    * @return true if this value is equal to 0
    */
-  public boolean isZero() 
+  public boolean isZero()
   {
     return hi == 0.0 && lo == 0.0;
   }
 
   /**
    * Tests whether this value is less than 0.
-   * 
+   *
    * @return true if this value is less than 0
    */
   public boolean isNegative()
   {
     return hi < 0.0 || (hi == 0.0 && lo < 0.0);
   }
-  
+
   /**
    * Tests whether this value is greater than 0.
-   * 
+   *
    * @return true if this value is greater than 0
    */
   public boolean isPositive()
   {
     return hi > 0.0 || (hi == 0.0 && lo > 0.0);
   }
-  
+
   /**
    * Tests whether this value is NaN.
-   * 
+   *
    * @return true if this value is NaN
    */
   public boolean isNaN() { return Double.isNaN(hi); }
-  
+
   /**
    * Tests whether this value is equal to another <tt>DoubleDouble</tt> value.
-   * 
+   *
    * @param y a DoubleDouble value
    * @return true if this value = y
    */
@@ -990,7 +990,7 @@ public Object clone()
   {
     return hi == y.hi && lo == y.lo;
   }
-  
+
   /**
    * Tests whether this value is greater than another <tt>DoubleDouble</tt> value.
    * @param y a DoubleDouble value
@@ -1027,15 +1027,15 @@ public Object clone()
   {
     return (hi < y.hi) || (hi == y.hi && lo <= y.lo);
   }
-  
+
   /**
    * Compares two DoubleDouble objects numerically.
-   * 
+   *
    * @return -1,0 or 1 depending on whether this value is less than, equal to
    * or greater than the value of <tt>o</tt>
    */
   @Override
-public int compareTo(Object o) 
+public int compareTo(Object o)
   {
     DD other = (DD) o;
 
@@ -1045,8 +1045,8 @@ public int compareTo(Object o)
     if (lo > other.lo) return 1;
     return 0;
   }
-  
-  
+
+
   /*------------------------------------------------------------
    *   Output
    *------------------------------------------------------------
@@ -1057,22 +1057,22 @@ public int compareTo(Object o)
   private static final DD ONE = DD.valueOf(1.0);
   private static final String SCI_NOT_EXPONENT_CHAR = "E";
   private static final String SCI_NOT_ZERO = "0.0E0";
-  
+
   /**
    * Dumps the components of this number to a string.
-   * 
+   *
    * @return a string showing the components of the number
    */
   public String dump()
   {
     return "DD<" + hi + ", " + lo + ">";
   }
-  
+
   /**
    * Returns a string representation of this number, in either standard or scientific notation.
    * If the magnitude of the number is in the range [ 10<sup>-3</sup>, 10<sup>8</sup> ]
    * standard notation will be used.  Otherwise, scientific notation will be used.
-   * 
+   *
    * @return a string representation of this number
    */
   @Override
@@ -1083,18 +1083,18 @@ public String toString()
       return toStandardNotation();
     return toSciNotation();
   }
-  
+
   /**
    * Returns the string representation of this value in standard notation.
-   * 
-   * @return the string representation in standard notation 
+   *
+   * @return the string representation in standard notation
    */
   public String toStandardNotation()
   {
     String specialStr = getSpecialNumberString();
     if (specialStr != null)
       return specialStr;
-    
+
     int[] magnitude = new int[1];
     String sigDigits = extractSignificantDigits(true, magnitude);
     int decimalPointPos = magnitude[0] + 1;
@@ -1114,55 +1114,55 @@ public String toString()
       String zeroes = stringOfChar('0', numZeroes);
       num = sigDigits + zeroes + ".0";
     }
-    
+
     if (this.isNegative())
       return "-" + num;
     return num;
   }
-  
+
   /**
    * Returns the string representation of this value in scientific notation.
-   * 
-   * @return the string representation in scientific notation 
+   *
+   * @return the string representation in scientific notation
    */
   public String toSciNotation()
   {
     // special case zero, to allow as
     if (isZero())
       return SCI_NOT_ZERO;
-    
+
     String specialStr = getSpecialNumberString();
     if (specialStr != null)
       return specialStr;
-    
+
     int[] magnitude = new int[1];
     String digits = extractSignificantDigits(false, magnitude);
     String expStr = SCI_NOT_EXPONENT_CHAR + magnitude[0];
-    
+
     // should never have leading zeroes
     // MD - is this correct?  Or should we simply strip them if they are present?
     if (digits.charAt(0) == '0') {
       throw new IllegalStateException("Found leading zero: " + digits);
     }
-    
+
     // add decimal point
     String trailingDigits = "";
     if (digits.length() > 1)
       trailingDigits = digits.substring(1);
     String digitsWithDecimal = digits.charAt(0) + "." + trailingDigits;
-    
+
     if (this.isNegative())
       return "-" + digitsWithDecimal + expStr;
     return digitsWithDecimal + expStr;
   }
-  
-  
+
+
   /**
    * Extracts the significant digits in the decimal representation of the argument.
    * A decimal point may be optionally inserted in the string of digits
    * (as long as its position lies within the extracted digits
    * - if not, the caller must prepend or append the appropriate zeroes and decimal point).
-   * 
+   *
    * @param y the number to extract ( >= 0)
    * @param decimalPointPos the position in which to insert a decimal point
    * @return the string containing the significant digits and possibly a decimal point
@@ -1174,7 +1174,7 @@ public String toString()
     int mag = magnitude(y.hi);
     DD scale = TEN.pow(mag);
     y = y.divide(scale);
-    
+
     // fix magnitude if off by one
     if (y.gt(TEN)) {
       y = y.divide(TEN);
@@ -1182,9 +1182,9 @@ public String toString()
     }
     else if (y.lt(ONE)) {
       y = y.multiply(TEN);
-      mag -= 1;   
+      mag -= 1;
     }
-    
+
     int decimalPointPos = mag + 1;
     StringBuilder buf = new StringBuilder();
     int numDigits = MAX_PRINT_DIGITS - 1;
@@ -1203,9 +1203,9 @@ public String toString()
 //        throw new IllegalStateException("Internal errror: found digit = " + digit);
       }
       /**
-       * If a negative remainder is encountered, simply terminate the extraction.  
+       * If a negative remainder is encountered, simply terminate the extraction.
        * This is robust, but maybe slightly inaccurate.
-       * My current hypothesis is that negative remainders only occur for very small lo components, 
+       * My current hypothesis is that negative remainders only occur for very small lo components,
        * so the inaccuracy is tolerable
        */
       if (digit < 0) {
@@ -1228,10 +1228,10 @@ public String toString()
           .multiply(TEN));
       if (rebiasBy10)
         y.selfAdd(TEN);
-      
+
       boolean continueExtractingDigits = true;
       /**
-       * Heuristic check: if the remaining portion of 
+       * Heuristic check: if the remaining portion of
        * y is non-positive, assume that output is complete
        */
 //      if (y.hi <= 0.0)
@@ -1242,7 +1242,7 @@ public String toString()
        * Do this by comparing the magnitude of the remainder with the expected precision.
        */
       int remMag = magnitude(y.hi);
-      if (remMag < 0 && Math.abs(remMag) >= (numDigits - i)) 
+      if (remMag < 0 && Math.abs(remMag) >= (numDigits - i))
         continueExtractingDigits = false;
       if (! continueExtractingDigits)
         break;
@@ -1254,10 +1254,10 @@ public String toString()
 
   /**
    * Creates a string of a given length containing the given character
-   * 
+   *
    * @param ch the character to be repeated
    * @param len the len of the desired string
-   * @return the string 
+   * @return the string
    */
   private static String stringOfChar(char ch, int len)
   {
@@ -1267,11 +1267,11 @@ public String toString()
     }
     return buf.toString();
   }
-  
+
   /**
    * Returns the string for this value if it has a known representation.
    * (E.g. NaN or 0.0)
-   * 
+   *
    * @return the string for this special number
    * or null if the number is not a special number
    */
@@ -1281,14 +1281,14 @@ public String toString()
     if (isNaN())  return "NaN ";
     return null;
   }
-  
 
-  
+
+
   /**
    * Determines the decimal magnitude of a number.
    * The magnitude is the exponent of the greatest power of 10 which is less than
    * or equal to the number.
-   * 
+   *
    * @param x the number to find the magnitude of
    * @return the decimal magnitude of x
    */
@@ -1296,19 +1296,19 @@ public String toString()
   {
     double xAbs = Math.abs(x);
     double xLog10 = Math.log(xAbs) / Math.log(10);
-    int xMag = (int) Math.floor(xLog10); 
+    int xMag = (int) Math.floor(xLog10);
     /**
      * Since log computation is inexact, there may be an off-by-one error
-     * in the computed magnitude. 
+     * in the computed magnitude.
      * Following tests that magnitude is correct, and adjusts it if not
      */
     double xApprox = Math.pow(10, xMag);
     if (xApprox * 10 <= xAbs)
       xMag += 1;
-    
+
     return xMag;
   }
-  
+
 
   /*------------------------------------------------------------
    *   Input
@@ -1317,12 +1317,12 @@ public String toString()
 
   /**
    * Converts a string representation of a real number into a DoubleDouble value.
-   * The format accepted is similar to the standard Java real number syntax.  
+   * The format accepted is similar to the standard Java real number syntax.
    * It is defined by the following regular expression:
    * <pre>
    * [<tt>+</tt>|<tt>-</tt>] {<i>digit</i>} [ <tt>.</tt> {<i>digit</i>} ] [ ( <tt>e</tt> | <tt>E</tt> ) [<tt>+</tt>|<tt>-</tt>] {<i>digit</i>}+
    * </pre>
-   * 
+   *
    * @param str the string to parse
    * @return the value of the parsed number
    * @throws NumberFormatException if <tt>str</tt> is not a valid representation of a number
@@ -1332,11 +1332,11 @@ public String toString()
   {
     int i = 0;
     int strlen = str.length();
-    
+
     // skip leading whitespace
     while (Character.isWhitespace(str.charAt(i)))
       i++;
-    
+
     // check for sign
     boolean isNegative = false;
     if (i < strlen) {
@@ -1346,7 +1346,7 @@ public String toString()
         if (signCh == '-') isNegative = true;
       }
     }
-    
+
     // scan all digits and accumulate into an integral value
     // Keep track of the location of the decimal point (if any) to allow scaling later
     DD val = new DD();
@@ -1380,12 +1380,12 @@ public String toString()
           exp = Integer.parseInt(expStr);
         }
         catch (NumberFormatException ex) {
-          throw new NumberFormatException("Invalid exponent " + expStr + " in string " + str);  
+          throw new NumberFormatException("Invalid exponent " + expStr + " in string " + str);
         }
         break;
       }
-      throw new NumberFormatException("Unexpected character '" + ch 
-          + "' at position " + i 
+      throw new NumberFormatException("Unexpected character '" + ch
+          + "' at position " + i
           + " in string " + str);
     }
     DD val2 = val;
@@ -1398,12 +1398,12 @@ public String toString()
     if (numDecPlaces == 0) {
       val2 = val;
     }
-    else if (numDecPlaces > 0) {  
+    else if (numDecPlaces > 0) {
       DD scale = TEN.pow(numDecPlaces);
       val2 = val.divide(scale);
     }
     else if (numDecPlaces < 0) {
-      DD scale = TEN.pow(-numDecPlaces);    
+      DD scale = TEN.pow(-numDecPlaces);
       val2 = val.multiply(scale);
     }
     // apply leading sign, if any

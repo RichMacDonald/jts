@@ -20,7 +20,7 @@ import junit.textui.TestRunner;
  * Tests cases that cause failure in a simple double-precision
  * implementation of orientation index, but
  * which are fixed by the improved DD algorithm.
- * 
+ *
  * @version 1.7
  */
 public class OrientationIndexFailureTest
@@ -65,7 +65,7 @@ public class OrientationIndexFailureTest
     checkOrientation(pts);
   }
 */
-  
+
   public void testBadCCW2() throws Exception
   {
     // this case fails because subtraction of small from large loses precision
@@ -148,9 +148,9 @@ public class OrientationIndexFailureTest
     };
     checkOrientation(pts);
   }
-  
+
   /**
-   * Tests a simple case in which a point exactly lies on a line, 
+   * Tests a simple case in which a point exactly lies on a line,
    * but whose orientation can't be computed accurately in double precision or DD.
    */
   public void testSimpleFail() {
@@ -158,17 +158,17 @@ public class OrientationIndexFailureTest
     Coordinate p2 = new Coordinate(3, 3.5);
     // 2.6 is not exactly representable in DD, or in double
     Coordinate q = new Coordinate(2.6, 3);
-    
+
     int indexDD = CGAlgorithmsDD.orientationIndex(p1, p2, q);
     int index = NonRobustCGAlgorithms.orientationIndex(p1, p2, q);
-    
+
     //System.out.println("indexDD = " + indexDD);
     //System.out.println("index = " + index);
-    
+
     assertTrue("orientationIndex DD is not expected to be correct", indexDD != 0);
     assertTrue("orientationIndex in DP is not expected to be correct", index != 0);
   }
-  
+
   /**
    * Shorthand method for most common case,
    * where the high-precision methods work but JTS Robust algorithm fails.
@@ -179,7 +179,7 @@ public class OrientationIndexFailureTest
     // this should succeed
     checkDD(pts, true);
     checkShewchuk(pts, true);
-    
+
     // this is expected to fail
     checkOriginalJTS(pts, false);
   }
@@ -198,7 +198,7 @@ public class OrientationIndexFailureTest
   {
     assertTrue("DD", expected == isAllOrientationsEqualDD(pts));
   }
-  
+
   public static boolean isAllOrientationsEqual(
       double p0x, double p0y,
       double p1x, double p1y,
@@ -221,7 +221,7 @@ public class OrientationIndexFailureTest
     int orient2 = CGAlgorithmsDD.orientationIndex(pts[2], pts[0], pts[1]);
     return orient0 == orient1 && orient0 == orient2;
   }
-  
+
   public static boolean isAllOrientationsEqualSD(Coordinate[] pts)
   {
     int orient0 = ShewchuksDeterminant.orientationIndex(pts[0], pts[1], pts[2]);
@@ -229,7 +229,7 @@ public class OrientationIndexFailureTest
     int orient2 = ShewchuksDeterminant.orientationIndex(pts[2], pts[0], pts[1]);
     return orient0 == orient1 && orient0 == orient2;
   }
-  
+
   public static boolean isAllOrientationsEqualRD(Coordinate[] pts)
   {
     int[] orient = new int[3];

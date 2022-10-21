@@ -244,7 +244,7 @@ public void initGeometry() throws ParseException { }
     Test testToReturn = getABTest(opName);
     if (testToReturn == null) {
       testToReturn = new Test(testCase, maxTestIndex(testCase) + 1, null, opName, "A",
-          Arrays.asList("B"), 
+          Arrays.asList("B"),
           getDefaultResult(opName),
           0);
       testCase.add(testToReturn);
@@ -266,7 +266,7 @@ public void initGeometry() throws ParseException { }
   }
 
   private Test getABTest(String opName) {
-    Assert.isTrue(GeometryMethodOperation.isBooleanFunction(opName) 
+    Assert.isTrue(GeometryMethodOperation.isBooleanFunction(opName)
     		|| GeometryMethodOperation.isGeometryFunction(opName));
     for (Object element : testCase.getTests()) {
       Test test = (Test) element;

@@ -49,7 +49,7 @@ public class MCIndexNoder
   public MCIndexNoder()
   {
   }
-  
+
   public MCIndexNoder(SegmentIntersector si)
   {
     super(si);
@@ -58,7 +58,7 @@ public class MCIndexNoder
   /**
    * Creates a new noder with a given {@link SegmentIntersector}
    * and an overlap tolerance distance to expand intersection tests with.
-   * 
+   *
    * @param si the segment intersector
    * @param overlapTolerance the expansion distance for overlap tests
    */

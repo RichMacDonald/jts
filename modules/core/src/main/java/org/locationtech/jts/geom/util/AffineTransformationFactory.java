@@ -18,9 +18,9 @@ import org.locationtech.jts.geom.Coordinate;
 /**
  * Supports creating {@link AffineTransformation}s defined by various kinds of
  * inputs and transformation mapping rules.
- * 
+ *
  * @author Martin Davis
- * 
+ *
  */
 public class AffineTransformationFactory {
 	/**
@@ -28,7 +28,7 @@ public class AffineTransformationFactory {
 	 * vector consists of a source point and a destination point, which is the
 	 * image of the source point under the desired transformation. Three control
 	 * vectors allows defining a fully general affine transformation.
-	 * 
+	 *
 	 * @param src0
 	 * @param src1
 	 * @param src2
@@ -52,7 +52,7 @@ public class AffineTransformationFactory {
 	 * computed transformation is a combination of one or more of a uniform scale,
 	 * a rotation, and a translation (i.e. there is no shear component and no
 	 * reflection)
-	 * 
+	 *
 	 * @param src0
 	 * @param src1
 	 * @param dest0
@@ -86,7 +86,7 @@ public class AffineTransformationFactory {
 	 * control vector consists of a source point and a destination point, which is
 	 * the image of the source point under the desired transformation. This
 	 * produces a translation.
-	 * 
+	 *
 	 * @param src0
 	 *          the start point of the control vector
 	 * @param dest0
@@ -103,7 +103,7 @@ public class AffineTransformationFactory {
 	/**
 	 * Creates an AffineTransformation defined by a set of control vectors.
 	 * Between one and three vectors must be supplied.
-	 * 
+	 *
 	 * @param src
 	 *          the source points of the vectors
 	 * @param dest
@@ -136,13 +136,13 @@ public class AffineTransformationFactory {
 	 * Creates an AffineTransformation defined by a mapping between two baselines.
 	 * The computed transformation consists of:
 	 * <ul>
-	 * <li>a translation 
+	 * <li>a translation
 	 * from the start point of the source baseline to the start point of the destination baseline,
 	 * <li>a rotation through the angle between the baselines about the destination start point,
 	 * <li>and a scaling equal to the ratio of the baseline lengths.
 	 * </ul>
 	 * If the source baseline has zero length, an identity transformation is returned.
-	 * 
+	 *
 	 * @param src0 the start point of the source baseline
 	 * @param src1 the end point of the source baseline
 	 * @param dest0 the start point of the destination baseline
@@ -150,8 +150,8 @@ public class AffineTransformationFactory {
 	 * @return the computed transformation
 	 */
 	public static AffineTransformation createFromBaseLines(
-			Coordinate src0, Coordinate src1, 
-			Coordinate dest0, Coordinate dest1) 
+			Coordinate src0, Coordinate src1,
+			Coordinate dest0, Coordinate dest1)
 	{
 		Coordinate rotPt = new Coordinate(src0.x + dest1.x - dest0.x, src0.y + dest1.y - dest0.y);
 

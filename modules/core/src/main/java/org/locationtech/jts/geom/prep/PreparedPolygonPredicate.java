@@ -25,18 +25,18 @@ import org.locationtech.jts.geom.util.ComponentCoordinateExtracter;
 
 /**
  * A base class for predicate operations on {@link PreparedPolygon}s.
- * 
+ *
  * @author mbdavis
  *
  */
-abstract class PreparedPolygonPredicate 
+abstract class PreparedPolygonPredicate
 {
 	protected PreparedPolygon prepPoly;
   private PointOnGeometryLocator targetPointLocator;
 
   /**
    * Creates an instance of this operation.
-   * 
+   *
    * @param prepPoly the PreparedPolygon to evaluate
    */
 	public PreparedPolygonPredicate(PreparedPolygon prepPoly)
@@ -44,12 +44,12 @@ abstract class PreparedPolygonPredicate
 		this.prepPoly = prepPoly;
     targetPointLocator = prepPoly.getPointLocator();
 	}
-	
+
   /**
-   * Tests whether all components of the test Geometry 
+   * Tests whether all components of the test Geometry
 	 * are contained in the target geometry.
    * Handles both linear and point components.
-   * 
+   *
    * @param geom a geometry to test
    * @return true if all components of the argument are contained in the target geometry
    */
@@ -64,12 +64,12 @@ abstract class PreparedPolygonPredicate
     }
 		return true;
 	}
-	 
+
   /**
-   * Tests whether all components of the test Geometry 
+   * Tests whether all components of the test Geometry
 	 * are contained in the interior of the target geometry.
    * Handles both linear and point components.
-   * 
+   *
    * @param geom a geometry to test
    * @return true if all components of the argument are contained in the target geometry interior
    */
@@ -84,12 +84,12 @@ abstract class PreparedPolygonPredicate
     }
 		return true;
 	}
-	 
+
   /**
    * Tests whether any component of the test Geometry intersects
    * the area of the target geometry.
    * Handles test geometries with both linear and point components.
-   * 
+   *
    * @param geom a geometry to test
    * @return true if any component of the argument intersects the prepared area geometry
    */
@@ -104,11 +104,11 @@ abstract class PreparedPolygonPredicate
     }
 		return false;
 	}
-	 
+
   /**
-   * Tests whether all points of the test Pointal geometry 
+   * Tests whether all points of the test Pointal geometry
    * are contained in the target geometry.
-   * 
+   *
    * @param geom a Pointal geometry to test
    * @return true if all points of the argument are contained in the target geometry
    */
@@ -123,11 +123,11 @@ abstract class PreparedPolygonPredicate
     }
     return true;
   }
-	 
+
   /**
    * Tests whether any point of the test Geometry intersects
    * the interior of the target geometry.
-   * 
+   *
    * @param geom a geometry to test
    * @return true if any point of the argument intersects the prepared area geometry interior
    */
@@ -144,9 +144,9 @@ abstract class PreparedPolygonPredicate
 	}
 
 	/**
-	 * Tests whether any component of the target geometry 
-	 * intersects the test geometry (which must be an areal geometry) 
-	 * 
+	 * Tests whether any component of the target geometry
+	 * intersects the test geometry (which must be an areal geometry)
+	 *
 	 * @param geom the test geometry
 	 * @param repPts the representative points of the target geometry
 	 * @return true if any component intersects the areal test geometry

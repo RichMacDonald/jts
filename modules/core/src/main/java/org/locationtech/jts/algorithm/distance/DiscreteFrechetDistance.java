@@ -30,8 +30,8 @@ import org.locationtech.jts.geom.Geometry;
  * speed, but backtracking is not allowed.
  * </pre>
  * <p/>
- * Its metric is better than the Hausdorff distance 
- * because it takes the directions of the curves into account. 
+ * Its metric is better than the Hausdorff distance
+ * because it takes the directions of the curves into account.
  * It is possible that two curves have a small Hausdorff but a large
  * Fréchet distance.
  * <p/>
@@ -100,7 +100,7 @@ public class DiscreteFrechetDistance {
 
   /**
    * Creates a matrix to store the computed distances.
-   * 
+   *
    * @param rows the number of rows
    * @param cols the number of columns
    * @return a matrix storage

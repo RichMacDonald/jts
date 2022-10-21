@@ -23,9 +23,9 @@ import org.xml.sax.SAXException;
 
 
 /**
- * Round trip testing for GML reading and writing. 
+ * Round trip testing for GML reading and writing.
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class StaticMultiPointTest extends WritingTestCase {
 
@@ -38,9 +38,9 @@ public class StaticMultiPointTest extends WritingTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPoint
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	public void testSingleMultiPointRoundTrip() throws SAXException, IOException, ParserConfigurationException{
 		PointGenerator pgc = new PointGenerator();
@@ -49,7 +49,7 @@ public class StaticMultiPointTest extends WritingTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPoint pt = (MultiPoint) pg.create();
 		checkRoundTrip(pt);
 	}

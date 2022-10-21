@@ -22,7 +22,7 @@ import test.jts.perf.PerformanceTestCase;
 import test.jts.perf.PerformanceTestRunner;
 
 /**
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -37,7 +37,7 @@ extends PerformanceTestCase
   static double SIZE = 100;
   static int N_ARMS = 20;
   static double ARM_RATIO = 0.3;
-  
+
   public static void main(String args[]) {
     PerformanceTestRunner.run(OverlayNGSnapRoundingPerfTest.class);
   }
@@ -52,7 +52,7 @@ extends PerformanceTestCase
   public OverlayNGSnapRoundingPerfTest(String name)
   {
     super(name);
-    setRunSize(new int[] { 100, 200, 400, 1000, 2000, 4000, 8000, 10000, 
+    setRunSize(new int[] { 100, 200, 400, 1000, 2000, 4000, 8000, 10000,
         100_000, 200_000, 400_000, 1000_000 });
     setRunIterations(N_ITER);
   }
@@ -63,29 +63,29 @@ public void setUp()
     System.out.println("OverlayNG Snap-Rounding perf test");
     System.out.println("SineStar: origin: ("
         + ORG_X + ", " + ORG_Y + ")  size: " + SIZE
-        + "  # arms: " + N_ARMS + "  arm ratio: " + ARM_RATIO);   
+        + "  # arms: " + N_ARMS + "  arm ratio: " + ARM_RATIO);
     System.out.println("# Iterations: " + N_ITER);
   }
-  
+
   @Override
 public void startRun(int npts)
   {
     int iter = 0;
     sineStar = SineStarFactory.create(new Coordinate(ORG_X, ORG_Y), SIZE, npts, N_ARMS, ARM_RATIO);
     sineStar2 = SineStarFactory.create(new Coordinate(ORG_X + SIZE/8, ORG_Y + SIZE/8), SIZE, npts, N_ARMS, ARM_RATIO);
-    
+
     double scale = npts / SIZE;
     pm = new PrecisionModel(scale);
     System.out.format("\n# pts = %d, Scale = %f\n", npts, scale);
-    
+
     if (npts <= 1000) System.out.println(sineStar);
   }
-  
+
   public void runSR()
   {
     Geometry result = OverlayNG.overlay(sineStar,  sineStar2, OverlayNG.INTERSECTION, pm);
   }
-  
+
   public void xrunRobust()
   {
     Geometry result = OverlayNGRobust.overlay(sineStar,  sineStar2, OverlayNG.INTERSECTION);

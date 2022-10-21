@@ -26,7 +26,7 @@ public class Corner implements Comparable<Corner> {
 
   public Corner(LinkedLine edge, int i) {
     this.edge = edge;
-    this.index = i; 
+    this.index = i;
     this.prev = edge.prev(i);
     this.next = edge.next(i);
     this.area = area(edge, i);
@@ -41,19 +41,19 @@ public class Corner implements Comparable<Corner> {
   public int getIndex() {
     return index;
   }
-  
+
   public double getArea() {
     return area;
   }
-  
+
   public Coordinate prev() {
-    return edge.getCoordinate(prev);  
+    return edge.getCoordinate(prev);
   }
-  
+
   public Coordinate next() {
-    return edge.getCoordinate(next);  
+    return edge.getCoordinate(next);
   }
-  
+
   private static double area(LinkedLine edge, int index) {
     Coordinate pp = edge.prevCoordinate(index);
     Coordinate p = edge.getCoordinate(index);
@@ -68,7 +68,7 @@ public class Corner implements Comparable<Corner> {
   public int compareTo(Corner o) {
     return Double.compare(area, o.area);
   }
-  
+
   public Envelope envelope() {
     Coordinate pp = edge.getCoordinate(prev);
     Coordinate p = edge.getCoordinate(index);
@@ -77,7 +77,7 @@ public class Corner implements Comparable<Corner> {
     env.expandToInclude(p);
     return env;
   }
-  
+
   public boolean isVertex(Coordinate v) {
     if (v.equals2D(edge.getCoordinate(prev)) || v.equals2D(edge.getCoordinate(index)) || v.equals2D(edge.getCoordinate(next))) return true;
     return false;
@@ -89,18 +89,18 @@ public class Corner implements Comparable<Corner> {
     if ((prev.equals2D( p0 ) && next.equals2D( p1 )) || (prev.equals2D( p1 ) && next.equals2D( p0 ))) return true;
     return false;
   }
-  
+
   public boolean intersects(Coordinate v) {
     Coordinate pp = edge.getCoordinate(prev);
     Coordinate p = edge.getCoordinate(index);
     Coordinate pn = edge.getCoordinate(next);
     return Triangle.intersects(pp, p, pn, v);
   }
-  
+
   public boolean isRemoved() {
     return edge.prev(index) != prev || edge.next(index) != next;
   }
-  
+
   public LineString toLineString() {
     Coordinate pp = edge.getCoordinate(prev);
     Coordinate p = edge.getCoordinate(index);

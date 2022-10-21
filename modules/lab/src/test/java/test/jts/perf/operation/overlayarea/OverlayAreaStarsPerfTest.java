@@ -27,7 +27,7 @@ public class OverlayAreaStarsPerfTest extends PerformanceTestCase
   boolean verbose = true;
   private Geometry star1;
   private Geometry star2;
-  
+
   public OverlayAreaStarsPerfTest(String name) {
     super(name);
     setRunSize(new int[] { 100, 1000, 2000, 10000, 20000 });
@@ -41,29 +41,29 @@ public void startRun(int size)
     star1 = createSineStar(size, 0);
     star2 = createSineStar(size, 10);
   }
-  
+
   public void runOverlayArea()
   {
     //System.out.println("Test 1 : Iter # " + iter++);
     double area = OverlayArea.intersectionArea(star1, star2);
     System.out.println(">>> OverlayArea = " + area);
   }
-  
+
   public void runFullIntersection()
   {
     double area = star1.intersection(star2).getArea();
     System.out.println(">>> Full Intersection area = " + area);
   }
-  
+
   Geometry createSineStar(int nPts, double offset)
   {
     SineStarFactory gsf = new SineStarFactory();
     gsf.setCentre(new Coordinate(0, offset));
     gsf.setSize(100);
     gsf.setNumPoints(nPts);
-    
+
     Geometry g = gsf.createSineStar();
-    
+
     return g;
   }
 }

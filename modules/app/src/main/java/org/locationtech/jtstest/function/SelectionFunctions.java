@@ -20,23 +20,23 @@ import org.locationtech.jts.operation.distance.IndexedFacetDistance;
 
 
 
-public class SelectionFunctions 
+public class SelectionFunctions
 {
   public static Geometry intersects(Geometry a, final Geometry mask)
   {
     return select(a, g -> mask.intersects(g));
   }
-  
+
   public static Geometry covers(Geometry a, final Geometry mask)
   {
     return select(a, g -> g.covers(mask));
   }
-  
+
   public static Geometry coveredBy(Geometry a, final Geometry mask)
   {
     return select(a, g -> g.coveredBy(mask));
   }
-  
+
   public static Geometry disjoint(Geometry a, Geometry mask)
   {
     List selected = new ArrayList();
@@ -98,12 +98,12 @@ public class SelectionFunctions
   {
     return select(a, g -> g.within(mask));
   }
-  
+
   public static Geometry interiorPointWithin(Geometry a, final Geometry mask)
   {
     return select(a, g -> g.getInteriorPoint().within(mask));
   }
-  
+
   public static Geometry withinDistance(Geometry a, final Geometry mask, double maximumDistance)
   {
     return select(a, g -> mask.isWithinDistance(g, maximumDistance));
@@ -130,7 +130,7 @@ public class SelectionFunctions
     return geom.getFactory().buildGeometry(selected);
 
   }
-  
+
   public static Geometry firstNComponents(Geometry g, int n)
   {
     List comp = new ArrayList();

@@ -21,7 +21,7 @@ import java.awt.geom.Point2D;
 import org.locationtech.jtstest.testbuilder.ui.Viewport;
 
 
-public class MidArrowLineStyle 
+public class MidArrowLineStyle
   extends SegmentStyle
 {
   private final static double HEAD_ANGLE = 30;
@@ -41,7 +41,7 @@ protected void paint(int index, Point2D p0, Point2D p1, int lineType, Viewport v
   }
 
   protected void paintMidpointArrow(Point2D p0, Point2D p1, Viewport viewport,
-      Graphics2D graphics) throws NoninvertibleTransformException 
+      Graphics2D graphics) throws NoninvertibleTransformException
   {
     // can't compute valid arrow for zero-length segments
     if (p0.equals(p1)) {

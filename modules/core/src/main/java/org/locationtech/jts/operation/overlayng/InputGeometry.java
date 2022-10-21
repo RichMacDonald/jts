@@ -20,29 +20,29 @@ import org.locationtech.jts.geom.Location;
 
 /**
  * Manages the input geometries for an overlay operation.
- * The second geometry is allowed to be null, 
+ * The second geometry is allowed to be null,
  * to support for instance precision reduction.
- * 
+ *
  * @author Martin Davis
  *
  */
 class InputGeometry {
-  
+
   //private static final PointLocator ptLocator = new PointLocator();
 
   private Geometry[] geom = new Geometry[2];
   private PointOnGeometryLocator ptLocatorA;
   private PointOnGeometryLocator ptLocatorB;
   private boolean[] isCollapsed = new boolean[2];
-  
+
   public InputGeometry(Geometry geomA, Geometry geomB) {
     geom = new Geometry[] { geomA, geomB };
   }
-  
+
   public boolean isSingle() {
     return geom[1] == null;
   }
-  
+
   public int getDimension(int index) {
     if (geom[index] == null) return -1;
     return geom[index].getDimension();
@@ -59,17 +59,17 @@ class InputGeometry {
   public boolean isEmpty(int geomIndex) {
     return geom[geomIndex].isEmpty();
   }
-  
+
   public boolean isArea(int geomIndex) {
     return geom[geomIndex] != null && geom[geomIndex].getDimension() == 2;
   }
-  
+
   /**
    * Gets the index of an input which is an area,
    * if one exists.
    * Otherwise returns -1.
    * If both inputs are areas, returns the index of the first one (0).
-   * 
+   *
    * @return the index of an area input, or -1
    */
   public int getAreaIndex() {
@@ -77,56 +77,56 @@ class InputGeometry {
     if (getDimension(1) == 2) return 1;
     return -1;
   }
-  
+
   public boolean isLine(int geomIndex) {
     return getDimension(geomIndex) == 1;
   }
 
   public boolean isAllPoints() {
-    return getDimension(0) == 0 
+    return getDimension(0) == 0
         && geom[1] != null && getDimension(1) == 0;
   }
-  
+
   public boolean hasPoints() {
     return getDimension(0) == 0 || getDimension(1) == 0;
   }
-  
+
   /**
    * Tests if an input geometry has edges.
    * This indicates that topology needs to be computed for them.
-   * 
+   *
    * @param geomIndex
    * @return true if the input geometry has edges
    */
   public boolean hasEdges(int geomIndex) {
     return geom[geomIndex] != null && geom[geomIndex].getDimension() > 0;
   }
-  
+
   /**
    * Determines the location within an area geometry.
-   * This allows disconnected edges to be fully 
-   * located.  
-   * 
+   * This allows disconnected edges to be fully
+   * located.
+   *
    * @param geomIndex the index of the geometry
    * @param pt the coordinate to locate
    * @return the location of the coordinate
-   * 
+   *
    * @see Location
    */
   public int locatePointInArea(int geomIndex, Coordinate pt) {
     // Assert: only called if dimension(geomIndex) = 2
-    
-    
 
-    
+
+
+
     //return ptLocator.locate(pt, geom[geomIndex]);
-    
+
     //*
     // this check is required because IndexedPointInAreaLocator can't handle empty polygons
-    if (isCollapsed[geomIndex] || getGeometry(geomIndex).isEmpty()  
-        || isCollapsed[geomIndex]) 
+    if (isCollapsed[geomIndex] || getGeometry(geomIndex).isEmpty()
+        || isCollapsed[geomIndex])
       return Location.EXTERIOR;
-    
+
     PointOnGeometryLocator ptLocator = getLocator(geomIndex);
     return ptLocator.locate(pt);
     //*/
@@ -142,7 +142,7 @@ class InputGeometry {
       if (ptLocatorB == null)
         ptLocatorB = new IndexedPointInAreaLocator(getGeometry(geomIndex));
       return ptLocatorB;
-    } 
+    }
   }
 
   public void setCollapsed(int geomIndex, boolean isGeomCollapsed) {

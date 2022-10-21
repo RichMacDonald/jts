@@ -27,10 +27,10 @@ public class StreamGrabber implements Runnable {
   public String getOutput() {
     return output.toString();
   }
-  
+
   @Override
   public void run() {
- 
+
     BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
     String line;

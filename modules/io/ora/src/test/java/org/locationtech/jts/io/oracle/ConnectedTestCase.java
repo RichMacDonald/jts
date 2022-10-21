@@ -23,29 +23,29 @@ import oracle.jdbc.OracleConnection;
 import junit.framework.TestCase;
 
 /**
- * 
+ *
  * An abstract Test Case providing an Oracle connection with which tests may be performed.
- * 
- * Sub-classes should not assume that either the connection will always exist, or 
+ *
+ * Sub-classes should not assume that either the connection will always exist, or
  * the connection has the required permissions.
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class ConnectedTestCase extends TestCase {
-	
+
 	/**
 	 * @param arg
 	 */
 	public ConnectedTestCase(String arg){
 		super(arg);
 	}
-	
+
 	private OracleConnection connection = null;
-	
+
 	/**
-	 * Sub-classes should not assume that either the connection will always exist, or 
+	 * Sub-classes should not assume that either the connection will always exist, or
 	 * the connection has the required permissions.
-	 * 
+	 *
 	 * @return OracleConnection
 	 */
 	protected OracleConnection getConnection()
@@ -84,7 +84,7 @@ public class ConnectedTestCase extends TestCase {
       return (OracleConnection) openConnection( "oracle.jdbc.driver.OracleDriver", url, userid, pwd );
   }
 
-  private static Connection openConnection( String driver, String url, String uid, String pwd ) throws SQLException 
+  private static Connection openConnection( String driver, String url, String uid, String pwd ) throws SQLException
   {
       try {
           Class.forName( driver );
@@ -104,7 +104,7 @@ public class ConnectedTestCase extends TestCase {
 		if(connection != null && !connection.isClosed())
 			connection.close();
 	}
-	
+
 	protected static PrecisionModel precisionModel = new PrecisionModel(1000);
 	protected static GeometryFactory geometryFactory = new GeometryFactory(precisionModel);
 

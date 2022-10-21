@@ -40,7 +40,7 @@ public class QuadtreeTest extends TestCase {
     tester.run();
     assertTrue(tester.isSuccess());
   }
-  
+
   public void testSerialization()
   throws Exception
   {
@@ -58,11 +58,11 @@ public class QuadtreeTest extends TestCase {
   @SuppressWarnings("rawtypes")
 	public void testNullQuery() {
   	Quadtree qt = new Quadtree();
-  	List result1 = qt.query(null); 
+  	List result1 = qt.query(null);
   	assertTrue(result1.size() == 0);
-  	
+
   	qt.insert(new Envelope(0, 10, 0, 10), "some data");
-  	List result2 = qt.query(null); 
+  	List result2 = qt.query(null);
   	assertTrue(result2.size() == 0);
   }
 

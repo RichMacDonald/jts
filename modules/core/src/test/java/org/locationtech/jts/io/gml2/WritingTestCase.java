@@ -28,22 +28,22 @@ import junit.framework.TestCase;
 
 /**
  * Test Case framework for GML unit tests.
- * 
+ *
  * @author David Zwiers, Vivid Solutions.
- * @author Martin Davis 
+ * @author Martin Davis
  */
-public abstract class WritingTestCase extends TestCase 
+public abstract class WritingTestCase extends TestCase
 {
-	
+
 	/**
 	 * @param arg
 	 */
 	public WritingTestCase(String arg){
 		super(arg);
 	}
-	
+
 	protected StringWriter sw = null;
-	
+
 	protected Writer getWriter(){
 		sw = new StringWriter();
 		sw.write("<?xml version='1.0' encoding='UTF-8'?>\n");
@@ -53,16 +53,16 @@ public abstract class WritingTestCase extends TestCase
 		sw.flush();
 		sw.close();
 		String s = sw.toString();
-		
+
 //		System.out.println(s);
-		
+
 		return new StringReader(s);
 	}
-	
+
 	protected static PrecisionModel precisionModel = new PrecisionModel(1000);
 	protected static GeometryFactory geometryFactory = new GeometryFactory(precisionModel);
 
-	protected void checkRoundTrip(Geometry g) 
+	protected void checkRoundTrip(Geometry g)
 	throws SAXException, IOException, ParserConfigurationException
 	{
 		GMLWriter out = new GMLWriter();
@@ -74,7 +74,7 @@ public abstract class WritingTestCase extends TestCase
 		out.write(g, getWriter());
 
 		//System.out.println(sw.toString());
-		
+
 		GMLReader in = new GMLReader();
 		Geometry g2 = in.read(getReader(), geometryFactory);
 

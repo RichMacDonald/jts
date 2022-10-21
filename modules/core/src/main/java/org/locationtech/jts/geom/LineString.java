@@ -36,13 +36,13 @@ public class LineString
 	implements Lineal
 {
   private static final long serialVersionUID = 3110669828065365560L;
-  
+
   /**
    * The minimum number of vertices allowed in a valid non-empty linestring.
    * Empty linestrings with 0 vertices are also valid.
    */
   public static final int MINIMUM_VALID_SIZE = 2;
-  
+
   /**
    *  The points of this <code>LineString</code>.
    */
@@ -91,7 +91,7 @@ public LineString(Coordinate points[], PrecisionModel precisionModel, int SRID)
     }
     this.points = points;
   }
-  
+
   @Override
 public Coordinate[] getCoordinates() {
     return points.toCoordinateArray();
@@ -358,7 +358,7 @@ protected int compareToSameClass(Object o, CoordinateSequenceComparator comp)
     LineString line = (LineString) o;
     return comp.compare(this.points, line.points);
   }
-  
+
   @Override
 protected int getTypeCode() {
     return Geometry.TYPECODE_LINESTRING;

@@ -64,7 +64,7 @@ public class LengthIndexedLine
    * line will be returned.
    * The computed point is offset to the left of the line if the offset distance is
    * positive, to the right if negative.
-   * 
+   *
    * The Z-ordinate of the computed point will be interpolated from
    * the Z-ordinates of the line segment containing it, if they exist.
    *
@@ -243,7 +243,7 @@ public class LengthIndexedLine
 
     return posIndex;
   }
-  
+
   private double positiveIndex(double index)
   {
     if (index >= 0.0) return index;

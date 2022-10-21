@@ -17,7 +17,7 @@ import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 
 public class ElevationModelTest extends GeometryTestCase {
-  
+
   private static final double TOLERANCE = 0.00001;
 
   public static void main(String args[]) {
@@ -27,7 +27,7 @@ public class ElevationModelTest extends GeometryTestCase {
   public ElevationModelTest(String name) {
     super(name);
   }
-  
+
   public void testBox() {
     checkElevation("POLYGON Z ((1 6 50, 9 6 60, 9 4 50, 1 4 40, 1 6 50))",
         0,10, 50,     5,10,  50,    10,10, 60,
@@ -92,7 +92,7 @@ public class ElevationModelTest extends GeometryTestCase {
                     5, 5, Double.NaN
         );
   }
-  
+
   public void testLineHorizontal() {
     checkElevation("LINESTRING Z (0 5 0, 10 5 10)",
         0,10, 0,    5,10,  5,     10,10,  10,
@@ -130,12 +130,12 @@ public class ElevationModelTest extends GeometryTestCase {
   private void checkElevation(String wkt1, String wkt2, double... ords) {
     checkElevation(read(wkt1), read(wkt2), ords);
   }
-  
+
   private void checkElevation(String wkt1, double... ords) {
     checkElevation(read(wkt1), null, ords);
   }
-  
-  
+
+
   private void checkElevation(Geometry geom1, Geometry geom2, double[] ords) {
     ElevationModel model = ElevationModel.create(geom1, geom2);
     int numPts = ords.length / 3;
@@ -151,14 +151,14 @@ public class ElevationModelTest extends GeometryTestCase {
       assertEquals(msg, expectedZ, actualZ, TOLERANCE);
     }
   }
-  
+
   private void checkElevationPopulateZ(String wkt, String wktNoZ, String wktZExpected) {
     Geometry geom = read(wkt);
     ElevationModel model = ElevationModel.create(geom, null);
-    
+
     Geometry geomNoZ = read(wktNoZ);
     model.populateZ(geomNoZ);
-    
+
     Geometry geomZExpected = read(wktZExpected);
     checkEqualXYZ(geomZExpected, geomNoZ);
   }

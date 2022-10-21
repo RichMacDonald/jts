@@ -40,14 +40,14 @@ import org.locationtech.jts.util.Assert;
  * See {@link WKTReader} for a formal specification of the format syntax.
  * <p>
  * The <code>WKTWriter</code> outputs coordinates rounded to the precision
- * model. Only the maximum number of decimal places 
+ * model. Only the maximum number of decimal places
  * necessary to represent the ordinates to the required precision will be
  * output.
  * <p>
  * The SFS WKT spec does not define a special tag for {@link LinearRing}s.
  * Under the spec, rings are output as <code>LINESTRING</code>s.
- * In order to allow precisely specifying constructed geometries, 
- * JTS also supports a non-standard <code>LINEARRING</code> tag which is used 
+ * In order to allow precisely specifying constructed geometries,
+ * JTS also supports a non-standard <code>LINEARRING</code> tag which is used
  * to output LinearRings.
  *
  * @version 1.7
@@ -139,11 +139,11 @@ public class WKTWriter
   public static String format(Coordinate p) {
     return format(p.x, p.y);
   }
-  
+
   private static String format(double x, double y) {
     return OrdinateFormat.DEFAULT.format(x) + " " + OrdinateFormat.DEFAULT.format(y);
   }
-  
+
   private static final int INDENT = 2;
   private static final int OUTPUT_DIMENSION = 2;
 
@@ -452,7 +452,7 @@ public class WKTWriter
     // if present use the cached formatter
     if (ordinateFormat != null)
       return ordinateFormat;
-    
+
     // no precision model was specified, so use the geometry's
     PrecisionModel pm = geometry.getPrecisionModel();
     OrdinateFormat formatter = createFormatter(pm);
@@ -645,7 +645,7 @@ public class WKTWriter
                                           OrdinateFormat formatter)
     throws IOException
   {
-    writer.write(WKTConstants.MULTIPOINT); 
+    writer.write(WKTConstants.MULTIPOINT);
     writer.write(" ");
     appendOrdinateText(outputOrdinates, writer);
     appendMultiPointText(multipoint, outputOrdinates, useFormatting, level, writer, formatter);

@@ -24,41 +24,41 @@ import org.locationtech.jts.index.strtree.STRtree;
 
 /**
  * A Hilbert-Packed R-tree.  This is a static R-tree
- * which is packed by using the Hilbert ordering 
+ * which is packed by using the Hilbert ordering
  * of the tree items.
  * <p>
  * The tree is constructed by sorting the items
- * by the Hilbert code of the midpoint of their envelope.  
+ * by the Hilbert code of the midpoint of their envelope.
  * Then, a set of internal layers is created recursively
  * as follows:
  * <ul>
- * <li>The items/nodes of the previous are partitioned into blocks 
+ * <li>The items/nodes of the previous are partitioned into blocks
  * of size <code>nodeCapacity</code>
  * <li>For each block a layer node is created with range
  * equal to the envelope of the items/nodess in the block
  * </ul>
  * The internal layers are stored using an array to
  * store the node bounds.
- * The link between a node and its children is 
+ * The link between a node and its children is
  * stored implicitly in the indexes of the array.
  * For efficiency, the offsets to the layers
  * within the node array are pre-computed and stored.
  * <p>
- * NOTE: Based on performance testing, 
+ * NOTE: Based on performance testing,
  * the HPRtree is somewhat faster than the STRtree.
  * It should also be more memory-efficent,
  * due to fewer object allocations.
- * However, it is not clear whether this 
- * will produce a significant improvement 
+ * However, it is not clear whether this
+ * will produce a significant improvement
  * for use in JTS operations.
- * 
+ *
  * @see STRtree
- * 
- * 
+ *
+ *
  * @author Martin Davis
  *
  */
-public class HPRtree  
+public class HPRtree
   implements SpatialIndex
 {
   private static final int ENV_SIZE = 4;
@@ -66,9 +66,9 @@ public class HPRtree
   private static final int HILBERT_LEVEL = 12;
 
   private static int DEFAULT_NODE_CAPACITY = 16;
-  
+
   private List<Item> items = new ArrayList<>();
-  
+
   private int nodeCapacity = DEFAULT_NODE_CAPACITY;
 
   private Envelope totalExtent = new Envelope();
@@ -87,25 +87,25 @@ public class HPRtree
   public HPRtree() {
     this(DEFAULT_NODE_CAPACITY);
   }
-  
+
   /**
    * Creates a new index with the given node capacity.
-   * 
+   *
    * @param nodeCapacity the node capacity to use
    */
   public HPRtree(int nodeCapacity) {
     this.nodeCapacity = nodeCapacity;
   }
-  
+
   /**
    * Gets the number of items in the index.
-   * 
+   *
    * @return the number of items
    */
   public int size() {
     return items.size();
   }
-  
+
   @Override
   public void insert(Envelope itemEnv, Object item) {
     if (isBuilt) {
@@ -118,10 +118,10 @@ public class HPRtree
   @Override
   public List query(Envelope searchEnv) {
     build();
-    
-    if (! totalExtent.intersects(searchEnv)) 
+
+    if (! totalExtent.intersects(searchEnv))
       return new ArrayList();
-    
+
     ArrayListVisitor visitor = new ArrayListVisitor();
     query(searchEnv, visitor);
     return visitor.getItems();
@@ -130,7 +130,7 @@ public class HPRtree
   @Override
   public void query(Envelope searchEnv, ItemVisitor visitor) {
     build();
-    if (! totalExtent.intersects(searchEnv)) 
+    if (! totalExtent.intersects(searchEnv))
       return;
     if (layerStartIndex == null) {
       queryItems(0, searchEnv, visitor);
@@ -165,31 +165,31 @@ public class HPRtree
 
   private boolean intersects(int nodeIndex, Envelope env) {
     //nodeIntersectsCount++;
-    boolean isBeyond = (env.getMaxX() < nodeBounds[nodeIndex]) 
-    || (env.getMaxY() < nodeBounds[nodeIndex+1]) 
-    || (env.getMinX() > nodeBounds[nodeIndex+2]) 
+    boolean isBeyond = (env.getMaxX() < nodeBounds[nodeIndex])
+    || (env.getMaxY() < nodeBounds[nodeIndex+1])
+    || (env.getMinX() > nodeBounds[nodeIndex+2])
     || (env.getMinY() > nodeBounds[nodeIndex+3]);
     return ! isBeyond;
   }
-  
+
   private void queryNodeChildren(int layerIndex, int blockOffset, Envelope searchEnv, ItemVisitor visitor) {
     int layerStart = layerStartIndex[layerIndex];
     int layerEnd = layerStartIndex[layerIndex + 1];
     for (int i = 0; i < nodeCapacity; i++) {
-      int nodeOffset = blockOffset + ENV_SIZE * i; 
+      int nodeOffset = blockOffset + ENV_SIZE * i;
       // don't query past layer end
       if (layerStart + nodeOffset >= layerEnd) break;
-      
+
       queryNode(layerIndex, nodeOffset, searchEnv, visitor);
     }
   }
 
   private void queryItems(int blockStart, Envelope searchEnv, ItemVisitor visitor) {
     for (int i = 0; i < nodeCapacity; i++) {
-      int itemIndex = blockStart + i; 
+      int itemIndex = blockStart + i;
       // don't query past end of items
       if (itemIndex >= items.size()) break;
-      
+
       // visit the item if its envelope intersects search env
       Item item = items.get(itemIndex);
       //nodeIntersectsCount++;
@@ -197,13 +197,13 @@ public class HPRtree
       //if (item.getEnvelope().intersects(searchEnv)) {
         visitor.visitItem(item.getItem());
       }
-    }    
+    }
   }
 
   /**
    * Tests whether two envelopes intersect.
    * Avoids the null check in {@link Envelope#intersects(Envelope)}.
-   * 
+   *
    * @param env1 an envelope
    * @param env2 an envelope
    * @return true if the envelopes intersect
@@ -211,7 +211,7 @@ public class HPRtree
   private static boolean intersects(Envelope env1, Envelope env2) {
     return ((env2.getMinX() <= env1.getMaxX()) && (env2.getMaxX() >= env1.getMinX()) && (env2.getMinY() <= env1.getMaxY()) && (env2.getMaxY() >= env1.getMinY()));
   }
-  
+
   private int layerSize(int layerIndex) {
     int layerStart = layerStartIndex[layerIndex];
     int layerEnd = layerStartIndex[layerIndex + 1];
@@ -223,7 +223,7 @@ public class HPRtree
     // TODO Auto-generated method stub
     return false;
   }
-  
+
   /**
    * Builds the index, if not already built.
    */
@@ -236,12 +236,12 @@ public class HPRtree
 
     sortItems();
     //dumpItems(items);
-    
+
     layerStartIndex = computeLayerIndices(items.size(), nodeCapacity);
     // allocate storage
     int nodeCount = layerStartIndex[ layerStartIndex.length - 1 ] / 4;
     nodeBounds = createBoundsArray(nodeCount);
-    
+
     // compute tree nodes
     computeLeafNodes(layerStartIndex[1]);
     for (int i = 1; i < layerStartIndex.length - 1; i++) {
@@ -297,7 +297,7 @@ public class HPRtree
       int index = blockStart + 4 * i;
       if (index >= nodeMaxIndex) break;
       updateNodeBounds(nodeIndex, nodeBounds[index], nodeBounds[index+1], nodeBounds[index+2], nodeBounds[index+3]);
-    } 
+    }
   }
 
   private void computeLeafNodes(int layerSize) {
@@ -325,7 +325,7 @@ public class HPRtree
   private Envelope getNodeEnvelope(int i) {
     return new Envelope(nodeBounds[i], nodeBounds[i+1], nodeBounds[i+2], nodeBounds[i+3]);
   }
-  
+
   private static int[] computeLayerIndices(int itemSize, int nodeCapacity) {
     List<Integer> layerIndexList = new ArrayList<>();
     int layerSize = itemSize;
@@ -337,11 +337,11 @@ public class HPRtree
     } while (layerSize > 1);
     return toIntArray(layerIndexList);
   }
-  
+
   /**
-   * Computes the number of blocks (nodes) required to 
+   * Computes the number of blocks (nodes) required to
    * cover a given number of children.
-   * 
+   *
    * @param nChild
    * @param nodeCapacity
    * @return the number of nodes needed to cover the children
@@ -352,7 +352,7 @@ public class HPRtree
     if (total == nChild) return mult;
     return mult + 1;
   }
-  
+
   private static int[] toIntArray(List<Integer> list) {
     int[] array = new int[list.size()];
     for (int i = 0; i < array.length; i++) {
@@ -363,7 +363,7 @@ public class HPRtree
 
   /**
    * Gets the extents of the internal index nodes
-   * 
+   *
    * @return a list of the internal node extents
    */
   public Envelope[] getBounds() {
@@ -377,16 +377,16 @@ public class HPRtree
     }
     return bounds;
   }
-  
+
   private void sortItems() {
     ItemComparator comp = new ItemComparator(new HilbertEncoder(HILBERT_LEVEL, totalExtent));
     Collections.sort(items, comp);
   }
-  
+
   static class ItemComparator implements Comparator<Item> {
 
     private HilbertEncoder encoder;
-    
+
     public ItemComparator(HilbertEncoder encoder) {
       this.encoder = encoder;
     }

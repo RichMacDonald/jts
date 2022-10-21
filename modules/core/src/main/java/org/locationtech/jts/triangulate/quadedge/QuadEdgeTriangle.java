@@ -33,23 +33,23 @@ import org.locationtech.jts.geom.Polygon;
  * structure.
  * <p>
  * QuadEdgeTriangles support having an external data attribute attached to them.
- * Alternatively, this class can be subclassed and attributes can 
- * be defined in the subclass.  Subclasses will need to define 
+ * Alternatively, this class can be subclassed and attributes can
+ * be defined in the subclass.  Subclasses will need to define
  * their own <tt>BuilderVisitor</tt> class
  * and <tt>createOn</tt> method.
- * 
+ *
  * @author Martin Davis
  * @version 1.0
  */
-public class QuadEdgeTriangle 
+public class QuadEdgeTriangle
 {
 	/**
-	 * Creates {@link QuadEdgeTriangle}s for all facets of a 
+	 * Creates {@link QuadEdgeTriangle}s for all facets of a
 	 * {@link QuadEdgeSubdivision} representing a triangulation.
 	 * The <tt>data</tt> attributes of the {@link QuadEdge}s in the subdivision
 	 * will be set to point to the triangle which contains that edge.
 	 * This allows tracing the neighbour triangles of any given triangle.
-	 * 
+	 *
 	 * @param subdiv
 	 * 				the QuadEdgeSubdivision to create the triangles on.
 	 * @return a List of the created QuadEdgeTriangles
@@ -64,7 +64,7 @@ public class QuadEdgeTriangle
 	/**
 	 * Tests whether the point pt is contained in the triangle defined by 3
 	 * {@link Vertex}es.
-	 * 
+	 *
 	 * @param tri
 	 *          an array containing at least 3 Vertexes
 	 * @param pt
@@ -80,7 +80,7 @@ public class QuadEdgeTriangle
 	/**
 	 * Tests whether the point pt is contained in the triangle defined by 3
 	 * {@link QuadEdge}es.
-	 * 
+	 *
 	 * @param tri
 	 *          an array containing at least 3 QuadEdges
 	 * @param pt
@@ -116,7 +116,7 @@ public class QuadEdgeTriangle
 	/**
 	 * Finds the next index around the triangle. Index may be an edge or vertex
 	 * index.
-	 * 
+	 *
 	 * @param index
 	 * @return the next index
 	 */
@@ -129,7 +129,7 @@ public class QuadEdgeTriangle
 
 	/**
 	 * Creates a new triangle from the given edges.
-	 * 
+	 *
 	 * @param edge an array of the edges of the triangle in CCW order
 	 */
 	public QuadEdgeTriangle(QuadEdge[] edge) {
@@ -142,16 +142,16 @@ public class QuadEdgeTriangle
 
   /**
    * Sets the external data value for this triangle.
-   * 
+   *
    * @param data an object containing external data
    */
   public void setData(Object data) {
       this.data = data;
   }
-  
+
   /**
    * Gets the external data value for this triangle.
-   * 
+   *
    * @return the data object
    */
   public Object getData() {
@@ -180,7 +180,7 @@ public class QuadEdgeTriangle
 
 	/**
 	 * Gets the vertices for this triangle.
-	 * 
+	 *
 	 * @return a new array containing the triangle vertices
 	 */
 	public Vertex[] getVertices() {
@@ -197,7 +197,7 @@ public class QuadEdgeTriangle
 
 	/**
 	 * Gets the index for the given edge of this triangle
-	 * 
+	 *
 	 * @param e
 	 *          a QuadEdge
 	 * @return the index of the edge in this triangle
@@ -213,7 +213,7 @@ public class QuadEdgeTriangle
 
 	/**
 	 * Gets the index for the edge that starts at vertex v.
-	 * 
+	 *
 	 * @param v
 	 *          the vertex to find the edge for
 	 * @return the index of the edge starting at the vertex
@@ -260,7 +260,7 @@ public class QuadEdgeTriangle
 
 	/**
 	 * Tests whether this triangle is adjacent to the outside of the subdivision.
-	 * 
+	 *
 	 * @return true if the triangle is adjacent to the subdivision exterior
 	 */
 	public boolean isBorder() {
@@ -284,9 +284,9 @@ public class QuadEdgeTriangle
 	}
 
 	/**
-	 * Gets the triangles which are adjacent (include) to a 
+	 * Gets the triangles which are adjacent (include) to a
 	 * given vertex of this triangle.
-	 * 
+	 *
 	 * @param vertexIndex the vertex to query
 	 * @return a list of the vertex-adjacent triangles
 	 */
@@ -311,7 +311,7 @@ public class QuadEdgeTriangle
 	/**
 	 * Gets the neighbours of this triangle. If there is no neighbour triangle,
 	 * the array element is <code>null</code>
-	 * 
+	 *
 	 * @return an array containing the 3 neighbours of this triangle
 	 */
 	public QuadEdgeTriangle[] getNeighbours() {

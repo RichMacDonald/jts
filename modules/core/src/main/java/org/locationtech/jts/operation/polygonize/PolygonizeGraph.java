@@ -84,7 +84,7 @@ class PolygonizeGraph
   private GeometryFactory factory;
 
   //private List labelledRings;
- 
+
   /**
    * Create a new polygonization graph.
    */
@@ -101,9 +101,9 @@ class PolygonizeGraph
   {
     if (line.isEmpty()) { return; }
     Coordinate[] linePts = CoordinateArrays.removeRepeatedPoints(line.getCoordinates());
-    
+
     if (linePts.length < 2) { return; }
-    
+
     Coordinate startPt = linePts[0];
     Coordinate endPt = linePts[linePts.length - 1];
 
@@ -216,7 +216,7 @@ class PolygonizeGraph
    * Finds and labels all edgerings in the graph.
    * The edge rings are labeling with unique integers.
    * The labeling allows detecting cut edges.
-   * 
+   *
    * @param dirEdges a List of the DirectedEdges in the graph
    * @return a List of DirectedEdges, one for each edge ring found
    */
@@ -399,13 +399,13 @@ class PolygonizeGraph
     }
     return dangleLines;
   }
-  
+
   /**
    * Traverses the polygonized edge rings in the graph
    * and computes the depth parity (odd or even)
    * relative to the exterior of the graph.
    * If the client has requested that the output
-   * be polygonally valid, only odd polygons will be constructed. 
+   * be polygonally valid, only odd polygons will be constructed.
    *
    */
   public void computeDepthParity()
@@ -417,16 +417,16 @@ class PolygonizeGraph
       computeDepthParity(de);
     }
   }
-  
+
   /**
    * Traverses all connected edges, computing the depth parity
    * of the associated polygons.
-   * 
+   *
    * @param de
    */
   private void computeDepthParity(PolygonizeDirectedEdge de)
   {
-    
+
   }
-  
+
 }

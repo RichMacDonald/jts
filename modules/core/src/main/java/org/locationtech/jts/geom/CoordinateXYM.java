@@ -17,7 +17,7 @@ package org.locationtech.jts.geom;
  * This data object is suitable for use with coordinate sequences with <tt>dimension</tt> = 3 and <tt>measures</tt> = 1.
  * <p>
  * The {@link Coordinate#z} field is visible, but intended to be ignored.
- * 
+ *
  * @since 1.16
  */
 public class CoordinateXYM extends Coordinate {
@@ -47,7 +47,7 @@ public class CoordinateXYM extends Coordinate {
 
   /**
    * Constructs a CoordinateXYM instance with the given ordinates and measure.
-   * 
+   *
    * @param x the X ordinate
    * @param y the Y ordinate
    * @param m the M measure value
@@ -59,7 +59,7 @@ public class CoordinateXYM extends Coordinate {
 
   /**
    * Constructs a CoordinateXYM instance with the x and y ordinates of the given Coordinate.
-   * 
+   *
    * @param coord the coordinate providing the ordinates
    */
   public CoordinateXYM(Coordinate coord) {
@@ -69,34 +69,34 @@ public class CoordinateXYM extends Coordinate {
 
   /**
    * Constructs a CoordinateXY instance with the x and y ordinates of the given CoordinateXYM.
-   * 
+   *
    * @param coord the coordinate providing the ordinates
    */
   public CoordinateXYM(CoordinateXYM coord) {
     super(coord.x,coord.y);
     m = coord.m;
   }
-  
+
   /**
    * Creates a copy of this CoordinateXYM.
-   * 
+   *
    * @return a copy of this CoordinateXYM
    */
   @Override
 public CoordinateXYM copy() {
     return new CoordinateXYM(this);
   }
-  
+
   /**
    * Create a new Coordinate of the same type as this Coordinate, but with no values.
-   * 
+   *
    * @return a new Coordinate
    */
   @Override
   public Coordinate create() {
       return new CoordinateXYM();
   }
-    
+
   /** The m-measure. */
   protected double m;
 
@@ -110,7 +110,7 @@ public double getM() {
 public void setM(double m) {
     this.m = m;
   }
-  
+
   /** The z-ordinate is not supported */
   @Override
   public double getZ() {
@@ -122,7 +122,7 @@ public void setM(double m) {
   public void setZ(double z) {
       throw new IllegalArgumentException("CoordinateXY dimension 2 does not support z-ordinate");
   }
-  
+
   @Override
   public void setCoordinate(Coordinate other)
   {
@@ -131,7 +131,7 @@ public void setM(double m) {
     z = other.getZ();
     m = other.getM();
   }
-  
+
   @Override
   public double getOrdinate(int ordinateIndex) {
       switch (ordinateIndex) {
@@ -141,7 +141,7 @@ public void setM(double m) {
       }
       throw new IllegalArgumentException("Invalid ordinate index: " + ordinateIndex);
   }
-  
+
   @Override
   public void setOrdinate(int ordinateIndex, double value) {
       switch (ordinateIndex) {
@@ -158,7 +158,7 @@ public void setM(double m) {
         throw new IllegalArgumentException("Invalid ordinate index: " + ordinateIndex);
     }
   }
-  
+
   @Override
 public String toString() {
     return "(" + x + ", " + y + " m=" + getM() + ")";

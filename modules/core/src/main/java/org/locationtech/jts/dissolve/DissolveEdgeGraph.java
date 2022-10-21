@@ -19,7 +19,7 @@ import org.locationtech.jts.geom.Coordinate;
 
 /**
  * A graph containing {@link DissolveHalfEdge}s.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -30,6 +30,6 @@ protected HalfEdge createEdge(Coordinate p0)
   {
     return new DissolveHalfEdge(p0);
   }
-  
+
 
 }

@@ -54,7 +54,7 @@ public class DistanceLineLineStressTest extends TestCase
 
   // make results reproducible
   static Random randGen = new Random(123456);
-  
+
   private static Coordinate[] randomDisjointCollinearSegments()
   {
     double slope = randGen.nextDouble();

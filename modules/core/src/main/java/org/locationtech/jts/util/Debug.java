@@ -37,7 +37,7 @@ import org.locationtech.jts.geom.LineString;
  * <pre>
  * -Djts.debug=on
  * </pre>
- * 
+ *
  *
  * @version 1.7
  */
@@ -125,13 +125,13 @@ public class Debug {
     debug.instancePrint(obj);
     debug.println();
   }
-  
+
   public static void resetTime()
   {
     stopwatch.reset();
     lastTimePrinted = stopwatch.getTime();
   }
-  
+
   public static void printTime(String tag)
   {
     if (!debugOn) {
@@ -143,10 +143,10 @@ public class Debug {
         formatField(Stopwatch.getTimeString(time), 10)
         + " (" + formatField(Stopwatch.getTimeString(elapsedTime), 10) + " ) "
         + tag);
-    debug.println();    
+    debug.println();
     lastTimePrinted = time;
   }
-  
+
   private static String formatField(String s, int fieldLen)
   {
     int nPad = fieldLen - s.length();
@@ -154,7 +154,7 @@ public class Debug {
     String padStr = spaces(nPad) + s;
     return padStr.substring(padStr.length() - fieldLen);
   }
-  
+
   private static String spaces(int n)
   {
     char[] ch = new char[n];
@@ -163,7 +163,7 @@ public class Debug {
     }
     return new String(ch);
   }
-  
+
   public static boolean equals(Coordinate c1, Coordinate c2, double tolerance)
   {
   	return c1.distance(c2) <= tolerance;
@@ -171,7 +171,7 @@ public class Debug {
   /**
    * Adds an object to be watched.
    * A watched object can be printed out at any time.
-   * 
+   *
    * Currently only supports one watched object at a time.
    * @param obj
    */
@@ -191,34 +191,34 @@ public class Debug {
   {
     if (cond) doBreak();
   }
-  
+
   public static void breakIfEqual(Object o1, Object o2)
   {
     if (o1.equals(o2)) doBreak();
   }
-  
+
   public static void breakIfEqual(Coordinate p0, Coordinate p1, double tolerance)
   {
     if (p0.distance(p1) <= tolerance) doBreak();
   }
-  
+
   private static void doBreak()
-  { 
+  {
   }
-  
+
   public static boolean hasSegment(Geometry geom, Coordinate p0, Coordinate p1)
   {
     SegmentFindingFilter filter = new SegmentFindingFilter(p0, p1);
     geom.apply(filter);
     return filter.hasSegment();
   }
-  
+
   private static class SegmentFindingFilter
   implements CoordinateSequenceFilter
   {
     private Coordinate p0, p1;
     private boolean hasSegment = false;
-    
+
     public SegmentFindingFilter(Coordinate p0, Coordinate p1)
     {
       this.p0 = p0;
@@ -231,23 +231,23 @@ public class Debug {
 	public void filter(CoordinateSequence seq, int i)
     {
       if (i == 0) return;
-      hasSegment = p0.equals2D(seq.getCoordinate(i-1)) 
+      hasSegment = p0.equals2D(seq.getCoordinate(i-1))
           && p1.equals2D(seq.getCoordinate(i));
     }
-    
+
     @Override
 	public boolean isDone()
     {
-      return hasSegment; 
+      return hasSegment;
     }
-    
+
     @Override
 	public boolean isGeometryChanged()
     {
       return false;
     }
   }
-  
+
   private Debug() {
     out = System.out;
     printArgs = new Class[1];

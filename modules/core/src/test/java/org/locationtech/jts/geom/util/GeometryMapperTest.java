@@ -25,15 +25,15 @@ public class GeometryMapperTest extends GeometryTestCase {
   public static void main(String args[]) {
     TestRunner.run(GeometryMapperTest.class);
   }
-  
+
 	public GeometryMapperTest(String name) {
 		super(name);
 	}
-	
+
 	/**
-	 * Mapping: 
-	 *   LineString -> LineString, 
-	 *   Point -> empty LineString, 
+	 * Mapping:
+	 *   LineString -> LineString,
+	 *   Point -> empty LineString,
 	 *   Polygon -> null
 	 */
 	static GeometryMapper.MapOp KEEP_LINE = geom -> {
@@ -44,9 +44,9 @@ public class GeometryMapperTest extends GeometryTestCase {
         return geom;
       return null;
     };
-  
+
   static GeometryMapper.MapOp BOUNDARY = Geometry::getBoundary;
-  
+
   public void testFlatMapInputEmpty() throws ParseException {
     checkFlatMap("GEOMETRYCOLLECTION( POINT EMPTY, LINESTRING EMPTY)",
         1, KEEP_LINE, "LINESTRING EMPTY");
@@ -56,18 +56,18 @@ public class GeometryMapperTest extends GeometryTestCase {
     checkFlatMap("GEOMETRYCOLLECTION( MULTILINESTRING((0 0, 1 1), (1 1, 2 2)), LINESTRING(2 2, 3 3))",
         1, KEEP_LINE, "MULTILINESTRING ((0 0, 1 1), (1 1, 2 2), (2 2, 3 3))");
   }
-  
+
   public void testFlatMapResultEmpty() throws ParseException {
     checkFlatMap("GEOMETRYCOLLECTION( LINESTRING(0 0, 1 1), LINESTRING(1 1, 2 2))",
         1, KEEP_LINE, "MULTILINESTRING((0 0, 1 1), (1 1, 2 2))");
-    
+
     checkFlatMap("GEOMETRYCOLLECTION( POINT(0 0), POINT(0 0), LINESTRING(0 0, 1 1))",
         1, KEEP_LINE, "LINESTRING(0 0, 1 1)");
-    
+
     checkFlatMap("MULTIPOINT((0 0), (1 1))",
         1, KEEP_LINE, "LINESTRING EMPTY");
   }
-  
+
   public void testFlatMapResultNull() throws ParseException {
     checkFlatMap("GEOMETRYCOLLECTION( POINT(0 0), LINESTRING(0 0, 1 1), POLYGON ((1 1, 1 2, 2 1, 1 1)))",
         1, KEEP_LINE, "LINESTRING(0 0, 1 1)");

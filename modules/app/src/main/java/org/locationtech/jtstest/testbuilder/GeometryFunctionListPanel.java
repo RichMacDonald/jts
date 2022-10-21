@@ -59,10 +59,10 @@ public class GeometryFunctionListPanel extends JPanel {
   Border border1;
 
   private class GeometryFunctionCellRenderer extends JLabel implements
-      ListCellRenderer 
+      ListCellRenderer
   {
     Border spaceBorder = BorderFactory.createEmptyBorder(0, 4, 1, 0);
-    
+
     private final ImageIcon binaryIcon = new ImageIcon(this.getClass()
         .getResource("BinaryGeomFunction.png"));
 
@@ -89,7 +89,7 @@ public class GeometryFunctionListPanel extends JPanel {
       setFont(list.getFont());
       return this;
     }
-    
+
     /*
     public String getToolTipText(MouseEvent e)
     {
@@ -129,7 +129,7 @@ public class GeometryFunctionListPanel extends JPanel {
         });
   }
 */
-  
+
   public void registerListSelectionListener(ListSelectionListener listener) {
     list.getSelectionModel().addListSelectionListener(listener);
   }
@@ -143,7 +143,7 @@ public class GeometryFunctionListPanel extends JPanel {
       return null;
     return (GeometryFunction) list.getSelectedValue();
   }
-   
+
   public void populate(List funcs) {
 //  listModel.clear();
          for (Object func2 : funcs) {

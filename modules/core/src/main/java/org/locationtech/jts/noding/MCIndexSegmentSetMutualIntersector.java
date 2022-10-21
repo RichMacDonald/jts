@@ -28,14 +28,14 @@ import org.locationtech.jts.index.strtree.STRtree;
  * on {@link MonotoneChain}s and a {@link SpatialIndex}.
  *
  * Thread-safe and immutable.
- * 
+ *
  * @version 1.7
  */
 public class MCIndexSegmentSetMutualIntersector implements SegmentSetMutualIntersector
 {
   /**
   * The {@link SpatialIndex} used should be something that supports
-  * envelope (range) queries efficiently (such as a 
+  * envelope (range) queries efficiently (such as a
   * {@link org.locationtech.jts.index.quadtree.Quadtree}
   * or {@link STRtree}.
   */
@@ -44,7 +44,7 @@ public class MCIndexSegmentSetMutualIntersector implements SegmentSetMutualInter
 
   /**
    * Constructs a new intersector for a given set of {@link SegmentString}s.
-   * 
+   *
    * @param baseSegStrings the base segment strings to intersect
    */
   public MCIndexSegmentSetMutualIntersector(Collection baseSegStrings)
@@ -58,11 +58,11 @@ public class MCIndexSegmentSetMutualIntersector implements SegmentSetMutualInter
     this.overlapTolerance  = overlapTolerance;
   }
 
-  /** 
+  /**
    * Gets the index constructed over the base segment strings.
-   * 
+   *
    * NOTE: To retain thread-safety, treat returned value as immutable!
-   * 
+   *
    * @return the constructed index
    */
   public SpatialIndex getIndex() { return index; }
@@ -77,7 +77,7 @@ public class MCIndexSegmentSetMutualIntersector implements SegmentSetMutualInter
     // build index to ensure thread-safety
     index.build();
   }
-  
+
   private void addToIndex(SegmentString segStr)
   {
     List segChains = MonotoneChainBuilder.getChains(segStr.getCoordinates(), segStr);
@@ -88,10 +88,10 @@ public class MCIndexSegmentSetMutualIntersector implements SegmentSetMutualInter
   }
 
   /**
-   * Calls {@link SegmentIntersector#processIntersections(SegmentString, int, SegmentString, int)} 
+   * Calls {@link SegmentIntersector#processIntersections(SegmentString, int, SegmentString, int)}
    * for all <i>candidate</i> intersections between
-   * the given collection of SegmentStrings and the set of indexed segments. 
-   * 
+   * the given collection of SegmentStrings and the set of indexed segments.
+   *
    * @param segStrings set of segments to intersect
    * @param segInt segment intersector to use
    */

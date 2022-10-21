@@ -22,7 +22,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 
 /**
- * Creates a map between the vertex {@link Coordinate}s of a 
+ * Creates a map between the vertex {@link Coordinate}s of a
  * set of {@link Geometry}s,
  * and the parent geometry, and transfers the source geometry
  * data objects to geometry components tagged with the coordinates.
@@ -30,20 +30,20 @@ import org.locationtech.jts.geom.Geometry;
  * This class can be used in conjunction with {@link VoronoiDiagramBuilder}
  * to transfer data objects from the input site geometries
  * to the constructed Voronoi polygons.
- * 
+ *
  * @author Martin Davis
  * @see VoronoiDiagramBuilder
  *
  */
-public class VertexTaggedGeometryDataMapper 
+public class VertexTaggedGeometryDataMapper
 {
 	private Map coordDataMap = new TreeMap();
-	
+
 	public VertexTaggedGeometryDataMapper()
 	{
-		
+
 	}
-	
+
 	public void loadSourceGeometries(Collection geoms)
 	{
 		for (Object geom2 : geoms) {
@@ -51,7 +51,7 @@ public class VertexTaggedGeometryDataMapper
 			loadVertices(geom.getCoordinates(), geom.getUserData());
 		}
 	}
-	
+
 	public void loadSourceGeometries(Geometry geomColl)
 	{
 		for (int i = 0; i < geomColl.getNumGeometries(); i++) {
@@ -59,26 +59,26 @@ public class VertexTaggedGeometryDataMapper
 			loadVertices(geom.getCoordinates(), geom.getUserData());
 		}
 	}
-	
+
 	private void loadVertices(Coordinate[] pts, Object data)
 	{
 		for (Coordinate pt : pts) {
 			coordDataMap.put(pt, data);
 		}
 	}
-	
+
 	public List getCoordinates()
 	{
 		return new ArrayList(coordDataMap.keySet());
 	}
-	
+
 	/**
 	 * Input is assumed to be a multiGeometry
 	 * in which every component has its userData
 	 * set to be a Coordinate which is the key to the output data.
 	 * The Coordinate is used to determine
-	 * the output data object to be written back into the component. 
-	 * 
+	 * the output data object to be written back into the component.
+	 *
 	 * @param targetGeom
 	 */
 	public void transferData(Geometry targetGeom)

@@ -17,12 +17,12 @@ import java.awt.geom.Point2D;
 /**
  * @version 1.7
  */
-public class DrawingGrid 
+public class DrawingGrid
 {
 	public static int DEFAULT_GRID_SIZE = 10;
 
 	public static final int GRID_MAJOR_FACTOR = 1;
-	
+
   private double gridSize = DEFAULT_GRID_SIZE;
   private int numGridUnits;
 
@@ -40,17 +40,17 @@ public class DrawingGrid
   {
   	return snapToGrid(modelPoint, 1);
   }
-  
+
   public Point2D snapToMajorGrid(Point2D modelPoint)
   {
   	return snapToGrid(modelPoint, GRID_MAJOR_FACTOR);
   }
-  
+
   public Point2D snapToGrid(Point2D modelPoint, int factor)
   {
     double rx, ry;
     int numUnits = factor * numGridUnits;
-    
+
     if (isFractional()) {
       rx = Math.floor(modelPoint.getX() * numUnits + .5) / numUnits;
       ry = Math.floor(modelPoint.getY() * numUnits + .5) / numUnits;

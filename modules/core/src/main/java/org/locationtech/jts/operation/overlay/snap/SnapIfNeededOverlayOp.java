@@ -22,10 +22,10 @@ import org.locationtech.jts.operation.overlay.OverlayOp;
  * to improve the robustness of the result.
  * This class only uses snapping
  * if an error is detected when running the standard JTS overlay code.
- * Errors detected include thrown exceptions 
+ * Errors detected include thrown exceptions
  * (in particular, {@link TopologyException})
  * and invalid overlay computations.
- *     
+ *
  * @author Martin Davis
  * @version 1.7
  */
@@ -56,7 +56,7 @@ public class SnapIfNeededOverlayOp
   {
      return overlayOp(g0, g1, OverlayOp.SYMDIFFERENCE);
   }
-  
+
   private Geometry[] geom = new Geometry[2];
 
   public SnapIfNeededOverlayOp(Geometry g1, Geometry g2)
@@ -72,7 +72,7 @@ public class SnapIfNeededOverlayOp
     RuntimeException savedException = null;
     try {
       // try basic operation with input geometries
-      result = OverlayOp.overlayOp(geom[0], geom[1], opCode); 
+      result = OverlayOp.overlayOp(geom[0], geom[1], opCode);
       boolean isValid = true;
       // not needed if noding validation is used
 //      boolean isValid = OverlayResultValidator.isValid(geom[0], geom[1], OverlayOp.INTERSECTION, result);

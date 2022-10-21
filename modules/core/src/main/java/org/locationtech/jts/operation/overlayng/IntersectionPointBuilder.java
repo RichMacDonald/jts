@@ -23,15 +23,15 @@ import org.locationtech.jts.geom.Point;
  * between non-Point inputs.
  * Points may be created during intersection
  * if lines or areas touch one another at single points.
- * Intersection is the only overlay operation which can 
+ * Intersection is the only overlay operation which can
  * result in Points from non-Point inputs.
  * <p>
- * Overlay operations where one or more inputs 
+ * Overlay operations where one or more inputs
  * are Points are handled via a different code path.
- * 
- * 
+ *
+ *
  * @author Martin Davis
- * 
+ *
  * @see OverlayPoints
  *
  */
@@ -40,14 +40,14 @@ class IntersectionPointBuilder {
   private GeometryFactory geometryFactory;
   private OverlayGraph graph;
   private List<Point> points = new ArrayList<>();
-  
+
   /**
    * Controls whether lines created by area topology collapses
    * to participate in the result computation.
    * True provides the original JTS semantics.
    */
   private boolean isAllowCollapseLines = ! OverlayNG.STRICT_MODE_DEFAULT;
-  
+
   public IntersectionPointBuilder(OverlayGraph graph,
       GeometryFactory geomFact) {
     this.graph = graph;
@@ -57,7 +57,7 @@ class IntersectionPointBuilder {
   public void setStrictMode(boolean isStrictMode) {
     isAllowCollapseLines = ! isStrictMode;
   }
-  
+
   public List<Point> getPoints() {
     addResultPoints();
     return points;
@@ -76,14 +76,14 @@ class IntersectionPointBuilder {
    * Tests if a node is a result point.
    * This is the case if the node is incident on edges from both
    * inputs, and none of the edges are themselves in the result.
-   * 
+   *
    * @param nodeEdge an edge originating at the node
    * @return true if this node is a result point
    */
   private boolean isResultPoint(OverlayEdge nodeEdge) {
     boolean isEdgeOfA = false;
     boolean isEdgeOfB = false;
-    
+
     OverlayEdge edge = nodeEdge;
     do {
       if (edge.isInResult()) return false;

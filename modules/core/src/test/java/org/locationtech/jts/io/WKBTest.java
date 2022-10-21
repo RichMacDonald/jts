@@ -53,15 +53,15 @@ public class WKBTest
 	public void testPointPCS() throws IOException, ParseException {
 		runWKBTestPackedCoordinate("POINT (1 2)");
 	}
-	
+
 	public void testPoint() throws IOException, ParseException {
 		runWKBTest("POINT (1 2)");
 	}
-	
+
   public void testPointEmpty() throws IOException, ParseException {
     runWKBTest("POINT EMPTY");
   }
-  
+
 	public void testLineString()
       throws IOException, ParseException
   {
@@ -152,7 +152,7 @@ public class WKBTest
     runWKBTest("GEOMETRYCOLLECTION EMPTY");
   }
 
-  private void runWKBTest(String wkt) throws IOException, ParseException 
+  private void runWKBTest(String wkt) throws IOException, ParseException
   {
   	runWKBTestCoordinateArray(wkt);
   	runWKBTestPackedCoordinate(wkt);
@@ -163,7 +163,7 @@ public class WKBTest
 				new PackedCoordinateSequenceFactory(PackedCoordinateSequenceFactory.DOUBLE));
 	  WKTReader rdr = new WKTReader(geomFactory);
 		Geometry g = rdr.read(wkt);
-		
+
 		// Since we are using a PCS of dim=2, only check 2-dimensional storage
 		runWKBTest(g, 2, true);
 		runWKBTest(g, 2, false);
@@ -173,7 +173,7 @@ public class WKBTest
 	  GeometryFactory geomFactory = new GeometryFactory();
 	  WKTReader rdr = new WKTReader(geomFactory);
 		Geometry g = rdr.read(wkt);
-		
+
 		// CoordinateArrays support dimension 3, so test both dimensions
 		runWKBTest(g, 2, true);
 		runWKBTest(g, 2, false);
@@ -188,7 +188,7 @@ public class WKBTest
     runWKBTest(g, dimension, ByteOrderValues.LITTLE_ENDIAN, toHex);
     runWKBTest(g, dimension, ByteOrderValues.BIG_ENDIAN, toHex);
 	}
-	
+
 	private void runWKBTest(Geometry g, int dimension, int byteOrder, boolean toHex)
 	throws IOException, ParseException
 	{
@@ -222,7 +222,7 @@ public class WKBTest
       includeSRID = true;
       g.setSRID(srid);
     }
-    
+
     WKBWriter wkbWriter = new WKBWriter(dimension, byteOrder, includeSRID);
     byte[] wkb = wkbWriter.write(g);
     String wkbHex = null;
@@ -236,7 +236,7 @@ public class WKBTest
     CoordinateSequenceComparator comp = (dimension == 2) ? comp2 : comp3;
     boolean isEqual = (g.compareTo(g2, comp) == 0);
     assertTrue(isEqual);
-    
+
     if (includeSRID) {
       boolean isSRIDEqual = g.getSRID() == g2.getSRID();
       assertTrue(isSRIDEqual);

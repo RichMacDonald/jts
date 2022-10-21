@@ -22,7 +22,7 @@ import org.locationtech.jts.geom.Polygon;
  * Computes the Euclidean distance (L2 metric) from a {@link Coordinate} to a {@link Geometry}.
  * Also computes two points on the geometry which are separated by the distance found.
  */
-public class DistanceToPoint 
+public class DistanceToPoint
 {
 
   public DistanceToPoint() {
@@ -47,7 +47,7 @@ public class DistanceToPoint
       ptDist.setMinimum(geom.getCoordinate(), pt);
     }
   }
-  
+
   public static void computeDistance(LineString line, Coordinate pt, PointPairDistance ptDist)
   {
     LineSegment tempSegment = new LineSegment();

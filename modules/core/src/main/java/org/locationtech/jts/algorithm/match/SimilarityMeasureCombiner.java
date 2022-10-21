@@ -14,11 +14,11 @@ package org.locationtech.jts.algorithm.match;
 
 /**
  * Provides methods to mathematically combine {@link SimilarityMeasure} values.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class SimilarityMeasureCombiner 
+public class SimilarityMeasureCombiner
 {
 	public static double combine(double measure1, double measure2)
 	{

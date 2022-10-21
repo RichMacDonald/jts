@@ -26,17 +26,17 @@ import test.jts.perf.PerformanceTestRunner;
  * See https://github.com/locationtech/jts/issues/871.
  * The original implementation produced a lot of identical hashcodes;
  * this is being replaced with a better algorithm.
- * 
+ *
  *   Timings
  * =============
- * 
+ *
  * Grid Size    Original      Improved
  * ---------    --------      --------
  *  50            117 ms         15 ms
  * 100            837 ms         29 ms
  * 200           4890 ms         98 ms
  * 400         103.623 s        354 ms
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -49,7 +49,7 @@ public class LineSegmentHashCodePerfTest extends PerformanceTestCase
   }
 
   private List<LineSegment> grid;
-  
+
   public LineSegmentHashCodePerfTest(String name) {
     super(name);
     setRunSize(new int[] { 50, 100, 200, 400 });
@@ -69,7 +69,7 @@ public void startRun(int size)
       total += sumSegmentWeights(grid);
     }
   }
-  
+
   private double sumSegmentWeights(List<LineSegment> lines) {
     Map<LineSegment, Double> weights = new HashMap<>();
     double total = 0;
@@ -101,12 +101,12 @@ public void startRun(int size)
     }
     return grid;
   }
-  
+
   /**
    * Original LineSegment hashCode implementation.
    * Produces a lot of identical hash codes for this test.
-   * 
-   * 
+   *
+   *
    * @param ls
    * @return
    */
@@ -115,7 +115,7 @@ public void startRun(int size)
     long bits0 = java.lang.Double.doubleToLongBits(ls.p0.x);
     bits0 ^= java.lang.Double.doubleToLongBits( ls.p0.y) * 31;
     int hash0 = (((int) bits0) ^ ((int) (bits0  >> 32)));
-    
+
     long bits1 = java.lang.Double.doubleToLongBits( ls.p1.x);
     bits1 ^= java.lang.Double.doubleToLongBits( ls.p1.y) * 31;
     int hash1 = (((int) bits1) ^ ((int) (bits1  >> 32)));

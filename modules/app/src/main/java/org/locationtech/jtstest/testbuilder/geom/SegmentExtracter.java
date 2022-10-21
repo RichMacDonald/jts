@@ -47,7 +47,7 @@ public class SegmentExtracter {
         Geometry line = factory.createLineString(pts);
         lines.add(line);
       }
-      if (lines.size() == 1) 
+      if (lines.size() == 1)
         return lines.get(0);
       return factory.createMultiLineString(GeometryFactory.toLineStringArray(lines));
     }
@@ -102,6 +102,6 @@ public class SegmentExtracter {
     public boolean isGeometryChanged() {
       return false;
     }
-    
+
   }
 }

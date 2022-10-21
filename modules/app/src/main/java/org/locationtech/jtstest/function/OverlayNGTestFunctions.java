@@ -35,7 +35,7 @@ import org.locationtech.jts.operation.overlayng.OverlayNG;
 import org.locationtech.jts.operation.overlayng.RingClipper;
 
 public class OverlayNGTestFunctions {
-  
+
   static Geometry sameOrEmpty(Geometry a, Geometry b) {
     if (a != null) return a;
     // return empty geom of same type
@@ -47,7 +47,7 @@ public class OverlayNGTestFunctions {
     }
     return b.getFactory().createPoint();
   }
-  
+
   public static Geometry edgesNoded(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     // force non-null inputs
@@ -86,7 +86,7 @@ public class OverlayNGTestFunctions {
     if ((g instanceof Polygon) || (g instanceof MultiPolygon)) return g;
     return ConversionFunctions.toMultiPolygon(g, null);
   }
-  
+
   public static Geometry edgesIntersectionResult(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     // force non-null inputs
@@ -106,7 +106,7 @@ public class OverlayNGTestFunctions {
     ovr.setOutputEdges(true);
     return ovr.getResult();
   }
-  
+
   public static Geometry edgesUnionResult(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     // force non-null inputs
@@ -116,7 +116,7 @@ public class OverlayNGTestFunctions {
     ovr.setOutputResultEdges(true);
     return ovr.getResult();
   }
-  
+
   public static Geometry edgesUnionAll(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     // force non-null inputs
@@ -126,7 +126,7 @@ public class OverlayNGTestFunctions {
     ovr.setOutputEdges(true);
     return ovr.getResult();
   }
-  
+
   public static Geometry intersectionSRNoOpt(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     OverlayNG ovr = new OverlayNG(a, b, pm, INTERSECTION);
@@ -139,31 +139,31 @@ public class OverlayNGTestFunctions {
     ovr.setOptimized(false);
     return ovr.getResult();
   }
-  
+
   public static Geometry intersectionNoValid(Geometry a, Geometry b) {
     Noder noder = createFloatingPrecisionNoder(false);
     return OverlayNG.overlay(a, b, INTERSECTION, new PrecisionModel(), noder);
   }
-  
+
   public static Geometry intersectionIsValid(Geometry a, Geometry b) {
     Noder noder = createFloatingPrecisionNoder(false);
     Geometry geom = OverlayNG.overlay(a, b, INTERSECTION, new PrecisionModel(), noder);
     if (geom.isValid()) return geom;
     return null;
   }
-  
+
   private static Noder createFloatingPrecisionNoder(boolean doValidation) {
     MCIndexNoder mcNoder = new MCIndexNoder();
     LineIntersector li = new RobustLineIntersector();
     mcNoder.setSegmentIntersector(new IntersectionAdder(li));
-    
+
     Noder noder = mcNoder;
     if (doValidation) {
       noder = new ValidatingNoder( mcNoder);
     }
     return noder;
   }
-  
+
   public static Geometry unionIntSymDiff(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     // force non-null inputs
@@ -192,29 +192,29 @@ public class OverlayNGTestFunctions {
     return OverlayNG.overlay(a, b, UNION, null, noder );
   }
 
-  
+
   static Noder createClassicNoder(boolean doValidation) {
     MCIndexNoder mcNoder = new MCIndexNoder();
     LineIntersector li = new RobustLineIntersector();
     mcNoder.setSegmentIntersector(new IntersectionAdder(li));
-    
+
     Noder noder = mcNoder;
     if (doValidation) {
       noder = new ValidatingNoder( mcNoder);
     }
     return noder;
   }
-  
+
   public static Geometry clipRing(Geometry line, Geometry box) {
     RingClipper clipper = new RingClipper(box.getEnvelopeInternal());
     Coordinate[] pts = clipper.clip(line.getCoordinates());
     return line.getFactory().createLineString(pts);
   }
-  
+
   public static Geometry limitLine(Geometry line, Geometry box) {
     LineLimiter limiter = new LineLimiter(box.getEnvelopeInternal());
     List<Coordinate[]> sections = limiter.limit(line.getCoordinates());
-   
+
     return toLines(sections, line.getFactory());
   }
 
@@ -227,7 +227,7 @@ public class OverlayNGTestFunctions {
     if (lines.length == 1) return lines[0];
     return factory.createMultiLineString(lines);
   }
-  
+
   public static Geometry edgesOverlayResult(Geometry a) {
     OverlayNG ovr = new OverlayNG(a, null, UNION);
     ovr.setOutputResultEdges(true);

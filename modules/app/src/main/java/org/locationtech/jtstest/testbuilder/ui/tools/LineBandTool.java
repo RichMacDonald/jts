@@ -23,16 +23,16 @@ import java.util.List;
 
 import org.locationtech.jts.geom.Coordinate;
 
-public abstract class LineBandTool extends IndicatorTool 
+public abstract class LineBandTool extends IndicatorTool
 {
   private List coordinates = new ArrayList();  // in model space
   protected Coordinate tentativeCoordinate;
 
   // set this to true if band should be closed
   private boolean closeRing = false;
-  private int clickCountToFinish = 2; 
+  private int clickCountToFinish = 2;
   private boolean drawBandLines = true;
-  
+
   public LineBandTool() {
   }
 
@@ -48,15 +48,15 @@ public abstract class LineBandTool extends IndicatorTool
   {
   	this.clickCountToFinish = clickCountToFinish;
   }
-  
+
   protected void setDrawBandLines(boolean drawBandLines)
   {
   	this.drawBandLines = drawBandLines;
   }
-  
+
   /**
    * Returns an empty List once the shape is cleared.
-   * 
+   *
    * @see LineBandTool#clearShape
    */
   public List getCoordinates() {
@@ -68,7 +68,7 @@ public abstract class LineBandTool extends IndicatorTool
     if (coordinates.size() <= 0) return null;
     return (Coordinate) coordinates.get(coordinates.size()-1);
   }
-  
+
   @Override
 public void mouseReleased(MouseEvent e) {
     try {
@@ -82,18 +82,18 @@ public void mouseReleased(MouseEvent e) {
       // the
       // coordinates are cleared. When #mouseReleased is then called
       // with
-      // the clickCount=2 event, coordinates is empty! 
+      // the clickCount=2 event, coordinates is empty!
 
       // Even though drawing is done in #mouseLocationChanged, call it
       // here
       // also so that #isGestureInProgress returns true on a mouse
       // click.
       // This is mainly for the benefit of OrCompositeTool, which
-      // calls #isGestureInProgress. 
+      // calls #isGestureInProgress.
       // Can't do this in #mouseClicked because #finishGesture may be
       // called
       // by #mouseReleased (below), which happens before #mouseClicked,
-      // resulting in an IndexOutOfBoundsException in #redrawShape. 
+      // resulting in an IndexOutOfBoundsException in #redrawShape.
       if (e.getClickCount() == 1) {
         // A double-click will generate two events: one with
         // click-count = 1 and
@@ -118,7 +118,7 @@ public void mouseReleased(MouseEvent e) {
       // Check for finish at #mouseReleased rather than #mouseClicked.
       // #mouseReleased is a more general condition, as it applies to
       // both
-      // drags and clicks. 
+      // drags and clicks.
       if (isFinishingRelease(e)) {
         finishGesture();
       }
@@ -184,8 +184,8 @@ protected Shape getShape() {
     path.moveTo((float) firstPoint.getX(), (float) firstPoint.getY());
     if (! drawBandLines)
     	return path;
-    
-    for (int i = 1; i < coordinates.size(); i++) { 
+
+    for (int i = 1; i < coordinates.size(); i++) {
       Coordinate nextCoordinate = (Coordinate) coordinates.get(i);
       Point2D nextPoint = toView(nextCoordinate);
       path.lineTo((int) nextPoint.getX(), (int) nextPoint.getY());
@@ -197,13 +197,13 @@ protected Shape getShape() {
       path.lineTo((int) firstPoint.getX(), (int) firstPoint.getY());
 
     drawVertices(path);
-    
+
     return path;
   }
 
   private void drawVertices(GeneralPath path)
   {
-    for (Object coordinate : coordinates) { 
+    for (Object coordinate : coordinates) {
       Coordinate coord = (Coordinate) coordinate;
       Point2D p = toView(coord);
       path.moveTo((int) p.getX()-2, (int) p.getY()-2);
@@ -214,7 +214,7 @@ protected Shape getShape() {
     }
 
   }
-  
+
   protected boolean isFinishingRelease(MouseEvent e) {
     return e.getClickCount() == clickCountToFinish;
   }
@@ -227,7 +227,7 @@ protected Shape getShape() {
     clearIndicator();
     try {
       bandFinished();
-    } 
+    }
     finally {
       coordinates.clear();
     }

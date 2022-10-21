@@ -148,14 +148,14 @@ public class NonRobustCGAlgorithms
    * a vector specified by <code>p1-p2</code>.
    * The orientation of a point relative to a directed line segment indicates
    * which way you turn to get to q after travelling from p1 to p2.
-   * 
+   *
    * @param p1
    *          the origin point of the vector
    * @param p2
    *          the final point of the vector
    * @param q
    *          the point to compute the direction to
-   * 
+   *
    * @return 1 if q is counter-clockwise (left) from p1-p2
    * @return -1 if q is clockwise (right) from p1-p2
    * @return 0 if q is collinear with p1-p2
@@ -174,9 +174,9 @@ public class NonRobustCGAlgorithms
 
   /**
    * Computes the distance from a line segment AB to a line segment CD
-   * 
+   *
    * Note: NON-ROBUST!
-   * 
+   *
    * @param A
    *          a point of one line
    * @param B
@@ -198,10 +198,10 @@ public class NonRobustCGAlgorithms
     // AB and CD are line segments
     /*
      * from comp.graphics.algo
-     * 
+     *
      * Solving the above for r and s yields (Ay-Cy)(Dx-Cx)-(Ax-Cx)(Dy-Cy) r =
      * ----------------------------- (eqn 1) (Bx-Ax)(Dy-Cy)-(By-Ay)(Dx-Cx)
-     * 
+     *
      * (Ay-Cy)(Bx-Ax)-(Ax-Cx)(By-Ay) s = ----------------------------- (eqn 2)
      * (Bx-Ax)(Dy-Cy)-(By-Ay)(Dx-Cx) Let P be the position vector of the
      * intersection point, then P=A+r(B-A) or Px=Ax+r(Bx-Ax) Py=Ay+r(By-Ay) By

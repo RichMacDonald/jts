@@ -33,12 +33,12 @@ extends BoxBandTool
   }
 
   @Override
-protected void gestureFinished() 
-  {      
+protected void gestureFinished()
+  {
     geomModel().setGeometryType(GeometryType.POLYGON);
     geomModel().addComponent(getCoordinates());
     panel().updateGeom();
   }
 
-  
+
 }

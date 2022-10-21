@@ -27,29 +27,29 @@ import org.locationtech.jts.geom.Envelope;
  * (which is able to process coincident linework due
  * to the need to handle topology collapse under precision reduction).
  * <p>
- * Because of the likelihood of creating 
- * extraneous line segments along the clipping rectangle sides, 
+ * Because of the likelihood of creating
+ * extraneous line segments along the clipping rectangle sides,
  * this class is not suitable for clipping linestrings.
  * <p>
  * The clipping envelope should be generated using {@link RobustClipEnvelopeComputer},
  * to ensure that intersecting line segments are not perturbed
  * by clipping.
  * This is required to ensure that the overlay of the
- * clipped geometry is robust and correct (i.e. the same as 
+ * clipped geometry is robust and correct (i.e. the same as
  * if clipping was not used).
- * 
+ *
  * @see LineLimiter
- * 
+ *
  * @author Martin Davis
  *
  */
 public class RingClipper {
-  
+
   private static final int BOX_LEFT = 3;
   private static final int BOX_TOP = 2;
   private static final int BOX_RIGHT = 1;
   private static final int BOX_BOTTOM = 0;
-  
+
   private Envelope clipEnv;
   private double clipEnvMinY;
   private double clipEnvMaxY;
@@ -58,7 +58,7 @@ public class RingClipper {
 
   /**
    * Creates a new clipper for the given envelope.
-   * 
+   *
    * @param clipEnv the clipping envelope
    */
   public RingClipper(Envelope clipEnv) {
@@ -68,10 +68,10 @@ public class RingClipper {
     clipEnvMinX = clipEnv.getMinX();
     clipEnvMaxX = clipEnv.getMaxX();
   }
-  
+
   /**
    * Clips a list of points to the clipping rectangle box.
-   * 
+   *
    * @param pts
    * @return clipped pts array
    */
@@ -86,10 +86,10 @@ public class RingClipper {
 
   /**
    * Clips line to the axis-parallel line defined by a single box edge.
-   * 
+   *
    * @param pts
    * @param edgeIndex
-   * @param closeRing 
+   * @param closeRing
    * @return
    */
   private Coordinate[] clipToBoxEdge(Coordinate[] pts, int edgeIndex, boolean closeRing) {
@@ -105,16 +105,16 @@ public class RingClipper {
         }
         // TODO: avoid copying so much?
         ptsClip.add( p1.copy(), false);
-        
+
       } else if ( isInsideEdge(p0, edgeIndex) ) {
         Coordinate intPt = intersection(p0, p1, edgeIndex);
         ptsClip.add( intPt, false);
       }
       // else p0-p1 is outside box, so it is dropped
-      
+
       p0 = p1;
     }
-    
+
     // add closing point if required
     if (closeRing && ptsClip.size() > 0) {
       Coordinate start = ptsClip.get(0);
@@ -124,12 +124,12 @@ public class RingClipper {
     }
     return ptsClip.toCoordinateArray();
   }
-  
+
   /**
-   * Computes the intersection point of a segment 
+   * Computes the intersection point of a segment
    * with an edge of the clip box.
    * The segment must be known to intersect the edge.
-   * 
+   *
    * @param a first endpoint of the segment
    * @param b second endpoint of the segment
    * @param edgeIndex index of box edge

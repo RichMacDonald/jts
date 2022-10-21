@@ -20,12 +20,12 @@ import org.locationtech.jts.operation.buffer.validate.BufferResultValidator;
 /**
  * Test buffers generated around set of random linestrings.
  * Intended to stress-test the correctness of buffer generation.
- * The random linestring sets tend to have numerous holes when buffered, 
+ * The random linestring sets tend to have numerous holes when buffered,
  * which is a good test.
- * 
+ *
  * @version 1.7
  */
-public class RandomLineBufferStressTest 
+public class RandomLineBufferStressTest
 {
 
   private PrecisionModel precisionModel = new PrecisionModel();
@@ -39,7 +39,7 @@ public class RandomLineBufferStressTest
   	catch (Exception ex) {
   		ex.printStackTrace();
   	}
-  
+
   }
 
   public RandomLineBufferStressTest() {  }
@@ -53,35 +53,35 @@ public class RandomLineBufferStressTest
   		run(200);
   	}
   }
-  
+
   void run(int numPts)
   throws Exception
   {
   	double lineScale = 1.0;
-  	
+
   	Geometry line = RandomOffsetLineStringGenerator.generate(lineScale, numPts, geometryFactory);
   	System.out.println();
   	System.out.println(line);
-  	
+
 		runCase(line, 10, lineScale, numPts);
 		runCase(line, 1, lineScale, numPts);
 		runCase(line, .1, lineScale, numPts);
   }
-  
+
   private int caseCount = 0;
-  
+
   void runCase(Geometry line, double dist, double lineScale, int numPts)
   throws Exception
   {
   	caseCount++;
-  	System.out.println("Running case " + caseCount 
+  	System.out.println("Running case " + caseCount
   			+ "  (line scale = " + lineScale
   			+ "  buffer dist = " + dist
   			+ "  num pts = " + numPts
   			+ " )");
   	checkBuffer(line, dist);
   }
-  
+
   void checkBuffer(Geometry g, double distance)
   {
   	Geometry buf = g.buffer(distance);
@@ -95,8 +95,8 @@ public class RandomLineBufferStressTest
   		throw new IllegalStateException(isValidMsg);
   	}
   }
-  
-  
+
+
 }
 
 

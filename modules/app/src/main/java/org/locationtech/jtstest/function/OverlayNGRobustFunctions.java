@@ -22,11 +22,11 @@ import org.locationtech.jts.operation.union.UnaryUnionOp;
 import org.locationtech.jts.operation.union.UnionStrategy;
 
 public class OverlayNGRobustFunctions {
-  
+
   private static Geometry overlay(Geometry a, Geometry b, int opcode) {
     return OverlayNGRobust.overlay(a, b, opcode );
   }
-  
+
   public static Geometry difference(Geometry a, Geometry b) {
     return overlay(a, b, DIFFERENCE );
   }
@@ -51,7 +51,7 @@ public class OverlayNGRobustFunctions {
     //System.out.println(areaDelta(a, b));
     return overlay(a, b, SYMDIFFERENCE );
   }
-  
+
   public static Geometry unaryUnion(Geometry a) {
     UnionStrategy unionSRFun = new UnionStrategy() {
 
@@ -64,52 +64,52 @@ public class OverlayNGRobustFunctions {
       public boolean isFloatingPrecision() {
         return true;
       }
-      
+
     };
     UnaryUnionOp op = new UnaryUnionOp(a);
     op.setUnionFunction(unionSRFun);
     return op.union();
   }
-  
+
   public static double unionArea(Geometry a) {
     return unaryUnion(a).getArea();
   }
-  
+
   public static double unionLength(Geometry a) {
     return unaryUnion(a).getLength();
   }
-  
+
   public static boolean overlayAreaTest(Geometry a, Geometry b) {
     double areaDelta = areaDelta(a, b);
-    return areaDelta < 1e-6; 
+    return areaDelta < 1e-6;
   }
-  
+
   /**
    * Computes the maximum area delta value
    * resulting from identity equations over the overlay operations.
    * The delta value is normalized to the total area of the geometries.
-   * If the overlay operations are computed correctly 
+   * If the overlay operations are computed correctly
    * the area delta is expected to be very small (e.g. < 1e-6).
-   *  
+   *
    * @param a a geometry
    * @param b a geometry
    * @return the computed maximum area delta
    */
   public static double areaDelta(Geometry a, Geometry b) {
-    
+
     double areaA = a == null ? 0 : a.getArea();
     double areaB = b == null ? 0 : b.getArea();
-    
+
     // if an input is non-polygonal delta is 0
     if (areaA == 0 || areaB == 0)
       return 0;
-    
-    double areaU   = overlay( a, b, UNION ).getArea();    
+
+    double areaU   = overlay( a, b, UNION ).getArea();
     double areaI   = overlay( a, b, INTERSECTION ).getArea();
     double areaDab = overlay( a, b, DIFFERENCE ).getArea();
     double areaDba = overlay( b, a, DIFFERENCE ).getArea();
     double areaSD  = overlay( a, b, SYMDIFFERENCE ).getArea();
-    
+
     double maxDelta = 0;
 
     // & : intersection
@@ -147,7 +147,7 @@ public class OverlayNGRobustFunctions {
     if (delta > maxDelta) {
         maxDelta = delta;
     }
-    
+
     // normalize the area delta value
     return maxDelta / (areaA + areaB);
   }

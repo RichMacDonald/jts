@@ -23,12 +23,12 @@ import org.locationtech.jts.geom.util.GeometryMapper.MapOp;
 
 /**
  * Removes holes which match a given predicate.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class HoleRemover {
-  
+
   public interface Predicate {
     boolean value(Geometry geom);
   }
@@ -38,24 +38,24 @@ public class HoleRemover {
 
   /**
    * Creates a new hole remover instance.
-   * 
+   *
    * @param geom the geometry to process
    */
   public HoleRemover(Geometry geom, Predicate isRemoved) {
     this.geom = geom;
     this.isRemoved = isRemoved;
   }
-  
+
   /**
    * Gets the cleaned geometry.
-   * 
+   *
    * @return the geometry with matched holes removed.
    */
   public Geometry getResult()
   {
     return GeometryMapper.map(geom, new HoleRemoverMapOp());
   }
-  
+
   private class HoleRemoverMapOp implements MapOp {
     @Override
 	public Geometry map(Geometry geom) {
@@ -64,14 +64,14 @@ public class HoleRemover {
       return geom;
     }
   }
-  
+
   private static class PolygonHoleRemover {
-    
+
     public static Polygon clean(Polygon poly, Predicate isRemoved) {
       PolygonHoleRemover pihr = new PolygonHoleRemover(poly, isRemoved);
       return pihr.getResult();
     }
-    
+
     private Polygon poly;
     private Predicate isRemoved;
 
@@ -79,12 +79,12 @@ public class HoleRemover {
       this.poly = poly;
       this.isRemoved = isRemoved;
     }
-    
+
     public Polygon getResult()
     {
       GeometryFactory gf = poly.getFactory();
       Polygon shell = gf.createPolygon(poly.getExteriorRing());
-      
+
       List holes = new ArrayList();
       for (int i = 0; i < poly.getNumInteriorRing(); i++) {
         LinearRing hole = poly.getInteriorRingN(i);
@@ -95,7 +95,7 @@ public class HoleRemover {
       // all holes valid, so return original
       if (holes.size() == poly.getNumInteriorRing())
         return poly;
-      
+
       // return new polygon with covered holes only
       Polygon result = gf.createPolygon(poly.getExteriorRing(),
           GeometryFactory.toLinearRingArray(holes));

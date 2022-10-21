@@ -35,9 +35,9 @@ import test.jts.perf.PerformanceTestRunner;
 public class PreparedPolygonCoversPerfTest extends PerformanceTestCase
 {
   static final int NUM_ITER = 10_000;
-  
+
   static final int NUM_PTS = 2000;
-  
+
   static PrecisionModel pm = new PrecisionModel();
   static GeometryFactory fact = new GeometryFactory(pm, 0);
   static WKTReader wktRdr = new WKTReader(fact);
@@ -74,7 +74,7 @@ public void startRun(int nPts)
 //  	System.out.println(poly);
 //  	Geometry target = sinePoly.getBoundary();
     prepGeom = (new PreparedGeometryFactory()).create(sinePoly);
-    
+
     testPoints = createPoints(sinePoly.getEnvelopeInternal(), NUM_PTS);
   }
 
@@ -88,7 +88,7 @@ public void startRun(int nPts)
 		Geometry poly = gsf.createSineStar();
 		return poly;
 	}
-  
+
   List<Point> createPoints(Envelope env, int nPts)
   {
     int nCells = (int) Math.sqrt(nPts);
@@ -108,7 +108,7 @@ public void startRun(int nPts)
   	}
   	return geoms;
   }
-  
+
   public void runPreparedPolygon() {
     for (int i = 0; i < NUM_ITER; i++) {
       prepGeom = (new PreparedGeometryFactory()).create(sinePoly);
@@ -126,5 +126,5 @@ public void startRun(int nPts)
       }
     }
   }
-    
+
 }

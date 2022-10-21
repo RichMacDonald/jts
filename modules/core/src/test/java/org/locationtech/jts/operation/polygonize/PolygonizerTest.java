@@ -73,23 +73,23 @@ public class PolygonizerTest extends GeometryTestCase {
 
   public void testPolygonal2() {
     checkPolygonize(true, new String[]{
-        "LINESTRING (100 100, 100 0, 0 0, 0 100, 100 100)" 
+        "LINESTRING (100 100, 100 0, 0 0, 0 100, 100 100)"
             ,"LINESTRING (10 10, 10 30, 20 30)"
             ,"LINESTRING (20 30, 30 30, 30 20)"
             ,"LINESTRING (30 20, 30 10, 10 10)"
-            ,"LINESTRING (40 40, 40 20, 30 20)" 
-            ,"LINESTRING (30 20, 20 20, 20 30)" 
+            ,"LINESTRING (40 40, 40 20, 30 20)"
+            ,"LINESTRING (30 20, 20 20, 20 30)"
             ,"LINESTRING (20 30, 20 40, 40 40))"
     },
     new String[]{
-"POLYGON ((0 0, 0 100, 100 100, 100 0, 0 0), (10 10, 30 10, 30 20, 40 20, 40 40, 20 40, 20 30, 10 30, 10 10))", 
+"POLYGON ((0 0, 0 100, 100 100, 100 0, 0 0), (10 10, 30 10, 30 20, 40 20, 40 40, 20 40, 20 30, 10 30, 10 10))",
 "POLYGON ((20 20, 20 30, 30 30, 30 20, 20 20))"
     });
   }
 
   public void testPolygonal_OuterOnly_1() {
     checkPolygonize(true, new String[] {
-        "LINESTRING (10 10, 10 20, 20 20)" 
+        "LINESTRING (10 10, 10 20, 20 20)"
             ,"LINESTRING (20 20, 20 10)"
             ,"LINESTRING (20 10, 10 10)"
             ,"LINESTRING (20 20, 30 20, 30 10, 20 10)"
@@ -101,7 +101,7 @@ public class PolygonizerTest extends GeometryTestCase {
 
   public void testPolygonal_OuterOnly_2() {
     checkPolygonize(true, new String[] {
-        "LINESTRING (100 400, 200 400, 200 300)" 
+        "LINESTRING (100 400, 200 400, 200 300)"
             ,"LINESTRING (200 300, 150 300)"
             ,"LINESTRING (150 300, 100 300, 100 400)"
             ,"LINESTRING (200 300, 250 300, 250 200)"
@@ -116,28 +116,28 @@ public class PolygonizerTest extends GeometryTestCase {
   }
 
   String[] LINES_CHECKERBOARD = {
-      "LINESTRING (10 20, 20 20)", 
+      "LINESTRING (10 20, 20 20)",
       "LINESTRING (10 20, 10 30)",
-      "LINESTRING (20 10, 10 10, 10 20)", 
-      "LINESTRING (10 30, 20 30)", 
-      "LINESTRING (10 30, 10 40, 20 40)", 
-      "LINESTRING (30 10, 20 10)", 
-      "LINESTRING (20 20, 20 10)", 
-      "LINESTRING (20 20, 30 20)", 
-      "LINESTRING (20 30, 20 20)", 
-      "LINESTRING (20 30, 30 30)", 
-      "LINESTRING (20 40, 20 30)", 
-      "LINESTRING (20 40, 30 40)", 
-      "LINESTRING (40 20, 40 10, 30 10)", 
-      "LINESTRING (30 20, 30 10)", 
-      "LINESTRING (30 20, 40 20)", 
-      "LINESTRING (30 30, 30 20)", 
-      "LINESTRING (30 30, 40 30)", 
-      "LINESTRING (30 40, 30 30)", 
-      "LINESTRING (30 40, 40 40, 40 30)", 
+      "LINESTRING (20 10, 10 10, 10 20)",
+      "LINESTRING (10 30, 20 30)",
+      "LINESTRING (10 30, 10 40, 20 40)",
+      "LINESTRING (30 10, 20 10)",
+      "LINESTRING (20 20, 20 10)",
+      "LINESTRING (20 20, 30 20)",
+      "LINESTRING (20 30, 20 20)",
+      "LINESTRING (20 30, 30 30)",
+      "LINESTRING (20 40, 20 30)",
+      "LINESTRING (20 40, 30 40)",
+      "LINESTRING (40 20, 40 10, 30 10)",
+      "LINESTRING (30 20, 30 10)",
+      "LINESTRING (30 20, 40 20)",
+      "LINESTRING (30 30, 30 20)",
+      "LINESTRING (30 30, 40 30)",
+      "LINESTRING (30 40, 30 30)",
+      "LINESTRING (30 40, 40 40, 40 30)",
       "LINESTRING (40 30, 40 20)"
   };
-      
+
   public void testPolygonal_OuterOnly_Checkerboard() {
     checkPolygonize(true, LINES_CHECKERBOARD,
     new String[]{
@@ -154,12 +154,12 @@ public class PolygonizerTest extends GeometryTestCase {
    * Output is undefined, however.
    */
   public void testNonNodedWithHoleNotAssignable() {
-    checkPolygonizeNoError(    
+    checkPolygonizeNoError(
         new String[]{
         "MULTILINESTRING ((10 90, 30 90, 30 30, 70 30, 70 90, 90 90, 90 10, 10 10, 10 90), (30 90, 70 90, 70 30, 30 30, 30 90))"
     });
   }
-  
+
 /*
   public void test2() {
     doTest(new String[]{

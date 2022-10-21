@@ -24,16 +24,16 @@ import org.locationtech.jts.geom.Geometry;
  * based on a discretization of the input {@link Geometry}.
  * The algorithm computes the Hausdorff distance restricted to discrete points
  * for one of the geometries.
- * The points can be either the vertices of the geometries (the default), 
+ * The points can be either the vertices of the geometries (the default),
  * or the geometries with line segments densified by a given fraction.
  * Also determines two points of the Geometries which are separated by the computed distance.
 * <p>
  * This algorithm is an approximation to the standard Hausdorff distance.
- * Specifically, 
+ * Specifically,
  * <pre>
  *    for all geometries a, b:    DHD(a, b) &lt;= HD(a, b)
  * </pre>
- * The approximation can be made as close as needed by densifying the input geometries.  
+ * The approximation can be made as close as needed by densifying the input geometries.
  * In the limit, this value will approach the true Hausdorff distance:
  * <pre>
  *    DHD(A, B, densifyFactor) -&gt; HD(A, B) as densifyFactor -&gt; 0.0
@@ -49,7 +49,7 @@ import org.locationtech.jts.geom.Geometry;
  * <pre>
  *   A = LINESTRING (0 0, 100 0, 10 100, 10 100)
  *   B = LINESTRING (0 100, 0 10, 80 10)
- *   
+ *
  *   DHD(A, B) = 22.360679774997898
  *   HD(A, B) ~= 47.8
  * </pre>
@@ -72,7 +72,7 @@ public class DiscreteHausdorffDistance
   private Geometry g0;
   private Geometry g1;
   private PointPairDistance ptDist = new PointPairDistance();
-  
+
   /**
    * Value of 0.0 indicates that no densification should take place
    */
@@ -89,28 +89,28 @@ public class DiscreteHausdorffDistance
    * Each segment will be (virtually) split into a number of equal-length
    * subsegments, whose fraction of the total length is closest
    * to the given fraction.
-   * 
+   *
    * @param densifyFrac
    */
   public void setDensifyFraction(double densifyFrac)
   {
-    if (densifyFrac > 1.0 
+    if (densifyFrac > 1.0
         || densifyFrac <= 0.0)
       throw new IllegalArgumentException("Fraction is not in range (0.0 - 1.0]");
-        
+
     this.densifyFrac = densifyFrac;
   }
-  
-  public double distance() 
-  { 
+
+  public double distance()
+  {
     compute(g0, g1);
-    return ptDist.getDistance(); 
+    return ptDist.getDistance();
   }
 
-  public double orientedDistance() 
-  { 
+  public double orientedDistance()
+  {
     computeOrientedDistance(g0, g1, ptDist);
-    return ptDist.getDistance(); 
+    return ptDist.getDistance();
   }
 
   public Coordinate[] getCoordinates() { return ptDist.getCoordinates(); }
@@ -126,12 +126,12 @@ public class DiscreteHausdorffDistance
     MaxPointDistanceFilter distFilter = new MaxPointDistanceFilter(geom);
     discreteGeom.apply(distFilter);
     ptDist.setMaximum(distFilter.getMaxPointDistance());
-    
+
     if (densifyFrac > 0) {
       MaxDensifiedByFractionDistanceFilter fracFilter = new MaxDensifiedByFractionDistanceFilter(geom, densifyFrac);
       discreteGeom.apply(fracFilter);
       ptDist.setMaximum(fracFilter.getMaxPointDistance());
-      
+
     }
   }
 
@@ -158,9 +158,9 @@ public class DiscreteHausdorffDistance
 
     public PointPairDistance getMaxPointDistance() { return maxPtDist; }
   }
-  
-  public static class MaxDensifiedByFractionDistanceFilter 
-  implements CoordinateSequenceFilter 
+
+  public static class MaxDensifiedByFractionDistanceFilter
+  implements CoordinateSequenceFilter
   {
   private PointPairDistance maxPtDist = new PointPairDistance();
   private PointPairDistance minPtDist = new PointPairDistance();
@@ -173,17 +173,17 @@ public class DiscreteHausdorffDistance
   }
 
   @Override
-public void filter(CoordinateSequence seq, int index) 
+public void filter(CoordinateSequence seq, int index)
   {
     /**
      * This logic also handles skipping Point geometries
      */
     if (index == 0)
       return;
-    
+
     Coordinate p0 = seq.getCoordinate(index - 1);
     Coordinate p1 = seq.getCoordinate(index);
-    
+
     double delx = (p1.x - p0.x)/numSubSegs;
     double dely = (p1.y - p0.y)/numSubSegs;
 
@@ -193,18 +193,18 @@ public void filter(CoordinateSequence seq, int index)
       Coordinate pt = new Coordinate(x, y);
       minPtDist.initialize();
       DistanceToPoint.computeDistance(geom, pt, minPtDist);
-      maxPtDist.setMaximum(minPtDist);  
+      maxPtDist.setMaximum(minPtDist);
     }
-    
-    
+
+
   }
 
   @Override
 public boolean isGeometryChanged() { return false; }
-  
+
   @Override
 public boolean isDone() { return false; }
-  
+
   public PointPairDistance getMaxPointDistance() {
     return maxPtDist;
   }

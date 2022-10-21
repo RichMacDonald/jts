@@ -24,12 +24,12 @@ public class OverlayFunctions {
 	public static Geometry difference(Geometry a, Geometry b)			{		return a.difference(b);	}
 	public static Geometry differenceBA(Geometry a, Geometry b)		{		return b.difference(a);	}
   public static Geometry unaryUnion(Geometry a)                 {   return a.union(); }
-  
-  public static Geometry unionUsingGeometryCollection(Geometry a, Geometry b)                 
-  {   
+
+  public static Geometry unionUsingGeometryCollection(Geometry a, Geometry b)
+  {
     Geometry gc = a.getFactory().createGeometryCollection(
         new Geometry[] { a, b});
-    return gc.union(); 
+    return gc.union();
   }
 
   public static Geometry clip(Geometry a, Geometry mask)
@@ -41,6 +41,6 @@ public class OverlayFunctions {
     }
     return FunctionsUtil.buildGeometry(geoms, a);
   }
-  
-  
+
+
 }

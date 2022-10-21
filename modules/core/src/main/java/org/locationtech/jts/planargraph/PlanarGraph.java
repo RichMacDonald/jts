@@ -63,7 +63,7 @@ public abstract class PlanarGraph
   /**
    * Adds a node to the map, replacing any that is already at that location.
    * Only subclasses can add Nodes, to ensure Nodes are of the right type.
-   * 
+   *
    * @param node the node to add
    */
   protected void add(Node node)
@@ -169,7 +169,7 @@ public abstract class PlanarGraph
   {
     DirectedEdge sym = de.getSym();
     if (sym != null) sym.setSym(null);
-    
+
     de.getFromNode().remove(de);
     de.remove();
     dirEdges.remove(de);

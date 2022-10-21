@@ -32,7 +32,7 @@ class VertexCounter implements CoordinateSequenceFilter {
   }
 
   private Map<Coordinate, Integer> vertexCount;
-  
+
   public VertexCounter(Map<Coordinate, Integer> vertexCount) {
     this.vertexCount = vertexCount;
   }

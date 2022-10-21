@@ -26,7 +26,7 @@ import org.locationtech.jts.util.Assert;
 
 /**
  * Utility methods for overlay processing.
- * 
+ *
  * @author mdavis
  *
  */
@@ -34,7 +34,7 @@ class OverlayUtil {
 
   /**
    * A null-handling wrapper for {@link PrecisionModel#isFloating()}
-   * 
+   *
    * @param pm
    * @return
    */
@@ -42,14 +42,14 @@ class OverlayUtil {
     if (pm == null) return true;
     return pm.isFloating();
   }
-  
+
   /**
    * Computes a clipping envelope for overlay input geometries.
-   * The clipping envelope encloses all geometry line segments which 
+   * The clipping envelope encloses all geometry line segments which
    * might participate in the overlay, with a buffer to
-   * account for numerical precision 
+   * account for numerical precision
    * (in particular, rounding due to a precision model.
-   * The clipping envelope is used in both the {@link RingClipper} 
+   * The clipping envelope is used in both the {@link RingClipper}
    * and in the {@link LineLimiter}.
    * <p>
    * Some overlay operations (i.e. {@link OverlayNG#UNION and OverlayNG#SYMDIFFERENCE}
@@ -57,22 +57,22 @@ class OverlayUtil {
    * since the result envelope is the full extent of the two input geometries.
    * In this case the returned
    * envelope is <code>null</code> to indicate this.
-   * 
+   *
    * @param opCode the overlay op code
    * @param inputGeom the input geometries
    * @param pm the precision model being used
    * @return an envelope for clipping and line limiting, or null if no clipping is performed
    */
-  static Envelope clippingEnvelope(int opCode, InputGeometry inputGeom, PrecisionModel pm) {   
+  static Envelope clippingEnvelope(int opCode, InputGeometry inputGeom, PrecisionModel pm) {
     Envelope resultEnv = resultEnvelope(opCode, inputGeom, pm);
-    if (resultEnv == null) 
+    if (resultEnv == null)
       return null;
-    
+
     Envelope clipEnv = RobustClipEnvelopeComputer.getEnvelope(
-        inputGeom.getGeometry(0), 
-        inputGeom.getGeometry(1), 
+        inputGeom.getGeometry(0),
+        inputGeom.getGeometry(1),
         resultEnv);
-    
+
     Envelope safeEnv = safeEnv( clipEnv, pm );
     return safeEnv;
   }
@@ -87,7 +87,7 @@ class OverlayUtil {
    * <li>{@link OverlayNG#DIFERENCE}: result envelope is the envelope of the A input geometry
    * </ul>
    * Otherwise, <code>null</code> is returned to indicate full extent.
-   * 
+   *
    * @param opCode
    * @param inputGeom
    * @param pm
@@ -100,7 +100,7 @@ class OverlayUtil {
       // use safe envelopes for intersection to ensure they contain rounded coordinates
       Envelope envA = safeEnv( inputGeom.getEnvelope(0), pm);
       Envelope envB = safeEnv( inputGeom.getEnvelope(1), pm);
-      overlapEnv = envA.intersection(envB);   
+      overlapEnv = envA.intersection(envB);
       break;
     case OverlayNG.DIFFERENCE:
       overlapEnv = safeEnv( inputGeom.getEnvelope(0), pm);
@@ -113,7 +113,7 @@ class OverlayUtil {
   /**
    * Determines a safe geometry envelope for clipping,
    * taking into account the precision model being used.
-   * 
+   *
    * @param env a geometry envelope
    * @param pm the precision model
    * @return a safe envelope to use for clipping
@@ -124,7 +124,7 @@ class OverlayUtil {
     safeEnv.expandBy(envExpandDist);
     return safeEnv;
   }
-  
+
   private static final double SAFE_ENV_BUFFER_FACTOR = 0.1;
 
   private static final int SAFE_ENV_GRID_FACTOR = 3;
@@ -148,13 +148,13 @@ class OverlayUtil {
     return envExpandDist;
   }
 
-  
+
   /**
    * Tests if the result can be determined to be empty
    * based on simple properties of the input geometries
-   * (such as whether one or both are empty, 
+   * (such as whether one or both are empty,
    * or their envelopes are disjoint).
-   * 
+   *
    * @param opCode the overlay operation
    * @param inputGeom the input geometries
    * @return true if the overlay result is determined to be empty
@@ -162,22 +162,22 @@ class OverlayUtil {
   static boolean isEmptyResult(int opCode, Geometry a, Geometry b, PrecisionModel pm) {
     switch (opCode) {
     case OverlayNG.INTERSECTION:
-      if (isEnvDisjoint(a, b, pm)) 
+      if (isEnvDisjoint(a, b, pm))
         return true;
       break;
     case OverlayNG.DIFFERENCE:
-      if ( isEmpty(a) )     
+      if ( isEmpty(a) )
         return true;
       break;
     case OverlayNG.UNION:
     case OverlayNG.SYMDIFFERENCE:
-      if ( isEmpty(a) && isEmpty(b) )     
+      if ( isEmpty(a) && isEmpty(b) )
         return true;
       break;
     }
     return false;
   }
-  
+
   private static boolean isEmpty(Geometry geom) {
     return geom == null || geom.isEmpty();
   }
@@ -186,7 +186,7 @@ class OverlayUtil {
    * Tests if the geometry envelopes are disjoint, or empty.
    * The disjoint test must take into account the precision model
    * being used, since geometry coordinates may shift under rounding.
-   * 
+   *
    * @param a a geometry
    * @param b a geometry
    * @param pm the precision model being used
@@ -201,10 +201,10 @@ class OverlayUtil {
   }
 
   /**
-   * Tests for disjoint envelopes adjusting for rounding 
+   * Tests for disjoint envelopes adjusting for rounding
    * caused by a fixed precision model.
    * Assumes envelopes are non-empty.
-   * 
+   *
    * @param envA an envelope
    * @param envB an envelope
    * @param pm the precision model
@@ -218,10 +218,10 @@ class OverlayUtil {
   /**
    * Creates an empty result geometry of the appropriate dimension,
    * based on the given overlay operation and the dimensions of the inputs.
-   * The created geometry is an atomic geometry, 
+   * The created geometry is an atomic geometry,
    * not a collection (unless the dimension is -1,
    * in which case a <code>GEOMETRYCOLLECTION EMPTY</code> is created.)
-   * 
+   *
    * @param dim the dimension of the empty geometry to create
    * @param geomFact the geometry factory being used for the operation
    * @return an empty atomic geometry of the appropriate dimension
@@ -262,26 +262,26 @@ class OverlayUtil {
    * <li>{@link OverlayNG#SYMDIFFERENCE} - result has the dimension of the highest input dimension
    * (since the Symmetric Difference is the Union of the Differences).
    * </ul>
-   * 
+   *
    * @param opCode the overlay operation
    * @param dim0 dimension of the LH input
    * @param dim1 dimension of the RH input
    * @return the dimension of the result
    */
   public static int resultDimension(int opCode, int dim0, int dim1)
-  { 
+  {
     int resultDimension = -1;
     switch (opCode) {
-    case OverlayNG.INTERSECTION: 
+    case OverlayNG.INTERSECTION:
       resultDimension = Math.min(dim0, dim1);
       break;
-    case OverlayNG.UNION: 
+    case OverlayNG.UNION:
       resultDimension = Math.max(dim0, dim1);
       break;
-    case OverlayNG.DIFFERENCE: 
+    case OverlayNG.DIFFERENCE:
       resultDimension = dim0;
       break;
-    case OverlayNG.SYMDIFFERENCE: 
+    case OverlayNG.SYMDIFFERENCE:
       /**
        * This result is chosen because
        * <pre>
@@ -297,7 +297,7 @@ class OverlayUtil {
 
   /**
    * Creates an overlay result geometry for homogeneous or mixed components.
-   *  
+   *
    * @param resultPolyList the list of result polygons (may be empty or null)
    * @param resultLineList the list of result lines (may be empty or null)
    * @param resultPointList the list of result points (may be empty or null)
@@ -306,14 +306,14 @@ class OverlayUtil {
    */
   static Geometry createResultGeometry(List<Polygon> resultPolyList, List<LineString> resultLineList, List<Point> resultPointList, GeometryFactory geometryFactory) {
     List<Geometry> geomList = new ArrayList<>();
-    
+
     // TODO: for mixed dimension, return collection of Multigeom for each dimension (breaking change)
-    
+
     // element geometries of the result are always in the order A,L,P
     if (resultPolyList != null) geomList.addAll(resultPolyList);
     if (resultLineList != null) geomList.addAll(resultLineList);
     if (resultPointList != null) geomList.addAll(resultPointList);
-  
+
     // build the most specific geometry possible
     // TODO: perhaps do this internally to give more control?
     return geometryFactory.buildGeometry(geomList);
@@ -341,7 +341,7 @@ class OverlayUtil {
   /**
    * Round the key point if precision model is fixed.
    * Note: return value is only copied if rounding is performed.
-   * 
+   *
    * @param pt the Point to round
    * @return the rounded point coordinate, or null if empty
    */
@@ -349,11 +349,11 @@ class OverlayUtil {
     if (pt.isEmpty()) return null;
     return round( pt.getCoordinate(), pm );
   }
-  
+
   /**
    * Rounds a coordinate if precision model is fixed.
    * Note: return value is only copied if rounding is performed.
-   * 
+   *
    * @param p the coordinate to round
    * @return the rounded coordinate
    */
@@ -365,7 +365,7 @@ class OverlayUtil {
     }
     return p;
   }
-  
+
   private static final double AREA_HEURISTIC_TOLERANCE = 0.1;
 
   /**
@@ -377,7 +377,7 @@ class OverlayUtil {
    * <b>Note:</b> - this check is only safe if the precision model is floating.
    * It should also be safe for snapping noding if the distance tolerance is reasonably small.
    * (Fixed precision models can lead to collapse causing result area to expand.)
-   * 
+   *
    * @param geom0 input geometry 0
    * @param geom1 input geometry 1
    * @param opCode the overlay opcode
@@ -385,17 +385,17 @@ class OverlayUtil {
    * @return true if the result area is consistent
    */
   public static boolean isResultAreaConsistent(Geometry geom0, Geometry geom1, int opCode, Geometry result) {
-    if (geom0 == null || geom1 == null) 
+    if (geom0 == null || geom1 == null)
       return true;
-    
+
     double areaResult = result.getArea();
     double areaA = geom0.getArea();
     double areaB = geom1.getArea();
-    
+
     boolean isConsistent = true;
     switch (opCode) {
     case OverlayNG.INTERSECTION:
-      isConsistent = isLess(areaResult, areaA, AREA_HEURISTIC_TOLERANCE) 
+      isConsistent = isLess(areaResult, areaA, AREA_HEURISTIC_TOLERANCE)
                   && isLess(areaResult, areaB, AREA_HEURISTIC_TOLERANCE);
       break;
     case OverlayNG.DIFFERENCE:
@@ -406,7 +406,7 @@ class OverlayUtil {
       isConsistent = isLess(areaResult, areaA + areaB, AREA_HEURISTIC_TOLERANCE);
       break;
     case OverlayNG.UNION:
-      isConsistent = isLess(areaA, areaResult, AREA_HEURISTIC_TOLERANCE) 
+      isConsistent = isLess(areaA, areaResult, AREA_HEURISTIC_TOLERANCE)
                   && isLess(areaB, areaResult, AREA_HEURISTIC_TOLERANCE)
                   && isGreater(areaResult, areaA - areaB, AREA_HEURISTIC_TOLERANCE);
       break;
@@ -417,9 +417,9 @@ class OverlayUtil {
   private static boolean isLess(double v1, double v2, double tol) {
     return v1 <= v2 * (1 + tol);
   }
-  
+
   private static boolean isGreater(double v1, double v2, double tol) {
     return v1 >= v2 * (1 - tol);
   }
-  
+
 }

@@ -40,7 +40,7 @@ public class CoordinateList
    * Constructs a new list from an array of Coordinates, allowing repeated points.
    * (I.e. this constructor produces a {@link CoordinateList} with exactly the same set of points
    * as the input array.)
-   * 
+   *
    * @param coord the initial coordinates
    */
   public CoordinateList(Coordinate[] coord)
@@ -65,7 +65,7 @@ public class CoordinateList
   public Coordinate getCoordinate(int i) { return get(i); }
 
 
-  /** 
+  /**
    * Adds a section of an array of coordinates to the list.
    * @param coord The coordinates
    * @param allowRepeated if set to false, repeated coordinates are collapsed
@@ -77,14 +77,14 @@ public class CoordinateList
   {
     int inc = 1;
     if (start > end) inc = -1;
-    
+
     for (int i = start; i != end; i += inc) {
       add(coord[i], allowRepeated);
     }
     return true;
   }
 
-  /** 
+  /**
    * Adds an array of coordinates to the list.
    * @param coord The coordinates
    * @param allowRepeated if set to false, repeated coordinates are collapsed
@@ -107,7 +107,7 @@ public class CoordinateList
   }
 
 
-  /** 
+  /**
    * Adds an array of coordinates to the list.
    * @param coord The coordinates
    * @param allowRepeated if set to false, repeated coordinates are collapsed
@@ -119,7 +119,7 @@ public class CoordinateList
     return true;
   }
 
-  /** 
+  /**
    * Adds a coordinate to the list.
    * @param obj The coordinate to add
    * @param allowRepeated if set to false, repeated coordinates are collapsed
@@ -133,7 +133,7 @@ public class CoordinateList
 
   /**
    * Adds a coordinate to the end of the list.
-   * 
+   *
    * @param coord The coordinates
    * @param allowRepeated if set to false, repeated coordinates are collapsed
    */
@@ -151,7 +151,7 @@ public class CoordinateList
 
   /**
    * Inserts the specified coordinate at the specified position in this list.
-   * 
+   *
    * @param i the position at which to insert
    * @param coord the coordinate to insert
    * @param allowRepeated if set to false, repeated coordinates are collapsed
@@ -213,7 +213,7 @@ public class CoordinateList
   /**
    * Creates an array containing the coordinates in this list,
    * oriented in the given direction (forward or reverse).
-   * 
+   *
    * @param isForward true if the direction is forward, false for reverse
    * @return an oriented array of coordinates
    */
@@ -239,7 +239,7 @@ public class CoordinateList
   @Override
 public Object clone() {
       CoordinateList clone = (CoordinateList) super.clone();
-      for (int i = 0; i < this.size(); i++) {	  
+      for (int i = 0; i < this.size(); i++) {
           clone.add(i, (Coordinate) this.get(i).clone());
       }
       return clone;

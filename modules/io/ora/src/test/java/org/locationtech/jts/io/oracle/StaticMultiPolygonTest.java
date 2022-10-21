@@ -19,18 +19,18 @@ import oracle.sql.STRUCT;
 
 
 /**
- * 
- * Does round trip testing by creating the oracle object, then decoding it. 
- * 
- * These tests do not include insert / delete / select operations.
- * 
- * NOTE: This test does require a precision to be used during the comparison, 
- * as points are rounded somewhat when creating the oracle struct. 
- * (One less decimal than a java double).
- * 
- * NOTE: The points may be re-ordered during these tests. 
  *
- * @author David Zwiers, Vivid Solutions. 
+ * Does round trip testing by creating the oracle object, then decoding it.
+ *
+ * These tests do not include insert / delete / select operations.
+ *
+ * NOTE: This test does require a precision to be used during the comparison,
+ * as points are rounded somewhat when creating the oracle struct.
+ * (One less decimal than a java double).
+ *
+ * NOTE: The points may be re-ordered during these tests.
+ *
+ * @author David Zwiers, Vivid Solutions.
  */
 public class StaticMultiPolygonTest extends ConnectedTestCase {
 
@@ -43,7 +43,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPolygon
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSingleMultiPolygonNoHoleRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -56,15 +56,15 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPolygon pt = (MultiPolygon) pg.create();
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		MultiPolygon pt2 = (MultiPolygon) or.read(st);
-		
+
 //		System.out.println((pt==null?"NULL":pt.toString()));
 //		System.out.println((pt2==null?"NULL":pt2.toString()));
 		assertTrue("The input MultiPolygon is not the same as the output MultiPolygon",pt.equals(pt2));
@@ -72,7 +72,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 100 non overlapping MultiPolygon
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testGridMultiPolygonsNoHoleRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -83,7 +83,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(10);
 		grid.setNumberRows(10);
-		
+
 		MultiPolygon[] pt = new MultiPolygon[100];
 		STRUCT[] st = new STRUCT[100];
 
@@ -94,9 +94,9 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<100){
 			pg.setBoundingBox(grid.createEnv());
@@ -104,7 +104,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 			st[i] = ow.write(pt[i], getConnection());
 			i++;
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<100 && pt[i] != null){
@@ -118,7 +118,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 8 overlapping line MultiPolygons (4 distinct MultiPolygons)
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testOverlappingMultiPolygonsNoHoleRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -129,7 +129,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(2);
 		grid.setNumberRows(2);
-		
+
 		MultiPolygon[] pt = new MultiPolygon[4];
 		STRUCT[] st = new STRUCT[8];
 
@@ -140,9 +140,9 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<8){
 			pg.setBoundingBox(grid.createEnv());
@@ -154,7 +154,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 			if(pt[j]!=null)
 				st[i++] = ow.write(pt[j], getConnection());
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<8 && pt[i%4] != null){
@@ -168,7 +168,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPolygon with lotsa points
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSingleMultiPolygonManyPointsNoHoleRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -182,13 +182,13 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPolygon pt = (MultiPolygon) pg.create();
 //		System.out.println((pt==null?"NULL":pt.toString()));
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		MultiPolygon pt2 = (MultiPolygon) or.read(st);
 
@@ -199,7 +199,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPolygon
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSingleMultiPolygonHolesRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -214,15 +214,15 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPolygon pt = (MultiPolygon) pg.create();
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		MultiPolygon pt2 = (MultiPolygon) or.read(st);
-		
+
 //		System.out.println((pt==null?"NULL":pt.toString()));
 //		System.out.println((pt2==null?"NULL":pt2.toString()));
 		assertTrue("The input MultiPolygon is not the same as the output MultiPolygon",pt.equals(pt2));
@@ -230,7 +230,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 100 non overlapping MultiPolygon
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testGridMultiPolygonsHolesRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -241,7 +241,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(10);
 		grid.setNumberRows(10);
-		
+
 		MultiPolygon[] pt = new MultiPolygon[100];
 		STRUCT[] st = new STRUCT[100];
 
@@ -255,9 +255,9 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<100){
 			pg.setBoundingBox(grid.createEnv());
@@ -265,7 +265,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 			st[i] = ow.write(pt[i], getConnection());
 			i++;
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<100 && pt[i] != null){
@@ -279,7 +279,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 8 overlapping line MultiPolygons (4 distinct MultiPolygons)
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testOverlappingMultiPolygonsHolesRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -290,7 +290,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(2);
 		grid.setNumberRows(2);
-		
+
 		MultiPolygon[] pt = new MultiPolygon[4];
 		STRUCT[] st = new STRUCT[8];
 
@@ -304,9 +304,9 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<8){
 			pg.setBoundingBox(grid.createEnv());
@@ -318,7 +318,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 			if(pt[j]!=null)
 				st[i++] = ow.write(pt[j], getConnection());
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<8 && pt[i%4] != null){
@@ -332,7 +332,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPolygon with lotsa points
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSingleMultiPolygonManyPointsHolesRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -347,13 +347,13 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPolygon pt = (MultiPolygon) pg.create();
 //		System.out.println((pt==null?"NULL":pt.toString()));
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		MultiPolygon pt2 = (MultiPolygon) or.read(st);
 
@@ -364,7 +364,7 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPolygon with lotsa points
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSingleMultiPolygonManyPointsManyHolesRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -379,13 +379,13 @@ public class StaticMultiPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPolygon pt = (MultiPolygon) pg.create();
 //		System.out.println((pt==null?"NULL":pt.toString()));
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		MultiPolygon pt2 = (MultiPolygon) or.read(st);
 

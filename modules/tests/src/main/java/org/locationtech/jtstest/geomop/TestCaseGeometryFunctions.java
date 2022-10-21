@@ -28,38 +28,38 @@ import org.locationtech.jts.precision.MinimumClearance;
  * Geometry functions which
  * augment the existing methods on {@link Geometry},
  * for use in XML Test files.
- * This is the default used in the TestRunner, 
- * and thus all the operations 
+ * This is the default used in the TestRunner,
+ * and thus all the operations
  * in this class should be named differently to the Geometry methods
  * (otherwise they will shadow the real Geometry methods).
  * <p>
  * If replacing a Geometry method is desired, this
  * can be done via the -geomfunc argument to the TestRunner.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class TestCaseGeometryFunctions 
+public class TestCaseGeometryFunctions
 {
-	public static Geometry bufferMitredJoin(Geometry g, double distance)	
+	public static Geometry bufferMitredJoin(Geometry g, double distance)
 	{
     BufferParameters bufParams = new BufferParameters();
     bufParams.setJoinStyle(BufferParameters.JOIN_MITRE);
-    
+
     return BufferOp.bufferOp(g, distance, bufParams);
 	}
 
-  public static Geometry densify(Geometry g, double distance) 
+  public static Geometry densify(Geometry g, double distance)
   {
     return Densifier.densify(g, distance);
   }
 
-  public static double minClearance(Geometry g) 
+  public static double minClearance(Geometry g)
   {
     return MinimumClearance.getDistance(g);
   }
 
-  public static Geometry minClearanceLine(Geometry g) 
+  public static Geometry minClearanceLine(Geometry g)
   {
     return MinimumClearance.getLine(g);
   }
@@ -70,19 +70,19 @@ public class TestCaseGeometryFunctions
     polygonizer.add(lines);
     return polygonizer.getGeometry();
   }
-  
+
   public static Geometry polygonize(Geometry g) {
     return polygonize(g, false);
   }
-  
+
   public static Geometry polygonizeValidPolygonal(Geometry g) {
     return polygonize(g, true);
   }
-  
+
   public static Geometry reducePrecision(Geometry g, double scaleFactor) {
     return GeometryPrecisionReducer.reduce(g, new PrecisionModel(scaleFactor));
   }
-  
+
   public static Geometry intersectionNG(Geometry geom0, Geometry geom1) {
     return OverlayNG.overlay(geom0, geom1, OverlayNG.INTERSECTION);
   }
@@ -95,7 +95,7 @@ public class TestCaseGeometryFunctions
   public static Geometry symDifferenceNG(Geometry geom0, Geometry geom1) {
     return OverlayNG.overlay(geom0, geom1, OverlayNG.SYMDIFFERENCE);
   }
-  
+
   public static Geometry intersectionSR(Geometry geom0, Geometry geom1, double scale) {
     PrecisionModel pm = new PrecisionModel(scale);
     return OverlayNG.overlay(geom0, geom1, OverlayNG.INTERSECTION, pm);
@@ -116,42 +116,42 @@ public class TestCaseGeometryFunctions
   public static double unionArea(Geometry geom) {
     return geom.union().getArea();
   }
-  
+
   public static double unionLength(Geometry geom) {
     return geom.union().getLength();
   }
-  
+
   public static boolean overlayAreaTest(Geometry a, Geometry b) {
     double areaDelta = areaDelta(a, b);
-    return areaDelta < 1e-6; 
+    return areaDelta < 1e-6;
   }
-  
+
   /**
    * Computes the maximum area delta value
    * resulting from identity equations over the overlay operations.
    * The delta value is normalized to the total area of the geometries.
-   * If the overlay operations are computed correctly 
+   * If the overlay operations are computed correctly
    * the area delta is expected to be very small (e.g. < 1e-6).
-   *  
+   *
    * @param a a geometry
    * @param b a geometry
    * @return the computed maximum area delta
    */
   private static double areaDelta(Geometry a, Geometry b) {
-    
+
     double areaA = a == null ? 0 : a.getArea();
     double areaB = b == null ? 0 : b.getArea();
-    
+
     // if an input is non-polygonal delta is 0
     if (areaA == 0 || areaB == 0)
       return 0;
-    
-    double areaU   = a.union( b ).getArea();    
+
+    double areaU   = a.union( b ).getArea();
     double areaI   = a.intersection( b ).getArea();
     double areaDab = a.difference( b ).getArea();
     double areaDba = b.difference( a ).getArea();
     double areaSD  = a.symDifference( b ).getArea();
-    
+
     double maxDelta = 0;
 
     // & : intersection
@@ -189,9 +189,9 @@ public class TestCaseGeometryFunctions
     if (delta > maxDelta) {
         maxDelta = delta;
     }
-    
+
     // normalize the area delta value
     return maxDelta / (areaA + areaB);
   }
-  
+
 }

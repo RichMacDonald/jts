@@ -28,11 +28,11 @@ import org.locationtech.jts.index.ItemVisitor;
 public abstract class NodeBase implements Serializable {
 
 //DEBUG private static int itemCount = 0;  // debugging
-  
+
   /**
    * Gets the index of the subquad that wholly contains the given envelope.
    * If none does, returns -1.
-   * 
+   *
    * @return the index of the subquad that wholly contains the given envelope
    * or -1 if no subquad wholly contains the envelope
    */

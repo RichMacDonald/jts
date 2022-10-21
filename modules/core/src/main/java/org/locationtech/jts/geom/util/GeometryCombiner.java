@@ -30,15 +30,15 @@ import org.locationtech.jts.geom.Polygonal;
  * No validation of the result geometry is performed.
  * (The only case where invalidity is possible is where {@link Polygonal} geometries
  * are combined and result in a self-intersection).
- * 
+ *
  * @author mbdavis
  * @see GeometryFactory#buildGeometry
  */
-public class GeometryCombiner 
+public class GeometryCombiner
 {
 	/**
 	 * Combines a collection of geometries.
-	 * 
+	 *
 	 * @param geoms the geometries to combine
 	 * @return the combined geometry
 	 */
@@ -47,10 +47,10 @@ public class GeometryCombiner
 		GeometryCombiner combiner = new GeometryCombiner(geoms);
 		return combiner.combine();
 	}
-	
+
 	/**
 	 * Combines two geometries.
-	 * 
+	 *
 	 * @param g0 a geometry to combine
 	 * @param g1 a geometry to combine
 	 * @return the combined geometry
@@ -60,10 +60,10 @@ public class GeometryCombiner
 		GeometryCombiner combiner = new GeometryCombiner(createList(g0, g1));
 		return combiner.combine();
 	}
-	
+
 	/**
 	 * Combines three geometries.
-	 * 
+	 *
 	 * @param g0 a geometry to combine
 	 * @param g1 a geometry to combine
 	 * @param g2 a geometry to combine
@@ -74,10 +74,10 @@ public class GeometryCombiner
 		GeometryCombiner combiner = new GeometryCombiner(createList(g0, g1, g2));
 		return combiner.combine();
 	}
-	
+
 	/**
 	 * Creates a list from two items
-	 * 
+	 *
 	 * @param obj0
 	 * @param obj1
 	 * @return a List containing the two items
@@ -89,10 +89,10 @@ public class GeometryCombiner
 		list.add(obj1);
 		return list;
   }
-  
+
 	/**
 	 * Creates a list from two items
-	 * 
+	 *
 	 * @param obj0
 	 * @param obj1
 	 * @return a List containing the two items
@@ -105,14 +105,14 @@ public class GeometryCombiner
 		list.add(obj2);
 		return list;
   }
-  
+
 	private GeometryFactory geomFactory;
 	private boolean skipEmpty = false;
 	private Collection inputGeoms;
-		
+
 	/**
 	 * Creates a new combiner for a collection of geometries
-	 * 
+	 *
 	 * @param geoms the geometries to combine
 	 */
 	public GeometryCombiner(Collection geoms)
@@ -120,10 +120,10 @@ public class GeometryCombiner
 		geomFactory = extractFactory(geoms);
 		this.inputGeoms = geoms;
 	}
-	
+
 	/**
 	 * Extracts the GeometryFactory used by the geometries in a collection
-	 * 
+	 *
 	 * @param geoms
 	 * @return a GeometryFactory
 	 */
@@ -132,11 +132,11 @@ public class GeometryCombiner
 			return null;
 		return ((Geometry) geoms.iterator().next()).getFactory();
 	}
-	
+
 	/**
 	 * Computes the combination of the input geometries
 	 * to produce the most appropriate {@link Geometry} or {@link GeometryCollection}
-	 * 
+	 *
 	 * @return a Geometry which is the combination of the inputs
 	 */
   public Geometry combine()
@@ -146,7 +146,7 @@ public class GeometryCombiner
   		Geometry g = (Geometry) inputGeom;
   		extractElements(g, elems);
   	}
-    
+
     if (elems.size() == 0) {
     	if (geomFactory != null) {
       // return an empty GC
@@ -157,12 +157,12 @@ public class GeometryCombiner
     // return the "simplest possible" geometry
     return geomFactory.buildGeometry(elems);
   }
-  
+
   private void extractElements(Geometry geom, List elems)
   {
     if (geom == null)
       return;
-    
+
     for (int i = 0; i < geom.getNumGeometries(); i++) {
       Geometry elemGeom = geom.getGeometryN(i);
       if (skipEmpty && elemGeom.isEmpty())

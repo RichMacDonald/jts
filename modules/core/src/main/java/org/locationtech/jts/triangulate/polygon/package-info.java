@@ -14,6 +14,6 @@
  * Classes for triangulating polygons.
  * {@link ConstrainedDelaunayTriangulator} can be used to provide high-quality
  * near-Delaunay triangulations of polygonal geometry.
- * The {@link PolygonTriangulator} produces lower-quality but faster triangulations. 
+ * The {@link PolygonTriangulator} produces lower-quality but faster triangulations.
  */
 package org.locationtech.jts.triangulate.polygon;

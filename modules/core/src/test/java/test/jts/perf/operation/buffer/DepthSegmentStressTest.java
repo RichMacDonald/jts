@@ -23,7 +23,7 @@ import test.jts.perf.PerformanceTestRunner;
 
 /**
  * Stress tests DepthSegment to determine if the compare contract is maintained.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -48,9 +48,9 @@ public void startRun(int size)
     System.out.println("Running with size " + size);
     iter = 0;
   }
-  
+
   private int iter = 0;
-  
+
   public void XXrunSort()
   {
     System.out.println("Iter # " + iter++);
@@ -58,7 +58,7 @@ public void startRun(int size)
     List segs = createRandomDepthSegments(100);
     Collections.sort(segs);
   }
-  
+
   public void runMin()
   {
     System.out.println("Iter # " + iter++);
@@ -66,28 +66,28 @@ public void startRun(int size)
     List segs = createRandomDepthSegments(100);
     Collections.min(segs);
   }
-  
+
   public void runCompare()
   {
     System.out.println("Iter # " + iter++);
     DepthSegment seg1 = createRandomDepthSegment();
     DepthSegment seg2 = createRandomDepthSegment();
     DepthSegment seg3 = createRandomDepthSegment();
-    
+
     // do test work here
     boolean fails = false;
     if (! isSymmetric(seg1, seg2))
       fails = true;
     if (! isTransitive(seg1, seg2, seg3))
       fails = true;
-    
+
     if (fails ){
       System.out.println("FAILS!");
       throw new RuntimeException("FAILS!");
     }
-      
+
   }
-  
+
   public boolean isSymmetric(DepthSegment seg1, DepthSegment seg2) {
     int cmp12 = seg1.compareTo(seg2);
     int cmp21 = seg2.compareTo(seg1);
@@ -105,7 +105,7 @@ public void startRun(int size)
     }
     return true;
   }
-  
+
   public List createRandomDepthSegments(int n)
   {
     List segs = new ArrayList();
@@ -114,11 +114,11 @@ public void startRun(int size)
     }
     return segs;
   }
-  
+
   int randint(int max) {
     return (int) (max * Math.random());
   }
-  
+
   private DepthSegment createRandomDepthSegment() {
     double scale = 10;
     int max = 10;
@@ -168,8 +168,8 @@ public void startRun(int size)
 	public int compareTo(Object obj)
     {
       DepthSegment other = (DepthSegment) obj;
-      
-      if (! envelopesOverlap(upwardSeg, other.upwardSeg)) 
+
+      if (! envelopesOverlap(upwardSeg, other.upwardSeg))
         return upwardSeg.compareTo(other.upwardSeg);
       // check orientations
       int orientIndex = upwardSeg.orientationIndex(other.upwardSeg);
@@ -184,9 +184,9 @@ public void startRun(int size)
     public int XcompareTo(Object obj)
     {
       DepthSegment other = (DepthSegment) obj;
-      
+
       // if segments are collinear and vertical compare endpoints
-      if (isVertical() && other.isVertical() 
+      if (isVertical() && other.isVertical()
           && upwardSeg.p0.x == other.upwardSeg.p0.x)
         return compareX(this.upwardSeg, other.upwardSeg);
       // check if segments are trivially ordered along X
@@ -222,7 +222,7 @@ public void startRun(int size)
     public boolean isVertical() {
       return upwardSeg.p0.x == upwardSeg.p1.x;
     }
-    
+
     public boolean envelopesOverlap(LineSegment seg1, LineSegment seg2) {
       if ((seg1.maxX() <= seg2.minX()) || (seg2.maxX() <= seg1.minX()) || (seg1.maxY() <= seg2.minY()) || (seg2.maxY() <= seg1.minY())) return false;
       return true;

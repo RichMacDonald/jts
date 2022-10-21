@@ -18,7 +18,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.SineStarFactory;
 import org.locationtech.jts.util.Stopwatch;
 
-public class TestPerfDistanceGeomSet 
+public class TestPerfDistanceGeomSet
 {
   static final int MAX_ITER = 1;
   static final int NUM_GEOM = 100;
@@ -39,8 +39,8 @@ public class TestPerfDistanceGeomSet
 
   public void test()
   {
-    
-    
+
+
 //    test(5000);
 //    test(8001);
 
@@ -67,27 +67,27 @@ public class TestPerfDistanceGeomSet
   public void test2()
   {
     verbose = false;
-    
+
     for (int i = 800; i <= 2000; i += 100) {
       test(i);
     }
   }
-  
+
   double size = 100;
   double separationDist = size * 2;
-  
+
   public void test(int num)
   {
-    
+
 //    Geometry[] geom = createRandomCircles(nPts);
     Geometry[] geom = createRandomCircles(100, 5, num);
 //    Geometry[] geom = createSineStarsRandomLocation(nPts);
-    
+
     if (verbose) System.out.println("Running with " + num + " points");
     if (! verbose) System.out.print(num + ", ");
     test(geom);
   }
-  
+
   public void test(Geometry[] geom)
   {
     Stopwatch sw = new Stopwatch();
@@ -110,11 +110,11 @@ public class TestPerfDistanceGeomSet
 //      double dist = SortedBoundsFacetDistance.distance(g1, g2);
 //      double dist = BranchAndBoundFacetDistance.distance(geom[i], geom[j]);
 //      double dist = CachedBABDistance.getDistance(geom[i], geom[j]);
-        
+
       }
     }
   }
-  
+
   Geometry[] createRandomCircles(int nPts)
   {
     Geometry[] geoms = new Geometry[NUM_GEOM];
@@ -123,7 +123,7 @@ public class TestPerfDistanceGeomSet
     }
     return geoms;
   }
-    
+
   Geometry[] createRandomCircles(int numGeom, int nPtsMin, int nPtsMax)
   {
     int nPtsRange = nPtsMax - nPtsMin + 1;
@@ -134,20 +134,20 @@ public class TestPerfDistanceGeomSet
     }
     return geoms;
   }
-    
-  Geometry createCircleRandomLocation(int nPts)  
+
+  Geometry createCircleRandomLocation(int nPts)
   {
     SineStarFactory gsf = new SineStarFactory();
     gsf.setCentre(randomLocation());
     gsf.setSize(GEOM_SIZE);
     gsf.setNumPoints(nPts);
-    
+
     Polygon g = gsf.createCircle();
 //    Geometry g = gsf.createSineStar();
-    
+
     return g;
   }
-  
+
   Coordinate randomLocation()
   {
     double x = Math.random() * MAX_X;
@@ -155,5 +155,5 @@ public class TestPerfDistanceGeomSet
     return new Coordinate(x, y);
   }
 }
-  
-  
+
+

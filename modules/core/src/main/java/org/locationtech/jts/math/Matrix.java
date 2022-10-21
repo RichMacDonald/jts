@@ -12,9 +12,9 @@
 package org.locationtech.jts.math;
 
 /**
- * Implements some 2D matrix operations 
+ * Implements some 2D matrix operations
  * (in particular, solving systems of linear equations).
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -29,7 +29,7 @@ public class Matrix
       m[j][col] = temp;
     }
   }
-  
+
   private static void swapRows(double[] m, int i, int j)
   {
     if (i == j) return;
@@ -37,26 +37,26 @@ public class Matrix
     m[i] = m[j];
     m[j] = temp;
   }
-  
+
   /**
    * Solves a system of equations using Gaussian Elimination.
    * In order to avoid overhead the algorithm runs in-place
    * on A - if A should not be modified the client must supply a copy.
-   * 
+   *
    * @param a an nxn matrix in row/column order )modified by this method)
    * @param b a vector of length n
-   * 
+   *
    * @return a vector containing the solution (if any)
    * or null if the system has no or no unique solution
-   * 
-   * @throws IllegalArgumentException if the matrix is the wrong size 
+   *
+   * @throws IllegalArgumentException if the matrix is the wrong size
    */
   public static double[] solve( double[][] a, double[] b )
   {
     int n = b.length;
     if ( a.length != n || a[0].length != n )
       throw new IllegalArgumentException("Matrix A is incorrectly sized");
-    
+
     // Use Gaussian Elimination with partial pivoting.
     // Iterate over each row
     for (int i = 0; i < n; i++ ) {
@@ -65,14 +65,14 @@ public class Matrix
       for (int j = i + 1; j < n; j++ )
         if ( Math.abs( a[j][i] ) > Math.abs( a[maxElementRow][i] ) )
           maxElementRow = j;
-        
+
       if ( a[maxElementRow][i] == 0.0 )
         return null;
-      
+
       // Exchange current row and maxElementRow in A and b.
       swapRows(a, i, maxElementRow );
       swapRows(b, i, maxElementRow );
-      
+
       // Eliminate using row i
       for (int j = i + 1; j < n; j++ ) {
         double rowFactor = a[j][i] / a[i][i];
@@ -81,7 +81,7 @@ public class Matrix
         b[j] -= b[i] * rowFactor;
       }
     }
-    
+
     /**
      * A is now (virtually) in upper-triangular form.
      * The solution vector is determined by back-substitution.
@@ -95,5 +95,5 @@ public class Matrix
     }
     return solution;
   }
-  
+
 }

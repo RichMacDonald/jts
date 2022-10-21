@@ -39,17 +39,17 @@ public class HPRtreeTest extends TestCase {
     junit.textui.TestRunner.main(testCaseName);
   }
 
-  public void testEmptyTreeUsingListQuery()  
+  public void testEmptyTreeUsingListQuery()
   {
     HPRtree tree = new HPRtree();
     List list = tree.query(new Envelope(0, 0, 1, 1));
     assertTrue(list.isEmpty());
   }
-  
-  public void testEmptyTreeUsingItemVisitorQuery()  
+
+  public void testEmptyTreeUsingItemVisitorQuery()
   {
     HPRtree tree = new HPRtree(0);
-    tree.query(new Envelope(0,0,1,1), item -> assertTrue("Should never reach here", true));  
+    tree.query(new Envelope(0,0,1,1), item -> assertTrue("Should never reach here", true));
   }
 
   public void testSpatialIndex()

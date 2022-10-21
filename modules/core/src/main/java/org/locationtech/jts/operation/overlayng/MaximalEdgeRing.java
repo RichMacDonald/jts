@@ -31,7 +31,7 @@ class MaximalEdgeRing {
    * Traverses the star of edges originating at a node
    * and links consecutive result edges together
    * into <b>maximal</b> edge rings.
-   * To link two edges the <code>resultNextMax</code> pointer 
+   * To link two edges the <code>resultNextMax</code> pointer
    * for an <b>incoming</b> result edge
    * is set to the next <b>outgoing</b> result edge.
    * <p>
@@ -41,14 +41,14 @@ class MaximalEdgeRing {
    * <li>they are marked as being in the result
    * </ul>
    * <p>
-   * Edges are linked in CCW order 
+   * Edges are linked in CCW order
    * (which is the order they are linked in the underlying graph).
    * This means that rings have their face on the Right
    * (in other words,
    * the topological location of the face is given by the RHS label of the DirectedEdge).
    * This produces rings with CW orientation.
    * <p>
-   * PRECONDITIONS: 
+   * PRECONDITIONS:
    * - This edge is in the result
    * - This edge is not yet linked
    * - The edge and its sym are NOT both marked as being in the result
@@ -60,10 +60,10 @@ class MaximalEdgeRing {
     //Assert.isTrue(! nodeEdge.symOE().isInResultArea(), "Found both half-edges in result");
 
     /**
-     * Since the node edge is an out-edge, 
+     * Since the node edge is an out-edge,
      * make it the last edge to be linked
      * by starting at the next edge.
-     * The node edge cannot be an in-edge as well, 
+     * The node edge cannot be an in-edge as well,
      * but the next one may be the first in-edge.
      */
     OverlayEdge endOut = nodeEdge.oNextOE();
@@ -79,7 +79,7 @@ class MaximalEdgeRing {
        */
       if (currResultIn != null && currResultIn.isResultMaxLinked())
         return;
-      
+
       switch (state) {
       case STATE_FIND_INCOMING:
         OverlayEdge currIn = currOut.symOE();
@@ -102,7 +102,7 @@ class MaximalEdgeRing {
     if (state == STATE_LINK_OUTGOING) {
 //Debug.print(firstOut == null, this);
       throw new TopologyException("no outgoing edge found", nodeEdge.getCoordinate());
-    }    
+    }
   }
 
   private OverlayEdge startEdge;
@@ -124,13 +124,13 @@ class MaximalEdgeRing {
       }
       edge.setEdgeRingMax(this);
       edge = edge.nextResultMax();
-    } while (edge != startEdge);  
+    } while (edge != startEdge);
   }
-  
+
   public List<OverlayEdgeRing> buildMinimalRings(GeometryFactory geometryFactory)
   {
     linkMinimalRings();
-    
+
     List<OverlayEdgeRing> minEdgeRings = new ArrayList<>();
     OverlayEdge e = startEdge;
     do {
@@ -142,7 +142,7 @@ class MaximalEdgeRing {
     } while (e != startEdge);
     return minEdgeRings;
   }
-  
+
   private void linkMinimalRings() {
     OverlayEdge e = startEdge;
     do {
@@ -150,7 +150,7 @@ class MaximalEdgeRing {
       e = e.nextResultMax();
     } while (e != startEdge);
   }
-  
+
   /**
    * Links the edges of a {@link MaximalEdgeRing} around this node
    * into minimal edge rings ({@link OverlayEdgeRing}s).
@@ -159,9 +159,9 @@ class MaximalEdgeRing {
    * This changes self-touching rings into a two or more separate rings,
    * as per the OGC SFS polygon topology semantics.
    * This relinking must be done to each max ring separately,
-   * rather than all the node result edges, since there may be 
+   * rather than all the node result edges, since there may be
    * more than one max ring incident at the node.
-   * 
+   *
    * @param nodeEdge an edge originating at this node
    * @param maxRing the maximal ring to link
    */
@@ -170,7 +170,7 @@ class MaximalEdgeRing {
     //Assert.isTrue(nodeEdge.isInResult(), "Attempt to link non-result edge");
 
     /**
-     * The node edge is an out-edge, 
+     * The node edge is an out-edge,
      * so it is the first edge linked
      * with the next CCW in-edge
      */
@@ -180,7 +180,7 @@ class MaximalEdgeRing {
 //Debug.println("\n------  Linking node MIN ring edges");
 //Debug.println("BEFORE: " + toString(nodeEdge));
     do {
-      if (isAlreadyLinked(currOut.symOE(), maxRing)) 
+      if (isAlreadyLinked(currOut.symOE(), maxRing))
         return;
 
       if (currMaxRingOut == null) {
@@ -194,14 +194,14 @@ class MaximalEdgeRing {
     //Debug.println("AFTER: " + toString(nodeEdge));
     if ( currMaxRingOut != null ) {
       throw new TopologyException("Unmatched edge found during min-ring linking", nodeEdge.getCoordinate());
-    }    
+    }
   }
 
   /**
    * Tests if an edge of the maximal edge ring is already linked into
    * a minimal {@link OverlayEdgeRing}.  If so, this node has already been processed
    * earlier in the maximal edgering linking scan.
-   * 
+   *
    * @param edge an edge of a maximal edgering
    * @param maxRing the maximal edgering
    * @return true if the edge has already been linked into a minimal edgering.
@@ -220,23 +220,23 @@ class MaximalEdgeRing {
     return null;
   }
 
-  private static OverlayEdge linkMaxInEdge(OverlayEdge currOut, 
-      OverlayEdge currMaxRingOut, 
-      MaximalEdgeRing maxEdgeRing) 
+  private static OverlayEdge linkMaxInEdge(OverlayEdge currOut,
+      OverlayEdge currMaxRingOut,
+      MaximalEdgeRing maxEdgeRing)
   {
     OverlayEdge currIn = currOut.symOE();
     // currIn is not in this max-edgering, so keep looking
-    if (currIn.getEdgeRingMax() !=  maxEdgeRing) 
+    if (currIn.getEdgeRingMax() !=  maxEdgeRing)
       return currMaxRingOut;
-     
+
     //Debug.println("Found result in-edge:  " + currIn);
-    
+
     currIn.setNextResult(currMaxRingOut);
     //Debug.println("Linked Min Edge:  " + currIn + " -> " + currMaxRingOut);
     // return null to indicate to scan for the next max-ring out-edge
     return null;
   }
-  
+
   @Override
 public String toString() {
     Coordinate[] pts = getCoordinates();
@@ -252,7 +252,7 @@ public String toString() {
         break;
       }
       edge = edge.nextResultMax();
-    } while (edge != startEdge); 
+    } while (edge != startEdge);
     // add last coordinate
     coords.add(edge.dest());
     return coords.toCoordinateArray();

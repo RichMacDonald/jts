@@ -6,13 +6,13 @@ import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 
 public class OverlayNGMixedPointsTest extends GeometryTestCase {
-  
+
   public static void main(String args[]) {
     TestRunner.run(OverlayNGMixedPointsTest.class);
   }
 
   public OverlayNGMixedPointsTest(String name) { super(name); }
-  
+
   public void testSimpleLineIntersection() {
     Geometry a = read("LINESTRING (1 1, 9 1)");
     Geometry b = read("POINT (5 1)");
@@ -49,7 +49,7 @@ public class OverlayNGMixedPointsTest extends GeometryTestCase {
     Geometry expected = read("GEOMETRYCOLLECTION (POINT (15 1), LINESTRING (1 1, 9 1))");
     checkEqual(expected, OverlayNGTest.symDifference(a, b, 1));
   }
-  
+
   public void testPolygonInsideIntersection() {
     Geometry a = read("POLYGON ((4 2, 6 2, 6 0, 4 0, 4 2))");
     Geometry b = read("POINT (5 1)");
@@ -70,7 +70,7 @@ public class OverlayNGMixedPointsTest extends GeometryTestCase {
     Geometry actual = OverlayNGTest.union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testLinestringEmptyPointUnion() {
     Geometry a = read("LINESTRING (10 10, 20 20)");
     Geometry b = read("POINT EMPTY");
@@ -78,7 +78,7 @@ public class OverlayNGMixedPointsTest extends GeometryTestCase {
     Geometry actual = OverlayNGTest.union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   /**
    * Result is empty because Line is not rounded.
    */

@@ -32,7 +32,7 @@ public class SimpleRayCrossingStressTest extends TestCase {
   }
 
 	PrecisionModel pmFixed_1 = new PrecisionModel(1.0);
-	
+
 	public SimpleRayCrossingStressTest(String name) {
 		super(name);
 	}
@@ -42,32 +42,32 @@ public class SimpleRayCrossingStressTest extends TestCase {
 		// Use fixed PM to try and get at least some points hitting the boundary
 		GeometryFactory geomFactory = new GeometryFactory(pmFixed_1);
 //		GeometryFactory geomFactory = new GeometryFactory();
-		
+
 		PerturbedGridPolygonBuilder gridBuilder = new PerturbedGridPolygonBuilder(geomFactory);
 		gridBuilder.setNumLines(20);
 		gridBuilder.setLineWidth(10.0);
 		Geometry area = gridBuilder.getGeometry();
-		
-		SimpleRayCrossingPointInAreaLocator pia = new SimpleRayCrossingPointInAreaLocator(area); 
+
+		SimpleRayCrossingPointInAreaLocator pia = new SimpleRayCrossingPointInAreaLocator(area);
 
 		PointInAreaStressTester gridTester = new PointInAreaStressTester(geomFactory, area);
 		gridTester.setNumPoints(100000);
 		gridTester.setPIA(pia);
-		
+
 		boolean isCorrect = gridTester.run();
 		assertTrue(isCorrect);
 	}
-	
+
 	static class SimpleRayCrossingPointInAreaLocator
 	implements PointOnGeometryLocator
 	{
 		private Geometry geom;
-		
+
 		public SimpleRayCrossingPointInAreaLocator(Geometry geom)
 		{
 			this.geom = geom;
 		}
-		
+
 		@Override
 		public int locate(Coordinate p)
 		{
@@ -76,18 +76,18 @@ public class SimpleRayCrossingStressTest extends TestCase {
 			geom.apply(filter);
 			return rcc.getLocation();
 		}
-		
+
 		static class RayCrossingSegmentFilter implements CoordinateSequenceFilter
 		{
 			private RayCrossingCounter rcc;
 			private Coordinate p0 = new Coordinate();
 			private Coordinate p1 = new Coordinate();
-			
+
 			public RayCrossingSegmentFilter(RayCrossingCounter rcc)
 			{
 				this.rcc = rcc;
 			}
-			
+
 		  @Override
 		public void filter(CoordinateSequence seq, int i)
 		  {
@@ -96,10 +96,10 @@ public class SimpleRayCrossingStressTest extends TestCase {
 		  	seq.getCoordinate(i, p1);
 		  	rcc.countSegment(p0, p1);
 		  }
-		  
+
 		  @Override
 		public boolean isDone() { return rcc.isOnSegment(); }
-		  
+
 		  @Override
 		public boolean isGeometryChanged() { return false; }
 		}

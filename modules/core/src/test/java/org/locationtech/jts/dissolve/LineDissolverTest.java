@@ -34,7 +34,7 @@ public class LineDissolverTest  extends TestCase {
     //testSingleLine();
     testIsolatedRing();
   }
-  
+
   public void testSingleSegmentLine() throws ParseException
   {
     checkDissolve("LINESTRING (0 0, 1 1)", "LINESTRING (0 0, 1 1)");
@@ -48,44 +48,44 @@ public class LineDissolverTest  extends TestCase {
   public void testOverlappingTwoSegmentLines() throws ParseException
   {
     checkDissolve(
-        new String[] {"LINESTRING (0 0, 1 1, 2 2)", "LINESTRING (1 1, 2 2, 3 3)"}, 
+        new String[] {"LINESTRING (0 0, 1 1, 2 2)", "LINESTRING (1 1, 2 2, 3 3)"},
         "LINESTRING (0 0, 1 1, 2 2, 3 3)");
   }
 
   public void testOverlappingLines3() throws ParseException
   {
     checkDissolve(
-        new String[] {"LINESTRING (0 0, 1 1, 2 2)", 
+        new String[] {"LINESTRING (0 0, 1 1, 2 2)",
             "LINESTRING (1 1, 2 2, 3 3)",
-            "LINESTRING (1 1, 2 2, 2 0)" }, 
+            "LINESTRING (1 1, 2 2, 2 0)" },
         "MULTILINESTRING ((0 0, 1 1, 2 2), (2 0, 2 2), (2 2, 3 3))");
   }
 
   public void testDivergingLines() throws ParseException
   {
     checkDissolve(
-        "MULTILINESTRING ((0 0, 1 0, 2 1), (0 0, 1 0, 2 0), (1 0, 2 1, 2 0, 3 0))",  
+        "MULTILINESTRING ((0 0, 1 0, 2 1), (0 0, 1 0, 2 0), (1 0, 2 1, 2 0, 3 0))",
         "MULTILINESTRING ((0 0, 1 0), (1 0, 2 0), (1 0, 2 1, 2 0), (2 0, 3 0))");
   }
 
   public void testLollipop() throws ParseException
   {
     checkDissolve(
-        "LINESTRING (0 0, 1 0, 2 0, 2 1, 1 0, 0 0)",  
+        "LINESTRING (0 0, 1 0, 2 0, 2 1, 1 0, 0 0)",
         "MULTILINESTRING ((0 0, 1 0), (1 0, 2 0, 2 1, 1 0))");
   }
 
   public void testDisjointLines() throws ParseException
   {
     checkDissolve(
-        "MULTILINESTRING ((0 0, 1 0, 2 1), (10 0, 11 0, 12 0))",  
+        "MULTILINESTRING ((0 0, 1 0, 2 1), (10 0, 11 0, 12 0))",
         "MULTILINESTRING ((0 0, 1 0, 2 1), (10 0, 11 0, 12 0))");
   }
 
   public void testSingleLine() throws ParseException
   {
     checkDissolve(
-        "MULTILINESTRING ((0 0, 1 0, 2 1))",  
+        "MULTILINESTRING ((0 0, 1 0, 2 1))",
         "LINESTRING (0 0, 1 0, 2 1)");
   }
 
@@ -96,7 +96,7 @@ public class LineDissolverTest  extends TestCase {
 
   public void testTwoSegmentY() throws ParseException
   {
-    checkDissolve("MULTILINESTRING ((0 0, 9 9, 10 10, 11 11, 20 20), (10 10, 10 20))", 
+    checkDissolve("MULTILINESTRING ((0 0, 9 9, 10 10, 11 11, 20 20), (10 10, 10 20))",
         "MULTILINESTRING ((10 20, 10 10), (10 10, 9 9, 0 0), (10 10, 11 11, 20 20))");
   }
 
@@ -104,26 +104,26 @@ public class LineDissolverTest  extends TestCase {
   {
     checkDissolve("LINESTRING (0 0, 1 1, 1 0, 0 0)", "LINESTRING (0 0, 1 1, 1 0, 0 0)");
   }
-  
+
   public void testIsolateRingFromMultipleLineStrings() throws ParseException
   {
     checkDissolve("MULTILINESTRING ((0 0, 1 0, 1 1), (0 0, 0 1, 1 1))", "LINESTRING (0 0, 0 1, 1 1, 1 0, 0 0)");
   }
-  
+
   /**
    * Shows that rings with incident lines are created with the correct node point.
-   * 
+   *
    * @throws ParseException
    */
   public void testRingWithTail() throws ParseException
   {
     checkDissolve("MULTILINESTRING ((0 0, 1 0, 1 1), (0 0, 0 1, 1 1), (1 0, 2 0))", "MULTILINESTRING ((1 0, 0 0, 0 1, 1 1, 1 0), (1 0, 2 0))");
   }
-  
+
   public void testZeroLengthStartSegment() throws ParseException
   {
     checkDissolve(
-        "MULTILINESTRING ((0 0, 0 0, 2 1))",  
+        "MULTILINESTRING ((0 0, 0 0, 2 1))",
         "LINESTRING (0 0, 2 1)");
   }
 

@@ -24,7 +24,7 @@ extends PerformanceTestCase {
   public static void main(String args[]) {
     PerformanceTestRunner.run(STRtreePerfTest.class);
   }
-  
+
   private STRtree index;
 
   public STRtreePerfTest(String name) {
@@ -36,14 +36,14 @@ extends PerformanceTestCase {
   @Override
 public void setUp()
   {
-    
+
   }
-  
+
   @Override
 public void startRun(int size)
   {
     System.out.println("----- Tree size: " + size);
-    index = new STRtree(); 
+    index = new STRtree();
     int side = (int) Math.sqrt(size);
     for (int i = 0; i < side; i++) {
       for (int j = 0; j < side; j++) {
@@ -55,11 +55,11 @@ public void startRun(int size)
     index.build();
     System.out.println("Build time = " + sw.getTimeString());
   }
-  
+
   public void runQueries() {
 
     CountItemVisitor visitor = new CountItemVisitor();
-    
+
     int size = index.size();
     int side = (int) Math.sqrt(size);
     //side = 10;

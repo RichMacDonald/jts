@@ -19,12 +19,12 @@ import oracle.sql.STRUCT;
 
 
 /**
- * 
- * Does round trip testing by creating the oracle object, then decoding it. 
- * 
+ *
+ * Does round trip testing by creating the oracle object, then decoding it.
+ *
  * These tests do not include insert / delete / select operations.
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class StaticMultiPointTest extends ConnectedTestCase {
 
@@ -37,7 +37,7 @@ public class StaticMultiPointTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPoint
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSingleMultiPointRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -49,12 +49,12 @@ public class StaticMultiPointTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPoint pt = (MultiPoint) pg.create();
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		MultiPoint pt2 = (MultiPoint) or.read(st);
 
@@ -65,7 +65,7 @@ public class StaticMultiPointTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 100 non overlapping MultiPoints
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testGridMultiPointsRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -76,7 +76,7 @@ public class StaticMultiPointTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(10);
 		grid.setNumberRows(10);
-		
+
 		MultiPoint[] pt = new MultiPoint[100];
 		STRUCT[] st = new STRUCT[100];
 
@@ -86,9 +86,9 @@ public class StaticMultiPointTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<100){
 			pg.setBoundingBox(grid.createEnv());
@@ -96,7 +96,7 @@ public class StaticMultiPointTest extends ConnectedTestCase {
 			st[i] = ow.write(pt[i], getConnection());
 			i++;
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<100 && pt[i] != null){
@@ -110,7 +110,7 @@ public class StaticMultiPointTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 8 overlapping MultiPoints (4 distinct MultiPoints)
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testOverlappingMultiPointsRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -121,7 +121,7 @@ public class StaticMultiPointTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(2);
 		grid.setNumberRows(2);
-		
+
 		MultiPoint[] pt = new MultiPoint[4];
 		STRUCT[] st = new STRUCT[8];
 
@@ -131,9 +131,9 @@ public class StaticMultiPointTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<8){
 			pg.setBoundingBox(grid.createEnv());
@@ -145,7 +145,7 @@ public class StaticMultiPointTest extends ConnectedTestCase {
 			if(pt[j]!=null)
 				st[i++] = ow.write(pt[j], getConnection());
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<8 && pt[i%4] != null){

@@ -14,7 +14,7 @@ package org.locationtech.jtstest.cmd;
 public class CommandOptions {
   public static final String GEOMFUNC = "geomfunc";
   public static final String VERBOSE = "verbose";
-  
+
   public static final String OP = "op";
   public static final String EXPLODE = "explode";
   public static final String FORMAT = "f";
@@ -32,7 +32,7 @@ public class CommandOptions {
   public static final String ARGS = "args";
   public static final String VALIDATE = "validate";
   public static final String INDEX = "index";
-  
+
   public static final String STDIN = "stdin";
   public static final String FORMAT_GML = "gml";
   public static final String FORMAT_WKB = "wkb";

@@ -295,13 +295,13 @@ public class IsSimpleOp
   private static Coordinate[] trimRepeatedPoints(Coordinate[] pts) {
     if (pts.length <= 2)
       return pts;
-    
+
     int len = pts.length;
     boolean hasRepeatedStart = pts[0].equals2D(pts[1]);
     boolean hasRepeatedEnd = pts[len - 1].equals2D(pts[len - 2]);
     if (! hasRepeatedStart && ! hasRepeatedEnd)
       return pts;
-    
+
     //-- trim ends
     int startIndex = 0;
     Coordinate startPt = pts[0];
@@ -320,7 +320,7 @@ public class IsSimpleOp
     Coordinate[] trimPts = CoordinateArrays.extract(pts, startIndex, endIndex);
     return trimPts;
   }
-  
+
   private static class NonSimpleIntersectionFinder
   implements SegmentIntersector
   {

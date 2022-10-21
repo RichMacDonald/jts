@@ -42,9 +42,9 @@ public class LineMergerTest extends TestCase {
     doTest(new String[] {
         "LINESTRING (120 120, 180 140)", "LINESTRING (200 180, 180 140)",
         "LINESTRING (200 180, 240 180)"
-      }, new String[] { "LINESTRING (120 120, 180 140, 200 180, 240 180)" });    
+      }, new String[] { "LINESTRING (120 120, 180 140, 200 180, 240 180)" });
   }
-  
+
   public void test2() {
     doTest(new String[]{"LINESTRING (120 300, 80 340)",
       "LINESTRING (120 300, 140 320, 160 320)",
@@ -52,38 +52,38 @@ public class LineMergerTest extends TestCase {
       "LINESTRING (0 320, 20 300, 40 320)",
       "LINESTRING (40 320, 60 320, 80 340)",
       "LINESTRING (160 320, 180 340, 200 320)",
-      "LINESTRING (200 320, 180 300, 160 320)"}, 
+      "LINESTRING (200 320, 180 300, 160 320)"},
       new String[]{
       "LINESTRING (160 320, 180 340, 200 320, 180 300, 160 320)",
       "LINESTRING (40 320, 20 340, 0 320, 20 300, 40 320)",
       "LINESTRING (40 320, 60 320, 80 340, 120 300, 140 320, 160 320)"});
-  }  
-  
+  }
+
   public void test3() {
     doTest(new String[]{"LINESTRING (0 0, 100 100)", "LINESTRING (0 100, 100 0)"},
       new String[]{"LINESTRING (0 0, 100 100)", "LINESTRING (0 100, 100 0)"});
-  }  
-  
+  }
+
   public void test4() {
     doTest(new String[]{"LINESTRING EMPTY", "LINESTRING EMPTY"},
       new String[]{});
-  }    
-  
+  }
+
   public void test5() {
     doTest(new String[]{},
       new String[]{});
-  }  
+  }
 
   public void testSingleUniquePoint() {
     doTest(new String[]{"LINESTRING (10642 31441, 10642 31441)", "LINESTRING EMPTY"},
       new String[]{});
-  }    
-  
+  }
+
 
   private void doTest(String[] inputWKT, String[] expectedOutputWKT) {
     doTest(inputWKT, expectedOutputWKT, true);
   }
-  
+
   public static void doTest(String[] inputWKT, String[] expectedOutputWKT, boolean compareDirections) {
     LineMerger lineMerger = new LineMerger();
     lineMerger.add(toGeometries(inputWKT));
@@ -106,7 +106,7 @@ public class LineMergerTest extends TestCase {
       Geometry element = (Geometry) element2;
       if ((exact && element.equalsExact(g)) || (!exact && element.equalsTopo(g))) {
         return true;
-      }      
+      }
     }
 
     return false;

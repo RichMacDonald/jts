@@ -15,12 +15,12 @@ public class TriTest extends GeometryTestCase {
   public static void main(String args[]) {
     TestRunner.run(TriTest.class);
   }
-  
+
   private static Tri triCentre = createSimpleTriangulation();
   private static Tri tri0;
   private static Tri tri1;
   private static Tri tri2;
-  
+
   public TriTest(String name) {
     super(name);
   }
@@ -54,7 +54,7 @@ public class TriTest extends GeometryTestCase {
         tri.getCoordinate(0), tri.getCoordinate(1), tri.getCoordinate(2) ));
     return tri;
   }
-  
+
   private static Tri createSimpleTriangulation() {
     Tri tri = tri(10,10,  10,20, 20,10  );
     tri0 = tri(10,20,  10,10, 0,10  );

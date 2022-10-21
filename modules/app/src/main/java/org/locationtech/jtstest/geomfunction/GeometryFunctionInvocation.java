@@ -43,11 +43,11 @@ public class GeometryFunctionInvocation {
   public Object[] getArgs() {
     return args;
   }
-  
+
   public static String toString(Object[] param)
   {
     if (param == null) return "";
-    
+
     StringBuilder buf = new StringBuilder();
     for (int i = 0; i < param.length; i++) {
       if (i > 0) buf.append(", ");

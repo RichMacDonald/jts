@@ -20,39 +20,39 @@ import org.locationtech.jts.geom.Polygon;
 
 /**
  * Computes the centroid of a {@link Geometry} of any dimension.
- * For collections the centroid is computed for the collection of 
- * non-empty elements of highest dimension. 
+ * For collections the centroid is computed for the collection of
+ * non-empty elements of highest dimension.
  * The centroid of an empty geometry is {@code null}.
- * 
+ *
  * <h3>Algorithm</h3>
  *
  * <ul>
- * <li><b>Dimension 2</b> - the centroid is computed 
+ * <li><b>Dimension 2</b> - the centroid is computed
  * as the weighted sum of the centroids
  * of a decomposition of the area into (possibly overlapping) triangles.
  * Holes and multipolygons are handled correctly.
  * See http://www.faqs.org/faqs/graphics/algorithms-faq/
  * for further details of the basic approach.
- * 
+ *
  * <li><b>Dimension 1</b> - Computes the average of the midpoints
  * of all line segments weighted by the segment length.
  * Zero-length lines are treated as points.
- * 
+ *
  * <li><b>Dimension 0</b> - Compute the average coordinate over all points.
  * Repeated points are all included in the average.
  * </ul>
- * 
+ *
  * @see InteriorPoint
  * @see org.locationtech.jts.algorithm.construct.MaximumInscribedCircle
  * @see org.locationtech.jts.algorithm.construct.LargestEmptyCircle
- *  
+ *
  * @version 1.7
  */
 public class Centroid
 {
   /**
    * Computes the centroid point of a geometry.
-   * 
+   *
    * @param geom the geometry to use
    * @return the centroid point, or null if the geometry is empty
    */
@@ -61,12 +61,12 @@ public class Centroid
     Centroid cent = new Centroid(geom);
     return cent.getCentroid();
   }
-  
+
   private Coordinate areaBasePt = null;// the point all triangles are based at
   private Coordinate triangleCent3 = new Coordinate();// temporary variable to hold centroid of triangle
   private double  areasum2 = 0;        /* Partial area sum */
   private Coordinate cg3 = new Coordinate(); // partial centroid sum
-  
+
   // data for linear centroid computation, if needed
   private Coordinate lineCentSum = new Coordinate();
   private double totalLength = 0.0;
@@ -112,7 +112,7 @@ public class Centroid
 
   /**
    * Gets the computed centroid.
-   * 
+   *
    * @return the computed centroid, or null if the input is empty
    */
   public Coordinate getCentroid()
@@ -136,7 +136,7 @@ public class Centroid
        * Input contains lineal geometry
        */
       cent.x = lineCentSum.x / totalLength;
-      cent.y = lineCentSum.y / totalLength;   	
+      cent.y = lineCentSum.y / totalLength;
     }
     else if (ptCount > 0){
       /*
@@ -155,7 +155,7 @@ public class Centroid
   {
       this.areaBasePt = basePt;
   }
-  
+
   private void add(Polygon poly)
   {
     addShell(poly.getExteriorRing().getCoordinates());
@@ -166,7 +166,7 @@ public class Centroid
 
   private void addShell(Coordinate[] pts)
   {
-    if (pts.length > 0) 
+    if (pts.length > 0)
       setAreaBasePoint(pts[0]);
     boolean isPositiveArea = ! Orientation.isCCW(pts);
     for (int i = 0; i < pts.length - 1; i++) {
@@ -174,7 +174,7 @@ public class Centroid
     }
     addLineSegments(pts);
   }
-  
+
   private void addHole(Coordinate[] pts)
   {
     boolean isPositiveArea = Orientation.isCCW(pts);
@@ -217,7 +217,7 @@ public class Centroid
   /**
    * Adds the line segments defined by an array of coordinates
    * to the linear centroid accumulators.
-   * 
+   *
    * @param pts an array of {@link Coordinate}s
    */
   private void addLineSegments(Coordinate[] pts)
@@ -227,7 +227,7 @@ public class Centroid
       double segmentLen = pts[i].distance(pts[i + 1]);
       if (segmentLen == 0.0)
         continue;
-      
+
       lineLen += segmentLen;
 
       double midx = (pts[i].x + pts[i + 1].x) / 2;

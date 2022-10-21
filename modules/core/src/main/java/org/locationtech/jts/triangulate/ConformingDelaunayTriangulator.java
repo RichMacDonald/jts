@@ -44,27 +44,27 @@ import org.locationtech.jts.util.Debug;
  * edges (up to tolerance).
  * <p>
  * A Conforming Delaunay triangulation is distinct from a Constrained Delaunay triangulation.
- * A Constrained Delaunay triangulation is not necessarily fully Delaunay, 
+ * A Constrained Delaunay triangulation is not necessarily fully Delaunay,
  * and it contains the constraint segments exactly as edges of the triangulation.
  * <p>
  * A typical usage pattern for the triangulator is:
  * <pre>
  * 	 ConformingDelaunayTriangulator cdt = new ConformingDelaunayTriangulator(sites, tolerance);
- * 
- *   // optional	
+ *
+ *   // optional
  *   cdt.setSplitPointFinder(splitPointFinder);
  *   cdt.setVertexFactory(vertexFactory);
- *   
+ *
  *	 cdt.setConstraints(segments, new ArrayList(vertexMap.values()));
  *	 cdt.formInitialDelaunay();
  *	 cdt.enforceConstraints();
  *	 subdiv = cdt.getSubdivision();
  * </pre>
- * 
+ *
  * @author David Skea
  * @author Martin Davis
  */
-public class ConformingDelaunayTriangulator 
+public class ConformingDelaunayTriangulator
 {
 	private static Envelope computeVertexEnvelope(Collection vertices) {
 		Envelope env = new Envelope();
@@ -99,7 +99,7 @@ public class ConformingDelaunayTriangulator
 	 * Creates a Conforming Delaunay Triangulation based on the given
 	 * unconstrained initial vertices. The initial vertex set should not contain
 	 * any vertices which appear in the constraint set.
-	 * 
+	 *
 	 * @param initialVertices
 	 *          a collection of {@link ConstraintVertex}
 	 * @param tolerance
@@ -115,12 +115,12 @@ public class ConformingDelaunayTriangulator
 	/**
 	 * Sets the constraints to be conformed to by the computed triangulation.
 	 * The constraints must not contain duplicate segments (up to orientation).
-	 * The unique set of vertices (as {@link ConstraintVertex}es) 
+	 * The unique set of vertices (as {@link ConstraintVertex}es)
 	 * forming the constraints must also be supplied.
 	 * Supplying it explicitly allows the ConstraintVertexes to be initialized
 	 * appropriately (e.g. with external data), and avoids re-computing the unique set
 	 * if it is already available.
-	 * 
+	 *
 	 * @param segments a list of the constraint {@link Segment}s
 	 * @param segVertices the set of unique {@link ConstraintVertex}es referenced by the segments
 	 */
@@ -133,8 +133,8 @@ public class ConformingDelaunayTriangulator
 	 * Sets the {@link ConstraintSplitPointFinder} to be
 	 * used during constraint enforcement.
 	 * Different splitting strategies may be appropriate
-	 * for special situations. 
-	 * 
+	 * for special situations.
+	 *
 	 * @param splitFinder the ConstraintSplitPointFinder to be used
 	 */
 	public void setSplitPointFinder(ConstraintSplitPointFinder splitFinder) {
@@ -143,17 +143,17 @@ public class ConformingDelaunayTriangulator
 
 	/**
 	 * Gets the tolerance value used to construct the triangulation.
-	 * 
+	 *
 	 * @return a tolerance value
 	 */
 	public double getTolerance()
 	{
 		return tolerance;
 	}
-	
+
 	/**
 	 * Gets the <tt>ConstraintVertexFactory</tt> used to create new constraint vertices at split points.
-	 * 
+	 *
 	 * @return a new constraint vertex
 	 */
 	public ConstraintVertexFactory getVertexFactory() {
@@ -163,7 +163,7 @@ public class ConformingDelaunayTriangulator
 	/**
 	 * Sets a custom {@link ConstraintVertexFactory} to be used
 	 * to allow vertices carrying extra information to be created.
-	 * 
+	 *
 	 * @param vertexFactory the ConstraintVertexFactory to be used
 	 */
 	public void setVertexFactory(ConstraintVertexFactory vertexFactory) {
@@ -172,7 +172,7 @@ public class ConformingDelaunayTriangulator
 
 	/**
 	 * Gets the {@link QuadEdgeSubdivision} which represents the triangulation.
-	 * 
+	 *
 	 * @return a subdivision
 	 */
 	public QuadEdgeSubdivision getSubdivision() {
@@ -181,16 +181,16 @@ public class ConformingDelaunayTriangulator
 
 	/**
 	 * Gets the {@link KdTree} which contains the vertices of the triangulation.
-	 * 
+	 *
 	 * @return a KdTree
 	 */
 	public KdTree getKDT() {
 		return kdt;
 	}
 
-	/** 
+	/**
 	 * Gets the sites (vertices) used to initialize the triangulation.
-	 *  
+	 *
 	 * @return a List of Vertex
 	 */
 	public List getInitialVertices() {
@@ -199,7 +199,7 @@ public class ConformingDelaunayTriangulator
 
 	/**
 	 * Gets the {@link Segment}s which represent the constraints.
-	 * 
+	 *
 	 * @return a collection of Segments
 	 */
 	public Collection getConstraintSegments() {
@@ -210,7 +210,7 @@ public class ConformingDelaunayTriangulator
 	 * Gets the convex hull of all the sites in the triangulation,
 	 * including constraint vertices.
 	 * Only valid after the constraints have been enforced.
-	 * 
+	 *
 	 * @return the convex hull of the sites
 	 */
 	public Geometry getConvexHull() {
@@ -302,7 +302,7 @@ public class ConformingDelaunayTriangulator
 
 	/**
 	 * Creates a vertex on a constraint segment
-	 * 
+	 *
 	 * @param p the location of the vertex to create
 	 * @param seg the constraint segment it lies on
 	 * @return the new constraint vertex
@@ -319,7 +319,7 @@ public class ConformingDelaunayTriangulator
 
 	/**
 	 * Inserts all sites in a collection
-	 * 
+	 *
 	 * @param vertices a collection of ConstraintVertex
 	 */
 	private void insertSites(Collection vertices) {
@@ -351,7 +351,7 @@ public class ConformingDelaunayTriangulator
 	 * This can be used to further refine the triangulation if required
 	 * (e.g. to approximate the medial axis of the constraints,
 	 * or to improve the grading of the triangulation).
-	 * 
+	 *
 	 * @param p the location of the site to insert
 	 */
 	public void insertSite(Coordinate p) {
@@ -377,7 +377,7 @@ public class ConformingDelaunayTriangulator
 
 	/**
 	 * Enforces the supplied constraints into the triangulation.
-	 * 
+	 *
 	 * @throws ConstraintEnforcementException
 	 *           if the constraints cannot be enforced
 	 */
@@ -495,7 +495,7 @@ public class ConformingDelaunayTriangulator
 	 * exists then the segment is said to have the Gabriel condition. Uses the
 	 * heuristic of finding the non-Gabriel point closest to the midpoint of the
 	 * segment.
-	 * 
+	 *
 	 * @param p
 	 *          start of the line segment
 	 * @param q

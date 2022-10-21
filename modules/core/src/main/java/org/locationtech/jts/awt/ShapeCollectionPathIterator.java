@@ -18,13 +18,13 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * A {@link PathIterator} which provides paths for a collection of {@link Shape}s. 
- * 
+ * A {@link PathIterator} which provides paths for a collection of {@link Shape}s.
+ *
  * @author Martin Davis
  */
 public class ShapeCollectionPathIterator implements PathIterator {
     private Iterator shapeIterator;
-    
+
     // initialize with a no-op iterator
     private PathIterator currentPathIterator = new PathIterator() {
             @Override
@@ -57,7 +57,7 @@ public class ShapeCollectionPathIterator implements PathIterator {
 
     /**
      * Creates a new path iterator for a collection of {@link Shape}s.
-     * 
+     *
      * @param shapes the Shapes in the collection
      * @param affineTransform a optional transformation to be applied to the coordinates in the path (may be null)
      */
@@ -75,7 +75,7 @@ public class ShapeCollectionPathIterator implements PathIterator {
        * in speed. (See http://www.geometryalgorithms.com/Archive/algorithm_0103/algorithm_0103.htm#Winding%20Number)
        * However, WIND_NON_ZERO requires that the
        * shell and holes be oriented in a certain way.
-       * So use WIND_EVEN_ODD. 
+       * So use WIND_EVEN_ODD.
      	 */
       return PathIterator.WIND_EVEN_ODD;
     }

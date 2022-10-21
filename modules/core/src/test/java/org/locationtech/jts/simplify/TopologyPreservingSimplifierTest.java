@@ -58,7 +58,7 @@ public class TopologyPreservingSimplifierTest
    * Test is from http://postgis.refractions.net/pipermail/postgis-users/2008-April/019327.html
    * Exhibits the issue where simplified polygon shells can "jump" across
    * holes, causing invalid topology.
-   * 
+   *
    * @throws Exception
    */
   public void testMultiPolygonWithSmallComponents() throws Exception {
@@ -134,7 +134,7 @@ public class TopologyPreservingSimplifierTest
         10.0))
         .test();
   }
-  
+
   public void testTinyClosedLineString() throws Exception {
     String geomStr = "LINESTRING (0 0, 5 0, 5 5, 0 0)";
     new GeometryOperationValidator(
@@ -144,7 +144,7 @@ public class TopologyPreservingSimplifierTest
         .setExpectedResult(geomStr)
         .test();
   }
-  
+
   public void testMultiPoint() throws Exception {
     String geomStr = "MULTIPOINT(80 200, 240 200, 240 60, 80 60, 80 200, 140 199, 120 120)";
     new GeometryOperationValidator(
@@ -154,7 +154,7 @@ public class TopologyPreservingSimplifierTest
         .setExpectedResult(geomStr)
         .test();
   }
-  
+
   public void testMultiLineString() throws Exception {
     new GeometryOperationValidator(
         TPSimplifierResult.getResult(

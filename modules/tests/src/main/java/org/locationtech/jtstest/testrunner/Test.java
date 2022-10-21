@@ -25,7 +25,7 @@ import org.locationtech.jtstest.util.StringUtil;
  *
  * @version 1.7
  */
-public class Test implements Runnable 
+public class Test implements Runnable
 {
   private String description;
   private String operation;
@@ -36,7 +36,7 @@ public class Test implements Runnable
   private TestCase testCase;
   private boolean passed;
   private double tolerance;
-  
+
   // cache for actual computed result
   private Geometry targetGeometry;
   private Object[] operationArgs;
@@ -83,7 +83,7 @@ public class Test implements Runnable
   public boolean hasExpectedResult() {
     return expectedResult != null;
   }
-  
+
   public String getOperation() {
     return operation;
   }
@@ -134,24 +134,24 @@ public void run() {
   {
   	return isRun;
   }
-  
+
   public boolean computePassed()
       throws Exception
   {
     Result actualResult = getActualResult();
-    
+
     // don't check expected if it wasn't provided
     if (! hasExpectedResult())
       return true;
-    
+
     ResultMatcher matcher = testCase.getTestRun().getResultMatcher();
-    
+
     // check that provided expected result geometry is valid
     // MD - disable except for testing
     //if (! isExpectedResultGeometryValid()) return false;
-    
-    return matcher.isMatch(targetGeometry, operation, operationArgs, 
-    		actualResult, expectedResult, 
+
+    return matcher.isMatch(targetGeometry, operation, operationArgs,
+    		actualResult, expectedResult,
     		tolerance);
 //    return expectedResult.equals(actualResult, tolerance);
   }
@@ -164,18 +164,18 @@ public void run() {
     }
     return true;
   }
-  
+
   /**
    * Computes the actual result and caches the result value.
-   * 
+   *
    * @return the actual result computed
    * @throws Exception if the operation fails
    */
-  public Result getActualResult() throws Exception 
+  public Result getActualResult() throws Exception
   {
   	if (isRun)
   		return actualResult;
-  	
+
   	isRun = true;
     targetGeometry = geometryIndex.equalsIgnoreCase("A")
          ? testCase.getGeometryA()
@@ -191,7 +191,7 @@ public void run() {
   {
   	return testCase.getTestRun().getGeometryOperation();
   }
-  	
+
   public String toXml() {
     StringBuilder xml = new StringBuilder();
     xml.append("<test>").append(StringUtil.newLine);

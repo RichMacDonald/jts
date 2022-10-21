@@ -32,11 +32,11 @@ import org.locationtech.jts.util.Assert;
 /**
  * Functions to operate on triangulations represented as
  * lists of {@link HullTri}s.
- * 
+ *
  * @author mdavis
  *
  */
-class HullTriangulation 
+class HullTriangulation
 {
   public static List<HullTri> createDelaunayTriangulation(Geometry geom) {
     //TODO: implement a DT on Tris directly?
@@ -46,7 +46,7 @@ class HullTriangulation
     List<HullTri> triList = toTris(subdiv);
     return triList;
   }
-  
+
   private static List<HullTri> toTris(QuadEdgeSubdivision subdiv) {
     HullTriVisitor visitor = new HullTriVisitor();
     subdiv.visitTriangles(visitor, false);
@@ -54,7 +54,7 @@ class HullTriangulation
     TriangulationBuilder.build(triList);
     return triList;
   }
-  
+
   private static class HullTriVisitor implements TriangleVisitor {
     private List<HullTri> triList = new ArrayList<>();
 
@@ -75,7 +75,7 @@ class HullTriangulation
       }
       triList.add(tri);
     }
-    
+
     public List<HullTri> getTriangles() {
       return triList;
     }
@@ -84,7 +84,7 @@ class HullTriangulation
   /**
    * Creates a polygonal geometry representing the area of a triangulation
    * which may be disconnected or contain holes.
-   * 
+   *
    * @param triList the triangulation
    * @param geomFactory the geometry factory to use
    * @return the area polygonal geometry
@@ -97,11 +97,11 @@ class HullTriangulation
     }
     return CoverageUnion.union(geomFactory.buildGeometry(polys));
   }
-  
+
   /**
    * Creates a Polygon representing the area of a triangulation
    * which is connected and contains no holes.
-   * 
+   *
    * @param triList the triangulation
    * @param geomFactory the geometry factory to use
    * @return the area polygon
@@ -114,14 +114,14 @@ class HullTriangulation
     Coordinate[] pts = traceBoundary(triList);
     return geomFactory.createPolygon(pts);
   }
-  
+
   /**
    * Extracts the coordinates of the edges along the boundary of a triangulation,
    * by tracing CW around the border triangles.
    * Assumption: there are at least 2 tris, they are connected,
    * and there are no holes.
    * So each tri has at least one non-boundary edge, and there is only one boundary.
-   * 
+   *
    * @param triList the triangulation
    * @return the points in the boundary of the triangulation
    */
@@ -145,7 +145,7 @@ class HullTriangulation
     coordList.closeRing();
     return coordList.toCoordinateArray();
   }
-  
+
   private static HullTri findBorderTri(List<HullTri> triList) {
     for (HullTri tri : triList) {
       if (tri.isBorder()) return tri;
@@ -153,7 +153,7 @@ class HullTriangulation
     Assert.shouldNeverReachHere("No border triangles found");
     return null;
   }
-  
+
   public static HullTri nextBorderTri(HullTri triStart) {
     HullTri tri = triStart;
     //-- start at first non-border edge CW

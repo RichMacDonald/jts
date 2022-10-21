@@ -104,7 +104,7 @@ public class IsValidTest extends GeometryTestCase {
   }
 
   public void testInvalidPolygonHoleProperIntersection() {
-    checkInvalid( TopologyValidationError.SELF_INTERSECTION, 
+    checkInvalid( TopologyValidationError.SELF_INTERSECTION,
         "POLYGON ((10 90, 50 50, 10 10, 10 90), (20 50, 60 70, 60 30, 20 50))");
   }
 
@@ -137,11 +137,11 @@ public class IsValidTest extends GeometryTestCase {
     checkValid(
           "MULTIPOLYGON (((20 380, 420 380, 420 20, 20 20, 20 380), (220 340, 80 320, 60 200, 140 100, 340 60, 300 240, 220 340)), ((60 200, 340 60, 220 340, 60 200)))");
   }
-  
+
   public void testLineString() {
     checkInvalid( "LINESTRING(0 0, 0 0)");
   }
-  
+
   public void testLinearRingTriangle() {
     checkValid( "LINEARRING (100 100, 150 200, 200 100, 100 100)");
   }
@@ -158,32 +158,32 @@ public class IsValidTest extends GeometryTestCase {
 
   /**
    * Tests that repeated points at nodes are handled correctly.
-   * 
+   *
    * See https://github.com/locationtech/jts/issues/843
    */
   public void testPolygonHoleWithRepeatedShellPointTouch() {
     checkValid( "POLYGON ((90 10, 10 10, 50 90, 50 90, 90 10), (50 90, 60 30, 40 30, 50 90))");
   }
-  
+
   public void testPolygonHoleWithRepeatedShellPointTouchMultiple() {
     checkValid( "POLYGON ((90 10, 10 10, 50 90, 50 90, 50 90, 50 90, 90 10), (50 90, 60 30, 40 30, 50 90))");
   }
-  
+
   public void testPolygonHoleWithRepeatedTouchEndPoint() {
     checkValid( "POLYGON ((90 10, 10 10, 50 90, 90 10, 90 10), (90 10, 40 30, 60 50, 90 10))");
   }
-  
+
   public void testPolygonHoleWithRepeatedHolePointTouch() {
     checkValid( "POLYGON ((50 90, 10 10, 90 10, 50 90), (50 90, 50 90, 60 40, 60 40, 40 40, 50 90))");
   }
-  
+
   //=============================================
-  
+
   private void checkValid(String wkt) {
     checkValid(true, wkt);
   }
- 
-  
+
+
   private void checkValid(boolean isExpectedValid, String wkt) {
     Geometry geom = read(wkt);
     boolean isValid = geom.isValid();
@@ -193,7 +193,7 @@ public class IsValidTest extends GeometryTestCase {
   private void checkInvalid(String wkt) {
     checkValid(false, wkt);
   }
-  
+
   private void checkInvalid(int exepctedErrType, String wkt) {
     Geometry geom = read(wkt);
     IsValidOp validOp = new IsValidOp(geom);

@@ -24,10 +24,10 @@ import org.locationtech.jts.io.WKBReader;
 import org.locationtech.jts.io.WKTFileReader;
 import org.locationtech.jts.io.WKTReader;
 
-public class TestRunBuilder 
+public class TestRunBuilder
 {
   private static GeometryFactory geomFact = new GeometryFactory();
-  
+
   private Geometry a = null;
   private Geometry b = null;
   private String description = "";
@@ -35,48 +35,48 @@ public class TestRunBuilder
   private List<String> args = new ArrayList<>();
   private File aFile = null;
   private File bFile = null;
-  
+
   public TestRunBuilder() {
-    
+
   }
-  
+
   public void setDescription(String description) {
     this.description = description;
   }
-  
+
   public void setOperation(String operation) {
     this.operation  = operation;
   }
-  
+
   public void setArguments(List<String> arguments) {
     args = arguments;
-  }  
+  }
   public void readGeometryAFromFile(String filename) throws IOException, ParseException {
     aFile = new File(filename);
     a = readFile(filename);
   }
-  
+
   public void readGeometryBFromFile(String filename) throws IOException, ParseException {
     bFile = new File(filename);
     b = readFile(filename);
   }
-  
+
   public TestRun build() {
     TestRun testRun = new TestRun(description, 0, null, null, null, null);
-    
+
     TestCase testCase = new TestCase(description, a, b, aFile, bFile, testRun, 0, 0);
-    
+
     //String description = "Cmd-line test";
     //String operation = "op";
     String geomIndex = "A";
-    
+
     Test test = new Test(testCase, 0, description, operation, geomIndex, args, null, 0);
     testCase.add(test);
     testRun.addTestCase(testCase);
     return testRun;
   }
 
-  
+
   private Geometry readFile(String filename) throws IOException, ParseException {
     if (filename.toLowerCase().endsWith(".wkt")) {
       return readWKTFile(filename);
@@ -100,7 +100,7 @@ public class TestRunBuilder
     List geoms = wkbFileReader.read();
     return createGeometry(geoms);
   }
-  
+
   private Geometry createGeometry(List<Geometry> geoms) {
     if (geoms.size() == 0) {
       return null;

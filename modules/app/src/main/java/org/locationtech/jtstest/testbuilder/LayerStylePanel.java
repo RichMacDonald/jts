@@ -58,17 +58,17 @@ public class LayerStylePanel extends JPanel {
   private JPanel btnFillColor;
   private JPanel btnLineColor;
   private JSlider sliderLineAlpha;
-  
+
   private JCheckBox cbVertex;
   private JPanel btnVertexColor;
   private JSpinner spinVertexSize;
   private SpinnerNumberModel vertexSizeModel;
-  
+
   private JCheckBox cbLabel;
   private JPanel btnLabelColor;
   private JSpinner spinLabelSize;
   private SpinnerNumberModel labelSizeModel;
-  
+
   private JCheckBox cbStroked;
   private JTextField txtName;
   private JCheckBox cbOrient;
@@ -82,18 +82,18 @@ public class LayerStylePanel extends JPanel {
   private JCheckBox cbSegIndex;
   private JComboBox comboVertexSymbol;
 
-  
+
   public LayerStylePanel() {
-    
+
     try {
       uiInit();
     } catch (Exception ex) {
       ex.printStackTrace();
-    } 
+    }
   }
   private BasicStyle geomStyle() {
     return layer.getLayerStyle().getGeomStyle();
-  }  
+  }
   public void setLayer(Layer layer, boolean isModifiable) {
     this.layer = layer;
     //this.title.setText("Styling - Layer " + layer.getName());
@@ -121,7 +121,7 @@ public class LayerStylePanel extends JPanel {
     setPaletteType(comboPalette, layer.getLayerStyle().getFillType());
     updateStyleControls();
   }
-  
+
   void updateStyleControls() {
     ColorControl.update(btnVertexColor, layer.getLayerStyle().getVertexColor() );
     ColorControl.update(btnLabelColor, layer.getLayerStyle().getLabelColor() );
@@ -131,19 +131,19 @@ public class LayerStylePanel extends JPanel {
     sliderFillAlpha.setValue(geomStyle().getFillAlpha());
     JTSTestBuilder.controller().updateLayerList();
   }
-  
+
   private void uiInit() throws Exception {
     setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
     setLayout(new BorderLayout());
-     
-     
+
+
     //title = new JLabel("Styling");
     //title.setAlignmentX(Component.LEFT_ALIGNMENT);
     //add(title, BorderLayout.NORTH);
-    
+
 
     add( stylePanel(), BorderLayout.CENTER );
-    
+
     JButton btnReset = SwingUtil.createButton(AppIcons.CLEAR, "Reset style to default", (ActionListener) arg0 -> {
         if (layer == null) return;
         layer.resetStyle();
@@ -155,18 +155,18 @@ public class LayerStylePanel extends JPanel {
     btnPanel.add(btnReset);
     add( btnPanel, BorderLayout.EAST);
   }
-  
+
   private JPanel stylePanel() {
     JPanel containerPanel = new JPanel();
     containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
-    
+
     stylePanel = new JPanel();
     stylePanel.setLayout(new GridBagLayout());
     stylePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
     containerPanel.add(Box.createVerticalGlue());
     containerPanel.add(stylePanel);
-    
+
     Dimension minSize = new Dimension(5, 100);
     Dimension prefSize = new Dimension(5, 100);
     Dimension maxSize = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
@@ -177,7 +177,7 @@ public class LayerStylePanel extends JPanel {
     txtName.setMaximumSize(new Dimension(100,20));
     txtName.setPreferredSize(new Dimension(100,20));
     txtName.setMinimumSize(new Dimension(100,20));
-    
+
     cbShift = new JCheckBox();
     cbShift.setToolTipText(AppStrings.TIP_STYLE_SHIFT);
     cbShift.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -189,7 +189,7 @@ public class LayerStylePanel extends JPanel {
       });
 
     addRow("Name", txtName, cbShift);
-    
+
     txtName.getDocument().addDocumentListener(new DocumentListener() {
       @Override
 	public void changedUpdate(DocumentEvent e) {
@@ -221,7 +221,7 @@ public class LayerStylePanel extends JPanel {
         layer.getLayerStyle().setVertices(cbVertex.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
       });
-    btnVertexColor = ColorControl.create(this, 
+    btnVertexColor = ColorControl.create(this,
         "Vertex",
         AppColors.GEOM_VIEW_BACKGROUND,
         clr -> {
@@ -230,7 +230,7 @@ public class LayerStylePanel extends JPanel {
             JTSTestBuilder.controller().geometryViewChanged();
           }
        );
-    
+
     vertexSizeModel = new SpinnerNumberModel(4, 0, 100, 1);
     spinVertexSize = new JSpinner(vertexSizeModel);
     spinVertexSize.setMaximumSize(new Dimension(40,16));
@@ -257,9 +257,9 @@ public class LayerStylePanel extends JPanel {
         layer.getLayerStyle().setVertexSymbol(symType);
         JTSTestBuilder.controller().geometryViewChanged();
       });
-    
+
     comboVertexSymbol.setToolTipText(AppStrings.TIP_STYLE_SYMBOL);
-   
+
     addRow("Vertices", cbVertex, btnVertexColor, spinVertexSize, comboVertexSymbol, cbVertexLabel);
     //=============================================
 
@@ -271,7 +271,7 @@ public class LayerStylePanel extends JPanel {
         JTSTestBuilder.controller().geometryViewChanged();
       });
 
-    btnLineColor = ColorControl.create(this, 
+    btnLineColor = ColorControl.create(this,
         "Line",
         AppColors.GEOM_VIEW_BACKGROUND,
         clr -> {
@@ -296,7 +296,7 @@ public class LayerStylePanel extends JPanel {
     //widthSpinner.setPreferredSize(new Dimension(50,12));
     spinnerLineWidth.setMaximumSize(new Dimension(40,16));
     spinnerLineWidth.setAlignmentX(Component.LEFT_ALIGNMENT);
-    
+
     spinnerLineWidth.addChangeListener(e -> {
         float width = lineWidthModel.getNumber().floatValue();
         geomStyle().setStrokeWidth(width);
@@ -341,11 +341,11 @@ public class LayerStylePanel extends JPanel {
         JTSTestBuilder.controller().geometryViewChanged();
       });
 
-    addRow("Line", cbStroked, btnLineColor, btnVertexSynch, sliderLineAlpha, spinnerLineWidth, 
+    addRow("Line", cbStroked, btnLineColor, btnVertexSynch, sliderLineAlpha, spinnerLineWidth,
         cbDashed, cbOffset, spinOffsetSize);
 
     //=============================================
-    
+
     cbEndpoint = new JCheckBox();
     cbEndpoint.setText("Endpoints");
     cbEndpoint.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -354,7 +354,7 @@ public class LayerStylePanel extends JPanel {
         layer.getLayerStyle().setEndpoints(cbEndpoint.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
       });
-    
+
     cbOrient = new JCheckBox();
     cbOrient.setText("Orientation");
     cbOrient.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -382,7 +382,7 @@ public class LayerStylePanel extends JPanel {
         JTSTestBuilder.controller().geometryViewChanged();
       });
 
-    
+
    // Leave on separate line to allow room for dash style
     addRow("", cbEndpoint, cbOrient, cbStructure, cbSegIndex);
     //=============================================
@@ -395,7 +395,7 @@ public class LayerStylePanel extends JPanel {
         JTSTestBuilder.controller().geometryViewChanged();
         JTSTestBuilder.controller().updateLayerList();
       });
-   
+
     sliderFillAlpha = createOpacitySlider(e -> {
         JSlider source = (JSlider)e.getSource();
         if (! source.getValueIsAdjusting()) {
@@ -405,7 +405,7 @@ public class LayerStylePanel extends JPanel {
           JTSTestBuilder.controller().updateLayerList();
         }
       });
-    btnFillColor = ColorControl.create(this, 
+    btnFillColor = ColorControl.create(this,
         "Fill",
         AppColors.GEOM_VIEW_BACKGROUND,
         clr -> {
@@ -435,10 +435,10 @@ public class LayerStylePanel extends JPanel {
       });
     comboPalette.setToolTipText(AppStrings.TIP_STYLE_PALETTE);
     addRow("Palette", comboPalette);
-    
+
     //=============================================
 
-    
+
     cbLabel = new JCheckBox();
     //cbLabel.setToolTipText(AppStrings.TIP_STYLE_VERTEX_ENABLE);
     cbLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -447,7 +447,7 @@ public class LayerStylePanel extends JPanel {
         layer.getLayerStyle().setLabel(cbLabel.isSelected());
         JTSTestBuilder.controller().geometryViewChanged();
       });
-    btnLabelColor = ColorControl.create(this, 
+    btnLabelColor = ColorControl.create(this,
         "Label",
         AppColors.GEOM_VIEW_BACKGROUND,
         clr -> {
@@ -456,7 +456,7 @@ public class LayerStylePanel extends JPanel {
             JTSTestBuilder.controller().geometryViewChanged();
           }
        );
-    
+
     labelSizeModel = new SpinnerNumberModel(4, 0, 100, 1);
     spinLabelSize = new JSpinner(labelSizeModel);
     spinLabelSize.setMaximumSize(new Dimension(40,16));
@@ -468,27 +468,27 @@ public class LayerStylePanel extends JPanel {
       });
 
 
-    
+
     addRow("Label", cbLabel, btnLabelColor, spinLabelSize);
-    
+
     //=============================================
-    
+
     return containerPanel;
   }
 
   //-----------------------------------------
-  static String[] paletteNames = { "Basic", "Varying", "Spectrum", "Spectrum Random" }; 
+  static String[] paletteNames = { "Basic", "Varying", "Spectrum", "Spectrum Random" };
 
   private static int getPaletteType(JComboBox comboPal) {
     String palName = (String)comboPal.getSelectedItem();
-    
+
     int paletteType = Palette.TYPE_BASIC;
     if (palName.equalsIgnoreCase(paletteNames[1])) paletteType = Palette.TYPE_VARY;
     if (palName.equalsIgnoreCase(paletteNames[2])) paletteType = Palette.TYPE_SPECTRUM;
     if (palName.equalsIgnoreCase(paletteNames[3])) paletteType = Palette.TYPE_SPECTRUM_RANDOM;
     return paletteType;
   }
-  
+
   private static void setPaletteType(JComboBox comboPal, int paletteType) {
     int index = 0;
     if (paletteType == Palette.TYPE_VARY) index = 1;
@@ -496,23 +496,23 @@ public class LayerStylePanel extends JPanel {
     if (paletteType == Palette.TYPE_SPECTRUM_RANDOM) index = 3;
     comboPal.setSelectedIndex(index);
   }
-  
+
   //-----------------------------------------
-  static String[] vertexSymbolNames = { "Square", "Square Hollow", "Circle", "Circle Hollow" }; 
+  static String[] vertexSymbolNames = { "Square", "Square Hollow", "Circle", "Circle Hollow" };
 
   private static int getVertexSymbol(JComboBox combo) {
     String name = (String)combo.getSelectedItem();
-    
+
     for (int i = 0; i < vertexSymbolNames.length; i++) {
       if (name.equalsIgnoreCase(vertexSymbolNames[i])) return i;
     }
     return VertexStyle.SYM_SQUARE_SOLID;
   }
-  
+
   private static void setVertexSymbol(JComboBox combo, int symbolType) {
     combo.setSelectedIndex(symbolType);
   }
-  
+
   protected static Color lineColorFromFill(Color clr) {
     return ColorUtil.saturate(clr,  1);
     //return clr.darker();
@@ -527,7 +527,7 @@ public class LayerStylePanel extends JPanel {
     btn.setMaximumSize(dim);
     return btn;
   }
-  
+
   private JSlider createOpacitySlider(ChangeListener changeListener) {
     JSlider slide = new JSlider(JSlider.HORIZONTAL, 0, 255, 150);
     Dimension dim = new Dimension(80, 20);
@@ -558,7 +558,7 @@ public class LayerStylePanel extends JPanel {
     addRow(title, c1, c2, c3, c4, null);
   }
 */
-  
+
   private void addRow(String title, JComponent ... comp) {
     JPanel panel = new JPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -568,10 +568,10 @@ public class LayerStylePanel extends JPanel {
     }
     addRow(title, panel);
   }
-  
+
   private GridBagConstraints gbc(int x, int y, int align, double weightX) {
-    return new GridBagConstraints(x, y, 
-        1, 1, 
+    return new GridBagConstraints(x, y,
+        1, 1,
         weightX, 1, //weights
         align,
         GridBagConstraints.NONE,

@@ -20,7 +20,7 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 
 public class CoverageBoundarySegmentFinder implements CoordinateSequenceFilter {
-  
+
   public static Set<LineSegment> findBoundarySegments(Geometry[] geoms) {
     Set<LineSegment> segs = new HashSet<>();
     CoverageBoundarySegmentFinder finder = new CoverageBoundarySegmentFinder(segs);

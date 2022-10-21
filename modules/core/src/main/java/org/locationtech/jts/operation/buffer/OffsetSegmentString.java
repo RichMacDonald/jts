@@ -22,19 +22,19 @@ import org.locationtech.jts.geom.PrecisionModel;
  * A dynamic list of the vertices in a constructed offset curve.
  * Automatically removes adjacent vertices
  * which are closer than a given tolerance.
- * 
+ *
  * @author Martin Davis
  *
  */
-class OffsetSegmentString 
+class OffsetSegmentString
 {
   private static final Coordinate[] COORDINATE_ARRAY_TYPE = {};
 
   private ArrayList ptList;
   private PrecisionModel precisionModel = null;
-  
+
   /**
-   * The distance below which two adjacent points on the curve 
+   * The distance below which two adjacent points on the curve
    * are considered to be coincident.
    * This is chosen to be a small fraction of the offset distance.
    */
@@ -44,17 +44,17 @@ class OffsetSegmentString
   {
   	ptList = new ArrayList();
   }
-  
+
   public void setPrecisionModel(PrecisionModel precisionModel)
   {
   	this.precisionModel = precisionModel;
   }
-  
+
   public void setMinimumVertexDistance(double minimimVertexDistance)
   {
   	this.minimimVertexDistance = minimimVertexDistance;
   }
-  
+
   public void addPt(Coordinate pt)
   {
     Coordinate bufPt = new Coordinate(pt);
@@ -65,7 +65,7 @@ class OffsetSegmentString
     ptList.add(bufPt);
 //System.out.println(bufPt);
   }
-  
+
   public void addPts(Coordinate[] pt, boolean isForward)
   {
     if (isForward) {
@@ -76,15 +76,15 @@ class OffsetSegmentString
     else {
       for (int i = pt.length - 1; i >= 0; i--) {
         addPt(pt[i]);
-      }     
+      }
     }
   }
-  
+
   /**
    * Tests whether the given point is redundant
    * relative to the previous
    * point in the list (up to tolerance).
-   * 
+   *
    * @param pt
    * @return true if the point is redundant
    */
@@ -98,7 +98,7 @@ class OffsetSegmentString
     	return true;
     return false;
   }
-  
+
   public void closeRing()
   {
     if (ptList.size() < 1) return;
@@ -110,9 +110,9 @@ class OffsetSegmentString
 
   public void reverse()
   {
-    
+
   }
-  
+
   public Coordinate[] getCoordinates()
   {
     /*

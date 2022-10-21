@@ -76,7 +76,7 @@ public class DistanceOp
       return false;
 
     // MD - could improve this further with a positive short-circuit based on envelope MinMaxDist
-    
+
     DistanceOp distOp = new DistanceOp(g0, g1, distance);
     return distOp.distance() <= distance;
   }
@@ -156,9 +156,9 @@ public static Coordinate[] closestPoints(Geometry g0, Geometry g1)
   {
   	if (geom[0] == null || geom[1] == null)
   		throw new IllegalArgumentException("null geometries are not supported");
-  	if (geom[0].isEmpty() || geom[1].isEmpty()) 
+  	if (geom[0].isEmpty() || geom[1].isEmpty())
   		return 0.0;
-  	
+
     computeMinDistance();
     return minDistance;
   }
@@ -178,9 +178,9 @@ public static Coordinate[] closestPoints(Geometry g0, Geometry g1)
 	  minDistanceLocation[1].getCoordinate() };
     return nearestPts;
   }
-  
+
   /**
-   * 
+   *
    * @return a pair of {@link Coordinate}s of the nearest points
    * @deprecated renamed to nearestPoints
    */
@@ -203,7 +203,7 @@ public Coordinate[] closestPoints()
   }
 
   /**
-   * 
+   *
    * @return a pair of {@link GeometryLocation}s for the nearest points
    * @deprecated renamed to nearestLocations
    */
@@ -247,13 +247,13 @@ public GeometryLocation[] closestLocations()
     if (minDistance <= terminateDistance) return;
     computeContainmentDistance(1, locPtPoly);
   }
-  
+
   private void computeContainmentDistance(int polyGeomIndex, GeometryLocation[] locPtPoly)
   {
     Geometry polyGeom = geom[polyGeomIndex];
     // if no polygon then nothing to do
     if (polyGeom.getDimension() < 2) return;
-    
+
   	int locationsIndex = 1 - polyGeomIndex;
     List polys = PolygonExtracter.getPolygons(polyGeom);
     if (polys.size() > 0) {
@@ -264,9 +264,9 @@ public GeometryLocation[] closestLocations()
         minDistanceLocation[locationsIndex] = locPtPoly[0];
         minDistanceLocation[polyGeomIndex] 	= locPtPoly[1];
       }
-    }	
+    }
   }
-  
+
   private void computeContainmentDistance(List locs, List polys, GeometryLocation[] locPtPoly)
   {
     for (Object loc2 : locs) {
@@ -385,14 +385,14 @@ public GeometryLocation[] closestLocations()
     Coordinate[] coord1 = line1.getCoordinates();
       // brute force approach!
     for (int i = 0; i < coord0.length - 1; i++) {
-      
+
       // short-circuit if line segment is far from line
       Envelope segEnv0 = new Envelope(coord0[i], coord0[i + 1]);
       if (segEnv0.distance(line1.getEnvelopeInternal()) > minDistance)
         continue;
-      
+
       for (int j = 0; j < coord1.length - 1; j++) {
-        
+
         // short-circuit if line segments are far apart
         Envelope segEnv1 = new Envelope(coord1[j], coord1[j + 1]);
         if (segEnv0.distance(segEnv1) > minDistance)

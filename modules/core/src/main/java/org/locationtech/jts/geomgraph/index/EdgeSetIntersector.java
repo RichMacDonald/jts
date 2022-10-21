@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @version 1.7
  */
-public abstract class EdgeSetIntersector 
+public abstract class EdgeSetIntersector
 {
   public EdgeSetIntersector() {
   }

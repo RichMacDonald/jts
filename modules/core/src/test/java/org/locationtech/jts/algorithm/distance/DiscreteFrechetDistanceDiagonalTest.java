@@ -3,11 +3,11 @@ package org.locationtech.jts.algorithm.distance;
 import junit.framework.TestCase;
 
 public class DiscreteFrechetDistanceDiagonalTest extends TestCase {
-  
+
   public DiscreteFrechetDistanceDiagonalTest(String name) {
     super(name);
   }
-  
+
   public void test1x1() {
     checkDiagonal(1,1, xy(0,0));
   }

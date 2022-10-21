@@ -45,12 +45,12 @@ public class TestEngine
   public void setTestFiles(List<File> testFiles) {
     this.testFiles = testFiles;
   }
-  
+
   public void setTestCaseIndexToRun(int testCaseIndexToRun)
   {
   	this.testCaseIndexToRun = testCaseIndexToRun;
   }
-  
+
   public int getExceptionCount() {
     int exceptionCount = 0;
     for (Test test : getTests() ) {
@@ -147,7 +147,7 @@ public void run() {
     end = new Date();
     running = false;
   }
-  
+
   private List<Test> getTests(TestRun testRun) {
     List<Test> tests = new ArrayList<>();
     for (TestCase testCase : testRun.getTestCases() ) {
@@ -164,8 +164,8 @@ public void run() {
     return tests;
   }
 
- 
-  
+
+
   /**
    *  Creates TestRun's, one for each test File.
    */

@@ -19,23 +19,23 @@ import org.locationtech.jts.geom.util.GeometryTransformer;
 
 /**
  * A transformer to reduce the precision of a geometry pointwise.
- * 
+ *
  * @author mdavis
  *
  */
 class PointwisePrecisionReducerTransformer extends GeometryTransformer {
-  
+
   public static Geometry reduce(Geometry geom, PrecisionModel targetPM) {
     PointwisePrecisionReducerTransformer trans = new PointwisePrecisionReducerTransformer(targetPM);
     return trans.transform(geom);
   }
-  
+
   private PrecisionModel targetPM;
 
   PointwisePrecisionReducerTransformer(PrecisionModel targetPM) {
     this.targetPM = targetPM;
   }
-  
+
   @Override
 protected CoordinateSequence transformCoordinates(
       CoordinateSequence coordinates, Geometry parent) {

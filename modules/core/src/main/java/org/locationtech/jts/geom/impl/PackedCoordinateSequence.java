@@ -46,7 +46,7 @@ public abstract class PackedCoordinateSequence
    * The dimensions of the coordinates held in the packed array
    */
   protected int dimension;
-  
+
   /**
    * The number of measures of the coordinates held in the packed array.
    */
@@ -64,7 +64,7 @@ public abstract class PackedCoordinateSequence
       this.dimension = dimension;
       this.measures = measures;
   }
-  
+
   /**
    * A soft reference to the Coordinate[] representation of this sequence.
    * Makes repeated coordinate array accesses more efficient.
@@ -211,7 +211,7 @@ public String toString()
     coordRef = null;
     return this;
   }
-  
+
   /**
    * Returns a Coordinate representation of the specified coordinate, by always
    * building a new Coordinate object
@@ -229,7 +229,7 @@ public String toString()
   @Deprecated
 @Override
 public abstract Object clone();
-  
+
   @Override
 public abstract PackedCoordinateSequence copy();
 
@@ -275,7 +275,7 @@ public abstract void setOrdinate(int index, int ordinate, double value);
       }
       this.coords = coords;
     }
-    
+
     /**
      * Builds a new packed coordinate sequence out of a float coordinate array
      *
@@ -290,10 +290,10 @@ public abstract void setOrdinate(int index, int ordinate, double value);
         this.coords[i] = coords[i];
       }
     }
-    
+
     /**
      * Builds a new packed coordinate sequence out of a coordinate array
-     * 
+     *
      * @param coordinates an array of {@link Coordinate}s
      * @param dimension the total number of ordinates that make up a {@link Coordinate} in this sequence.
      */
@@ -311,7 +311,7 @@ public abstract void setOrdinate(int index, int ordinate, double value);
       super(dimension,measures);
       if (coordinates == null)
         coordinates = new Coordinate[0];
-      
+
       coords = new double[coordinates.length * this.dimension];
       for (int i = 0; i < coordinates.length; i++) {
         int offset = i * dimension;
@@ -340,7 +340,7 @@ public abstract void setOrdinate(int index, int ordinate, double value);
      * @param measures the number of measure-ordinates each {@link Coordinate} in this sequence has.
      */
     public Double(int size, int dimension, int measures) {
-      super(dimension,measures);  
+      super(dimension,measures);
       coords = new double[size * this.dimension];
     }
 
@@ -372,14 +372,14 @@ public abstract void setOrdinate(int index, int ordinate, double value);
 
     /**
      * Gets the underlying array containing the coordinate values.
-     * 
+     *
      * @return the array of coordinate values
      */
     public double[] getRawCoordinates()
     {
       return coords;
     }
-    
+
     /**
      * @see CoordinateSequence#size()
      */
@@ -407,7 +407,7 @@ public abstract void setOrdinate(int index, int ordinate, double value);
       double[] clone = Arrays.copyOf(coords, coords.length);
       return new Double(clone, dimension, measures);
     }
-    
+
     /**
      * @see PackedCoordinateSequence#getOrdinate(int, int)
      *      Beware, for performance reasons the ordinate index is not checked, if
@@ -480,7 +480,7 @@ public abstract void setOrdinate(int index, int ordinate, double value);
     public Float(double[] coords, int dimension, int measures) {
       super(dimension,measures);
       this.coords = new float[coords.length];
-      
+
       for (int i = 0; i < coords.length; i++) {
         this.coords[i] = (float) coords[i];
       }
@@ -495,7 +495,7 @@ public abstract void setOrdinate(int index, int ordinate, double value);
     public Float(Coordinate[] coordinates, int dimension) {
       this( coordinates, dimension, Math.max(0,dimension-3));
     }
-    
+
     /**
      * Constructs a packed coordinate sequence out of a coordinate array
      *
@@ -507,7 +507,7 @@ public abstract void setOrdinate(int index, int ordinate, double value);
       super(dimension,measures);
       if (coordinates == null)
         coordinates = new Coordinate[0];
-      
+
       coords = new float[coordinates.length * dimension];
       for (int i = 0; i < coordinates.length; i++) {
         int offset = i * dimension;
@@ -560,14 +560,14 @@ public abstract void setOrdinate(int index, int ordinate, double value);
 
     /**
      * Gets the underlying array containing the coordinate values.
-     * 
+     *
      * @return the array of coordinate values
      */
     public float[] getRawCoordinates()
     {
       return coords;
     }
-    
+
     /**
      * @see CoordinateSequence#size()
      */

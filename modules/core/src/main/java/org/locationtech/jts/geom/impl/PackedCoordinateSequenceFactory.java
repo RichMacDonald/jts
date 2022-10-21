@@ -19,21 +19,21 @@ import org.locationtech.jts.geom.CoordinateSequenceFactory;
 import org.locationtech.jts.geom.Coordinates;
 
 /**
- * Builds packed array coordinate sequences. 
+ * Builds packed array coordinate sequences.
  * The array data type can be either
- * <code>double</code> or <code>float</code>, 
+ * <code>double</code> or <code>float</code>,
  * and defaults to <code>double</code>.
  */
 public class PackedCoordinateSequenceFactory implements
     CoordinateSequenceFactory, Serializable
 {
   private static final long serialVersionUID = -3558264771905224525L;
-  
+
   /**
    * Type code for arrays of type <code>double</code>.
    */
   public static final int DOUBLE = 0;
-  
+
   /**
    * Type code for arrays of type <code>float</code>.
    */
@@ -44,7 +44,7 @@ public class PackedCoordinateSequenceFactory implements
    */
   public static final PackedCoordinateSequenceFactory DOUBLE_FACTORY =
       new PackedCoordinateSequenceFactory(DOUBLE);
-  
+
   /**
    * A factory using array type {@link #FLOAT}
    */
@@ -80,7 +80,7 @@ public class PackedCoordinateSequenceFactory implements
    * Gets the type of packed coordinate sequence this factory builds, either
    * {@linkplain PackedCoordinateSequenceFactory#FLOAT} or
    * {@linkplain PackedCoordinateSequenceFactory#DOUBLE}
-   * 
+   *
    * @return the type of packed array built
    */
   public int getType() {
@@ -123,8 +123,8 @@ public CoordinateSequence create(CoordinateSequence coordSeq) {
   /**
    * Creates a packed coordinate sequence of type {@link #DOUBLE}
    * from the provided array
-   * using the given coordinate dimension and a measure count of 0. 
-   * 
+   * using the given coordinate dimension and a measure count of 0.
+   *
    * @param packedCoordinates the array containing coordinate values
    * @param dimension the coordinate dimension
    * @return a packed coordinate sequence of type {@link #DOUBLE}
@@ -132,12 +132,12 @@ public CoordinateSequence create(CoordinateSequence coordSeq) {
   public CoordinateSequence create(double[] packedCoordinates, int dimension) {
     return create( packedCoordinates, dimension, DEFAULT_MEASURES );
   }
-  
+
   /**
    * Creates a packed coordinate sequence of type {@link #DOUBLE}
    * from the provided array
-   * using the given coordinate dimension and measure count. 
-   * 
+   * using the given coordinate dimension and measure count.
+   *
    * @param packedCoordinates the array containing coordinate values
    * @param dimension the coordinate dimension
    * @param measures the coordinate measure count
@@ -152,8 +152,8 @@ public CoordinateSequence create(CoordinateSequence coordSeq) {
   }
   /**
    * Creates a packed coordinate sequence of type {@link #FLOAT}
-   * from the provided array. 
-   * 
+   * from the provided array.
+   *
    * @param packedCoordinates the array containing coordinate values
    * @param dimension the coordinate dimension
    * @return a packed coordinate sequence of type {@link #FLOAT}
@@ -161,11 +161,11 @@ public CoordinateSequence create(CoordinateSequence coordSeq) {
   public CoordinateSequence create(float[] packedCoordinates, int dimension) {
     return create( packedCoordinates, dimension, Math.max(DEFAULT_MEASURES, dimension-3) );
   }
-  
+
   /**
    * Creates a packed coordinate sequence of type {@link #FLOAT}
-   * from the provided array. 
-   * 
+   * from the provided array.
+   *
    * @param packedCoordinates the array containing coordinate values
    * @param dimension the coordinate dimension
    * @param measures the coordinate measure count
@@ -192,7 +192,7 @@ public CoordinateSequence create(int size, int dimension) {
               size, dimension, Math.max(DEFAULT_MEASURES, dimension-3));
     }
   }
-  
+
   /**
    * @see org.locationtech.jts.geom.CoordinateSequenceFactory#create(int, int, int)
    */

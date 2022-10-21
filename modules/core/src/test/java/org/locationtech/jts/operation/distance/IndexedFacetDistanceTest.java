@@ -10,7 +10,7 @@ public class IndexedFacetDistanceTest extends BaseDistanceTest {
   public static void main(String args[]) {
     TestRunner.run(IndexedFacetDistanceTest.class);
   }
-  
+
   public IndexedFacetDistanceTest(String name) {
     super(name);
   }

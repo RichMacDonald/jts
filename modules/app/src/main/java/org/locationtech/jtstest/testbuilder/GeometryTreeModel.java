@@ -41,7 +41,7 @@ public class GeometryTreeModel implements TreeModel
   public static Comparator SORT_AREA_DESC = new AreaComparator(true);
   public static Comparator SORT_LEN_ASC = new LengthComparator(false);
   public static Comparator SORT_LEN_DESC = new LengthComparator(true);
-  
+
   private Vector<TreeModelListener> treeModelListeners = new Vector<>();
 
   private GeometricObjectNode rootGeom;
@@ -130,7 +130,7 @@ public void valueForPathChanged(TreePath path, Object newValue)
     System.out
         .println("*** valueForPathChanged : " + path + " --> " + newValue);
   }
-  
+
   public static class AreaComparator implements Comparator {
 
     private int dirFactor;
@@ -138,7 +138,7 @@ public void valueForPathChanged(TreePath path, Object newValue)
     public AreaComparator(boolean direction) {
       this.dirFactor = direction ? 1 : -1;
     }
-    
+
     @Override
     public int compare(Object o1, Object o2) {
       double area1 = ((GeometricObjectNode) o1).getGeometry().getArea();
@@ -153,7 +153,7 @@ public void valueForPathChanged(TreePath path, Object newValue)
     public LengthComparator(boolean direction) {
       this.dirFactor = direction ? 1 : -1;
     }
-    
+
     @Override
     public int compare(Object o1, Object o2) {
       double area1 = ((GeometricObjectNode) o1).getGeometry().getLength();
@@ -196,9 +196,9 @@ abstract class GeometricObjectNode
     }
     return text;
   }
-  
+
   public abstract ImageIcon getIcon();
-  
+
   public abstract Geometry getGeometry();
 
   public abstract boolean isLeaf();
@@ -214,7 +214,7 @@ abstract class GeometricObjectNode
 class GeometryContext {
   int source = 0;
   private Comparator comp;
-  
+
   GeometryContext(int source) {
     this.source = source;
   }
@@ -223,7 +223,7 @@ class GeometryContext {
     this.source = source;
     this.comp = comp;
   }
-  
+
   public Comparator getComparator() {
     return comp;
   }
@@ -285,16 +285,16 @@ abstract class GeometryNode extends GeometricObjectNode
       buf.append("  -  ");
     }
     buf.append( metrics );
-    
+
     return buf.toString();
   }
-  
+
   @Override
 public boolean isLeaf()
   {
     return isLeaf;
   }
-  
+
   @Override
 public ImageIcon getIcon()
   {
@@ -420,8 +420,8 @@ protected void fillChildren()
   private void populateChildren(Coordinate[] pt)
   {
     Envelope env = line.getEnvelopeInternal();
-    
-    
+
+
     for (int i = 0; i < pt.length; i++) {
       double dist = Double.NaN;
       if (i < pt.length - 1) dist = pt[i].distance(pt[i + 1]);
@@ -505,7 +505,7 @@ protected void fillChildren()
       children.sort(context.getComparator());
     }
   }
-  
+
   @Override
 public ImageIcon getIcon()
   {
@@ -516,9 +516,9 @@ public ImageIcon getIcon()
 }
 
 /**
- * Coordinate is the only leaf node now, but could be 
+ * Coordinate is the only leaf node now, but could be
  * refactored into a LeafNode class.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -535,7 +535,7 @@ class CoordinateNode extends GeometricObjectNode
   }
 
   private static DecimalFormat fmt = new DecimalFormat("0.#################", new DecimalFormatSymbols());
-  
+
   private static String label(Coordinate coord, double distPrev)
   {
     StringBuilder lbl = new StringBuilder().append(fmt.format(coord.x)).append("   ").append(fmt.format(coord.y));
@@ -544,7 +544,7 @@ class CoordinateNode extends GeometricObjectNode
     }
     return lbl.toString();
   }
-  
+
 
   Coordinate coord;
 

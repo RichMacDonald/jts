@@ -29,7 +29,7 @@ public class LinearReferencingFunctions
   }
   public static Geometry extractLine(Geometry g,
       @Metadata(title="Start length")
-      double start, 
+      double start,
       @Metadata(title="End length")
       double end)
   {

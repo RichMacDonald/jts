@@ -31,7 +31,7 @@ public class HtmlSvgTestWriter {
 
   private SVGWriter svgWriter = new SVGWriter();
   private int viewSize = 200;
-  
+
   public HtmlSvgTestWriter() {}
 
   public String write(TestCaseList tcList) {
@@ -44,19 +44,19 @@ public class HtmlSvgTestWriter {
       Testable tc = tcList.get(i);
       writeTest(i + 1, tc, sb);
     }
-    appendln(sb, "</body></html>");    
+    appendln(sb, "</body></html>");
     return sb.toString();
   }
 
   private static void writeStyles(StringBuilder sb) {
     String styleA = HtmlUtil.styleClass(".geomA", style("vertexA", "#bbbbff", "#0000ff"));
-        
+
     String styleB = HtmlUtil.styleClass(".geomB", style("vertexB", "#ffbbbb", "#ff0000"));
-    
+
     sb.append(HtmlUtil.elem("head",
         HtmlUtil.elem("style", styleA, styleB)));
   }
-  
+
   private static String style(String vertexMarker, String clrFill, String clrStroke) {
     return  String.format(
         "marker-end: url(#%s); marker-mid: url(#%s); fill:%s; fill-opacity:0.5; stroke:%s; stroke-width:1; stroke-opacity:1; stroke-miterlimit:4; stroke-linejoin:miter; stroke-linecap:square;"
@@ -78,7 +78,7 @@ public class HtmlSvgTestWriter {
         + "\n</defs>"
         + "\n</svg>";
   }
-  
+
   private void writeTest(int i, Testable tc, StringBuilder sb) {
     writeTitle(i, tc, sb);
     sb.append("<table><tr>");
@@ -113,18 +113,18 @@ public class HtmlSvgTestWriter {
       if (ga == null && gb == null) return "";
       return write(ga, gb, testable.getName(), testable.getDescription() );
   }
-  
+
   public String write(Geometry ga, Geometry gb, String name, String description) {
       StringBuilder sb = new StringBuilder();
-      
+
       Envelope env = sceneEnv(ga, gb);
       Coordinate centre = env.centre();
-      
+
       String wh = "width='" + viewSize + "' height='" + viewSize + "'";
       String viewBox = env.getMinX() + " " + env.getMinY() + " " + env.getWidth() + " " + env.getHeight();
       // transform to flip the Y axis to match SVG
       String trans = String.format("translate(0 %f) scale( 1 -1 ) translate(0 %f)", centre.y, -centre.y);
-      
+
       sb.append("<svg " + wh + " viewBox='" + viewBox + "'  version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>\n");
       String nameStr =name == null ? "" : name;
       String descStr = description == null ? "" : description;
@@ -147,7 +147,7 @@ public class HtmlSvgTestWriter {
     env.expandBy(envDiam * 0.02);
     return env;
   }
-  
+
   private void writeGeometryWithClass(StringBuilder sb, Geometry g, String className ) {
     if (g == null) return;
     String gstyle = String.format("<g class='%s' >", className);

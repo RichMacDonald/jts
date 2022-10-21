@@ -21,7 +21,7 @@ import org.locationtech.jtstest.testrunner.Result;
 
 
 /**
- * A {@link GeometryOperation} which validates the results of the 
+ * A {@link GeometryOperation} which validates the results of the
  * {@link Geometry} <tt>buffer()</tt> method.
  * If an invalid result is found, an exception is thrown (this is the most
  * convenient and noticeable way of flagging the problem when using the TestRunner).
@@ -33,12 +33,12 @@ import org.locationtech.jtstest.testrunner.Result;
  * @author mbdavis
  *
  */
-public class BufferValidatedGeometryOperation 
+public class BufferValidatedGeometryOperation
 implements GeometryOperation
 {
 
   private boolean returnEmptyGC = false;
-  
+
   private GeometryMethodOperation chainOp = new GeometryMethodOperation();
 
   private int argCount = 0;
@@ -46,9 +46,9 @@ implements GeometryOperation
   private int quadSegments;
   public BufferValidatedGeometryOperation()
   {
-  	
+
   }
-  
+
   @Override
 public Class getReturnType(String opName)
   {
@@ -58,17 +58,17 @@ public Class getReturnType(String opName)
   /**
    * Creates a new operation which chains to the given {@link GeometryMethodOperation}
    * for non-intercepted methods.
-   * 
+   *
    * @param chainOp the operation to chain to
    */
   public BufferValidatedGeometryOperation(GeometryMethodOperation chainOp)
   {
   	this.chainOp = chainOp;
   }
-  
+
   /**
    * Invokes the named operation
-   * 
+   *
    * @param opName
    * @param geometry
    * @param args
@@ -79,21 +79,21 @@ public Class getReturnType(String opName)
 	@Override
 	public Result invoke(String opName, Geometry geometry, Object[] args)
 	  throws Exception
-	{	  
+	{
 		boolean isBufferOp = opName.equalsIgnoreCase("buffer");
 	  // if not a buffer op, do the default
 	  if (! isBufferOp) {
 	    return chainOp.invoke(opName, geometry, args);
-	  } 
+	  }
 	  parseArgs(args);
-	  return invokeBufferOpValidated(geometry);    
+	  return invokeBufferOpValidated(geometry);
 	}
 
 	private void parseArgs(Object[] args)
 	{
 		argCount = args.length;
 		distance = Double.parseDouble((String) args[0]);
-		if (argCount >= 2) 
+		if (argCount >= 2)
 			quadSegments = Integer.parseInt((String) args[1]);
 		int endCapStyleUnused;
 		if (argCount >= 3)
@@ -102,12 +102,12 @@ public Class getReturnType(String opName)
 	private Result invokeBufferOpValidated(Geometry geometry)
 	{
 	  Geometry result = invokeBuffer(geometry);
-	  
+
     // validate
 	  validate(geometry, result);
-    
+
     /**
-     * Return an empty GeometryCollection as the result.  
+     * Return an empty GeometryCollection as the result.
      * This allows the test case to avoid specifying an exact result
      */
     if (returnEmptyGC) {
@@ -115,7 +115,7 @@ public Class getReturnType(String opName)
     }
     return new GeometryResult(result);
 	}
-	
+
 	private Geometry invokeBuffer(Geometry geom)
 	{
 		if (argCount == 1) {
@@ -127,7 +127,7 @@ public Class getReturnType(String opName)
 		Assert.shouldNeverReachHere("Unknown or unhandled buffer method");
 		return null;
 	}
-	
+
 	private void validate(Geometry geom, Geometry buffer)
 	{
 		if (isEmptyBufferExpected(geom)) {
@@ -136,18 +136,18 @@ public Class getReturnType(String opName)
 		}
 		// simple containment check
 		checkContainment(geom, buffer);
-		
+
 		// could also check distances of boundaries
 		checkDistance(geom, distance, buffer);
 		// need special check for negative buffers which disappear.  Somehow need to find maximum inner circle - via skeleton?
 	}
-	
+
 	private boolean isEmptyBufferExpected(Geometry geom)
 	{
 		boolean isNegativeBufferOfNonAreal = geom.getDimension() < 2 && distance <= 0.0;
 		return isNegativeBufferOfNonAreal;
 	}
-	
+
 	private void checkEmpty(Geometry geom)
 	{
 		if (geom.isEmpty()) {
@@ -155,7 +155,7 @@ public Class getReturnType(String opName)
 		}
 		reportError("Expected empty buffer result", null);
 	}
-	
+
 	private void checkContainment(Geometry geom, Geometry buffer)
 	{
 		boolean isCovered = true;
@@ -173,13 +173,13 @@ public Class getReturnType(String opName)
 			else {
 				isCovered = geom.covers(buffer);
 			}
-			
+
 		}
 		if (! isCovered) {
 			reportError(errMsg, null);
 		}
  	}
-	
+
 	private void checkDistance(Geometry geom, double distance, Geometry buffer)
 	{
 		BufferResultValidator bufValidator = new BufferResultValidator(geom, distance, buffer);
@@ -189,7 +189,7 @@ public Class getReturnType(String opName)
 			reportError(errorMsg, errorLoc);
 		}
 	}
-	
+
   private void reportError(String msg, Coordinate loc)
   {
   	String locStr = "";
@@ -199,6 +199,6 @@ public Class getReturnType(String opName)
 //  	System.out.println(msg);
     throw new RuntimeException(msg + locStr);
   }
-  
+
 
 }

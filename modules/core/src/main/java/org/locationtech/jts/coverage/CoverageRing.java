@@ -25,7 +25,7 @@ import org.locationtech.jts.geom.util.PolygonExtracter;
 import org.locationtech.jts.noding.BasicSegmentString;
 
 class CoverageRing extends BasicSegmentString {
-  
+
   public static List<CoverageRing> createRings(Geometry geom)
   {
     List<Polygon> polygons = PolygonExtracter.getPolygons(geom);
@@ -37,7 +37,7 @@ class CoverageRing extends BasicSegmentString {
     for (Polygon poly : polygons) {
       createRings(poly, rings);
     }
-    return rings;   
+    return rings;
   }
 
   private static void createRings(Polygon poly, List<CoverageRing> rings) {
@@ -53,7 +53,7 @@ class CoverageRing extends BasicSegmentString {
     boolean isInteriorOnRight = isShell ^ isCCW;
     return new CoverageRing(pts, isInteriorOnRight);
   }
-  
+
   public static boolean isValid(List<CoverageRing> rings) {
     for (CoverageRing ring : rings) {
       if (! ring.isValid())
@@ -61,7 +61,7 @@ class CoverageRing extends BasicSegmentString {
     }
     return true;
   }
-  
+
   private boolean isInteriorOnRight;
   private boolean[] isInvalid;
   private boolean[] isValid;
@@ -72,14 +72,14 @@ class CoverageRing extends BasicSegmentString {
     isInvalid = new boolean[size() - 1];
     isValid = new boolean[size() - 1];
   }
-  
+
   public boolean isInteriorOnRight() {
     return isInteriorOnRight;
   }
-  
+
   /**
    * Tests if a segment is marked valid.
-   * 
+   *
    * @param index the segment index
    * @return true if the segment is valid
    */
@@ -89,17 +89,17 @@ class CoverageRing extends BasicSegmentString {
 
   /**
    * Tests if a segment is marked invalid.
-   * 
+   *
    * @param index the segment index
    * @return true if the segment is invalid
    */
   public boolean isInvalid(int index) {
     return isInvalid[index];
   }
-  
+
   /**
    * Tests whether all segments are valid.
-   * 
+   *
    * @return true if all segments are valid
    */
   public boolean isValid() {
@@ -112,7 +112,7 @@ class CoverageRing extends BasicSegmentString {
 
   /**
    * Tests whether all segments are invalid.
-   * 
+   *
    * @return true if all segments are invalid
    */
   public boolean isInvalid() {
@@ -125,7 +125,7 @@ class CoverageRing extends BasicSegmentString {
 
   /**
    * Tests whether any segment is invalid.
-   * 
+   *
    * @return true if some segment is invalid
    */
   public boolean hasInvalid() {
@@ -138,17 +138,17 @@ class CoverageRing extends BasicSegmentString {
 
   /**
    * Tests whether the validity state of a ring segment is known.
-   * 
+   *
    * @param i the index of the ring segment
    * @return true if the segment validity state is known
    */
   public boolean isKnown(int i) {
     return isValid[i] || isInvalid[i];
-  } 
-  
+  }
+
   /**
    * Finds the previous vertex in the ring which is distinct from a given coordinate value.
-   * 
+   *
    * @param index the index to start the search
    * @param pt a coordinate value (which may not be a ring vertex)
    * @return the previous distinct vertex in the ring
@@ -165,7 +165,7 @@ class CoverageRing extends BasicSegmentString {
 
   /**
    * Finds the next vertex in the ring which is distinct from a given coordinate value.
-   * 
+   *
    * @param index the index to start the search
    * @param pt a coordinate value (which may not be a ring vertex)
    * @return the next distinct vertex in the ring
@@ -180,10 +180,10 @@ class CoverageRing extends BasicSegmentString {
     }
     return next;
   }
-  
+
   /**
    * Gets the index of the previous segment in the ring.
-   * 
+   *
    * @param index a segment index
    * @return the index of the previous segment
    */
@@ -192,22 +192,22 @@ class CoverageRing extends BasicSegmentString {
       return size() - 2;
     return index - 1;
   }
-  
+
   /**
    * Gets the index of the next segment in the ring.
-   * 
+   *
    * @param index a segment index
    * @return the index of the next segment
    */
   public int next(int index) {
-    if (index < size() - 2) 
+    if (index < size() - 2)
       return index + 1;
     return 0;
   }
-  
+
   /**
    * Marks a segment as invalid.
-   * 
+   *
    * @param i the segment index
    */
   public void markInvalid(int i) {
@@ -218,7 +218,7 @@ class CoverageRing extends BasicSegmentString {
 
   /**
    * Marks a segment as valid.
-   * 
+   *
    * @param i the segment index
    */
   public void markValid(int i) {
@@ -238,13 +238,13 @@ class CoverageRing extends BasicSegmentString {
       lines.add(line);
       return;
     }
-    
+
     //-- find first end after index 0, to allow wrap-around
     int startIndex = findInvalidStart(0);
     int firstEndIndex = findInvalidEnd(startIndex);
     int endIndex = firstEndIndex;
     while (true) {
-      startIndex = findInvalidStart(endIndex); 
+      startIndex = findInvalidStart(endIndex);
       endIndex = findInvalidEnd(startIndex);
       LineString line = createLine(startIndex, endIndex, geomFactory);
       lines.add(line);
@@ -267,7 +267,7 @@ class CoverageRing extends BasicSegmentString {
     }
     return index;
   }
-  
+
   private int nextMarkIndex(int index) {
     if (index >= isInvalid.length - 1) {
       return 0;
@@ -278,7 +278,7 @@ class CoverageRing extends BasicSegmentString {
   /**
    * Creates a line from a sequence of ring segments between startIndex and endIndex (inclusive).
    * If the endIndex < startIndex the sequence wraps around the ring endpoint.
-   * 
+   *
    * @param startIndex
    * @param endIndex
    * @param geomFactory
@@ -287,7 +287,7 @@ class CoverageRing extends BasicSegmentString {
   private LineString createLine(int startIndex, int endIndex, GeometryFactory geomFactory) {
     Coordinate[] pts = endIndex < startIndex ?
           extractSectionWrap(startIndex, endIndex)
-        : extractSection(startIndex, endIndex);    
+        : extractSection(startIndex, endIndex);
     return geomFactory.createLineString(pts);
   }
 

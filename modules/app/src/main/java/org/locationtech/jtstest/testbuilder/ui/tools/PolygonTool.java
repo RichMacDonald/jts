@@ -17,7 +17,7 @@ import org.locationtech.jtstest.testbuilder.model.GeometryType;
 /**
  * @version 1.7
  */
-public class PolygonTool extends AbstractDrawTool 
+public class PolygonTool extends AbstractDrawTool
 {
     private static PolygonTool singleton = null;
 
@@ -27,10 +27,10 @@ public class PolygonTool extends AbstractDrawTool
         return singleton;
     }
 
-    private PolygonTool() 
+    private PolygonTool()
     {
     }
-    
+
     @Override
 	protected int getGeometryType()
     {

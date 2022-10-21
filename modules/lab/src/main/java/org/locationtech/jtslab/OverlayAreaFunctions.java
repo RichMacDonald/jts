@@ -22,11 +22,11 @@ public class OverlayAreaFunctions {
   public static double areaSingle(Geometry g) {
     return GeometryArea.area(g);
   }
-  
+
   public static double intersectionArea(Geometry geom0, Geometry geom1) {
     return OverlayArea.intersectionArea(geom0, geom1);
   }
-  
+
   private static Geometry overlayAreaKey;
   private static OverlayArea overlayAreaCache;
 
@@ -37,7 +37,7 @@ public class OverlayAreaFunctions {
     }
     return overlayAreaCache.intersectionArea(geom1);
   }
-  
+
   public static Geometry intersectionAreaPrepData(Geometry geom0, Geometry geom1) {
     double area = intersectionAreaPrep(geom0, geom1);
     if (area == 0.0) return null;
@@ -45,7 +45,7 @@ public class OverlayAreaFunctions {
     result.setUserData(area);
     return result;
   }
-  
+
   public static Geometry intersectionAreaData(Geometry geom0, Geometry geom1) {
     double area = intersectionArea(geom0, geom1);
     if (area == 0.0) return null;
@@ -53,15 +53,15 @@ public class OverlayAreaFunctions {
     result.setUserData(area);
     return result;
   }
-  
+
   public static double intAreaOrig(Geometry geom0, Geometry geom1) {
     double intArea = geom0.intersection(geom1).getArea();
     return intArea;
   }
-  
+
   static PreparedGeometry geomPrepCache = null;
   static Geometry geomPrepKey = null;
-  
+
   public static double intAreaOrigPrep(Geometry geom0, Geometry geom1) {
     if (geom0 != geomPrepKey) {
       geomPrepKey = geom0;
@@ -73,35 +73,35 @@ public class OverlayAreaFunctions {
   public static Geometry intAreaOrigData(Geometry geom0, Geometry geom1) {
     double area = intAreaOrig(geom0, geom1);
     if (area == 0.0) return null;
-    
+
     Geometry result = geom1.copy();
     result.setUserData(area);
     return result;
   }
-  
+
   public static Geometry intAreaOrigPrepData(Geometry geom0, Geometry geom1) {
     double area = intAreaOrigPrep(geom0, geom1);
     if (area == 0.0) return null;
-    
+
     Geometry result = geom1.copy();
     result.setUserData(area);
     return result;
   }
-  
+
   private static double intAreaFullPrep(Geometry geom, PreparedGeometry geomPrep, Geometry geom1) {
     if (! geomPrep.intersects(geom1)) return 0.0;
     if (geomPrep.contains(geom1)) return geom1.getArea();
     double intArea = geom.intersection(geom1).getArea();
     return intArea;
   }
-  
+
   public static double checkIntArea(Geometry geom0, Geometry geom1) {
     double intArea = intersectionArea(geom0, geom1);
-    
+
     double intAreaStd = geom0.intersection(geom1).getArea();
-    
+
     double diff = Math.abs(intArea - intAreaStd)/Math.max(intArea, intAreaStd);
-    
+
     return diff;
   }
 }

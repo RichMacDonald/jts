@@ -61,7 +61,7 @@ public class MultiFormatReader
       return FORMAT_WKT;
     return FORMAT_UNKNOWN;
   }
-	
+
   private static boolean isHex(String str, int maxCharsToTest)
   {
     for (int i = 0; i < maxCharsToTest && i < str.length(); i++) {
@@ -98,7 +98,7 @@ public class MultiFormatReader
   public void setStrict(boolean isStrict) {
     this.isStrict = isStrict;
   }
-  
+
   public Geometry read(String geomStr)
       throws ParseException, IOException
   {
@@ -108,13 +108,13 @@ public class MultiFormatReader
     }
     if (isGML(trimStr))
       return readGML(trimStr);
-      
+
     if (isGeoJSON(trimStr))
       return readGeoJSON(trimStr);
-      
+
     return IOUtil.readWKTString(trimStr, geomFactory, isStrict);
   }
-  
+
   private Geometry readGeoJSON(String str)
     throws ParseException
 {
@@ -127,7 +127,7 @@ public class MultiFormatReader
     }
   }
 
-  private Geometry readGML(String str) 
+  private Geometry readGML(String str)
   	throws ParseException
   {
   	try {

@@ -430,7 +430,7 @@ protected int compareToSameClass(Object o, CoordinateSequenceComparator comp) {
     if (i < nHole2) return -1;
     return 0;
   }
-  
+
   @Override
 protected int getTypeCode() {
     return Geometry.TYPECODE_POLYGON;

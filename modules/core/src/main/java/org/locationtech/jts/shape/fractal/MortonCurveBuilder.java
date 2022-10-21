@@ -27,7 +27,7 @@ import static org.locationtech.jts.shape.fractal.MortonCode.size;
 /**
  * Generates a {@link LineString} representing the Morton Curve
  * at a given level.
- * 
+ *
  * @author Martin Davis
  * @see MortonCode
  */
@@ -37,7 +37,7 @@ extends GeometricShapeBuilder
 
   /**
    * Creates a new instance using the provided {@link GeometryFactory}.
-   * 
+   *
    * @param geomFactory the geometry factory to use
    */
   public MortonCurveBuilder(GeometryFactory geomFactory)
@@ -51,20 +51,20 @@ extends GeometricShapeBuilder
   /**
    * Sets the level of curve to generate.
    * The level must be in the range [0 - 16].
-   * This determines the 
+   * This determines the
    * number of points in the generated curve.
-   * 
+   *
    * @param level the level of the curve
    */
   public void setLevel(int level) {
     this.numPts = size(level);
   }
-  
+
   @Override
   public Geometry getGeometry() {
     int level = level(numPts);
     int nPts = size(level);
-    
+
     double scale = 1;
     double baseX = 0;
     double baseY = 0;
@@ -76,7 +76,7 @@ extends GeometricShapeBuilder
       int maxOrdinate = maxOrdinate(level);
       scale = width / maxOrdinate;
     }
-    
+
     Coordinate[] pts = new Coordinate[nPts];
     for (int i = 0; i < nPts; i++) {
        Coordinate pt = decode(i);
@@ -86,7 +86,7 @@ extends GeometricShapeBuilder
     }
     return geomFactory.createLineString(pts);
   }
-  
+
   private static double transform(double val, double scale, double offset) {
     return val * scale + offset;
   }

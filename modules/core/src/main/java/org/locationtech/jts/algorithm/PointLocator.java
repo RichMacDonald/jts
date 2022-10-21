@@ -29,7 +29,7 @@ import org.locationtech.jts.geom.Polygon;
 /**
  * Computes the topological ({@link Location})
  * of a single point to a {@link Geometry}.
- * A {@link BoundaryNodeRule} may be specified 
+ * A {@link BoundaryNodeRule} may be specified
  * to control the evaluation of whether the point lies on the boundary or not
  * The default rule is to use the the <i>SFS Boundary Determination Rule</i>
  * <p>
@@ -44,8 +44,8 @@ import org.locationtech.jts.geom.Polygon;
 public class PointLocator
 {
   // default is to use OGC SFS rule
-  private BoundaryNodeRule boundaryRule = 
-  	//BoundaryNodeRule.ENDPOINT_BOUNDARY_RULE; 
+  private BoundaryNodeRule boundaryRule =
+  	//BoundaryNodeRule.ENDPOINT_BOUNDARY_RULE;
   	BoundaryNodeRule.OGC_SFS_BOUNDARY_RULE;
 
   private boolean isIn;         // true if the point lies in or on any Geometry element
@@ -149,7 +149,7 @@ public class PointLocator
   private int locateOnPoint(Coordinate p, Point pt)
   {
   	// no point in doing envelope test, since equality test is just as fast
-  	
+
     Coordinate ptCoord = pt.getCoordinate();
     if (ptCoord.equals2D(p))
       return Location.INTERIOR;
@@ -160,7 +160,7 @@ public class PointLocator
   {
     // bounding-box check
     if (! l.getEnvelopeInternal().intersects(p)) return Location.EXTERIOR;
-    
+
     CoordinateSequence seq = l.getCoordinateSequence();
     if (! l.isClosed()) {
           if (p.equals(seq.getCoordinate(0))

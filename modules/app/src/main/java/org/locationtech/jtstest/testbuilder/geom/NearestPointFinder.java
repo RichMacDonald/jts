@@ -17,7 +17,7 @@ import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.CoordinateSequenceFilter;
 import org.locationtech.jts.geom.Geometry;
 
-public class NearestPointFinder 
+public class NearestPointFinder
 {
   public static Coordinate findNearestPoint(Geometry geom, Coordinate pt, double tolerance)
   {
@@ -26,25 +26,25 @@ public class NearestPointFinder
   }
 
   private Geometry geom;
-  
+
   public NearestPointFinder(Geometry geom) {
     this.geom = geom;
   }
-  
+
   public Coordinate getNearestPoint(Coordinate pt, double tolerance)
   {
     NearestPointFilter filter = new NearestPointFilter(pt, tolerance);
     geom.apply(filter);
     return filter.getNearestPoint();
   }
-  
+
   static class NearestPointFilter implements CoordinateSequenceFilter
   {
     private double tolerance = 0.0;
     private Coordinate basePt;
     private Coordinate nearestPt = null;
     private double dist = Double.MAX_VALUE;
-    
+
     public NearestPointFilter(Coordinate basePt, double tolerance)
     {
       this.basePt = basePt;
@@ -57,14 +57,14 @@ public class NearestPointFinder
       Coordinate p = seq.getCoordinate(i);
       double dist = p.distance(basePt);
       if (dist > tolerance) return;
-      
+
       if (nearestPt == null || basePt.distance(p) < dist) {
         nearestPt = p;
         dist = basePt.distance(nearestPt);
       }
     }
-    
-    public Coordinate getNearestPoint() 
+
+    public Coordinate getNearestPoint()
     {
       return nearestPt;
     }

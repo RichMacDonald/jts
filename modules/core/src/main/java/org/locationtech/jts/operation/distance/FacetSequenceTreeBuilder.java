@@ -43,7 +43,7 @@ public class FacetSequenceTreeBuilder {
 
   /**
    * Creates facet sequences
-   * 
+   *
    * @param g
    * @return List<GeometryFacetSequence>
    */

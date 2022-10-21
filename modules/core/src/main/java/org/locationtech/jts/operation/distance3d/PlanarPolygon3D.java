@@ -29,7 +29,7 @@ import org.locationtech.jts.math.Vector3D;
  * 3D polygons are assumed to lie in a single plane.
  * The plane best fitting the polygon coordinates is
  * computed and is represented by a {@link Plane3D}.
- * 
+ *
  * @author mdavis
  *
  */
@@ -46,18 +46,18 @@ public class PlanarPolygon3D {
 	}
 
 	/**
-	 * Finds a best-fit plane for the polygon, 
+	 * Finds a best-fit plane for the polygon,
 	 * by sampling a few points from the exterior ring.
 	 * <p>
 	 * The algorithm used is Newell's algorithm:
 	 * - a base point for the plane is determined from the average of all vertices
 	 * - the normal vector is determined by
 	 *   computing the area of the projections on each of the axis planes
-	 * 
+	 *
 	 * @param poly the polygon to determine the plane for
 	 * @return the best-fit plane
 	 */
-	private Plane3D findBestFitPlane(Polygon poly) 
+	private Plane3D findBestFitPlane(Polygon poly)
 	{
 		CoordinateSequence seq = poly.getExteriorRing().getCoordinateSequence();
 		Coordinate basePt = averagePoint(seq);
@@ -69,13 +69,13 @@ public class PlanarPolygon3D {
 	 * Computes an average normal vector from a list of polygon coordinates.
 	 * Uses Newell's method, which is based
 	 * on the fact that the vector with components
-	 * equal to the areas of the projection of the polygon onto 
+	 * equal to the areas of the projection of the polygon onto
 	 * the Cartesian axis planes is normal.
-	 * 
+	 *
 	 * @param seq the sequence of coordinates for the polygon
 	 * @return a normal vector
 	 */
-	private Vector3D averageNormal(CoordinateSequence seq) 
+	private Vector3D averageNormal(CoordinateSequence seq)
 	{
 		int n = seq.size();
 		Coordinate sum = new Coordinate(0,0,0);
@@ -100,7 +100,7 @@ public class PlanarPolygon3D {
 	 * in a sequence.
 	 * If the sequence lies in a single plane,
 	 * the computed point also lies in the plane.
-	 * 
+	 *
 	 * @param seq a coordinate sequence
 	 * @return a Coordinate with averaged ordinates
 	 */
@@ -129,7 +129,7 @@ public class PlanarPolygon3D {
 	public boolean intersects(Coordinate intPt) {
 		if (Location.EXTERIOR == locate(intPt, poly.getExteriorRing()))
 			return false;
-		
+
 		for (int i = 0; i < poly.getNumInteriorRing(); i++) {
 			if (Location.INTERIOR == locate(intPt, poly.getInteriorRingN(i)))
 				return false;
@@ -143,14 +143,14 @@ public class PlanarPolygon3D {
 		Coordinate ptProj = project(pt, facingPlane);
 		return RayCrossingCounter.locatePointInRing(ptProj, seqProj);
 	}
-	
+
 	public boolean intersects(Coordinate pt, LineString ring) {
 		CoordinateSequence seq = ring.getCoordinateSequence();
 		CoordinateSequence seqProj = project(seq, facingPlane);
 		Coordinate ptProj = project(pt, facingPlane);
 		return Location.EXTERIOR != RayCrossingCounter.locatePointInRing(ptProj, seqProj);
 	}
-	
+
 	private static CoordinateSequence project(CoordinateSequence seq, int facingPlane)
 	{
 		switch (facingPlane) {
@@ -159,7 +159,7 @@ public class PlanarPolygon3D {
 		default: return AxisPlaneCoordinateSequence.projectToYZ(seq);
 		}
 	}
-	
+
 	private static Coordinate project(Coordinate p, int facingPlane)
 	{
 		switch (facingPlane) {
@@ -169,6 +169,6 @@ public class PlanarPolygon3D {
 		default: return new Coordinate(p.y, p.getZ());
 		}
 	}
-	
+
 
 }

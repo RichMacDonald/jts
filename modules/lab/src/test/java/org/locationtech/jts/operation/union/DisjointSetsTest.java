@@ -9,16 +9,16 @@ public class DisjointSetsTest extends TestCase {
   public static void main(String args[]) {
     TestRunner.run(DisjointSetsTest.class);
   }
-  
+
   public DisjointSetsTest(String name) {
     super(name);
   }
-  
+
   public void testEmpty() {
     int[] nums = { };
     checkIntsModulo(nums, 3, new String[] { });
   }
-  
+
   public void testSingleItem() {
     int[] nums = {
         11
@@ -27,7 +27,7 @@ public class DisjointSetsTest extends TestCase {
         "11",
     });
   }
-  
+
   public void testIntsModulo3() {
     int[] nums = {
         11,22,3,45,5,62,7
@@ -38,7 +38,7 @@ public class DisjointSetsTest extends TestCase {
         "22,7"
     });
   }
-  
+
   public void testIntsModulo2() {
     int[] nums = {
         11,22,3,45,5,62,7
@@ -48,7 +48,7 @@ public class DisjointSetsTest extends TestCase {
         "11,3,45,5,7"
     });
   }
-  
+
   public void checkIntsModulo(int[] nums, int modulus, String[] setsExpected) {
     DisjointSets dset = new DisjointSets(nums.length);
     for (int i = 1; i < nums.length; i++) {
@@ -80,7 +80,7 @@ public class DisjointSetsTest extends TestCase {
         str.append(nums[itemIndex]);
       }
       setStr[s] = str.toString();
-      
+
       //System.out.println(setStr);
     }
     return setStr;

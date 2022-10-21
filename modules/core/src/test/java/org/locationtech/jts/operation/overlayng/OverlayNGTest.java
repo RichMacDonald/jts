@@ -29,7 +29,7 @@ public class OverlayNGTest extends GeometryTestCase {
   }
 
   public OverlayNGTest(String name) { super(name); }
-  
+
   public void testEmptyGCBothIntersection() {
     Geometry a = read("GEOMETRYCOLLECTION EMPTY");
     Geometry b = read("GEOMETRYCOLLECTION EMPTY");
@@ -37,7 +37,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testEmptyAPolygonIntersection() {
     Geometry a = read("POLYGON EMPTY");
     Geometry b = read("POLYGON ((1 0, 2 5, 3 0, 1 0))");
@@ -45,7 +45,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testEmptyBIntersection() {
     Geometry a = read("POLYGON ((1 0, 2 5, 3 0, 1 0))");
     Geometry b = read("POLYGON EMPTY");
@@ -53,7 +53,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testEmptyABIntersection() {
     Geometry a = read("POLYGON EMPTY");
     Geometry b = read("POLYGON EMPTY");
@@ -61,7 +61,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testEmptyADifference() {
     Geometry a = read("POLYGON EMPTY");
     Geometry b = read("POLYGON ((1 0, 2 5, 3 0, 1 0))");
@@ -69,7 +69,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = difference(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testEmptyAUnion() {
     Geometry a = read("POLYGON EMPTY");
     Geometry b = read("POLYGON ((1 0, 2 5, 3 0, 1 0))");
@@ -77,7 +77,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testEmptyASymDifference() {
     Geometry a = read("POLYGON EMPTY");
     Geometry b = read("POLYGON ((1 0, 2 5, 3 0, 1 0))");
@@ -85,7 +85,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = symDifference(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testEmptyLinePolygonIntersection() {
     Geometry a = read("LINESTRING EMPTY");
     Geometry b = read("POLYGON ((1 0, 2 5, 3 0, 1 0))");
@@ -93,7 +93,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testEmptyLinePolygonDifference() {
     Geometry a = read("LINESTRING EMPTY");
     Geometry b = read("POLYGON ((1 0, 2 5, 3 0, 1 0))");
@@ -101,7 +101,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = difference(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testEmptyPointPolygonIntersection() {
     Geometry a = read("POINT EMPTY");
     Geometry b = read("POLYGON ((1 0, 2 5, 3 0, 1 0))");
@@ -109,7 +109,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testDisjointIntersection() {
     Geometry a = read("POLYGON ((60 90, 90 90, 90 60, 60 60, 60 90))");
     Geometry b = read("POLYGON ((200 300, 300 300, 300 200, 200 200, 200 300))");
@@ -117,7 +117,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testDisjointIntersectionNoOpt() {
     Geometry a = read("POLYGON ((60 90, 90 90, 90 60, 60 60, 60 90))");
     Geometry b = read("POLYGON ((200 300, 300 300, 300 200, 200 200, 200 300))");
@@ -125,7 +125,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersectionNoOpt(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testAreaLineIntersection() {
     Geometry a = read("POLYGON ((360 200, 220 200, 220 180, 300 180, 300 160, 300 140, 360 200))");
     Geometry b = read("MULTIPOLYGON (((280 180, 280 160, 300 160, 300 180, 280 180)), ((220 230, 240 230, 240 180, 220 180, 220 230)))");
@@ -133,7 +133,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testAreaLinePointIntersection() {
     Geometry a = read("POLYGON ((100 100, 200 100, 200 150, 250 100, 300 100, 300 150, 350 100, 350 200, 100 200, 100 100))");
     Geometry b = read("POLYGON ((100 140, 170 140, 200 100, 400 100, 400 30, 100 30, 100 140))");
@@ -141,7 +141,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   /**
    * Note this result is different to old overlay, because the top-right diagonal line
    * gets snapped to the vertex above it.
@@ -152,14 +152,14 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry expected = read("POLYGON ((0 0, 0 4, 4 4, 4 0, 0 0), (1 2, 1 1, 2 1, 1 2), (2 3, 1 3, 1 2, 2 3))");
     checkEqual(expected, OverlayNGTest.union(a, b, 1));
   }
-  
+
   public void testTriangleFillingHoleUnionPrec10() {
     Geometry a = read("POLYGON ((0 0, 4 0, 4 4, 0 4, 0 0), (1 1, 1 2, 2 1, 1 1), (1 2, 1 3, 2 3, 1 2), (2 3, 3 3, 3 2, 2 3))");
     Geometry b = read("POLYGON ((2 1, 3 1, 3 2, 2 1))");
     Geometry expected = read("POLYGON ((0 0, 0 4, 4 4, 4 0, 0 0), (1 2, 1 1, 2 1, 1 2), (2 3, 1 3, 1 2, 2 3), (3 2, 3 3, 2 3, 3 2))");
     checkEqual(expected, OverlayNGTest.union(a, b, 10));
   }
-  
+
   public void testBoxTriIntersection() {
     Geometry a = read("POLYGON ((0 6, 4 6, 4 2, 0 2, 0 6))");
     Geometry b = read("POLYGON ((1 0, 2 5, 3 0, 1 0))");
@@ -167,7 +167,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testBoxTriUnion() {
     Geometry a = read("POLYGON ((0 6, 4 6, 4 2, 0 2, 0 6))");
     Geometry b = read("POLYGON ((1 0, 2 5, 3 0, 1 0))");
@@ -175,7 +175,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void test2spikesIntersection() {
     Geometry a = read("POLYGON ((0 100, 40 100, 40 0, 0 0, 0 100))");
     Geometry b = read("POLYGON ((70 80, 10 80, 60 50, 11 20, 69 11, 70 80))");
@@ -183,7 +183,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void test2spikesUnion() {
     Geometry a = read("POLYGON ((0 100, 40 100, 40 0, 0 0, 0 100))");
     Geometry b = read("POLYGON ((70 80, 10 80, 60 50, 11 20, 69 11, 70 80))");
@@ -191,15 +191,15 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testTriBoxIntersection() {
     Geometry a = read("POLYGON ((68 35, 35 42, 40 9, 68 35))");
     Geometry b = read("POLYGON ((20 60, 50 60, 50 30, 20 30, 20 60))");
     Geometry expected = read("POLYGON ((37 30, 35 42, 50 39, 50 30, 37 30))");
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
-  }  
-  
+  }
+
   public void testNestedShellsIntersection() {
     Geometry a = read("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200))");
     Geometry b = read("POLYGON ((120 180, 180 180, 180 120, 120 120, 120 180))");
@@ -207,7 +207,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testNestedShellsUnion() {
     Geometry a = read("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200))");
     Geometry b = read("POLYGON ((120 180, 180 180, 180 120, 120 120, 120 180))");
@@ -215,7 +215,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testATouchingNestedPolyUnion() {
     Geometry a = read("MULTIPOLYGON (((0 200, 200 200, 200 0, 0 0, 0 200), (50 50, 190 50, 50 200, 50 50)), ((60 100, 100 60, 50 50, 60 100)))");
     Geometry b = read("POLYGON ((135 176, 180 176, 180 130, 135 130, 135 176))");
@@ -239,7 +239,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testTouchingMultiHoleUnion() {
     Geometry a = read("POLYGON ((100 300, 300 300, 300 100, 100 100, 100 300), (200 200, 150 200, 200 300, 200 200), (250 230, 216 236, 250 300, 250 230), (235 198, 300 200, 237 175, 235 198))");
     Geometry b = read("POLYGON ((130 160, 260 160, 260 120, 130 120, 130 160))");
@@ -247,7 +247,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testBoxLineIntersection() {
     Geometry a = read("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200))");
     Geometry b = read("LINESTRING (50 150, 150 150)");
@@ -255,7 +255,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testBoxLineUnion() {
     Geometry a = read("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200))");
     Geometry b = read("LINESTRING (50 150, 150 150)");
@@ -263,7 +263,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testAdjacentBoxesIntersection() {
     Geometry a = read("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200))");
     Geometry b = read("POLYGON ((300 200, 300 100, 200 100, 200 200, 300 200))");
@@ -271,7 +271,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testAdjacentBoxesUnion() {
     Geometry a = read("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200))");
     Geometry b = read("POLYGON ((300 200, 300 100, 200 100, 200 200, 300 200))");
@@ -279,7 +279,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testCollapseBoxGoreIntersection() {
     Geometry a = read("MULTIPOLYGON (((1 1, 5 1, 5 0, 1 0, 1 1)), ((1 1, 5 2, 5 4, 1 4, 1 1)))");
     Geometry b = read("POLYGON ((1 0, 1 2, 2 2, 2 0, 1 0))");
@@ -287,7 +287,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testCollapseBoxGoreUnion() {
     Geometry a = read("MULTIPOLYGON (((1 1, 5 1, 5 0, 1 0, 1 1)), ((1 1, 5 2, 5 4, 1 4, 1 1)))");
     Geometry b = read("POLYGON ((1 0, 1 2, 2 2, 2 0, 1 0))");
@@ -302,7 +302,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testSnapBoxGoreUnion() {
     Geometry a = read("MULTIPOLYGON (((1 1, 5 1, 5 0, 1 0, 1 1)), ((1 1, 5 2, 5 4, 1 4, 1 1)))");
     Geometry b = read("POLYGON ((4 3, 5 3, 5 0, 4 0, 4 3))");
@@ -310,7 +310,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testCollapseTriBoxIntersection() {
     Geometry a = read("POLYGON ((1 2, 1 1, 9 1, 1 2))");
     Geometry b = read("POLYGON ((9 2, 9 1, 8 1, 8 2, 9 2))");
@@ -318,7 +318,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testCollapseTriBoxUnion() {
     Geometry a = read("POLYGON ((1 2, 1 1, 9 1, 1 2))");
     Geometry b = read("POLYGON ((9 2, 9 1, 8 1, 8 2, 9 2))");
@@ -331,7 +331,7 @@ public class OverlayNGTest extends GeometryTestCase {
    * Fails because polygon A collapses totally, but one
    * L edge is still labelled with location A:iL due to being located
    * inside original A polygon by PiP test for incomplete edges.
-   * That edge is then marked as in-result-area, but 
+   * That edge is then marked as in-result-area, but
    * it is the only edge marked in-result, so result ring can't
    * be formed because ring is incomplete
    */
@@ -342,11 +342,11 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   /**
    * Fails because edge of B is computed as Interior to A because it
    * is checked against full precision input, rather than collapsed linework.
-   * 
+   *
    * Probably need to determine location against output rings
    */
   public void testCollapseResultShouldHavePolygonUnion() {
@@ -356,7 +356,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   /**
    * Fails because current isResultAreaEdge does not accept L edges as result area boundary
    */
@@ -387,7 +387,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 100000000);
     checkEqual(expected, actual);
   }
-  
+
   /**
    * Currently noding is incorrect, producing one 2pt edge which is coincident
    * with a 3-pt edge.  The EdgeMerger doesn't check that merged edges are identical,
@@ -406,7 +406,7 @@ public class OverlayNGTest extends GeometryTestCase {
    * Probably due to B collapsing completely and disconnected edges being located incorrectly in B interior.
    * Have seen other cases of this as well.
    * Also - a B edge is marked as a Hole, which is incorrect.
-   * 
+   *
    * FIXED - copy-paste error in Edge.mergedRingRole
    */
   public void testBcollapseLocateIssue() {
@@ -416,16 +416,16 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1000);
     checkEqual(expected, actual);
   }
-  
+
   /**
    * Fails because a component of B collapses completely and labelling is wrong.
    * Labelling marks a single collapsed edge as B:i.
    * Edge is only connected to two other edges both marked B:e.
    * B:i edge is included in area result edges, and faild because it does not form a ring.
-   * 
+   *
    * Perhaps a fix is to ignore connected single Bi edges which do not form a ring?
    * This may be dangerous since it may hide other labelling problems?
-   * 
+   *
    * FIXED by computing location of both edge endpoints.
    */
   public void testBcollapseEdgeLabeledInterior() {
@@ -435,15 +435,15 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 600);
     checkEqual(expected, actual);
   }
-  
+
   /**
-   * This failure is due to B inverting due to an snapped intersection being added 
+   * This failure is due to B inverting due to an snapped intersection being added
    * to a segment by a nearby vertex, and the snap vertex "jumped" across another segment.
    * This is because the nearby snap intersection tolerance in SnapIntersectionAdder was too large (FACTOR = 10).
-   * 
+   *
    * FIXED by reducing the tolerance factor to 100.
-   * 
-   * However, it may be that there is no safe tolerance level?  
+   *
+   * However, it may be that there is no safe tolerance level?
    * Perhaps there can always be situations where a snap intersection will jump across a segment?
    */
   public void testBNearVertexSnappingCausesInversion() {
@@ -453,12 +453,12 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 200);
     checkEqual(expected, actual);
   }
-  
+
   /**
    * Failure due to B hole collapsing and edges being labeled Exterior.
    * They are coincident with an A hole edge, but because labeled E are not
    * included in Intersection result.
-   * This occurred because of a very subtle instance field update sequence bug 
+   * This occurred because of a very subtle instance field update sequence bug
    * in Edge.mergeEdge.
    */
   public void testBCollapsedHoleEdgeLabelledExterior() {
@@ -468,7 +468,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 100);
     checkEqual(expected, actual);
   }
-  
+
   public void testLineUnion() {
     Geometry a = read("LINESTRING (0 0, 1 1)");
     Geometry b = read("LINESTRING (1 1, 2 2)");
@@ -476,7 +476,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testLine2Union() {
     Geometry a = read("LINESTRING (0 0, 1 1, 0 1)");
     Geometry b = read("LINESTRING (1 1, 2 2, 3 3)");
@@ -484,7 +484,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testLine3Union() {
     Geometry a = read("MULTILINESTRING ((0 1, 1 1), (2 2, 2 0))");
     Geometry b = read("LINESTRING (0 0, 1 1, 2 2, 3 3)");
@@ -492,7 +492,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testLine4Union() {
     Geometry a = read("LINESTRING (100 300, 200 300, 200 100, 100 100)");
     Geometry b = read("LINESTRING (300 300, 200 300, 200 300, 200 100, 300 100)");
@@ -500,7 +500,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testLineFigure8Union() {
     Geometry a = read("LINESTRING (5 1, 2 2, 5 3, 2 4, 5 5)");
     Geometry b = read("LINESTRING (5 1, 8 2, 5 3, 8 4, 5 5)");
@@ -508,7 +508,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testLineRingUnion() {
     Geometry a = read("LINESTRING (1 1, 5 5, 9 1)");
     Geometry b = read("LINESTRING (1 1, 9 1)");
@@ -523,7 +523,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry expected = read("POINT (3 2)");
     checkEqual(expected, OverlayNGTest.intersection(a, b, 1));
   }
-  
+
   public void testPolygonMultiLineUnion() {
     Geometry a = read("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200))");
     Geometry b = read("MULTILINESTRING ((150 250, 150 50), (250 250, 250 50))");
@@ -531,7 +531,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testLinePolygonUnion() {
     Geometry a = read("LINESTRING (50 150, 150 150)");
     Geometry b = read("POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200))");
@@ -539,7 +539,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testLinePolygonUnionAlongPolyBoundary() {
     Geometry a = read("LINESTRING (150 300, 250 300)");
     Geometry b = read("POLYGON ((100 400, 200 400, 200 300, 100 300, 100 400))");
@@ -547,7 +547,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = union(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testLinePolygonIntersectionAlongPolyBoundary() {
     Geometry a = read("LINESTRING (150 300, 250 300)");
     Geometry b = read("POLYGON ((100 400, 200 400, 200 300, 100 300, 100 400))");
@@ -555,7 +555,7 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   /**
    * Tests that overlay can handle polygons with flat topology collapse
    * along top, courtesy of improved Orientation.isCCW algorithm.
@@ -568,80 +568,80 @@ public class OverlayNGTest extends GeometryTestCase {
     Geometry actual = intersection(a, b, 1);
     checkEqual(expected, actual);
   }
-  
+
   public void testPolygonLineIntersectionOrder() {
     Geometry a = read("POLYGON ((1 1, 1 9, 9 9, 9 7, 3 7, 3 3, 9 3, 9 1, 1 1))");
     Geometry b = read("MULTILINESTRING ((2 10, 2 0), (4 10, 4 0))");
     Geometry expected = read("MULTILINESTRING ((2 9, 2 1), (4 9, 4 7), (4 3, 4 1))");
     Geometry actual = intersection(a, b, 1);
-    checkEqualExact(expected, actual);    
+    checkEqualExact(expected, actual);
   }
-  
+
   public void testPolygonLineVerticalntersection() {
     Geometry a = read("POLYGON ((-200 -200, 200 -200, 200 200, -200 200, -200 -200))");
     Geometry b = read("LINESTRING (-100 100, -100 -100)");
     Geometry expected = read("LINESTRING (-100 100, -100 -100)");
     Geometry actual = intersection(a, b);
-    checkEqual(expected, actual);    
+    checkEqual(expected, actual);
   }
-  
+
   public void testPolygonLineHorizontalIntersection() {
     Geometry a = read("POLYGON ((10 90, 90 90, 90 10, 10 10, 10 90))");
     Geometry b = read("LINESTRING (20 50, 80 50)");
     Geometry expected = read("LINESTRING (20 50, 80 50)");
     Geometry actual = intersection(a, b);
-    checkEqual(expected, actual);    
+    checkEqual(expected, actual);
   }
-  
+
   //============================================================
-  
-  
+
+
   public static Geometry difference(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     return OverlayNG.overlay(a, b, DIFFERENCE, pm);
   }
-  
+
   public static Geometry symDifference(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     return OverlayNG.overlay(a, b, SYMDIFFERENCE, pm);
   }
-  
+
   public static Geometry intersection(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     return OverlayNG.overlay(a, b, INTERSECTION, pm);
   }
-  
+
   public static Geometry union(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     return OverlayNG.overlay(a, b, UNION, pm);
   }
-  
+
   public static Geometry difference(Geometry a, Geometry b) {
     PrecisionModel pm = new PrecisionModel();
     return OverlayNG.overlay(a, b, DIFFERENCE, pm);
   }
-  
+
   public static Geometry symDifference(Geometry a, Geometry b) {
     PrecisionModel pm = new PrecisionModel();
     return OverlayNG.overlay(a, b, SYMDIFFERENCE, pm);
   }
-  
+
   public static Geometry intersection(Geometry a, Geometry b) {
     PrecisionModel pm = new PrecisionModel();
     return OverlayNG.overlay(a, b, INTERSECTION, pm);
   }
-  
+
   public static Geometry union(Geometry a, Geometry b) {
     PrecisionModel pm = new PrecisionModel();
     return OverlayNG.overlay(a, b, UNION, pm);
   }
-  
+
   public static Geometry intersectionNoOpt(Geometry a, Geometry b, double scaleFactor) {
     PrecisionModel pm = new PrecisionModel(scaleFactor);
     OverlayNG ov = new OverlayNG(a, b, pm, INTERSECTION);
     ov.setOptimized(false);
     return ov.getResult();
   }
-  
-  
+
+
 }

@@ -18,19 +18,19 @@ import org.locationtech.jts.index.SpatialIndex;
 import org.locationtech.jts.index.strtree.STRtree;
 
 /**
- * Assigns hole rings to shell rings 
+ * Assigns hole rings to shell rings
  * during polygonization.
  * Uses spatial indexing to improve performance
  * of shell lookup.
- * 
+ *
  * @author mdavis
  *
  */
-public class HoleAssigner 
+public class HoleAssigner
 {
   /**
    * Assigns hole rings to shell rings.
-   * 
+   *
    * @param holes list of hole rings to assign
    * @param shells list of shell rings
    */
@@ -38,20 +38,20 @@ public class HoleAssigner
     HoleAssigner assigner = new HoleAssigner(shells);
     assigner.assignHolesToShells(holes);
   }
-  
+
   private List<EdgeRing> shells;
   private SpatialIndex shellIndex;
-  
+
   /**
    * Creates a new hole assigner.
-   * 
+   *
    * @param shells the shells to be assigned to
    */
   public HoleAssigner(List<EdgeRing> shells) {
     this.shells = shells;
     buildIndex();
   }
-  
+
   private void buildIndex() {
     shellIndex = new STRtree();
     for (EdgeRing shell : shells) {
@@ -61,7 +61,7 @@ public class HoleAssigner
 
   /**
    * Assigns holes to the shells.
-   * 
+   *
    * @param holeList list of hole rings to assign
    */
   public void assignHolesToShells(List<EdgeRing> holeList)
@@ -71,7 +71,7 @@ public class HoleAssigner
       assignHoleToShell(holeER);
     }
   }
-  
+
   private void assignHoleToShell(EdgeRing holeER)
   {
     EdgeRing shell = findShellContaining(holeER);
@@ -79,11 +79,11 @@ public class HoleAssigner
       shell.addHole(holeER);
     }
   }
-  
+
   private List<EdgeRing> queryOverlappingShells(Envelope ringEnv) {
     return shellIndex.query(ringEnv);
   }
-  
+
   /**
    * Find the innermost enclosing shell EdgeRing containing the argument EdgeRing, if any.
    * The innermost enclosing ring is the <i>smallest</i> enclosing ring.
@@ -100,7 +100,7 @@ public class HoleAssigner
    */
   private EdgeRing findShellContaining(EdgeRing testEr)
   {
-    Envelope testEnv = testEr.getRing().getEnvelopeInternal();   
+    Envelope testEnv = testEr.getRing().getEnvelopeInternal();
     List<EdgeRing> candidateShells = queryOverlappingShells(testEnv);
     return EdgeRing.findEdgeRingContaining(testEr, candidateShells);
   }

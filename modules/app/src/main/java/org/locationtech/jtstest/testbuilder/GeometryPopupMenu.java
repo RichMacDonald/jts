@@ -20,33 +20,33 @@ import javax.swing.JPopupMenu;
 import org.locationtech.jts.geom.Coordinate;
 
 
-public class GeometryPopupMenu extends JPopupMenu 
+public class GeometryPopupMenu extends JPopupMenu
 {
   Coordinate clickCoord;
-  
+
   public GeometryPopupMenu(){
     initUI();
   }
-  
+
   private void initUI()
   {
     JMenuItem extractComponentItem = new JMenuItem("Extract Component");
     extractComponentItem.addActionListener(
           e -> JTSTestBuilder.controller().extractComponentsToTestCase(clickCoord));
     add(extractComponentItem);
-    
+
     JMenuItem copyComponentItem = new JMenuItem("Copy Component");
     copyComponentItem.addActionListener(
           e -> JTSTestBuilder.controller().copyComponentToClipboard(clickCoord));
     add(copyComponentItem);
-    
+
     JMenuItem infoItem = new JMenuItem("Info");
     infoItem.addActionListener(
           e -> JTSTestBuilder.controller().displayInfo(clickCoord));
     add(infoItem);
-    
+
   }
-  
+
   /**
    * Record model coordinate of click point for use in menu operations
    */
@@ -57,6 +57,6 @@ public void show(Component invoker, int x, int y)
     clickCoord = editPanel.getViewport().toModelCoordinate(new java.awt.Point(x, y));
     super.show(invoker, x, y);
   }
-  
+
 }
 

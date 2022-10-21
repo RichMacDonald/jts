@@ -21,15 +21,15 @@ import org.locationtech.jts.noding.SegmentStringUtil;
  * Computes the <tt>intersects</tt> spatial relationship predicate for
  * {@link PreparedPolygon}s relative to all other {@link Geometry} classes. Uses
  * short-circuit tests and indexing to improve performance.
- * 
+ *
  * @author Martin Davis
- * 
+ *
  */
 class PreparedPolygonIntersects extends PreparedPolygonPredicate {
   /**
    * Computes the intersects predicate between a {@link PreparedPolygon} and a
    * {@link Geometry}.
-   * 
+   *
    * @param prep
    *          the prepared polygon
    * @param geom
@@ -43,7 +43,7 @@ class PreparedPolygonIntersects extends PreparedPolygonPredicate {
 
   /**
    * Creates an instance of this operation.
-   * 
+   *
    * @param prepPoly
    *          the PreparedPolygon to evaluate
    */
@@ -53,7 +53,7 @@ class PreparedPolygonIntersects extends PreparedPolygonPredicate {
 
   /**
    * Tests whether this PreparedPolygon intersects a given geometry.
-   * 
+   *
    * @param geom
    *          the test geometry
    * @return true if the test geometry intersects
@@ -62,7 +62,7 @@ class PreparedPolygonIntersects extends PreparedPolygonPredicate {
     /**
      * Do point-in-poly tests first, since they are cheaper and may result in a
      * quick positive result.
-     * 
+     *
      * If a point of any test components lie in target, result is true
      */
     boolean isInPrepGeomArea = isAnyTestComponentInTarget(geom);
@@ -78,7 +78,7 @@ class PreparedPolygonIntersects extends PreparedPolygonPredicate {
      * If any segments intersect, result is true
      */
     List lineSegStr = SegmentStringUtil.extractSegmentStrings(geom);
-    // only request intersection finder if there are segments 
+    // only request intersection finder if there are segments
     // (i.e. NOT for point inputs)
     if (lineSegStr.size() > 0) {
       boolean segsIntersect = prepPoly.getIntersectionFinder().intersects(

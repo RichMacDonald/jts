@@ -34,7 +34,7 @@ import org.locationtech.jtstest.util.StringUtil;
 /**
  * @version 1.7
  */
-public class XMLTestWriter 
+public class XMLTestWriter
 {
   public static String toXML(PrecisionModel precisionModel) {
     if (precisionModel.isFloating()) {
@@ -97,37 +97,37 @@ public class XMLTestWriter
     if (testCase.getName() != null && testCase.getName().length() > 0) {
       return "<desc>" + StringUtil.escapeHTML(testCase.getName()) + "</desc>\n";
     }
-    return "<desc> " 
+    return "<desc> "
     + getGeometryArgPairCode(testCase.getGeometry(0), testCase.getGeometry(1) )
     + " </desc>\n";
   }
 
   private static String getGeometryArgPairCode(Geometry geom0, Geometry geom1)
   {
-   return getGeometryCode(geom0) + "/" + getGeometryCode(geom1); 
+   return getGeometryCode(geom0) + "/" + getGeometryCode(geom1);
   }
-  
+
   private static String getGeometryCode(Geometry geom)
   {
     String dimCode = "";
     if (geom instanceof Puntal) dimCode = "P";
     if (geom instanceof Lineal) dimCode = "L";
     if (geom instanceof Polygonal) dimCode = "L";
-    
+
     if (geom instanceof GeometryCollection) return "m" + dimCode;
-    
+
     return dimCode;
   }
-  
+
   public String getTestXML(TestRunnerTestCaseAdapter adapter) {
     return adapter.getTestRunnerTestCase().toXml();
   }
-  
+
   public String getTestXML(Testable testCase)
   {
     return getTestXML(testCase, true);
   }
-  
+
   public String getTestXML(Testable testCase, boolean useWKT) {
     Geometry geom0 = testCase.getGeometry(0);
     Geometry geom1 = testCase.getGeometry(1);
@@ -152,7 +152,7 @@ public class XMLTestWriter
       return wktWriter.writeFormatted(g);
     return WKBWriter.toHex(wkbWriter.write(g));
   }
-  
+
   public String getTestXML(TestCaseList tcList) {
     StringBuilder xml = new StringBuilder();
     for (Object element : tcList.getList()) {

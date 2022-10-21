@@ -25,11 +25,11 @@ public class ColorControl {
   public interface ColorListener {
     void colorChanged(Color clr);
   }
-  
+
   public static JPanel create(Component comp, String title, Color initColor, ColorListener colorListener) {
     JPanel ctl = new JPanel();
     ctl.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    
+
     Dimension dim = new Dimension(20, 20);
     ctl.setMinimumSize(dim);
     ctl.setPreferredSize(dim);
@@ -46,10 +46,10 @@ public class ColorControl {
           colorListener.colorChanged(clr);
         }
       }
-    });    
+    });
     return ctl;
   }
-  
+
   private static Color showColorChooser(Component comp, String title, Color initColor) {
     return JColorChooser.showDialog(comp, title, initColor);
   }
@@ -57,7 +57,7 @@ public class ColorControl {
   public static void update(JPanel ctl, Color clr) {
     ctl.setBackground(clr);
   }
-  
+
   public static Color getColor(JPanel clrCtl) {
     return clrCtl.getBackground();
   }

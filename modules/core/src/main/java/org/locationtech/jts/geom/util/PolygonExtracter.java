@@ -31,7 +31,7 @@ public class PolygonExtracter
   /**
    * Extracts the {@link Polygon} elements from a single {@link Geometry}
    * and adds them to the provided {@link List}.
-   * 
+   *
    * @param geom the geometry from which to extract
    * @param list the list to add the extracted elements to
    */
@@ -44,14 +44,14 @@ public class PolygonExtracter
   		geom.apply(new PolygonExtracter(list));
   	}
   	// skip non-Polygonal elemental geometries
-  	
+
     return list;
   }
 
   /**
    * Extracts the {@link Polygon} elements from a single {@link Geometry}
    * and returns them in a {@link List}.
-   * 
+   *
    * @param geom the geometry from which to extract
    */
   public static List getPolygons(Geometry geom)

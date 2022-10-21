@@ -15,12 +15,12 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.io.WKTWriter;
 
 /**
- * Represents an edge in a {@link Tri}, 
+ * Represents an edge in a {@link Tri},
  * to be used as a key for looking up Tris
  * while building a triangulation.
  * The edge value is normalized to allow lookup
  * of adjacent triangles.
- * 
+ *
  * @author mdavis
  *
  */
@@ -41,7 +41,7 @@ class TriEdge {
       p1 = tmp;
     }
   }
-  
+
   @Override
   public int hashCode() {
     int result = 17;
@@ -61,7 +61,7 @@ class TriEdge {
       return true;
     return false;
   }
-  
+
   @Override
 public String toString() {
     return WKTWriter.toLineString(new Coordinate[] { p0, p1});

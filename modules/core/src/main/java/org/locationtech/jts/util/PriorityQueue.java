@@ -15,12 +15,12 @@ import java.util.ArrayList;
 
 /**
  * A priority queue over a set of {@link Comparable} objects.
- * 
+ *
  * @author Martin Davis
  * @deprecated
  */
 @Deprecated
-public class PriorityQueue 
+public class PriorityQueue
 {
   private int size; // Number of elements in queue
   private ArrayList items; // The queue binary heap array
@@ -40,7 +40,7 @@ public class PriorityQueue
    * Duplicates are allowed.
    * @param x the item to insert.
    */
-  public void add(Comparable x) 
+  public void add(Comparable x)
   {
     // increase the size of the items heap to create a hole for the new item
     items.add(null);
@@ -60,7 +60,7 @@ public class PriorityQueue
   }
 
   /**
-   * Establish heap from an arbitrary arrangement of items. 
+   * Establish heap from an arbitrary arrangement of items.
    */
   /*
    private void buildHeap( ) {
@@ -97,7 +97,7 @@ public class PriorityQueue
    * Remove the smallest item from the priority queue.
    * @return the smallest item, or null if empty
    */
-  public Object poll() 
+  public Object poll()
   {
     if (isEmpty())
       return null;
@@ -109,20 +109,20 @@ public class PriorityQueue
     return minItem;
   }
 
-  public Object peek() 
+  public Object peek()
   {
     if (isEmpty())
       return null;
     Object minItem = items.get(1);
     return minItem;
   }
-  
+
   /**
    * Internal method to percolate down in the heap.
-   * 
+   *
    * @param hole the index at which the percolate begins.
    */
-  private void reorder(int hole) 
+  private void reorder(int hole)
   {
     int child;
     Object tmp = items.get(hole);

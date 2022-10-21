@@ -25,7 +25,7 @@ import org.locationtech.jts.geom.GeometryCollection;
 /**
  * Locates the components of a Geometry
  * which lie in a target area.
- * 
+ *
  * @author Martin Davis
  * @see FacetLocater
  */
@@ -36,7 +36,7 @@ public class ComponentLocater {
     return locater.getComponents(queryPt, tolerance);
   }
 
-  
+
   private Geometry parentGeom;
   private List<GeometryLocation> components = new ArrayList();
   private Geometry aoi;
@@ -44,9 +44,9 @@ public class ComponentLocater {
   public ComponentLocater(Geometry parentGeom) {
     this.parentGeom = parentGeom;
   }
-  
+
   /**
-   * 
+   *
    * @param queryPt
    * @param tolerance
    * @return a List of the component Geometrys
@@ -74,7 +74,7 @@ public class ComponentLocater {
     env.expandBy(2 * tolerance);
     return parentGeom.getFactory().toGeometry(env);
   }
-  
+
   private void findComponents(Stack path, Geometry geom, List components)
   {
     if (geom instanceof GeometryCollection) {
@@ -89,7 +89,7 @@ public class ComponentLocater {
     // TODO: make this robust - do not use Geometry.intersects()
     // atomic component - check for match
     if (aoi.intersects(geom))
-      components.add(new GeometryLocation(parentGeom, geom, 
+      components.add(new GeometryLocation(parentGeom, geom,
       		FacetLocater.toIntArray(path)));
   }
 

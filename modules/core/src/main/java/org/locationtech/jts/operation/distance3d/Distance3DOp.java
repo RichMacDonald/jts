@@ -39,13 +39,13 @@ import org.locationtech.jts.operation.distance.GeometryLocation;
  * The algorithms used are straightforward O(n^2) comparisons. This worst-case
  * performance could be improved on by using Voronoi techniques or spatial
  * indexes.
- * 
+ *
  * @version 1.7
  */
 public class Distance3DOp {
 	/**
 	 * Compute the distance between the nearest points of two geometries.
-	 * 
+	 *
 	 * @param g0
 	 *            a {@link Geometry}
 	 * @param g1
@@ -59,7 +59,7 @@ public class Distance3DOp {
 
 	/**
 	 * Test whether two geometries lie within a given distance of each other.
-	 * 
+	 *
 	 * @param g0
 	 *            a {@link Geometry}
 	 * @param g1
@@ -77,7 +77,7 @@ public class Distance3DOp {
 	/**
 	 * Compute the the nearest points of two geometries. The points are
 	 * presented in the same order as the input Geometries.
-	 * 
+	 *
 	 * @param g0
 	 *            a {@link Geometry}
 	 * @param g1
@@ -100,7 +100,7 @@ public class Distance3DOp {
 	/**
 	 * Constructs a DistanceOp that computes the distance and nearest points
 	 * between the two specified geometries.
-	 * 
+	 *
 	 * @param g0
 	 *            a Geometry
 	 * @param g1
@@ -113,7 +113,7 @@ public class Distance3DOp {
 	/**
 	 * Constructs a DistanceOp that computes the distance and nearest points
 	 * between the two specified geometries.
-	 * 
+	 *
 	 * @param g0
 	 *            a Geometry
 	 * @param g1
@@ -130,7 +130,7 @@ public class Distance3DOp {
 
 	/**
 	 * Report the distance between the nearest points on the input geometries.
-	 * 
+	 *
 	 * @return the distance between the geometries, or 0 if either input geometry is empty
 	 * @throws IllegalArgumentException
 	 *             if either input geometry is null
@@ -149,7 +149,7 @@ public class Distance3DOp {
 	/**
 	 * Report the coordinates of the nearest points in the input geometries. The
 	 * points are presented in the same order as the input Geometries.
-	 * 
+	 *
 	 * @return a pair of {@link Coordinate}s of the nearest points
 	 */
 	public Coordinate[] nearestPoints() {
@@ -163,7 +163,7 @@ public class Distance3DOp {
 	/**
 	 * Report the locations of the nearest points in the input geometries. The
 	 * locations are presented in the same order as the input Geometries.
-	 * 
+	 *
 	 * @return a pair of {@link GeometryLocation}s for the nearest points
 	 */
 	public GeometryLocation[] nearestLocations() {
@@ -187,7 +187,7 @@ public class Distance3DOp {
 		if (minDistanceLocation != null)
 			return;
 		minDistanceLocation = new GeometryLocation[2];
-		
+
 		int geomIndex = mostPolygonalIndex();
 		boolean flip = geomIndex == 1;
 		computeMinDistanceMultiMulti(geom[geomIndex], geom[1-geomIndex], flip);
@@ -195,9 +195,9 @@ public class Distance3DOp {
 
 	/**
 	 * Finds the index of the "most polygonal" input geometry.
-	 * This optimizes the computation of the best-fit plane, 
+	 * This optimizes the computation of the best-fit plane,
 	 * since it is cached only for the left-hand geometry.
-	 * 
+	 *
 	 * @return the index of the most polygonal geometry
 	 */
 	private int mostPolygonalIndex() {
@@ -228,16 +228,16 @@ public class Distance3DOp {
 			// handle case of multigeom component being empty
 			if (g0.isEmpty())
 				return;
-			
+
 			// compute planar polygon only once for efficiency
 			if (g0 instanceof Polygon) {
 				computeMinDistanceOneMulti(polyPlane(g0), g1, flip);
 			}
-			else 
+			else
 				computeMinDistanceOneMulti(g0, g1, flip);
 		}
 	}
-	
+
 	private void computeMinDistanceOneMulti(Geometry g0, Geometry g1, boolean flip) {
 		if (g1 instanceof GeometryCollection) {
 			int n = g1.getNumGeometries();
@@ -285,7 +285,7 @@ public class Distance3DOp {
 	{
 		return new PlanarPolygon3D((Polygon) poly);
 	}
-	
+
 	private void computeMinDistance(Geometry g0, Geometry g1, boolean flip) {
 		if (g0 instanceof Point) {
 			if (g1 instanceof Point) {
@@ -332,19 +332,19 @@ public class Distance3DOp {
 
 	/**
 	 * Computes distance between two polygons.
-	 * 
+	 *
 	 * To compute the distance, compute the distance
 	 * between the rings of one polygon and the other polygon,
 	 * and vice-versa.
 	 * If the polygons intersect, then at least one ring must
 	 * intersect the other polygon.
-	 * Note that it is NOT sufficient to test only the shell rings. 
-	 * A counter-example is a "figure-8" polygon A 
+	 * Note that it is NOT sufficient to test only the shell rings.
+	 * A counter-example is a "figure-8" polygon A
 	 * and a simple polygon B at right angles to A, with the ring of B
 	 * passing through the holes of A.
 	 * The polygons intersect,
 	 * but A's shell does not intersect B, and B's shell does not intersect A.
-	 *  
+	 *
 	 * @param poly0
 	 * @param poly1
 	 * @param geomIndex
@@ -359,7 +359,7 @@ public class Distance3DOp {
 
 	/**
 	 * Compute distance between a polygon and the rings of another.
-	 * 
+	 *
 	 * @param poly
 	 * @param ringPoly
 	 * @param geomIndex
@@ -377,9 +377,9 @@ public class Distance3DOp {
 		}
 	}
 
-	private void computeMinDistancePolygonLine(PlanarPolygon3D poly,LineString line, 
+	private void computeMinDistancePolygonLine(PlanarPolygon3D poly,LineString line,
 			boolean flip) {
-		
+
 		// first test if line intersects polygon
 		Coordinate intPt = intersection(poly, line);
 		if (intPt != null) {
@@ -390,7 +390,7 @@ public class Distance3DOp {
 			);
 			return;
 		}
-		
+
 		// if no intersection, then compute line distance to polygon rings
 		computeMinDistanceLineLine(poly.getPolygon().getExteriorRing(), line, flip);
 		if (isDone) return;
@@ -410,7 +410,7 @@ public class Distance3DOp {
 		Coordinate p0 = new Coordinate();
 		seq.getCoordinate(0, p0);
 		double d0 = poly.getPlane().orientedDistance(p0);
-		
+
 		// for each segment in the line
 		Coordinate p1 = new Coordinate();
 		for (int i = 0; i < seq.size() - 1; i++) {
@@ -419,7 +419,7 @@ public class Distance3DOp {
 			double d1 = poly.getPlane().orientedDistance(p1);
 
 			/**
-			 * If the oriented distances of the segment endpoints have the same sign, 
+			 * If the oriented distances of the segment endpoints have the same sign,
 			 * the segment does not cross the plane, and is skipped.
 			 */
 			if (d0 * d1 > 0)
@@ -428,8 +428,8 @@ public class Distance3DOp {
 			/**
 			 * Compute segment-plane intersection point
 			 * which is then used for a point-in-polygon test.
-			 * The endpoint distances to the plane d0 and d1 
-			 * give the proportional distance of the intersection point 
+			 * The endpoint distances to the plane d0 and d1
+			 * give the proportional distance of the intersection point
 			 * along the segment.
 			 */
 			Coordinate intPt = segmentPoint(p0, p1, d0, d1);
@@ -444,14 +444,14 @@ public class Distance3DOp {
 		return null;
 	}
 
-	private void computeMinDistancePolygonPoint(PlanarPolygon3D polyPlane, Point point, 
+	private void computeMinDistancePolygonPoint(PlanarPolygon3D polyPlane, Point point,
 			boolean flip) {
 		Coordinate pt = point.getCoordinate();
-		
+
 		LineString shell = polyPlane.getPolygon().getExteriorRing();
 		if (polyPlane.intersects(pt, shell)) {
 			// point is either inside or in a hole
-			
+
 			int nHole = polyPlane.getPolygon().getNumInteriorRing();
 			for (int i = 0; i < nHole; i++) {
 				LineString hole = polyPlane.getPolygon().getInteriorRingN(i);
@@ -499,7 +499,7 @@ public class Distance3DOp {
 		}
 	}
 
-	private void computeMinDistanceLinePoint(LineString line,Point point, 
+	private void computeMinDistanceLinePoint(LineString line,Point point,
 			boolean flip) {
 		Coordinate[] lineCoord = line.getCoordinates();
 		Coordinate coord = point.getCoordinate();
@@ -533,9 +533,9 @@ public class Distance3DOp {
 
 	/**
 	 * Computes a point at a distance along a segment
-	 * specified by two relatively proportional values. 
+	 * specified by two relatively proportional values.
 	 * The fractional distance along the segment is d0/(d0+d1).
-	 * 
+	 *
 	 * @param p0
 	 *            start point of the segment
 	 * @param p1
@@ -550,7 +550,7 @@ public class Distance3DOp {
 			double d1) {
 		if (d0 <= 0) return new Coordinate(p0);
 		if (d1 <= 0) return new Coordinate(p1);
-		
+
 		double f = Math.abs(d0) / (Math.abs(d0) + Math.abs(d1));
 		double intx = p0.x + f * (p1.x - p0.x);
 		double inty = p0.y + f * (p1.y - p0.y);

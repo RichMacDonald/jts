@@ -49,33 +49,33 @@ import org.locationtech.jts.math.MathUtil;
  * computed for each {@link EdgeVector} of the polygon.
  * This allows the area of the intersection of two polygons to be computed
  * by summing the partial areas for the edge vectors of the intersection resultant.
- * To determine the edge vectors all that is required 
- * is to compute the vertices of the intersection resultant, 
+ * To determine the edge vectors all that is required
+ * is to compute the vertices of the intersection resultant,
  * along with the direction (not the length) of the edges they belong to.
- * The resultant vertices are the vertices where the edges of the inputs intersect, 
+ * The resultant vertices are the vertices where the edges of the inputs intersect,
  * along with the vertices of each input which lie in the interior of the other input.
  * The direction of the edge vectors is the same as the parent edges from which they derive.
- * Determining the vertices of intersection is simpler and more robust 
+ * Determining the vertices of intersection is simpler and more robust
  * than determining the values of the actual edge line segments in the overlay result.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class OverlayArea {
-  
+
   public static double intersectionArea(Geometry geom0, Geometry geom1) {
     if (! interacts(geom0, geom1))
       return 0;
     OverlayArea area = new OverlayArea(geom0);
     return area.intersectionArea(geom1);
   }
-  
+
   private static boolean interacts(Geometry geom0, Geometry geom1) {
     return geom0.getEnvelopeInternal().intersects(geom1.getEnvelopeInternal());
   }
 
   private static LineIntersector li = new RobustLineIntersector();
-  
+
   private Geometry geom0;
   private Envelope geomEnv0;
   private IndexedPointInAreaLocator locator0;
@@ -84,21 +84,21 @@ public class OverlayArea {
 
   public OverlayArea(Geometry geom) {
     this.geom0 = geom;
-    
+
     //TODO: handle holes and multipolygons
     if ((!(geom0 instanceof Polygon) || (((Polygon) geom0).getNumInteriorRing() != 0)))
       throw new IllegalArgumentException("Currently only Polygons with no holes supported");
-    
+
     geomEnv0 = geom.getEnvelopeInternal();
     locator0 = new IndexedPointInAreaLocator(geom);
     indexSegs = buildSegmentIndex(geom);
     vertexIndex = buildVertexIndex(geom);
   }
-  
+
   private boolean interacts(Geometry geom) {
     return geomEnv0.intersects(geom.getEnvelopeInternal());
   }
-  
+
   public double intersectionArea(Geometry geom) {
     //-- intersection area is 0 if geom does not interact with geom0
     if (! interacts(geom)) return 0;
@@ -107,7 +107,7 @@ public class OverlayArea {
     geom.apply(filter);
     return filter.area;
   }
-  
+
   private class PolygonAreaFilter implements GeometryFilter {
     double area = 0;
     @Override
@@ -117,11 +117,11 @@ public class OverlayArea {
       }
     }
   }
-  
+
   private double intersectionAreaPolygon(Polygon geom) {
     //-- optimization - intersection area is 0 if geom does not interact with geom0
     if (! interacts(geom)) return 0;
-    
+
     double area = 0;
     area += intersectionArea(geom.getExteriorRing());
     for (int i = 0; i < geom.getNumInteriorRing(); i++) {
@@ -136,10 +136,10 @@ public class OverlayArea {
 
   private double intersectionArea(LinearRing geom) {
     double areaInt = areaForIntersections(geom);
-    
+
     /**
      * If area for segment intersections is zero then no segments intersect.
-     * This means that either the geometries are disjoint, 
+     * This means that either the geometries are disjoint,
      * OR one is inside the other.
      * This allows computing the area efficiently
      * using a simple inside/outside test
@@ -147,22 +147,22 @@ public class OverlayArea {
     if (areaInt == 0.0) {
       return areaContainedOrDisjoint(geom);
     }
-    
+
     /**
      * The geometries intersect, so add areas for interior vertices
      */
     double areaVert1 = areaForInteriorVertices(geom);
-    
+
     IndexedPointInAreaLocator locator1 = new IndexedPointInAreaLocator(geom);
     double areaVert0 = areaForInteriorVerticesIndexed(geom0, vertexIndex, geom.getEnvelopeInternal(), locator1);
-    
+
     return (areaInt + areaVert1 + areaVert0) / 2;
   }
 
   /**
-   * Computes the area for the situation where the geometries are known to either 
+   * Computes the area for the situation where the geometries are known to either
    * be disjoint, or have one contained in the other.
-   * 
+   *
    * @param geom the other geometry to intersect
    * @return the area of the contained geometry, or 0.0 if disjoint
    */
@@ -170,7 +170,7 @@ public class OverlayArea {
     double area0 = areaForContainedGeom(geom, geom0.getEnvelopeInternal(), locator0);
     // if area is non-zero then geom is contained in geom0
     if (area0 != 0.0) return area0;
-    
+
     // only checking one point, so non-indexed is faster
     SimplePointInAreaLocator locator = new SimplePointInAreaLocator(geom);
     double area1 = areaForContainedGeom(geom0, geom.getEnvelopeInternal(), locator);
@@ -181,7 +181,7 @@ public class OverlayArea {
   /**
    * Tests and computes the area of a geometry contained in the other,
    * or 0.0 if the geometry is disjoint.
-   * 
+   *
    * @param geom
    * @param env
    * @param locator
@@ -189,14 +189,14 @@ public class OverlayArea {
    */
   private double areaForContainedGeom(Geometry geom, Envelope env, PointOnGeometryLocator locator) {
     Coordinate pt = geom.getCoordinate();
-    
+
     // fast check for disjoint
     // full check for contained
     if (! env.covers(pt) || (Location.INTERIOR != locator.locate(pt))) return 0.0;
-    
+
     return area(geom);
   }
-  
+
   private static double area(Geometry geom) {
     if (geom instanceof LinearRing) {
       return Area.ofRing( ((LinearRing) geom).getCoordinateSequence() );
@@ -207,10 +207,10 @@ public class OverlayArea {
   private double areaForIntersections(LinearRing geom) {
     double area = 0.0;
     CoordinateSequence seq = geom.getCoordinateSequence();
-    
+
     boolean isCCW = Orientation.isCCW(seq);
-    
-    // Compute rays for all intersections   
+
+    // Compute rays for all intersections
     for (int j = 0; j < seq.size() - 1; j++) {
       Coordinate b0 = seq.getCoordinate(j);
       Coordinate b1 = seq.getCoordinate(j+1);
@@ -218,7 +218,7 @@ public class OverlayArea {
         // flip segment orientation
         Coordinate temp = b0; b0 = b1; b1 = temp;
       }
-      
+
       Envelope env = new Envelope(b0, b1);
       IntersectionVisitor intVisitor = new IntersectionVisitor(b0, b1);
       indexSegs.query(env, intVisitor);
@@ -231,45 +231,45 @@ public class OverlayArea {
     double area = 0.0;
     private Coordinate b0;
     private Coordinate b1;
-    
+
     IntersectionVisitor(Coordinate b0, Coordinate b1) {
       this.b0 = b0;
       this.b1 = b1;
     }
-    
+
     double getArea() {
       return area;
     }
-    
+
     @Override
 	public void visitItem(Object item) {
       LineSegment seg = (LineSegment) item;
       area += areaForIntersection(seg.p0, seg.p1, b0, b1);
     }
   }
-  
+
   private static double areaForIntersection(Coordinate a0, Coordinate a1, Coordinate b0, Coordinate b1 ) {
     // TODO: can the intersection computation be optimized?
     li.computeIntersection(a0, a1, b0, b1);
     if (! li.hasIntersection()) return 0.0;
-    
+
     /**
      * An intersection creates two edge vectors which contribute to the area.
-     * 
+     *
      * With both rings oriented CW (effectively)
      * There are two situations for segment intersection:
-     * 
+     *
      * 1) A entering B, B exiting A => rays are IP->A1:R, IP->B0:L
      * 2) A exiting B, B entering A => rays are IP->A0:L, IP->B1:R
-     * (where IP is the intersection point, 
+     * (where IP is the intersection point,
      * and  :L/R indicates result polygon interior is to the Left or Right).
-     * 
+     *
      * For accuracy the full edge is used to provide the direction vector.
      */
     Coordinate intPt = li.getIntersection(0);
-    
+
     boolean isAenteringB = Orientation.COUNTERCLOCKWISE == Orientation.index(a0, a1, b1);
-    
+
     if ( isAenteringB ) {
       return EdgeVector.area2Term(intPt, a0, a1, true)
         + EdgeVector.area2Term(intPt, b1, b0, false);
@@ -279,7 +279,7 @@ public class OverlayArea {
        + EdgeVector.area2Term(intPt, b0, b1, true);
     }
   }
-    
+
   private double areaForInteriorVertices(LinearRing ring) {
     /**
      * Compute rays originating at vertices inside the intersection result
@@ -288,7 +288,7 @@ public class OverlayArea {
     double area = 0.0;
     CoordinateSequence seq = ring.getCoordinateSequence();
     boolean isCW = ! Orientation.isCCW(seq);
-    
+
     for (int i = 0; i < seq.size()-1; i++) {
       Coordinate v = seq.getCoordinate(i);
       // quick bounda check
@@ -303,7 +303,7 @@ public class OverlayArea {
     }
     return area;
   }
-  
+
   private double areaForInteriorVerticesIndexed(Geometry geom, KdTree vertexIndex, Envelope env, IndexedPointInAreaLocator locator) {
     /**
      * Compute rays originating at vertices inside the intersection result
@@ -312,7 +312,7 @@ public class OverlayArea {
     double area = 0.0;
     CoordinateSequence seq = getVertices(geom);
     boolean isCW = ! Orientation.isCCW(seq);
-    
+
     List<KdNode> verts = vertexIndex.query(env);
     for (KdNode kdNode : verts) {
       int i = (Integer) kdNode.getData();
@@ -327,16 +327,16 @@ public class OverlayArea {
     }
     return area;
   }
-  
+
   private static CoordinateSequence getVertices(Geometry geom) {
     Polygon poly = (Polygon) geom;
     CoordinateSequence seq = poly.getExteriorRing().getCoordinateSequence();
     return seq;
   }
-  
+
   private static STRtree buildSegmentIndex(Geometry geom) {
     Coordinate[] coords = geom.getCoordinates();
-    
+
     boolean isCCW = Orientation.isCCW(coords);
     STRtree index = new STRtree();
     for (int i = 0; i < coords.length - 1; i++) {

@@ -41,7 +41,7 @@ public class CoordinateXY extends Coordinate {
 
   /**
    * Constructs a CoordinateXY instance with the given ordinates.
-   * 
+   *
    * @param x the X ordinate
    * @param y the Y ordinate
    */
@@ -51,7 +51,7 @@ public class CoordinateXY extends Coordinate {
 
   /**
    * Constructs a CoordinateXY instance with the x and y ordinates of the given Coordinate.
-   * 
+   *
    * @param coord the Coordinate providing the ordinates
    */
   public CoordinateXY(Coordinate coord) {
@@ -60,26 +60,26 @@ public class CoordinateXY extends Coordinate {
 
   /**
    * Constructs a CoordinateXY instance with the x and y ordinates of the given CoordinateXY.
-   * 
+   *
    * @param coord the CoordinateXY providing the ordinates
    */
   public CoordinateXY(CoordinateXY coord) {
-    super(coord.x,coord.y);  
+    super(coord.x,coord.y);
   }
 
   /**
    * Creates a copy of this CoordinateXY.
-   * 
+   *
    * @return a copy of this CoordinateXY
    */
   @Override
 public CoordinateXY copy() {
     return new CoordinateXY(this);
   }
-  
+
   /**
    * Create a new Coordinate of the same type as this Coordinate, but with no values.
-   * 
+   *
    * @return a new Coordinate
    */
   @Override
@@ -97,8 +97,8 @@ public CoordinateXY copy() {
   @Override
   public void setZ(double z) {
       throw new IllegalArgumentException("CoordinateXY dimension 2 does not support z-ordinate");
-  }  
-  
+  }
+
   @Override
   public void setCoordinate(Coordinate other)
   {
@@ -106,7 +106,7 @@ public CoordinateXY copy() {
     y = other.y;
     z = other.getZ();
   }
-  
+
   @Override
   public double getOrdinate(int ordinateIndex) {
       switch (ordinateIndex) {
@@ -117,7 +117,7 @@ public CoordinateXY copy() {
       // disable for now to avoid regression issues
       //throw new IllegalArgumentException("Invalid ordinate index: " + ordinateIndex);
   }
-  
+
   @Override
   public void setOrdinate(int ordinateIndex, double value) {
       switch (ordinateIndex) {
@@ -131,7 +131,7 @@ public CoordinateXY copy() {
         throw new IllegalArgumentException("Invalid ordinate index: " + ordinateIndex);
     }
   }
-  
+
   @Override
 public String toString() {
     return "(" + x + ", " + y + ")";

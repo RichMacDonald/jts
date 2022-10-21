@@ -21,7 +21,7 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 
 /**
- * Extracts a representative {@link Coordinate} 
+ * Extracts a representative {@link Coordinate}
  * from each connected component of a {@link Geometry}.
  *
  * @version 1.9
@@ -65,7 +65,7 @@ public void filter(Geometry geom)
       return;
     // add coordinates from connected components
     if (geom instanceof LineString
-        || geom instanceof Point) 
+        || geom instanceof Point)
       coords.add(geom.getCoordinate());
   }
 

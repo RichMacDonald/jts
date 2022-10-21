@@ -48,7 +48,7 @@ protected void runPtInRing(int expectedLoc, Coordinate pt, String wkt)
    /**
     * See JTS GH Issue #19.
     * Used to infinite-loop on empty geometries.
-    * 
+    *
     * @throws Exception
     */
    public void testEmpty() throws Exception {

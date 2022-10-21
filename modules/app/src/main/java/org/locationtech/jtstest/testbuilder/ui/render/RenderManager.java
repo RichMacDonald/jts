@@ -24,13 +24,13 @@ import org.locationtech.jtstest.testbuilder.GeometryEditPanel;
 import org.locationtech.jtstest.testbuilder.ui.SwingWorker;
 
 
-public class RenderManager 
+public class RenderManager
 {
 	private GeometryEditPanel panel;
   private RendererSwingWorker worker = null;
 	private Image image = null;
 	private boolean isDirty = true;
-	
+
 	private Timer repaintTimer = new Timer(100, e -> {
 		if (worker.isRendering()) {
 			paintPanel();
@@ -51,27 +51,27 @@ public class RenderManager
 	{
 		this.isDirty = isDirty;
 	}
-		
+
 	public void componentResized()
 	{
 		image = null;
 		isDirty = true;
 	}
-	
+
 	public void render()
 	{
 		if (image != null && ! isDirty) return;
-		
+
 		/*
 		 * Clear dirty flag at start of rendering, so that subsequent paints will newly rendered image.
 		 * Another way to think of this is that once rendering has been initiated,
-		 * from the perspective of the client panel the image is up-to-date 
+		 * from the perspective of the client panel the image is up-to-date
 		 * (although possibly not yet fully rendered)
-		 */ 
+		 */
 		isDirty = false;
 
 		repaintTimer.stop();
-	
+
 		if (worker != null)
 			worker.cancel();
 		initImage();
@@ -79,7 +79,7 @@ public class RenderManager
 		worker.start();
 		repaintTimer.start();
 	}
-	
+
 	private void initImage()
 	{
 		if (image != null) {
@@ -88,16 +88,16 @@ public class RenderManager
 		}
 		image = createPanelImage(panel);
 	}
-	
+
   private Image createPanelImage(JPanel panel) {
     return new BufferedImage(panel.getWidth(), panel.getHeight(),
         BufferedImage.TYPE_INT_ARGB);
   }
-  
+
 	public void erase(Image image) {
 		int width = image.getWidth(null);
 		int height = image.getHeight(null);
-		
+
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		g.setColor( panel.getBackgroundColor() );
 
@@ -112,7 +112,7 @@ public class RenderManager
     }
     g.drawImage(image, 0, 0, null);
 	}
-  
+
 	private void paintPanel()
 	{
     copyImage(panel.getGraphics());
@@ -125,13 +125,13 @@ class RendererSwingWorker extends SwingWorker
 
   private Renderer renderer;
 	private boolean isRendering = true;
-	
+
 	public RendererSwingWorker(Renderer renderable, Image image)
 	{
 		this.renderer = renderable;
 		this.image = image;
 	}
-	
+
   @Override
 public Object construct()
   {
@@ -141,7 +141,7 @@ public Object construct()
   	isRendering = false;
     return Boolean.TRUE;
   }
-  
+
   public boolean isRendering()
   {
   	return isRendering;

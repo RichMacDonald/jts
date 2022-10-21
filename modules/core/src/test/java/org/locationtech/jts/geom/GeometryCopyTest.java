@@ -8,11 +8,11 @@ public class GeometryCopyTest extends GeometryTestCase {
   public static void main(String[] args) throws Exception {
     junit.textui.TestRunner.run(GeometryCopyTest.class);
   }
-  
+
   public GeometryCopyTest(String name) {
     super(name);
   }
-  
+
   public void testCopy() {
     checkCopy( read( GeometryTestData.WKT_POINT ));
     checkCopy( read( GeometryTestData.WKT_LINESTRING ));
@@ -27,15 +27,15 @@ public class GeometryCopyTest extends GeometryTestCase {
   private void checkCopy(final Geometry g) {
     int SRID = 123;
     g.setSRID(SRID );
-    
+
     Object DATA = Integer.valueOf(999);
     g.setUserData(DATA);
-    
+
     Geometry copy = g.copy();
-    
+
     assertEquals(g.getSRID(), copy.getSRID());
     assertEquals(g.getUserData(), copy.getUserData());
-    
+
     //TODO: use a test which checks all ordinates of CoordinateSequences
     assertTrue( g.equalsExact(copy) );
   }

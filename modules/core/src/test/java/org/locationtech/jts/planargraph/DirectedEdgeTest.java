@@ -19,7 +19,7 @@ public class DirectedEdgeTest extends TestCase
   {
     super(name);
   }
-  
+
   public void testDirectedEdgeComparator() {
     DirectedEdge d1 = new DirectedEdge(new Node(new Coordinate(0, 0)),
         new Node(new Coordinate(10, 10)), new Coordinate(10, 10), true);

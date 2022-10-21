@@ -88,7 +88,7 @@ public class WKTReadWriteTest extends TestCase {
     assertEquals("GEOMETRYCOLLECTION (POINT (10 10), LINEARRING (10 10, 20 20, 30 40, 10 10), LINESTRING (15 15, 20 20))", writer.write(reader.read("GEOMETRYCOLLECTION (POINT (10 10), LINEARRING (10 10, 20 20, 30 40, 10 10), LINESTRING (15 15, 20 20))")));
     assertEquals("GEOMETRYCOLLECTION EMPTY", writer.write(reader.read("GEOMETRYCOLLECTION EMPTY")));
   }
-  
+
   public void testReadGeometryCollectionEmptyWithElements() throws Exception {
     assertEquals("GEOMETRYCOLLECTION (POINT EMPTY)", writer.write(reader.read("GEOMETRYCOLLECTION ( POINT EMPTY )")));
     assertEquals("GEOMETRYCOLLECTION (POINT EMPTY, LINESTRING EMPTY)", writer.write(reader.read("GEOMETRYCOLLECTION ( POINT EMPTY, LINESTRING EMPTY )")));

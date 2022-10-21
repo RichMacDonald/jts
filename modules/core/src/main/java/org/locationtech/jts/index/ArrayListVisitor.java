@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  * Builds an array of all visited items.
- * 
+ *
  * @version 1.7
  */
 public class ArrayListVisitor
@@ -24,7 +24,7 @@ public class ArrayListVisitor
 {
 
   private ArrayList items = new ArrayList();
-  
+
   /**
    * Creates a new instance.
    */
@@ -33,7 +33,7 @@ public class ArrayListVisitor
 
   /**
    * Visits an item.
-   * 
+   *
    * @param item the item to visit
    */
   @Override
@@ -44,7 +44,7 @@ public void visitItem(Object item)
 
   /**
    * Gets the array of visited items.
-   * 
+   *
    * @return the array of items
    */
   public ArrayList getItems() { return items; }

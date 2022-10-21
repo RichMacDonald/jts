@@ -13,16 +13,16 @@ import junit.textui.TestRunner;
 
 /**
  * Intersection produces point geometry instead of polygonal.
- * 
+ *
  * See https://github.com/locationtech/jts/issues/820
  *
  */
 public class Issue820 extends TestCase {
-  
+
   public static void main(String args[]) {
     TestRunner.run(Issue820.class);
   }
-  
+
   public void testIntersection() {
     Geometry smallerArea = new GeometryFactory().createPolygon(new Coordinate[]{
             new Coordinate(7.04972080711741E-9d, 0.0d),

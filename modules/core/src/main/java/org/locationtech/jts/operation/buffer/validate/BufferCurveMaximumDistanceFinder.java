@@ -28,11 +28,11 @@ import org.locationtech.jts.geom.Geometry;
  * as midpoints of the curve segments.
  * Due to the way buffer curves are constructed, this
  * should be a very close approximation.
- * 
+ *
  * @author mbdavis
  *
  */
-public class BufferCurveMaximumDistanceFinder 
+public class BufferCurveMaximumDistanceFinder
 {
 	private Geometry inputGeom;
   private PointPairDistance maxPtDist = new PointPairDistance();
@@ -41,14 +41,14 @@ public class BufferCurveMaximumDistanceFinder
 	{
 		this.inputGeom = inputGeom;
 	}
-	
+
 	public double findDistance(Geometry bufferCurve)
 	{
     computeMaxVertexDistance(bufferCurve);
     computeMaxMidpointDistance(bufferCurve);
     return maxPtDist.getDistance();
 	}
-	
+
 	public PointPairDistance getDistancePoints()
 	{
 		return maxPtDist;
@@ -59,14 +59,14 @@ public class BufferCurveMaximumDistanceFinder
     curve.apply(distFilter);
     maxPtDist.setMaximum(distFilter.getMaxPointDistance());
 	}
-	
+
 	private void computeMaxMidpointDistance(Geometry curve)
 	{
     MaxMidpointDistanceFilter distFilter = new MaxMidpointDistanceFilter(inputGeom);
     curve.apply(distFilter);
     maxPtDist.setMaximum(distFilter.getMaxPointDistance());
 	}
-	
+
   public static class MaxPointDistanceFilter implements CoordinateFilter {
 		private PointPairDistance maxPtDist = new PointPairDistance();
 		private PointPairDistance minPtDist = new PointPairDistance();
@@ -88,8 +88,8 @@ public class BufferCurveMaximumDistanceFinder
 		}
 	}
 
-  public static class MaxMidpointDistanceFilter 
-  	implements CoordinateSequenceFilter 
+  public static class MaxMidpointDistanceFilter
+  	implements CoordinateSequenceFilter
   	{
 		private PointPairDistance maxPtDist = new PointPairDistance();
 		private PointPairDistance minPtDist = new PointPairDistance();
@@ -100,17 +100,17 @@ public class BufferCurveMaximumDistanceFinder
 		}
 
 		@Override
-		public void filter(CoordinateSequence seq, int index) 
+		public void filter(CoordinateSequence seq, int index)
 		{
 			if (index == 0)
 				return;
-			
+
 			Coordinate p0 = seq.getCoordinate(index - 1);
 			Coordinate p1 = seq.getCoordinate(index);
 			Coordinate midPt = new Coordinate(
 					(p0.x + p1.x)/2,
 					(p0.y + p1.y)/2);
-			
+
 			minPtDist.initialize();
 			DistanceToPointFinder.computeDistance(geom, midPt, minPtDist);
 			maxPtDist.setMaximum(minPtDist);
@@ -118,10 +118,10 @@ public class BufferCurveMaximumDistanceFinder
 
 		@Override
 		public boolean isGeometryChanged() { return false; }
-		
+
 		@Override
 		public boolean isDone() { return false; }
-		
+
 		public PointPairDistance getMaxPointDistance() {
 			return maxPtDist;
 		}

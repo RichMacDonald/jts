@@ -113,7 +113,7 @@ public class RelateBoundaryNodeRuleTest
 
     // closed line has no boundary under SFS rule
     runRelateTest(a, b,  BoundaryNodeRule.OGC_SFS_BOUNDARY_RULE,   "FFFFFF1F2"    );
-    
+
     // closed line has boundary under ENDPOINT rule
     runRelateTest(a, b,  BoundaryNodeRule.ENDPOINT_BOUNDARY_RULE,  "FFFFFF102"    );
   }
@@ -126,7 +126,7 @@ public class RelateBoundaryNodeRuleTest
 
     // closed line has no boundary under SFS rule
     runRelateTest(a, b,  BoundaryNodeRule.OGC_SFS_BOUNDARY_RULE,   "FFFFFF1F2"    );
-    
+
     // closed line has boundary under ENDPOINT rule
     runRelateTest(a, b,  BoundaryNodeRule.ENDPOINT_BOUNDARY_RULE,  "FFFFFF102"    );
   }

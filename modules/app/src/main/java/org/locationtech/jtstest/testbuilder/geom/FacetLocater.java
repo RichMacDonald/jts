@@ -28,20 +28,20 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
 /**
- * Locates the paths to facets (vertices and segments) of 
+ * Locates the paths to facets (vertices and segments) of
  * a {@link Geometry} which are within a given tolerance
  * of a query point.
- * 
- *  
+ *
+ *
  * @author Martin Davis
  *
  */
-public class FacetLocater 
+public class FacetLocater
 {
 	/**
 	 * Creates a list containing all the vertex {@link GeometryLocation}s
 	 * in the input collection.
-	 * 
+	 *
 	 * @param locations the source collection
 	 * @return a list of the vertex locations, if any
 	 */
@@ -54,16 +54,16 @@ public class FacetLocater
 		}
 		return vertexLocs;
 	}
-	
+
   private Geometry parentGeom;
   private List locations = new ArrayList();
   private Coordinate queryPt;
-  private double tolerance = 0.0; 
-  
+  private double tolerance = 0.0;
+
   public FacetLocater(Geometry parentGeom) {
     this.parentGeom = parentGeom;
   }
-  
+
   public List getLocations(Coordinate queryPt, double tolerance)
   {
   	this.queryPt = queryPt;
@@ -71,12 +71,12 @@ public class FacetLocater
     findLocations(locations);
     return locations;
   }
-  
+
   private void findLocations(List locations)
   {
     findLocations(new Stack(), parentGeom, locations);
   }
-    
+
   private void findLocations(Stack path, Geometry geom, List locations)
   {
   	if (geom instanceof GeometryCollection) {
@@ -87,13 +87,13 @@ public class FacetLocater
   			path.pop();
   		}
   	}
-  	else if (geom instanceof Polygon) { 
+  	else if (geom instanceof Polygon) {
   			findLocations(path, (Polygon) geom, locations);
 
   	}
   	else {
   		CoordinateSequence seq;
-  	
+
   		if (geom instanceof LineString) {
    		 seq = ((LineString) geom).getCoordinateSequence();
   		}
@@ -106,19 +106,19 @@ public class FacetLocater
   		findLocations(path, geom, seq, locations);
   	}
   }
-  
+
   private void findLocations(Stack path, Polygon poly, List locations)
   {
 		path.push(0);
-		findLocations(path, 
+		findLocations(path,
 				poly.getExteriorRing(),
 				poly.getExteriorRing().getCoordinateSequence(), locations);
 		path.pop();
-		
+
 		for (int i = 0; i < poly.getNumInteriorRing(); i++ ) {
 			path.push(i + 1);
-			findLocations(path, 
-					poly.getInteriorRingN(i), 
+			findLocations(path,
+					poly.getInteriorRingN(i),
 					poly.getInteriorRingN(i).getCoordinateSequence(), locations);
 			path.pop();
 		}
@@ -135,7 +135,7 @@ public class FacetLocater
   	for (int i = 0; i < seq.size(); i++) {
       Coordinate p = seq.getCoordinate(i);
       double dist = p.distance(queryPt);
-      if (dist <= tolerance) 
+      if (dist <= tolerance)
       	locations.add(new GeometryLocation(parentGeom, compGeom, toIntArray(path), i, true, p));
   	}
   }
@@ -147,7 +147,7 @@ public class FacetLocater
       seg.p0 = seq.getCoordinate(i);
       seg.p1 = seq.getCoordinate(i+1);
       double dist = seg.distance(queryPt);
-      if (dist <= tolerance) 
+      if (dist <= tolerance)
       	locations.add(new GeometryLocation(parentGeom, compGeom, toIntArray(path), i, false, seg.p0));
   	}
   }

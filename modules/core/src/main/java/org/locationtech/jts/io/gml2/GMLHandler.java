@@ -29,30 +29,30 @@ import org.xml.sax.helpers.DefaultHandler;
 
 
 /**
- * A SAX {@link DefaultHandler} which builds {@link Geometry}s 
+ * A SAX {@link DefaultHandler} which builds {@link Geometry}s
  * from GML2-formatted geometries.
  * An XML parser can delegate SAX events to this handler
- * to parse and building Geometrys. 
+ * to parse and building Geometrys.
  * <p>
- * This handler currently ignores both namespaces and prefixes. 
- * 
- * Hints: 
+ * This handler currently ignores both namespaces and prefixes.
+ *
+ * Hints:
  * <ul>
  * <li>If your parent handler is a DefaultHandler register the parent handler to receive the errors and locator calls.
  * <li>Use {@link GeometryStrategies#findStrategy(String, String)} to help check for applicability
  * </ul>
- * 
+ *
  * @see DefaultHandler
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class GMLHandler extends DefaultHandler {
 
 	/**
 	 * This class is intended to log the SAX activity within a given element until its termination.
-	 * At this time, a new object of value is created and passed to the parent. 
+	 * At this time, a new object of value is created and passed to the parent.
 	 * An object of value is typically either java.lang.* or a JTS Geometry
-	 * This class is not intended for use outside this distribution, 
+	 * This class is not intended for use outside this distribution,
 	 * and may change in subsequent versions.
 	 *
 	 * @author David Zwiers, Vivid Solutions.
@@ -63,7 +63,7 @@ public class GMLHandler extends DefaultHandler {
 		protected ParseStrategy strategy;
 
 		/**
-		 * @param strategy 
+		 * @param strategy
 		 * @param attributes Nullable
 		 */
 		public Handler(ParseStrategy strategy, Attributes attributes) {
@@ -88,7 +88,7 @@ public class GMLHandler extends DefaultHandler {
 
 		/**
 		 * Store param for the future
-		 * 
+		 *
 		 * @param obj
 		 */
 		public void keep(Object obj) {
@@ -101,7 +101,7 @@ public class GMLHandler extends DefaultHandler {
 		/**
 		 * @param gf GeometryFactory
 		 * @return Parsed Object
-		 * @throws SAXException 
+		 * @throws SAXException
 		 */
 		public Object create(GeometryFactory gf) throws SAXException {
 			return strategy.parse(this, gf);
@@ -116,17 +116,17 @@ public class GMLHandler extends DefaultHandler {
 
 	/**
 	 * Creates a new handler.
-	 * Allows the user to specify a delegate object for error / warning messages. 
+	 * Allows the user to specify a delegate object for error / warning messages.
 	 * If the delegate also implements ContentHandler then the document Locator will be passed on.
-	 * 
+	 *
 	 * @param gf Geometry Factory
 	 * @param delegate Nullable
-	 * 
+	 *
 	 * @see ErrorHandler
 	 * @see ContentHandler
 	 * @see ContentHandler#setDocumentLocator(org.xml.sax.Locator)
 	 * @see org.xml.sax.Locator
-	 * 
+	 *
 	 */
 	public GMLHandler(GeometryFactory gf, ErrorHandler delegate) {
 		this.delegate = delegate;
@@ -135,29 +135,29 @@ public class GMLHandler extends DefaultHandler {
 	}
 
 	/**
-	 * Tests whether this handler has completed parsing 
+	 * Tests whether this handler has completed parsing
 	 * a geometry.
 	 * If this is the case, {@link #getGeometry()} can be called
 	 * to get the value of the parsed geometry.
-	 * 
+	 *
 	 * @return if the parsing of the geometry is complete
 	 */
 	public boolean isGeometryComplete()
 	{
 		if (stack.size() > 1)
 			return false;
-		// top level node on stack needs to have at least one child 
+		// top level node on stack needs to have at least one child
 		Handler h = (Handler) stack.peek();
 		if (h.children.size() < 1)
 			return false;
 		return true;
-		
+
 	}
-	
+
 	/**
 	 * Gets the geometry parsed by this handler.
 	 * This method should only be called AFTER the parser has completed execution
-	 * 
+	 *
 	 * @return the parsed Geometry, or a GeometryCollection if more than one geometry was parsed
 	 * @throws IllegalStateException if called before the parse is complete
 	 */

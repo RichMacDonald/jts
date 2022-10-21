@@ -32,13 +32,13 @@ import org.locationtech.jts.simplify.LinkedLine;
  * The simplified lines will contain no more intersections than are present
  * in the original input, and line endpoints are preserved.
  * <p>
- * The amount of simplification is determined by a tolerance value, 
- * which is a non-zero quantity. 
- * It is the square root of the area tolerance used 
+ * The amount of simplification is determined by a tolerance value,
+ * which is a non-zero quantity.
+ * It is the square root of the area tolerance used
  * in the Visvalingam-Whyatt algorithm.
  * This equates roughly to the maximum
  * distance by which a simplfied line can change from the original.
- * 
+ *
  * @author mdavis
  *
  */
@@ -46,7 +46,7 @@ class TPVWSimplifier {
 
   /**
    * Simplifies a set of lines, preserving the topology of the lines.
-   * 
+   *
    * @param lines the lines to simplify
    * @param constraints the linear constraints
    * @param distanceTolerance the simplification tolerance
@@ -57,24 +57,24 @@ class TPVWSimplifier {
     MultiLineString result = (MultiLineString) simp.simplify();
     return result;
   }
-  
+
   /**
    * Simplifies a set of lines, preserving the topology of the lines between
    * themselves and a set of linear constraints.
-   * 
+   *
    * @param lines the lines to simplify
    * @param constraints the linear constraints
    * @param distanceTolerance the simplification tolerance
    * @return the simplified lines
    */
-  public static MultiLineString simplify(MultiLineString lines, 
+  public static MultiLineString simplify(MultiLineString lines,
       MultiLineString constraints, double distanceTolerance) {
     TPVWSimplifier simp = new TPVWSimplifier(lines, distanceTolerance);
     simp.setConstraints(constraints);
     MultiLineString result = (MultiLineString) simp.simplify();
     return result;
   }
- 
+
   private MultiLineString input;
   private double areaTolerance;
   private GeometryFactory geomFactory;
@@ -85,7 +85,7 @@ class TPVWSimplifier {
     this.areaTolerance = distanceTolerance * distanceTolerance;
     geomFactory = input.getFactory();
   }
-  
+
   private void setConstraints(MultiLineString constraints) {
     this.constraints = constraints;
   }
@@ -93,11 +93,11 @@ class TPVWSimplifier {
   private Geometry simplify() {
     List<Edge> edges = createEdges(input);
     List<Edge> constraintEdges = createEdges(constraints);
-    
+
     EdgeIndex edgeIndex = new EdgeIndex();
     edgeIndex.add(edges);
     edgeIndex.add(constraintEdges);
-    
+
     LineString[] result = new LineString[edges.size()];
     for (int i = 0 ; i < edges.size(); i++) {
       Edge edge = edges.get(i);
@@ -117,7 +117,7 @@ class TPVWSimplifier {
     }
     return edges;
   }
-  
+
   private static class Edge {
     private double areaTolerance;
     private LinkedLine linkedLine;
@@ -125,14 +125,14 @@ class TPVWSimplifier {
 
     private VertexSequencePackedRtree vertexIndex;
     private Envelope envelope;
-    
+
     Edge(LineString inputLine, double areaTolerance) {
       this.areaTolerance = areaTolerance;
       this.envelope = inputLine.getEnvelopeInternal();
       Coordinate[] pts = inputLine.getCoordinates();
       linkedLine = new LinkedLine(pts);
       minEdgeSize = linkedLine.isRing() ? 3 : 2;
-      
+
       vertexIndex = new VertexSequencePackedRtree(pts);
       //-- remove ring duplicate final vertex
       if (linkedLine.isRing()) {
@@ -143,19 +143,19 @@ class TPVWSimplifier {
     private Coordinate getCoordinate(int index) {
       return linkedLine.getCoordinate(index);
     }
-  
+
     public Envelope getEnvelope() {
       return envelope;
     }
-    
+
     public int size() {
       return linkedLine.size();
     }
-    
-    private Coordinate[] simplify(EdgeIndex edgeIndex) {        
+
+    private Coordinate[] simplify(EdgeIndex edgeIndex) {
       PriorityQueue<Corner> cornerQueue = createQueue();
 
-      while (! cornerQueue.isEmpty() 
+      while (! cornerQueue.isEmpty()
           && size() > minEdgeSize) {
         Corner corner = cornerQueue.poll();
         //-- a corner may no longer be valid due to removal of adjacent corners
@@ -179,7 +179,7 @@ class TPVWSimplifier {
       }
       return cornerQueue;
     }
-    
+
     private void addCorner(int i, PriorityQueue<Corner> cornerQueue) {
       if (! linkedLine.isCorner(i))
         return;
@@ -187,14 +187,14 @@ class TPVWSimplifier {
       if (corner.getArea() <= areaTolerance) {
         cornerQueue.add(corner);
       }
-    }  
-    
+    }
+
     private boolean isRemovable(Corner corner, EdgeIndex edgeIndex) {
       Envelope cornerEnv = corner.envelope();
       //-- check nearby lines for violating intersections
       //-- the query also returns this line for checking
       for (Edge edge : edgeIndex.query(cornerEnv)) {
-        if (hasIntersectingVertex(corner, cornerEnv, edge)) 
+        if (hasIntersectingVertex(corner, cornerEnv, edge))
           return false;
         //-- check if corner base equals line (2-pts)
         //-- if so, don't remove corner, since that would collapse to the line
@@ -210,13 +210,13 @@ class TPVWSimplifier {
     /**
      * Tests if any vertices in a line intersect the corner triangle.
      * Uses the vertex spatial index for efficiency.
-     * 
+     *
      * @param corner the corner vertices
      * @param cornerEnv the envelope of the corner
      * @param hull the hull to test
      * @return true if there is an intersecting vertex
      */
-    private boolean hasIntersectingVertex(Corner corner, Envelope cornerEnv, 
+    private boolean hasIntersectingVertex(Corner corner, Envelope cornerEnv,
         Edge edge) {
       int[] result = edge.query(cornerEnv);
       for (int index : result) {
@@ -224,7 +224,7 @@ class TPVWSimplifier {
         // ok if corner touches another line - should only happen at endpoints
         if (corner.isVertex(v))
             continue;
-        
+
         //--- does corner triangle contain vertex?
         if (corner.intersects(v))
           return true;
@@ -241,7 +241,7 @@ class TPVWSimplifier {
      * Two new corners are created with apexes
      * at the other vertices of the corner
      * (if they are non-convex and thus removable).
-     * 
+     *
      * @param corner the corner to remove
      * @param cornerQueue the corner queue
      */
@@ -251,7 +251,7 @@ class TPVWSimplifier {
       int next = linkedLine.next(index);
       linkedLine.remove(index);
       vertexIndex.remove(index);
-      
+
       //-- potentially add the new corners created
       addCorner(prev, cornerQueue);
       addCorner(next, cornerQueue);
@@ -262,24 +262,24 @@ class TPVWSimplifier {
       return linkedLine.toString();
     }
   }
-  
+
   private static class EdgeIndex {
 
-    STRtree index = new STRtree(); 
-    
+    STRtree index = new STRtree();
+
     public void add(List<Edge> edges) {
       for (Edge edge : edges) {
         add(edge);
       }
     }
-    
+
     public void add(Edge edge) {
       index.insert(edge.getEnvelope(), edge);
     }
-    
+
     public List<Edge> query(Envelope queryEnv) {
       return index.query(queryEnv);
     }
   }
-  
+
 }

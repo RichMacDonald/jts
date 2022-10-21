@@ -45,10 +45,10 @@ import org.locationtech.jtstest.testbuilder.model.TestCaseEdit;
  */
 public class ValidPanel extends JPanel {
   private static final int TEXT_BOX_WIDTH = 240;
-  
+
   TestCaseEdit testCase;
   private Coordinate markPoint = null;
-  
+
   //===========================================
   JTextField txtIsValid = new JTextField();
   JTextField txtIsSimple = new JTextField();
@@ -82,17 +82,17 @@ public class ValidPanel extends JPanel {
     JButton btnSimple = new JButton();
     btnSimple.setText("Simple?");
     btnSimple.addActionListener(this::btnSimple_actionPerformed);
-    
+
     JButton btnClear = new JButton();
     btnClear.setText("Clear");
     btnClear.addActionListener(e -> clearAll());
-    
-    
+
+
     cbInvertedRingAllowed = new JCheckBox();
     cbInvertedRingAllowed.setToolTipText(AppStrings.TIP_ALLOW_INVERTED_RINGS);
     cbInvertedRingAllowed.setAlignmentX(Component.LEFT_ALIGNMENT);
     cbInvertedRingAllowed.setText("Allow Inverted Rings");
-    
+
     txtIsValid.setBackground(AppColors.BACKGROUND);
     txtIsValid.setEditable(false);
     //txtIsValid.setText("Y");
@@ -100,52 +100,52 @@ public class ValidPanel extends JPanel {
     Dimension flagSize = new Dimension(40, 24);
     txtIsValid.setMinimumSize(flagSize);
     txtIsValid.setPreferredSize(flagSize);
-    
+
     txtIsSimple.setBackground(AppColors.BACKGROUND);
     txtIsSimple.setEditable(false);
     txtIsSimple.setHorizontalAlignment(SwingConstants.CENTER);
     txtIsSimple.setMinimumSize(flagSize);
     txtIsSimple.setPreferredSize(flagSize);
-    
+
     taInvalidMsg.setPreferredSize(new Dimension(TEXT_BOX_WIDTH, 80));
     taInvalidMsg.setMaximumSize(new Dimension(TEXT_BOX_WIDTH, 80));
     taInvalidMsg.setMinimumSize(new Dimension(TEXT_BOX_WIDTH, 80));
-    
+
     taInvalidMsg.setLineWrap(true);
     taInvalidMsg.setBorder(BorderFactory.createLoweredBevelBorder());
     taInvalidMsg.setToolTipText("");
     taInvalidMsg.setBackground(AppColors.BACKGROUND);
     taInvalidMsg.setEditable(true);
     taInvalidMsg.setFont(new java.awt.Font("SansSerif", 0, 12));
-    
+
     lblValidSimple.setToolTipText("");
     lblValidSimple.setText("Valid / Simple ");
-    
+
     lblMark.setToolTipText("");
     lblMark.setText("Mark Point ( X Y ) ");
-    
+
     btnClearMark.setToolTipText("");
     btnClearMark.setText("Clear Mark");
     btnClearMark.addActionListener(e -> clearMark());
-    
+
     btnSetMark.setToolTipText("");
     btnSetMark.setText("Set Mark");
     btnSetMark.addActionListener(this::btnSetMark_actionPerformed);
-    
+
     JPanel panelValidSimple = new JPanel();
     panelValidSimple.add(btnValidate);
     panelValidSimple.add(txtIsValid);
-    
+
     JPanel panelSimple = new JPanel();
     panelSimple.add(btnSimple);
     panelSimple.add(txtIsSimple);
-   
+
     JPanel panelMsg = new JPanel();
     panelMsg.add(taInvalidMsg);
-    
+
     JPanel panelClear = new JPanel();
     panelClear.add(btnClear);
-    
+
     jPanel1.setLayout(new GridBagLayout());
     jPanel1.add(panelSimple, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0
         ,GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(10, 5, 10, 5), 0, 0));
@@ -153,7 +153,7 @@ public class ValidPanel extends JPanel {
         ,GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(10, 5, 10, 5), 0, 0));
     jPanel1.add(cbInvertedRingAllowed, new GridBagConstraints(0, 3, 2, 1, 1.0, 0.0
         ,GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(4, 0, 4, 0), 10, 0));
-    
+
     /*jPanel1.add(lblValidSimple, new GridBagConstraints(0, 4, 1, 1, 1.0, 0.0
             ,GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 4, 0, 4), 0, 0));
 */
@@ -165,7 +165,7 @@ public class ValidPanel extends JPanel {
         ,GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 4, 0, 4), 0, 0));
     jPanel1.add(panelClear, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0
         ,GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0, 4, 0, 4), 0, 0));
-   
+
     //----------------------------------------------
     txtMarkLocation.setBorder(BorderFactory.createLoweredBevelBorder());
     txtMarkLocation.setToolTipText("");
@@ -177,16 +177,16 @@ public class ValidPanel extends JPanel {
     txtMarkLocation.setMaximumSize(markDim);
     txtMarkLocation.setMinimumSize(markDim);
 
-    
+
     markPanel.setLayout(new BorderLayout());
-    
+
     markBtnPanel.add(btnSetMark);
     markBtnPanel.add(btnClearMark);
     markPanel.add(lblMark, BorderLayout.NORTH);
     markPanel.add(txtMarkLocation, BorderLayout.CENTER);
     //markPanel.add(txtMarkLabel, BorderLayout.CENTER);
     markPanel.add(markBtnPanel, BorderLayout.SOUTH);
-    
+
     //----------------------------------------------
     this.setLayout(new BorderLayout());
     this.add(jPanel1, BorderLayout.CENTER);
@@ -206,7 +206,7 @@ public class ValidPanel extends JPanel {
     clearMark();
   }
 
-  void btnValidate_actionPerformed(ActionEvent e) 
+  void btnValidate_actionPerformed(ActionEvent e)
   {
     TopologyValidationError err = null;
     if (testCase.getGeometry(0) != null) {
@@ -228,14 +228,14 @@ public class ValidPanel extends JPanel {
     setFlagText(txtIsValid, isValid);
     setMarkPoint(invalidPoint);
   }
-  void btnSimple_actionPerformed(ActionEvent e) 
+  void btnSimple_actionPerformed(ActionEvent e)
   {
   	boolean isSimple = true;
   	Coordinate nonSimpleLoc = null;
   	if (testCase.getGeometry(0) != null) {
       IsSimpleOp simpleOp = new IsSimpleOp(testCase.getGeometry(0));
       isSimple = simpleOp.isSimple();
-      nonSimpleLoc = simpleOp.getNonSimpleLocation(); 
+      nonSimpleLoc = simpleOp.getNonSimpleLocation();
     }
     String msg = isSimple ?
     		""
@@ -244,17 +244,17 @@ public class ValidPanel extends JPanel {
     setFlagText(txtIsSimple, isSimple);
     setMarkPoint(nonSimpleLoc);
   }
-  
+
   private void setFlagText(JTextField txt, boolean val) {
     txt.setText(val ? "Y" : "N");
     txt.setBackground(val ? AppColors.BACKGROUND : AppColors.BACKGROUND_ERROR);
   }
-  
+
   private void clearFlag(JTextField txt) {
     txt.setText("");
     txt.setBackground(AppColors.BACKGROUND);
   }
-  
+
   private void setMarkPoint(Coordinate coord)
   {
     markPoint = coord;
@@ -265,11 +265,11 @@ public class ValidPanel extends JPanel {
     txtMarkLocation.setText(markText);
     fireSetHighlightPerformed(new ValidPanelEvent(this));
   }
-  
+
   private void clearMark() {
     setMarkPoint(null);
   }
-  
+
   public synchronized void removeValidPanelListener(ValidPanelListener l) {
     if (validPanelListeners != null && validPanelListeners.contains(l)) {
       Vector v = (Vector) validPanelListeners.clone();
@@ -316,7 +316,7 @@ public class ValidPanel extends JPanel {
     String s = xy[index];
     try {
       return Double.parseDouble(s);
-    } 
+    }
     catch (NumberFormatException ex)
     {
       // just eat it - not much we can do

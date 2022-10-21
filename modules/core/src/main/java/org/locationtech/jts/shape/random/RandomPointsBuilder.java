@@ -23,13 +23,13 @@ import org.locationtech.jts.geom.Polygonal;
 import org.locationtech.jts.shape.GeometricShapeBuilder;
 
 /**
- * Creates random point sets contained in a 
- * region defined by either a rectangular or a polygonal extent. 
- * 
+ * Creates random point sets contained in a
+ * region defined by either a rectangular or a polygonal extent.
+ *
  * @author mbdavis
  *
  */
-public class RandomPointsBuilder 
+public class RandomPointsBuilder
 extends GeometricShapeBuilder
 {
   protected Geometry maskPoly = null;
@@ -57,7 +57,7 @@ extends GeometricShapeBuilder
 
   /**
    * Sets a polygonal mask.
-   * 
+   *
    * @param mask
    * @throws IllegalArgumentException if the mask is not polygonal
    */
@@ -69,7 +69,7 @@ extends GeometricShapeBuilder
   	setExtent(mask.getEnvelopeInternal());
   	extentLocator = new IndexedPointInAreaLocator(mask);
   }
-  
+
   @Override
 public Geometry getGeometry()
   {
@@ -83,14 +83,14 @@ public Geometry getGeometry()
   	}
   	return geomFactory.createMultiPointFromCoords(pts);
   }
-  
+
   protected boolean isInExtent(Coordinate p)
   {
-  	if (extentLocator != null) 
+  	if (extentLocator != null)
   		return extentLocator.locate(p) != Location.EXTERIOR;
   	return getExtent().contains(p);
   }
-  
+
   @Override
 protected Coordinate createCoord(double x, double y)
   {
@@ -98,7 +98,7 @@ protected Coordinate createCoord(double x, double y)
   	geomFactory.getPrecisionModel().makePrecise(pt);
     return pt;
   }
-  
+
   protected Coordinate createRandomCoord(Envelope env)
   {
     double x = env.getMinX() + env.getWidth() * Math.random();

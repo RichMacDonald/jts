@@ -24,31 +24,31 @@ import org.locationtech.jts.geom.util.GeometryTransformer;
 import org.locationtech.jts.operation.overlayng.PrecisionReducer;
 
 /**
- * A transformer to reduce the precision of geometry in a 
+ * A transformer to reduce the precision of geometry in a
  * topologically valid way.
  * Repeated points are removed.
- * If geometry elements collapse below their valid length, 
- * they may be removed 
+ * If geometry elements collapse below their valid length,
+ * they may be removed
  * by specifying <code>isRemoveCollapsed</code as <code>true</code>.
- * 
+ *
  * @author mdavis
  *
  */
 class PrecisionReducerTransformer extends GeometryTransformer {
-  
+
   public static Geometry reduce(Geometry geom, PrecisionModel targetPM, boolean isRemoveCollapsed) {
     PrecisionReducerTransformer trans = new PrecisionReducerTransformer(targetPM, isRemoveCollapsed);
     return trans.transform(geom);
   }
-  
+
   private PrecisionModel targetPM;
   private boolean isRemoveCollapsed = false;
-  
+
   PrecisionReducerTransformer(PrecisionModel targetPM, boolean isRemoveCollapsed) {
     this.targetPM = targetPM;
     this.isRemoveCollapsed  = isRemoveCollapsed;
   }
-  
+
   @Override
 protected CoordinateSequence transformCoordinates(
       CoordinateSequence coordinates, Geometry parent) {

@@ -21,43 +21,43 @@ import org.locationtech.jts.geom.GeometryFilter;
 /**
  * Computes an interior point of a <code>{@link Geometry}</code>.
  * An interior point is guaranteed to lie in the interior of the Geometry,
- * if it possible to calculate such a point exactly. 
+ * if it possible to calculate such a point exactly.
  * Otherwise, the point may lie on the boundary of the geometry.
- * For collections the interior point is computed for the collection of 
- * non-empty elements of highest dimension.  
+ * For collections the interior point is computed for the collection of
+ * non-empty elements of highest dimension.
  * The interior point of an empty geometry is <code>null</code>.
- * 
+ *
  * <h2>Algorithm</h2>
  * The point is chosen to be "close to the center" of the geometry.
  * The location depends on the dimension of the input:
- * 
+ *
  * <ul>
  * <li><b>Dimension 2</b> - the interior point is constructed in the middle of the longest interior segment
  * of a line bisecting the area.
- * 
+ *
  * <li><b>Dimension 1</b> - the interior point is the interior or boundary vertex closest to the centroid.
 
  * <li><b>Dimension 0</b> - the point is the point closest to the centroid.
- * </ul> 
- * 
+ * </ul>
+ *
  * @see Centroid
  * @see MaximumInscribedCircle
  * @see LargestEmptyCircle
  */
 public class InteriorPoint {
-  
+
   /**
    * Computes a location of an interior point in a {@link Geometry}.
    * Handles all geometry types.
-   * 
+   *
    * @param geom a geometry in which to find an interior point
-   * @return the location of an interior point, 
+   * @return the location of an interior point,
    *  or <code>null</code> if the input is empty
    */
   public static Coordinate getInteriorPoint(Geometry geom) {
-    if (geom.isEmpty()) 
+    if (geom.isEmpty())
       return null;
-    
+
     Coordinate interiorPt = null;
     //int dim = geom.getDimension();
     int dim = effectiveDimension(geom);
@@ -82,15 +82,15 @@ public class InteriorPoint {
     geom.apply(dimFilter);
     return dimFilter.getDimension();
   }
-  
+
   private static class EffectiveDimensionFilter implements GeometryFilter
   {
     private int dim = -1;
-    
+
     public int getDimension() {
       return dim;
     }
-    
+
     @Override
 	public void filter(Geometry elem) {
       if (elem instanceof GeometryCollection)

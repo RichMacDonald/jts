@@ -24,11 +24,11 @@ public class JTSTestReflectionException
   public JTSTestReflectionException(String message) {
     super(message);
   }
-  
+
   public JTSTestReflectionException(String opName, Object[] args) {
     super(createMessage(opName, args));
   }
-  
+
   private static String createMessage(String opName, Object[] args) {
 		StringBuilder msg = new StringBuilder("Could not find Geometry method: ").append(opName).append("(");
 		for (int j = 0; j < args.length; j++) {

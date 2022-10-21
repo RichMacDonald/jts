@@ -21,10 +21,10 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 
 /**
- * Represents a {@link LineString} which can be modified to a simplified shape.  
+ * Represents a {@link LineString} which can be modified to a simplified shape.
  * This class provides an attribute which specifies the minimum allowable length
  * for the modified result.
- * 
+ *
  * @version 1.7
  */
 class TaggedLineString

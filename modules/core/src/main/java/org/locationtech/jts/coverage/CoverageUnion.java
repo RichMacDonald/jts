@@ -19,14 +19,14 @@ import org.locationtech.jts.geom.GeometryFactory;
  * Unions a polygonal coverage in an efficient way.
  * <p>
  * Valid polygonal coverage topology allows merging polygons in a very efficient way.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class CoverageUnion {
   /**
    * Unions a polygonal coverage.
-   * 
+   *
    * @param coverage the polygons in the coverage
    * @return the union of the coverage polygons
    */

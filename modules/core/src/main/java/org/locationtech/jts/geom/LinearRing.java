@@ -128,7 +128,7 @@ public boolean isClosed() {
 public String getGeometryType() {
     return Geometry.TYPENAME_LINEARRING;
   }
-  
+
   @Override
 protected int getTypeCode() {
     return Geometry.TYPECODE_LINEARRING;

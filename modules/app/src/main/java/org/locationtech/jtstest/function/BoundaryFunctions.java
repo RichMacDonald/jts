@@ -15,7 +15,7 @@ import org.locationtech.jts.algorithm.BoundaryNodeRule;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.operation.BoundaryOp;
 
-public class BoundaryFunctions {  
+public class BoundaryFunctions {
   public static Geometry boundary(Geometry g) {      return g.getBoundary();  }
 
   public static Geometry boundaryMod2(Geometry g) {
@@ -30,5 +30,5 @@ public class BoundaryFunctions {
   public static Geometry boundaryMultiValentEnd(Geometry g) {
     return BoundaryOp.getBoundary(g, BoundaryNodeRule.MULTIVALENT_ENDPOINT_BOUNDARY_RULE);
   }
-  
+
 }

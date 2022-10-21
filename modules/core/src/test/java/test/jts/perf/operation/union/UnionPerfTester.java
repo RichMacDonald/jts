@@ -26,25 +26,25 @@ import org.locationtech.jts.util.Stopwatch;
 
 
 
-public class UnionPerfTester 
+public class UnionPerfTester
 {
   public static final int CASCADED = 1;
   public static final int ITERATED = 2;
   public static final int BUFFER0 = 3;
   public static final int ORDERED = 4;
-  
+
   public static void run(String testName, int testType, List polys)
   {
   	UnionPerfTester test = new UnionPerfTester(polys);
   	test.run(testName, testType);
   }
-  
+
   public static void runAll(List polys)
   {
   	UnionPerfTester test = new UnionPerfTester(polys);
   	test.runAll();
   }
-  
+
   static final int MAX_ITER = 1;
 
   static PrecisionModel pm = new PrecisionModel();
@@ -54,15 +54,15 @@ public class UnionPerfTester
 
   Stopwatch sw = new Stopwatch();
   GeometryFactory factory = new GeometryFactory();
-  
+
   private List polys;
-  
+
   public UnionPerfTester(List polys) {
   	this.polys = polys;
   }
 
 
-  
+
   public void runAll()
   {
     System.out.println("# items: " + polys.size());
@@ -92,7 +92,7 @@ public class UnionPerfTester
         union = unionAllBuffer(polys);
         break;
     	}
-      
+
 //    	printFormatted(union);
 
     }
@@ -104,21 +104,21 @@ public class UnionPerfTester
   	WKTWriter writer = new WKTWriter();
   	System.out.println(writer.writeFormatted(geom));
   }
-  
+
   public Geometry unionAllSimple(List geoms)
   {
     Geometry unionAll = null;
     int count = 0;
     for (Object geom2 : geoms) {
       Geometry geom = (Geometry) geom2;
-      
+
       if (unionAll == null) {
       	unionAll = geom.copy();
       }
       else {
       	unionAll = unionAll.union(geom);
       }
-      
+
       count++;
       if (count % 100 == 0) {
         System.out.print(".");
@@ -127,27 +127,27 @@ public class UnionPerfTester
     }
     return unionAll;
   }
-  
+
   public Geometry unionAllBuffer(List geoms)
   {
-  	
+
   	Geometry gColl = factory.buildGeometry(geoms);
   	Geometry unionAll = gColl.buffer(0.0);
     return unionAll;
   }
-  
+
   public Geometry unionCascaded(List geoms)
   {
   	return CascadedPolygonUnion.union(geoms);
   }
-  
+
   /*
   public Geometry unionAllOrdered(List geoms)
   {
 //  	return OrderedUnion.union(geoms);
   }
   */
-  
+
   void printItemEnvelopes(List tree)
   {
     Envelope itemEnv = new Envelope();

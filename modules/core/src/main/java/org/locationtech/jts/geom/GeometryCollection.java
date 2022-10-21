@@ -289,7 +289,7 @@ protected int compareToSameClass(Object o, CoordinateSequenceComparator comp) {
     return 0;
 
   }
-  
+
   @Override
 protected int getTypeCode() {
     return Geometry.TYPECODE_GEOMETRYCOLLECTION;

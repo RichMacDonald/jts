@@ -17,17 +17,17 @@ import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
 public class SortedPackedIntervalRTreeTest extends TestCase {
-  
+
   public static void main(String args[]) {
     TestRunner.run(SortedPackedIntervalRTreeTest.class);
   }
 
   public SortedPackedIntervalRTreeTest(String name) { super(name); }
-  
+
   /**
    * See JTS GH Issue #19.
    * Used to infinite-loop on empty geometries.
-   * 
+   *
    */
   public void testEmpty() {
     SortedPackedIntervalRTree spitree = new SortedPackedIntervalRTree();

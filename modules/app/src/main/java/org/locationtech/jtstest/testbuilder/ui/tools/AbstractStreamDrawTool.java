@@ -33,7 +33,7 @@ public abstract class AbstractStreamDrawTool extends LineBandTool {
   @Override
 protected void mouseLocationChanged(MouseEvent e) {
     try {
-      if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK) 
+      if ((e.getModifiersEx() & InputEvent.BUTTON1_DOWN_MASK)
           == InputEvent.BUTTON1_DOWN_MASK) {
         Coordinate newCoord = toModelCoordinate(e.getPoint());
         if (newCoord.distance(lastCoordinate()) < gridSize())

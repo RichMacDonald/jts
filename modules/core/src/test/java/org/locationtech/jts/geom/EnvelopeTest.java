@@ -208,7 +208,7 @@ public class EnvelopeTest extends TestCase {
     assertEquals(2, e2.getMaxX(), 1E-5);
     assertEquals(3, e2.getMinY(), 1E-5);
     assertEquals(4, e2.getMaxY(), 1E-5);
-    
+
     Envelope eNull = new Envelope();
     Envelope eNullCopy = eNull.copy();
     assertTrue(eNullCopy.isNull());
@@ -221,16 +221,16 @@ public class EnvelopeTest extends TestCase {
 		checkExpectedEnvelopeGeometry("POINT (100 13)");
 		checkExpectedEnvelopeGeometry("LINESTRING (0 0, 0 10)");
 		checkExpectedEnvelopeGeometry("LINESTRING (0 0, 10 0)");
-		
+
 		String poly10 = "POLYGON ((0 10, 10 10, 10 0, 0 0, 0 10))";
 		checkExpectedEnvelopeGeometry(poly10);
-		
+
 		checkExpectedEnvelopeGeometry("LINESTRING (0 0, 10 10)",
 				poly10);
 		checkExpectedEnvelopeGeometry("POLYGON ((5 10, 10 6, 5 0, 0 6, 5 10))",
 				poly10);
 	}
-	
+
   public void testMetrics() {
     Envelope env = new Envelope(0, 4, 0, 3);
     assertEquals(env.getWidth(), 4.0);
@@ -252,17 +252,17 @@ public class EnvelopeTest extends TestCase {
 		checkIntersects(a1x, a2y, a2x, a1y, b1x, b2y, b2x, b1y, expected);
 	}
 	private void checkIntersects(double a1x, double a1y, double a2x, double a2y, double b1x, double b1y, double b2x, double b2y, boolean expected) {
-		Envelope a = new Envelope(a1x, a2x, a1y, a2y); 
-		Envelope b = new Envelope(b1x, b2x, b1y, b2y); 
+		Envelope a = new Envelope(a1x, a2x, a1y, a2y);
+		Envelope b = new Envelope(b1x, b2x, b1y, b2y);
     assertEquals(expected, a.intersects(b));
     assertEquals(expected, ! a.disjoint(b));
-		
+
 		Coordinate a1 = new Coordinate(a1x, a1y);
 		Coordinate a2 = new Coordinate(a2x, a2y);
 		Coordinate b1 = new Coordinate(b1x, b1y);
 		Coordinate b2 = new Coordinate(b2x, b2y);
     assertEquals(expected, Envelope.intersects(a1, a2, b1, b2));
-		
+
 		assertEquals(expected, a.intersects(b1, b2));
 	}
 
@@ -271,19 +271,19 @@ public class EnvelopeTest extends TestCase {
 	{
 		checkExpectedEnvelopeGeometry(wktInput, wktInput);
 	}
-	
+
 	void checkExpectedEnvelopeGeometry(String wktInput, String wktEnvGeomExpected)
 		throws ParseException
 	{
 		Geometry input = reader.read(wktInput);
 		Geometry envGeomExpected = reader.read(wktEnvGeomExpected);
-		
+
 		Envelope env = input.getEnvelopeInternal();
 		Geometry envGeomActual = geometryFactory.toGeometry(env);
 		boolean isEqual = envGeomActual.equalsNorm(envGeomExpected);
 		assertTrue(isEqual);
 	}
-	
+
 	public void testCompareTo()
 	{
 	  checkCompareTo(0, new Envelope(), new Envelope());
@@ -293,7 +293,7 @@ public class EnvelopeTest extends TestCase {
 	  checkCompareTo(1, new Envelope(1,2, 1,3), new Envelope(1,2, 1,2));
 	  checkCompareTo(1, new Envelope(2,3, 1,3), new Envelope(1,3, 1,2));
 	}
-	
+
 	public void checkCompareTo(int expected, Envelope env1, Envelope env2)
 	{
           assertTrue(expected == env1.compareTo(env2));

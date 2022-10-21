@@ -30,7 +30,7 @@ public class CoordinateSequenceExperiment2 {
     public static void main(String[] args) throws Exception {
         CoordinateSequenceExperiment2 test = new CoordinateSequenceExperiment2();
 //        System.out.println("Press Enter to begin");
-//        System.in.read();        
+//        System.in.read();
         test.run();
         System.exit(0);
     }
@@ -51,14 +51,14 @@ public class CoordinateSequenceExperiment2 {
         double size = 100.0;
         double armLen = 50.0;
         int nArms = 10;
-        long startTime = System.currentTimeMillis();        
+        long startTime = System.currentTimeMillis();
         Polygon poly = GeometryTestFactory.createSineStar(fact, 0.0, 0.0, size,
                 armLen, nArms, nPts);
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         String totalTimeStr = totalTime < 10000 ? totalTime + " ms"
                                                 : totalTime / 1000.0 + " s";
-        System.out.println("Sine Star Creation Executed in " + totalTimeStr);        
+        System.out.println("Sine Star Creation Executed in " + totalTimeStr);
 
         Polygon box = GeometryTestFactory.createBox(fact, 0, 0, 1, 100.0);
 
@@ -85,8 +85,8 @@ public class CoordinateSequenceExperiment2 {
         long totalTime = endTime - startTime;
         String totalTimeStr = totalTime < 10000 ? totalTime + " ms"
                                                 : totalTime / 1000.0 + " s";
-        System.out.println("Sine Star Creation Executed in " + totalTimeStr);        
-                
+        System.out.println("Sine Star Creation Executed in " + totalTimeStr);
+
 
         //RobustDeterminant.callCount = 0;
         System.out.println("n Pts: " + nPts);

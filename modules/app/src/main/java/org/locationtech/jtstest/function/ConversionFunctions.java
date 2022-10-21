@@ -27,7 +27,7 @@ import org.locationtech.jts.geom.Polygonal;
 import org.locationtech.jts.geom.util.LinearComponentExtracter;
 import org.locationtech.jts.geom.util.PolygonExtracter;
 
-public class ConversionFunctions 
+public class ConversionFunctions
 {
   public static Geometry pointsToLine(Geometry g)
   {
@@ -35,7 +35,7 @@ public class ConversionFunctions
     LineString line = g.getFactory().createLineString(pts);
     return line;
   }
-  
+
   public static Geometry lineToPolygon(Geometry g)
   {
     if (g instanceof Polygonal) return g;
@@ -49,7 +49,7 @@ public class ConversionFunctions
     LinearRing ring = g.getFactory().createLinearRing(ringList.toCoordinateArray());
     return g.getFactory().createPolygon(ring, null);
   }
-  
+
   public static Geometry toPoints(Geometry g1, Geometry g2)
   {
     Geometry geoms = FunctionsUtil.buildGeometry(g1, g2);

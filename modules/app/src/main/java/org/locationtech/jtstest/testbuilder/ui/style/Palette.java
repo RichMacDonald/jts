@@ -22,10 +22,10 @@ public class Palette {
   public static final int TYPE_VARY = 2;
   public static final int TYPE_SPECTRUM = 3;
   public static final int TYPE_SPECTRUM_RANDOM = 4;
-  
+
   private static final float BRIGHT_RANGE = 0.1f;
   private static final float SAT_RANGE = 0.2f;
-  
+
   public static HSBPalette customPalette(int paletteType, Color clrBase, int numHues) {
     HSBPalette pal = null;
     float sat = ColorUtil.getSaturation(clrBase);

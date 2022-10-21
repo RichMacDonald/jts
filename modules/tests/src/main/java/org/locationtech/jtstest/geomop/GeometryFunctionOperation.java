@@ -20,7 +20,7 @@ import org.locationtech.jtstest.testrunner.JTSTestReflectionException;
 import org.locationtech.jtstest.testrunner.Result;
 
 /**
- * Invokes a function from registry 
+ * Invokes a function from registry
  * or a Geometry method determined by a named operation with a list of arguments,
  * the first of which is a {@link Geometry}.
  * This class allows overriding Geometry methods
@@ -53,7 +53,7 @@ public Class getReturnType(String opName)
   		return defaultOp.getReturnType(opName);
   	return func.getReturnType();
   }
-  
+
   @Override
 public Result invoke(String opName, Geometry geometry, Object[] args)
       throws Exception
@@ -61,7 +61,7 @@ public Result invoke(String opName, Geometry geometry, Object[] args)
   	GeometryFunction func = registry.find(opName, args.length);
   	if (func == null)
       return defaultOp.invoke(opName, geometry, args);
-  	
+
     return invoke(func, geometry, args);
   }
 

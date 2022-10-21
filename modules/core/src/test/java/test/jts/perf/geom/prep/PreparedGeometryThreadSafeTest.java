@@ -26,7 +26,7 @@ import test.jts.perf.ThreadTestRunner;
 
 /**
  * Tests for race conditions in the PreparedGeometry classes.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -38,15 +38,15 @@ public class PreparedGeometryThreadSafeTest extends ThreadTestCase
 
   int nPts = 1000;
   GeometryFactory factory = new GeometryFactory(new PrecisionModel(1.0));
-  
+
   protected PreparedGeometry pg;
   protected Geometry g;
 
   public PreparedGeometryThreadSafeTest()
   {
-    
+
   }
-  
+
   @Override
 public void setup()
   {
@@ -54,7 +54,7 @@ public void setup()
     pg = PreparedGeometryFactory.prepare(sinePoly);
     g = createSineStar(new Coordinate(10, 10), 100000.0, 100);
   }
-  
+
   Geometry createSineStar(Coordinate origin, double size, int nPts) {
     SineStarFactory gsf = new SineStarFactory(factory);
     gsf.setCentre(origin);
@@ -65,7 +65,7 @@ public void setup()
     Geometry poly = gsf.createSineStar();
     return poly;
   }
-  
+
   @Override
   public Runnable getRunnable(final int threadIndex)
   {

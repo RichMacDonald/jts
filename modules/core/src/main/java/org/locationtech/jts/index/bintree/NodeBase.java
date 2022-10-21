@@ -70,7 +70,7 @@ public abstract class NodeBase {
    * Adds items in the tree which potentially overlap the query interval
    * to the given collection.
    * If the query interval is <tt>null</tt>, add all items in the tree.
-   * 
+   *
    * @param interval a query interval, or null
    * @param resultItems the candidate items found
    */

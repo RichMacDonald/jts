@@ -42,19 +42,19 @@ public class STRtreeTest extends TestCase {
     junit.textui.TestRunner.main(testCaseName);
   }
 
-  public void testEmptyTreeUsingListQuery()  
+  public void testEmptyTreeUsingListQuery()
   {
     STRtree tree = new STRtree();
     List list = tree.query(new Envelope(0, 0, 1, 1));
     assertTrue(list.isEmpty());
   }
-  
-  public void testEmptyTreeUsingItemVisitorQuery()  
+
+  public void testEmptyTreeUsingItemVisitorQuery()
   {
     STRtree tree = new STRtree();
-    tree.query(new Envelope(0,0,1,1), (ItemVisitor) item -> assertTrue("Should never reach here", true));  
+    tree.query(new Envelope(0,0,1,1), (ItemVisitor) item -> assertTrue("Should never reach here", true));
   }
-  
+
   public void testCreateParentsFromVerticalSlice() {
     doTestCreateParentsFromVerticalSlice(3, 2, 2, 1);
     doTestCreateParentsFromVerticalSlice(4, 2, 2, 2);
@@ -106,10 +106,10 @@ public class STRtreeTest extends TestCase {
     STRtree tree = (STRtree) tester.getSpatialIndex();
     // create the index before serialization
     tree.query(new Envelope());
-    
+
     byte[] data = SerializationUtil.serialize(tree);
     tree = (STRtree) SerializationUtil.deserialize(data);
-    
+
     tester.setSpatialIndex(tree);
     tester.run();
     assertTrue(tester.isSuccess());
@@ -171,7 +171,7 @@ public class STRtreeTest extends TestCase {
     tree.remove(new Envelope(10, 20, 10, 20), "4");
     assertEquals(3, tree.size());
   }
- 
+
   private void doTestCreateParentsFromVerticalSlice(int childCount,
       int nodeCapacity, int expectedChildrenPerParentBoundable,
       int expectedChildrenOfLastParent) {

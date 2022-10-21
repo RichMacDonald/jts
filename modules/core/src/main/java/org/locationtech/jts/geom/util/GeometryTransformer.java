@@ -43,7 +43,7 @@ import org.locationtech.jts.geom.Polygon;
  * <p>
  * A typically usage would be a transformation class that transforms <tt>Polygons</tt> into
  * <tt>Polygons</tt>, <tt>LineStrings</tt> or <tt>Points</tt>, depending on the geometry of the input
- * (For instance, a simplification operation).  
+ * (For instance, a simplification operation).
  * This class would likely need to override the {@link #transformMultiPolygon(MultiPolygon, Geometry)}
  * method to ensure that if input Polygons change type the result is a <tt>GeometryCollection</tt>,
  * not a <tt>MultiPolygon</tt>.
@@ -196,10 +196,10 @@ public class GeometryTransformer
    * Transforms a LinearRing.
    * The transformation of a LinearRing may result in a coordinate sequence
    * which does not form a structurally valid ring (i.e. a degenerate ring of 3 or fewer points).
-   * In this case a LineString is returned. 
+   * In this case a LineString is returned.
    * Subclasses may wish to override this method and check for this situation
    * (e.g. a subclass may choose to eliminate degenerate linear rings)
-   * 
+   *
    * @param geom the ring to simplify
    * @param parent the parent geometry
    * @return a LinearRing if the transformation resulted in a structurally valid ring
@@ -207,7 +207,7 @@ public class GeometryTransformer
    */
   protected Geometry transformLinearRing(LinearRing geom, Geometry parent) {
     CoordinateSequence seq = transformCoordinates(geom.getCoordinateSequence(), geom);
-    if (seq == null) 
+    if (seq == null)
       return factory.createLinearRing((CoordinateSequence) null);
     int seqSize = seq.size();
     // ensure a valid LinearRing
@@ -231,7 +231,7 @@ public class GeometryTransformer
 
   protected Geometry transformMultiLineString(MultiLineString geom, Geometry parent) {
     List transGeomList = new ArrayList();
-    for (int i = 0; i < geom.getNumGeometries(); i++) {  
+    for (int i = 0; i < geom.getNumGeometries(); i++) {
       Geometry transformGeom = transformLineString((LineString) geom.getGeometryN(i), geom);
       if ((transformGeom == null) || transformGeom.isEmpty()) continue;
       transGeomList.add(transformGeom);
@@ -251,7 +251,7 @@ public class GeometryTransformer
     if (geom.isEmpty() && shellIsNullOrEmpty ) {
       return factory.createPolygon();
     }
-    
+
     if (shellIsNullOrEmpty || ! (shell instanceof LinearRing))
       isAllValidLinearRings = false;
 

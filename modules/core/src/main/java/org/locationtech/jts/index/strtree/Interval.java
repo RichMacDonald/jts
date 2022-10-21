@@ -50,14 +50,14 @@ public class Interval {
   public boolean intersects(Interval other) {
     return ((other.min <= max) && (other.max >= min));
   }
-  
+
   @Override
 public boolean equals(Object o) {
     if (! (o instanceof Interval)) { return false; }
     Interval other = (Interval) o;
     return min == other.min && max == other.max;
   }
-  
+
   /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
    */

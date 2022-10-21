@@ -19,18 +19,18 @@ public class NormalizedGeometryMatcher
 implements GeometryMatcher
 {
 	private double tolerance;
-	
+
 	public NormalizedGeometryMatcher()
 	{
-		
+
 	}
-	
+
 	@Override
 	public void setTolerance(double tolerance)
 	{
 		this.tolerance = tolerance;
 	}
-	
+
 	@Override
 	public boolean match(Geometry a, Geometry b)
 	{

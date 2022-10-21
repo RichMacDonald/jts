@@ -18,59 +18,59 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.operation.valid.IsValidOp;
 
 /**
- * 
+ *
  * This class is used to create a line string within the specified bounding box.
- * 
+ *
  * Successive calls to create may or may not return the same geometry topology.
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class LineStringGenerator extends GeometryGenerator {
 	protected int numberPoints = 2;
 	protected int generationAlgorithm = 0;
-	
+
 	/**
 	 * Create the points in a vertical line
 	 */
 	public static final int VERT = 1;
-	
+
 	/**
 	 * Create the points in a horizontal line
 	 */
 	public static final int HORZ = 2;
-	
+
 	/**
 	 * Create the points in an approximation of an open circle (one edge will not be included).
-	 * 
+	 *
 	 * Note: this requires the number of points to be greater than 2.
-	 * 
+	 *
 	 * @see #getNumberPoints()
 	 * @see #setNumberPoints(int)
 	 */
 	public static final int ARC = 0;
-	
+
 	/**
 	 * Number of iterations attempting to create a valid line string
 	 */
 	private static final int RUNS = 5;
 
 	/**
-	 * As the user increases the number of points, the probability of creating a random valid linestring decreases. 
-	 * Please take not of this when selecting the generation style, and the number of points. 
-	 * 
+	 * As the user increases the number of points, the probability of creating a random valid linestring decreases.
+	 * Please take not of this when selecting the generation style, and the number of points.
+	 *
 	 * May return null if a geometry could not be created.
-	 * 
+	 *
 	 * @see #getNumberPoints()
 	 * @see #setNumberPoints(int)
 	 * @see #getGenerationAlgorithm()
 	 * @see #setGenerationAlgorithm(int)
-	 * 
+	 *
 	 * @see #VERT
 	 * @see #HORZ
 	 * @see #ARC
-	 * 
+	 *
 	 * @see org.locationtech.jts.generator.GeometryGenerator#create()
-	 * 
+	 *
 	 * @throws IllegalStateException When the alg is not valid or the number of points is invalid
 	 * @throws NullPointerException when either the Geometry Factory, or the Bounding Box are undefined.
 	 */
@@ -86,16 +86,16 @@ public class LineStringGenerator extends GeometryGenerator {
 		if(numberPoints<2){
 			throw new IllegalStateException("Too few points");
 		}
-		
+
 		Coordinate[] coords = new Coordinate[numberPoints];
 
 		double x = boundingBox.getMinX(); // base x
 		double dx = boundingBox.getMaxX()-x;
-		
+
 		double y = boundingBox.getMinY(); // base y
 		double dy = boundingBox.getMaxY()-y;
-		
-		
+
+
 		for(int i=0;i<RUNS;i++){
 			switch(getGenerationAlgorithm()){
 			case VERT:
@@ -110,7 +110,7 @@ public class LineStringGenerator extends GeometryGenerator {
 			default:
 				throw new IllegalStateException("Invalid Alg. Specified");
 			}
-			
+
 			LineString ls = geometryFactory.createLineString(coords);
 			IsValidOp valid = new IsValidOp(ls);
 			if(valid.isValid()){
@@ -119,7 +119,7 @@ public class LineStringGenerator extends GeometryGenerator {
 		}
 		return null;
 	}
-	
+
 	private static void fillVert(double x, double dx, double y, double dy, Coordinate[] coords, GeometryFactory gf){
 		double fx = x+Math.random()*dx;
 		double ry = dy; // remainder of y distance
@@ -133,7 +133,7 @@ public class LineStringGenerator extends GeometryGenerator {
 		coords[coords.length-1] = new Coordinate(fx,y+dy);
 		gf.getPrecisionModel().makePrecise(coords[coords.length-1]);
 	}
-	
+
 	private static void fillHorz(double x, double dx, double y, double dy, Coordinate[] coords, GeometryFactory gf){
 		double fy = y+Math.random()*dy;
 		double rx = dx; // remainder of x distance
@@ -147,25 +147,25 @@ public class LineStringGenerator extends GeometryGenerator {
 		coords[coords.length-1] = new Coordinate(x+dx,fy);
 		gf.getPrecisionModel().makePrecise(coords[coords.length-1]);
 	}
-	
+
 	private static void fillArc(double x, double dx, double y, double dy, Coordinate[] coords, GeometryFactory gf){
 		if(coords.length == 2)
 			throw new IllegalStateException("Too few points for Arc");
-		
+
 		double theta = 360/coords.length;
 		double start = theta/2;
-		
+
 		double radius = dx<dy?dx/3:dy/3;
-		
+
 		double cx = x+(dx/2); // center
 		double cy = y+(dy/2); // center
-		
+
 		for(int i=0;i<coords.length;i++){
 			double angle = Math.toRadians(start+theta*i);
-			
+
 			double fx = Math.sin(angle)*radius; // may be neg.
 			double fy = Math.cos(angle)*radius; // may be neg.
-			
+
 			coords[i] = new Coordinate(cx+fx,cy+fy);
 			gf.getPrecisionModel().makePrecise(coords[i]);
 		}
@@ -198,5 +198,5 @@ public class LineStringGenerator extends GeometryGenerator {
 	public void setGenerationAlgorithm(int generationAlgorithm) {
 		this.generationAlgorithm = generationAlgorithm;
 	}
-	
+
 }

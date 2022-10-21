@@ -31,7 +31,7 @@ public class OrientationFunctions {
       throw new IllegalArgumentException("A must have two points and B must have one");
     }
     Coordinate[] segPt = segment.getCoordinates();
-    
+
     Coordinate p = ptGeom.getCoordinate();
     int index = Orientation.index(segPt[0], segPt[1], p);
     return index;
@@ -41,7 +41,7 @@ public class OrientationFunctions {
     Coordinate[] pts = null;
     if (g instanceof Polygon) {
       pts = ((Polygon) g).getExteriorRing().getCoordinates();
-    } 
+    }
     else if (g instanceof LineString
         && ((LineString) g).isClosed()) {
       pts = g.getCoordinates();

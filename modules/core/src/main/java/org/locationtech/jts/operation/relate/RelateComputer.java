@@ -265,7 +265,7 @@ public class RelateComputer
   /**
    * If the Geometries are disjoint, we need to enter their dimension and
    * boundary dimension in the Ext rows in the IM
-   * 
+   *
    * @param boundaryNodeRule the Boundary Node Rule to use
    */
   private void computeDisjointIM(IntersectionMatrix im, BoundaryNodeRule boundaryNodeRule)
@@ -281,15 +281,15 @@ public class RelateComputer
       im.set(Location.EXTERIOR, Location.BOUNDARY, getBoundaryDim(gb, boundaryNodeRule));
     }
   }
-  
+
   /**
-   * Compute the IM entry for the intersection of the boundary 
+   * Compute the IM entry for the intersection of the boundary
    * of a geometry with the Exterior.
-   * This is the nominal dimension of the boundary 
+   * This is the nominal dimension of the boundary
    * unless the boundary is empty, in which case it is {@link Dimension#FALSE}.
    * For linear geometries the Boundary Node Rule determines
    * whether the boundary is empty.
-   * 
+   *
    * @param geom the geometry providing the boundary
    * @param boundaryNodeRule  the Boundary Node Rule to use
    * @return the IM dimension entry
@@ -314,7 +314,7 @@ public class RelateComputer
      */
     return Dimension.FALSE;
   }
-  
+
   private void labelNodeEdges()
   {
     for (Iterator ni = nodes.iterator(); ni.hasNext(); ) {

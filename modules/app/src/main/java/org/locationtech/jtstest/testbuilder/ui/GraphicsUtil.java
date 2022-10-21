@@ -15,14 +15,14 @@ package org.locationtech.jtstest.testbuilder.ui;
 import java.awt.Graphics2D;
 
 public class GraphicsUtil {
-  
+
   public static void drawStringAlignCenter(Graphics2D g2d, String s, int x, int y) {
     int stringLen = (int) g2d.getFontMetrics().getStringBounds(s, g2d).getWidth();
-    g2d.drawString(s, x - stringLen /2, y); 
+    g2d.drawString(s, x - stringLen /2, y);
   }
-  
+
   /**
-   * 
+   *
    * @param g2d
    * @param s
    * @param x
@@ -33,11 +33,11 @@ public class GraphicsUtil {
   public static void drawStringAlign(Graphics2D g2d, String s, int x, int y, float anchorx, float anchory) {
     int width = (int) g2d.getFontMetrics().getStringBounds(s, g2d).getWidth();
     int height = (int) g2d.getFontMetrics().getStringBounds(s, g2d).getHeight();
-    g2d.drawString(s, x - anchorx*width, y + anchory*height); 
+    g2d.drawString(s, x - anchorx*width, y + anchory*height);
   }
-  
+
   /**
-   * 
+   *
    * @param g2d
    * @param s
    * @param x
@@ -49,17 +49,17 @@ public class GraphicsUtil {
   public static void drawStringAlign(Graphics2D g2d, String s, int x, int y, float anchorx, float anchory, int offset) {
     int width = (int) g2d.getFontMetrics().getStringBounds(s, g2d).getWidth();
     int height = (int) g2d.getFontMetrics().getStringBounds(s, g2d).getHeight();
-    
+
     int dirx = 0;
     if (anchorx <= 0) dirx = 1;
     if (anchorx >= 1) dirx = -1;
-    
+
     // Y directions are inverted due to graphics orientation
     int diry = 0;
     if (anchory <= 0) diry = -1;
     if (anchory >= 1) diry = 1;
 
-    g2d.drawString(s, x - anchorx*width + dirx*offset, y + anchory*height + diry*offset); 
+    g2d.drawString(s, x - anchorx*width + dirx*offset, y + anchory*height + diry*offset);
   }
 
 }

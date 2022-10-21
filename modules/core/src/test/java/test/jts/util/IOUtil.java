@@ -52,7 +52,7 @@ public class IOUtil {
     	return IOUtil.reader.read(inputWKT);
     }
 
-    public static List<Geometry> readWKTFile(String filename) 
+    public static List<Geometry> readWKTFile(String filename)
     throws IOException, ParseException
     {
       WKTFileReader fileRdr = new WKTFileReader(filename, IOUtil.reader);
@@ -61,7 +61,7 @@ public class IOUtil {
       return geoms;
     }
 
-    public static List<Geometry> readWKTFile(Reader rdr) 
+    public static List<Geometry> readWKTFile(Reader rdr)
     throws IOException, ParseException
     {
       WKTFileReader fileRdr = new WKTFileReader(rdr, IOUtil.reader);
@@ -71,10 +71,10 @@ public class IOUtil {
     }
 
     public static WKTReader reader = new WKTReader();
-    
+
   @SuppressWarnings("unchecked")
-  public static List<Geometry> readWKBHexFile(String filename) 
-      throws ParseException, IOException 
+  public static List<Geometry> readWKBHexFile(String filename)
+      throws ParseException, IOException
   {
     WKBReader reader = new WKBReader();
     WKBHexFileReader fileReader = new WKBHexFileReader(filename, reader);
@@ -86,7 +86,7 @@ public class IOUtil {
   {
     if (filename.endsWith(".wkb"))
       return readWKBHexFile(filename);
-    
+
     return readWKTFile(filename);
   }
 

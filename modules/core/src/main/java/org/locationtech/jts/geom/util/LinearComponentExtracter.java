@@ -135,7 +135,7 @@ public class LinearComponentExtracter
   /**
    * Extracts the linear components from a single {@link Geometry}
    * and returns them as either a {@link LineString} or {@link MultiLineString}.
-   * 
+   *
    * @param geom the geometry from which to extract
    * @return a linear geometry
    */
@@ -148,7 +148,7 @@ public class LinearComponentExtracter
   /**
    * Extracts the linear components from a single {@link Geometry}
    * and returns them as either a {@link LineString} or {@link MultiLineString}.
-   * 
+   *
    * @param geom the geometry from which to extract
    * @param forceToLineString true if LinearRings should be converted to LineStrings
    * @return a linear geometry
@@ -161,7 +161,7 @@ public class LinearComponentExtracter
 
   private Collection lines;
   private boolean isForcedToLineString = false;
-  
+
   /**
    * Constructs a LineExtracterFilter with a list in which to store LineStrings found.
    */
@@ -180,16 +180,16 @@ public class LinearComponentExtracter
   }
 
   /**
-   * Indicates that LinearRing components should be 
+   * Indicates that LinearRing components should be
    * converted to pure LineStrings.
-   * 
+   *
    * @param isForcedToLineString true if LinearRings should be converted to LineStrings
    */
   public void setForceToLineString(boolean isForcedToLineString)
   {
   	this.isForcedToLineString = isForcedToLineString;
   }
-  
+
   @Override
 public void filter(Geometry geom)
   {
@@ -199,9 +199,9 @@ public void filter(Geometry geom)
   		return;
   	}
   	// if not being forced, and this is a linear component
-  	if (geom instanceof LineString) 
+  	if (geom instanceof LineString)
   		lines.add(geom);
-  	
+
   	// else this is not a linear component, so skip it
   }
 

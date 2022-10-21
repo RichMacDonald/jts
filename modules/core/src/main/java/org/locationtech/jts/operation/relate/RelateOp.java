@@ -23,10 +23,10 @@ import org.locationtech.jts.operation.GeometryGraphOperation;
  * to be used during the relate computation.
  * <p>
  * If named spatial predicates are used on the result {@link IntersectionMatrix}
- * of the RelateOp, the result may or not be affected by the 
+ * of the RelateOp, the result may or not be affected by the
  * choice of <tt>BoundaryNodeRule</tt>, depending on the exact nature of the pattern.
- * For instance, {@link IntersectionMatrix#isIntersects()} is insensitive 
- * to the choice of <tt>BoundaryNodeRule</tt>, 
+ * For instance, {@link IntersectionMatrix#isIntersects()} is insensitive
+ * to the choice of <tt>BoundaryNodeRule</tt>,
  * whereas {@link IntersectionMatrix#isTouches(int, int)} is affected by the rule chosen.
  * <p>
  * <b>Note:</b> custom Boundary Node Rules do not (currently)

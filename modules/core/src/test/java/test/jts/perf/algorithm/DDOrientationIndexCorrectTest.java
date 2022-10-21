@@ -21,9 +21,9 @@ import test.jts.GeometryTestCase;
 /**
  * Tests the correctness of Orientation Index computed with DD
  * arithmetic.
- * 
+ *
  * This is primarily to capture the case for future research.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -38,17 +38,17 @@ public class DDOrientationIndexCorrectTest extends GeometryTestCase {
 	}
 
   /**
-   * This test captures a situation where 
+   * This test captures a situation where
    * the DD orientation apparently fails.
-   * 
+   *
    * According to the stated decimal representation
    * the two orientations should be equal, but they are not.
-   * 
-   * Even more disturbingly, the orientationIndexFilter 
-   * handles this case, without dropping through to 
+   *
+   * Even more disturbingly, the orientationIndexFilter
+   * handles this case, without dropping through to
    * the actual DD code.  The result is the same, however.
    */
-  public void testPointCloseToLine() 
+  public void testPointCloseToLine()
   {
     Coordinate[] pts = {
         new Coordinate( 2.4829102, 48.8726807),
@@ -57,7 +57,7 @@ public class DDOrientationIndexCorrectTest extends GeometryTestCase {
     };
     int orientDD = runDD("Orginal case", pts);
     //System.out.println("DD - Alt: " + orientDD);
-    
+
     Coordinate[] ptsScale = {
         new Coordinate( 24829102, 488726807),
         new Coordinate( 24832535, 488737106 ),
@@ -65,9 +65,9 @@ public class DDOrientationIndexCorrectTest extends GeometryTestCase {
     };
     int orientSC = runDD("Scaled case", ptsScale);
     //System.out.println("DD - Alt: " + orientDD);
-    
+
     /**
-     * Same arrangement as above, but translated 
+     * Same arrangement as above, but translated
      * by removing digits before decimal point
      * to reduce numeric precision
      */
@@ -77,7 +77,7 @@ public class DDOrientationIndexCorrectTest extends GeometryTestCase {
         new Coordinate( 0.4830818249999997, 0.873195575)
     };
     int orientLP = runDD("Lower precision case", ptsLowPrec);
-    
+
     /**
      * By adjusting the point slightly it lies exactly on the line
      */
@@ -88,7 +88,7 @@ public class DDOrientationIndexCorrectTest extends GeometryTestCase {
     };
     int orientOLSC = runDD("On-line scaled case", ptOnLineScaled);
     assertTrue(orientOLSC == 0);
-    
+
     /**
      * By adjusting the point slightly it lies exactly on the line
      */
@@ -99,15 +99,15 @@ public class DDOrientationIndexCorrectTest extends GeometryTestCase {
     };
     int orientOL = runDD("On-line case", ptOnLine);
     //assertTrue(orientOL == 0);
-    
+
     assertTrue("Orignal index not equal to lower-precision index", orientDD == orientLP);
 
   }
 
   private int runDD(String desc, Coordinate[] pts) {
-    int orientDD = Orientation.index(pts[0], pts[1], pts[2]); 
-    //int orientSD = ShewchuksDeterminant.orientationIndex(pts[0], pts[1], pts[2]); 
-    //int orientAlt = orientationIndexAlt(pts[0], pts[1], pts[2]); 
+    int orientDD = Orientation.index(pts[0], pts[1], pts[2]);
+    //int orientSD = ShewchuksDeterminant.orientationIndex(pts[0], pts[1], pts[2]);
+    //int orientAlt = orientationIndexAlt(pts[0], pts[1], pts[2]);
 
     System.out.println(desc + " --------------");
     System.out.println("DD: " + orientDD);

@@ -16,15 +16,15 @@ import org.locationtech.jts.geom.CoordinateSequence;
 
 /**
  * Functions for computing area.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class Area {
 
   /**
-   * Computes the area for a ring. 
-   * 
+   * Computes the area for a ring.
+   *
    * @param ring the coordinates forming the ring
    * @return the area of the ring
    */
@@ -32,10 +32,10 @@ public class Area {
   {
     return Math.abs(ofRingSigned(ring));
   }
- 
+
   /**
-   * Computes the area for a ring. 
-   * 
+   * Computes the area for a ring.
+   *
    * @param ring the coordinates forming the ring
    * @return the area of the ring
    */
@@ -48,7 +48,7 @@ public class Area {
    * Computes the signed area for a ring. The signed area is positive if the
    * ring is oriented CW, negative if the ring is oriented CCW, and zero if the
    * ring is degenerate or flat.
-   * 
+   *
    * @param ring
    *          the coordinates forming the ring
    * @return the signed area of the ring
@@ -79,7 +79,7 @@ public class Area {
    * <li>negative if the ring is oriented CCW
    * <li>zero if the ring is degenerate or flat
    * </ul>
-   * 
+   *
    * @param ring
    *          the coordinates forming the ring
    * @return the signed area of the ring

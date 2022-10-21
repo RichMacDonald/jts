@@ -23,9 +23,9 @@ import org.xml.sax.SAXException;
 
 
 /**
- * Round trip testing for GML reading and writing. 
+ * Round trip testing for GML reading and writing.
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class StaticMultiPolygonTest extends WritingTestCase {
 
@@ -38,9 +38,9 @@ public class StaticMultiPolygonTest extends WritingTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPolygon
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	public void testSingleMultiPolygonNoHoleRoundTrip() throws SAXException, IOException, ParserConfigurationException{
 		PolygonGenerator pgc = new PolygonGenerator();
@@ -50,7 +50,7 @@ public class StaticMultiPolygonTest extends WritingTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPolygon pt = (MultiPolygon) pg.create();
 
 		checkRoundTrip(pt);
@@ -58,9 +58,9 @@ public class StaticMultiPolygonTest extends WritingTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPolygon with lots of points
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	public void testSingleMultiPolygonManyPointsNoHoleRoundTrip() throws SAXException, IOException, ParserConfigurationException{
 
@@ -72,7 +72,7 @@ public class StaticMultiPolygonTest extends WritingTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPolygon pt = (MultiPolygon) pg.create();
 
 		checkRoundTrip(pt);
@@ -80,9 +80,9 @@ public class StaticMultiPolygonTest extends WritingTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPolygon
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	public void testSingleMultiPolygonHolesRoundTrip() throws SAXException, IOException, ParserConfigurationException{
 
@@ -95,7 +95,7 @@ public class StaticMultiPolygonTest extends WritingTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPolygon pt = (MultiPolygon) pg.create();
 
 		checkRoundTrip(pt);
@@ -103,9 +103,9 @@ public class StaticMultiPolygonTest extends WritingTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPolygon with lots of points
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	public void testSingleMultiPolygonManyPointsHolesRoundTrip() throws SAXException, IOException, ParserConfigurationException{
 
@@ -118,7 +118,7 @@ public class StaticMultiPolygonTest extends WritingTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPolygon pt = (MultiPolygon) pg.create();
 //		System.out.println((pt==null?"NULL":pt.toString()));
 
@@ -127,9 +127,9 @@ public class StaticMultiPolygonTest extends WritingTestCase {
 
 	/**
 	 * Round Trip test for a single MultiPolygon with lots of points
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	public void testSingleMultiPolygonManyPointsManyHolesRoundTrip() throws SAXException, IOException, ParserConfigurationException{
 
@@ -142,7 +142,7 @@ public class StaticMultiPolygonTest extends WritingTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiPolygon pt = (MultiPolygon) pg.create();
 //		System.out.println((pt==null?"NULL":pt.toString()));
 

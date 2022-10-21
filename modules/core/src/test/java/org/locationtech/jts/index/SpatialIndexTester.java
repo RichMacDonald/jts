@@ -20,14 +20,14 @@ import org.locationtech.jts.geom.Envelope;
 /**
  * @version 1.7
  */
-public class SpatialIndexTester 
+public class SpatialIndexTester
 {
   private static boolean VERBOSE = false;
-  
+
   private SpatialIndex index;
   private ArrayList sourceData;
   private boolean isSuccess = true;
-  
+
   public SpatialIndexTester() {
   }
 
@@ -35,7 +35,7 @@ public class SpatialIndexTester
   {
     return isSuccess;
   }
-  
+
   public void setSpatialIndex(SpatialIndex index)
   {
     this.index = index;
@@ -61,7 +61,7 @@ public class SpatialIndexTester
     }
     insert(sourceData, index);
   }
-  
+
   public void run()
   {
     doTest(index, QUERY_ENVELOPE_EXTENT_1, sourceData);

@@ -19,10 +19,10 @@ import org.locationtech.jts.operation.buffer.BufferOp;
 import org.locationtech.jts.operation.buffer.BufferParameters;
 /**
  * Tests self-snapping issues
- * 
+ *
  * @version 1.7
  */
-public class BufferCorrectnessTest 
+public class BufferCorrectnessTest
 {
 
   private PrecisionModel precisionModel = new PrecisionModel();
@@ -36,7 +36,7 @@ public class BufferCorrectnessTest
   	catch (Exception ex) {
   		ex.printStackTrace();
   	}
-  
+
   }
 
   public BufferCorrectnessTest() {  }
@@ -50,33 +50,33 @@ public class BufferCorrectnessTest
   	Geometry buf = g.buffer(15);
   	System.out.println(buf);
   }
-  
+
   void run6()
   throws Exception
   {
   	// polygon with two vertices very close - mitred negative buffer lies outside input
   	String wkt = "POLYGON ((589081.1515112884 4518509.334764771, 589103.7370954598 4518497.015419995, 589099.8017397423 4518490.719003885, 589097.1198886324 4518486.20858194, 589090.9424687021 4518475.819013388, 589081.1515112884 4518509.334764771))";
   	Geometry g = rdr.read(wkt);
-  	
+
   	BufferParameters params = new BufferParameters(8, BufferParameters.CAP_ROUND, BufferParameters.JOIN_MITRE, 5);
   	Geometry buf = new BufferOp(g, params).getResultGeometry(-5);
-    
+
   	System.out.println(buf);
   }
-  
+
   void run5()
   throws Exception
   {
   	// polygon with two vertices very close - mitred negative buffer lies outside input
   	String wkt = "POLYGON ((588722.7612465625 4518964.956739423, 588755.2073151038 4518948.2420851765, 588750.2892019567 4518938.490656119, 588750.2892047082 4518938.490654858, 588741.1098934844 4518920.290260831, 588722.7612465625 4518964.956739423))";
   	Geometry g = rdr.read(wkt);
-  	
+
   	BufferParameters params = new BufferParameters(8, BufferParameters.CAP_ROUND, BufferParameters.JOIN_MITRE, 5);
   	Geometry buf = new BufferOp(g, params).getResultGeometry(-5);
-    
+
   	System.out.println(buf);
   }
-  
+
   void run4()
   throws Exception
   {
@@ -84,14 +84,14 @@ public class BufferCorrectnessTest
 //  	String wkt = "LINESTRING(1872762.082 529964.535, 1872774.638 529891.173, 1872787.194 529817.811)";
   	String wkt = "LINESTRING (1872612.157 530840.503, 1872624.713 530767.14, 1872637.269 530693.777)";
   	Geometry g = rdr.read(wkt);
-  	
+
   	BufferParameters params = new BufferParameters(10, BufferParameters.CAP_SQUARE, BufferParameters.JOIN_MITRE, 10);
   	Geometry buf = new BufferOp(g, params).getResultGeometry(200);
-    
+
 
   	System.out.println(buf);
   }
-  
+
   void run3()
   throws Exception
   {
@@ -100,7 +100,7 @@ public class BufferCorrectnessTest
   	Geometry buf = g.buffer(15);
   	System.out.println(buf);
   }
-  
+
   void run2()
   throws Exception
   {
@@ -109,14 +109,14 @@ public class BufferCorrectnessTest
   	Geometry buf = g.buffer(1.0, 1);
   	System.out.println(buf);
   }
-  
+
   void run()
   throws Exception
   {
   	doBuffer("LINESTRING (110 320, 280 290, 170 150)", 20.0, -1);
 //  	doBuffer("LINESTRING (10 0, 0 0, 10 1)");
   }
-  
+
   void doBuffer(String wkt, double dist)
   throws Exception
   {
@@ -124,7 +124,7 @@ public class BufferCorrectnessTest
   	Geometry buf = g.buffer(dist, -4);
   	System.out.println(buf);
   }
-  
+
   void doBuffer(String wkt, double dist, int quadSegs)
   throws Exception
   {
@@ -132,6 +132,6 @@ public class BufferCorrectnessTest
   	Geometry buf = g.buffer(dist, quadSegs);
   	System.out.println(buf);
   }
-  
-  
+
+
 }

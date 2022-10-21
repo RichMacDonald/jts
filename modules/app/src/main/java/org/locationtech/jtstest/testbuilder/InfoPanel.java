@@ -24,17 +24,17 @@ import org.locationtech.jtstest.testbuilder.model.TestBuilderModel;
 /**
  * @version 1.7
  */
-public class InfoPanel 
-extends JPanel 
+public class InfoPanel
+extends JPanel
 {
 	TestBuilderModel tbModel = null;
-	
+
 	JScrollPane jScrollPane1 = new JScrollPane();
 	JTextArea txtInfo = new JTextArea();
   BorderLayout tabPanelLayout = new BorderLayout();
-  
+
   StringBuffer text = new StringBuffer();
-	
+
 	public InfoPanel() {
 		try {
 			jbInit();
@@ -42,9 +42,9 @@ extends JPanel
 			ex.printStackTrace();
 		}
 	}
-	
+
   void jbInit() throws Exception {
-    
+
     this.setLayout(tabPanelLayout);
 
     txtInfo.setWrapStyleWord(true);
@@ -52,23 +52,23 @@ extends JPanel
     txtInfo.setBackground(AppColors.BACKGROUND);
 
     this.add(jScrollPane1, BorderLayout.CENTER);
-    
+
     jScrollPane1.setBorder(BorderFactory.createLoweredBevelBorder());
     jScrollPane1.getViewport().add(txtInfo, null);
   }
-  
+
 	public void setModel(TestBuilderModel tbModel)
 	{
 		this.tbModel = tbModel;
 	}
-	
+
   public void OLDsetInfo(String s)
   {
     txtInfo.setText(s);
   }
-  
+
   private static final String LOG_SEP = "-------------------------------------------------";
-  
+
   public void setInfo(String s)
   {
     if (s == null || s.length() == 0) s = "";
@@ -78,7 +78,7 @@ extends JPanel
   public void addInfo(String s)
   {
     if (s == null || s.length() == 0) return;
-    
+
     if (text.length() != 0) {
       text.append("\n");
       text.append(LOG_SEP);
@@ -88,5 +88,5 @@ extends JPanel
     txtInfo.setText(text.toString());
   }
 
-  
+
 }

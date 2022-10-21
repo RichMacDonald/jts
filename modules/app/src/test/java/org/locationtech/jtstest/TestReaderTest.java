@@ -46,9 +46,9 @@ public class TestReaderTest extends TestCase {
 
   public void testDummy()
   {
-    
+
   }
-  
+
   public void XtestWktFile() {
     TestReader testReader = new TestReader();
     TestRun testRun = testReader.createTestRun(new File(

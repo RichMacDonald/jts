@@ -18,14 +18,14 @@ import org.locationtech.jts.util.Assert;
 
 /**
  * A 2-dimensional mathematical vector represented by double-precision X and Y components.
- * 
+ *
  * @author mbdavis
- * 
+ *
  */
 public class Vector2D {
   /**
    * Creates a new vector with given X and Y components.
-   * 
+   *
    * @param x the x component
    * @param y the y component
    * @return a new vector
@@ -36,7 +36,7 @@ public class Vector2D {
 
   /**
    * Creates a new vector from an existing one.
-   * 
+   *
    * @param v the vector to copy
    * @return a new vector
    */
@@ -45,8 +45,8 @@ public class Vector2D {
 	}
 
   /**
-   * Creates a vector from a {@link Coordinate}. 
-   * 
+   * Creates a vector from a {@link Coordinate}.
+   *
    * @param coord the Coordinate to copy
    * @return a new vector
    */
@@ -56,9 +56,9 @@ public class Vector2D {
 
   /**
    * Creates a vector with the direction and magnitude
-   * of the difference between the 
+   * of the difference between the
    * <tt>to</tt> and <tt>from</tt> {@link Coordinate}s.
-   * 
+   *
    * @param from the origin Coordinate
    * @param to the destination Coordinate
    * @return a new vector
@@ -125,7 +125,7 @@ public class Vector2D {
 
   /**
    * Multiplies the vector by a scalar value.
-   * 
+   *
    * @param d the value to multiply by
    * @return a new vector with the value v * d
    */
@@ -135,7 +135,7 @@ public class Vector2D {
 
   /**
    * Divides the vector by a scalar value.
-   * 
+   *
    * @param d the value to divide by
    * @return a new vector with the value v / d
    */
@@ -165,25 +165,25 @@ public class Vector2D {
 	public Vector2D average(Vector2D v) {
 		return weightedSum(v, 0.5);
 	}
-  
+
 	/**
 	 * Computes the weighted sum of this vector
 	 * with another vector,
 	 * with this vector contributing a fraction
 	 * of <tt>frac</tt> to the total.
 	 * <p>
-	 * In other words, 
+	 * In other words,
 	 * <pre>
 	 * sum = frac * this + (1 - frac) * v
 	 * </pre>
-	 * 
+	 *
 	 * @param v the vector to sum
 	 * @param frac the fraction of the total contributed by this vector
 	 * @return the weighted sum of the two vectors
 	 */
 	public Vector2D weightedSum(Vector2D v, double frac) {
 		return create(
-				frac * x + (1.0 - frac) * v.x, 
+				frac * x + (1.0 - frac) * v.x,
 				frac * y + (1.0 - frac) * v.y);
 	}
 
@@ -198,10 +198,10 @@ public class Vector2D {
     double dely = v.y - y;
     return Math.sqrt(delx * delx + dely * dely);
   }
-  
+
 	/**
 	 * Computes the dot-product of two vectors
-	 * 
+	 *
 	 * @param v a vector
 	 * @return the dot product of the vectors
 	 */
@@ -213,18 +213,18 @@ public class Vector2D {
 	{
 		return Math.atan2(y, x);
 	}
-	
+
   public double angle(Vector2D v)
   {
     return Angle.diff(v.angle(), angle());
   }
-  
+
   public double angleTo(Vector2D v)
   {
     double a1 = angle();
     double a2 = v.angle();
     double angDel = a2 - a1;
-    
+
     // normalize, maintaining orientation
     if (angDel <= -Math.PI)
       return angDel + Angle.PI_TIMES_2;
@@ -232,7 +232,7 @@ public class Vector2D {
       return angDel - Angle.PI_TIMES_2;
     return angDel;
   }
-  
+
 	public Vector2D rotate(double angle)
 	{
 		double cos = Math.cos(angle);
@@ -242,14 +242,14 @@ public class Vector2D {
 				x * sin + y * cos
 				);
 	}
-	
+
 	/**
 	 * Rotates a vector by a given number of quarter-circles (i.e. multiples of 90
 	 * degrees or Pi/2 radians). A positive number rotates counter-clockwise, a
 	 * negative number rotates clockwise. Under this operation the magnitude of
 	 * the vector and the absolute values of the ordinates do not change, only
 	 * their sign and ordinate index.
-	 * 
+	 *
 	 * @param numQuarters
 	 *          the number of quarter-circles to rotate by
 	 * @return the rotated vector.
@@ -277,7 +277,7 @@ public class Vector2D {
   {
     return 0.0 == CGAlgorithmsDD.signOfDet2x2(x, y, v.x, v.y);
   }
-  
+
 	public Coordinate translate(Coordinate coord) {
 		return new Coordinate(x + coord.x, y + coord.y);
 	}
@@ -288,7 +288,7 @@ public class Vector2D {
 
   /**
    * Creates a copy of this vector
-   * 
+   *
    * @return a copy of this vector
    */
   @Override
@@ -296,21 +296,21 @@ public Object clone()
   {
     return new Vector2D(this);
   }
-  
+
   /**
    * Gets a string representation of this vector
-   * 
+   *
    * @return a string representing this vector
    */
 	@Override
 	public String toString() {
 		return "[" + x + ", " + y + "]";
 	}
-	
+
 	/**
 	 * Tests if a vector <tt>o</tt> has the same values for the x and y
 	 * components.
-	 * 
+	 *
 	 * @param o
 	 *          a <tt>Vector2D</tt> with which to do the comparison.
 	 * @return true if <tt>other</tt> is a <tt>Vector2D</tt> with the same
@@ -327,7 +327,7 @@ public Object clone()
 
 	/**
 	 * Gets a hashcode for this vector.
-	 * 
+	 *
 	 * @return a hashcode for this vector
 	 */
 	@Override

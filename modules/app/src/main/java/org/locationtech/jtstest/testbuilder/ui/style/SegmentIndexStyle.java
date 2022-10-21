@@ -22,7 +22,7 @@ import org.locationtech.jts.geom.Quadrant;
 import org.locationtech.jtstest.testbuilder.ui.Viewport;
 
 
-public class SegmentIndexStyle 
+public class SegmentIndexStyle
   extends SegmentStyle
 {
   private final static double MIN_LEN = 10;
@@ -32,12 +32,12 @@ public class SegmentIndexStyle
   private final static int BOX_PAD = 1;
   private final static Font FONT = new Font(FontGlyphReader.FONT_SANSSERIF, Font.PLAIN, 10);
   private static final int MIN_LABEL_DIST = 300;
-  
+
   private Color color = Color.RED;
 
   private double lastX = 0;
   private double lastY = 0;
-  
+
   public SegmentIndexStyle(Color color) {
     this.color = color;
   }
@@ -52,19 +52,19 @@ protected void paint(int index, Point2D p0, Point2D p1, int lineType, Viewport v
     if (len < MIN_LEN) {
       return;
     }
-    
+
     double vertexOffset = len / 4;
     if (vertexOffset > VERTEX_OFFSET)
       vertexOffset = VERTEX_OFFSET;
-    
+
     double dx = p1.getX() - p0.getX();
     double dy = p1.getY() - p0.getY();
     int quadrant = Quadrant.quadrant(dx, -dy);
-    
+
     String indexStr = Integer.toString(index);
     double boxMaxX = /*2 * BOX_PAD +*/ indexStr.length() * CHAR_WIDTH_APPROX;
     double boxMaxY = 2 * BOX_PAD + CHAR_HEIGHT_APPROX;
-    
+
     double strOffsetX = BOX_PAD;
     double strOffsetY = -BOX_PAD;
     switch (quadrant) {
@@ -81,18 +81,18 @@ protected void paint(int index, Point2D p0, Point2D p1, int lineType, Viewport v
       strOffsetY = boxMaxY;
       break;
     }
-    
+
     double x = p0.getX() + dx/len*vertexOffset + strOffsetX;
     double y = p0.getY() + dy/len*vertexOffset + strOffsetY;
-    
+
     // cache last point drawn for simple label deconfliction
-    boolean doDraw = index == 0 || distToLast(x, y) > MIN_LABEL_DIST; 
-    
+    boolean doDraw = index == 0 || distToLast(x, y) > MIN_LABEL_DIST;
+
     if (doDraw) {
       gr.setColor(color);
       gr.setFont(FONT);
       gr.drawString(indexStr, (int) x, (int) y);
-      
+
       lastX = x;
       lastY = y;
     }
@@ -101,7 +101,7 @@ protected void paint(int index, Point2D p0, Point2D p1, int lineType, Viewport v
   private double distToLast(double x, double y) {
     return (x - lastX)*(x - lastX) + (y - lastY)*(y - lastY);
   }
-  
+
 
 
 }

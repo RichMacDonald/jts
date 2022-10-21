@@ -47,18 +47,18 @@ import org.locationtech.jts.index.chain.MonotoneChainSelectAction;
  * <li>For self-intersecting lines, the buffer boundary includes
  * offset lines for both left and right sides of the input line.
  * Only a single contiguous portion on the specified side is returned.</li>
- * <li>If the offset corresponds to buffer holes, only the largest hole is used. 
+ * <li>If the offset corresponds to buffer holes, only the largest hole is used.
  * </li>
  * </ul>
- * Offset curves support setting the number of quadrant segments, 
- * the join style, and the mitre limit (if applicable) via 
+ * Offset curves support setting the number of quadrant segments,
+ * the join style, and the mitre limit (if applicable) via
  * the {@link BufferParameters}.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class OffsetCurve {
-  
+
   /**
    * The nearness tolerance between the raw offset linework and the buffer curve.
    */
@@ -66,7 +66,7 @@ public class OffsetCurve {
 
   /**
    * Computes the offset curve of a geometry at a given distance.
-   * 
+   *
    * @param geom a geometry
    * @param distance the offset distance (positive = left, negative = right)
    * @return the offset curve
@@ -75,11 +75,11 @@ public class OffsetCurve {
     OffsetCurve oc = new OffsetCurve(geom, distance);
     return oc.getCurve();
   }
-  
+
   /**
    * Computes the offset curve of a geometry at a given distance,
    * and for a specified quadrant segments, join style and mitre limit.
-   * 
+   *
    * @param geom a geometry
    * @param distance the offset distance (positive = left, negative = right)
    * @param quadSegs the quadrant segments (-1 for default)
@@ -91,11 +91,11 @@ public class OffsetCurve {
     BufferParameters bufferParams = new BufferParameters();
     if (quadSegs >= 0) bufferParams.setQuadrantSegments(quadSegs);
     if (joinStyle >= 0) bufferParams.setJoinStyle(joinStyle);
-    if (mitreLimit >= 0) bufferParams.setMitreLimit(mitreLimit);    
+    if (mitreLimit >= 0) bufferParams.setMitreLimit(mitreLimit);
     OffsetCurve oc = new OffsetCurve(geom, distance, bufferParams);
     return oc.getCurve();
   }
-  
+
   private Geometry inputGeom;
   private double distance;
   private BufferParameters bufferParams;
@@ -106,21 +106,21 @@ public class OffsetCurve {
    * Creates a new instance for computing an offset curve for a geometryat a given distance.
    * with default quadrant segments ({@link BufferParameters#DEFAULT_QUADRANT_SEGMENTS})
    * and join style ({@link BufferParameters#JOIN_STYLE}).
-   * 
+   *
    * @param geom the geometry to offset
    * @param distance the offset distance (positive = left, negative = right)
-   * 
+   *
    * @see BufferParameters
    */
   public OffsetCurve(Geometry geom, double distance) {
     this(geom, distance, null);
   }
-  
+
   /**
    * Creates a new instance for computing an offset curve for a geometry at a given distance.
    * allowing the quadrant segments and join style and mitre limit to be set
    * via {@link BufferParameters}.
-   * 
+   *
    * @param geom
    * @param distance
    * @param bufParams
@@ -128,10 +128,10 @@ public class OffsetCurve {
   public OffsetCurve(Geometry geom, double distance, BufferParameters bufParams) {
     this.inputGeom = geom;
     this.distance = distance;
-    
+
     matchDistance = Math.abs(distance) / NEARNESS_FACTOR;
     geomFactory = inputGeom.getFactory();
-    
+
     //-- make new buffer params since the end cap style must be the default
     this.bufferParams = new BufferParameters();
     if (bufParams != null) {
@@ -140,27 +140,27 @@ public class OffsetCurve {
       bufferParams.setMitreLimit(bufParams.getMitreLimit());
     }
   }
-  
+
   /**
    * Gets the computed offset curve.
-   * 
+   *
    * @return the offset curve geometry
    */
   public Geometry getCurve() {
     return GeometryMapper.flatMap(inputGeom, 1, new GeometryMapper.MapOp() {
-      
+
       @Override
       public Geometry map(Geometry geom) {
         if (geom instanceof Point) return null;
         if (geom instanceof Polygon ) {
           return toLineString(geom.buffer(distance).getBoundary());
-        } 
+        }
         return computeCurve((LineString) geom, distance);
       }
 
       /**
        * Force LinearRings to be LineStrings.
-       * 
+       *
        * @param geom a geometry which may be a LinearRing
        * @return a geometry which will be a LineString or MultiLineString
        */
@@ -173,17 +173,17 @@ public class OffsetCurve {
       }
     });
   }
-  
+
   /**
    * Gets the raw offset line.
    * The quadrant segments and join style and mitre limit to be set
    * via {@link BufferParameters}.
    * <p>
-   * The raw offset line may contain loops and other artifacts which are 
+   * The raw offset line may contain loops and other artifacts which are
    * not present in the true offset curve.
    * The raw offset line is matched to the buffer ring (which is clean)
    * to extract the offset curve.
-   * 
+   *
    * @param geom the linestring to offset
    * @param distance the offset distance
    * @param bufParams the buffer parameters to use
@@ -197,10 +197,10 @@ public class OffsetCurve {
     Coordinate[] pts = ocb.getOffsetCurve(geom.getCoordinates(), distance);
     return pts;
   }
-  
+
   /**
    * Gets the raw offset line, with default buffer parameters.
-   * 
+   *
    * @param geom the linestring to offset
    * @param distance the offset distance
    * @return the raw offset line
@@ -226,21 +226,21 @@ public class OffsetCurve {
     /**
      * Note: If the raw offset curve has no
      * narrow concave angles or self-intersections it could be returned as is.
-     * However, this is likely to be a less frequent situation, 
+     * However, this is likely to be a less frequent situation,
      * and testing indicates little performance advantage,
-     * so not doing this. 
+     * so not doing this.
      */
-    
+
     Polygon bufferPoly = getBufferOriented(lineGeom, distance, bufferParams);
-    
+
     //-- first try matching shell to raw curve
     Coordinate[] shell = bufferPoly.getExteriorRing().getCoordinates();
     LineString offsetCurve = computeCurve(shell, rawOffset);
-    if (! offsetCurve.isEmpty() 
+    if (! offsetCurve.isEmpty()
         || bufferPoly.getNumInteriorRing() == 0)
       return offsetCurve;
-    
-    //-- if shell didn't work, try matching to largest hole 
+
+    //-- if shell didn't work, try matching to largest hole
     Coordinate[] holePts = extractLongestHole(bufferPoly).getCoordinates();
     offsetCurve = computeCurve(holePts, rawOffset);
     return offsetCurve;
@@ -264,14 +264,14 @@ public class OffsetCurve {
   /**
    * Extracts the largest polygon by area from a geometry.
    * Used here to avoid issues with non-robust buffer results which have spurious extra polygons.
-   * 
+   *
    * @param geom a geometry
    * @return the polygon element of largest area
    */
   private static Polygon extractMaxAreaPolygon(Geometry geom) {
     if (geom.getNumGeometries() == 1)
       return (Polygon) geom;
-    
+
     double maxArea = 0;
     Polygon maxPoly = null;
     for (int i = 0; i < geom.getNumGeometries(); i++) {
@@ -298,7 +298,7 @@ public class OffsetCurve {
     }
     return largestHole;
   }
-  
+
   private LineString computeCurve(Coordinate[] bufferPts, Coordinate[] rawOffset) {
     boolean[] isInCurve = new boolean[bufferPts.length - 1];
     SegmentMCIndex segIndex = new SegmentMCIndex(bufferPts);
@@ -313,9 +313,9 @@ public class OffsetCurve {
     Coordinate[] curvePts = extractSection(bufferPts, curveStart, isInCurve);
     return geomFactory.createLineString(curvePts);
   }
-  
-  private int markMatchingSegments(Coordinate p0, Coordinate p1, 
-      SegmentMCIndex segIndex, Coordinate[] bufferPts, 
+
+  private int markMatchingSegments(Coordinate p0, Coordinate p1,
+      SegmentMCIndex segIndex, Coordinate[] bufferPts,
       boolean[] isInCurve) {
     Envelope matchEnv = new Envelope(p0, p1);
     matchEnv.expandBy(matchDistance);
@@ -323,15 +323,15 @@ public class OffsetCurve {
     segIndex.query(matchEnv, action);
     return action.getMinCurveIndex();
   }
-  
+
   /**
-   * An action to match a raw offset curve segment 
-   * to segments in the buffer ring 
+   * An action to match a raw offset curve segment
+   * to segments in the buffer ring
    * and mark them as being in the offset curve.
-   * 
+   *
    * @author Martin Davis
    */
-  private static class MatchCurveSegmentAction 
+  private static class MatchCurveSegmentAction
     extends MonotoneChainSelectAction
   {
     private Coordinate p0;
@@ -339,11 +339,11 @@ public class OffsetCurve {
     private Coordinate[] bufferPts;
     private double matchDistance;
     private boolean[] isInCurve;
-    
+
     private double minFrac = -1;
     private int minCurveIndex = -1;
-    
-    public MatchCurveSegmentAction(Coordinate p0, Coordinate p1, 
+
+    public MatchCurveSegmentAction(Coordinate p0, Coordinate p1,
         Coordinate[] bufferPts, double matchDistance, boolean[] isInCurve) {
       this.p0 = p0;
       this.p1 = p1;
@@ -351,36 +351,36 @@ public class OffsetCurve {
       this.matchDistance = matchDistance;
       this.isInCurve = isInCurve;
     }
-    
+
     @Override
 	public void select(MonotoneChain mc, int segIndex)
     {
       /**
        * A curveRingPt segment may match all or only a portion of a single raw segment.
        * There may be multiple curve ring segs that match along the raw segment.
-       * The one closest to the segment start is recorded as the offset curve start.      
+       * The one closest to the segment start is recorded as the offset curve start.
        */
       double frac = subsegmentMatchFrac(bufferPts[segIndex], bufferPts[segIndex+1], p0, p1, matchDistance);
       //-- no match
       if (frac < 0) return;
-      
+
       isInCurve[segIndex] = true;
-      
+
       //-- record lowest index
       if (minFrac < 0 || frac < minFrac) {
         minFrac = frac;
         minCurveIndex = segIndex;
       }
     }
-    
+
     public int getMinCurveIndex() {
       return minCurveIndex;
     }
   }
-  
+
   /*
   // Slower, non-indexed algorithm.  Left here for future testing.
-  
+
   private Coordinate[] OLDcomputeCurve(Coordinate[] curveRingPts, Coordinate[] rawOffset) {
     boolean[] isInCurve = new boolean[curveRingPts.length - 1];
     int curveStart = -1;
@@ -405,9 +405,9 @@ public class OffsetCurve {
       double frac = subsegmentMatchFrac(curveRingPts[i], curveRingPts[i+1], p0, p1, matchDistance);
       //-- no match
       if (frac < 0) continue;
-      
+
       isInCurve[i] = true;
-      
+
       //-- record lowest index
       if (minFrac < 0 || frac < minFrac) {
         minFrac = frac;
@@ -417,8 +417,8 @@ public class OffsetCurve {
     return minCurveIndex;
   }
   */
-  
-  private static double subsegmentMatchFrac(Coordinate p0, Coordinate p1, 
+
+  private static double subsegmentMatchFrac(Coordinate p0, Coordinate p1,
       Coordinate seg0, Coordinate seg1, double matchDistance) {
     if ((matchDistance < Distance.pointToSegment(p0, seg0, seg1)) || (matchDistance < Distance.pointToSegment(p1, seg0, seg1)))
       return -1;
@@ -428,9 +428,9 @@ public class OffsetCurve {
   }
 
   /**
-   * Extracts a section of a ring of coordinates, starting at a given index, 
+   * Extracts a section of a ring of coordinates, starting at a given index,
    * and keeping coordinates which are flagged as being required.
-   * 
+   *
    * @param ring the ring of points
    * @param startIndex the index of the start coordinate
    * @param isExtracted flag indicating if coordinate is to be extracted
@@ -439,7 +439,7 @@ public class OffsetCurve {
   private static Coordinate[] extractSection(Coordinate[] ring, int startIndex, boolean[] isExtracted) {
     if (startIndex < 0)
       return new Coordinate[0];
-    
+
     CoordinateList coordList = new CoordinateList();
     int i = startIndex;
     do {
@@ -453,16 +453,16 @@ public class OffsetCurve {
     if (isExtracted[i]) {
       coordList.add(ring[i], false);
     }
-    
+
     //-- if only one point found return empty LineString
     if (coordList.size() == 1)
       return new Coordinate[0];
-    
-    return coordList.toCoordinateArray();  
+
+    return coordList.toCoordinateArray();
   }
-  
+
   private static int next(int i, int size) {
     i += 1;
-    return (i < size) ? i : 0; 
+    return (i < size) ? i : 0;
   }
 }

@@ -30,7 +30,7 @@ class PolygonBuilder {
   public PolygonBuilder(List<OverlayEdge> resultAreaEdges, GeometryFactory geomFact) {
     this(resultAreaEdges, geomFact, true);
   }
-  
+
   public PolygonBuilder(List<OverlayEdge> resultAreaEdges, GeometryFactory geomFact, boolean isEnforcePolygonal) {
     this.geometryFactory = geomFact;
     this.isEnforcePolygonal = isEnforcePolygonal;
@@ -38,11 +38,11 @@ class PolygonBuilder {
   }
 
   public List<Polygon> getPolygons() {
-    return computePolygons(shellList);  
+    return computePolygons(shellList);
   }
 
   public List<OverlayEdgeRing> getShellRings() {
-    return shellList;  
+    return shellList;
   }
 
   private List<Polygon> computePolygons(List<OverlayEdgeRing> shellList)
@@ -55,7 +55,7 @@ class PolygonBuilder {
     }
     return resultPolyList;
   }
-  
+
   private void buildRings(List<OverlayEdge> resultAreaEdges)
   {
     linkResultAreaEdgesMax(resultAreaEdges);
@@ -64,15 +64,15 @@ class PolygonBuilder {
     placeFreeHoles(shellList, freeHoleList);
     //Assert: every hole on freeHoleList has a shell assigned to it
   }
-  
+
   private void linkResultAreaEdgesMax(List<OverlayEdge> resultEdges) {
     for (OverlayEdge edge : resultEdges ) {
       //Assert.isTrue(edge.isInResult());
       // TODO: find some way to skip nodes which are already linked
       MaximalEdgeRing.linkResultAreaMaxRingAtNode(edge);
-    }    
+    }
   }
-  
+
   /**
    * For all OverlayEdges in result, form them into MaximalEdgeRings
    */
@@ -105,7 +105,7 @@ class PolygonBuilder {
      * - the rings are a shell and some holes
      * - rings are a set of holes
      * This code identifies the situation
-     * and places the rings appropriately 
+     * and places the rings appropriately
      */
     OverlayEdgeRing shell = findSingleShell(minRings);
     if (shell != null) {
@@ -117,11 +117,11 @@ class PolygonBuilder {
       freeHoleList.addAll(minRings);
     }
   }
-  
+
   /**
-   * Finds the single shell, if any, out of 
+   * Finds the single shell, if any, out of
    * a list of minimal rings derived from a maximal ring.
-   * The other possibility is that they are a set of (connected) holes, 
+   * The other possibility is that they are a set of (connected) holes,
    * in which case no shell will be found.
    *
    * @return the shell ring, if there is one
@@ -140,9 +140,9 @@ class PolygonBuilder {
     Assert.isTrue(shellCount <= 1, "found two shells in EdgeRing list");
     return shell;
   }
-  
+
   /**
-   * For the set of minimal rings comprising a maximal ring, 
+   * For the set of minimal rings comprising a maximal ring,
    * assigns the holes to the shell known to contain them.
    * Assigning the holes directly to the shell serves two purposes:
    * <ul>

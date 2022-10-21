@@ -27,19 +27,19 @@ package org.locationtech.jts.index.strtree;
  * If it is required that only pairs of <b>distinct</b> items be returned,
  * the distance function must be <i>anti-reflexive</i>,
  * and must return {@link Double#MAX_VALUE} for identical arguments.
- * 
+ *
  * @author Martin Davis
  *
  */
-public interface ItemDistance 
+public interface ItemDistance
 {
   /**
    * Computes the distance between two items.
-   * 
+   *
    * @param item1
    * @param item2
    * @return the distance between the items
-   * 
+   *
    * @throws IllegalArgumentException if the metric is not applicable to the arguments
    */
   double distance(ItemBoundable item1, ItemBoundable item2);

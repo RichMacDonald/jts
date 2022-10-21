@@ -23,9 +23,9 @@ import org.locationtech.jtstest.testbuilder.ui.Viewport;
 public abstract class LineEndStyle extends LineStringStyle  {
     private boolean start;
 
-    public LineEndStyle(boolean start) {               
+    public LineEndStyle(boolean start) {
         this.start = start;
-    }    
+    }
 
     @Override
 	protected void paintLineString(LineString lineString, int lineType, Viewport viewport, Graphics2D graphics
@@ -51,5 +51,5 @@ public abstract class LineEndStyle extends LineStringStyle  {
     protected abstract void paint(Point2D terminal, Point2D next,
         Viewport viewport, Graphics2D graphics) throws Exception;
 
-    
+
 }

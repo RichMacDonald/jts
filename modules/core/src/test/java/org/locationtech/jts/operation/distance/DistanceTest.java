@@ -40,5 +40,5 @@ public class DistanceTest extends BaseDistanceTest {
   @Override
   protected Coordinate[] nearestPoints(Geometry g1, Geometry g2) {
     return DistanceOp.nearestPoints(g1, g2);
-  }  
+  }
 }

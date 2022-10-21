@@ -29,7 +29,7 @@ import org.locationtech.jtstest.testbuilder.model.Layer;
 import org.locationtech.jtstest.testbuilder.model.LayerList;
 
 
-public class GeometryLocationsWriter 
+public class GeometryLocationsWriter
 {
   public static String writeLocation(LayerList layers,
       Coordinate pt, double tolerance)
@@ -39,18 +39,18 @@ public class GeometryLocationsWriter
   }
 
   private static final int MAX_ITEMS_TO_DISPLAY = 10;
-  
+
   private String eol = null;
   private String highlightStart = null;
   private String highlightEnd = null;
   private String documentStart = null;
   private String documentEnd = null;
-  
+
   public GeometryLocationsWriter() {
     setHtml(true);
   }
 
-  public void setHtml(boolean isHtmlFormatted) 
+  public void setHtml(boolean isHtmlFormatted)
   {
     if (isHtmlFormatted) {
       eol = "<br>";
@@ -64,10 +64,10 @@ public class GeometryLocationsWriter
       highlightStart = "";
       highlightEnd = "";
       documentStart = "";
-      documentEnd = "";     
+      documentEnd = "";
     }
  }
-  
+
   public String writeLocationString(LayerList layers,
       Coordinate pt, double tolerance)
   {
@@ -77,65 +77,65 @@ public class GeometryLocationsWriter
       Layer lyr = layers.getLayer(i);
       String locStr = writeLocation(lyr, pt, tolerance);
       if (locStr == null) continue;
-      
+
       if (i > 0 && text.length() > 0) {
         text.append(eol);
         text.append(eol);
       }
-      
+
       text.append(highlightStart + lyr.getName() + highlightEnd + eol);
       text.append(locStr);
     }
-    
+
     if (text.length() > 0) {
       return documentStart + text.toString() +documentEnd;
     }
     return null;
   }
-    
+
   public String writeSingleLocation(Layer lyr, Coordinate p, double tolerance)
   {
     Geometry geom = lyr.getGeometry();
     if (geom == null) return null;
-    
+
     VertexLocater locater = new VertexLocater(geom);
     Coordinate coord = locater.getVertex(p, tolerance);
     int index = locater.getIndex();
-    
+
     if (coord == null) return null;
-    return "[" + index + "]: " 
+    return "[" + index + "]: "
       + coord.x + ", " + coord.y;
   }
-  
+
   public String writeLocation(Layer lyr, Coordinate p, double tolerance)
   {
     Geometry geom = lyr.getGeometry();
     if (geom == null) return null;
-    
+
     String locStr = writeComponentLocation(geom, p, tolerance);
     String facetStr = writeFacetLocation(geom, p, tolerance);
-    if (facetStr == null) 
+    if (facetStr == null)
       return locStr;
-    return locStr + facetStr;   
+    return locStr + facetStr;
   }
-  
-  
+
+
   public String writeComponentLocation(Geometry geom, Coordinate p, double tolerance)
   {
     ComponentLocater locater = new ComponentLocater(geom);
     List locs = locater.getComponents(p, tolerance);
-    
+
     StringBuilder buf = new StringBuilder();
     int count = 0;
     for (Object loc2 : locs) {
-    	
+
     	GeometryLocation loc = (GeometryLocation) loc2;
     	Geometry comp = loc.getComponent();
-      
+
       String path = loc.pathString();
       path = path.length() == 0 ? "" : path;
     	buf.append("[" + path + "]  ");
-      
+
       buf.append(comp.getGeometryType().toUpperCase());
       if (comp instanceof GeometryCollection) {
         buf.append("[" + comp.getNumGeometries() + "]");
@@ -148,7 +148,7 @@ public class GeometryLocationsWriter
       	buf.append(comp.getUserData().toString());
       }
       buf.append(eol);
-      
+
       if (count++ > MAX_ITEMS_TO_DISPLAY) {
         buf.append(" & more..." + eol);
         break;
@@ -159,25 +159,25 @@ public class GeometryLocationsWriter
       return null;
     return locStr;
   }
-    
+
   public String writeFacetLocation(Geometry geom, Coordinate p, double tolerance)
   {
     FacetLocater locater = new FacetLocater(geom);
     List locs = locater.getLocations(p, tolerance);
     List vertexLocs = FacetLocater.filterVertexLocations(locs);
-    
+
     // only show vertices if some are present, to avoid confusing with segments
-    if (! vertexLocs.isEmpty()) 
+    if (! vertexLocs.isEmpty())
       return writeFacetLocations(vertexLocs);
-    
+
     // write 'em all
     return writeFacetLocations(locs);
   }
-    
+
   private String writeFacetLocations(List locs)
   {
     if (locs.size() <= 0) return null;
-    
+
     StringBuilder buf = new StringBuilder();
     boolean isFirst = true;
     int count = 0;
@@ -189,7 +189,7 @@ public class GeometryLocationsWriter
     	}
 
     	isFirst = false;
-      
+
       buf.append(componentType(loc));
       buf.append(loc.isVertex() ? "Vert" : "Seg");
     	buf.append(loc.toFacetString());
@@ -208,14 +208,14 @@ public class GeometryLocationsWriter
     String compType = "";
     if (loc.getComponent() instanceof LinearRing) {
       boolean isCCW = Orientation.isCCW(loc.getComponent().getCoordinates());
-      compType = "Ring" 
+      compType = "Ring"
         + (isCCW ? "-CCW" : "-CW ")
           + " ";
     }
-    else if (loc.getComponent() instanceof LineString) { 
+    else if (loc.getComponent() instanceof LineString) {
       compType = "Line  ";
     }
-    else if (loc.getComponent() instanceof Point) { 
+    else if (loc.getComponent() instanceof Point) {
       compType = "Point ";
     }
     return compType;
@@ -225,9 +225,9 @@ public class GeometryLocationsWriter
   {
     VertexLocater locater = new VertexLocater(geom);
     List locs = locater.getLocations(p, tolerance);
-    
+
     if (locs.size() <= 0) return null;
-    
+
     StringBuilder buf = new StringBuilder();
     boolean isFirst = true;
     for (Object loc : locs) {
@@ -238,11 +238,11 @@ public class GeometryLocationsWriter
     		buf.append(eol + "--");
     	}
     	isFirst = false;
-    	String locStr = "[" + index + "]: " 
+    	String locStr = "[" + index + "]: "
     					+ pt.x + ", " + pt.y;
     	buf.append(locStr);
     }
-    
+
     return buf.toString();
   }
 

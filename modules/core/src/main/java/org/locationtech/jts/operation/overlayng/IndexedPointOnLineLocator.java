@@ -19,7 +19,7 @@ import org.locationtech.jts.geom.Geometry;
 /**
  * Locates points on a linear geometry,
  * using a spatial index to provide good performance.
- * 
+ *
  * @author mdavis
  *
  */

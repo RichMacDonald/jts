@@ -29,7 +29,7 @@ extends PerformanceTestCase {
   public static void main(String args[]) {
     PerformanceTestRunner.run(HPRtreePerfTest.class);
   }
-  
+
   private HPRtree index;
 
   public HPRtreePerfTest(String name) {
@@ -41,18 +41,18 @@ extends PerformanceTestCase {
   @Override
 public void setUp()
   {
-    
+
   }
-  
+
   @Override
 public void startRun(int size)
   {
     System.out.println("----- Tree size: " + size);
-    
+
     index = new HPRtree(NODE_SIZE);
     int side = (int) Math.sqrt(size);
     loadGrid(side, index);
-    
+
     Stopwatch sw = new Stopwatch();
     index.build();
     System.out.println("Build time = " + sw.getTimeString());
@@ -66,10 +66,10 @@ public void startRun(int size)
       }
     }
   }
-  
+
   public void runQueries() {
     CountItemVisitor visitor = new CountItemVisitor();
-    
+
     int size = index.size();
     int side = (int) Math.sqrt(size);
     //side = 10;

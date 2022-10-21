@@ -54,7 +54,7 @@ public class TestCaseTextDialog extends JDialog {
     JPanel functionsPanel = new JPanel();
     BoxLayout boxLayout1 = new BoxLayout(functionsPanel, BoxLayout.Y_AXIS);
     ButtonGroup textFormatGroup = new ButtonGroup();
-    
+
     JRadioButton rbSVG = new JRadioButton();
     JRadioButton rbXML = new JRadioButton();
     JRadioButton rbXMLWKB = new JRadioButton();
@@ -64,7 +64,7 @@ public class TestCaseTextDialog extends JDialog {
     JRadioButton rbWKT = new JRadioButton();
     JRadioButton rbWKTFormatted = new JRadioButton();
     JRadioButton rbGML = new JRadioButton();
-    
+
     JCheckBox intersectsCB = new JCheckBox();
 
     public TestCaseTextDialog(Frame frame, String title, boolean modal) {
@@ -101,19 +101,19 @@ public class TestCaseTextDialog extends JDialog {
         rbSVG.setText("SVG");
         rbSVG.setToolTipText("");
         rbSVG.addActionListener(this::rbSVG_actionPerformed);
-        
+
         rbTestCaseJava.setText("TestCase Java");
         rbTestCaseJava.setToolTipText("");
         rbTestCaseJava.addActionListener(this::rbTestCaseJava_actionPerformed);
         rbJTSJava.setEnabled(false);
         rbJTSJava.setText("JTS Java ");
-        
+
         rbWKT.setText("WKT");
         rbWKT.addActionListener(this::rbWKT_actionPerformed);
-        
+
         rbWKTFormatted.setText("WKT-Formatted");
         rbWKTFormatted.addActionListener(this::rbWKTFormatted_actionPerformed);
-        
+
         rbWKB.setText("WKB");
         rbWKB.addActionListener(this::rbWKB_actionPerformed);
         rbGML.setText("GML");
@@ -134,11 +134,11 @@ public class TestCaseTextDialog extends JDialog {
         textFormatPanel.add(rbXMLWKB, null);
         textFormatPanel.add(rbJTSJava, null);
         jScrollPane1.getViewport().add(txtGeomView, null);
-        
+
         allOptionsPanel.setLayout(borderLayout3);
         allOptionsPanel.add(textFormatPanel, BorderLayout.NORTH);
         allOptionsPanel.add(functionsPanel, BorderLayout.CENTER);
-       
+
         jPanel1.add(allOptionsPanel, BorderLayout.CENTER);
 
         textFormatGroup.add(rbJTSJava);
@@ -175,15 +175,15 @@ public class TestCaseTextDialog extends JDialog {
     void rbXML_actionPerformed(ActionEvent e) {
       txtGeomView.setText((new XMLTestWriter()).getTestXML(test));
   }
-    
+
     void rbXMLWKB_actionPerformed(ActionEvent e) {
       txtGeomView.setText((new XMLTestWriter()).getTestXML(test, false));
   }
-    
+
     void rbSVG_actionPerformed(ActionEvent e) {
       txtGeomView.setText(SVGTestWriter.writeTestSVG(test));
   }
-    
+
     void rbWKB_actionPerformed(ActionEvent e) {
     	writeView(
     			IOUtil.toWKBHex(test.getGeometry(0)),
@@ -191,7 +191,7 @@ public class TestCaseTextDialog extends JDialog {
     			IOUtil.toWKBHex(test.getResult())
     			);
     }
-    
+
     void rbWKT_actionPerformed(ActionEvent e) {
     	writeView(
     			test.getGeometry(0) == null ? null : test.getGeometry(0).toString(),
@@ -199,7 +199,7 @@ public class TestCaseTextDialog extends JDialog {
           test.getResult() == null ? null :test.getResult().toString()
     			);
   }
-    
+
     void rbWKTFormatted_actionPerformed(ActionEvent e) {
     	writeView(
     	    IOUtil.toWKT(test.getGeometry(0), true),
@@ -207,7 +207,7 @@ public class TestCaseTextDialog extends JDialog {
     	    IOUtil.toWKT(test.getResult(), true)
     			);
   }
-    
+
     void rbGML_actionPerformed(ActionEvent e) {
       writeView(
           IOUtil.toGML(test.getGeometry(0)),
@@ -215,7 +215,7 @@ public class TestCaseTextDialog extends JDialog {
           IOUtil.toGML(test.getResult())
           );
   }
-    
+
   private void writeView(String a, String b, String result)
   {
   	txtGeomView.setText("");
@@ -223,7 +223,7 @@ public class TestCaseTextDialog extends JDialog {
   	writeViewGeometry("B", b);
   	writeViewGeometry("Result", result);
   }
-  
+
   private void writeViewGeometry(String tag, String str)
   {
   	if (str == null || str.length() <= 0) return;
@@ -231,5 +231,5 @@ public class TestCaseTextDialog extends JDialog {
 		txtGeomView.append(str);
 		txtGeomView.append("\n\n");
   }
-  
+
 }

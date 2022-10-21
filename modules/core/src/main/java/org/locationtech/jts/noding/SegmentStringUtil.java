@@ -26,17 +26,17 @@ import org.locationtech.jts.geom.util.LinearComponentExtracter;
 
 /**
  * Utility methods for processing {@link SegmentString}s.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class SegmentStringUtil 
+public class SegmentStringUtil
 {
   /**
    * Extracts all linear components from a given {@link Geometry}
    * to {@link SegmentString}s.
    * The SegmentString data item is set to be the source Geometry.
-   * 
+   *
    * @param geom the geometry to extract from
    * @return a List of SegmentStrings
    */
@@ -49,7 +49,7 @@ public class SegmentStringUtil
    * Extracts all linear components from a given {@link Geometry}
    * to {@link NodedSegmentString}s.
    * The SegmentString data item is set to be the source Geometry.
-   * 
+   *
    * @param geom the geometry to extract from
    * @return a List of NodedSegmentStrings
    */
@@ -64,12 +64,12 @@ public class SegmentStringUtil
     }
     return segStr;
   }
-  
+
   /**
    * Extracts all linear components from a given {@link Geometry}
    * to {@link BasicSegmentString}s.
    * The SegmentString data item is set to be the source Geometry.
-   * 
+   *
    * @param geom the geometry to extract from
    * @return a List of BasicSegmentStrings
    */
@@ -84,7 +84,7 @@ public class SegmentStringUtil
     }
     return segStr;
   }
-  
+
 
   /**
    * Converts a collection of {@link SegmentString}s into a {@link Geometry}.
@@ -113,7 +113,7 @@ public class SegmentStringUtil
         SegmentString segStr = (SegmentString) segString;
         buf.append(segStr.toString());
         buf.append("\n");
-        
+
     }
     return buf.toString();
   }

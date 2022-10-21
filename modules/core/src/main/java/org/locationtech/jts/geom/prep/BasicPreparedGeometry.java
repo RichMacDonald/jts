@@ -26,17 +26,17 @@ import org.locationtech.jts.geom.util.ComponentCoordinateExtracter;
  * to the equivalent {@link Geometry} methods.
  * This class may be used as a "no-op" class for Geometry types
  * which do not have a corresponding {@link PreparedGeometry} implementation.
- * 
+ *
  * @author Martin Davis
  *
  */
-class BasicPreparedGeometry 
+class BasicPreparedGeometry
   implements PreparedGeometry
 {
   private final Geometry baseGeom;
   private final List representativePts;  // List<Coordinate>
 
-  public BasicPreparedGeometry(Geometry geom) 
+  public BasicPreparedGeometry(Geometry geom)
   {
     baseGeom = geom;
     representativePts = ComponentCoordinateExtracter.getCoordinates(geom);
@@ -49,9 +49,9 @@ public Geometry getGeometry() { return baseGeom; }
    * Gets the list of representative points for this geometry.
    * One vertex is included for every component of the geometry
    * (i.e. including one for every ring of polygonal geometries).
-   * 
+   *
    * Do not modify the returned list!
-   * 
+   *
    * @return a List of Coordinate
    */
   public List getRepresentativePoints()
@@ -59,12 +59,12 @@ public Geometry getGeometry() { return baseGeom; }
 	//TODO wrap in unmodifiable?
     return representativePts;
   }
-  
+
 	/**
-	 * Tests whether any representative of the target geometry 
+	 * Tests whether any representative of the target geometry
 	 * intersects the test geometry.
 	 * This is useful in A/A, A/L, A/P, L/P, and P/P cases.
-	 * 
+	 *
 	 * @param testGeom the test geometry
 	 * @return true if any component intersects the areal test geometry
 	 */
@@ -80,9 +80,9 @@ public Geometry getGeometry() { return baseGeom; }
 	}
 
   /**
-   * Determines whether a Geometry g interacts with 
+   * Determines whether a Geometry g interacts with
    * this geometry by testing the geometry envelopes.
-   *  
+   *
    * @param g a Geometry
    * @return true if the envelopes intersect
    */
@@ -92,12 +92,12 @@ public Geometry getGeometry() { return baseGeom; }
       return false;
     return true;
   }
-  
+
   /**
-   * Determines whether the envelope of 
+   * Determines whether the envelope of
    * this geometry covers the Geometry g.
-   * 
-   *  
+   *
+   *
    * @param g a Geometry
    * @return true if g is contained in this envelope
    */
@@ -107,7 +107,7 @@ public Geometry getGeometry() { return baseGeom; }
       return false;
     return true;
   }
-  
+
   /**
    * Default implementation.
    */
@@ -124,11 +124,11 @@ public boolean contains(Geometry g)
 public boolean containsProperly(Geometry g)
   {
   	// since raw relate is used, provide some optimizations
-  	
+
     // short-circuit test
     if (! baseGeom.getEnvelopeInternal().contains(g.getEnvelopeInternal()))
       return false;
-  	
+
     // otherwise, compute using relate mask
     return baseGeom.relate(g, "T**FF*FF*");
   }
@@ -159,7 +159,7 @@ public boolean crosses(Geometry g)
   {
     return baseGeom.crosses(g);
   }
-  
+
   /**
    * Standard implementation for all geometries.
    * Supports {@link GeometryCollection}s as input.
@@ -169,7 +169,7 @@ public boolean disjoint(Geometry g)
   {
     return ! intersects(g);
   }
-  
+
   /**
    * Default implementation.
    */
@@ -178,7 +178,7 @@ public boolean intersects(Geometry g)
   {
     return baseGeom.intersects(g);
   }
-  
+
   /**
    * Default implementation.
    */
@@ -187,7 +187,7 @@ public boolean overlaps(Geometry g)
   {
     return baseGeom.overlaps(g);
   }
-  
+
   /**
    * Default implementation.
    */
@@ -196,7 +196,7 @@ public boolean touches(Geometry g)
   {
     return baseGeom.touches(g);
   }
-  
+
   /**
    * Default implementation.
    */
@@ -205,7 +205,7 @@ public boolean within(Geometry g)
   {
     return baseGeom.within(g);
   }
-  
+
   @Override
 public String toString()
   {

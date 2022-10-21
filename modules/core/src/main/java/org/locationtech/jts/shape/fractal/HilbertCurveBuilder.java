@@ -27,7 +27,7 @@ import static org.locationtech.jts.shape.fractal.HilbertCode.size;
 /**
  * Generates a {@link LineString} representing the Hilbert Curve
  * at a given level.
- * 
+ *
  * @author Martin Davis
  * @see HilbertCode
  */
@@ -38,7 +38,7 @@ extends GeometricShapeBuilder
 
   /**
    * Creates a new instance using the provided {@link GeometryFactory}.
-   * 
+   *
    * @param geomFactory the geometry factory to use
    */
   public HilbertCurveBuilder(GeometryFactory geomFactory)
@@ -48,21 +48,21 @@ extends GeometricShapeBuilder
     // (may be set by client)
     extent = null;
   }
-  
+
   /**
    * Sets the level of curve to generate.
    * The level must be in the range [0 - 16].
-   * 
+   *
    * @param level the order of the curve
    */
   public void setLevel(int level) {
     this.numPts = size(level);  }
-  
+
   @Override
   public Geometry getGeometry() {
     int level = level(numPts);
     int nPts = size(level);
-    
+
     double scale = 1;
     double baseX = 0;
     double baseY = 0;
@@ -74,7 +74,7 @@ extends GeometricShapeBuilder
       int maxOrdinate = maxOrdinate(level);
       scale = width / maxOrdinate;
     }
-    
+
     Coordinate[] pts = new Coordinate[nPts];
     for (int i = 0; i < nPts; i++) {
        Coordinate pt = decode(level, i);
@@ -84,9 +84,9 @@ extends GeometricShapeBuilder
     }
     return geomFactory.createLineString(pts);
   }
-  
+
   private static double transform(double val, double scale, double offset) {
     return val * scale + offset;
   }
-  
+
 }

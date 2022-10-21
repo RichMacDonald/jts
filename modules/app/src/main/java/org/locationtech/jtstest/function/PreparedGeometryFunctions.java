@@ -21,13 +21,13 @@ import org.locationtech.jts.geom.prep.PreparedGeometryFactory;
  * @author mdavis
  *
  */
-public class PreparedGeometryFunctions 
+public class PreparedGeometryFunctions
 {
   private static PreparedGeometry createPG(Geometry g)
   {
     return (new PreparedGeometryFactory()).create(g);
   }
-  
+
   public static boolean preparedIntersects(Geometry g1, Geometry g2)
   {
     return createPG(g1).intersects(g2);
@@ -48,6 +48,6 @@ public class PreparedGeometryFunctions
     return createPG(g1).covers(g2);
   }
 
-  
+
 
 }

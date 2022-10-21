@@ -31,8 +31,8 @@ import org.locationtech.jts.util.Assert;
  * <P>
  * The STR packed R-tree is simple to implement and maximizes space
  * utilization; that is, as many leaves as possible are filled to capacity.
- * Overlap between nodes is far less than in a basic R-tree. 
- * However, the index is semi-static; once the tree has been built 
+ * Overlap between nodes is far less than in a basic R-tree.
+ * However, the index is semi-static; once the tree has been built
  * (which happens automatically upon the first query), items may
  * not be added.
  * Items may be removed from the tree using {@link #remove(Envelope, Object)}.
@@ -44,14 +44,14 @@ import org.locationtech.jts.util.Assert;
  * <b>Note that inserting items into a tree is not thread-safe.</b>
  * Inserting performed on more than one thread must be synchronized externally.
  * <p>
- * Querying a tree is thread-safe.  
- * The building phase is done synchronously, 
+ * Querying a tree is thread-safe.
+ * The building phase is done synchronously,
  * and querying is stateless.
  *
  * @version 1.7
  */
-public class STRtree extends AbstractSTRtree 
-implements SpatialIndex, Serializable 
+public class STRtree extends AbstractSTRtree
+implements SpatialIndex, Serializable
 {
 
   static final class STRtreeNode extends AbstractNode
@@ -78,10 +78,10 @@ implements SpatialIndex, Serializable
   }
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 259274702368956900L;
-  
+
   private static Comparator xComparator =
     (o1, o2) -> compareDoubles(
     centreX((Envelope)((Boundable)o1).getBounds()),
@@ -155,13 +155,13 @@ protected List createParentBoundables(List childBoundables, int newLevel) {
   }
 
   private static final int DEFAULT_NODE_CAPACITY = 10;
-  
+
   /**
    * Constructs an STRtree with the default node capacity.
    */
-  public STRtree() 
-  { 
-    this(DEFAULT_NODE_CAPACITY); 
+  public STRtree()
+  {
+    this(DEFAULT_NODE_CAPACITY);
   }
 
   /**
@@ -169,7 +169,7 @@ protected List createParentBoundables(List childBoundables, int newLevel) {
    * a node may have.
    * <p>
    * The minimum recommended capacity setting is 4.
-   * 
+   *
    */
   public STRtree(int nodeCapacity) {
     super(nodeCapacity);
@@ -276,18 +276,18 @@ protected Comparator getComparator() {
   }
 
   /**
-   * Finds the two nearest items in the tree, 
+   * Finds the two nearest items in the tree,
    * using {@link ItemDistance} as the distance metric.
    * A Branch-and-Bound tree traversal algorithm is used
    * to provide an efficient search.
    * <p>
    * If the tree is empty, the return value is <code>null</code.
-   * If the tree contains only one item, 
-   * the return value is a pair containing that item.  
+   * If the tree contains only one item,
+   * the return value is a pair containing that item.
    * <b>
    * If it is required to find only pairs of distinct items,
    * the {@link ItemDistance} function must be <b>anti-reflexive</b>.
-   * 
+   *
    * @param itemDist a distance metric applicable to the items in this tree
    * @return the pair of the nearest items
    *    or <code>null</code> if the tree is empty
@@ -295,23 +295,23 @@ protected Comparator getComparator() {
   public Object[] nearestNeighbour(ItemDistance itemDist)
   {
     if (isEmpty()) return null;
-    
+
     // if tree has only one item this will return null
     BoundablePair bp = new BoundablePair(this.getRoot(), this.getRoot(), itemDist);
     return nearestNeighbour(bp);
   }
 
   /**
-   * Finds the item in this tree which is nearest to the given {@link Object}, 
+   * Finds the item in this tree which is nearest to the given {@link Object},
    * using {@link ItemDistance} as the distance metric.
    * A Branch-and-Bound tree traversal algorithm is used
    * to provide an efficient search.
    * <p>
-   * The query <tt>object</tt> does <b>not</b> have to be 
-   * contained in the tree, but it does 
-   * have to be compatible with the <tt>itemDist</tt> 
-   * distance metric. 
-   * 
+   * The query <tt>object</tt> does <b>not</b> have to be
+   * contained in the tree, but it does
+   * have to be compatible with the <tt>itemDist</tt>
+   * distance metric.
+   *
    * @param env the envelope of the query item
    * @param item the item to find the nearest neighbour of
    * @param itemDist a distance metric applicable to the items in this tree and the query item
@@ -326,17 +326,17 @@ protected Comparator getComparator() {
     BoundablePair bp = new BoundablePair(this.getRoot(), bnd, itemDist);
     return nearestNeighbour(bp)[0];
   }
-  
+
   /**
-   * Finds the two nearest items from this tree 
+   * Finds the two nearest items from this tree
    * and another tree,
    * using {@link ItemDistance} as the distance metric.
    * A Branch-and-Bound tree traversal algorithm is used
    * to provide an efficient search.
-   * The result value is a pair of items, 
+   * The result value is a pair of items,
    * the first from this tree and the second
    * from the argument tree.
-   * 
+   *
    * @param tree another tree
    * @param itemDist a distance metric applicable to the items in the trees
    * @return the pair of the nearest items, one from each tree
@@ -348,12 +348,12 @@ protected Comparator getComparator() {
     BoundablePair bp = new BoundablePair(this.getRoot(), tree.getRoot(), itemDist);
     return nearestNeighbour(bp);
   }
-  
-  private Object[] nearestNeighbour(BoundablePair initBndPair) 
+
+  private Object[] nearestNeighbour(BoundablePair initBndPair)
   {
     double distanceLowerBound = Double.POSITIVE_INFINITY;
     BoundablePair minPair = null;
-    
+
     // initialize search queue
     PriorityQueue priQ = new PriorityQueue();
     priQ.add(initBndPair);
@@ -362,7 +362,7 @@ protected Comparator getComparator() {
       // pop head of queue and expand one side of pair
       BoundablePair bndPair = (BoundablePair) priQ.poll();
       double pairDistance = bndPair.getDistance();
-      
+
       /**
        * If the distance for the first pair in the queue
        * is >= current minimum distance, other nodes
@@ -370,15 +370,15 @@ protected Comparator getComparator() {
        * So the current minDistance must be the true minimum,
        * and we are done.
        */
-      if (pairDistance >= distanceLowerBound) 
-        break;  
+      if (pairDistance >= distanceLowerBound)
+        break;
 
       /**
        * If the pair members are leaves
        * then their distance is the exact lower bound.
        * Update the distanceLowerBound to reflect this
-       * (which must be smaller, due to the test 
-       * immediately prior to this). 
+       * (which must be smaller, due to the test
+       * immediately prior to this).
        */
       if (bndPair.isLeaves()) {
         // assert: currentDistance < minimumDistanceFound
@@ -387,29 +387,29 @@ protected Comparator getComparator() {
       }
       else {
         /**
-         * Otherwise, expand one side of the pair, 
+         * Otherwise, expand one side of the pair,
          * and insert the expanded pairs into the queue.
          * The choice of which side to expand is determined heuristically.
          */
         bndPair.expandToQueue(priQ, distanceLowerBound);
       }
     }
-    if (minPair == null) 
+    if (minPair == null)
       return null;
     // done - return items with min distance
-    return new Object[] {    
+    return new Object[] {
           ((ItemBoundable) minPair.getBoundable(0)).getItem(),
           ((ItemBoundable) minPair.getBoundable(1)).getItem()
       };
   }
-  
+
   /**
    * Tests whether some two items from this tree and another tree
    * lie within a given distance.
    * {@link ItemDistance} is used as the distance metric.
    * A Branch-and-Bound tree traversal algorithm is used
    * to provide an efficient search.
-   * 
+   *
    * @param tree another tree
    * @param itemDist a distance metric applicable to the items in the trees
    * @param maxDistance the distance limit for the search
@@ -420,7 +420,7 @@ protected Comparator getComparator() {
     BoundablePair bp = new BoundablePair(this.getRoot(), tree.getRoot(), itemDist);
     return isWithinDistance(bp, maxDistance);
   }
-  
+
   /**
    * Performs a withinDistance search on the tree node pairs.
    * This is a different search algorithm to nearest neighbour.
@@ -428,15 +428,15 @@ protected Comparator getComparator() {
    * tree nodes to confirm if two internal nodes must
    * have items closer than the maxDistance,
    * and short-circuit the search.
-   * 
+   *
    * @param initBndPair the initial pair containing the tree root nodes
    * @param maxDistance the maximum distance to search for
    * @return true if two items lie within the given distance
    */
-  private boolean isWithinDistance(BoundablePair initBndPair, double maxDistance) 
+  private boolean isWithinDistance(BoundablePair initBndPair, double maxDistance)
   {
     double distanceUpperBound = Double.POSITIVE_INFINITY;
-    
+
     // initialize search queue
     PriorityQueue priQ = new PriorityQueue();
     priQ.add(initBndPair);
@@ -445,7 +445,7 @@ protected Comparator getComparator() {
       // pop head of queue and expand one side of pair
       BoundablePair bndPair = (BoundablePair) priQ.poll();
       double pairDistance = bndPair.getDistance();
-      
+
       /**
        * If the distance for the first pair in the queue
        * is > maxDistance, all other pairs
@@ -453,17 +453,17 @@ protected Comparator getComparator() {
        * So can conclude no items are within the distance
        * and terminate with result = false
        */
-      if (pairDistance > maxDistance) 
-        return false;  
+      if (pairDistance > maxDistance)
+        return false;
 
       /**
        * If the maximum distance between the nodes
        * is less than the maxDistance,
-       * than all items in the nodes must be 
+       * than all items in the nodes must be
        * closer than the max distance.
        * Then can terminate with result = true.
-       * 
-       * NOTE: using Envelope MinMaxDistance 
+       *
+       * NOTE: using Envelope MinMaxDistance
        * would provide a tighter bound,
        * but not much performance improvement has been observed
        */
@@ -477,7 +477,7 @@ protected Comparator getComparator() {
       if (bndPair.isLeaves()) {
         // assert: currentDistance < minimumDistanceFound
         distanceUpperBound = pairDistance;
-        
+
         /**
          * If the items are closer than maxDistance
          * can terminate with result = true.
@@ -487,7 +487,7 @@ protected Comparator getComparator() {
       }
       else {
         /**
-         * Otherwise, expand one side of the pair, 
+         * Otherwise, expand one side of the pair,
          * and insert the expanded pairs into the queue.
          * The choice of which side to expand is determined heuristically.
          */
@@ -496,9 +496,9 @@ protected Comparator getComparator() {
     }
     return false;
   }
- 
+
   /**
-   * Finds up to k items in this tree which are the nearest neighbors to the given {@code item}, 
+   * Finds up to k items in this tree which are the nearest neighbors to the given {@code item},
    * using {@code itemDist} as the distance metric.
    * A Branch-and-Bound tree traversal algorithm is used
    * to provide an efficient search.
@@ -507,14 +507,14 @@ protected Comparator getComparator() {
    * Roussopoulos, Nick, Stephen Kelley, and Frédéric Vincent. "Nearest neighbor queries."
    * ACM sigmod record. Vol. 24. No. 2. ACM, 1995.
    * <p>
-   * The query {@code item} does <b>not</b> have to be 
-   * contained in the tree, but it does 
-   * have to be compatible with the {@code itemDist} 
-   * distance metric. 
+   * The query {@code item} does <b>not</b> have to be
+   * contained in the tree, but it does
+   * have to be compatible with the {@code itemDist}
+   * distance metric.
    * <p>
    * If the tree size is smaller than k fewer items will be returned.
    * If the tree is empty an array of size 0 is returned.
-   * 
+   *
    * @param env the envelope of the query item
    * @param item the item to find the nearest neighbours of
    * @param itemDist a distance metric applicable to the items in this tree and the query item
@@ -530,15 +530,15 @@ protected Comparator getComparator() {
     return nearestNeighbourK(bp,k);
   }
 
-  private Object[] nearestNeighbourK(BoundablePair initBndPair, int k) 
+  private Object[] nearestNeighbourK(BoundablePair initBndPair, int k)
   {
     return nearestNeighbourK(initBndPair, Double.POSITIVE_INFINITY,k);
   }
-  
-  private Object[] nearestNeighbourK(BoundablePair initBndPair, double maxDistance, int k) 
+
+  private Object[] nearestNeighbourK(BoundablePair initBndPair, double maxDistance, int k)
   {
     double distanceLowerBound = maxDistance;
-    
+
     // initialize internal structures
     PriorityQueue priQ = new PriorityQueue();
 
@@ -551,8 +551,8 @@ protected Comparator getComparator() {
       // pop head of queue and expand one side of pair
       BoundablePair bndPair = (BoundablePair) priQ.poll();
       double pairDistance = bndPair.getDistance();
-      
-      
+
+
       /**
        * If the distance for the first node in the queue
        * is >= the current maximum distance in the k queue , all other nodes
@@ -561,18 +561,18 @@ protected Comparator getComparator() {
        * and we are done.
        */
       if (pairDistance >= distanceLowerBound){
-    	  break;  
+    	  break;
       }
       /**
        * If the pair members are leaves
        * then their distance is the exact lower bound.
        * Update the distanceLowerBound to reflect this
-       * (which must be smaller, due to the test 
-       * immediately prior to this). 
+       * (which must be smaller, due to the test
+       * immediately prior to this).
        */
       if (bndPair.isLeaves()) {
         // assert: currentDistance < minimumDistanceFound
-    	
+
     	  if(kNearestNeighbors.size()<k){
 	    	  	kNearestNeighbors.add(bndPair);
     	  }
@@ -589,12 +589,12 @@ protected Comparator getComparator() {
     		   */
           BoundablePair bp2 = (BoundablePair) kNearestNeighbors.peek();
     		  distanceLowerBound = bp2.getDistance();
-    	  }        
+    	  }
       }
       else {
         /**
          * Otherwise, expand one side of the pair,
-         * (the choice of which side to expand is heuristically determined) 
+         * (the choice of which side to expand is heuristically determined)
          * and insert the new expanded pairs into the queue
          */
         bndPair.expandToQueue(priQ, distanceLowerBound);
@@ -606,7 +606,7 @@ protected Comparator getComparator() {
   }
   private static Object[] getItems(PriorityQueue kNearestNeighbors)
   {
-	  /** 
+	  /**
 	   * Iterate the K Nearest Neighbour Queue and retrieve the item from each BoundablePair
 	   * in this queue
 	   */
@@ -614,11 +614,11 @@ protected Comparator getComparator() {
 	  int count=0;
 	  while( ! kNearestNeighbors.isEmpty() )
 	  {
-      BoundablePair bp = (BoundablePair) kNearestNeighbors.poll(); 
+      BoundablePair bp = (BoundablePair) kNearestNeighbors.poll();
       items[count]=((ItemBoundable)bp.getBoundable(0)).getItem();
       count++;
-	  }	
+	  }
 	  return items;
   }
 }
- 
+

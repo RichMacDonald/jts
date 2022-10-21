@@ -22,7 +22,7 @@ public interface KdNodeVisitor
 {
   /**
    * Visits a node.
-   * 
+   *
    * @param node the node to visit
    */
   void visit(KdNode node);

@@ -19,7 +19,7 @@ import org.locationtech.jts.math.DD;
 /**
  * Represents a planar triangle, and provides methods for calculating various
  * properties of triangles.
- * 
+ *
  * @version 1.7
  */
 public class Triangle
@@ -32,7 +32,7 @@ public class Triangle
    * <p>
    * Note: this implementation is not robust for angles very close to 90
    * degrees.
-   * 
+   *
    * @param a a vertex of the triangle
    * @param b a vertex of the triangle
    * @param c a vertex of the triangle
@@ -44,10 +44,10 @@ public class Triangle
       return false;
     return true;
   }
-  
+
   /**
    * Tests whether a triangle is oriented counter-clockwise.
-   * 
+   *
    * @param a a vertex of the triangle
    * @param b a vertex of the triangle
    * @param c a vertex of the triangle
@@ -57,10 +57,10 @@ public class Triangle
   {
     return Orientation.COUNTERCLOCKWISE == Orientation.index(a, b, c);
   }
-  
+
   /**
    * Tests whether a triangle intersects a point.
-   * 
+   *
    * @param a a vertex of the triangle
    * @param b a vertex of the triangle
    * @param c a vertex of the triangle
@@ -69,7 +69,7 @@ public class Triangle
    */
   public static boolean intersects(Coordinate a, Coordinate b, Coordinate c, Coordinate p)
   {
-    int exteriorIndex = isCCW(a, b, c) ? 
+    int exteriorIndex = isCCW(a, b, c) ?
         Orientation.CLOCKWISE : Orientation.COUNTERCLOCKWISE;
     if ((exteriorIndex == Orientation.index(a, b, p)) || (exteriorIndex == Orientation.index(b, c, p)) || (exteriorIndex == Orientation.index(c, a, p))) return false;
     return true;
@@ -78,7 +78,7 @@ public class Triangle
   /**
    * Computes the line which is the perpendicular bisector of the line segment
    * a-b.
-   * 
+   *
    * @param a
    *          a point
    * @param b
@@ -102,7 +102,7 @@ public class Triangle
    * also the common intersection point of the perpendicular bisectors of the
    * sides of the triangle, and is the only point which has equal distance to
    * all three vertices of the triangle.
-   * 
+   *
    * @param a
    *          a vertex of the triangle
    * @param b
@@ -123,10 +123,10 @@ public class Triangle
    * { // MD - not sure what we can do to prevent this (robustness problem) //
    * Idea - can we condition which edges we choose? throw new
    * IllegalStateException(ex.getMessage()); }
-   * 
+   *
    * //System.out.println("Acc = " + a.distance(cc) + ", Bcc = " +
    * b.distance(cc) + ", Ccc = " + c.distance(cc) );
-   * 
+   *
    * return cc; }
    */
 
@@ -143,7 +143,7 @@ public class Triangle
    * This method uses an algorithm due to J.R.Shewchuk which uses normalization
    * to the origin to improve the accuracy of computation. (See <i>Lecture Notes
    * on Geometric Robustness</i>, Jonathan Richard Shewchuk, 1999).
-   * 
+   *
    * @param a
    *          a vertex of the triangle
    * @param b
@@ -181,9 +181,9 @@ public class Triangle
    * The circumcentre does not necessarily lie within the triangle. For example,
    * the circumcentre of an obtuse isosceles triangle lies outside the triangle.
    * <p>
-   * This method uses {@link DD} extended-precision arithmetic to 
+   * This method uses {@link DD} extended-precision arithmetic to
    * provide more accurate results than {@link #circumcentre(Coordinate, Coordinate, Coordinate)}
-   * 
+   *
    * @param a
    *          a vertex of the triangle
    * @param b
@@ -214,7 +214,7 @@ public class Triangle
   /**
    * Computes the determinant of a 2x2 matrix. Uses standard double-precision
    * arithmetic, so is susceptible to round-off error.
-   * 
+   *
    * @param m00
    *          the [0,0] entry of the matrix
    * @param m01
@@ -238,7 +238,7 @@ public class Triangle
    * is tangent to each of the triangle's three sides.
    * <p>
    * The incentre always lies within the triangle.
-   * 
+   *
    * @param a
    *          a vertex of the triangle
    * @param b
@@ -267,8 +267,8 @@ public class Triangle
    * side). The centroid divides each median in a ratio of 2:1.
    * <p>
    * The centroid always lies within the triangle.
-   * 
-   * 
+   *
+   *
    * @param a
    *          a vertex of the triangle
    * @param b
@@ -286,7 +286,7 @@ public class Triangle
 
   /**
    * Compute the length of the perimeter of a triangle
-   * 
+   *
    * @param a a vertex of the triangle
    * @param b a vertex of the triangle
    * @param c a vertex of the triangle
@@ -296,10 +296,10 @@ public class Triangle
   {
     return a.distance(b) + b.distance(c) + c.distance(a);
   }
-  
+
   /**
    * Computes the length of the longest side of a triangle
-   * 
+   *
    * @param a
    *          a vertex of the triangle
    * @param b
@@ -325,7 +325,7 @@ public class Triangle
   /**
    * Computes the point at which the bisector of the angle ABC cuts the segment
    * AC.
-   * 
+   *
    * @param a
    *          a vertex of the triangle
    * @param b
@@ -353,7 +353,7 @@ public class Triangle
 
   /**
    * Computes the 2D area of a triangle. The area value is always non-negative.
-   * 
+   *
    * @param a
    *          a vertex of the triangle
    * @param b
@@ -361,7 +361,7 @@ public class Triangle
    * @param c
    *          a vertex of the triangle
    * @return the area of the triangle
-   * 
+   *
    * @see #signedArea(Coordinate, Coordinate, Coordinate)
    */
   public static double area(Coordinate a, Coordinate b, Coordinate c)
@@ -378,7 +378,7 @@ public class Triangle
    * implementation in this method is susceptible to round-off errors. Use
    * {@link Orientation#index(Coordinate, Coordinate, Coordinate)}
    * for robust orientation calculation.
-   * 
+   *
    * @param a
    *          a vertex of the triangle
    * @param b
@@ -386,7 +386,7 @@ public class Triangle
    * @param c
    *          a vertex of the triangle
    * @return the signed 2D area of the triangle
-   * 
+   *
    * @see Orientation#index(Coordinate, Coordinate, Coordinate)
    */
   public static double signedArea(Coordinate a, Coordinate b, Coordinate c)
@@ -402,7 +402,7 @@ public class Triangle
   /**
    * Computes the 3D area of a triangle. The value computed is always
    * non-negative.
-   * 
+   *
    * @param a
    *          a vertex of the triangle
    * @param b
@@ -437,7 +437,7 @@ public class Triangle
 
     return area3D;
   }
-  
+
   /**
    * Computes the Z-value (elevation) of an XY point on a three-dimensional
    * plane defined by a triangle whose vertices have Z-values. The defining
@@ -446,7 +446,7 @@ public class Triangle
    * <p>
    * This method can be used to interpolate the Z-value of a point inside a
    * triangle (for example, of a TIN facet with elevations on the vertices).
-   * 
+   *
    * @param p
    *          the point to compute the Z-value of
    * @param v0
@@ -473,8 +473,8 @@ public class Triangle
     double u = (-c * dx + a * dy) / det;
     double z = v0.getZ() + t * (v1.getZ() - v0.getZ()) + u * (v2.getZ() - v0.getZ());
     return z;
-  }  
-  
+  }
+
   /**
    * The coordinates of the vertices of the triangle
    */
@@ -482,7 +482,7 @@ public class Triangle
 
   /**
    * Creates a new triangle with the given vertices.
-   * 
+   *
    * @param p0
    *          a vertex
    * @param p1
@@ -503,7 +503,7 @@ public class Triangle
    * also the point at which the bisectors of the triangle's angles meet. It is
    * the centre of the triangle's <i>incircle</i>, which is the unique circle
    * that is tangent to each of the triangle's three sides.
-   * 
+   *
    * @return the point which is the inCentre of this triangle
    */
   public Coordinate inCentre()
@@ -518,7 +518,7 @@ public class Triangle
    * <p>
    * Note: this implementation is not robust for angles very close to 90
    * degrees.
-   * 
+   *
    * @return true if this triangle is acute
    */
   public boolean isAcute()
@@ -528,13 +528,13 @@ public class Triangle
 
   /**
    * Tests whether this triangle is oriented counter-clockwise.
-   * 
+   *
    * @return true if the triangle orientation is counter-clockwise
    */
   public boolean isCCW() {
     return isCCW(p0, p1, p2);
   }
-  
+
   /**
    * Computes the circumcentre of this triangle. The circumcentre is the centre
    * of the circumcircle, the smallest circle which encloses the triangle. It is
@@ -547,7 +547,7 @@ public class Triangle
    * This method uses an algorithm due to J.R.Shewchuk which uses normalization
    * to the origin to improve the accuracy of computation. (See <i>Lecture Notes
    * on Geometric Robustness</i>, Jonathan Richard Shewchuk, 1999).
-   * 
+   *
    * @return the circumcentre of this triangle
    */
   public Coordinate circumcentre()
@@ -562,7 +562,7 @@ public class Triangle
    * side). The centroid divides each median in a ratio of 2:1.
    * <p>
    * The centroid always lies within the triangle.
-   * 
+   *
    * @return the centroid of this triangle
    */
   public Coordinate centroid()
@@ -572,17 +572,17 @@ public class Triangle
 
   /**
    * Computes the length of the perimeter of this triangle.
-   * 
+   *
    * @return the length of the perimeter
    */
   public double length()
   {
     return length(p0, p1, p2);
   }
-  
+
   /**
    * Computes the length of the longest side of this triangle
-   * 
+   *
    * @return the length of the longest side of this triangle
    */
   public double longestSideLength()
@@ -593,9 +593,9 @@ public class Triangle
   /**
    * Computes the 2D area of this triangle. The area value is always
    * non-negative.
-   * 
+   *
    * @return the area of this triangle
-   * 
+   *
    * @see #signedArea()
    */
   public double area()
@@ -611,9 +611,9 @@ public class Triangle
    * implementation in this method is susceptible to round-off errors. Use
    * {@link Orientation#index(Coordinate, Coordinate, Coordinate)}
    * for robust orientation calculation.
-   * 
+   *
    * @return the signed 2D area of this triangle
-   * 
+   *
    * @see Orientation#index(Coordinate, Coordinate, Coordinate)
    */
   public double signedArea()
@@ -624,7 +624,7 @@ public class Triangle
   /**
    * Computes the 3D area of this triangle. The value computed is always
    * non-negative.
-   * 
+   *
    * @return the 3D area of this triangle
    */
   public double area3D()
@@ -640,7 +640,7 @@ public class Triangle
    * <p>
    * This method can be used to interpolate the Z-value of a point inside this
    * triangle (for example, of a TIN facet with elevations on the vertices).
-   * 
+   *
    * @param p
    *          the point to compute the Z-value of
    * @return the computed Z-value (elevation) of the point

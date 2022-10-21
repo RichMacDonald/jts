@@ -41,7 +41,7 @@ import org.locationtech.jts.geom.Polygon;
 
 
 
-public class Shapefile  
+public class Shapefile
 {
 
 
@@ -67,7 +67,7 @@ public class Shapefile
     public static final int XY = 2;
     public static final int XYM = 3;
     public static final int XYZM = 4;
-    
+
     private URL baseURL;
     private InputStream myInputStream;
     private GeometryFactory geomFactory;
@@ -155,7 +155,7 @@ public class Shapefile
     private ShapefileHeader mainHeader;
     private ShapeHandler handler;
     private int recordNumber;
-    
+
     /**
      * Initialises a shapefile from disk.
      * Use Shapefile(String) if you don't want to use LEDataInputStream directly (recomened)

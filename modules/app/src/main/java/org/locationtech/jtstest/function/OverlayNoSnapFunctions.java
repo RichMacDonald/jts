@@ -35,7 +35,7 @@ public class OverlayNoSnapFunctions {
 	      public boolean isFloatingPrecision() {
 	        return true;
 	      }
-	      
+
 	    };
 	    UnaryUnionOp op = new UnaryUnionOp(a);
 	    op.setUnionFunction(unionSRFun);

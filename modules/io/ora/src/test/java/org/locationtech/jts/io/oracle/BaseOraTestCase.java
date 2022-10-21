@@ -15,7 +15,7 @@ import junit.framework.TestCase;
 
 /**
  * Tests OraReader without requiring an Oracle connection.
- * 
+ *
  * @author mbdavis
  *
  */

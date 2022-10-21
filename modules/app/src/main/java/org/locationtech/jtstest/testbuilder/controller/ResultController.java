@@ -29,7 +29,7 @@ import org.locationtech.jtstest.testbuilder.model.TestBuilderModel;
 import org.locationtech.jtstest.testbuilder.ui.SwingWorker;
 
 
-public class ResultController 
+public class ResultController
 {
   private static NumberFormat timeFmt;
   static {
@@ -40,11 +40,11 @@ public class ResultController
 	public ResultController()
 	{
 	}
-	
+
   private static JTSTestBuilderFrame frame() {
     return  JTSTestBuilderController.frame();
   }
-  
+
   private static TestBuilderModel model() {
     return  JTSTestBuilderController.model();
   }
@@ -52,8 +52,8 @@ public class ResultController
   private ResultWKTPanel resultWKTPanel() {
     return frame().getResultWKTPanel();
   }
-  
-  public void execute(boolean isCreateNew) 
+
+  public void execute(boolean isCreateNew)
   {
     SpatialFunctionPanel spatialPanel = frame().getTestCasePanel().getSpatialFunctionPanel();
     GeometryFunctionInvocation functionDesc = functionInvocation(spatialPanel);
@@ -76,7 +76,7 @@ public class ResultController
 
   private GeometryFunctionInvocation functionInvocation(FunctionPanel functionPanel) {
     GeometryFunctionInvocation functionDesc = new GeometryFunctionInvocation(
-        functionPanel.getFunction(), 
+        functionPanel.getFunction(),
         model().getGeometryEditModel().getGeometry(0),
         functionPanel.getFunctionParams());
     return functionDesc;
@@ -89,13 +89,13 @@ public class ResultController
     System.gc();
     updateResult(null,null,null);
   }
-  	
+
   /**
    * If result is null, clears result info.
-   * 
+   *
    * @param result
-   * @param object 
-   * @param object 
+   * @param object
+   * @param object
    * @param timer
    */
   private void resetUI() {
@@ -103,7 +103,7 @@ public class ResultController
          .enableExecuteControl(true);
      frame().setCursorNormal();
   }
-  
+
   private void updateResult(GeometryFunctionInvocation function, Object result, Stopwatch timer) {
      model().setResult(result);
      String timeString = timer != null ? timer.getTimeString() : "";
@@ -113,7 +113,7 @@ public class ResultController
      // log it
      resultLogEntry(function, timeString, result);
    }
-  
+
   private void resultLogEntry(GeometryFunctionInvocation function, String timeString, Object result) {
     if (function == null) return;
     String funTimeLine = function.getSignature() + " : " + timeString;
@@ -122,28 +122,28 @@ public class ResultController
     if (resultDesc != null && resultDesc.length() < 40) entry.append("\n ==> ").append(resultDesc);
     JTSTestBuilder.controller().displayInfo(entry.toString(), false);
   }
-  
-  
-  
+
+
+
   private SwingWorker worker = null;
-  
+
   private void runFunctionWorker(final GeometryFunctionInvocation functionInvoc, final boolean createNew)
   {
     worker = new SwingWorker() {
     	Stopwatch timer;
-    	
+
       @Override
 	public Object construct()
       {
         return computeResult();
       }
-      
+
       private Object computeResult() {
         Object result = null;
         GeometryFunction currentFunc = functionInvoc.getFunction();
         if (currentFunc == null)
           return null;
-        
+
         try {
           timer = new Stopwatch();
           try {
@@ -168,7 +168,7 @@ public class ResultController
         Object result = getValue();
         if (createNew) {
           String desc = "Result of " + functionInvoc.getSignature();
-          JTSTestBuilder.controller().addTestCase(new Geometry[] { (Geometry) result, null }, desc);          
+          JTSTestBuilder.controller().addTestCase(new Geometry[] { (Geometry) result, null }, desc);
         } else {
           updateResult(functionInvoc, result, timer);
         }
@@ -177,11 +177,11 @@ public class ResultController
     };
     worker.start();
   }
-  
+
   private Timer funcTimer;
   private long runMillis = 0;
   private static final int TIMER_DELAY_IN_MILLIS = 10;
-  
+
   private void startFunctionMonitor()
   {
     runMillis = 0;
@@ -201,15 +201,15 @@ public class ResultController
         resultWKTPanel().setRunningTime(timeStr);
       });
     funcTimer.setInitialDelay(0);
-    funcTimer.start(); 
+    funcTimer.start();
   }
-  
+
   private void stopFunctionMonitor()
   {
     funcTimer.stop();
   }
 
-  public void executeScalarFunction() 
+  public void executeScalarFunction()
   {
     /**
      * For now scalar functions are executed on the calling thread.
@@ -219,15 +219,15 @@ public class ResultController
     String opName = scalarPanel.getOpName();
     // initialize UI view
     frame().getResultValuePanel().setResult(opName, "", null);
-    frame().showResultValueTab(); 
-    
+    frame().showResultValueTab();
+
     frame().setCursorWait();
     Object result = scalarPanel.getResult();
     frame().setCursorNormal();
-    
+
     Stopwatch timer = scalarPanel.getTimer();
     String timeString = timer.getTimeString();
-    
+
     frame().getResultValuePanel().setResult(opName, timer.getTimeString(), result);
 
     resultLogEntry(functionInvocation(scalarPanel), timeString, result);

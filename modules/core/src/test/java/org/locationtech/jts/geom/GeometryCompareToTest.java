@@ -21,7 +21,7 @@ public class GeometryCompareToTest extends GeometryTestCase{
   }
 
   public GeometryCompareToTest(String name) { super(name); }
-  
+
   public void testPoints() {
     checkCompareTo(-1, "POINT (0 0)", "POINT (1 0)");
     checkCompareTo(-1, "POINT (0 0)", "POINT (0 1)");
@@ -29,7 +29,7 @@ public class GeometryCompareToTest extends GeometryTestCase{
   }
 
   public void testLines() {
-    checkCompareTo(-1, 
+    checkCompareTo(-1,
         "LINESTRING ( 0 0, 1 1, 0 1)",
         "LINESTRING ( 0 0, 1 1, 0 2)");
   }
@@ -51,8 +51,8 @@ public class GeometryCompareToTest extends GeometryTestCase{
     checkCompareTo(-1, GeometryTestData.WKT_LINESTRING,GeometryTestData.WKT_LINEARRING);
     checkCompareTo(-1, GeometryTestData.WKT_LINEARRING,GeometryTestData.WKT_MULTILINESTRING);
     checkCompareTo(-1, GeometryTestData.WKT_MULTILINESTRING,GeometryTestData.WKT_POLY);
-    checkCompareTo(-1, GeometryTestData.WKT_POLY,GeometryTestData.WKT_MULTIPOLYGON);    
-    checkCompareTo(-1, GeometryTestData.WKT_MULTIPOLYGON,GeometryTestData.WKT_GC);    
+    checkCompareTo(-1, GeometryTestData.WKT_POLY,GeometryTestData.WKT_MULTIPOLYGON);
+    checkCompareTo(-1, GeometryTestData.WKT_MULTIPOLYGON,GeometryTestData.WKT_GC);
   }
   private void checkCompareTo(int compExpected, String wkt1, String wkt2 ) {
     Geometry g1 = read(wkt1);

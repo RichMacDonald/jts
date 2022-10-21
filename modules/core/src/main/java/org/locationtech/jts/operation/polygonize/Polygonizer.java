@@ -26,11 +26,11 @@ import org.locationtech.jts.geom.Polygon;
 /**
  * Polygonizes a set of {@link Geometry}s which contain linework that
  * represents the edges of a planar graph.
- * All types of Geometry are accepted as input;  
+ * All types of Geometry are accepted as input;
  * the constituent linework is extracted as the edges to be polygonized.
  * The processed edges must be correctly noded; that is, they must only meet
  * at their endpoints.  Polygonization will accept incorrectly noded input
- * but will not form polygons from non-noded edges, 
+ * but will not form polygons from non-noded edges,
  * and reports them as errors.
  * <p>
  * The Polygonizer reports the follow kinds of errors:
@@ -49,7 +49,7 @@ import org.locationtech.jts.geom.Polygon;
  * @version 1.7
  */
 public class Polygonizer
-{  
+{
   /**
    * Adds every linear element in a {@link Geometry} into the polygonizer graph.
    */
@@ -57,11 +57,11 @@ public class Polygonizer
       implements GeometryComponentFilter
   {
     Polygonizer p;
-    
+
     LineStringAdder(Polygonizer p) {
       this.p = p;
     }
-    
+
     @Override
 	public void filter(Geometry g) {
       if (g instanceof LineString)
@@ -94,13 +94,13 @@ public class Polygonizer
   {
     this(false);
   }
-  
+
   /**
    * Creates a polygonizer, specifying whether a valid polygonal geometry must be created.
    * If the argument is <code>true</code>
-   * then areas may be discarded in order to 
+   * then areas may be discarded in order to
    * ensure that the extracted geometry is a valid polygonal geometry.
-   * 
+   *
    * @param extractOnlyPolygonal true if a valid polygonal geometry should be extracted
    */
   public Polygonizer(boolean extractOnlyPolygonal)
@@ -153,18 +153,18 @@ public class Polygonizer
   }
 
   /**
-   * Allows disabling the valid ring checking, 
+   * Allows disabling the valid ring checking,
    * to optimize situations where invalid rings are not expected.
    * <p>
    * The default is <code>true</code>.
-   * 
+   *
    * @param isCheckingRingsValid true if generated rings should be checked for validity
    */
   public void setCheckRingsValid(boolean isCheckingRingsValid)
   {
     this.isCheckingRingsValid = isCheckingRingsValid;
   }
-  
+
   /**
    * Gets the list of polygons formed by the polygonization.
    * @return a collection of {@link Polygon}s
@@ -178,7 +178,7 @@ public class Polygonizer
   /**
    * Gets a geometry representing the polygons formed by the polygonization.
    * If a valid polygonal geometry was extracted the result is a {@link org.locationtech.jts.geom.Polygonal} geometry.
-   * 
+   *
    * @return a geometry containing the polygons
    */
   public Geometry getGeometry()
@@ -249,15 +249,15 @@ public class Polygonizer
       validEdgeRingList = edgeRingList;
     }
     //Debug.printTime("Validate Rings");
-    
+
     findShellsAndHoles(validEdgeRingList);
     HoleAssigner.assignHolesToShells(holeList, shellList);
-    
+
     // order the shells to make any subsequent processing deterministic
     Collections.sort(shellList, new EdgeRing.EnvelopeComparator());
 
     //Debug.printTime("Assign Holes");
-    
+
     boolean includeAll = true;
     if (extractOnlyPolygonal) {
       findDisjointShells(shellList);
@@ -293,13 +293,13 @@ public class Polygonizer
 
   private static void findDisjointShells(List shellList) {
     findOuterShells(shellList);
-    
+
     boolean isMoreToScan;
     do {
       isMoreToScan = false;
       for (Object element : shellList) {
         EdgeRing er = (EdgeRing) element;
-        if (er.isIncludedSet()) 
+        if (er.isIncludedSet())
           continue;
         er.updateIncluded();
         if (! er.isIncludedSet()) {
@@ -312,7 +312,7 @@ public class Polygonizer
   /**
    * For each outer hole finds and includes a single outer shell.
    * This seeds the traversal algorithm for finding only polygonal shells.
-   *  
+   *
    * @param shellList the list of shell EdgeRings
    */
   private static void findOuterShells(List shellList) {
@@ -326,7 +326,7 @@ public class Polygonizer
       }
     }
   }
-  
+
   private static List extractPolygons(List shellList, boolean includeAll) {
     List polyList = new ArrayList();
     for (Object element : shellList) {

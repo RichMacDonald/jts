@@ -21,7 +21,7 @@ import org.locationtech.jts.operation.linemerge.LineMerger;
 
 
 /**
- * Example of using the LineMerger class to sew together a set of fully noded 
+ * Example of using the LineMerger class to sew together a set of fully noded
  * linestrings.
  *
  * @version 1.7
@@ -43,11 +43,11 @@ public class LineMergeExample {
 
   void run() throws Exception {
     Collection lineStrings = getData();
-    
+
     LineMerger lineMerger = new LineMerger();
     lineMerger.add(lineStrings);
     Collection mergedLineStrings = lineMerger.getMergedLineStrings();
-    
+
     System.out.println("Lines formed (" + mergedLineStrings.size() + "):");
     System.out.println(mergedLineStrings);
   }

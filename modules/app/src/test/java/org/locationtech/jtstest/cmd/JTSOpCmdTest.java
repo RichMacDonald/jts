@@ -25,42 +25,42 @@ public class JTSOpCmdTest extends TestCase {
     String[] testCaseName = {JTSOpCmdTest.class.getName()};
     junit.textui.TestRunner.main(testCaseName);
   }
-  
+
   public void testErrorFileNotFoundA() {
-    runCmdError( args("-a", "missing.wkt"), 
+    runCmdError( args("-a", "missing.wkt"),
         JTSOpRunner.ERR_FILE_NOT_FOUND );
   }
-  
+
   public void testErrorFileNotFoundB() {
-    runCmdError( args("-b", "missing.wkt"), 
+    runCmdError( args("-b", "missing.wkt"),
         JTSOpRunner.ERR_FILE_NOT_FOUND );
   }
-  
+
   public void testErrorFunctioNotFound() {
     runCmdError( args("-a", "POINT ( 1 1 )", "buffer" ),
         JTSOpRunner.ERR_FUNCTION_NOT_FOUND );
   }
-  
+
   public void testErrorMissingArgBuffer() {
     runCmdError( args("-a", "POINT ( 1 1 )", "Buffer.buffer" ),
         JTSOpRunner.ERR_WRONG_ARG_COUNT );
   }
-  
+
   public void testErrorbadMultiArgsNoRParen() {
     runCmdError( args("-a", "POINT ( 1 1 )", "Buffer.buffer", "(1,2,3" ),
         JTSOpCmd.ERR_INVALID_ARG_PARAM );
   }
-  
+
   public void testErrorbadMultiArgsNoLParen() {
     runCmdError( args("-a", "POINT ( 1 1 )", "Buffer.buffer", "1,2,3)" ),
         JTSOpCmd.ERR_INVALID_ARG_PARAM );
   }
-  
+
   public void testErrorMissingGeomABuffer() {
     runCmdError( args("Buffer.buffer", "10" ),
         JTSOpRunner.ERR_REQUIRED_A );
   }
-  
+
   /*
    // Missing B check is disabled for now
   public void testErrorMissingGeomBUnion() {
@@ -68,107 +68,107 @@ public class JTSOpCmdTest extends TestCase {
         JTSOpRunner.ERR_REQUIRED_B );
   }
   */
-  
+
   public void testErrorMissingGeomAUnion() {
     runCmdError( args("-b", "POINT ( 1 1 )", "Overlay.union" ),
         JTSOpRunner.ERR_REQUIRED_A );
   }
   //===========================================
-  
+
   public void testOpEnvelope() {
-    runCmd( args("-a", "LINESTRING ( 1 1, 2 2)", "-f", "wkt", "envelope"), 
+    runCmd( args("-a", "LINESTRING ( 1 1, 2 2)", "-f", "wkt", "envelope"),
         "POLYGON" );
   }
-  
+
   public void testOpLength() {
-    runCmd( args("-a", "LINESTRING ( 1 0, 2 0 )", "-f", "txt", "length"), 
+    runCmd( args("-a", "LINESTRING ( 1 0, 2 0 )", "-f", "txt", "length"),
         "1" );
   }
-  
+
   public void testOpUnionLines() {
-    runCmd( args("-a", "LINESTRING ( 1 0, 2 0 )", "-b", "LINESTRING ( 2 0, 3 0 )", "-f", "wkt", "Overlay.union"), 
+    runCmd( args("-a", "LINESTRING ( 1 0, 2 0 )", "-b", "LINESTRING ( 2 0, 3 0 )", "-f", "wkt", "Overlay.union"),
         "MULTILINESTRING ((1 0, 2 0), (2 0, 3 0))" );
   }
-  
+
   public void testOpNoArg() {
-    runCmd( args("-f", "wkt", "CreateRandomShape.randomPoints", "10"), 
+    runCmd( args("-f", "wkt", "CreateRandomShape.randomPoints", "10"),
         "MULTIPOINT" );
   }
-  
+
   public void testCollectUnion() {
-    runCmd( args("-a", "stdin", 
-                "-collect", 
-                "-f", "wkt", "Overlay.unaryUnion"), 
+    runCmd( args("-a", "stdin",
+                "-collect",
+                "-f", "wkt", "Overlay.unaryUnion"),
         stdin(  "POLYGON ((1 3, 3 3, 3 1, 1 1, 1 3))",
                 "POLYGON ((5 3, 5 1, 3 1, 3 3, 5 3))"
         ),
         "POLYGON ((1 3, 3 3, 5 3, 5 1, 3 1, 1 1, 1 3))" );
-    
+
   }
-  
+
   public void testCollectLimitUnion() {
-    runCmd( args("-a", "stdin", 
-                "-collect", 
+    runCmd( args("-a", "stdin",
+                "-collect",
                 "-limit", "2",
-                "-f", "wkt", "Overlay.unaryUnion"), 
+                "-f", "wkt", "Overlay.unaryUnion"),
         stdin(  "POLYGON ((1 3, 3 3, 3 1, 1 1, 1 3))",
                 "POLYGON ((5 3, 5 1, 3 1, 3 3, 5 3))",
                 "POLYGON ((1 5, 5 5, 5 3, 1 3, 1 5))"
         ),
         "POLYGON ((1 3, 3 3, 5 3, 5 1, 3 1, 1 1, 1 3))" );
-    
+
   }
 
   //===========================================
 
   public void testOpEachA() {
-    runCmd( args("-a", "MULTILINESTRING((0 0, 10 10), (100 100, 110 110))", 
+    runCmd( args("-a", "MULTILINESTRING((0 0, 10 10), (100 100, 110 110))",
         "-eacha",
-        "-f", "wkt", "envelope"), 
+        "-f", "wkt", "envelope"),
         "POLYGON ((0 0, 0 10, 10 10, 10 0, 0 0))\nPOLYGON ((100 100, 100 110, 110 110, 110 100, 100 100))" );
   }
 
   public void testOpEachAEachB() {
     runCmd( args(
-        "-a", "MULTIPOINT((0 0), (0 1))", 
-        "-b", "MULTIPOINT((9 9), (8 8))", 
+        "-a", "MULTIPOINT((0 0), (0 1))",
+        "-b", "MULTIPOINT((9 9), (8 8))",
         "-eacha", "-eachb",
-        "-f", "wkt", "Distance.nearestPoints"), 
+        "-f", "wkt", "Distance.nearestPoints"),
         "LINESTRING (0 0, 9 9)\nLINESTRING (0 0, 8 8)\nLINESTRING (0 1, 9 9)\nLINESTRING (0 1, 8 8)" );
   }
 
   public void testOpEachB() {
     runCmd( args(
-        "-a", "MULTIPOINT((0 0), (0 1))", 
-        "-b", "MULTIPOINT((9 9), (8 8))", 
+        "-a", "MULTIPOINT((0 0), (0 1))",
+        "-b", "MULTIPOINT((9 9), (8 8))",
         "-eachb",
-        "-f", "wkt", "Distance.nearestPoints" ), 
+        "-f", "wkt", "Distance.nearestPoints" ),
         "LINESTRING (0 1, 9 9)\nLINESTRING (0 1, 8 8)" );
   }
 
   public void testOpEachAA() {
     runCmd( args(
-        "-ab", "MULTIPOINT((0 0), (0 1))", 
+        "-ab", "MULTIPOINT((0 0), (0 1))",
         "-eacha",
-        "-f", "wkt", "Distance.nearestPoints"), 
+        "-f", "wkt", "Distance.nearestPoints"),
         "LINESTRING (0 0, 0 0)\nLINESTRING (0 0, 0 1)\nLINESTRING (0 1, 0 0)\nLINESTRING (0 1, 0 1)" );
   }
 
   public void testOpEachABIndexed() {
     runCmd( args(
-        "-a", "MULTILINESTRING((0 0, 5 5), (10 0, 15 5))", 
-        "-b", "MULTIPOINT((1 1), (11 1))", 
+        "-a", "MULTILINESTRING((0 0, 5 5), (10 0, 15 5))",
+        "-b", "MULTIPOINT((1 1), (11 1))",
         "-eacha", "-eachb",
         "-index",
-        "-f", "wkt", "Distance.nearestPoints"), 
+        "-f", "wkt", "Distance.nearestPoints"),
         "LINESTRING (1 1, 1 1)\nLINESTRING (11 1, 11 1)" );
   }
 
   public void testOpBufferVals() {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "POINT(0 0)", 
-        "-f", "wkt", 
-        "Buffer.buffer", "val(1,2,3,4)" ), 
+        "-a", "POINT(0 0)",
+        "-f", "wkt",
+        "Buffer.buffer", "val(1,2,3,4)" ),
         null, null );
     List<Geometry> results = cmd.getResultGeometry();
     assertTrue("Not enough results for arg values",  results.size() == 4 );
@@ -177,9 +177,9 @@ public class JTSOpCmdTest extends TestCase {
 
   public void testOpBufferMultiArgParen() {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "POINT(0 0)", 
-        "-f", "wkt", 
-        "Buffer.buffer", "(1,2,3,4)" ), 
+        "-a", "POINT(0 0)",
+        "-f", "wkt",
+        "Buffer.buffer", "(1,2,3,4)" ),
         null, null );
     List<Geometry> results = cmd.getResultGeometry();
     assertTrue("Not enough results for arg values",  results.size() == 4 );
@@ -188,9 +188,9 @@ public class JTSOpCmdTest extends TestCase {
 
   public void testOpBufferMultiArgNoParen() {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "POINT(0 0)", 
-        "-f", "wkt", 
-        "Buffer.buffer", "1,2,3,4" ), 
+        "-a", "POINT(0 0)",
+        "-f", "wkt",
+        "Buffer.buffer", "1,2,3,4" ),
         null, null );
     List<Geometry> results = cmd.getResultGeometry();
     assertTrue("Not enough results for arg values",  results.size() == 4 );
@@ -201,8 +201,8 @@ public class JTSOpCmdTest extends TestCase {
 
   public void testWhereValid() {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9))", 
-        "-f", "wkt", 
+        "-a", "POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9))",
+        "-f", "wkt",
         "-where", "eq", "1",
         "isValid" ) );
     List<Geometry> results = cmd.getResultGeometry();
@@ -211,8 +211,8 @@ public class JTSOpCmdTest extends TestCase {
 
   public void testWhereInvalid() {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "POLYGON ((1 9, 9 1, 9 9, 1 1, 1 9))", 
-        "-f", "wkt", 
+        "-a", "POLYGON ((1 9, 9 1, 9 9, 1 1, 1 9))",
+        "-f", "wkt",
         "-where","eq", "0",
         "isValid" ) );
     List<Geometry> results = cmd.getResultGeometry();
@@ -221,10 +221,10 @@ public class JTSOpCmdTest extends TestCase {
 
   public void testWhereLength() {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "stdin", 
-        "-f", "wkt", 
+        "-a", "stdin",
+        "-f", "wkt",
         "-where","gt", "1",
-        "Geometry.length" ), 
+        "Geometry.length" ),
         stdin(
             "LINESTRING ( 0 1, 0 1)",
             "LINESTRING ( 0 1, 0 2)",
@@ -236,47 +236,47 @@ public class JTSOpCmdTest extends TestCase {
   }
 
   //----------------------------------------------------------------
-  
+
   public void testSRIDBuffer() throws ParseException {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "POINT(0 0)", 
+        "-a", "POINT(0 0)",
         "-srid", "4326",
-        "-f", "wkb", 
-        "Buffer.buffer", "1" ), 
+        "-f", "wkb",
+        "Buffer.buffer", "1" ),
         null, null );
     List<Geometry> results = cmd.getResultGeometry();
     assertEquals("Incorrect SRID", 4326, results.get(0).getSRID());
-    
+
     Geometry outGeom = readWKB(cmd.getOutput());
     assertEquals("Incorrect SRID in WKB", 4326, outGeom.getSRID());
   }
 
   public void testSRIDStdIn() throws ParseException {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "stdin", 
+        "-a", "stdin",
         "-srid", "4326",
-        "-f", "wkb", 
-        "Buffer.buffer", "1" ), 
+        "-f", "wkb",
+        "Buffer.buffer", "1" ),
         stdin("POINT(0 0)"), null );
     List<Geometry> results = cmd.getResultGeometry();
     assertEquals("Incorrect SRID", 4326, results.get(0).getSRID());
-    
+
     Geometry outGeom = readWKB(cmd.getOutput());
     assertEquals("Incorrect SRID in WKB", 4326, outGeom.getSRID());
   }
 
   public void testSRIDPolygonize() throws ParseException {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "MULTILINESTRING ((1 1, 9 9), (9 9, 9 1), (9 1, 1 1), (9 1, 16 9), (9 9, 16 9))", 
+        "-a", "MULTILINESTRING ((1 1, 9 9), (9 9, 9 1), (9 1, 1 1), (9 1, 16 9), (9 9, 16 9))",
         "-srid", "4326",
         "-explode",
-        "-f", "wkb", 
-        "Polygonize.polygonize" ), 
+        "-f", "wkb",
+        "Polygonize.polygonize" ),
         null, null );
     List<Geometry> results = cmd.getResultGeometry();
     assertEquals("Incorrect SRID", 4326,  results.get(0).getSRID());
     assertEquals("Incorrect SRID", 4326,  results.get(1).getSRID());
-    
+
     String[] output = cmd.getOutputLines();
     for (String out : output) {
       Geometry outGeom = readWKB(out);
@@ -295,11 +295,11 @@ public class JTSOpCmdTest extends TestCase {
 
   public void testExplode() {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "LINESTRING(0 0, 10 10)", 
-        "-b", "LINESTRING(0 10, 10 0)", 
-        "-explode", 
-        "-f", "wkt", 
-        "Overlay.union" ), 
+        "-a", "LINESTRING(0 0, 10 10)",
+        "-b", "LINESTRING(0 10, 10 0)",
+        "-explode",
+        "-f", "wkt",
+        "Overlay.union" ),
         null, null );
     List<Geometry> results = cmd.getResultGeometry();
     assertEquals("Not enough results for explode",  results.size(), 4 );
@@ -307,9 +307,9 @@ public class JTSOpCmdTest extends TestCase {
 
   public void testLiteralEmptyLinestring() {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "LINESTRING EMPTY", 
-        "-f", "wkt", 
-        "Construction.boundary" ), 
+        "-a", "LINESTRING EMPTY",
+        "-f", "wkt",
+        "Construction.boundary" ),
         null, null );
     List<Geometry> results = cmd.getResultGeometry();
     assertEquals("Too many results for operation",  results.size(), 1 );
@@ -318,9 +318,9 @@ public class JTSOpCmdTest extends TestCase {
 
   public void testLiteralEmptyPoint() {
     JTSOpCmd cmd = runCmd( args(
-        "-a", "POINT EMPTY", 
-        "-f", "wkt", 
-        "Construction.boundary" ), 
+        "-a", "POINT EMPTY",
+        "-f", "wkt",
+        "Construction.boundary" ),
         null, null );
     List<Geometry> results = cmd.getResultGeometry();
     assertEquals("Too many results for operation",  results.size(), 1 );
@@ -328,56 +328,56 @@ public class JTSOpCmdTest extends TestCase {
   }
 
   //===========================================
-  
+
   public void testFormatWKB() {
-    runCmd( args("-a", "LINESTRING ( 1 1, 2 2)", "-f", "wkb"), 
+    runCmd( args("-a", "LINESTRING ( 1 1, 2 2)", "-f", "wkb"),
         "0000000002000000023FF00000000000003FF000000000000040000000000000004000000000000000" );
   }
-  
+
   public void testFormatGeoJSON() {
-    runCmd( args("-a", "LINESTRING ( 1 1, 2 2)", "-f", "geojson"), 
+    runCmd( args("-a", "LINESTRING ( 1 1, 2 2)", "-f", "geojson"),
         "{\"type\":\"LineString\",\"coordinates\":[[1,1],[2,2]]}" );
   }
-  
+
   public void testFormatSVG() {
-    runCmd( args("-a", "LINESTRING ( 1 1, 2 2)", "-f", "svg"), 
+    runCmd( args("-a", "LINESTRING ( 1 1, 2 2)", "-f", "svg"),
         "<polyline" );
   }
-  
+
   public void testFormatGML() {
-    runCmd( args("-a", "LINESTRING ( 1 1, 2 2)", "-f", "gml"), 
+    runCmd( args("-a", "LINESTRING ( 1 1, 2 2)", "-f", "gml"),
         "<gml:LineString>" );
   }
-  
+
   //===========================================
 
   public void testStdInWKT() {
-    runCmd( args("-a", "stdin", "-f", "wkt", "envelope"), 
+    runCmd( args("-a", "stdin", "-f", "wkt", "envelope"),
         stdin("LINESTRING ( 1 1, 2 2)"),
         "POLYGON" );
   }
-  
+
   public void testStdInWKB() {
-    runCmd( args("-a", "stdin", "-f", "wkt", "envelope"), 
+    runCmd( args("-a", "stdin", "-f", "wkt", "envelope"),
         stdin("000000000200000005405900000000000040590000000000004072C000000000004062C00000000000405900000000000040690000000000004072C00000000000406F40000000000040590000000000004072C00000000000"),
         "POLYGON" );
   }
-  
+
   /*
   // no longer supporting this semantic
   public void testGeomABStdIn() {
-    runCmd( args("-ab", "stdin", "-f", "wkt", "Overlay.intersection"), 
+    runCmd( args("-ab", "stdin", "-f", "wkt", "Overlay.intersection"),
         stdin("MULTILINESTRING (( 1 1, 3 3), (1 3, 3 1))"),
         "POINT (2 2)" );
   }
   */
 
   public void testErrorStdInBadFormat() {
-    runCmdError( args("-a", "stdin", "-f", "wkt", "envelope"), 
+    runCmdError( args("-a", "stdin", "-f", "wkt", "envelope"),
         stdin("<gml fdlfld >"),
         JTSOpRunner.ERR_PARSE_GEOM );
   }
-  
+
   private String[] args(String ... args) {
     return args;
   }
@@ -386,12 +386,12 @@ public class JTSOpCmdTest extends TestCase {
     InputStream instr = new ByteArrayInputStream(data.getBytes(Charset.forName("UTF-8")));
     return instr;
   }
-  
+
   private static InputStream stdin(String... dataArr) {
     String data = String.join("\n", dataArr);
     return stdin(data);
   }
-  
+
   private static InputStream stdinFile(String filename) {
     try {
       return new FileInputStream(filename);
@@ -400,20 +400,20 @@ public class JTSOpCmdTest extends TestCase {
       throw new RuntimeException("File not found: " + filename);
     }
   }
-  
+
   public void runCmd(String[] args, String expected)
-  {    
+  {
     runCmd(args, null, expected);
   }
 
   private JTSOpCmd runCmd(String[] args, InputStream stdin) {
     return runCmd(args, stdin, null);
   }
-  
+
   private JTSOpCmd runCmd(String[] args) {
     return runCmd(args, null, null);
   }
-  
+
   private JTSOpCmd runCmd(String[] args, InputStream stdin, String expected) {
     JTSOpCmd cmd = new JTSOpCmd();
     cmd.captureOutput();
@@ -428,7 +428,7 @@ public class JTSOpCmdTest extends TestCase {
     checkExpected( cmd.getOutput(), expected);
     return cmd;
   }
-  
+
   public void runCmdError(String[] args) {
     runCmdError(args, null);
   }
@@ -438,13 +438,13 @@ public class JTSOpCmdTest extends TestCase {
   }
 
   public void runCmdError(String[] args, InputStream stdin, String expected)
-  {    
+  {
     JTSOpCmd cmd = new JTSOpCmd();
     if (stdin != null) cmd.replaceStdIn(stdin);
     try {
       JTSOpRunner.OpParams cmdArgs = cmd.parseArgs(args);
       cmd.execute(cmdArgs);
-    } 
+    }
     catch (CommandError e) {
       if (expected != null) checkExpected( e.getMessage(), expected );
       return;
@@ -457,7 +457,7 @@ public class JTSOpCmdTest extends TestCase {
 
   private void checkExpected(String actual, String expected) {
     if (expected == null) return;
-    
+
     boolean found = actual.contains(expected);
     if (isVerbose  && ! found) {
       System.out.println("Expected: " + expected);
@@ -465,7 +465,7 @@ public class JTSOpCmdTest extends TestCase {
     }
     assertTrue( "Output does not contain string " + expected, found );
   }
-  
+
   private static double computeArea(List<Geometry> results) {
     GeometryFactory fact = new GeometryFactory();
     Geometry geom = fact.buildGeometry(results);

@@ -21,7 +21,7 @@ import org.locationtech.jts.util.Assert;
 /**
  * A {@link GeometryFunction} which calls a static
  * {@link Method}.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -31,26 +31,26 @@ public class StaticMethodGeometryFunction
 	private static final String FUNCTIONS_SUFFIX = "Functions";
 	private static final String PARAMETERS_SUFFIX = "Parameters";
 	private static final String DESCRIPTION_SUFFIX = "Description";
-	
+
 	public static StaticMethodGeometryFunction createFunction(Method method)
 	{
 		Assert.isTrue(Geometry.class.isAssignableFrom((method.getParameterTypes())[0]));
-		
+
 		Class clz = method.getDeclaringClass();
-		
+
 		String funcName = method.getName();
 		String description = "dummy";
 		String[] paramNames = { };
 		Class[] paramTypes = extractParamTypes(method);
 		Class returnType = method.getReturnType();
-		
-		return new StaticMethodGeometryFunction(funcName, 
+
+		return new StaticMethodGeometryFunction(funcName,
 				description,
 				paramNames, paramTypes,
-				returnType, method);    
+				returnType, method);
 	}
-	
-	
+
+
 	private static Class[] extractParamTypes(Method method)
 	{
 		Class[] methodParamTypes = method.getParameterTypes();
@@ -63,26 +63,26 @@ public class StaticMethodGeometryFunction
   private Method method;
 
 	public StaticMethodGeometryFunction(
-			String name, 
+			String name,
 			String description,
-			String[] parameterNames, 
-			Class[] parameterTypes, 
+			String[] parameterNames,
+			Class[] parameterTypes,
 			Class returnType,
 			Method method)
 	{
 		super(name, description, parameterNames, parameterTypes, returnType);
     this.method = method;
 	}
-	
+
   @Override
-public Object invoke(Geometry g, Object[] arg) 
+public Object invoke(Geometry g, Object[] arg)
   {
     return invoke(method, null, createFullArgs(g, arg));
   }
 
   /**
    * Creates an arg array which includes the target geometry as the first argument
-   * 
+   *
    * @param g
    * @param arg
    * @return
@@ -90,7 +90,7 @@ public Object invoke(Geometry g, Object[] arg)
   private static Object[] createFullArgs(Geometry g, Object[] arg)
   {
   	int fullArgLen = 1;
-  	if (arg != null) 
+  	if (arg != null)
   		fullArgLen = arg.length + 1;
   	Object[] fullArg = new Object[fullArgLen];
   	fullArg[0] = g;
@@ -99,7 +99,7 @@ public Object invoke(Geometry g, Object[] arg)
   	}
   	return fullArg;
   }
-  
+
   public static Object invoke(Method method, Object target, Object[] args)
   {
     Object result;
@@ -118,7 +118,7 @@ public Object invoke(Geometry g, Object[] arg)
     }
     return result;
   }
-  
+
   private static String invocationErrMsg(InvocationTargetException ex)
   {
     Throwable targetEx = ex.getTargetException();
@@ -127,7 +127,7 @@ public Object invoke(Geometry g, Object[] arg)
     targetEx.getMessage();
     return msg;
   }
-  
+
   public static String getClassname(Class javaClass)
   {
     String jClassName = javaClass.getName();

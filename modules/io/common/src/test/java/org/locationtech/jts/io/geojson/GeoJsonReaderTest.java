@@ -39,7 +39,7 @@ public class GeoJsonReaderTest extends GeometryTestCase {
   public void testEmptyArray() throws ParseException {
     runParseEx("[]");
   }
- 
+
   public void testEmptyObject() throws ParseException {
     runParseEx("{}");
   }

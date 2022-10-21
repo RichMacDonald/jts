@@ -133,11 +133,11 @@ class LocationIndexOfPoint
   }
 
   /**
-   * Computes the fraction of distance (in <tt>[0.0, 1.0]</tt>) 
+   * Computes the fraction of distance (in <tt>[0.0, 1.0]</tt>)
    * that a point occurs along a line segment.
    * If the point is beyond either ends of the line segment,
    * the closest fractional value (<tt>0.0</tt> or <tt>1.0</tt>) is returned.
-   *  
+   *
    * @param seg the line segment to use
    * @param inputPt the point
    * @return the fraction along the line segment the point occurs

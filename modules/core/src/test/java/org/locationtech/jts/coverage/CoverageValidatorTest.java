@@ -16,17 +16,17 @@ import org.locationtech.jts.geom.Geometry;
 import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 
-public class CoverageValidatorTest extends GeometryTestCase 
+public class CoverageValidatorTest extends GeometryTestCase
 {
-  
+
   public static void main(String args[]) {
     TestRunner.run(CoverageValidatorTest.class);
   }
-  
+
   public CoverageValidatorTest(String name) {
     super(name);
   }
-  
+
   //========  Invalid cases   =============================
 
   public void testCollinearUnmatchedEdge() {
@@ -38,7 +38,7 @@ public class CoverageValidatorTest extends GeometryTestCase
             "LINESTRING (100 200, 180 200, 180 300)")
         );
   }
-  
+
   public void testOverlappingSquares() {
     checkInvalid(readArray(
         "POLYGON ((1 9, 6 9, 6 4, 1 4, 1 9))",
@@ -48,7 +48,7 @@ public class CoverageValidatorTest extends GeometryTestCase
             "LINESTRING (4 1, 4 6, 9 6)")
             );
   }
-  
+
   //========  Gap cases   =============================
 
   public void testGap() {
@@ -63,7 +63,7 @@ public class CoverageValidatorTest extends GeometryTestCase
             "LINESTRING (5 9, 5.5 5.1, 9 5)")
             );
   }
-  
+
   public void testGapDisjoint() {
     checkInvalidWithGaps(readArray(
         "POLYGON ((1 5, 9 5, 9 1, 1 1, 1 5))",
@@ -76,7 +76,7 @@ public class CoverageValidatorTest extends GeometryTestCase
             "LINESTRING (9 5.1, 5 5.1)")
             );
   }
-  
+
   public void testGore() {
     checkInvalidWithGaps(readArray(
         "POLYGON ((1 5, 5 5, 9 5, 9 1, 1 1, 1 5))",
@@ -89,7 +89,7 @@ public class CoverageValidatorTest extends GeometryTestCase
             null)
             );
   }
-  
+
   //========  Valid cases   =============================
 
   public void testGrid() {
@@ -101,7 +101,7 @@ public class CoverageValidatorTest extends GeometryTestCase
   }
 
   //------------------------------------------------------------
-  
+
   private void checkValid(Geometry[] coverage) {
     assertTrue(CoverageValidator.isValid(coverage));
   }
@@ -110,7 +110,7 @@ public class CoverageValidatorTest extends GeometryTestCase
     Geometry[] actual = CoverageValidator.validate(coverage);
     checkEqual(expected, actual);
   }
-  
+
   private void checkInvalidWithGaps(Geometry[] coverage, double gapWidth, Geometry[] expected) {
     Geometry[] actual = CoverageValidator.validate(coverage, gapWidth);
     checkEqual(expected, actual);

@@ -32,15 +32,15 @@ import org.locationtech.jtstest.testbuilder.geom.GeometryLocation;
 /**
  * @version 1.7
  */
-public class MoveTool 
-extends IndicatorTool 
+public class MoveTool
+extends IndicatorTool
 {
   private static MoveTool instance = null;
 
   private Point2D startIndicatorLoc = null;
   private Coordinate currentVertexLoc = null;
   private Geometry targetComp;
-  
+
   public static MoveTool getInstance() {
     if (instance == null)
       instance = new MoveTool();
@@ -56,7 +56,7 @@ extends IndicatorTool
     if (geoms.size() <= 0) return null;
     return geoms.get(0).getComponent();
   }
-  
+
   @Override
 public void mousePressed(MouseEvent e) {
     startIndicatorLoc = null;
@@ -69,11 +69,11 @@ public void mousePressed(MouseEvent e) {
     }
     //-- Ctl-Drag -> use component, otherwise use entire geom
     targetComp = e.isControlDown() ? comp : null;
-    
+
     //-- over a geom - start gesture
     startIndicatorLoc = e.getPoint();
   	currentVertexLoc = null;
-    
+
     // initiate move
   	currentVertexLoc = toModelCoordinate(e.getPoint());
     redrawIndicator();
@@ -113,17 +113,17 @@ public void mouseDragged(MouseEvent e) {
   }
 
   @Override
-protected Shape getShape() 
+protected Shape getShape()
   {
     Point2D currentIndicatorLoc = toView(currentVertexLoc);
     GeneralPath line = new GeneralPath();
     line.moveTo((float) currentIndicatorLoc.getX(), (float) currentIndicatorLoc.getY());
     Point2D pt = startIndicatorLoc;
     line.lineTo((float) pt.getX(), (float) pt.getY());
-    
+
     GeometryCollectionShape ind = new GeometryCollectionShape();
     ind.add(line);
-    
+
     int dx = (int) (currentIndicatorLoc.getX() - startIndicatorLoc.getX());
     int dy = (int) (currentIndicatorLoc.getY() - startIndicatorLoc.getY());
     Rectangle rect = boxTarget(dx, dy);
@@ -146,7 +146,7 @@ protected Shape getShape()
     return box(env, dx, dy);
   }
 
-  
+
   private Rectangle box(Envelope env, int dx, int dy) {
     Coordinate envLL = new Coordinate(env.getMinX(), env.getMinY());
     Point2D boxLL = toView(envLL);

@@ -31,11 +31,11 @@ import org.locationtech.jtstest.testbuilder.ui.SwingUtil;
 
 
 public class InspectorPanel extends TestBuilderPanel  {
-  
+
   private static final int BOX_SPACER = 5;
 
   GeometryTreePanel geomTreePanel;
-  
+
   private JButton btnExpand = new JButton();
   private JButton btnDelete;
 
@@ -64,16 +64,16 @@ public class InspectorPanel extends TestBuilderPanel  {
 protected void uiInit() {
     this.setLayout(new BorderLayout());
     geomTreePanel = new GeometryTreePanel();
-    
+
     geomTreePanel.setPreferredSize(new Dimension(300, 500));
     this.add(geomTreePanel, BorderLayout.CENTER);
-    
+
     JButton btnZoom = SwingUtil.createButton(AppIcons.ZOOM, "Zoom to component", (ActionListener) e -> btnZoom_actionPerformed());
     JButton btnCopy = SwingUtil.createButton(AppIcons.COPY, "Copy (Ctl-click to copy formatted", (ActionListener) this::btnCopy_actionPerformed);
     JButton btnNext = SwingUtil.createButton(AppIcons.DOWN, "Zoom to Next", (ActionListener) e -> btnZoomNext_actionPerformed(1));
     JButton btnPrev = SwingUtil.createButton(AppIcons.UP, "Zoom to Previous", (ActionListener) e -> btnZoomNext_actionPerformed(-1));
-    btnDelete = SwingUtil.createButton(AppIcons.DELETE, "Delete", (ActionListener) e -> deleteGeom());    
-    
+    btnDelete = SwingUtil.createButton(AppIcons.DELETE, "Delete", (ActionListener) e -> deleteGeom());
+
     lblGeom.setFont(new java.awt.Font("Dialog", 1, 16));
     lblGeom.setText(" ");
     lblGeom.setMaximumSize(new Dimension(30, 30));
@@ -93,7 +93,7 @@ protected void uiInit() {
     btnPanel.add(btnCopy);
     btnPanel.add(btnDelete);
     this.add(btnPanel, BorderLayout.WEST);
-    
+
     if (showExpand) {
       JPanel btn2Panel = new JPanel();
       btn2Panel.setLayout(new BoxLayout(btn2Panel, BoxLayout.PAGE_AXIS));
@@ -106,11 +106,11 @@ protected void uiInit() {
       btn2Panel.add(btnExpand);
       this.add(btn2Panel, BorderLayout.EAST);
     }
-    
+
     JButton btnSortNone = SwingUtil.createButton(AppIcons.CLEAR, "Unsorted", (ActionListener) e -> sortNone());
     JButton btnSortByArea = SwingUtil.createButton(AppIcons.ICON_POLYGON, "Sort by Area (Asc/Desc)", (ActionListener) e -> sortByArea());
     JButton btnSortByLen = SwingUtil.createButton(AppIcons.ICON_LINESTRING, "Sort by Length (Asc/Desc)", (ActionListener) e -> sortByLen());
-    
+
     JPanel sortPanel = new JPanel();
     sortPanel.setLayout(new BoxLayout(sortPanel, BoxLayout.LINE_AXIS));
     sortPanel.add(Box.createRigidArea(new Dimension(160, 0)));
@@ -159,7 +159,7 @@ protected void uiInit() {
     btnDelete.setEnabled(isEditable);
     lblGeom.setText(tag);
     lblGeom.setForeground(source == 0 ? Color.BLUE : Color.RED);
-    
+
     sortNone();
   }
 
@@ -175,11 +175,11 @@ protected void uiInit() {
     sorterArea = null;
     geomTreePanel.populate(geometry, source);
   }
-  
+
   public void sortByArea()
   {
     sorterLen = null;
-    
+
     if (sorterArea == GeometryTreeModel.SORT_AREA_ASC) {
       sorterArea = GeometryTreeModel.SORT_AREA_DESC;
     }
@@ -188,7 +188,7 @@ protected void uiInit() {
     }
     geomTreePanel.populate(geometry, source, sorterArea);
   }
-  
+
   public void sortByLen()
   {
     sorterArea = null;
@@ -202,5 +202,5 @@ protected void uiInit() {
   }
 
 
-  
+
 }

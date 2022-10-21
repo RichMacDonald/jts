@@ -21,56 +21,56 @@ import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 
 /**
- * Computes the minimum clearance of a geometry or 
+ * Computes the minimum clearance of a geometry or
  * set of geometries.
  * <p>
  * The <b>Minimum Clearance</b> is a measure of
  * what magnitude of perturbation of its vertices can be tolerated
  * by a geometry before it becomes topologically invalid.
  * <p>
- * This class uses an inefficient O(N^2) scan.  
+ * This class uses an inefficient O(N^2) scan.
  * It is primarily for testing purposes.
- * 
- * 
+ *
+ *
  * @see MinimumClearance
  * @author Martin Davis
  *
  */
-public class SimpleMinimumClearance 
+public class SimpleMinimumClearance
 {
   public static double getDistance(Geometry g)
   {
     SimpleMinimumClearance rp = new SimpleMinimumClearance(g);
     return rp.getDistance();
   }
-  
+
   public static Geometry getLine(Geometry g)
   {
     SimpleMinimumClearance rp = new SimpleMinimumClearance(g);
     return rp.getLine();
   }
-  
+
   private Geometry inputGeom;
   private double minClearance;
   private Coordinate[] minClearancePts;
-  
+
   public SimpleMinimumClearance(Geometry geom)
   {
     inputGeom = geom;
   }
-  
+
   public double getDistance()
   {
     compute();
     return minClearance;
   }
-  
+
   public LineString getLine()
   {
     compute();
     return inputGeom.getFactory().createLineString(minClearancePts);
   }
-  
+
   private void compute()
   {
     if (minClearancePts != null) return;
@@ -78,7 +78,7 @@ public class SimpleMinimumClearance
     minClearance = Double.MAX_VALUE;
     inputGeom.apply(new VertexCoordinateFilter(this));
   }
-  
+
   private void updateClearance(double candidateValue, Coordinate p0, Coordinate p1)
   {
     if (candidateValue < minClearance) {
@@ -87,8 +87,8 @@ public class SimpleMinimumClearance
       minClearancePts[1] = new Coordinate(p1);
     }
   }
-  
-  private void updateClearance(double candidateValue, Coordinate p, 
+
+  private void updateClearance(double candidateValue, Coordinate p,
       Coordinate seg0, Coordinate seg1)
   {
     if (candidateValue < minClearance) {
@@ -98,29 +98,29 @@ public class SimpleMinimumClearance
       minClearancePts[1] = new Coordinate(seg.closestPoint(p));
     }
   }
-  
-  private static class VertexCoordinateFilter 
+
+  private static class VertexCoordinateFilter
   implements CoordinateFilter
   {
     SimpleMinimumClearance smc;
-    
+
     public VertexCoordinateFilter(SimpleMinimumClearance smc)
     {
       this.smc = smc;
     }
-    
+
     @Override
 	public void filter(Coordinate coord) {
       smc.inputGeom.apply(new ComputeMCCoordinateSequenceFilter(smc, coord));
     }
   }
-  
-  private static class ComputeMCCoordinateSequenceFilter 
-  implements CoordinateSequenceFilter 
+
+  private static class ComputeMCCoordinateSequenceFilter
+  implements CoordinateSequenceFilter
   {
     SimpleMinimumClearance smc;
     private Coordinate queryPt;
-    
+
     public ComputeMCCoordinateSequenceFilter(SimpleMinimumClearance smc, Coordinate queryPt)
     {
       this.smc = smc;
@@ -130,13 +130,13 @@ public class SimpleMinimumClearance
 	public void filter(CoordinateSequence seq, int i) {
       // compare to vertex
       checkVertexDistance(seq.getCoordinate(i));
-      
+
       // compare to segment, if this is one
       if (i > 0) {
         checkSegmentDistance(seq.getCoordinate(i - 1), seq.getCoordinate(i));
       }
     }
-    
+
     private void checkVertexDistance(Coordinate vertex)
     {
       double vertexDist = vertex.distance(queryPt);
@@ -144,25 +144,25 @@ public class SimpleMinimumClearance
         smc.updateClearance(vertexDist, queryPt, vertex);
       }
     }
-    
+
     private void checkSegmentDistance(Coordinate seg0, Coordinate seg1)
     {
         if (queryPt.equals2D(seg0) || queryPt.equals2D(seg1))
           return;
         double segDist = Distance.pointToSegment(queryPt, seg1, seg0);
-        if (segDist > 0) 
+        if (segDist > 0)
           smc.updateClearance(segDist, queryPt, seg1, seg0);
     }
-    
+
     @Override
 	public boolean isDone() {
       return false;
     }
-    
+
     @Override
 	public boolean isGeometryChanged() {
       return false;
     }
-    
+
   }
 }

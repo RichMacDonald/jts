@@ -34,7 +34,7 @@ import org.locationtech.jts.noding.snapround.SnapRoundingNoder;
 import org.locationtech.jtstest.geomfunction.Metadata;
 
 
-public class NodingFunctions 
+public class NodingFunctions
 {
 
   public static boolean isNodingValid(Geometry geom) {
@@ -58,11 +58,11 @@ public class NodingFunctions
     if (intPts.size() == 0) return FunctionsUtil.getFactoryOrDefault(geom).createPoint();
     return FunctionsUtil.getFactoryOrDefault(geom).createPoint((Coordinate) intPts.get(0));
   }
-  
+
   @Metadata(description="Finds intersection points between linestrings")
   public static Geometry findNodes(Geometry geom)
   {
-    List<Coordinate> intPtsList = FastNodingValidator.computeIntersections( 
+    List<Coordinate> intPtsList = FastNodingValidator.computeIntersections(
         SegmentStringUtil.extractBasicSegmentStrings(geom) );
     return FunctionsUtil.getFactoryOrDefault(null)
         .createMultiPointFromCoords( dedup(intPtsList) );
@@ -74,7 +74,7 @@ public class NodingFunctions
     Coordinate[] pts = CoordinateArrays.toCoordinateArray(ptsNoDup);
     return pts;
   }
-  
+
   @Metadata(description="Finds interior intersection points between segments")
   public static Geometry findInteriorNodes(Geometry geom)
   {
@@ -85,7 +85,7 @@ public class NodingFunctions
     return FunctionsUtil.getFactoryOrDefault(null)
         .createMultiPointFromCoords( dedup(intPts) );
   }
- 
+
   public static int intersectionCount(Geometry geom)
   {
     NodingIntersectionFinder intCounter = NodingIntersectionFinder
@@ -110,7 +110,7 @@ public class NodingFunctions
   public static Geometry MCIndexNodingWithPrecision(Geometry geom, double scaleFactor)
   {
     PrecisionModel fixedPM = new PrecisionModel(scaleFactor);
-    
+
     LineIntersector li = new RobustLineIntersector();
     li.setPrecisionModel(fixedPM);
 
@@ -125,9 +125,9 @@ public class NodingFunctions
     noder.computeNodes( SegmentStringUtil.extractNodedSegmentStrings(geom) );
     return SegmentStringUtil.toGeometry(noder.getNodedSubstrings(), FunctionsUtil.getFactoryOrDefault(geom));
   }
-  
+
   @Metadata(description="Nodes input using the SnappingNoder")
-  public static Geometry snappingNoder(Geometry geom, Geometry geom2, 
+  public static Geometry snappingNoder(Geometry geom, Geometry geom2,
       @Metadata(title="Snap distance")
       double snapDistance)
   {
@@ -143,7 +143,7 @@ public class NodingFunctions
   }
 
   @Metadata(description="Nodes input using the SnapRoundingNoder")
-  public static Geometry snapRoundingNoder(Geometry geom, Geometry geom2, 
+  public static Geometry snapRoundingNoder(Geometry geom, Geometry geom2,
       @Metadata(title="Scale factor")
       double scaleFactor)
   {

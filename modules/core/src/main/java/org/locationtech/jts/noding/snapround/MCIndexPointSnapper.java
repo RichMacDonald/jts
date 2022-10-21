@@ -68,12 +68,12 @@ public class MCIndexPointSnapper
   }
 
   private static final double SAFE_ENV_EXPANSION_FACTOR = 0.75;
-  
+
   /**
    * Returns a "safe" envelope that is guaranteed to contain the hot pixel.
-   * The envelope returned is larger than the exact envelope of the 
+   * The envelope returned is larger than the exact envelope of the
    * pixel by a safe margin.
-   * 
+   *
    * @return an envelope which contains the hot pixel
    */
   public Envelope getSafeEnvelope(HotPixel hp)
@@ -83,7 +83,7 @@ public class MCIndexPointSnapper
     safeEnv.expandBy(safeTolerance);
     return safeEnv;
   }
-  
+
   public static class HotPixelSnapAction
       extends MonotoneChainSelectAction
   {
@@ -144,7 +144,7 @@ public class MCIndexPointSnapper
      * @param segIndex
      * @return true if a node was added to the segment
      */
-    public boolean addSnappedNode(HotPixel hotPixel, 
+    public boolean addSnappedNode(HotPixel hotPixel,
         NodedSegmentString segStr,
         int segIndex
         )

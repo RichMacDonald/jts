@@ -23,9 +23,9 @@ import org.locationtech.jts.util.Stopwatch;
 
 /**
  * Runs {@link PerformanceTestCase} classes which contain performance tests.
- * 
- * 
- * 
+ *
+ *
+ *
  * @author Martin Davis
  *
  */
@@ -43,9 +43,9 @@ public class PerformanceTestRunner
 
   private PerformanceTestRunner()
   {
-    
+
   }
-  
+
   private void runInternal(Class clz)
   {
     try {
@@ -54,7 +54,7 @@ public class PerformanceTestRunner
       int[] runSize = test.getRunSize();
       int runIter = test.getRunIterations();
       Method[] runMethod = findMethods(clz);
-      
+
       // do the run
       test.setUp();
       for (int runNum = 0; runNum < runSize.length; runNum++)
@@ -82,8 +82,8 @@ public class PerformanceTestRunner
       e.printStackTrace();
     }
   }
-  
-  
+
+
   private static Method[] findMethods(Class clz)
   {
     List runMeths = new ArrayList();

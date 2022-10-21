@@ -28,7 +28,7 @@ public class SpreaderGeometryFunction implements GeometryFunction {
     this.isEachA = eachA;
     this.isEachB = eachB;
   }
-  
+
   @Override
 public String getCategory() {
     return fun.getCategory();
@@ -86,7 +86,7 @@ public Object invoke(Geometry geom, Object[] args) {
     }
     return createResult(result, geom.getFactory());
   }
-  
+
   private Object createResult(List<Geometry> result, GeometryFactory geometryFactory) {
     if (result.size() == 1) {
       return result.get(0);
@@ -147,5 +147,5 @@ public Object invoke(Geometry geom, Object[] args) {
     });
   }
   */
-  
+
 }

@@ -17,7 +17,7 @@ import org.locationtech.jtstest.testbuilder.model.GeometryType;
 /**
  * @version 1.7
  */
-public class LineStringTool extends AbstractStreamDrawTool 
+public class LineStringTool extends AbstractStreamDrawTool
 {
     private static LineStringTool singleton = null;
 
@@ -27,10 +27,10 @@ public class LineStringTool extends AbstractStreamDrawTool
         return singleton;
     }
 
-    private LineStringTool() 
+    private LineStringTool()
     {
     }
-    
+
     @Override
 	protected int getGeometryType()
     {

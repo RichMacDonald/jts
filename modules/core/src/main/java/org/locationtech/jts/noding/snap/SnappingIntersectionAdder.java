@@ -46,7 +46,7 @@ public class SnappingIntersectionAdder
     this.snapPointIndex = snapPointIndex;
     this.snapTolerance = snapTolerance;
   }
-  
+
   /**
    * This method is called by clients
    * of the {@link SegmentIntersector} class to process
@@ -70,27 +70,27 @@ public void processIntersections(
     Coordinate p11 = seg1.getCoordinate(segIndex1 + 1);
 
     /**
-     * Don't node intersections which are just 
+     * Don't node intersections which are just
      * due to the shared vertex of adjacent segments.
      */
     if (! isAdjacent(seg0, segIndex0, seg1, segIndex1)) {
       li.computeIntersection(p00, p01, p10, p11);
   //if (li.hasIntersection() && li.isProper()) Debug.println(li);
-  
+
       /**
        * Process single point intersections only.
        * Two-point (collinear) ones are handled by the near-vertex code
        */
       if (li.hasIntersection() && li.getIntersectionNum() == 1) {
-          
+
           Coordinate intPt = li.getIntersection(0);
           Coordinate snapPt = snapPointIndex.snap(intPt);
-          
+
           ((NodedSegmentString) seg0).addIntersection(snapPt, segIndex0);
           ((NodedSegmentString) seg1).addIntersection(snapPt, segIndex1);
       }
     }
-    
+
     /**
      * The segments must also be snapped to the other segment endpoints.
      */
@@ -99,9 +99,9 @@ public void processIntersections(
     processNearVertex(seg1, segIndex1, p10, seg0, segIndex0, p00, p01 );
     processNearVertex(seg1, segIndex1, p11, seg0, segIndex0, p00, p01 );
   }
-  
+
   /**
-   * If an endpoint of one segment is near 
+   * If an endpoint of one segment is near
    * the <i>interior</i> of the other segment, add it as an intersection.
    * EXCEPT if the endpoint is also close to a segment endpoint
    * (since this can introduce "zigs" in the linework).
@@ -109,17 +109,17 @@ public void processIntersections(
    * This resolves situations where
    * a segment A endpoint is extremely close to another segment B,
    * but is not quite crossing.  Due to robustness issues
-   * in orientation detection, this can 
+   * in orientation detection, this can
    * result in the snapped segment A crossing segment B
    * without a node being introduced.
-   * 
+   *
    * @param p
    * @param ss
    * @param segIndex
    * @param p0
    * @param p1
    */
-  private void processNearVertex(SegmentString srcSS, int srcIndex, Coordinate p, SegmentString ss, int segIndex, Coordinate p0, Coordinate p1) 
+  private void processNearVertex(SegmentString srcSS, int srcIndex, Coordinate p, SegmentString ss, int segIndex, Coordinate p0, Coordinate p1)
   {
     /**
      * Don't add intersection if candidate vertex is near endpoints of segment.
@@ -128,7 +128,7 @@ public void processIntersections(
      * Also, this should have already been snapped.
      */
     if ((p.distance(p0) < snapTolerance) || (p.distance(p1) < snapTolerance)) return;
-    
+
     double distSeg = Distance.pointToSegment(p, p0, p1);
     if (distSeg < snapTolerance) {
       // add node to target segment
@@ -146,7 +146,7 @@ public void processIntersections(
   private static boolean isAdjacent(SegmentString ss0, int segIndex0, SegmentString ss1, int segIndex1)
   {
     if (ss0 != ss1) return false;
-    
+
     boolean isAdjacent = Math.abs(segIndex0 - segIndex1) == 1;
     if (isAdjacent)
       return true;
@@ -159,10 +159,10 @@ public void processIntersections(
     }
     return false;
   }
-  
+
   /**
    * Always process all intersections
-   * 
+   *
    * @return false always
    */
   @Override

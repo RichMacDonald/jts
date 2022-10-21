@@ -17,7 +17,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 
-public class AWTUtil 
+public class AWTUtil
 {
 
   public static Point2D subtract(Point2D a, Point2D b) {

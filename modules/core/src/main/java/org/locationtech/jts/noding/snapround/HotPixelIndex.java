@@ -25,7 +25,7 @@ import org.locationtech.jts.index.kdtree.KdTree;
 /**
  * An index which creates unique {@link HotPixel}s for provided points,
  * and performs range queries on them.
- * The points passed to the index do not needed to be 
+ * The points passed to the index do not needed to be
  * rounded to the specified scale factor; this is done internally
  * when creating the HotPixels for them.
  *
@@ -114,7 +114,7 @@ class HotPixelIndex {
   public void addNodes(List<Coordinate> pts) {
     /**
      * Node points are not shuffled, since they are
-     * added after the vertex points, and hence the KD-tree should 
+     * added after the vertex points, and hence the KD-tree should
      * be reasonably balanced already.
      */
     for (Coordinate pt : pts) {

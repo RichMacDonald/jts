@@ -31,23 +31,23 @@ import org.locationtech.jts.util.Assert;
  * <li>{@link #COLLINEAR_INTERSECTION} - the segments are collinear and they intersect in a line segment
  * </ul>
  * For segments which intersect in a single point, the point may be either an endpoint
- * or in the interior of each segment.  
- * If the point lies in the interior of both segments, 
+ * or in the interior of each segment.
+ * If the point lies in the interior of both segments,
  * this is termed a <i>proper intersection</i>.
  * The method {@link #isProper()} test for this situation.
  * <p>
  * The intersection point(s) may be computed in a precise or non-precise manner.
- * Computing an intersection point precisely involves rounding it 
- * via a supplied {@link PrecisionModel}.  
+ * Computing an intersection point precisely involves rounding it
+ * via a supplied {@link PrecisionModel}.
  * <p>
- * LineIntersectors do not perform an initial envelope intersection test 
+ * LineIntersectors do not perform an initial envelope intersection test
  * to determine if the segments are disjoint.
- * This is because this class is likely to be used in a context where 
+ * This is because this class is likely to be used in a context where
  * envelope overlap is already known to occur (or be likely).
  *
  * @version 1.7
  */
-public abstract class LineIntersector 
+public abstract class LineIntersector
 {
 /**
  * These are deprecated, due to ambiguous naming
@@ -55,17 +55,17 @@ public abstract class LineIntersector
   public final static int DONT_INTERSECT = 0;
   public final static int DO_INTERSECT = 1;
   public final static int COLLINEAR = 2;
-  
+
   /**
    * Indicates that line segments do not intersect
    */
   public final static int NO_INTERSECTION = 0;
-  
+
   /**
    * Indicates that line segments intersect in a single point
    */
   public final static int POINT_INTERSECTION = 1;
-  
+
   /**
    * Indicates that line segments intersect in a line segment
    */
@@ -190,7 +190,7 @@ public void setMakePrecise(PrecisionModel precisionModel)
 
   /**
    * Gets an endpoint of an input segment.
-   * 
+   *
    * @param segmentIndex the index of the input segment (0 or 1)
    * @param ptIndex the index of the endpoint (0 or 1)
    * @return the specified endpoint
@@ -199,7 +199,7 @@ public void setMakePrecise(PrecisionModel precisionModel)
   {
     return inputLines[segmentIndex][ptIndex];
   }
-  
+
   /**
    * Compute the intersection of a point p and the line p1-p2.
    * This function computes the boolean value of the hasIntersection test.
@@ -276,7 +276,7 @@ public String toString() {
 
   /**
    * Returns the number of intersection points found.  This will be either 0, 1 or 2.
-   * 
+   *
    * @return the number of intersection points found (0, 1, or 2)
    */
   public int getIntersectionNum() { return result; }

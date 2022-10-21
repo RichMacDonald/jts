@@ -21,7 +21,7 @@ import org.locationtech.jts.io.WKTWriter;
 /**
  * Specifies the precision model of the {@link Coordinate}s in a {@link Geometry}.
  * In other words, specifies the grid of allowable points for a <code>Geometry</code>.
- * A precision model may be <b>floating</b> ({@link #FLOATING} or {@link #FLOATING_SINGLE}), 
+ * A precision model may be <b>floating</b> ({@link #FLOATING} or {@link #FLOATING_SINGLE}),
  * in which case normal floating-point value semantics apply.
  * <p>
  * For a {@link #FIXED} precision model the {@link #makePrecise(Coordinate)} method allows rounding a coordinate to
@@ -55,7 +55,7 @@ import org.locationtech.jts.io.WKTWriter;
  * of 1000. To specify -3 decimal places of precision (i.e. rounding to
  * the nearest 1000), use a scale factor of 0.001.
  * <p>
- * It is also supported to specify a precise <b>grid size</b> 
+ * It is also supported to specify a precise <b>grid size</b>
  * by providing it as a negative scale factor.
  * This allows setting a precise grid size rather than using a fractional scale,
  * which provides more accurate and robust rounding.
@@ -73,7 +73,7 @@ public class PrecisionModel implements Serializable, Comparable
 	/**
 	 * Determines which of two {@link PrecisionModel}s is the most precise
 	 * (allows the greatest number of significant digits).
-	 * 
+	 *
 	 * @param pm1 a PrecisionModel
 	 * @param pm2 a PrecisionModel
 	 * @return the PrecisionModel which is most precise
@@ -84,7 +84,7 @@ public class PrecisionModel implements Serializable, Comparable
 			return pm1;
 		return pm2;
 	}
-	
+
   private static final long serialVersionUID = 7777263578777803835L;
 
   /**
@@ -102,8 +102,8 @@ public class PrecisionModel implements Serializable, Comparable
     private String name;
     @Override
 	public String toString() { return name; }
-    
-    
+
+
     /*
      * Ssee http://www.javaworld.com/javaworld/javatips/jw-javatip122.html
      */
@@ -198,7 +198,7 @@ public PrecisionModel(double scale, double offsetX, double offsetY) {
    *  Creates a <code>PrecisionModel</code> that specifies Fixed precision.
    *  Fixed-precision coordinates are represented as precise internal coordinates,
    *  which are rounded to the grid defined by the scale factor.
-   *  The provided scale may be negative, to specify an exact grid size. 
+   *  The provided scale may be negative, to specify an exact grid size.
    *  The scale is then computed as the reciprocal.
    *
    *@param  scale amount by which to multiply a coordinate after subtracting
@@ -231,11 +231,11 @@ public PrecisionModel(double scale, double offsetX, double offsetY) {
   /**
    * Returns the maximum number of significant digits provided by this
    * precision model.
-   * Intended for use by routines which need to print out 
+   * Intended for use by routines which need to print out
    * decimal representations of precise values (such as {@link WKTWriter}).
    * <p>
    * This method would be more correctly called
-   * <tt>getMinimumDecimalPlaces</tt>, 
+   * <tt>getMinimumDecimalPlaces</tt>,
    * since it actually computes the number of decimal places
    * that is required to correctly display the full
    * precision of an ordinate value.
@@ -245,7 +245,7 @@ public PrecisionModel(double scale, double offsetX, double offsetY) {
    * the algorithm uses a very rough approximation in this case.
    * This has the side effect that for scale factors which are
    * powers of 10 the value returned is 1 greater than the true value.
-   * 
+   *
    *
    * @return the maximum number of decimal places provided by this precision model
    */
@@ -263,11 +263,11 @@ public PrecisionModel(double scale, double offsetX, double offsetY) {
 
   /**
    * Returns the scale factor used to specify a fixed precision model.
-   * The number of decimal places of precision is 
+   * The number of decimal places of precision is
    * equal to the base-10 logarithm of the scale factor.
    * Non-integral and negative scale factors are supported.
-   * Negative scale factors indicate that the places 
-   * of precision is to the left of the decimal point.  
+   * Negative scale factors indicate that the places
+   * of precision is to the left of the decimal point.
    *
    *@return the scale factor for the fixed precision model
    */
@@ -280,18 +280,18 @@ public PrecisionModel(double scale, double offsetX, double offsetY) {
    * This is equal to the reciprocal of the scale factor.
    * If the grid size has been set explicity (via a negative scale factor)
    * it will be returned.
-   *  
+   *
    * @return the grid size at a fixed precision scale.
    */
   public double gridSize() {
     if (isFloating())
       return Double.NaN;
-    
+
     if (gridSize != 0)
       return gridSize;
     return 1.0 / scale;
   }
-  
+
   /**
    * Gets the type of this precision model
    * @return the type of this precision model
@@ -426,11 +426,11 @@ public void toExternal(Coordinate internal, Coordinate external) {
    * <b>Note:</b> Java's <code>Math#rint</code> uses the "Banker's Rounding" algorithm,
    * which is not suitable for precision operations elsewhere in JTS.
    */
-  public double makePrecise(double val) 
+  public double makePrecise(double val)
   {
   	// don't change NaN values
   	if (Double.isNaN(val)) return val;
-  	
+
   	if (modelType == FLOATING_SINGLE) {
   		float floatSingleVal = (float) val;
   		return floatSingleVal;
@@ -483,7 +483,7 @@ public boolean equals(Object other) {
     return modelType == otherPrecisionModel.modelType
         && scale == otherPrecisionModel.scale;
   }
-  
+
   /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
    */
@@ -491,7 +491,7 @@ public boolean equals(Object other) {
   public int hashCode() {
     return Objects.hash(modelType, scale);
   }
-  
+
   /**
    *  Compares this {@link PrecisionModel} object with the specified object for order.
    * A PrecisionModel is greater than another if it provides greater precision.

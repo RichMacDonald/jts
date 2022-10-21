@@ -192,7 +192,7 @@ public class GeometryFactory
 
   /**
    * Creates a {@link Geometry} with the same extent as the given envelope.
-   * The Geometry returned is guaranteed to be valid.  
+   * The Geometry returned is guaranteed to be valid.
    * To provide this behaviour, the following cases occur:
    * <p>
    * If the <code>Envelope</code> is:
@@ -203,24 +203,24 @@ public class GeometryFactory
    * <li>a rectangle : returns a {@link Polygon} whose points are (minx, miny),
    *  (minx, maxy), (maxx, maxy), (maxx, miny), (minx, miny).
    * </ul>
-   * 
+   *
    *@param  envelope the <code>Envelope</code> to convert
-   *@return an empty <code>Point</code> (for null <code>Envelope</code>s), 
+   *@return an empty <code>Point</code> (for null <code>Envelope</code>s),
    *	a <code>Point</code> (when min x = max x and min y = max y) or a
    *      <code>Polygon</code> (in all other cases)
    */
-  public Geometry toGeometry(Envelope envelope) 
+  public Geometry toGeometry(Envelope envelope)
   {
   	// null envelope - return empty point geometry
     if (envelope.isNull()) {
       return createPoint();
     }
-    
+
     // point?
     if (envelope.getMinX() == envelope.getMaxX() && envelope.getMinY() == envelope.getMaxY()) {
       return createPoint(new Coordinate(envelope.getMinX(), envelope.getMinY()));
     }
-    
+
     // vertical or horizontal line?
     if (envelope.getMinX() == envelope.getMaxX()
     		|| envelope.getMinY() == envelope.getMaxY()) {
@@ -230,7 +230,7 @@ public class GeometryFactory
           });
     }
 
-    // create a CW ring for the polygon 
+    // create a CW ring for the polygon
     return createPolygon(createLinearRing(new Coordinate[]{
         new Coordinate(envelope.getMinX(), envelope.getMinY()),
         new Coordinate(envelope.getMinX(), envelope.getMaxY()),
@@ -243,7 +243,7 @@ public class GeometryFactory
   /**
    * Returns the PrecisionModel that Geometries created by this factory
    * will be associated with.
-   * 
+   *
    * @return the PrecisionModel for this factory
    */
   public PrecisionModel getPrecisionModel() {
@@ -252,17 +252,17 @@ public class GeometryFactory
 
   /**
    * Constructs an empty {@link Point} geometry.
-   * 
+   *
    * @return an empty Point
    */
   public Point createPoint() {
 	return createPoint(getCoordinateSequenceFactory().create(new Coordinate[]{}));
   }
-  
+
   /**
    * Creates a Point using the given Coordinate.
    * A null Coordinate creates an empty Geometry.
-   * 
+   *
    * @param coordinate a Coordinate, or null
    * @return the created Point
    */
@@ -273,17 +273,17 @@ public class GeometryFactory
   /**
    * Creates a Point using the given CoordinateSequence; a null or empty
    * CoordinateSequence will create an empty Point.
-   * 
+   *
    * @param coordinates a CoordinateSequence (possibly empty), or null
    * @return the created Point
    */
   public Point createPoint(CoordinateSequence coordinates) {
   	return new Point(coordinates, this);
   }
-  
+
   /**
    * Constructs an empty {@link MultiLineString} geometry.
-   * 
+   *
    * @return an empty MultiLineString
    */
   public MultiLineString createMultiLineString() {
@@ -293,17 +293,17 @@ public class GeometryFactory
   /**
    * Creates a MultiLineString using the given LineStrings; a null or empty
    * array will create an empty MultiLineString.
-   * 
+   *
    * @param lineStrings LineStrings, each of which may be empty but not null
    * @return the created MultiLineString
    */
   public MultiLineString createMultiLineString(LineString[] lineStrings) {
   	return new MultiLineString(lineStrings, this);
   }
-  
+
   /**
    * Constructs an empty {@link GeometryCollection} geometry.
-   * 
+   *
    * @return an empty GeometryCollection
    */
   public GeometryCollection createGeometryCollection() {
@@ -313,17 +313,17 @@ public class GeometryFactory
   /**
    * Creates a GeometryCollection using the given Geometries; a null or empty
    * array will create an empty GeometryCollection.
-   * 
+   *
    * @param geometries an array of Geometries, each of which may be empty but not null, or null
    * @return the created GeometryCollection
    */
   public GeometryCollection createGeometryCollection(Geometry[] geometries) {
   	return new GeometryCollection(geometries, this);
   }
-  
+
   /**
    * Constructs an empty {@link MultiPolygon} geometry.
-   * 
+   *
    * @return an empty MultiPolygon
    */
   public MultiPolygon createMultiPolygon() {
@@ -344,10 +344,10 @@ public class GeometryFactory
   public MultiPolygon createMultiPolygon(Polygon[] polygons) {
     return new MultiPolygon(polygons, this);
   }
-  
+
   /**
    * Constructs an empty {@link LinearRing} geometry.
-   * 
+   *
    * @return an empty LinearRing
    */
   public LinearRing createLinearRing() {
@@ -356,8 +356,8 @@ public class GeometryFactory
 
   /**
    * Creates a {@link LinearRing} using the given {@link Coordinate}s.
-   * A null or empty array creates an empty LinearRing. 
-   * The points must form a closed and simple linestring. 
+   * A null or empty array creates an empty LinearRing.
+   * The points must form a closed and simple linestring.
    * @param coordinates an array without null elements, or an empty array, or null
    * @return the created LinearRing
    * @throws IllegalArgumentException if the ring is not closed, or has too few points
@@ -367,10 +367,10 @@ public class GeometryFactory
   }
 
   /**
-   * Creates a {@link LinearRing} using the given {@link CoordinateSequence}. 
-   * A null or empty array creates an empty LinearRing. 
-   * The points must form a closed and simple linestring. 
-   * 
+   * Creates a {@link LinearRing} using the given {@link CoordinateSequence}.
+   * A null or empty array creates an empty LinearRing.
+   * The points must form a closed and simple linestring.
+   *
    * @param coordinates a CoordinateSequence (possibly empty), or null
    * @return the created LinearRing
    * @throws IllegalArgumentException if the ring is not closed, or has too few points
@@ -378,10 +378,10 @@ public class GeometryFactory
   public LinearRing createLinearRing(CoordinateSequence coordinates) {
     return new LinearRing(coordinates, this);
   }
-  
+
   /**
    * Constructs an empty {@link MultiPoint} geometry.
-   * 
+   *
    * @return an empty MultiPoint
    */
   public MultiPoint createMultiPoint() {
@@ -428,7 +428,7 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
   }
 
   /**
-   * Creates a {@link MultiPoint} using the 
+   * Creates a {@link MultiPoint} using the
    * points in the given {@link CoordinateSequence}.
    * A <code>null</code> or empty CoordinateSequence creates an empty MultiPoint.
    *
@@ -505,10 +505,10 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
   public Polygon createPolygon(LinearRing shell) {
     return createPolygon(shell, null);
   }
-  
+
   /**
    * Constructs an empty {@link Polygon} geometry.
-   * 
+   *
    * @return an empty polygon
    */
   public Polygon createPolygon() {
@@ -543,7 +543,7 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
    *      .
    */
   public Geometry buildGeometry(Collection geomList) {
-  	
+
   	/**
   	 * Determine some facts about the geometries in the list
   	 */
@@ -562,7 +562,7 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
       if (geom instanceof GeometryCollection)
         hasGeometryCollection = true;
     }
-    
+
     /**
      * Now construct an appropriate geometry to return
      */
@@ -592,10 +592,10 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
     }
     return geom0;
   }
-  
+
   /**
    * Constructs an empty {@link LineString} geometry.
-   * 
+   *
    * @return an empty LineString
    */
   public LineString createLineString() {
@@ -604,8 +604,8 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
 
   /**
    * Creates a LineString using the given Coordinates.
-   * A null or empty array creates an empty LineString. 
-   * 
+   * A null or empty array creates an empty LineString.
+   *
    * @param coordinates an array without null elements, or an empty array, or null
    */
   public LineString createLineString(Coordinate[] coordinates) {
@@ -613,8 +613,8 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
   }
   /**
    * Creates a LineString using the given CoordinateSequence.
-   * A null or empty CoordinateSequence creates an empty LineString. 
-   * 
+   * A null or empty CoordinateSequence creates an empty LineString.
+   *
    * @param coordinates a CoordinateSequence (possibly empty), or null
    */
   public LineString createLineString(CoordinateSequence coordinates) {
@@ -624,7 +624,7 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
   /**
    * Creates an empty atomic geometry of the given dimension.
    * If passed a dimension of -1 will create an empty {@link GeometryCollection}.
-   * 
+   *
    * @param dimension the required dimension (-1, 0, 1 or 2)
    * @return an empty atomic geometry of given dimension
    */
@@ -638,7 +638,7 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
       throw new IllegalArgumentException("Invalid dimension: " + dimension);
     }
   }
-  
+
   /**
    * Creates a deep copy of the input {@link Geometry}.
    * The {@link CoordinateSequenceFactory} defined for this factory
@@ -646,15 +646,15 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
    * of the input geometry.
    * <p>
    * This is a convenient way to change the <tt>CoordinateSequence</tt>
-   * used to represent a geometry, or to change the 
+   * used to represent a geometry, or to change the
    * factory used for a geometry.
    * <p>
    * {@link Geometry#copy()} can also be used to make a deep copy,
    * but it does not allow changing the CoordinateSequence type.
-   * 
+   *
    * @return a deep copy of the input geometry, using the CoordinateSequence type of this factory
-   * 
-   * @see Geometry#copy() 
+   *
+   * @see Geometry#copy()
    */
   public Geometry createGeometry(Geometry g)
   {
@@ -675,7 +675,7 @@ public MultiPoint createMultiPoint(Coordinate[] coordinates) {
 
   /**
    * Gets the SRID value defined for this factory.
-   * 
+   *
    * @return the factory SRID value
    */
   public int getSRID() {

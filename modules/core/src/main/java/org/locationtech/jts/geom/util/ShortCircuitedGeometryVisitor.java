@@ -47,9 +47,9 @@ public abstract class ShortCircuitedGeometryVisitor
 
   /**
    * Reports whether visiting components can be terminated.
-   * Once this method returns <tt>true</tt>, it must 
+   * Once this method returns <tt>true</tt>, it must
    * continue to return <tt>true</tt> on every subsequent call.
-   * 
+   *
    * @return true if visiting can be terminated.
    */
   protected abstract boolean isDone();

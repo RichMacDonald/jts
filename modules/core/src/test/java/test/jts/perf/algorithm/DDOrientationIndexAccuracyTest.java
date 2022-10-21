@@ -12,7 +12,7 @@ import test.jts.GeometryTestCase;
  * Test the accuracy of DD orientation index computation,
  * using the built-in double value conversion and an experimental
  * conversion approach with better decimal accuracy.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -41,7 +41,7 @@ public class DDOrientationIndexAccuracyTest extends GeometryTestCase {
 			checkPointOnSeg(p1, p2, q);
 		}
 	}
-	
+
 
 
 	private void checkPointOnSeg(Coordinate p1, Coordinate p2, Coordinate q) {
@@ -63,14 +63,14 @@ public class DDOrientationIndexAccuracyTest extends GeometryTestCase {
 	}
 
 	private static final boolean USE_ACCURATE_CONVERSION = false;
-	
+
 	private static DD convertToDD(double x) {
 		if (USE_ACCURATE_CONVERSION) {
 		// convert more accurately to DD from decimal representation
 		// very slow though - should be a better way
 			return DD.valueOf(x + "");
 		}
-		
+
 		// current built-in conversion - introduces jitter
 		return DD.valueOf(x);
 	}

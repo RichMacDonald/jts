@@ -18,29 +18,29 @@ import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 
 /**
- * A noder which extracts all line segments 
+ * A noder which extracts all line segments
  * as {@link SegmentString}s.
  * This enables fast overlay of geometries which are known to be already fully noded.
  * In particular, it provides fast union of polygonal and linear coverages.
- * Unioning a noded set of lines is an effective way 
+ * Unioning a noded set of lines is an effective way
  * to perform line merging and line dissolving.
  * <p>
- * No precision reduction is carried out. 
+ * No precision reduction is carried out.
  * If that is required, another noder must be used (such as a snap-rounding noder),
  * or the input must be precision-reduced beforehand.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class SegmentExtractingNoder implements Noder {
 
   private List segList;
-  
+
   /**
    * Creates a new segment-extracting noder.
    */
   public SegmentExtractingNoder() {
-    
+
   }
 
   @Override
@@ -55,7 +55,7 @@ public class SegmentExtractingNoder implements Noder {
     }
     return segList;
   }
-  
+
   private static void extractSegments(SegmentString ss, List<SegmentString> segList) {
     for (int i = 0; i < ss.size() - 1; i++) {
       Coordinate p0 = ss.getCoordinate(i);

@@ -27,7 +27,7 @@ import org.locationtech.jtstest.testbuilder.AppCursors;
 /**
  * @version 1.7
  */
-public class ZoomTool extends BasicTool 
+public class ZoomTool extends BasicTool
 {
   private static ZoomTool singleton = null;
 
@@ -36,19 +36,19 @@ public class ZoomTool extends BasicTool
       singleton = new ZoomTool(2, AppCursors.ZOOM);
     return singleton;
   }
-  
+
   private double zoomFactor = 2;
   private Point mouseStart = null;
   private Point mouseEnd = null;
   private Point2D panStart;
-  
+
   public ZoomTool(double zoomFactor, Cursor cursor) {
     super(cursor);
     this.zoomFactor = zoomFactor;
   }
 
   @Override
-public void mouseClicked(MouseEvent mouseEvent) 
+public void mouseClicked(MouseEvent mouseEvent)
   {
     // determine if zoom in (left) or zoom out (right)
     double realZoomFactor = SwingUtilities.isRightMouseButton(mouseEvent)
@@ -63,13 +63,13 @@ public void mousePressed(MouseEvent e)
   	mouseEnd = e.getPoint();
   	panStart = isPanGesture(e) ? toModel(mouseStart) : null;
   }
-  
+
   @Override
 public void mouseReleased(MouseEvent e) {
     // don't process if mouse was dragged a very short distance
     if (! isSignificantMouseMove(e.getPoint()))
       return;
-    
+
     if (isPanGesture(e)) {
       Point2D panEnd = toModel(e.getPoint());
       PanTool.pan(panel(), panStart, panEnd);
@@ -85,10 +85,10 @@ public void mouseReleased(MouseEvent e) {
   private boolean isPanning() {
     return panStart != null;
   }
-  
+
   @Override
 public void mouseDragged(MouseEvent e)
-  {   
+  {
   	Graphics g = getBandGraphics();
   	// erase old band
   	drawBand(g);
@@ -105,7 +105,7 @@ public void mouseDragged(MouseEvent e)
   	g.setXORMode(Color.white);
     return g;
   }
-  
+
   private void drawBand(Graphics g) {
     if (isPanning()) {
       drawLine(g, mouseStart, mouseEnd);
@@ -122,9 +122,9 @@ public void mouseWheelMoved(MouseWheelEvent e) {
     if (notches > 0 && zoomFactor > 0) zoomFactor = 1.0 / zoomFactor;
     panel().zoom(toModel(e.getPoint()), zoomFactor);
   }
-  
+
   private static final int MIN_MOVEMENT = 5;
-  
+
   private boolean isSignificantMouseMove(Point p)
   {
     int delta = Math.abs(mouseStart.x - p.x) + Math.abs(mouseStart.y - p.y);
@@ -132,7 +132,7 @@ public void mouseWheelMoved(MouseWheelEvent e) {
   		return false;
   	return true;
   }
-  
+
   public static void drawRect(Graphics g, Point p0, Point p1)
   {
   	Point base = new Point(Math.min(p0.x, p1.x),

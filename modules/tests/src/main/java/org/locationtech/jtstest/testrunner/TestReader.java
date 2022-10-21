@@ -45,16 +45,16 @@ import org.locationtech.jtstest.util.io.WKTOrWKBReader;
  */
 public class TestReader
 {
-	private static final String TAG_geometryOperation = "geometryOperation"; 
-	private static final String TAG_resultMatcher = "resultMatcher"; 
-	
+	private static final String TAG_geometryOperation = "geometryOperation";
+	private static final String TAG_resultMatcher = "resultMatcher";
+
     Vector parsingProblems = new Vector();
     private GeometryFactory geometryFactory;
     private WKTOrWKBReader wktorbReader;
     private GeometryOperation geomOp = null;
     private ResultMatcher resultMatcher = null;
-    
-    public TestReader() 
+
+    public TestReader()
     {
     }
 
@@ -64,7 +64,7 @@ public class TestReader
     	if (JTSTestRunnerCmd.isGeometryOperationSpecified()
     			|| geomOp == null)
     		return JTSTestRunnerCmd.getGeometryOperation();
-    	
+
     	return geomOp;
     }
 
@@ -80,7 +80,7 @@ public class TestReader
         return getGeometryOperation().getReturnType(name) == double.class;
     }
 
-    private boolean isGeometryFunction(String name) 
+    private boolean isGeometryFunction(String name)
     {
     	Class returnType = getGeometryOperation().getReturnType(name);
     	if (returnType == null)
@@ -113,7 +113,7 @@ public class TestReader
             return null;
         }
     }
-    
+
     /**
      *  Creates a List of Test's from the given <test> Element's.
      */
@@ -172,13 +172,13 @@ public class TestReader
                         nameAttribute.getValue().trim(),
                         testCase.getTestRun());
                 Test test = new Test(
-                		testCase, 
+                		testCase,
                 		testIndex,
-                		descElement != null ? descElement.getTextTrim() : "", 
-                		nameAttribute.getValue().trim(), 
-                		arg1, 
-                		arguments, 
-                		result, 
+                		descElement != null ? descElement.getTextTrim() : "",
+                		nameAttribute.getValue().trim(),
+                		arg1,
+                		arguments,
+                		result,
                 		tolerance);
 
                 tests.add(test);
@@ -201,7 +201,7 @@ public class TestReader
         throws TestParseException, ParseException {
         // no expected result provided
         if (value.length() == 0) {
-          return null; 
+          return null;
         }
         if (isBooleanFunction(name)) {
             return toBooleanResult(value);
@@ -314,9 +314,9 @@ public class TestReader
      *  Creates a TestRun from the <run> Element.
      */
     private TestRun parseTestRun(Element runElement, File testFile, int runIndex)
-        throws TestParseException 
+        throws TestParseException
     {
-    	
+
       //----------- <workspace> (optional) ------------------
         File workspace = null;
         if (runElement.getChild("workspace") != null) {
@@ -332,21 +332,21 @@ public class TestReader
                 throw new TestParseException("<workspace> is not a directory: " + workspace);
             }
         }
-        
+
         //----------- <tolerance> (optional) ------------------
         double tolerance = parseTolerance(runElement);
-        
+
         Element descElement = runElement.getChild("desc");
 
         //----------- <geometryOperation> (optional) ------------------
         geomOp = parseGeometryOperation(runElement);
-        
+
         //----------- <geometryMatcher> (optional) ------------------
         resultMatcher = parseResultMatcher(runElement);
-        
+
         //-----------  <precisionModel> (optional) ----------------
         PrecisionModel precisionModel = parsePrecisionModel(runElement);
-        
+
         //--------------- build TestRun  ---------------------
         TestRun testRun =
             new TestRun(
@@ -371,7 +371,7 @@ public class TestReader
     /**
      * Parses an optional <tt>precisionModel</tt> element.
      * The default is to use a FLOATING model.
-     * 
+     *
      * @param runElement
      * @return a PrecisionModel instance (default if not specified)
      * @throws TestParseException
@@ -399,7 +399,7 @@ public class TestReader
       }
       return precisionModel;
     }
-    
+
     private PrecisionModel createPrecisionModel(Element precisionModelElement)
 			throws TestParseException {
 		Attribute scaleAttribute = precisionModelElement.getAttribute("scale");
@@ -420,9 +420,9 @@ public class TestReader
 
 
     /**
-		 * Parses an optional <tt>geometryOperation</tt> element. 
+		 * Parses an optional <tt>geometryOperation</tt> element.
 		 * The default is to leave this unspecified .
-		 * 
+		 *
 		 * @param runElement
 		 * @return an instance of the GeometryOperation class, if specified, or
 		 * null if no geometry operation was specified
@@ -442,11 +442,11 @@ public class TestReader
     }
     return geomOp;
   }
- 
+
     /**
-		 * Parses an optional <tt>resultMatcher</tt> element. 
+		 * Parses an optional <tt>resultMatcher</tt> element.
 		 * The default is to leave this unspecified .
-		 * 
+		 *
 		 * @param runElement
 		 * @return an instance of the ResultMatcher class, if specified, or
 		 *  null if no result matcher was specified
@@ -466,8 +466,8 @@ public class TestReader
     }
     return resultMatcher;
   }
- 
-  private double parseTolerance(Element runElement) throws TestParseException 
+
+  private double parseTolerance(Element runElement) throws TestParseException
     {
 		double tolerance = 0.0;
 		// Note: the tolerance element applies to the coordinate-by-coordinate
@@ -499,11 +499,11 @@ public class TestReader
 		return op;
 	}
     */
-  
+
   /**
-   * Gets an instance of a class with the given name, 
+   * Gets an instance of a class with the given name,
    * and ensures that the class is assignable to a specified baseClass.
-   * 
+   *
    * @return an instance of the class, if it is assignment-compatible, or
    *  null if the requested class is not assigment-compatible
    */
@@ -519,7 +519,7 @@ public class TestReader
 		}
 		return o;
 	}
-    
+
     private File wktFile(Element geometryElement, TestRun testRun) throws TestParseException {
         if ((geometryElement == null) || (geometryElement.getAttribute("file") == null)) {
             return null;
@@ -585,7 +585,7 @@ public class TestReader
         }
         return absoluteWktFile;
     }
-    
+
     /**
      * Returns a List of the String's in the text file, one per line.
      */

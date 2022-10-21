@@ -25,7 +25,7 @@ import org.locationtech.jts.geom.TopologyException;
  * intersections are detected.
  * <p>
  * Iterated noding using a FLOATING precision model is not guaranteed to converge,
- * due to roundoff error.   
+ * due to roundoff error.
  * This problem is detected and an exception is thrown.
  * Clients can choose to rerun the noding using a lower precision model.
  *

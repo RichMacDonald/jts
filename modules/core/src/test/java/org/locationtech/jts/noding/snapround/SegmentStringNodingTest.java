@@ -33,11 +33,11 @@ import junit.textui.TestRunner;
  * which can create 1-point Segment Strings
  * if the input is incorrectly noded due to robustness issues.
  * It also reveals a limitation in SegmentNode sorting which
- * can cause nodes to sort wrongly if their coordinates are very close 
+ * can cause nodes to sort wrongly if their coordinates are very close
  * and they are relatively far off the line segment containing them.
  * This is actually outside of the operating regime of the SegmentNode comparison,
  * but in there is a simple fix which handles some cases like these.
- * 
+ *
  * See https://github.com/locationtech/jts/pull/395
  *
  * @version 1.17
@@ -51,7 +51,7 @@ public class SegmentStringNodingTest  extends TestCase {
   }
 
   public SegmentStringNodingTest(String name) { super(name); }
-  
+
   public void testThinTriangle() throws Exception {
     String wkt = "LINESTRING ( 55121.54481117887 42694.49730855581, 55121.54481117887 42694.4973085558, 55121.458748617406 42694.419143944244, 55121.54481117887 42694.49730855581 )";
     PrecisionModel pm = new PrecisionModel(1.1131949079327356E11);
@@ -63,13 +63,13 @@ public class SegmentStringNodingTest  extends TestCase {
     PrecisionModel pm = new PrecisionModel(1.11E10);
     checkNodedStrings(wkt, pm);
   }
-  
+
   private void checkNodedStrings(String wkt, PrecisionModel pm) throws ParseException {
     Geometry g = new WKTReader().read(wkt);
     List<NodedSegmentString> strings = new ArrayList<>();
     strings.add(new NodedSegmentString(g.getCoordinates(), null));
     new SnapRoundingNoder(pm).computeNodes(strings);
-    
+
     @SuppressWarnings("unchecked")
     List<NodedSegmentString> noded = NodedSegmentString.getNodedSubstrings(strings);
     for (NodedSegmentString s : noded) {
@@ -79,9 +79,9 @@ public class SegmentStringNodingTest  extends TestCase {
   }
 
   /**
-   * Test if the segmentString is a collapsed edge 
+   * Test if the segmentString is a collapsed edge
    * of the form ABA.
-   * These should not be returned by noding. 
+   * These should not be returned by noding.
    *
    * @param s a segmentString
    * @return true if the segmentString is collapsed
@@ -93,6 +93,6 @@ public class SegmentStringNodingTest  extends TestCase {
     boolean isCollapsed = isEndsEqual && isMiddleDifferent;
     return isCollapsed;
   }
-  
+
 
 }

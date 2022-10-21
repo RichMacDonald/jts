@@ -68,7 +68,7 @@ protected boolean isSearchMatch(Envelope searchEnv)
    * Returns the subquad containing the envelope <tt>searchEnv</tt>.
    * Creates the subquad if
    * it does not already exist.
-   * 
+   *
    * @return the subquad containing the search envelope
    */
   public Node getNode(Envelope searchEnv)

@@ -30,17 +30,17 @@ import org.locationtech.jts.operation.union.UnionStrategy;
  * a fixed-precision model. 
  * For unary union using floating precision,  
  * {@link OverlayNGRobust#union(Geometry)} should be used.
- * 
+ *
  * @author Martin Davis
  * @see OverlayNGRobust
  *
  */
 public class UnaryUnionNG {
-  
+
   /**
    * Unions a geometry (which is often a collection)
    * using a given precision model.
-   * 
+   *
    * @param geom the geometry to union
    * @param pm the precision model to use
    * @return the union of the geometry
@@ -50,11 +50,11 @@ public class UnaryUnionNG {
     op.setUnionFunction( createUnionStrategy(pm) );
     return op.union();
   }
-  
+
   /**
    * Unions a collection of geometries
    * using a given precision model.
-   * 
+   *
    * @param geoms the collection of geometries to union
    * @param pm the precision model to use
    * @return the union of the geometries
@@ -64,11 +64,11 @@ public class UnaryUnionNG {
     op.setUnionFunction( createUnionStrategy(pm) );
     return op.union();
   }
-  
+
   /**
    * Unions a collection of geometries
    * using a given precision model.
-   * 
+   *
    * @param geoms the collection of geometries to union
    * @param geomFact the geometry factory to use
    * @param pm the precision model to use
@@ -79,7 +79,7 @@ public class UnaryUnionNG {
     op.setUnionFunction( createUnionStrategy(pm) );
     return op.union();
   }
-  
+
   private static UnionStrategy createUnionStrategy(PrecisionModel pm) {
     UnionStrategy unionSRFun = new UnionStrategy() {
 
@@ -92,11 +92,11 @@ public class UnaryUnionNG {
       public boolean isFloatingPrecision() {
          return OverlayUtil.isFloating(pm);
       }
-      
+
     };
     return unionSRFun;
   }
-  
+
   private UnaryUnionNG() {
     // no instantiation for now
   }

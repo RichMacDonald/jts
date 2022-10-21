@@ -18,12 +18,12 @@ import junit.textui.TestRunner;
 
 
 /**
- * Stress tests {@link PreparedPolygon} for 
- * correctness of 
+ * Stress tests {@link PreparedPolygon} for
+ * correctness of
  * {@link PreparedPolygon#contains(Geometry)}
  * and {@link PreparedPolygon#intersects(Geometry)}
  * operations.
- * 
+ *
  * @author Owner
  *
  */
@@ -45,8 +45,8 @@ public class PreparedPolygonPredicateStressTest extends TestCase
   	PredicateStressTester tester = new PredicateStressTester();
   	tester.run(1000);
   }
-  
-  class PredicateStressTester 
+
+  class PredicateStressTester
   extends StressTestHarness
   {
   	@Override
@@ -55,35 +55,35 @@ public class PreparedPolygonPredicateStressTest extends TestCase
   		return true;
   	}
   }
-  
-  public boolean checkContains(Geometry target, Geometry test) 
+
+  public boolean checkContains(Geometry target, Geometry test)
   {
 	boolean expectedResult = target.contains(test);
 
     PreparedGeometryFactory pgFact = new PreparedGeometryFactory();
     PreparedGeometry prepGeom = pgFact.create(target);
-    
+
 	boolean prepResult = prepGeom.contains(test);
 
 	if (prepResult != expectedResult) {
 		return false;
 	}
 	return true;
-  } 
+  }
 
-  public boolean checkIntersects(Geometry target, Geometry test) 
+  public boolean checkIntersects(Geometry target, Geometry test)
   {
 	boolean expectedResult = target.intersects(test);
-	
+
 	PreparedGeometryFactory pgFact = new PreparedGeometryFactory();
 	PreparedGeometry prepGeom = pgFact.create(target);
-	
+
 	boolean prepResult = prepGeom.intersects(test);
-	
+
 	if (prepResult != expectedResult) {
 		return false;
 	}
 	return true;
-  } 
+  }
 
 }

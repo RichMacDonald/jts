@@ -32,7 +32,7 @@ import junit.framework.TestCase;
 public class FileBufferResultValidatorTest extends TestCase {
 
   static int MAX_FEATURE = 1;
-  
+
 	WKTReader rdr = new WKTReader();
 
   public FileBufferResultValidatorTest(String name) {

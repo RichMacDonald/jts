@@ -25,7 +25,7 @@ import org.locationtech.jts.geom.Geometry;
 /**
  * A {@link Shape} which contains a heterogeneous collection of other shapes
  * representing JTS {@link Geometry}s.
- * 
+ *
  * @author Martin Davis
  *
  */

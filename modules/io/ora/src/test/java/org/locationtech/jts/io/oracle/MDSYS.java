@@ -15,7 +15,7 @@ package org.locationtech.jts.io.oracle;
 /**
  * Mimics Oracle MDSYS functions for building geometries.
  * Useful for creating test objects.
- * 
+ *
  * @author mbdavis
  *
  */
@@ -41,7 +41,7 @@ public class MDSYS {
 	public static int[] SDO_ELEM_INFO_ARRAY(int... i) {
 		return i;
 	}
-	
+
 	public static double[] SDO_ORDINATE_ARRAY(double... d) {
 		return d;
 	}

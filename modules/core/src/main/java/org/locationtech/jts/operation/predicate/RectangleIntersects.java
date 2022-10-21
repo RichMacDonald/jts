@@ -29,22 +29,22 @@ import org.locationtech.jts.geom.util.ShortCircuitedGeometryVisitor;
 
 /**
  * Implementation of the <tt>intersects</tt> spatial predicate
- * optimized for the case where one {@link Geometry} is a rectangle. 
+ * optimized for the case where one {@link Geometry} is a rectangle.
  * This class works for all
  * input geometries, including {@link GeometryCollection}s.
  * <p>
- * As a further optimization, 
+ * As a further optimization,
  * this class can be used in batch style
  * to test many geometries
  * against a single rectangle.
- * 
+ *
  * @version 1.7
  */
 public class RectangleIntersects
 {
   /**
    * Tests whether a rectangle intersects a given geometry.
-   * 
+   *
    * @param rectangle
    *          a rectangular Polygon
    * @param b
@@ -63,7 +63,7 @@ public class RectangleIntersects
 
   /**
    * Create a new intersects computer for a rectangle.
-   * 
+   *
    * @param rectangle
    *          a rectangular Polygon
    */
@@ -76,7 +76,7 @@ public class RectangleIntersects
   /**
    * Tests whether the given Geometry intersects
    * the query rectangle.
-   * 
+   *
    * @param geom the Geometry to test (may be of any type)
    * @return true if the geometry intersects the query rectangle
    */
@@ -117,7 +117,7 @@ public class RectangleIntersects
 /**
  * Tests whether it can be concluded that a rectangle intersects a geometry,
  * based on the relationship of the envelope(s) of the geometry.
- * 
+ *
  * @author Martin Davis
  * @version 1.7
  */
@@ -133,10 +133,10 @@ class EnvelopeIntersectsVisitor extends ShortCircuitedGeometryVisitor
   }
 
   /**
-   * Reports whether it can be concluded that an intersection occurs, 
+   * Reports whether it can be concluded that an intersection occurs,
    * or whether further testing is required.
-   * 
-   * @return true if an intersection must occur 
+   *
+   * @return true if an intersection must occur
    * or false if no conclusion about intersection can be made
    */
   public boolean intersects()
@@ -182,10 +182,10 @@ protected boolean isDone()
 }
 
 /**
- * A visitor which tests whether it can be 
+ * A visitor which tests whether it can be
  * concluded that a geometry contains a vertex of
  * a query geometry.
- * 
+ *
  * @author Martin Davis
  * @version 1.7
  */
@@ -206,8 +206,8 @@ class GeometryContainsPointVisitor extends ShortCircuitedGeometryVisitor
   /**
    * Reports whether it can be concluded that a corner point of the rectangle is
    * contained in the geometry, or whether further testing is required.
-   * 
-   * @return true if a corner point is contained 
+   *
+   * @return true if a corner point is contained
    * or false if no conclusion about intersection can be made
    */
   public boolean containsPoint()
@@ -254,7 +254,7 @@ protected boolean isDone()
 /**
  * A visitor to test for intersection between the query
  * rectangle and the line segments of the geometry.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -268,8 +268,8 @@ class RectangleIntersectsSegmentVisitor extends ShortCircuitedGeometryVisitor
   /**
    * Creates a visitor for checking rectangle intersection
    * with segments
-   * 
-   * @param rectangle the query rectangle 
+   *
+   * @param rectangle the query rectangle
    */
   public RectangleIntersectsSegmentVisitor(Polygon rectangle)
   {
@@ -279,7 +279,7 @@ class RectangleIntersectsSegmentVisitor extends ShortCircuitedGeometryVisitor
 
   /**
    * Reports whether any segment intersection exists.
-   * 
+   *
    * @return true if a segment intersection exists
    * or false if no segment intersection exists
    */
@@ -292,14 +292,14 @@ class RectangleIntersectsSegmentVisitor extends ShortCircuitedGeometryVisitor
 protected void visit(Geometry geom)
   {
     /**
-     * It may be the case that the rectangle and the 
+     * It may be the case that the rectangle and the
      * envelope of the geometry component are disjoint,
      * so it is worth checking this simple condition.
      */
     Envelope elementEnv = geom.getEnvelopeInternal();
     if (!rectEnv.intersects(elementEnv))
       return;
-    
+
     // check segment intersections
     // get all lines from geometry component
     // (there may be more than one if it's a multi-ring polygon)

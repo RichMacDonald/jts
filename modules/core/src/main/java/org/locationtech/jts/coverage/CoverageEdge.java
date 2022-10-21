@@ -18,7 +18,7 @@ import org.locationtech.jts.io.WKTWriter;
 
 /**
  * An edge of a polygonal coverage formed from all or a section of a polygon ring.
- * 
+ *
  * @author mdavis
  *
  */
@@ -35,8 +35,8 @@ class CoverageEdge {
   }
 
   private static Coordinate[] extractEdgePoints(LinearRing ring, int start, int end) {
-    int size = start < end 
-                  ? end - start + 1 
+    int size = start < end
+                  ? end - start + 1
                   : ring.getNumPoints() - start + end;
     Coordinate[] pts = new Coordinate[size];
     int iring = start;
@@ -52,7 +52,7 @@ class CoverageEdge {
    * Computes a key segment for a ring.
    * The key is the segment starting at the lowest vertex,
    * towards the lowest adjacent distinct vertex.
-   * 
+   *
    * @param ring a linear ring
    * @return a LineSegment representing the key
    */
@@ -71,10 +71,10 @@ class CoverageEdge {
     Coordinate key1 = adj0.compareTo(adj1) < 0 ? adj0 : adj1;
     return new LineSegment(key0, key1);
   }
-  
+
   /**
    * Computes a distinct key for a section of a linear ring.
-   * 
+   *
    * @param ring the linear ring
    * @param start index of the start of the section
    * @param end end index of the end of the section
@@ -95,7 +95,7 @@ class CoverageEdge {
       key0 = end1;
       key1 = findDistinctPoint(pts, end, false, key0);
     }
-    return new LineSegment(key0, key1);  
+    return new LineSegment(key0, key1);
   }
 
   private static Coordinate findDistinctPoint(Coordinate[] pts, int index, boolean isForward, Coordinate pt) {
@@ -119,7 +119,7 @@ class CoverageEdge {
 
   private Coordinate[] pts;
   private int ringCount = 0;
-  
+
   public CoverageEdge(Coordinate[] pts) {
     this.pts = pts;
   }
@@ -127,11 +127,11 @@ class CoverageEdge {
   public void incRingCount() {
     ringCount++;
   }
-  
+
   public int getRingCount() {
     return ringCount;
   }
-  
+
   public void setCoordinates(Coordinate[] pts) {
     this.pts = pts;
   }
@@ -143,11 +143,11 @@ class CoverageEdge {
   public Coordinate getEndCoordinate() {
     return pts[pts.length - 1];
   }
-  
+
   public Coordinate getStartCoordinate() {
     return pts[0];
   }
-  
+
   @Override
 public String toString() {
     return WKTWriter.toLineString(pts);

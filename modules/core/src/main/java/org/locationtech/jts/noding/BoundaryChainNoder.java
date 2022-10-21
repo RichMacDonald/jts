@@ -20,7 +20,7 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.LineSegment;
 
 /**
- * A noder which extracts chains of boundary segments 
+ * A noder which extracts chains of boundary segments
  * as {@link SegmentString}s from a polygonal coverage.
  * Boundary segments are those which are not duplicated in the input polygonal coverage.
  * Extracting chains of segments minimize the number of segment strings created,
@@ -30,22 +30,22 @@ import org.locationtech.jts.geom.LineSegment;
  * Using this noder is faster than {@link SegmentExtractingNoder}
  * and {@link BoundarySegmentNoder}.
  * <p>
- * No precision reduction is carried out. 
+ * No precision reduction is carried out.
  * If that is required, another noder must be used (such as a snap-rounding noder),
  * or the input must be precision-reduced beforehand.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class BoundaryChainNoder implements Noder {
 
   private List<SegmentString> chainList;
-  
+
   /**
    * Creates a new boundary-extracting noder.
    */
   public BoundaryChainNoder() {
-    
+
   }
 
   @Override
@@ -57,7 +57,7 @@ public class BoundaryChainNoder implements Noder {
     chainList = extractChains(boundaryChains);
   }
 
-  private static void addSegments(Collection<SegmentString> segStrings, HashSet<Segment> segSet, 
+  private static void addSegments(Collection<SegmentString> segStrings, HashSet<Segment> segSet,
       BoundaryChainMap[] boundaryChains) {
     int i = 0;
     for (SegmentString ss : segStrings) {
@@ -66,7 +66,7 @@ public class BoundaryChainNoder implements Noder {
       addSegments( ss, chainMap, segSet );
     }
   }
-  
+
   private static void addSegments(SegmentString segString, BoundaryChainMap chainMap, HashSet<Segment> segSet) {
     for (int i = 0; i < segString.size() - 1; i++) {
       Coordinate p0 = segString.getCoordinate(i);
@@ -80,7 +80,7 @@ public class BoundaryChainNoder implements Noder {
       }
     }
   }
-  
+
   private static void markBoundarySegments(HashSet<Segment> segSet) {
     for (Segment seg : segSet) {
       seg.markBoundary();
@@ -103,20 +103,20 @@ public class BoundaryChainNoder implements Noder {
   private static class BoundaryChainMap {
     private SegmentString segString;
     private boolean[] isBoundary;
-    
+
     public BoundaryChainMap(SegmentString ss) {
       this.segString = ss;
       isBoundary = new boolean[ss.size() - 1];
     }
-    
+
     public void setBoundarySegment(int index) {
       isBoundary[index] = true;
     }
-    
+
     public void createChains(List<SegmentString> chainList) {
       int endIndex = 0;
       while (true) {
-        int startIndex = findChainStart(endIndex); 
+        int startIndex = findChainStart(endIndex);
         if (startIndex >= segString.size() - 1)
           break;
         endIndex = findChainEnd(startIndex);
@@ -149,19 +149,19 @@ public class BoundaryChainNoder implements Noder {
       return index;
     }
   }
-  
+
   private static class Segment extends LineSegment {
     private BoundaryChainMap segMap;
     private int index;
 
-    public Segment(Coordinate p0, Coordinate p1, 
+    public Segment(Coordinate p0, Coordinate p1,
         BoundaryChainMap segMap, int index) {
       super(p0, p1);
       this.segMap = segMap;
       this.index = index;
       normalize();
     }
-    
+
     public void markBoundary() {
       segMap.setBoundarySegment(index);
     }

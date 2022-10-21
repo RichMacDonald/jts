@@ -71,8 +71,8 @@ public class GeometryCollectionImplTest extends TestCase {
           + "((100 100, 110 100, 110 110, 100 110, 100 100), (103 103, 103 107, 107 107, 107 103, 103 103)))");
     assertEquals(112, g.getLength(), 1E-15);
   }
-  
 
-  
+
+
 
 }

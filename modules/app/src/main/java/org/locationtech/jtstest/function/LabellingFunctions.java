@@ -23,7 +23,7 @@ public class LabellingFunctions {
     Coordinate pt = ConstrainedInteriorPoint.getCoordinate((Polygon) g);
     return g.getFactory().createPoint(pt);
   }
-  
+
   public static Geometry labelPointConstrained(Geometry g, Geometry con) {
     Envelope envCon = con.getEnvelopeInternal();
     Coordinate pt = ConstrainedInteriorPoint.getCoordinate((Polygon) g, envCon);

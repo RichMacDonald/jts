@@ -20,11 +20,11 @@ class RingHullIndex {
 
   //TODO: use a proper spatial index
   List<RingHull> hulls = new ArrayList<>();
-  
+
   public void add(RingHull ringHull) {
     hulls.add(ringHull);
   }
-  
+
   public List<RingHull> query(Envelope queryEnv) {
     List<RingHull> result = new ArrayList<>();
     for (RingHull hull : hulls) {
@@ -35,5 +35,5 @@ class RingHullIndex {
     }
     return result;
   }
-  
+
 }

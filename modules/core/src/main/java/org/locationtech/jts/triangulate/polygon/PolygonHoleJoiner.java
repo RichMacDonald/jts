@@ -32,8 +32,8 @@ import org.locationtech.jts.noding.SegmentStringUtil;
 
 /**
  * Transforms a polygon with holes into a single self-touching (invalid) ring
- * by joining holes to the exterior shell or to another hole. 
- * The holes are added from the lowest upwards. 
+ * by joining holes to the exterior shell or to another hole.
+ * The holes are added from the lowest upwards.
  * As the resulting shell develops, a hole might be added to what was
  * originally another hole.
  * <p>
@@ -42,18 +42,18 @@ import org.locationtech.jts.noding.SegmentStringUtil;
  * joined at a different vertex.
  */
 public class PolygonHoleJoiner {
-  
+
   public static Polygon joinAsPolygon(Polygon inputPolygon) {
     return inputPolygon.getFactory().createPolygon(join(inputPolygon));
   }
-  
+
   public static Coordinate[] join(Polygon inputPolygon) {
     PolygonHoleJoiner joiner = new PolygonHoleJoiner(inputPolygon);
     return joiner.compute();
   }
-  
+
   private static final double EPS = 1.0E-4;
-  
+
   private List<Coordinate> shellCoords;
   // a sorted copy of shellCoords
   private TreeSet<Coordinate> shellCoordsSorted;
@@ -70,7 +70,7 @@ public class PolygonHoleJoiner {
 
   /**
    * Computes the joined ring.
-   * 
+   *
    * @return the points in the joined ring
    */
   public Coordinate[] compute() {
@@ -88,7 +88,7 @@ public class PolygonHoleJoiner {
     Collections.addAll(coordList, coords);
     return coordList;
   }
-  
+
   private void joinHoles() {
     shellCoordsSorted = new TreeSet<>();
     shellCoordsSorted.addAll(shellCoords);
@@ -101,15 +101,15 @@ public class PolygonHoleJoiner {
 
   /**
    * Joins a single hole to the current shellRing.
-   * 
+   *
    * @param hole the hole to join
    */
   private void joinHole(LinearRing hole) {
     /**
-     * 1) Get a list of HoleVertex Index. 
-     * 2) Get a list of ShellVertex. 
-     * 3) Get the pair that has the shortest distance between them. 
-     * This pair is the endpoints of the cut 
+     * 1) Get a list of HoleVertex Index.
+     * 2) Get a list of ShellVertex.
+     * 3) Get the pair that has the shortest distance between them.
+     * This pair is the endpoints of the cut
      * 4) The selected ShellVertex may occurs multiple times in
      * shellCoords[], so find the proper one and add the hole after it.
      */
@@ -140,7 +140,7 @@ public class PolygonHoleJoiner {
 
   /**
    * Get the ith shellvertex in shellCoords[] that the current should add after
-   * 
+   *
    * @param shellVertex Coordinate of the shell vertex
    * @param holeVertex  Coordinate of the hole vertex
    * @return the ith shellvertex
@@ -168,7 +168,7 @@ public class PolygonHoleJoiner {
   /**
    * Find the index of the coordinate in ShellCoords ArrayList,
    * skipping over some number of matches
-   * 
+   *
    * @param coord
    * @return
    */
@@ -187,7 +187,7 @@ public class PolygonHoleJoiner {
    * Gets a list of shell vertices that could be used to join with the hole.
    * This list contains only one item if the chosen vertex does not share the same
    * x value with holeCoord
-   * 
+   *
    * @param holeCoord the hole coordinates
    * @return a list of candidate join vertices
    */
@@ -217,7 +217,7 @@ public class PolygonHoleJoiner {
   /**
    * Determine if a line segment between a hole vertex
    * and a shell vertex lies inside the input polygon.
-   * 
+   *
    * @param holeCoord a hole coordinate
    * @param shellCoord a shell coordinate
    * @return true if the line lies inside the polygon
@@ -239,10 +239,10 @@ public class PolygonHoleJoiner {
     */
     return isJoinable;
   }
-  
+
   /**
    * Tests whether a line segment crosses the polygon boundary.
-   * 
+   *
    * @param p0 a vertex
    * @param p1 a vertex
    * @return true if the line segment crosses the polygon boundary
@@ -252,20 +252,20 @@ public class PolygonHoleJoiner {
         new Coordinate[] { p0, p1 }, null);
     List<SegmentString> segStrings = new ArrayList<>();
     segStrings.add(segString);
-    
+
     SegmentIntersectionDetector segInt = new SegmentIntersectionDetector();
     segInt.setFindProper(true);
     polygonIntersector.process(segStrings, segInt);
-    
+
     return segInt.hasProperIntersection();
   }
-  
+
   /**
    * Add hole vertices at proper position in shell vertex list.
    * For a touching/zero-length join line, avoids adding the join vertices twice.
-   * 
+   *
    * Also adds hole points to ordered coordinates.
-   * 
+   *
    * @param shellJoinIndex index of join vertex in shell
    * @param holeCoords the vertices of the hole to be inserted
    * @param holeJoinIndex index of join vertex in hole
@@ -275,7 +275,7 @@ public class PolygonHoleJoiner {
     Coordinate holeJoinPt = holeCoords[holeJoinIndex];
     //-- check for touching (zero-length) join to avoid inserting duplicate vertices
     boolean isJoinTouching = shellJoinPt.equals2D(holeJoinPt);
-    
+
     //-- create new section of vertices to insert in shell
     List<Coordinate> newSection = new ArrayList<>();
     if (! isJoinTouching) {
@@ -290,14 +290,14 @@ public class PolygonHoleJoiner {
     if (! isJoinTouching) {
       newSection.add(new Coordinate(holeCoords[holeJoinIndex]));
     }
-    
+
     shellCoords.addAll(shellJoinIndex, newSection);
     shellCoordsSorted.addAll(newSection);
   }
 
   /**
    * Sort the hole rings by minimum X, minimum Y.
-   * 
+   *
    * @param poly polygon that contains the holes
    * @return a list of sorted hole rings
    */
@@ -312,7 +312,7 @@ public class PolygonHoleJoiner {
 
   /**
    * Gets a list of indices of the leftmost vertices in a ring.
-   * 
+   *
    * @param geom the hole ring
    * @return indices of the leftmost vertices
    */
@@ -328,14 +328,14 @@ public class PolygonHoleJoiner {
     }
     return leftmostIndex;
   }
-    
+
   private static SegmentSetMutualIntersector createPolygonIntersector(Polygon polygon) {
     List<SegmentString> polySegStrings = SegmentStringUtil.extractSegmentStrings(polygon);
     return new MCIndexSegmentSetMutualIntersector(polySegStrings);
   }
-  
+
   /**
-   * 
+   *
    * @author mdavis
    *
    */
@@ -347,5 +347,5 @@ public class PolygonHoleJoiner {
       return e1.compareTo(e2);
     }
   }
-      
+
 }

@@ -21,7 +21,7 @@ public class GeometryAreaTest extends GeometryTestCase {
   public static void main(String args[]) {
     TestRunner.run(GeometryAreaTest.class);
   }
-  
+
   public GeometryAreaTest(String name) {
     super(name);
   }
@@ -53,10 +53,10 @@ public class GeometryAreaTest extends GeometryTestCase {
 
   private void checkArea(String wkt) {
     Geometry geom = read(wkt);
-    
+
     double ovArea = GeometryArea.area(geom);
     double area = geom.getArea();
-    
+
     assertEquals(area, ovArea, 0.00001);
   }
 }

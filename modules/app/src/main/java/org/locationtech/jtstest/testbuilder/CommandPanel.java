@@ -40,14 +40,14 @@ import org.locationtech.jtstest.testbuilder.ui.SwingUtil;
 /**
  * @version 1.7
  */
-public class CommandPanel 
-extends JPanel 
+public class CommandPanel
+extends JPanel
 {
 	private JTextArea txtCmd;
   private JTextArea txtOutput;
 
   private List<String> commandLog = new ArrayList<>();
-  
+
   private int historyIndex = 1;
   protected String commandSave;
   private boolean isCommandSavedOnUpdate;
@@ -55,7 +55,7 @@ extends JPanel
   private JCheckBox cbSupplyStdin;
   private JRadioButton rbWKT;
   private JRadioButton rbWKB;
-  
+
   public CommandPanel() {
 		try {
 			jbInit();
@@ -63,14 +63,14 @@ extends JPanel
 			ex.printStackTrace();
 		}
 	}
-	
+
   void jbInit() throws Exception {
-    
+
     this.setLayout(new BorderLayout());
 
     JPanel textPanel = new JPanel();
     textPanel.setLayout(new BorderLayout());
-    
+
     txtCmd = new JTextArea();
     txtCmd.setWrapStyleWord(true);
     txtCmd.setLineWrap(true);
@@ -92,14 +92,14 @@ extends JPanel
 
       public void save() {
         /**
-         * If the change occurred via internal setting, 
+         * If the change occurred via internal setting,
          * don't copy to the save buffer.
          */
         if (! isCommandSavedOnUpdate) {
           isCommandSavedOnUpdate = true;
           return;
         }
-        
+
         commandSave = txtCmd.getText();
         historyIndex = -1;
         update();
@@ -109,7 +109,7 @@ extends JPanel
     JScrollPane jScrollPane = new JScrollPane();
     jScrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
     jScrollPane.getViewport().add(txtCmd, null);
-    
+
     txtOutput = new JTextArea();
     txtOutput.setWrapStyleWord(true);
     txtOutput.setLineWrap(true);
@@ -120,23 +120,23 @@ extends JPanel
     JScrollPane jScrollPaneErr = new JScrollPane();
     jScrollPaneErr.setBorder(BorderFactory.createLoweredBevelBorder());
     jScrollPaneErr.getViewport().add(txtOutput, null);
-    
+
     textPanel.add(jScrollPane, BorderLayout.CENTER);
     textPanel.add(jScrollPaneErr, BorderLayout.SOUTH);
-    
-    
+
+
     JButton btnRun = SwingUtil.createButton(AppIcons.EXECUTE, "Run Command", (ActionListener) e -> doRun());
-    
+
     JButton btnPaste = SwingUtil.createButton(AppIcons.PASTE, "Paste Command", (ActionListener) e -> {
         setCommandText(getPaste());
         update();
       });
-    
+
     JButton btnClear = SwingUtil.createButton(AppIcons.CUT, "Clear Command", (ActionListener) e -> {
         setCommandText("");
         update();
       });
-    
+
     JButton btnPrev = SwingUtil.createButton(AppIcons.LEFT, "Previous Command", (ActionListener) e -> {
         if (historyIndex == -1) {
           historyIndex = commandLog.size()-1;
@@ -147,7 +147,7 @@ extends JPanel
         setCommandTextNoSave(commandLog.get(historyIndex));
         update();
       });
-    
+
     JButton btnNext = SwingUtil.createButton(AppIcons.RIGHT, "Next Command", (ActionListener) e -> {
         if (historyIndex == -1) return;
         if (historyIndex == commandLog.size()-1) {
@@ -160,38 +160,38 @@ extends JPanel
         }
         update();
       });
-    
+
     /*
     Box btnPanel = Box.createVerticalBox();
     btnPanel.setPreferredSize(new java.awt.Dimension(30, 30));
     //btnPanel.add(btnRun);
     this.add(btnPanel, BorderLayout.EAST);
     */
-    
+
     lblCommand = new JLabel();
     lblCommand.setText("Command 1");
     lblCommand.setBorder(new EmptyBorder(2,2,2,20));//top,left,bottom,right
-    
+
     JLabel lblVars = new JLabel();
     lblVars.setText("Vars ");
     lblVars.setBorder(new EmptyBorder(2,30,2,2));//top,left,bottom,right
-    
-    JButton btnAwkt = SwingUtil.createButton("A-WKT", 
-        "Insert variable " + CommandController.VAR_A + " for A as WKT", 
+
+    JButton btnAwkt = SwingUtil.createButton("A-WKT",
+        "Insert variable " + CommandController.VAR_A + " for A as WKT",
         (ActionListener) e -> insertCmdText(CommandController.VAR_A));
-    JButton btnAwkb = SwingUtil.createButton("A-WKB", 
-        "Insert variable " + CommandController.VAR_A_WKB + " for A as WKB", 
+    JButton btnAwkb = SwingUtil.createButton("A-WKB",
+        "Insert variable " + CommandController.VAR_A_WKB + " for A as WKB",
         (ActionListener) e -> insertCmdText(CommandController.VAR_A_WKB));
-    JButton btnBwkt = SwingUtil.createButton("B-WKT", 
-        "Insert variable " + CommandController.VAR_B + " for B as WKT", 
+    JButton btnBwkt = SwingUtil.createButton("B-WKT",
+        "Insert variable " + CommandController.VAR_B + " for B as WKT",
         (ActionListener) e -> insertCmdText(CommandController.VAR_B));
-    JButton btnBwkb = SwingUtil.createButton("B-WKB", 
-        "Insert variable " + CommandController.VAR_B_WKB + " for B as WKB", 
+    JButton btnBwkb = SwingUtil.createButton("B-WKB",
+        "Insert variable " + CommandController.VAR_B_WKB + " for B as WKB",
         (ActionListener) e -> insertCmdText(CommandController.VAR_B_WKB));
     JLabel lblStdin = new JLabel();
     lblStdin.setText("Stdin ");
     lblStdin.setBorder(new EmptyBorder(2,10,2,0));//top,left,bottom,right
-    
+
     cbSupplyStdin = new JCheckBox();
     cbSupplyStdin.setToolTipText("Send A to command standard input");
     rbWKT = new JRadioButton();
@@ -204,7 +204,7 @@ extends JPanel
     ButtonGroup btnGrpStdInFormat = new ButtonGroup();
     btnGrpStdInFormat.add(rbWKT);
     btnGrpStdInFormat.add(rbWKB);
-    
+
     JPanel labelPanel = new JPanel();
     labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.X_AXIS));
     labelPanel.setBorder(BorderFactory.createEmptyBorder(0,4,2,2));
@@ -219,7 +219,7 @@ extends JPanel
     labelPanel.add(cbSupplyStdin);
     labelPanel.add(rbWKT);
     labelPanel.add(rbWKB);
-    
+
 
     JPanel btnPanel = new JPanel();
     btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.Y_AXIS));
@@ -234,7 +234,7 @@ extends JPanel
     this.add(labelPanel, BorderLayout.NORTH);
     this.add(textPanel, BorderLayout.CENTER);
   }
-  
+
   private void insertCmdText(String text)
   {
     int pos = txtCmd.getCaretPosition();
@@ -250,17 +250,17 @@ extends JPanel
     boolean gotFocus = txtCmd.requestFocusInWindow();
   }
 
-  
+
   private void update() {
     lblCommand.setText(getCommandName());
   }
-  
+
   public String getCommandName() {
     int commandIndex = historyIndex + 1;
     if (commandIndex <= 0) commandIndex = commandLog.size() + 1;
     return "Command " + commandIndex;
   }
-  
+
   private void doRun() {
     txtOutput.setText("");
     txtOutput.setBackground(AppColors.BACKGROUND);
@@ -280,7 +280,7 @@ extends JPanel
     }
     return "";
   }
-  
+
   public void setError(String msg) {
     txtOutput.setText(msg);
     // scroll to top
@@ -293,7 +293,7 @@ extends JPanel
     txtOutput.setCaretPosition(0);
     txtOutput.setBackground(AppColors.BACKGROUND);
   }
-  
+
   private String getCommandText() {
     return txtCmd.getText();
   }
@@ -306,7 +306,7 @@ extends JPanel
     isCommandSavedOnUpdate = false;
     txtCmd.setText(cmd);
   }
-  
+
   /**
    * Record the command in history, but only if it is different to ones already there
    * @param cmd
@@ -315,5 +315,5 @@ extends JPanel
     if (commandLog.contains(cmd)) return;
     commandLog.add(cmd);
   }
-  
+
 }

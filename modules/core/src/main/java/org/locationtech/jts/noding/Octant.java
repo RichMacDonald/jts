@@ -48,25 +48,19 @@ public class Octant {
           return 0;
         else
           return 1;
-      }
-      else { // dy < 0
-        if (adx >= ady)
-          return 7;
-        else
-          return 6;
-      }
+      } else if (adx >= ady)
+	  return 7;
+	else
+	  return 6;
     } else if (dy >= 0) {
         if (adx >= ady)
           return 3;
         else
           return 2;
-      }
-      else { // dy < 0
-        if (adx >= ady)
-          return 4;
-        else
-          return 5;
-      }
+      } else if (adx >= ady)
+	  return 4;
+	else
+	  return 5;
   }
 
   /**

@@ -18,43 +18,43 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.util.GeometryEditor;
 
-public class GeometryVertexDeleter 
+public class GeometryVertexDeleter
 {
-  public static Geometry delete(Geometry geom, 
-      LineString line, 
+  public static Geometry delete(Geometry geom,
+      LineString line,
       int vertexIndex)
   {
     GeometryEditor editor = new GeometryEditor();
     editor.setCopyUserData(true);
     return editor.edit(geom, new DeleteVertexOperation(line, vertexIndex));
   }
-  
+
   private static class DeleteVertexOperation
     extends GeometryEditor.CoordinateOperation
   {
     private LineString line;
     private int vertexIndex;
     private Coordinate newVertex;
-    
+
     public DeleteVertexOperation(LineString line, int vertexIndex)
     {
       this.line = line;
       this.vertexIndex = vertexIndex;
     }
-    
+
     @Override
 	public Coordinate[] edit(Coordinate[] coords,
         Geometry geometry)
     {
       if (geometry != line) return coords;
-      
+
       int minLen = 2;
       if (geometry instanceof LinearRing) minLen = 4;
-      
+
       // don't change if would make geometry invalid
       if (coords.length <= minLen)
         return coords;
-      
+
       int newLen = coords.length - 1;
       Coordinate[] newPts = new Coordinate[newLen];
       int newIndex = 0;
@@ -64,18 +64,18 @@ public class GeometryVertexDeleter
           newIndex++;
         }
       }
-      
+
       // close ring if required
       if (geometry instanceof LinearRing) {
-        if (newPts[newLen - 1] == null 
+        if (newPts[newLen - 1] == null
             || ! newPts[newLen - 1].equals2D(newPts[0])) {
           newPts[newLen - 1] = new Coordinate(newPts[0]);
         }
       }
-      
-      return newPts; 
+
+      return newPts;
     }
   }
 
-  
+
 }

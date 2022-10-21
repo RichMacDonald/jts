@@ -17,9 +17,9 @@ import java.awt.Color;
 /**
  * @version 1.7
  */
-public class GeometryDepiction 
+public class GeometryDepiction
 {
-	
+
   public static final Color GEOM_A_HIGHLIGHT_CLR = new Color(0, 0, 255);
   public static final Color GEOM_A_LINE_CLR = new Color(0, 0, 255, 150);
   public static final Color GEOM_A_FILL_CLR = new Color(200, 200, 255, 150);
@@ -27,18 +27,18 @@ public class GeometryDepiction
   public static final Color GEOM_B_HIGHLIGHT_CLR = new Color(255, 0, 0);
   public static final Color GEOM_B_LINE_CLR = new Color(150, 0, 0, 150);
   public static final Color GEOM_B_FILL_CLR = new Color(255, 200, 200, 150);
-  
+
   // YellowGreen
   public static final Color GEOM_RESULT_LINE_CLR = new Color(120, 180, 0, 200);
   // Yellow
   public static final Color GEOM_RESULT_FILL_CLR = new Color(255, 255, 100, 100);
-  
+
   public static final GeometryDepiction RESULT = new GeometryDepiction(
 			new Color(154, 205, 0, 150),
 			new Color(255, 255, 100, 100),
 			// Yellow
 			null);
-  
+
   public static final GeometryDepiction GEOM_A = new GeometryDepiction(
       new Color(0, 0, 255, 150),
       new Color(200, 200, 255, 150),

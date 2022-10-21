@@ -27,7 +27,7 @@ import org.locationtech.jts.io.twkb.TWKBTestSupport.TWKBTestData;
 
 /**
  * Tests for reading TWKB.
- * 
+ *
  * @author James Hughes
  * @author Gabriel Roldan
  */

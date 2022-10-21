@@ -26,7 +26,7 @@ public class TriangleCircumcentreTest extends GeometryTestCase {
   {
     super(name);
   }
-  
+
   // This test fails due to round-off error
   /*
   public void testSquareDiagonal() {
@@ -54,7 +54,7 @@ public class TriangleCircumcentreTest extends GeometryTestCase {
     Coordinate c = new Coordinate(cx, cy);
     return Triangle.circumcentreDD(a, b, c);
   }
-  
+
   private void checkCCEqual(Coordinate cc1, Coordinate cc2) {
     boolean isEqual = cc1.equals2D(cc2);
     if (! isEqual) {

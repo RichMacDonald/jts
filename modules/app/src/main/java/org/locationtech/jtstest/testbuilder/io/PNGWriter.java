@@ -75,8 +75,8 @@ public class PNGWriter {
     String filenameWithPath = outputDirectory.getPath() + "\\" + filenameNoPath;
     Image image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_4BYTE_ABGR);
     geometryEditPanel.paint(image.getGraphics());
-    
-    ImageIO.write((RenderedImage) image, "png", 
+
+    ImageIO.write((RenderedImage) image, "png",
         new File(filenameWithPath + ".png"));
   }
 

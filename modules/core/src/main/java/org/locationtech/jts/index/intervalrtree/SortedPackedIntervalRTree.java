@@ -23,23 +23,23 @@ import org.locationtech.jts.index.ItemVisitor;
  * using an R-Tree packed based on the order of the interval midpoints.
  * It supports range searching,
  * where the range is an interval of the real line (which may be a single point).
- * A common use is to index 1-dimensional intervals which 
+ * A common use is to index 1-dimensional intervals which
  * are the projection of 2-D objects onto an axis of the coordinate system.
  * <p>
- * This index structure is <i>static</i> 
+ * This index structure is <i>static</i>
  * - items cannot be added or removed once the first query has been made.
- * The advantage of this characteristic is that the index performance 
+ * The advantage of this characteristic is that the index performance
  * can be optimized based on a fixed set of items.
- * 
+ *
  * @author Martin Davis
  */
-public class SortedPackedIntervalRTree 
+public class SortedPackedIntervalRTree
 {
   private final List leaves = new ArrayList();
-  
+
   /**
    * If root is null that indicates
-   * that the tree has not yet been built,   
+   * that the tree has not yet been built,
    * OR nothing has been added to the tree.
    * In both cases, the tree is still open for insertions.
    */
@@ -47,16 +47,16 @@ public class SortedPackedIntervalRTree
 
 	public SortedPackedIntervalRTree()
 	{
-		
+
 	}
-	
+
   /**
    * Adds an item to the index which is associated with the given interval
-   * 
+   *
    * @param min the lower bound of the item interval
    * @param max the upper bound of the item interval
    * @param item the item to insert
-   * 
+   *
    * @throws IllegalStateException if the index has already been queried
    */
 	public void insert(double min, double max, Object item)
@@ -65,7 +65,7 @@ public class SortedPackedIntervalRTree
       throw new IllegalStateException("Index cannot be added to once it has been queried");
     leaves.add(new IntervalRTreeLeafNode(min, max, item));
 	}
-	
+
   private synchronized void init()
   {
     // already built
@@ -74,32 +74,32 @@ public class SortedPackedIntervalRTree
      * In this case it is safe to leave the tree in an open state
      */
     if ((root != null) || (leaves.size() == 0)) return;
-    
+
     buildRoot();
   }
-  
+
   private void buildRoot()
   {
     if (root != null) return;
     root = buildTree();
   }
-  
+
 	private  IntervalRTreeNode buildTree()
 	{
-	  
+
     // sort the leaf nodes
     Collections.sort(leaves, new IntervalRTreeNode.NodeComparator());
-    
+
     // now group nodes into blocks of two and build tree up recursively
 		List src = leaves;
 		List temp = null;
 		List dest = new ArrayList();
-		
+
 		while (true) {
 			buildLevel(src, dest);
 			if (dest.size() == 1)
 				return (IntervalRTreeNode) dest.get(0);
-      
+
 			temp = src;
 			src = dest;
 			dest = temp;
@@ -108,13 +108,13 @@ public class SortedPackedIntervalRTree
 
   //private int level = 0;
 
-	private void buildLevel(List src, List dest) 
+	private void buildLevel(List src, List dest)
   {
     //level++;
 		dest.clear();
 		for (int i = 0; i < src.size(); i += 2) {
 			IntervalRTreeNode n1 = (IntervalRTreeNode) src.get(i);
-			IntervalRTreeNode n2 = (i + 1 < src.size()) 
+			IntervalRTreeNode n2 = (i + 1 < src.size())
 						? (IntervalRTreeNode) src.get(i) : null;
 			if (n2 == null) {
 				dest.add(n1);
@@ -137,7 +137,7 @@ public class SortedPackedIntervalRTree
   /**
    * Search for intervals in the index which intersect the given closed interval
    * and apply the visitor to them.
-   * 
+   *
    * @param min the lower bound of the query interval
    * @param max the upper bound of the query interval
    * @param visitor the visitor to pass any matched items to
@@ -145,12 +145,12 @@ public class SortedPackedIntervalRTree
 	public void query(double min, double max, ItemVisitor visitor)
 	{
     init();
-    
+
     // if root is null tree must be empty
-    if (root == null) 
+    if (root == null)
       return;
-    
+
 		root.query(min, max, visitor);
 	}
-  
+
 }

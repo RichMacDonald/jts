@@ -41,11 +41,11 @@ import org.locationtech.jts.util.Assert;
  * components of the input.  Each linestring is oriented
  * so that identical endpoints are adjacent in the list.
  * <p>
- * A typical use case is to convert a set of 
- * unoriented geometric links 
+ * A typical use case is to convert a set of
+ * unoriented geometric links
  * from a linear network
  * (e.g. such as block faces on a bus route)
- * into a continuous oriented path through the network. 
+ * into a continuous oriented path through the network.
  * <p>
  * The input linestrings may form one or more connected sets.
  * The input linestrings should be correctly noded, or the results may
@@ -84,7 +84,7 @@ public class LineSequencer
 		sequencer.add(geom);
 		return sequencer.getSequencedLineStrings();
 	}
-	
+
   /**
    * Tests whether a {@link Geometry} is sequenced correctly.
    * {@link LineString}s are trivially sequenced.

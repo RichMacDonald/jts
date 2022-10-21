@@ -84,7 +84,7 @@ public class GeometryImplTest extends TestCase {
                 "POLYGON ((10 10, 10 30, 30 30, 30 10, 10 10))");
         assertTrue(bigPolygon.contains(smallPolygon));
     }
-    
+
     public void testEmptyGeometryCentroid() throws Exception {
       assertTrue(reader.read("POINT EMPTY").getCentroid().isEmpty());
       assertTrue(reader.read("POLYGON EMPTY").getCentroid().isEmpty());
@@ -103,11 +103,11 @@ public class GeometryImplTest extends TestCase {
     public void testOutOfMemoryError() throws Exception {
         doTestFromCommcast2003AtYahooDotCa(new WKTReader());
     }
-    
-  
+
+
 
     public void testDepthMismatchAssertionFailedException() throws Exception {
-      //register@robmeek.com reported an assertion failure 
+      //register@robmeek.com reported an assertion failure
       //("depth mismatch at (160.0, 300.0, Nan)") [Jon Aquino 10/28/2003]
       reader
           .read("MULTIPOLYGON (((100 300, 100 400, 200 400, 200 300, 100 300)),"
@@ -346,10 +346,10 @@ public class GeometryImplTest extends TestCase {
         assertTrue(gc2.intersects(gc1));
     }
 
-    private void doTestEqualsExact(Geometry x, 
+    private void doTestEqualsExact(Geometry x,
         Geometry somethingExactlyEqual,
         Geometry sameClassButEmpty,
-        Geometry anotherSameClassButEmpty, 
+        Geometry anotherSameClassButEmpty,
         CollectionFactory collectionFactory)
         throws Exception {
         Geometry emptyDifferentClass;
@@ -363,19 +363,19 @@ public class GeometryImplTest extends TestCase {
         Geometry somethingEqualButNotExactly = geometryFactory.createGeometryCollection(new Geometry[] {
                     x
                 });
-        
+
         doTestEqualsExact(x, somethingExactlyEqual,
             collectionFactory.createCollection(new Geometry[] { x }));
-        
+
         doTestEqualsExact(sameClassButEmpty, anotherSameClassButEmpty,
             emptyDifferentClass);
-        
+
         /**
          * Test comparison of non-empty versus empty.
          */
         doTestEqualsExact(x, somethingExactlyEqual,
             sameClassButEmpty);
-        
+
         doTestEqualsExact(collectionFactory.createCollection(
                 new Geometry[] { x, x }),
             collectionFactory.createCollection(
@@ -383,7 +383,7 @@ public class GeometryImplTest extends TestCase {
             somethingEqualButNotExactly);
     }
 
-    private void doTestEqualsExact(Geometry x, 
+    private void doTestEqualsExact(Geometry x,
         Geometry somethingExactlyEqual,
         Geometry somethingEqualButNotExactly) throws Exception {
         Geometry differentClass;

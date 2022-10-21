@@ -36,7 +36,7 @@ import org.locationtech.jts.geom.Geometry;
 /**
  * @version 1.7
  */
-public class GeometryTreePanel extends JPanel implements TreeWillExpandListener 
+public class GeometryTreePanel extends JPanel implements TreeWillExpandListener
 {
   JScrollPane jScrollPane = new JScrollPane();
 	JTree tree = new JTree();
@@ -55,11 +55,11 @@ public class GeometryTreePanel extends JPanel implements TreeWillExpandListener
 					hasFocus);
 			if (! (value instanceof GeometricObjectNode))
 				return this;
-			
+
 			GeometricObjectNode o = (GeometricObjectNode) value;
 			setText(o.getText());
 			setIcon(o.getIcon());
-			setToolTipText("geometry"); 
+			setToolTipText("geometry");
 			return this;
 		}
 	}
@@ -97,7 +97,7 @@ public class GeometryTreePanel extends JPanel implements TreeWillExpandListener
 			public void mouseClicked(MouseEvent e) {
 			  Geometry geom = getSelectedGeometry();
 			  if (geom == null) return;
-			  
+
         if (e.getClickCount() == 2) {
           JTSTestBuilderFrame.getGeometryEditPanel().zoom(geom.getEnvelopeInternal());
         }
@@ -119,10 +119,10 @@ public class GeometryTreePanel extends JPanel implements TreeWillExpandListener
   public void moveToNextNode(int direction) {
     direction = (int) Math.signum(direction);
     TreePath path = tree.getSelectionPath();
-    
+
     TreePath nextPath2 = nextPath(path, 2 * direction);
     tree.scrollPathToVisible(nextPath2);
-    
+
     TreePath nextPath = nextPath(path, direction);
     tree.setSelectionPath(nextPath);
   }
@@ -145,7 +145,7 @@ public class GeometryTreePanel extends JPanel implements TreeWillExpandListener
   }
 
   private static Geometry getGeometryFromNode(Object value) {
-    if (value == null) 
+    if (value == null)
       return null;
     return ((GeometricObjectNode) value).getGeometry();
   }
@@ -160,10 +160,10 @@ public class GeometryTreePanel extends JPanel implements TreeWillExpandListener
 
   //Required by TreeWillExpandListener interface.
   @Override
-public void treeWillExpand(TreeExpansionEvent e) 
+public void treeWillExpand(TreeExpansionEvent e)
               throws ExpandVetoException {
   	TreePath path = e.getPath();
-  	Object lastComp = path.getLastPathComponent(); 
+  	Object lastComp = path.getLastPathComponent();
   }
 
   //Required by TreeWillExpandListener interface.

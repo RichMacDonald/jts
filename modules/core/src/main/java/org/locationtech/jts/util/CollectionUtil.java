@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @version 1.7
  */
-public class CollectionUtil 
+public class CollectionUtil
 {
 
   public interface Function {

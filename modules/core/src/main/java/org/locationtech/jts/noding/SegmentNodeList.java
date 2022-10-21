@@ -220,13 +220,13 @@ public class SegmentNodeList
     Coordinate[] pts = createSplitEdgePts(ei0, ei1);
     return new NodedSegmentString(pts, edge.getData());
   }
-  
+
   /**
    * Extracts the points for a split edge running between two nodes.
    * The extracted points should contain no duplicate points.
    * There should always be at least two points extracted
    * (which will be the given nodes).
-   * 
+   *
    * @param ei0 the start node of the split edge
    * @param ei1 the end node of the split edge
    * @return the points for the split edge
@@ -237,15 +237,15 @@ public class SegmentNodeList
 
     // if only two points in split edge they must be the node points
     if (npts == 2) return new Coordinate[] { new Coordinate(ei0.coord), new Coordinate(ei1.coord) };
-    
+
     Coordinate lastSegStartPt = edge.getCoordinate(ei1.segmentIndex);
     /**
      * If the last intersection point is not equal to the its segment start pt,
      * add it to the points list as well.
      * This check is needed because the distance metric is not totally reliable!
-     * 
+     *
      * Also ensure that the created edge always has at least 2 points.
-     * 
+     *
      * The check for point equality is 2D only - Z values are ignored
      */
     boolean useIntPt1 = ei1.isInterior() || ! ei1.coord.equals2D(lastSegStartPt);
@@ -268,9 +268,9 @@ public class SegmentNodeList
    * including all original segment string vertices and vertices
    * introduced by nodes in this list.
    * Repeated coordinates are collapsed.
-   * 
+   *
    * @return an array of Coordinates
-   * 
+   *
    */
   public Coordinate[] getSplitCoordinates()
   {

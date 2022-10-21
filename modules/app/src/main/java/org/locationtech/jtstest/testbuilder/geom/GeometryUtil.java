@@ -35,7 +35,7 @@ public class GeometryUtil {
       size = " [ " + g.getNumGeometries() + " ]";
 
     return
-    g.getGeometryType().toUpperCase() 
+    g.getGeometryType().toUpperCase()
     +  size + " - " + structure
     + g.getNumPoints() + " pts";
   }
@@ -43,7 +43,7 @@ public class GeometryUtil {
   public static String metricsSummary(Geometry g)
   {
     StringBuilder metrics = new StringBuilder();
-    if ( hasLength(g) ) metrics.append("Len: ").append(g.getLength()); 
+    if ( hasLength(g) ) metrics.append("Len: ").append(g.getLength());
     if ( hasArea(g) ) metrics.append("  Area: ").append(area(g));
     return metrics.toString();
   }
@@ -71,7 +71,7 @@ public class GeometryUtil {
 
   /**
    * Gets the envelope including all holes which might lie outside a polygon.
-   * 
+   *
    * @param geom
    * @return
    */

@@ -22,23 +22,23 @@ import org.locationtech.jts.geom.Polygon;
 /**
  * Computes a robust clipping envelope for a pair of polygonal geometries.
  * The envelope is computed to be large enough to include the full
- * length of all geometry line segments which intersect 
+ * length of all geometry line segments which intersect
  * a given target envelope.
  * This ensures that line segments which might intersect are
  * not perturbed when clipped using {@link RingClipper}.
- *  
+ *
  * @author Martin Davis
  *
  */
 class RobustClipEnvelopeComputer {
-  
+
   public static Envelope getEnvelope(Geometry a, Geometry b, Envelope targetEnv) {
     RobustClipEnvelopeComputer cec = new RobustClipEnvelopeComputer(targetEnv);
     cec.add(a);
     cec.add(b);
     return cec.getEnvelope();
   }
-  
+
   private Envelope targetEnv;
   private Envelope clipEnv;
 
@@ -50,7 +50,7 @@ class RobustClipEnvelopeComputer {
   public Envelope getEnvelope() {
     return clipEnv;
   }
-  
+
   public void add(Geometry g) {
     if ( g == null || g.isEmpty() )
       return;

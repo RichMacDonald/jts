@@ -17,11 +17,11 @@ import junit.textui.TestRunner;
 
 /**
  * Tests basic arithmetic operations for {@link DD}s.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class DDBasicTest 
+public class DDBasicTest
   extends TestCase
 {
   public static void main(String args[]) {
@@ -35,14 +35,14 @@ public class DDBasicTest
   	assertTrue(DD.valueOf(1).divide(DD.valueOf(0)).isNaN());
   	assertTrue(DD.valueOf(1).multiply(DD.NaN).isNaN());
   }
-  
+
 
   public void testAddMult2()
   {
   	checkAddMult2(new DD(3));
   	checkAddMult2(DD.PI);
   }
-  
+
   public void testMultiplyDivide()
   {
   	checkMultiplyDivide(DD.PI, DD.E, 1e-30);
@@ -56,7 +56,7 @@ public class DDBasicTest
   	checkDivideMultiply(DD.PI, DD.E, 1e-30);
   	checkDivideMultiply(new DD(39.4), new DD(10), 1e-30);
   }
-   
+
   public void testSqrt()
   {
   	// the appropriate error bound is determined empirically
@@ -79,7 +79,7 @@ public class DDBasicTest
   	// the appropriate error bound is determined empirically
   	checkTrunc(DD.PI, DD.valueOf(3));
   	checkTrunc(DD.valueOf(999.999), DD.valueOf(999));
-  	
+
   	checkTrunc(DD.E.negate(), DD.valueOf(-2));
   	checkTrunc(DD.valueOf(-999.999), DD.valueOf(-999));
   }
@@ -100,18 +100,18 @@ public class DDBasicTest
   	checkPow(-3, -5, 16 * DD.EPS);
   	checkPow(0.12345, -5, 1e5 * DD.EPS);
   }
-  
+
   public void testReciprocal()
   {
   	// error bounds are chosen to be "close enough" (i.e. heuristically)
-  	
+
   	// for some reason many reciprocals are exact
   	checkReciprocal(3.0, 0);
   	checkReciprocal(99.0, 1e-29);
   	checkReciprocal(999.0, 0);
   	checkReciprocal(314159269.0, 0);
   }
-  
+
   /**
    * A basic test for determinant correctness
    */
@@ -119,12 +119,12 @@ public class DDBasicTest
     checkDeterminant(3, 8, 4, 6, -14, 0);
     checkDeterminantDD(3, 8, 4, 6, -14, 0);
   }
-  
+
   public void testDeterminantRobust() {
     checkDeterminant(1.0e9, 1.0e9 - 1, 1.0e9 - 1, 1.0e9 - 2, -1, 0);
     checkDeterminantDD(1.0e9, 1.0e9 - 1, 1.0e9 - 1, 1.0e9 - 2, -1, 0);
   }
-  
+
   private void checkDeterminant(double x1, double y1, double x2, double y2, double expected, double errBound) {
     DD det = DD.determinant(x1, y1, x2, y2);
     checkErrorBound("Determinant", det, DD.valueOf(expected), errBound);
@@ -132,7 +132,7 @@ public class DDBasicTest
 
   private void checkDeterminantDD(double x1, double y1, double x2, double y2, double expected, double errBound) {
     DD det = DD.determinant(
-        DD.valueOf(x1), DD.valueOf(y1), 
+        DD.valueOf(x1), DD.valueOf(y1),
         DD.valueOf(x2), DD.valueOf(y2));
     checkErrorBound("Determinant", det, DD.valueOf(expected), errBound);
   }
@@ -143,13 +143,13 @@ public class DDBasicTest
   	checkBinomialSquare(1000.0, 1.0);
   	checkBinomialSquare(10000.0, 1.0);
   	checkBinomialSquare(100000.0, 1.0);
-  	checkBinomialSquare(1000000.0, 1.0);  	
+  	checkBinomialSquare(1000000.0, 1.0);
   	checkBinomialSquare(1e8, 1.0);
   	checkBinomialSquare(1e10, 1.0);
   	checkBinomialSquare(1e14, 1.0);
   	// Following call will fail, because it requires 32 digits of precision
 //  	checkBinomialSquare(1e16, 1.0);
-  	
+
   	checkBinomialSquare(1e14, 291.0);
   	checkBinomialSquare(5e14, 291.0);
   	checkBinomialSquare(5e14, 345291.0);
@@ -178,25 +178,25 @@ public class DDBasicTest
   {
   	return x.subtract(y).abs();
   }
-  
+
   private void checkErrorBound(String tag, DD x, DD y, double errBound)
   {
   	DD err = x.subtract(y).abs();
   	//System.out.println(tag + " err=" + err);
   	boolean isWithinEps = err.doubleValue() <= errBound;
   	if (! isWithinEps) {
-  	  System.out.println("checkErrorBound: " + tag 
+  	  System.out.println("checkErrorBound: " + tag
           + " val1 = " + x
           + " val2 = " + y
   	      + "  err=" + err);
   	}
   	assertTrue(isWithinEps);
   }
-  
+
   /**
    * Computes (a+b)^2 in two different ways and compares the result.
    * For correct results, a and b should be integers.
-   * 
+   *
    * @param a
    * @param b
    */
@@ -208,20 +208,20 @@ public class DDBasicTest
   	DD aPlusb = add.add(bdd);
   	DD abSq = aPlusb.multiply(aPlusb);
 //  	System.out.println("(a+b)^2 = " + abSq);
-  	
+
   	// expansion
   	DD a2dd = add.multiply(add);
   	DD b2dd = bdd.multiply(bdd);
   	DD ab = add.multiply(bdd);
   	DD sum = b2dd.add(ab).add(ab);
-  	
+
 //  	System.out.println("2ab+b^2 = " + sum);
-  	
+
   	DD diff = abSq.subtract(a2dd);
 //  	System.out.println("(a+b)^2 - a^2 = " + diff);
-  	
+
   	DD delta = diff.subtract(sum);
-  	
+
   	//System.out.println();
   	//System.out.println("A = " + a + ", B = " + b);
   	//System.out.println("[DD]     2ab+b^2 = " + sum
@@ -234,7 +234,7 @@ public class DDBasicTest
   	boolean isDeltaZero = delta.isZero();
   	assertTrue(isDeltaZero);
   }
-  
+
   void printBinomialSquareDouble(double a, double b)
   {
   	double sum = 2*a*b + b*b;
@@ -243,20 +243,20 @@ public class DDBasicTest
   	//		+ "   (a+b)^2-a^2= " + diff
   	//		+ "   delta= " + (sum - diff));
   }
-  
+
   public void testBinomial2()
   {
   	checkBinomial2(100.0, 1.0);
   	checkBinomial2(1000.0, 1.0);
   	checkBinomial2(10000.0, 1.0);
   	checkBinomial2(100000.0, 1.0);
-  	checkBinomial2(1000000.0, 1.0);  	
+  	checkBinomial2(1000000.0, 1.0);
   	checkBinomial2(1e8, 1.0);
   	checkBinomial2(1e10, 1.0);
   	checkBinomial2(1e14, 1.0);
-  	
+
   	checkBinomial2(1e14, 291.0);
-  	
+
   	checkBinomial2(5e14, 291.0);
   	checkBinomial2(5e14, 345291.0);
   }
@@ -270,19 +270,19 @@ public class DDBasicTest
   	DD aSubb = add.subtract(bdd);
   	DD abProd = aPlusb.multiply(aSubb);
 //  	System.out.println("(a+b)^2 = " + abSq);
-  	
+
   	// expansion
   	DD a2dd = add.multiply(add);
   	DD b2dd = bdd.multiply(bdd);
-  	
+
 //  	System.out.println("2ab+b^2 = " + sum);
-  	
+
   	// this should equal b^2
   	DD diff = abProd.subtract(a2dd).negate();
 //  	System.out.println("(a+b)^2 - a^2 = " + diff);
-  	
+
   	DD delta = diff.subtract(b2dd);
-  	
+
   	//System.out.println();
   	//System.out.println("A = " + a + ", B = " + b);
   	//System.out.println("[DD] (a+b)(a-b) = " + abProd
@@ -295,43 +295,43 @@ public class DDBasicTest
   	boolean isDeltaZero = delta.isZero();
   	assertTrue(isDeltaZero);
   }
-  
+
 
   private void checkReciprocal(double x, double errBound)
   {
   	DD xdd = new DD(x);
   	DD rr = xdd.reciprocal().reciprocal();
-  	
+
   	double err = xdd.subtract(rr).doubleValue();
-  	
-  	//System.out.println("DD Recip = " + xdd 
+
+  	//System.out.println("DD Recip = " + xdd
   	//		+ " DD delta= " + err
   	//		+ " double recip delta= " + (x - 1.0/(1.0/x)) );
-  	
+
   	assertTrue(err <= errBound);
   }
- 
+
   private void checkPow(double x, int exp, double errBound)
   {
   	DD xdd = new DD(x);
   	DD pow = xdd.pow(exp);
   	//System.out.println("Pow(" + x + ", " + exp + ") = " + pow);
   	DD pow2 = slowPow(xdd, exp);
-  	
+
   	double err = pow.subtract(pow2).doubleValue();
-  	
+
   	boolean isOK = err < errBound;
   	if (! isOK)
   		System.out.println("Test slowPow value " + pow2);
-  		
+
   	assertTrue(err <= errBound);
   }
- 
+
 	private DD slowPow(DD x, int exp)
 	{
 		if (exp == 0)
 			return DD.valueOf(1.0);
-		
+
 		int n = Math.abs(exp);
 		// MD - could use binary exponentiation for better precision & speed
 		DD pow = new DD(x);
@@ -344,6 +344,6 @@ public class DDBasicTest
 		return pow;
 	}
 
-	
+
 
 }

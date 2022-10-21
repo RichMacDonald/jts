@@ -23,33 +23,33 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 
 
 
-public class TestDataBuilder 
+public class TestDataBuilder
 {
   private GeometryFactory geomFact = new GeometryFactory();
 
-	private Coordinate origin = new Coordinate(0, 0); 
+	private Coordinate origin = new Coordinate(0, 0);
 	private double size = 100.0;
 	public TestDataBuilder()
 	{
-		
+
 	}
-	
+
 	public TestDataBuilder(GeometryFactory geomFact)
 	{
 		this.geomFact = geomFact;
 	}
-	
+
 	public void setExtent(Coordinate origin, double size)
 	{
 		this.origin = origin;
 		this.size = size;
 	}
-	
+
 	public void setTestDimension(int testDim)
 	{
 		int testDimUnused = testDim;
 	}
-	
+
 	public Geometry createCircle(int nPts) {
 		GeometricShapeFactory gsf = new GeometricShapeFactory();
 		gsf.setCentre(origin);
@@ -60,7 +60,7 @@ public class TestDataBuilder
 		// Geometry g = gRect.getExteriorRing();
 		return circle;
 	}
-  
+
   public Geometry createSineStar(int nPts) {
 		SineStarFactory gsf = new SineStarFactory();
 		gsf.setCentre(origin);
@@ -71,7 +71,7 @@ public class TestDataBuilder
 		Geometry poly = gsf.createSineStar();
 		return poly;
 	}
-  
+
   public List createTestGeoms(Envelope env, int nItems, double size, int nPts)
   {
     int nCells = (int) Math.sqrt(nItems);
@@ -91,7 +91,7 @@ public class TestDataBuilder
   	}
   	return geoms;
   }
-  
+
   Geometry createLine(Coordinate base, double size, int nPts)
   {
     GeometricShapeFactory gsf = new GeometricShapeFactory();
@@ -102,6 +102,6 @@ public class TestDataBuilder
 //    System.out.println(circle);
     return circle.getBoundary();
   }
-  
+
 
 }

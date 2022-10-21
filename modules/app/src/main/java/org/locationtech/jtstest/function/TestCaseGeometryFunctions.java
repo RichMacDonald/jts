@@ -21,38 +21,38 @@ import org.locationtech.jts.precision.MinimumClearance;
  * Geometry functions which
  * augment the existing methods on {@link Geometry},
  * for use in XML Test files.
- * This is the default used in the TestRunner, 
- * and thus all the operations 
+ * This is the default used in the TestRunner,
+ * and thus all the operations
  * in this class should be named differently to the Geometry methods
  * (otherwise they will shadow the real Geometry methods).
  * <p>
  * If replacing a Geometry method is desired, this
  * can be done via the -geomfunc argument to the TestRunner.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class TestCaseGeometryFunctions 
+public class TestCaseGeometryFunctions
 {
-	public static Geometry bufferMitredJoin(Geometry g, double distance)	
+	public static Geometry bufferMitredJoin(Geometry g, double distance)
 	{
     BufferParameters bufParams = new BufferParameters();
     bufParams.setJoinStyle(BufferParameters.JOIN_MITRE);
-    
+
     return BufferOp.bufferOp(g, distance, bufParams);
 	}
 
-  public static Geometry densify(Geometry g, double distance) 
+  public static Geometry densify(Geometry g, double distance)
   {
     return Densifier.densify(g, distance);
   }
 
-  public static double minClearance(Geometry g) 
+  public static double minClearance(Geometry g)
   {
     return MinimumClearance.getDistance(g);
   }
 
-  public static Geometry minClearanceLine(Geometry g) 
+  public static Geometry minClearanceLine(Geometry g)
   {
     return MinimumClearance.getLine(g);
   }

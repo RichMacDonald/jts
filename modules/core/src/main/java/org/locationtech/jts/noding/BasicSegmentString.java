@@ -27,7 +27,7 @@ import org.locationtech.jts.io.WKTWriter;
  * @see NodedSegmentString
  */
 public class BasicSegmentString
-	implements SegmentString 
+	implements SegmentString
 {
   private Coordinate[] pts;
   private Object data;

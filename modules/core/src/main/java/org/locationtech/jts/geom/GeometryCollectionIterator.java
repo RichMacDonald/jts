@@ -17,10 +17,10 @@ import java.util.NoSuchElementException;
 /**
  *  Iterates over all {@link Geometry}s in a {@link Geometry},
  *  (which may be either a collection or an atomic geometry).
- *  The iteration sequence follows a pre-order, depth-first traversal of the 
+ *  The iteration sequence follows a pre-order, depth-first traversal of the
  *  structure of the <code>GeometryCollection</code>
  *  (which may be nested). The original <code>Geometry</code> object is
- *  returned as well (as the first object), as are all sub-collections and atomic elements. 
+ *  returned as well (as the first object), as are all sub-collections and atomic elements.
  *  It is  simple to ignore the intermediate <code>GeometryCollection</code> objects if they are not
  *  needed.
  *
@@ -33,7 +33,7 @@ public class GeometryCollectionIterator implements Iterator {
    */
   private Geometry parent;
   /**
-   *  Indicates whether or not the first element 
+   *  Indicates whether or not the first element
    *  (the root <code>GeometryCollection</code>) has been returned.
    */
   private boolean atStart;
@@ -68,7 +68,7 @@ public class GeometryCollectionIterator implements Iterator {
 
   /**
    * Tests whether any geometry elements remain to be returned.
-   * 
+   *
    * @return true if more geometry elements remain
    */
   @Override
@@ -90,7 +90,7 @@ public boolean hasNext() {
 
   /**
    * Gets the next geometry in the iteration sequence.
-   * 
+   *
    * @return the next geometry in the iteration
    */
   @Override
@@ -126,7 +126,7 @@ public Object next() {
   {
     return ! (geom instanceof GeometryCollection);
   }
-  
+
   /**
    * Removal is not supported.
    *

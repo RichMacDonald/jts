@@ -182,7 +182,7 @@ public class SVGWriter
       Point point = (Point) geometry;
       appendPoint(point.getCoordinate(), writer, point.getPrecisionModel());
     }
-    else if ((geometry instanceof LinearRing) 
+    else if ((geometry instanceof LinearRing)
       || (geometry instanceof LineString)) {
       appendLineString((LineString) geometry, level, false, writer);
     }

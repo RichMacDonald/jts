@@ -42,17 +42,17 @@ public class CoordinateArraySequenceTest
   CoordinateArraySequenceFactory getCSFactory() {
     return CoordinateArraySequenceFactory.instance();
   }
-  
+
   public void testFactoryLimits() {
     // Expected to clip dimension and measure value within factory limits
-    
+
     CoordinateArraySequenceFactory factory = getCSFactory();
     CoordinateSequence sequence = factory.create(10, 4);
     assertEquals("clipped dimension 3", 3, sequence.getDimension());
     assertEquals("default measure   0", 0, sequence.getMeasures());
     assertTrue(sequence.hasZ());
     assertTrue(!sequence.hasM());
-    
+
     sequence = factory.create(10, 4, 0);
     assertEquals("clipped dimension 3", 3, sequence.getDimension());
     assertEquals("provided measure  0", 0, sequence.getMeasures());
@@ -64,7 +64,7 @@ public class CoordinateArraySequenceTest
     assertEquals("clipped measure   1", 1, sequence.getMeasures());
     assertTrue(!sequence.hasZ());
     assertTrue(sequence.hasM());
-    
+
     sequence = factory.create(10, 5, 1);
     assertEquals("clipped dimension 3", 4, sequence.getDimension());
     assertEquals("provided measure  1", 1, sequence.getMeasures());
@@ -84,9 +84,9 @@ public class CoordinateArraySequenceTest
     assertTrue(!sequence.hasZ());
     assertTrue(sequence.hasM());
   }
-  
-  
-  
+
+
+
   public void testDimensionAndMeasure()
   {
     CoordinateSequenceFactory factory = getCSFactory();
@@ -94,7 +94,7 @@ public class CoordinateArraySequenceTest
     CoordinateSequence copy;
     Coordinate coord;
     Coordinate[] array;
-    
+
     initProgression(seq);
     assertEquals("xz", 2, seq.getDimension());
     assertTrue("Z", !seq.hasZ());
@@ -110,7 +110,7 @@ public class CoordinateArraySequenceTest
     assertTrue(isEqual(copy,array));
     copy = factory.create(seq);
     assertTrue(isEqual(copy,array));
-    
+
     seq = factory.create(5, 3);
     initProgression(seq);
     assertEquals("xyz", 3, seq.getDimension());
@@ -128,7 +128,7 @@ public class CoordinateArraySequenceTest
     assertTrue(isEqual(copy,array));
     copy = factory.create(seq);
     assertTrue(isEqual(copy,array));
-    
+
     seq = factory.create(5, 3, 1);
     initProgression(seq);
     assertEquals("xym", 3, seq.getDimension());
@@ -146,7 +146,7 @@ public class CoordinateArraySequenceTest
     assertTrue(isEqual(copy,array));
     copy = factory.create(seq);
     assertTrue(isEqual(copy,array));
-    
+
     seq = factory.create(5, 4, 1);
     initProgression(seq);
     assertEquals("xyzm", 4, seq.getDimension());
@@ -165,30 +165,30 @@ public class CoordinateArraySequenceTest
     assertTrue(isEqual(copy,array));
     copy = factory.create(seq);
     assertTrue(isEqual(copy,array));
-    
+
     // dimensions clipped from XM to XYM
     seq = factory.create(5, 2, 1);
     assertEquals(3,seq.getDimension());
     assertEquals(1,seq.getMeasures());
   }
- 
+
   public void testMixedCoordinates()
   {
     CoordinateSequenceFactory factory = getCSFactory();
     Coordinate coord1 = new Coordinate(1.0,1.0,1.0);
     CoordinateXY coord2 = new CoordinateXY(2.0,2.0);
     CoordinateXYM coord3 = new CoordinateXYM(3.0,3.0,3.0);
-    
+
     Coordinate[] array = {coord1, coord2, coord3, null};
     CoordinateSequence seq = factory.create(array);
     assertEquals( 3, seq.getDimension());
     assertEquals( 1, seq.getMeasures());
     assertTrue( coord1.equals( seq.getCoordinate(0)));
     assertTrue( coord2.equals( seq.getCoordinate(1)));
-    assertTrue( coord3.equals( seq.getCoordinate(2)));   
-    assertNull( seq.getCoordinate(3));   
+    assertTrue( coord3.equals( seq.getCoordinate(2)));
+    assertNull( seq.getCoordinate(3));
   }
-  
+
   private void initProgression(CoordinateSequence seq) {
     for (int index = 0; index < seq.size(); index++) {
        for( int ordinateIndex = 0; ordinateIndex < seq.getDimension(); ordinateIndex++) {

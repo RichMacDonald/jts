@@ -17,15 +17,15 @@ import junit.textui.TestRunner;
 
 /**
  * Tests basic accessor and mutator operations for {@link DD}s.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class DDTest 
+public class DDTest
   extends TestCase
 {
   private static final double VALUE_DBL = 2.2;
-  
+
   public static void main(String args[]) {
       TestRunner.run(DDTest.class);
     }

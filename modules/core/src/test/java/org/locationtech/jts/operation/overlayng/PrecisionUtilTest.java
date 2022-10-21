@@ -22,67 +22,67 @@ public class PrecisionUtilTest extends GeometryTestCase {
   }
 
   public PrecisionUtilTest(String name) { super(name); }
-  
+
   public void testInts() {
-    checkRobustScale("POINT(1 1)", "POINT(10 10)", 
+    checkRobustScale("POINT(1 1)", "POINT(10 10)",
         1, 1e12, 1 );
   }
 
   public void testBNull() {
-    checkRobustScale("POINT(1 1)", null, 
+    checkRobustScale("POINT(1 1)", null,
         1, 1e13, 1 );
   }
 
   public void testPower10() {
-    checkRobustScale("POINT(100 100)", "POINT(1000 1000)", 
+    checkRobustScale("POINT(100 100)", "POINT(1000 1000)",
         1, 1e11, 1 );
   }
 
   public void testDecimalsDifferent() {
-    checkRobustScale("POINT( 1.123 1.12 )", "POINT( 10.123 10.12345 )", 
+    checkRobustScale("POINT( 1.123 1.12 )", "POINT( 10.123 10.12345 )",
         1e5, 1e12, 1e5 );
   }
 
   public void testDecimalsShort() {
-    checkRobustScale("POINT(1 1.12345)", "POINT(10 10)", 
-        1e5, 1e12, 1e5 );    
+    checkRobustScale("POINT(1 1.12345)", "POINT(10 10)",
+        1e5, 1e12, 1e5 );
   }
-  
+
   public void testDecimalsMany() {
-    checkRobustScale("POINT(1 1.123451234512345)", "POINT(10 10)", 
-        1e12, 1e12, 1e15 );    
+    checkRobustScale("POINT(1 1.123451234512345)", "POINT(10 10)",
+        1e12, 1e12, 1e15 );
   }
-  
+
   public void testDecimalsAllLong() {
-    checkRobustScale("POINT( 1.123451234512345 1.123451234512345 )", "POINT( 10.123451234512345 10.123451234512345 )", 
-        1e12, 1e12, 1e15 );    
+    checkRobustScale("POINT( 1.123451234512345 1.123451234512345 )", "POINT( 10.123451234512345 10.123451234512345 )",
+        1e12, 1e12, 1e15 );
   }
-  
+
   public void testSafeScaleChosen() {
-    checkRobustScale("POINT( 123123.123451234512345 1 )", "POINT( 10 10 )", 
-        1e8, 1e8, 1e11 );    
+    checkRobustScale("POINT( 123123.123451234512345 1 )", "POINT( 10 10 )",
+        1e8, 1e8, 1e11 );
   }
-  
+
   public void testSafeScaleChosenLargeMagnitude() {
-    checkRobustScale("POINT( 123123123.123451234512345 1 )", "POINT( 10 10 )", 
-        1e5, 1e5, 1e8 );    
+    checkRobustScale("POINT( 123123123.123451234512345 1 )", "POINT( 10 10 )",
+        1e5, 1e5, 1e8 );
   }
-  
+
   public void testInherentWithLargeMagnitude() {
-    checkRobustScale("POINT( 123123123.12 1 )", "POINT( 10 10 )", 
-        1e2, 1e5, 1e2 );    
+    checkRobustScale("POINT( 123123123.12 1 )", "POINT( 10 10 )",
+        1e2, 1e5, 1e2 );
   }
-  
+
   public void testMixedMagnitude() {
-    checkRobustScale("POINT( 1.123451234512345 1 )", "POINT( 100000.12345 10 )", 
-        1e8, 1e8, 1e15 );    
+    checkRobustScale("POINT( 1.123451234512345 1 )", "POINT( 100000.12345 10 )",
+        1e8, 1e8, 1e15 );
   }
-  
+
   public void testInherentBelowSafe() {
-    checkRobustScale("POINT( 100000.1234512 1 )", "POINT( 100000.12345 10 )", 
-        1e7, 1e8, 1e7 );    
+    checkRobustScale("POINT( 100000.1234512 1 )", "POINT( 100000.12345 10 )",
+        1e7, 1e8, 1e7 );
   }
-  
+
   private void checkRobustScale(String wktA, String wktB, double scaleExpected,
       double safeScaleExpected, double inherentScaleExpected ) {
     Geometry a = read(wktA);

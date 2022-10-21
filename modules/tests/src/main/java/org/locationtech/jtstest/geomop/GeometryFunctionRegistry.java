@@ -23,41 +23,41 @@ import org.locationtech.jts.geom.Geometry;
 
 /**
  * A registry to manage a collection of {@link GeometryFunction}s.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class GeometryFunctionRegistry 
+public class GeometryFunctionRegistry
 {
   public static GeometryFunctionRegistry create()
   {
     GeometryFunctionRegistry funcRegistry = new GeometryFunctionRegistry();
-    
+
     funcRegistry.add(TestCaseGeometryFunctions.class);
 
-    
+
     return funcRegistry;
   }
 
 	private List functions = new ArrayList();
-	
+
 	public GeometryFunctionRegistry()
 	{
 	}
-	
+
 	public GeometryFunctionRegistry(Class clz)
 	{
 		add(clz);
 	}
-	  	
+
 	public static boolean hasGeometryResult(GeometryFunction func)
 	{
 		return Geometry.class.isAssignableFrom(func.getReturnType());
 	}
-	
+
 	/**
 	 * Adds functions for all the static methods in the given class.
-	 * 
+	 *
 	 * @param geomFuncClass
 	 */
 	public void add(Class geomFuncClass)
@@ -67,10 +67,10 @@ public class GeometryFunctionRegistry
 		Collections.sort(funcs);
 		add(funcs);
 	}
-	
+
 	/**
 	 * Adds functions for all the static methods in the given class.
-	 * 
+	 *
 	 * @param geomFuncClassname the name of the class to load and extract functions from
 	 */
 	public void add(String geomFuncClassname)
@@ -79,7 +79,7 @@ public class GeometryFunctionRegistry
 		Class geomFuncClass = this.getClass().getClassLoader().loadClass(geomFuncClassname);
 		add(geomFuncClass);
 	}
-	
+
 	public void add(Collection funcs)
 	{
 		for (Object func : funcs) {
@@ -87,11 +87,11 @@ public class GeometryFunctionRegistry
 			add(f);
 		}
 	}
-	
+
 	/**
-	 * Create {@link GeometryFunction}s for all the static 
+	 * Create {@link GeometryFunction}s for all the static
 	 * methods in the given class
-	 * 
+	 *
 	 * @param functionClass
 	 * @return a list of the functions created
 	 */
@@ -107,12 +107,12 @@ public class GeometryFunctionRegistry
 		return funcs;
 	}
 
-	
+
 	/**
 	 * Adds a function if it does not currently
    * exist in the registry, or replaces the existing one
 	 * with the same signature.
-	 * 
+	 *
 	 * @param func a function
 	 */
 	public void add(GeometryFunction func)
@@ -125,7 +125,7 @@ public class GeometryFunctionRegistry
 	    functions.add(func);
 	  }
 	}
-	
+
 	public int findIndex(GeometryFunction func) {
     return findIndex(func.getName(), func.getParameterTypes().length);
   }
@@ -140,16 +140,16 @@ public class GeometryFunctionRegistry
     }
     return -1;
   }
-  
+
   private static boolean isResolved(GeometryFunction func, String name, int argCount) {
     String funcName = func.getName();
-    return funcName.equalsIgnoreCase(name) 
+    return funcName.equalsIgnoreCase(name)
         && func.getParameterTypes().length == argCount;
   }
 
   /**
    * Finds the first function which matches the given name and argument count.
-   * 
+   *
    * @param name
    * @return a matching function, or null
    */
@@ -161,10 +161,10 @@ public class GeometryFunctionRegistry
     }
     return null;
   }
-  
+
   /**
    * Finds the first function which matches the given name.
-   * 
+   *
    * @param name
    * @return a matching function, or null
    */

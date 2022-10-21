@@ -37,37 +37,37 @@ import test.jts.perf.PerformanceTestRunner;
  * <li>DD is the slowest implementation
  * <li>the performance of DP-Filter is similar to DP or DD, depending on which method is chosen by the filter
  * <ul>
- * 
+ *
  * This test is evaluated together with the accuracy results from {@link IntersectionStressTest}.
- * The conclusion is that the best combination of accuracy and performance 
+ * The conclusion is that the best combination of accuracy and performance
  * is provided by DP-Cond.
- * 
+ *
  * @author Martin Davis
  */
 public class IntersectionPerfTest extends PerformanceTestCase {
   private static final int N_ITER = 1000000;
-  
+
   public static void main(String args[]) {
     PerformanceTestRunner.run(IntersectionPerfTest.class);
   }
-  
+
   public IntersectionPerfTest(String name)
   {
     super(name);
     setRunSize(new int[] { 1 });
     setRunIterations(N_ITER);
   }
-  
+
   Coordinate a0 = new Coordinate(0, 0);
   Coordinate a1 = new Coordinate(10, 0);
   Coordinate b0 = new Coordinate(20, 10);
   Coordinate b1 = new Coordinate(20, 20);
-  
+
   Coordinate p0;
   Coordinate p1;
   Coordinate q0;
   Coordinate q1;
-  
+
   @Override
 public void startRun(int npts)
   {
@@ -76,51 +76,51 @@ public void startRun(int npts)
     q0 = new Coordinate(35613477.775057241, 4257160.5396535359);
     q1 = new Coordinate(35613479.856073894, 4257165.9236917039);
   }
-  
+
   public void runDP()
   {
     Coordinate intPt = IntersectionAlgorithms.intersectionBasic(p0, p1, q0, q1);
   }
-  
-  public void runDD() 
+
+  public void runDD()
   {
     Coordinate intPt = CGAlgorithmsDD.intersection(p0, p1, q0, q1);
   }
-  
-  public void runDDWithFilter() 
+
+  public void runDDWithFilter()
   {
     Coordinate intPt = IntersectionAlgorithms.intersectionDDWithFilter(p0, p1, q0, q1);
   }
-  
-  public void runCB()  
+
+  public void runCB()
   {
     Coordinate intPt = IntersectionAlgorithms.intersectionCB(p0, p1, q0, q1);
   }
-  
-  public void runCond()  
+
+  public void runCond()
   {
     Coordinate intPt = Intersection.intersection(p0, p1, q0, q1);
   }
-  
-  public void runDP_easy() 
+
+  public void runDP_easy()
   {
     Coordinate intPt = IntersectionAlgorithms.intersectionBasic(a0, a1, b0, b1);
   }
-  
-  public void runCond_easy() 
+
+  public void runCond_easy()
   {
     Coordinate intPt = Intersection.intersection(a0, a1, b0, b1);
   }
-  
-  public void runDD_easy() 
+
+  public void runDD_easy()
   {
     Coordinate intPt = CGAlgorithmsDD.intersection(a0, a1, b0, b1);
   }
-  
-  public void runDDWithFilter_easy()  
+
+  public void runDDWithFilter_easy()
   {
     Coordinate intPt = IntersectionAlgorithms.intersectionDDWithFilter(a0, a1, b0, b1);
   }
-  
+
 
 }

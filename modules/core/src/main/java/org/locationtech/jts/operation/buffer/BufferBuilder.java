@@ -87,7 +87,7 @@ class BufferBuilder
   /**
    * Creates a new BufferBuilder,
    * using the given parameters.
-   * 
+   *
    * @param bufParams the buffer parameters to use
    */
   public BufferBuilder(BufferParameters bufParams)
@@ -118,11 +118,11 @@ class BufferBuilder
   public void setNoder(Noder noder) { workingNoder = noder; }
 
   /**
-   * Sets whether the offset curve is generated 
+   * Sets whether the offset curve is generated
    * using the inverted orientation of input rings.
    * This allows generating a buffer(0) polygon from the smaller lobes
    * of self-crossing rings.
-   * 
+   *
    * @param isInvertOrientation true if input ring orientation should be inverted
    */
   void setInvertOrientation(boolean isInvertOrientation) {
@@ -140,7 +140,7 @@ class BufferBuilder
 
     BufferCurveSetBuilder curveSetBuilder = new BufferCurveSetBuilder(g, distance, precisionModel, bufParams);
     curveSetBuilder.setInvertOrientation(isInvertOrientation);
-    
+
     List bufferSegStrList = curveSetBuilder.getCurves();
 
     // short-circuit test
@@ -159,14 +159,14 @@ class BufferBuilder
 //System.out.println(wktWriter.writeFormatted(convertSegStrings(bufferSegStrList.iterator())));
 
     /**
-     * Currently only zero-distance buffers are validated, 
+     * Currently only zero-distance buffers are validated,
      * to avoid reducing performance for other buffers.
      * This fixes some noding failure cases found via GeometryFixer
      * (see JTS-852).
      */
     boolean isNodingValidated = distance == 0.0;
     computeNodedEdges(bufferSegStrList, precisionModel, isNodingValidated);
-    
+
     graph = new PlanarGraph(new OverlayNodeFactory());
     graph.addEdges(edgeList.getEdges());
 
@@ -206,20 +206,20 @@ class BufferBuilder
     Noder noder = getNoder(precisionModel);
     noder.computeNodes(bufferSegStrList);
     Collection nodedSegStrings = noder.getNodedSubstrings();
-    
+
     if (isNodingValidated) {
       FastNodingValidator nv = new FastNodingValidator(nodedSegStrings);
       nv.checkValid();
     }
-    
+
 // DEBUGGING ONLY
 //BufferDebug.saveEdges(nodedEdges, "run" + BufferDebug.runCount + "_nodedEdges");
 
     for (Object nodedSegString : nodedSegStrings) {
       SegmentString segStr = (SegmentString) nodedSegString;
-      
+
       /**
-       * Discard edges which have zero length, 
+       * Discard edges which have zero length,
        * since they carry no information and cause problems with topology building
        */
       Coordinate[] pts = segStr.getCoordinates();
@@ -325,7 +325,7 @@ class BufferBuilder
       polyBuilder.add(subgraph.getDirectedEdges(), subgraph.getNodes());
     }
   }
-  
+
   private static Geometry convertSegStrings(Iterator it)
   {
   	GeometryFactory fact = new GeometryFactory();
@@ -337,12 +337,12 @@ class BufferBuilder
   	}
   	return fact.buildGeometry(lines);
   }
-  
+
   /**
    * Gets the standard result for an empty buffer.
    * Since buffer always returns a polygonal result,
    * this is chosen to be an empty polygon.
-   * 
+   *
    * @return the empty result geometry
    */
   private Geometry createEmptyResultGeometry()

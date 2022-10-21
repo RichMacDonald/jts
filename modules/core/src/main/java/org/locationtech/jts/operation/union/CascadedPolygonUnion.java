@@ -68,7 +68,7 @@ public class CascadedPolygonUnion
     }
   };
 
-  
+
   /**
    * Computes the union of
    * a collection of {@link Polygonal} {@link Geometry}s.
@@ -317,10 +317,10 @@ public class CascadedPolygonUnion
   	}
 
   	Geometry union = unionActual( g0, g1 );
-  	
+
     if (Debug.isDebugging()) Debug.println(" Result: " + union.getNumPoints());
     //if (TestBuilderProxy.isActive()) TestBuilderProxy.showIndicator(union);
-    
+
     return union;
   }
 

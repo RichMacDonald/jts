@@ -24,7 +24,7 @@ import java.util.EventObject;
 public class SpatialFunctionPanelEvent extends EventObject {
 
   private boolean createNew = false;
-  
+
     public SpatialFunctionPanelEvent(Object source) {
         super(source);
     }
@@ -34,8 +34,8 @@ public class SpatialFunctionPanelEvent extends EventObject {
       super(source);
       this. createNew = createNew;
     }
-    
-    public boolean isCreateNew() 
+
+    public boolean isCreateNew()
     {
       return createNew;
     }

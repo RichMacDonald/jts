@@ -23,9 +23,9 @@ import org.xml.sax.SAXException;
 
 
 /**
- * Round trip testing for GML reading and writing. 
+ * Round trip testing for GML reading and writing.
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class StaticMultiLineStringTest extends WritingTestCase {
 
@@ -38,9 +38,9 @@ public class StaticMultiLineStringTest extends WritingTestCase {
 
 	/**
 	 * Round Trip test for a single line string
-	 * @throws ParserConfigurationException 
-	 * @throws IOException 
-	 * @throws SAXException 
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
 	 */
 	public void testSingleMultiLineStringRoundTrip() throws SAXException, IOException, ParserConfigurationException{
 		LineStringGenerator pgc = new LineStringGenerator();
@@ -50,16 +50,16 @@ public class StaticMultiLineStringTest extends WritingTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiLineString pt = (MultiLineString) pg.create();
 		checkRoundTrip(pt);
 	}
 
 	/**
 	 * Round Trip test for a single line string with lots of points
-	 * @throws IOException 
-	 * @throws ParserConfigurationException 
-	 * @throws SAXException 
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
 	 */
 	public void testSingleMultiLineStringManyPointRoundTrip() throws IOException, SAXException, ParserConfigurationException{
 
@@ -71,7 +71,7 @@ public class StaticMultiLineStringTest extends WritingTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberGeometries(3);
 		pg.setGeometryFactory(geometryFactory);
-		
+
 		MultiLineString pt = (MultiLineString) pg.create();
 		checkRoundTrip(pt);
 	}

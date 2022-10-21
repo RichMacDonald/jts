@@ -19,7 +19,7 @@ import org.locationtech.jts.geom.LineSegment;
 /**
  * A strategy for finding constraint split points which attempts to maximise the length of the split
  * segments while preventing further encroachment. (This is not always possible for narrow angles).
- * 
+ *
  * @author Martin Davis
  */
 public class NonEncroachingSplitPointFinder implements ConstraintSplitPointFinder {
@@ -29,7 +29,7 @@ public class NonEncroachingSplitPointFinder implements ConstraintSplitPointFinde
     /**
      * A basic strategy for finding split points when nothing extra is known about the geometry of
      * the situation.
-     * 
+     *
      * @param seg the encroached segment
      * @param encroachPt the encroaching point
      * @return the point at which to split the encroached segment
@@ -61,7 +61,7 @@ public class NonEncroachingSplitPointFinder implements ConstraintSplitPointFinde
 
     /**
      * Computes a split point which is the projection of the encroaching point on the segment
-     * 
+     *
      * @param seg
      * @param encroachPt
      * @return a split point on the segment

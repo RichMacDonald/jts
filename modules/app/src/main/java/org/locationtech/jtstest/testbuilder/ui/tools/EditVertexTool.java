@@ -27,14 +27,14 @@ import org.locationtech.jtstest.testbuilder.geom.GeometryLocation;
 /**
  * @version 1.7
  */
-public class EditVertexTool 
-extends IndicatorTool 
+public class EditVertexTool
+extends IndicatorTool
 {
   private static EditVertexTool instance = null;
 
   //Point2D currentIndicatorLoc = null;
   Coordinate currentVertexLoc = null;
-  
+
   private Coordinate selectedVertexLocation = null;
   private Coordinate[] adjVertices = null;
 
@@ -53,7 +53,7 @@ public void mousePressed(MouseEvent e) {
   	currentVertexLoc = null;
     if (SwingUtilities.isRightMouseButton(e))
       return;
-    
+
     // initiate moving a vertex
     Coordinate mousePtModel = toModelCoordinate(e.getPoint());
     double tolModel = getModelSnapTolerance();
@@ -70,7 +70,7 @@ public void mousePressed(MouseEvent e) {
 public void mouseReleased(MouseEvent e) {
     if (SwingUtilities.isRightMouseButton(e))
       return;
-    
+
     clearIndicator();
     // finish the move of the vertex
     if (selectedVertexLocation != null) {
@@ -90,7 +90,7 @@ public void mouseDragged(MouseEvent e) {
 public void mouseClicked(MouseEvent e) {
     if (! SwingUtilities.isRightMouseButton(e))
       return;
-    
+
     Coordinate mousePtModel = toModelCoordinate(e.getPoint());
     double tolModel = getModelSnapTolerance();
 
@@ -112,7 +112,7 @@ public void mouseClicked(MouseEvent e) {
   }
 
   @Override
-protected Shape getShape() 
+protected Shape getShape()
   {
   	GeometryCollectionShape ind = new GeometryCollectionShape();
   	Point2D currentIndicatorLoc = toView(currentVertexLoc);
@@ -127,7 +127,7 @@ protected Shape getShape()
   		}
   	}
   	return ind;
-  	
+
 //    return getIndicatorCircle(currentIndicatorLoc);
   }
 

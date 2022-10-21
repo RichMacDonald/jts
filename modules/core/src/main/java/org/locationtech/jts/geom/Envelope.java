@@ -65,7 +65,7 @@ public class Envelope
    * Tests whether the envelope defined by p1-p2
    * and the envelope defined by q1-q2
    * intersect.
-   * 
+   *
    * @param p1 one extremal point of the envelope P
    * @param p2 another extremal point of the envelope P
    * @param q1 one extremal point of the envelope Q
@@ -201,13 +201,13 @@ public class Envelope
 
   /**
    * Creates a copy of this envelope object.
-   * 
+   *
    * @return a copy of this envelope
    */
   public Envelope copy() {
     return new Envelope(this);
   }
-  
+
   /**
    *  Initialize an <code>Envelope</code> to a region defined by two Coordinates.
    *
@@ -291,7 +291,7 @@ public class Envelope
 
   /**
    * Gets the length of the diameter (diagonal) of the envelope.
-   * 
+   *
    * @return the diameter length
    */
   public double getDiameter() {
@@ -344,7 +344,7 @@ public class Envelope
 
   /**
    * Gets the area of this envelope.
-   * 
+   *
    * @return the area of the envelope
    * @return 0.0 if the envelope is null
    */
@@ -352,10 +352,10 @@ public class Envelope
   {
     return getWidth() * getHeight();
   }
-  
+
   /**
    * Gets the minimum extent of this envelope across both dimensions.
-   * 
+   *
    * @return the minimum extent of this envelope
    */
 	public double minExtent()
@@ -366,10 +366,10 @@ public class Envelope
 		if (w < h) return w;
 		return h;
 	}
-	
+
   /**
    * Gets the maximum extent of this envelope across both dimensions.
-   * 
+   *
    * @return the maximum extent of this envelope
    */
 	public double maxExtent()
@@ -380,10 +380,10 @@ public class Envelope
 		if (w > h) return w;
 		return h;
 	}
-  
+
   /**
    *  Enlarges this <code>Envelope</code> so that it contains
-   *  the given {@link Coordinate}. 
+   *  the given {@link Coordinate}.
    *  Has no effect if the point is already on or within the envelope.
    *
    *@param  p  the Coordinate to expand to include
@@ -427,7 +427,7 @@ public class Envelope
 
   /**
    *  Enlarges this <code>Envelope</code> so that it contains
-   *  the given point. 
+   *  the given point.
    *  Has no effect if the point is already on or within the envelope.
    *
    *@param  x  the value to lower the minimum x to or to raise the maximum x to
@@ -458,7 +458,7 @@ public class Envelope
 
   /**
    *  Enlarges this <code>Envelope</code> so that it contains
-   *  the <code>other</code> Envelope. 
+   *  the <code>other</code> Envelope.
    *  Has no effect if <code>other</code> is wholly on or
    *  within the envelope.
    *
@@ -548,8 +548,8 @@ public class Envelope
     return ((other.minx <= maxx) && (other.maxx >= minx) && (other.miny <= maxy)
 			&& (other.maxy >= miny));
   }
-  
-  
+
+
   /**
    * Tests if the extent defined by two extremal points
    * intersects the extent of this <code>Envelope</code>.
@@ -560,22 +560,22 @@ public class Envelope
    */
   public boolean intersects(Coordinate a, Coordinate b) {
     if (isNull()) { return false; }
-    
+
     double envminx = (a.x < b.x) ? a.x : b.x;
     if (envminx > maxx) return false;
-    
+
     double envmaxx = (a.x > b.x) ? a.x : b.x;
     if (envmaxx < minx) return false;
-    
+
     double envminy = (a.y < b.y) ? a.y : b.y;
     if (envminy > maxy) return false;
-    
+
     double envmaxy = (a.y > b.y) ? a.y : b.y;
     if (envmaxy < miny) return false;
-    
+
     return true;
   }
-  
+
   /**
    * Tests if the region defined by <code>other</code>
    * is disjoint from the region of this <code>Envelope</code>.
@@ -592,7 +592,7 @@ public class Envelope
         other.miny > maxy ||
         other.maxy < miny;
   }
-  
+
   /**
    * @deprecated Use #intersects instead. In the future, #overlaps may be
    * changed to be a true overlap check; that is, whether the intersection is
@@ -666,7 +666,7 @@ public boolean overlaps(double x, double y) {
    *      being checked for containing
    *@return    <code>true</code> if the point lies in the interior or
    *      on the boundary of this <code>Envelope</code>.
-   *      
+   *
    *@see #covers(Coordinate)
    */
   public boolean contains(Coordinate p) {
@@ -685,7 +685,7 @@ public boolean overlaps(double x, double y) {
    *      being checked for containing
    *@return    <code>true</code> if <code>(x, y)</code> lies in the interior or
    *      on the boundary of this <code>Envelope</code>.
-   *      
+   *
    *@see #covers(double, double)
    */
   public boolean contains(double x, double y) {
@@ -694,9 +694,9 @@ public boolean overlaps(double x, double y) {
 
   /**
    * Tests if an envelope is properly contained in this one.
-   * The envelope is properly contained if it is contained 
+   * The envelope is properly contained if it is contained
    * by this one but not equal to it.
-   * 
+   *
    * @param other the envelope to test
    * @return true if the envelope is properly contained
    */
@@ -705,7 +705,7 @@ public boolean overlaps(double x, double y) {
       return false;
     return covers(other);
   }
-  
+
   /**
    * Tests if the given point lies in or on the envelope.
    *
@@ -741,7 +741,7 @@ public boolean overlaps(double x, double y) {
    * lies wholely inside this <code>Envelope</code> (inclusive of the boundary).
    *
    *@param  other the <code>Envelope</code> to check
-   *@return true if this <code>Envelope</code> covers the <code>other</code> 
+   *@return true if this <code>Envelope</code> covers the <code>other</code>
    */
   public boolean covers(Envelope other) {
     if (isNull() || other.isNull()) { return false; }
@@ -760,15 +760,15 @@ public boolean overlaps(double x, double y) {
   public double distance(Envelope env)
   {
     if (intersects(env)) return 0;
-    
+
     double dx = 0.0;
-    if (maxx < env.minx) 
+    if (maxx < env.minx)
       dx = env.minx - maxx;
-    else if (minx > env.maxx) 
+    else if (minx > env.maxx)
       dx = minx - env.maxx;
-    
+
     double dy = 0.0;
-    if (maxy < env.miny) 
+    if (maxy < env.miny)
       dy = env.miny - maxy;
     else if (miny > env.maxy) dy = miny - env.maxy;
 
@@ -804,7 +804,7 @@ public String toString()
    * The ordering comparison is based on the usual numerical
    * comparison between the sequence of ordinates.
    * Null envelopes are less than all non-null envelopes.
-   * 
+   *
    * @param o an Envelope object
    */
   @Override
@@ -825,8 +825,8 @@ public int compareTo(Object o) {
     if (maxy < env.maxy) return -1;
     if (maxy > env.maxy) return 1;
     return 0;
-    
-    
+
+
   }
 }
 

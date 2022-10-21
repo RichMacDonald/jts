@@ -49,22 +49,22 @@ public class GeometryFactoryTest extends TestCase {
     checkCreateGeometryExact("MULTIPOLYGON (((100 200, 200 200, 200 100, 100 100, 100 200)), ((300 200, 400 200, 400 100, 300 100, 300 200)))");
     checkCreateGeometryExact("GEOMETRYCOLLECTION (POLYGON ((100 200, 200 200, 200 100, 100 100, 100 200)), LINESTRING (250 100, 350 200), POINT (350 150))");
   }
-  
+
   public void testCreateEmpty() {
     checkEmpty( geometryFactory.createEmpty(0), Point.class);
     checkEmpty( geometryFactory.createEmpty(1), LineString.class);
     checkEmpty( geometryFactory.createEmpty(2), Polygon.class);
-    
+
     checkEmpty( geometryFactory.createPoint(), Point.class);
     checkEmpty( geometryFactory.createLineString(), LineString.class);
     checkEmpty( geometryFactory.createPolygon(), Polygon.class);
-    
+
     checkEmpty( geometryFactory.createMultiPoint(), MultiPoint.class);
     checkEmpty( geometryFactory.createMultiLineString(), MultiLineString.class);
     checkEmpty( geometryFactory.createMultiPolygon(), MultiPolygon.class);
     checkEmpty( geometryFactory.createGeometryCollection(), GeometryCollection.class);
   }
-  
+
   private void checkEmpty(Geometry geom, Class clz) {
     assertTrue(geom.isEmpty());
     assertTrue( geom.getClass() == clz );
@@ -77,7 +77,7 @@ public class GeometryFactoryTest extends TestCase {
     g.getCoordinateSequence().setOrdinate(0, 0, 99);
     assertTrue(! g.equalsExact(g2));
   }
-  
+
   public void testMultiPointCS()
   {
     GeometryFactory gf = new GeometryFactory(new PackedCoordinateSequenceFactory());
@@ -86,18 +86,18 @@ public class GeometryFactoryTest extends TestCase {
     mpSeq.setOrdinate(0, 1, -2);
     mpSeq.setOrdinate(0, 2, 10);
     mpSeq.setOrdinate(0, 3, 20);
-    
+
     MultiPoint mp = gf.createMultiPoint(mpSeq);
     CoordinateSequence pSeq = ((Point)mp.getGeometryN(0)).getCoordinateSequence();
     assertEquals(4, pSeq.getDimension());
     for (int i = 0; i < 4; i++)
       assertEquals(mpSeq.getOrdinate(0, i), pSeq.getOrdinate(0, i));
   }
-  
+
   /**
      * CoordinateArraySequences default their dimension to 3 unless explicitly told otherwise.
      * This test ensures that GeometryFactory.createGeometry() recreates the input dimension properly.
-   * 
+   *
    * @throws ParseException
    */
   public void testCopyGeometryWithNonDefaultDimension() throws ParseException
@@ -106,23 +106,23 @@ public class GeometryFactoryTest extends TestCase {
     CoordinateSequence mpSeq = gf.getCoordinateSequenceFactory().create(1, 2);
     mpSeq.setOrdinate(0, 0, 50);
     mpSeq.setOrdinate(0, 1, -2);
-    
+
     Point g = gf.createPoint(mpSeq);
     CoordinateSequence pSeq = ((Point) g.getGeometryN(0)).getCoordinateSequence();
     assertEquals(2, pSeq.getDimension());
-    
+
     Point g2 = (Point) geometryFactory.createGeometry(g);
     assertEquals(2, g2.getCoordinateSequence().getDimension());
 
   }
-  
+
   private void checkCreateGeometryExact(String wkt) throws ParseException
   {
     Geometry g = read(wkt);
     Geometry g2 = geometryFactory.createGeometry(g);
     assertTrue(g.equalsExact(g2));
   }
-  
+
   private Geometry read(String wkt) throws ParseException
   {
     return reader.read(wkt);

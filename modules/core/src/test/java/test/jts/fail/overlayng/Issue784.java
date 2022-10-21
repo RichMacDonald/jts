@@ -19,20 +19,20 @@ import junit.textui.TestRunner;
 
 /**
  * Union of high-precision polygons - result misses one input area.
- * Original issue was a unary union of 6 polygons. 
+ * Original issue was a unary union of 6 polygons.
  * Problem is also manifested in a simpler form by two specific polygons.
- *  
+ *
  * See https://github.com/locationtech/jts/issues/784
  *
  */
 public class Issue784 extends TestCase {
-  
+
   public static void main(String args[]) {
     TestRunner.run(Issue784.class);
   }
-  
+
   private GeometryFactory gf = new GeometryFactory();
-  
+
   private Function<double[][], Polygon> createPolygon = points -> gf.createPolygon(
       IntStream.range(0, points[0].length)
               .mapToObj(index -> new CoordinateXY(points[0][index], points[1][index]))
@@ -71,7 +71,7 @@ public class Issue784 extends TestCase {
 
   /**
    * Simplest reproducer.
-   * 
+   *
    * @throws ParseException
    */
   public void testUnion_p3p5() throws ParseException {
@@ -81,7 +81,7 @@ public class Issue784 extends TestCase {
 
   /**
    * Original test case.  Simplified version shows same problem.
-   * 
+   *
    * @throws ParseException
    */
   @Test
@@ -95,12 +95,12 @@ public class Issue784 extends TestCase {
 
       Geometry gc = gf.createGeometryCollection(polygons);
       System.out.println(gc);
-      
+
       Geometry gcUnion = gc.union();
       System.out.println(gcUnion);
 
       Geometry mpUnion = gf.createMultiPolygon(polygons).union();
-      
+
       Geometry indUnion = Arrays.stream(polygons)
               .map(Geometry.class::cast)
               .reduce(Geometry::union)
@@ -110,10 +110,10 @@ public class Issue784 extends TestCase {
       assertEquals(expectedUnion.getArea(), mpUnion.getArea(), 0.0001); // Fail
       assertEquals(expectedUnion.getArea(), indUnion.getArea(), 0.0001); // Pass
   }
-  
+
   /**
    * See simpler case.
-   * 
+   *
    * @throws ParseException
    */
   public void xtestUnion_p2p3p5() throws ParseException {
@@ -125,26 +125,26 @@ public class Issue784 extends TestCase {
     Geometry p25 = union(p2, p5);
     Geometry pall = union(p3, p25);
     double areaSum = p2.getArea() + p3.getArea() + p5.getArea();
-    
+
     checkAreas(title, pall, areaSum);
   }
 
   private void checkUnion(String title, Polygon p1, Polygon p2) {
     Geometry pUnion = union(p1, p2);
     double areaSum = p1.getArea() + p2.getArea();
-    
+
     checkAreas(title, pUnion, areaSum);
   }
-  
+
   private static Geometry union(Geometry a, Geometry b) {
     return OverlayNGRobust.overlay(a, b, OverlayNG.UNION);
   }
-  
+
   private void checkAreas(String title, Geometry union, double areaSum) {
     boolean isOk = isAreasClose(union, areaSum);
     String status = isOk ? "Success" : "FAILED!";
     System.out.println(title + " - Union status: " + status);
-    assertTrue(isOk); 
+    assertTrue(isOk);
   }
 
   private boolean isAreasClose(Geometry geom, double area) {

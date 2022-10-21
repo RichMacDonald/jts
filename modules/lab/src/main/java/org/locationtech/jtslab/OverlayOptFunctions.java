@@ -16,19 +16,19 @@ import org.locationtech.jts.geom.prep.PreparedGeometry;
 import org.locationtech.jts.geom.prep.PreparedGeometryFactory;
 
 /**
- * Functions to test using spatial predicates 
+ * Functions to test using spatial predicates
  * as a filter in front of overlay operations
  * to optimize performance.
- * 
+ *
  * @author Martin Davis
  *
  */
 public class OverlayOptFunctions {
-  
+
   /**
    * Use spatial predicates as a filter
    * in front of intersection.
-   * 
+   *
    * @param a a geometry
    * @param b a geometry
    * @return the intersection of the geometries
@@ -39,12 +39,12 @@ public class OverlayOptFunctions {
     if (b.covers(a)) return a.copy();
     return a.intersection(b);
   }
-  
+
   /**
    * Use prepared geometry spatial predicates as a filter
    * in front of intersection,
    * with the first operand prepared.
-   * 
+   *
    * @param a a geometry to prepare
    * @param b a geometry
    * @return the intersection of the geometries
@@ -55,10 +55,10 @@ public class OverlayOptFunctions {
     if (pg.covers(b)) return b.copy();
     return a.intersection(b);
   }
-  
+
   private static Geometry cacheKey = null;
   private static PreparedGeometry cache = null;
-  
+
 
   private static PreparedGeometry cacheFetch(Geometry g) {
     if (g != cacheKey) {
@@ -67,5 +67,5 @@ public class OverlayOptFunctions {
     }
     return cache;
   }
-  
+
 }

@@ -18,15 +18,15 @@ import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 
 public class SparsePolygonUnionTest extends GeometryTestCase {
-  
+
   public static void main(String args[]) {
     TestRunner.run(SparsePolygonUnionTest.class);
   }
-  
+
   public SparsePolygonUnionTest(String name) {
     super(name);
   }
-  
+
   public void testSimple() {
     check(
         "MULTIPOLYGON (((10 20, 20 20, 20 10, 10 10, 10 20)), ((30 10, 20 10, 20 20, 30 20, 30 10)))",

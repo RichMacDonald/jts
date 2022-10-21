@@ -53,18 +53,18 @@ import oracle.sql.STRUCT;
  * <li>LINE, MULTILINE
  * <li>POLYGON, MULTIPOLYGON
  * </ul>
- * The optimized representations of <code>SDO_POINT</code> 
+ * The optimized representations of <code>SDO_POINT</code>
  * and <code>RECTANGLE</code> are supported in the following way:
  * <ul>
- * <li>If the <code>SDO_POINT</code> attribute is present 
+ * <li>If the <code>SDO_POINT</code> attribute is present
  * and <code>SDO_ELEM_INFO</code> and <code>SDO_ORDINATES</code> are not,
  * a {@link Point} geometry is read.
  * Otherwise, the geometry specified by the latter two attributes is read.
  * <li><code>RECTANGLE</code>s are converted to equivalent {@link Polygon}s
- * </ul> 
+ * </ul>
  * <p>
  * A {@link GeometryFactory} may be provided, otherwise a default one will be used.
- * If a {@link PrecisionModel} other than {@link PrecisionModel#FLOATING} 
+ * If a {@link PrecisionModel} other than {@link PrecisionModel#FLOATING}
  * is supplied it is the client's responsibility
  * to ensure that it matches the precision of the incoming data.
  * If a lower precision for the data is required, a subsequent
@@ -80,7 +80,7 @@ import oracle.sql.STRUCT;
  * The Geometry SRID field is populated from the input Geometry.
  * <p>
  * To use this class a suitable Oracle JDBC JAR must be present in the classpath.
- * 
+ *
  * <h3>LIMITATIONS</h3>
  * <ul>
  * <li>Geometries with Measures (XYM or XYZM) can be read, but the Measure values are not preserved
@@ -92,10 +92,10 @@ import oracle.sql.STRUCT;
  *
  * @author Martin Davis
  */
-public class OraReader 
+public class OraReader
 {
 	//TODO: add a strict mode, that checks for ordinate length & other errors?
-	
+
 	private GeometryFactory geometryFactory;
 
 	private int outputDimension = OraGeom.NULL_DIMENSION;
@@ -124,7 +124,7 @@ public class OraReader
 			throw new NullPointerException("Geometry Factory may not be Null");
 		this.geometryFactory = gf;
 	}
-	
+
 	/**
 	 * Gets the coordinate dimension which will be created.
 	 *
@@ -136,7 +136,7 @@ public class OraReader
 
     /**
      * Sets the coordinate dimension to use for created geometries.
-     * 
+     *
      * @param outputDimension
      *            the coordinate dimension to create
      */
@@ -148,24 +148,24 @@ public class OraReader
 
 	/**
 	 * Reads a {@link Geometry} representing the MDSYS.GEOMETRY
-	 * provided in the STRUCT. The type of geometry created 
+	 * provided in the STRUCT. The type of geometry created
 	 * depends on the Geometry type specified within the STRUCT.
 	 * The SRID of the created geometry is set to be the same as the input SRID.
 	 *
 	 * @param struct The MDSYS.GEOMETRY Object to decode
 	 * @return the Geometry if one could be created, null otherwise
-	 * 
+	 *
 	 * @throws SQLException if a read error occurs while accessing the struct
    * @throws IllegalArgumentException if an unsupported geometry type or encoding error is found
 	 */
-	public Geometry read(STRUCT struct) throws SQLException 
+	public Geometry read(STRUCT struct) throws SQLException
 	{
 		// Return null for null input
 		if (struct == null)
 			return null;
 
 		Datum data[] = struct.getOracleAttributes();
-		
+
 		int gType = OraUtil.toInteger(data[0], 0);
 		int SRID = OraUtil.toInteger(data[1], OraGeom.SRID_NULL);
 		double point[] = OraUtil.toDoubleArray((STRUCT) data[2], Double.NaN);
@@ -173,7 +173,7 @@ public class OraReader
 		double ordinates[] = OraUtil.toDoubleArray((ARRAY) data[4], Double.NaN);
 		OraGeom oraGeom = new OraGeom(gType, SRID, point, elemInfo, ordinates);
 		Geometry geom = read(oraGeom);
-		
+
 		// Set SRID of created Geometry to be the same as input (regardless of geomFactory SRID)
 		if (geom != null)
 			geom.setSRID(SRID);
@@ -197,8 +197,8 @@ public class OraReader
     if (oraGeom.isCompactPoint()) {
       CoordinateSequence ptCoord = extractCoords(oraGeom, oraGeom.point);
       return createPoint(ptCoord);
-    } 
-    
+    }
+
     CoordinateSequence coords = null;
 
     switch (oraGeom.geomType()) {
@@ -225,20 +225,20 @@ public class OraReader
    * Create a {@link GeometryCollection} as specified by elemInfo. Note that in
    * Oracle, unlike the SFS and JTS, collections contain only atomic types or
    * (possibly) MultiPoints. This makes them simpler to parse.
-   * 
+   *
    * @param oraGeom
    *          SDO_GEOMETRY attributes being read
    * @param coords
    *          the coordinates of the entire geometry
    * @return GeometryCollection
-   * 
+   *
    * @throws IllegalArgumentException
    *           when an encoding error or unsupported geometry type is found
    */
-    private GeometryCollection readCollection(OraGeom oraGeom) 
+    private GeometryCollection readCollection(OraGeom oraGeom)
     {
       checkOrdinates(oraGeom, 0);
-      
+
       int nElem = oraGeom.numElements();
       List geomList = new ArrayList();
       boolean cont = true;
@@ -251,7 +251,7 @@ public class OraReader
         case -1:
           cont = false; // We are at the end of the list - get out of here
           continue;
-            
+
         case OraGeom.ETYPE.POINT:
             if (interpretation == OraGeom.INTERP.POINT) {
                 geom = readPoint(oraGeom, i);
@@ -304,7 +304,7 @@ public class OraReader
           Polygon poly = readPolygon(oraGeom, i);
           i += poly.getNumInteriorRing(); // skip interior rings
           geoms.add(poly);
-        } 
+        }
         else { // not a Polygon - stop reading
         	break;
         }
@@ -320,7 +320,7 @@ public class OraReader
      * @param coords the coordinates of the entire geometry
      * @return MultiLineString
      */
-    private MultiLineString readMultiLine(OraGeom oraGeom) 
+    private MultiLineString readMultiLine(OraGeom oraGeom)
     {
       int nElem = oraGeom.numElements();
       List geoms = new ArrayList();
@@ -343,7 +343,7 @@ public class OraReader
      * @param coords the coordinates of the entire geometry
      * @return MultiPoint
      */
-    private MultiPoint readMultiPoint(OraGeom oraGeom, int elemIndex) 
+    private MultiPoint readMultiPoint(OraGeom oraGeom, int elemIndex)
     {
       CoordinateSequence seq;
       /**
@@ -358,7 +358,7 @@ public class OraReader
       else {
         int etype = oraGeom.eType(elemIndex);
         int interpretation = oraGeom.interpretation(elemIndex);
-  
+
         checkOrdinates(oraGeom, elemIndex);
         checkETYPE(etype, OraGeom.ETYPE.POINT, "MultiPoint");
         // MultiPoints have a unique interpretation code
@@ -370,7 +370,7 @@ public class OraReader
       MultiPoint points = geometryFactory.createMultiPoint(seq);
       return points;
     }
-    
+
     /**
      * Read {@link Polygon) from encoded geometry.
      *
@@ -381,7 +381,7 @@ public class OraReader
      *         encoding that can not be captured by JTS
      * @throws IllegalArgumentException When faced with an invalid SDO encoding
      */
-    private Polygon readPolygon(OraGeom oraGeom, int elemIndex) 
+    private Polygon readPolygon(OraGeom oraGeom, int elemIndex)
     {
       int etype = oraGeom.eType(elemIndex);
       int interpretation = oraGeom.interpretation(elemIndex);
@@ -403,8 +403,8 @@ public class OraReader
         etype = oraGeom.eType(i);
         if (etype == OraGeom.ETYPE.POLYGON_INTERIOR) {
           holeRings.add(readLinearRing(oraGeom, i));
-        } 
-        else if (etype == OraGeom.ETYPE.POLYGON) { 
+        }
+        else if (etype == OraGeom.ETYPE.POLYGON) {
           // test orientation of Ring to see if it is
           // an interior (hole) ring
           LinearRing ring = readLinearRing(oraGeom, i);
@@ -415,12 +415,12 @@ public class OraReader
             break;
           // it is an Interior Hole
           holeRings.add(ring);
-        } 
+        }
         else { // not a LinearRing - get out of here
             break;
         }
       }
-      Polygon poly = geometryFactory.createPolygon(exteriorRing, 
+      Polygon poly = geometryFactory.createPolygon(exteriorRing,
           GeometryFactory.toLinearRingArray(holeRings));
       return poly;
     }
@@ -435,7 +435,7 @@ public class OraReader
      *
      * @throws IllegalArgumentException If circle, or curve is requested
      */
-    private LinearRing readLinearRing(OraGeom oraGeom, int elemIndex) 
+    private LinearRing readLinearRing(OraGeom oraGeom, int elemIndex)
     {
       int etype = oraGeom.eType(elemIndex);
       int interpretation = oraGeom.interpretation(elemIndex);
@@ -448,15 +448,15 @@ public class OraReader
     	LinearRing ring;
       if (interpretation == OraGeom.INTERP.POLYGON) {
         ring = geometryFactory.createLinearRing(seq);
-      } 
-      else { 
+      }
+      else {
       	// interpretation == OraSDO.INTERP.RECTANGLE
         // rectangle does not maintain measures
         Coordinate min = seq.getCoordinate(0);
         Coordinate max = seq.getCoordinate(1);
         ring = geometryFactory.createLinearRing(new Coordinate[] {
-                    min, new Coordinate(max.x, min.y), 
-                    max, new Coordinate(min.x, max.y), 
+                    min, new Coordinate(max.x, min.y),
+                    max, new Coordinate(min.x, max.y),
                     min
                 });
       }
@@ -465,12 +465,12 @@ public class OraReader
 
   /**
    * Create LineString as encoded.
-   * 
+   *
    * @param oraGeom SDO_GEOMETRY attributes being read
    * @param elemIndex the element being read
    * @param coords the coordinates of the entire geometry
    * @return LineString
-   * 
+   *
    * @throws IllegalArgumentException If asked to create a curve
    */
   private LineString readLine(OraGeom oraGeom, int elemIndex)
@@ -481,7 +481,7 @@ public class OraReader
   	checkOrdinates(oraGeom, elemIndex);
   	checkETYPE(etype, OraGeom.ETYPE.LINE, "LineString");
   	checkInterpretation(interpretation, OraGeom.INTERP.LINESTRING, "LineString");
-	
+
     LineString line = geometryFactory.createLineString(
         extractCoords(oraGeom, elemIndex));
     return line;
@@ -502,7 +502,7 @@ public class OraReader
   		checkOrdinates(oraGeom, elemIndex);
   		checkETYPE(etype,OraGeom.ETYPE.POINT, "Point");
   		checkInterpretation(interpretation, OraGeom.INTERP.POINT, "Point");
-  
+
       CoordinateSequence seq = extractCoords(oraGeom, elemIndex);
       return createPoint(seq);
     }
@@ -533,12 +533,12 @@ public class OraReader
       int end = oraGeom.startingOffset(elemIndex + 1);
       return extractCoords(oraGeom, oraGeom.ordinates, start, end);
     }
-    
+
     private CoordinateSequence extractCoords(OraGeom oraGeom, double[] ordinates)
     {
       return extractCoords(oraGeom, ordinates, 1, ordinates.length + 1);
     }
-    
+
     private CoordinateSequence extractCoords(OraGeom oraGeom, double[] ordinates, int start, int end)
     {
       CoordinateSequenceFactory csFactory = geometryFactory.getCoordinateSequenceFactory();
@@ -547,7 +547,7 @@ public class OraReader
         return csFactory.create(new Coordinate[0]);
       }
       int ordDim = oraGeom.ordDim();
-      
+
       /**
        * The dimension created matches the input dim, unless it is explicitly set,
        * and unless the CoordinateSequence impl limits the dimension.
@@ -561,7 +561,7 @@ public class OraReader
       CoordinateSequence cs = csFactory.create(nCoord, csDim);
       int actualCSDim = cs.getDimension();
       int readDim = Math.min(actualCSDim, ordDim);
-      
+
       for (int iCoord = 0; iCoord < nCoord; iCoord++) {
         for (int iDim = 0; iDim < readDim; iDim++) {
           int ordIndex = start + iCoord * ordDim + iDim - 1;
@@ -576,23 +576,23 @@ public class OraReader
     {
     	checkETYPE(eType,val1, -1, -1, geomType);
     }
-    
+
     private static void checkETYPE(int eType, int val1, int val2, String geomType)
     {
     	checkETYPE(eType,val1, val2, -1, geomType);
     }
-    
+
     private static void checkETYPE(int eType, int val1, int val2, int val3, String geomType)
     {
     	if ((eType == val1) || (val2 >= 0 && eType == val2)) return;
     	if (val3 >= 0 && eType == val3) return;
     	throw new IllegalArgumentException("SDO_ETYPE "+ eType +" is not supported when reading a " + geomType);
     }
-    
+
     private static void checkInterpretation(int interpretation, int val1, String geomType) {
     	checkInterpretation(interpretation, val1, -1, geomType);
     }
-    
+
     private static void checkInterpretation(int interpretation, int val1, int val2, String geomType) {
 		if ((interpretation == val1) || (val2 >= 0 && interpretation == val2)) return;
 	   	errorInterpretation(interpretation, geomType);
@@ -615,6 +615,6 @@ public class OraReader
 		    throw new IllegalArgumentException("STARTING_OFFSET " + startOffset + " inconsistent with ORDINATES length " + ordLen
 		    		+ " (Element " + elemIndex + " in SDO_ELEM_INFO " + OraGeom.toStringElemInfo(elemInfo) + ")");
     }
-    
+
 
 }

@@ -21,18 +21,18 @@ import org.locationtech.jts.shape.GeometricShapeBuilder;
 
 
 /**
- * Creates random point sets 
- * where the points are constrained to lie in the cells of a grid. 
- * 
+ * Creates random point sets
+ * where the points are constrained to lie in the cells of a grid.
+ *
  * @author mbdavis
  *
  */
-public class RandomPointsInGridBuilder 
+public class RandomPointsInGridBuilder
 extends GeometricShapeBuilder
 {
 	private boolean isConstrainedToCircle = false;
 	private double gutterFraction = 0;
-	
+
   /**
    * Create a builder which will create shapes using the default
    * {@link GeometryFactory}.
@@ -66,22 +66,22 @@ extends GeometricShapeBuilder
   {
   	this.isConstrainedToCircle = isConstrainedToCircle;
   }
-  
+
   /**
    * Sets the fraction of the grid cell side which will be treated as
    * a gutter, in which no points will be created.
    * The provided value is clamped to the range [0.0, 1.0].
-   * 
+   *
    * @param gutterFraction
    */
   public void setGutterFraction(double gutterFraction)
   {
   	this.gutterFraction = gutterFraction;
   }
-  
+
   /**
    * Gets the {@link MultiPoint} containing the generated point
-   * 
+   *
    * @return a MultiPoint
    */
   @Override
@@ -101,7 +101,7 @@ public Geometry getGeometry()
     double cellFrac = 1.0 - gutterFrac;
     double cellDX = cellFrac * gridDX;
     double cellDY = cellFrac * gridDY;
-    	
+
     Coordinate[] pts = new Coordinate[nCells * nCells];
     int index = 0;
     for (int i = 0; i < nCells; i++) {
@@ -113,18 +113,18 @@ public Geometry getGeometry()
     }
     return geomFactory.createMultiPointFromCoords(pts);
   }
-  
+
   private Coordinate randomPointInCell(double orgX, double orgY, double xLen, double yLen)
   {
   	if (isConstrainedToCircle) {
   		return randomPointInCircle(
-  				orgX, 
-  				orgY, 
+  				orgX,
+  				orgY,
   				xLen, yLen);
   	}
   	return randomPointInGridCell(orgX, orgY, xLen, yLen);
   }
-  
+
   private Coordinate randomPointInGridCell(double orgX, double orgY, double xLen, double yLen)
   {
     double x = orgX + xLen * Math.random();
@@ -136,17 +136,17 @@ public Geometry getGeometry()
   {
   	double centreX = orgX + width/2;
   	double centreY = orgY + height/2;
-  		
+
   	double rndAng = 2 * Math.PI * Math.random();
   	double rndRadius = Math.random();
     // use square root of radius, since area is proportional to square of radius
     double rndRadius2 = Math.sqrt(rndRadius);
-  	double rndX = width/2 * rndRadius2 * Math.cos(rndAng); 
-  	double rndY = height/2 * rndRadius2 * Math.sin(rndAng); 
-  	
+  	double rndX = width/2 * rndRadius2 * Math.cos(rndAng);
+  	double rndY = height/2 * rndRadius2 * Math.sin(rndAng);
+
     double x0 = centreX + rndX;
     double y0 = centreY + rndY;
-    return new Coordinate(x0, y0);    
+    return new Coordinate(x0, y0);
   }
 
 }

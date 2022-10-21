@@ -30,7 +30,7 @@ import org.locationtech.jtstest.test.TestCaseList;
 
 /**
  * MD - Probably obsolete
- * 
+ *
  * @author
  * @version 1.7
  */

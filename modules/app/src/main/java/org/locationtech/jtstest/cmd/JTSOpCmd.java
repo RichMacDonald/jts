@@ -35,56 +35,56 @@ import org.locationtech.jtstest.util.io.MultiFormatReader;
  * Allows easier execution of JTS functions on test data for debugging purposes.
  * <p>
  * Examples:
- * 
+ *
  * <pre>
  * --- Compute the area of a WKT geometry, output it
- * jtsop -a some-file-with-geom.wkt -f txt area 
- * 
+ * jtsop -a some-file-with-geom.wkt -f txt area
+ *
  * --- Validate geometries from a WKT file using limit and offset
- * jtsop -a some-file-with-geom.wkt -limit 100 -offset 40 -f txt isValid 
- * 
+ * jtsop -a some-file-with-geom.wkt -limit 100 -offset 40 -f txt isValid
+ *
  * --- Compute the unary union of a WKT geometry, output as WKB
- * jtsop -a some-file-with-geom.wkt -f wkb Overlay.unaryUnion 
- * 
+ * jtsop -a some-file-with-geom.wkt -f wkb Overlay.unaryUnion
+ *
  * --- Compute the union of two geometries in WKT and WKB, output as WKT
  * jtsop -a some-file-with-geom.wkt -b some-other-geom.wkb -f wkt Overlay.Union
- * 
+ *
  * --- Compute the buffer of distance 10 of a WKT geometry, output as GeoJSON
  * jtsop -a some-file-with-geom.wkt -f geojson Buffer.buffer 10
- * 
+ *
  * --- Compute the buffer of a literal geometry, output as WKT
  * jtsop -a "POINT (10 10)" -f wkt Buffer.buffer 10
- * 
+ *
  * --- Compute buffers of multiple sizes
  * jtsop -a "POINT (10 10)" -f wkt Buffer.buffer 1,10,100
- * 
- * --- Run op for each A 
+ *
+ * --- Run op for each A
  * jtsop -a "MULTIPOINT ((10 10), (20 20))" -eacha -f wkt Buffer.buffer
- * 
+ *
  * --- Output a literal geometry as GeoJSON
  * jtsop -a "POINT (10 10)" -f geojson
  * </pre>
- * 
+ *
  * @author Martin Davis
  *
  */
 public class JTSOpCmd {
 
   // TODO: add option -ab to read both geoms from a file
-  // TODO: allow -a stdin  to indicate reading from stdin.  
+  // TODO: allow -a stdin  to indicate reading from stdin.
   public static final String ERR_INVALID_ARG_PARAM = "Invalid argument parameter";
 
   private static final String MACRO_VAL = "val";
 
   public static void main(String[] args)
-  {    
+  {
     JTSOpCmd cmd = new JTSOpCmd();
     int rc = 1;
     try {
       OpParams cmdArgs = cmd.parseArgs(args);
       cmd.execute(cmdArgs);
       rc = 0;
-    } 
+    }
     catch (CommandError | ParseException e) {
       System.err.println(e.getMessage() );
     }
@@ -176,7 +176,7 @@ public class JTSOpCmd {
   "  -v, -verbose    display information about execution",
   "  -help           print a list of available operations"
   };
-  
+
   private void printHelp(boolean showFunctions) {
     System.out.println("JTSOp  --  Version " + JTSVersion.CURRENT_VERSION);
     for (String s : helpDoc) {
@@ -188,7 +188,7 @@ public class JTSOpCmd {
       printFunctions();
    }
   }
-  
+
   private void printFunctions() {
     //TODO: include any loaded functions
     DoubleKeyMap funcMap = funcRegistry.getCategorizedGeometryFunctions();
@@ -221,32 +221,32 @@ public class JTSOpCmd {
   public JTSOpCmd() {
     opRunner = new JTSOpRunner();
   }
-  
+
   public void captureOutput() {
     opRunner.captureOutput();
   }
-  
+
   public void captureResult() {
     opRunner.captureResult();
   }
-  
+
   public List<Geometry> getResultGeometry() {
     return opRunner.getResultGeometry();
   }
-  
+
   public void replaceStdIn(InputStream inStream) {
     opRunner.replaceStdIn(inStream);
   }
-  
+
   public String getOutput() {
     return opRunner.getOutput();
   }
-  
+
   public String[] getOutputLines() {
     String outAll = opRunner.getOutput();
     return outAll.split("\n");
   }
-  
+
   public static boolean isFilename(String arg) {
     if ((arg == null) || MultiFormatReader.isWKB(arg) || isWKT(arg)) return false;
     /*
@@ -264,7 +264,7 @@ public class JTSOpCmd {
     if (hasParen || arg.toUpperCase().endsWith(" " + WKTConstants.EMPTY)) return true;
     return false;
   }
-  
+
   void execute(JTSOpRunner.OpParams cmdArgs) {
     if (isHelp || isHelpWithFunctions) {
       printHelp(isHelpWithFunctions);
@@ -275,7 +275,7 @@ public class JTSOpCmd {
   }
 
   JTSOpRunner.OpParams parseArgs(String[] args) throws ParseException, ClassNotFoundException {
-    
+
     if (args.length == 0) {
       isHelp = true;
       return null;
@@ -283,7 +283,7 @@ public class JTSOpCmd {
     commandLine.parse(args);
 
     OpParams cmdArgs = new JTSOpRunner.OpParams();
-    
+
     String argA = commandLine.getOptionArg(CommandOptions.GEOMA, 0);
     if (argA != null) {
       if (isFilename(argA)) {
@@ -312,31 +312,31 @@ public class JTSOpCmd {
         cmdArgs.geomA = argAB;
       }
     }
-    
+
     cmdArgs.isCollect = commandLine.hasOption(CommandOptions.COLLECT);
     cmdArgs.isExplode = commandLine.hasOption(CommandOptions.EXPLODE);
-    
+
     int paramLimit = commandLine.hasOption(CommandOptions.LIMIT)
         ? commandLine.getOptionArgAsInt(CommandOptions.LIMIT, 0)
-            : -1; 
-    
+            : -1;
+
     int paramOffset = commandLine.hasOption(CommandOptions.OFFSET)
         ? commandLine.getOptionArgAsInt(CommandOptions.OFFSET, 0)
-            : 0; 
-        
+            : 0;
+
     cmdArgs.format = commandLine.getOptionArg(CommandOptions.FORMAT, 0);
-    
+
     cmdArgs.srid = commandLine.hasOption(CommandOptions.SRID)
         ? commandLine.getOptionArgAsInt(CommandOptions.SRID, 0)
             : -1;
-    
+
     cmdArgs.isIndexed = commandLine.hasOption(CommandOptions.INDEX);
-    
+
     cmdArgs.repeat = commandLine.hasOption(CommandOptions.REPEAT)
         ? commandLine.getOptionArgAsInt(CommandOptions.REPEAT, 0)
             : 1;
     cmdArgs.validate = commandLine.hasOption(CommandOptions.VALIDATE);
-    
+
     cmdArgs.isFilter = commandLine.hasOption(CommandOptions.WHERE);
     cmdArgs.filterOp =  cmdArgs.isFilter ?
         parseFilterOp(commandLine.getOptionArg(CommandOptions.WHERE, 0))
@@ -344,15 +344,15 @@ public class JTSOpCmd {
     cmdArgs.filterVal =  cmdArgs.isFilter ?
         commandLine.getOptionArgAsNum(CommandOptions.WHERE, 1)
         : 0;
-     
+
     cmdArgs.eachA = commandLine.hasOption(CommandOptions.EACHA);
     cmdArgs.eachB = commandLine.hasOption(CommandOptions.EACHB);
-    
+
     boolean isVerbose = commandLine.hasOption(CommandOptions.VERBOSE)
         || commandLine.hasOption(CommandOptions.V);
     opRunner.setVerbose(isVerbose);
     opRunner.setTime(commandLine.hasOption(CommandOptions.TIME));
-    
+
     isHelpWithFunctions = commandLine.hasOption(CommandOptions.HELP);
 
     if (commandLine.hasOption(CommandOptions.GEOMFUNC)) {
@@ -367,7 +367,7 @@ public class JTSOpCmd {
         }
       }
     }
-    
+
     String[] freeArgs = commandLine.getOptionArgs(OptionSpec.OPTION_FREE_ARGS);
     if (freeArgs != null) {
       if (freeArgs.length >= 1) {
@@ -377,8 +377,8 @@ public class JTSOpCmd {
         cmdArgs.argList = parseOpArg(freeArgs[1]);
       }
     }
-    
-    /** 
+
+    /**
      * ======  Apply extra parameter logic
      */
     //--- apply limit to A if no B, or else to B
@@ -391,7 +391,7 @@ public class JTSOpCmd {
       cmdArgs.limitA = paramLimit;
       cmdArgs.offsetA = paramOffset;
     }
-    
+
     return cmdArgs;
   }
 
@@ -399,11 +399,11 @@ public class JTSOpCmd {
     if (isArgMultiValues(arg)) {
       return parseValues(arg);
     }
-    
+
     // no other macros, for now
-    if (arg.contains("(")) 
-        throw new CommandError(ERR_INVALID_ARG_PARAM, arg); 
-    
+    if (arg.contains("("))
+        throw new CommandError(ERR_INVALID_ARG_PARAM, arg);
+
     // default is a single arg value
     return new String[] { arg };
   }
@@ -413,19 +413,19 @@ public class JTSOpCmd {
    * - (1,2,3)
    * - val(1,2,3)
    * - 1,2,3
-   * 
+   *
    * @param arg
    * @return
    */
   private boolean isArgMultiValues(String arg) {
-    
+
     if (arg.startsWith("(") || arg.startsWith(MACRO_VAL + "(")) return true;
-    
+
     boolean hasParen = arg.indexOf('(') >= 0;
     boolean hasComma = arg.indexOf(',') >= 0;
-    
+
     if (hasComma && ! hasParen) return true;
-    
+
     return false;
   }
 
@@ -444,16 +444,16 @@ public class JTSOpCmd {
   private String[] parseMacroArgs(String macroTerm) {
     int indexLeft = macroTerm.indexOf('(');
     int indexRight = macroTerm.indexOf(')');
-    
+
     // check for missing L or R parent
-    if (indexLeft < 0 || indexRight <= 0) 
-      throw new CommandError(ERR_INVALID_ARG_PARAM, macroTerm);  
-    
+    if (indexLeft < 0 || indexRight <= 0)
+      throw new CommandError(ERR_INVALID_ARG_PARAM, macroTerm);
+
     // TODO: error if no R paren
     String args = macroTerm.substring(indexLeft + 1, indexRight);
     return args.split(",");
   }
-  
+
   private int parseFilterOp(String opStr) {
     if ("eq".equalsIgnoreCase(opStr)) return FilterGeometryFunction.OP_EQ;
     if ("ne".equalsIgnoreCase(opStr)) return FilterGeometryFunction.OP_NE;

@@ -57,21 +57,21 @@ public class DepthSegmentTest extends TestCase {
     SubgraphDepthLocater.DepthSegment ds1 = depthSeg(146.269, -8.42889, 146.268, -8.42361);
     checkCompare(ds0, ds1, -1);
   }
-  
+
   public void testCompareEqual() throws Exception
   {
     SubgraphDepthLocater.DepthSegment ds0 = depthSeg(1, 1, 2, 2);
     checkCompare(ds0, ds0, 0);
   }
-  
+
   private void checkCompare(
      SubgraphDepthLocater.DepthSegment ds0,
-     SubgraphDepthLocater.DepthSegment ds1, 
-     int expectedComp) 
+     SubgraphDepthLocater.DepthSegment ds1,
+     int expectedComp)
   {
     assertTrue(ds0.isUpward());
     assertTrue(ds1.isUpward());
-    
+
     // check compareTo contract - should never have ds1 < ds2 && ds2 < ds1
     int comp0 = ds0.compareTo(ds1);
     int comp1 = ds1.compareTo(ds0);

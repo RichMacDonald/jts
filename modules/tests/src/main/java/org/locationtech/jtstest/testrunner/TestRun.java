@@ -24,7 +24,7 @@ import org.locationtech.jtstest.geomop.GeometryOperation;
 /**
  * @version 1.7
  */
-public class TestRun implements Runnable 
+public class TestRun implements Runnable
 {
 	// default is to run all cases
 	private int testCaseIndexToRun = -1;
@@ -38,15 +38,15 @@ public class TestRun implements Runnable
   private File workspace;
 
   /**
-   * 
+   *
    * @param description
    * @param runIndex
    * @param precisionModel
    * @param geomOp a GeometryOperation to use for all tests in this run (may be null)
    * @param testFile
    */
-  public TestRun(String description, 
-  		int runIndex, 
+  public TestRun(String description,
+  		int runIndex,
   		PrecisionModel precisionModel,
   		GeometryOperation geomOp,
   		ResultMatcher resultMatcher,
@@ -100,20 +100,20 @@ public class TestRun implements Runnable
   	if (JTSTestRunnerCmd.isGeometryOperationSpecified()
   			|| geomOp == null)
   		return JTSTestRunnerCmd.getGeometryOperation();
-  	
+
   	return geomOp;
   }
-  
+
   public ResultMatcher getResultMatcher()
   {
   	// use the main one if it was user-specified or this run does not have an op specified
   	if (JTSTestRunnerCmd.isResultMatcherSpecified()
   			|| resultMatcher == null)
   		return JTSTestRunnerCmd.getResultMatcher();
-  	
+
   	return resultMatcher;
   }
-  
+
   public List<TestCase> getTestCases() {
     return Collections.unmodifiableList(testCases);
   }
@@ -123,7 +123,7 @@ public class TestRun implements Runnable
   }
 
   public String getTestFileName() {
-    if (testFile == null) 
+    if (testFile == null)
       return "";
     return testFile.getName();
   }

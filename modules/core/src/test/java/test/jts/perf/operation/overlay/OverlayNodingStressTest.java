@@ -25,13 +25,13 @@ import junit.framework.TestCase;
 /**
  * Tests Noding checking during overlay.
  * Intended to show that noding check failures due to robustness
- * problems do not occur very often (i.e. that the heuristic is 
+ * problems do not occur very often (i.e. that the heuristic is
  * not triggering so often that a large performance penalty would be incurred.)
- * 
+ *
  * The class generates test geometries for input to overlay which contain almost parallel lines
  * - this should cause noding failures relatively frequently.
  *
- * Can also be used to check that the cross-snapping heuristic fix for robustness 
+ * Can also be used to check that the cross-snapping heuristic fix for robustness
  * failures works well.  If snapping ever fails to fix a case,
  * an exception is thrown.  It is expected (and has been observed)
  * that cross-snapping works extremely well on this dataset.
@@ -43,10 +43,10 @@ public class OverlayNodingStressTest
 {
 	private static final int ITER_LIMIT = 10000;
 	private static final int BATCH_SIZE = 20;
-	
+
 	private Random rand = new Random((long) (Math.PI * 10e8));
 	private int failureCount = 0;
-	
+
   public OverlayNodingStressTest(String name) {
     super(name);
   }
@@ -60,7 +60,7 @@ public class OverlayNodingStressTest
   	double r = rand.nextDouble();
   	return r;
   }
-  
+
 	public void testNoding()
 	{
 		int iterLimit = ITER_LIMIT;
@@ -75,7 +75,7 @@ public class OverlayNodingStressTest
 		}
 		System.out.println(
 				"Test count = " + iterLimit
-				+ "  Noding failure count = " + failureCount 
+				+ "  Noding failure count = " + failureCount
 			);
 	}
 
@@ -95,7 +95,7 @@ public class OverlayNodingStressTest
 
 	private Geometry baseAccum = null;
 	private int geomCount = 0;
-	
+
 	public Geometry[] generateGeometryAccum(double angle1, double angle2) {
 		RotatedRectangleFactory rrFact = new RotatedRectangleFactory();
 		double basex = angle2 * MAX_DISPLACEMENT - (MAX_DISPLACEMENT / 2);
@@ -108,7 +108,7 @@ public class OverlayNodingStressTest
 			geomCount = 0;
 		if (geomCount == 0)
 			baseAccum = null;
-		
+
 		if (baseAccum == null)
 			baseAccum = rr1;
 		else {
@@ -129,14 +129,14 @@ public class OverlayNodingStressTest
 		System.out.println(base);
 		System.out.println("Rectangle:");
 		System.out.println(testGeom);
-		
+
 		// test to see whether the basic overlay code fails
 		try {
 			Geometry intTrial = base.intersection(testGeom);
 		} catch (Exception ex) {
 			failureCount++;
 		}
-		
+
 		// this will throw an intersection if a robustness error occurs,
 		// stopping the run
 		Geometry intersection = SnapIfNeededOverlayOp.intersection(base, testGeom);
@@ -149,12 +149,12 @@ class RotatedRectangleFactory
 {
 	public RotatedRectangleFactory()
 	{
-		
+
 	}
-	
+
 	private static double PI_OVER_2 = Math.PI / 2;
 	private GeometryFactory fact = new GeometryFactory();
-	
+
 	public Polygon createRectangle(double length, double width, double angle)
 	{
 		return createRectangle(length, width, angle, new Coordinate(0,0));
@@ -168,7 +168,7 @@ class RotatedRectangleFactory
 		double negy = -posy;
 		double widthOffsetx = (width / 2) * Math.cos(angle + PI_OVER_2);
 		double widthOffsety = (width / 2) * Math.sin(angle + PI_OVER_2);
-		
+
 		Coordinate[] pts = {
 				new Coordinate(base.x + posx + widthOffsetx, base.y + posy + widthOffsety),
 				new Coordinate(base.x + posx - widthOffsetx, base.y + posy - widthOffsety),
@@ -181,7 +181,7 @@ class RotatedRectangleFactory
 		Polygon poly = fact.createPolygon(fact.createLinearRing(pts), null);
 		return poly;
 	}
-	
+
 
 }
-  
+

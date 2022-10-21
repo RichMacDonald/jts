@@ -28,19 +28,19 @@ import org.locationtech.jts.util.Stopwatch;
 
 
 /**
- * Tests performance of {@link IndexedFacetDistance} versus standard 
+ * Tests performance of {@link IndexedFacetDistance} versus standard
  * {@link DistanceOp}
- * using a grid of points to a target set of lines 
- * 
+ * using a grid of points to a target set of lines
+ *
  * @author Martin Davis
  *
  */
-public class TestPerfDistanceLinesPoints 
+public class TestPerfDistanceLinesPoints
 {
   static final boolean USE_INDEXED_DIST = true;
-  
+
   static GeometryFactory geomFact = new GeometryFactory();
-  
+
   static final int MAX_ITER = 1;
   static final int NUM_TARGET_ITEMS = 4000;
   static final double EXTENT = 1000;
@@ -66,10 +66,10 @@ public class TestPerfDistanceLinesPoints
   public void test()
   throws Exception
   {
-  
+
     //test(200);
     //if (true) return;
-    
+
 //    test(5000);
 //    test(8001);
 
@@ -83,14 +83,14 @@ public class TestPerfDistanceLinesPoints
     //test(50000);
     //test(100000);
   }
-  
+
   public void test(int num)
   throws Exception
   {
     //Geometry lines = createLine(EXTENT, num);
     Geometry target = createDiagonalCircles(EXTENT, NUM_TARGET_ITEMS);
     Geometry[] pts = createPoints(target.getEnvelopeInternal(), num);
-    
+
     /*
     Geometry target = loadData("C:\\data\\martin\\proj\\jts\\testing\\distance\\bc_coast.wkt");
     Envelope bcEnv_Albers = new Envelope(-45838, 1882064, 255756, 1733287);
@@ -98,31 +98,31 @@ public class TestPerfDistanceLinesPoints
     */
     test(pts, target);
   }
-  
+
   public void xtest(int num)
   throws Exception
   {
     Geometry target = loadData("C:\\proj\\JTS\\test\\g2e\\ffmwdec08.wkt");
     Envelope bcEnv_Albers = new Envelope(-45838, 1882064, 255756, 1733287);
     Geometry[] pts = createPoints(bcEnv_Albers, num);
-    
+
     test(pts, target, true);
   }
-  
+
   public void test(Geometry[] pts, Geometry target)
   {
     if (verbose) {
       System.out.println();
-      System.out.println("Query points = " + pts.length 
+      System.out.println("Query points = " + pts.length
         + "     Target points = " + target.getNumPoints());
     }
     test(pts, target, true);
-    test(pts, target, false);    
+    test(pts, target, false);
   }
-  
+
   public void test(Geometry[] pts, Geometry target, boolean useFastDist)
   {
-    
+
     Stopwatch sw = new Stopwatch();
     double dist = 0.0;
     for (int i = 0; i < MAX_ITER; i++) {
@@ -147,12 +147,12 @@ public class TestPerfDistanceLinesPoints
         double dist = bbd.distance(pt);
 //        double dist = bbd.getDistanceWithin(pts[i].getCoordinate(), 100000);
       }
-      else { 
+      else {
        double dist = geom.distance(pt);
       }
     }
   }
-  
+
   Geometry createDiagonalCircles(double extent, int nSegs)
   {
     Polygon[] circles = new Polygon[nSegs];
@@ -166,23 +166,23 @@ public class TestPerfDistanceLinesPoints
     return geomFact.createMultiPolygon(circles);
 
   }
-  
+
   Geometry createLine(double extent, int nSegs)
   {
-    Coordinate[] pts = 
+    Coordinate[] pts =
       {
         new Coordinate(0,0),
         new Coordinate(0, extent),
         new Coordinate(extent, extent),
         new Coordinate(extent, 0)
-        
+
                                       };
     Geometry outline = geomFact.createLineString(pts);
     double inc = extent / nSegs;
-    return Densifier.densify(outline, inc);    
+    return Densifier.densify(outline, inc);
 
   }
-  
+
   Geometry createDiagonalLine(double extent, int nSegs)
   {
     Coordinate[] pts = new Coordinate[nSegs + 1];
@@ -190,11 +190,11 @@ public class TestPerfDistanceLinesPoints
     double inc = extent / nSegs;
     for (int i = 1; i <= nSegs; i++) {
       double ord = i * inc;
-      pts[i] = new Coordinate(ord, ord); 
+      pts[i] = new Coordinate(ord, ord);
     }
     return geomFact.createLineString(pts);
   }
-  
+
   Geometry[] createPoints(Envelope extent, int nPtsSide)
   {
     Geometry[] pts = new Geometry[nPtsSide * nPtsSide];
@@ -205,15 +205,15 @@ public class TestPerfDistanceLinesPoints
       for (int j = 0; j < nPtsSide; j++) {
         pts[index++] = geomFact.createPoint(
             new Coordinate(
-                extent.getMinX() + i * xinc, 
+                extent.getMinX() + i * xinc,
                 extent.getMinY() + j * yinc));
       }
     }
     return pts;
   }
-  
-  Geometry loadData(String file) 
-  throws Exception 
+
+  Geometry loadData(String file)
+  throws Exception
   {
     List geoms = loadWKT(file);
     return geomFact.buildGeometry(geoms);
@@ -226,5 +226,5 @@ public class TestPerfDistanceLinesPoints
   }
 
 }
-  
-  
+
+

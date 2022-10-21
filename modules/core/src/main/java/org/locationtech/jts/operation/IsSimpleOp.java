@@ -50,34 +50,34 @@ import org.locationtech.jts.geomgraph.index.SegmentIntersector;
  * <ul>
  * <li><b>Polygonal</b> geometries are simple by definition, so
  * <code>isSimple</code> trivially returns true.
- * (Note: this means that <tt>isSimple</tt> cannot be used to test 
- * for (invalid) self-intersections in <tt>Polygon</tt>s.  
+ * (Note: this means that <tt>isSimple</tt> cannot be used to test
+ * for (invalid) self-intersections in <tt>Polygon</tt>s.
  * In order to check if a <tt>Polygonal</tt> geometry has self-intersections,
  * use {@link Geometry#isValid()}).
  * <li><b>Linear</b> geometries are simple if they do <i>not</i> self-intersect at interior points
  * (i.e. points other than boundary points).
  * This is equivalent to saying that no two linear components satisfy the SFS {@link Geometry#touches(Geometry)}
- * predicate. 
+ * predicate.
  * <li><b>Zero-dimensional (point)</b> geometries are simple if and only if they have no
  * repeated points.
  * <li><b>Empty</b> geometries are <i>always</i> simple, by definition
  * </ul>
- * For {@link Lineal} geometries the evaluation of simplicity  
- * can be customized by supplying a {@link BoundaryNodeRule} 
+ * For {@link Lineal} geometries the evaluation of simplicity
+ * can be customized by supplying a {@link BoundaryNodeRule}
  * to define how boundary points are determined.
  * The default is the SFS-standard {@link BoundaryNodeRule#MOD2_BOUNDARY_RULE}.
  * Note that under the <tt>Mod-2</tt> rule, closed <tt>LineString</tt>s (rings)
  * will never satisfy the <tt>touches</tt> predicate at their endpoints, since these are
- * interior points, not boundary points. 
+ * interior points, not boundary points.
  * If it is required to test whether a set of <code>LineString</code>s touch
  * only at their endpoints, use <code>IsSimpleOp</code> with {@link BoundaryNodeRule#ENDPOINT_BOUNDARY_RULE}.
  * For example, this can be used to validate that a set of lines form a topologically valid
  * linear network.
- * 
+ *
  * @see BoundaryNodeRule
  *
  * @version 1.7
- * 
+ *
  * @deprecated Replaced by org.locationtech.jts.operation.valid.IsSimpleOp
  */
 @Deprecated
@@ -127,7 +127,7 @@ public IsSimpleOp() {
     nonSimpleLocation = null;
     return computeSimple(inputGeom);
   }
-  
+
   private boolean computeSimple(Geometry geom)
   {
     nonSimpleLocation = null;
@@ -142,7 +142,7 @@ public IsSimpleOp() {
 
   /**
    * Gets a coordinate for the location where the geometry
-   * fails to be simple. 
+   * fails to be simple.
    * (i.e. where it has a non-boundary self-intersection).
    * {@link #isSimple} must be called before this method is called.
    *
@@ -210,7 +210,7 @@ public boolean isSimple(MultiPoint mp)
    * Computes simplicity for polygonal geometries.
    * Polygonal geometries are simple if and only if
    * all of their component rings are simple.
-   * 
+   *
    * @param geom a Polygonal geometry
    * @return true if the geometry is simple
    */
@@ -224,11 +224,11 @@ public boolean isSimple(MultiPoint mp)
     }
     return true;
   }
-  
+
   /**
-   * Semantics for GeometryCollection is 
+   * Semantics for GeometryCollection is
    * simple if all components are simple.
-   * 
+   *
    * @param geom
    * @return true if the geometry is simple
    */
@@ -241,7 +241,7 @@ public boolean isSimple(MultiPoint mp)
     }
     return true;
   }
-  
+
   private boolean isSimpleLinearGeometry(Geometry geom)
   {
     if (geom.isEmpty()) return true;

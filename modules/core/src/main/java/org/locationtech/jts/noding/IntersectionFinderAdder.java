@@ -22,7 +22,7 @@ import org.locationtech.jts.geom.Coordinate;
  * and adds them as nodes
  * using {@link NodedSegmentString#addIntersection(LineIntersector, int, int, int)}.
  * <p>
- * This class is used primarily for Snap-Rounding.  
+ * This class is used primarily for Snap-Rounding.
  * For general-purpose noding, use {@link IntersectionAdder}.
  *
  * @version 1.7
@@ -85,10 +85,10 @@ public void processIntersections(
       }
     }
   }
-  
+
   /**
    * Always process all intersections
-   * 
+   *
    * @return false always
    */
   @Override

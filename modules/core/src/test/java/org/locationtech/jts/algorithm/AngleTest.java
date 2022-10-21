@@ -30,7 +30,7 @@ import java.util.Arrays;
 public class AngleTest extends TestCase {
 
   private static final double TOLERANCE = 1E-5;
-  
+
   public static void main(String args[]) {
     TestRunner.run(AngleTest.class);
   }
@@ -47,57 +47,57 @@ public class AngleTest extends TestCase {
 		assertEquals(Angle.angle(p(-10,-0.1)), -3.131592986903128, TOLERANCE);
 		assertEquals(Angle.angle(p(-10,-10)), -0.75*Math.PI, TOLERANCE);
   }
-  
+
   public void testIsAcute()
   {
   	assertEquals(Angle.isAcute(p(10,0), p(0,0), p(5,10)), true);
   	assertEquals(Angle.isAcute(p(10,0), p(0,0), p(5,-10)), true);
   	// angle of 0
   	assertEquals(Angle.isAcute(p(10,0), p(0,0), p(10,0)), true);
-  	
+
   	assertEquals(Angle.isAcute(p(10,0), p(0,0), p(-5,10)), false);
   	assertEquals(Angle.isAcute(p(10,0), p(0,0), p(-5,-10)), false);
   }
-  
+
   public void testNormalizePositive()
   {
 		assertEquals(Angle.normalizePositive(0.0), 0.0, TOLERANCE);
-		
+
 		assertEquals(Angle.normalizePositive(-0.5*Math.PI), 1.5*Math.PI, TOLERANCE);
 		assertEquals(Angle.normalizePositive(-Math.PI), Math.PI, TOLERANCE);
 		assertEquals(Angle.normalizePositive(-1.5*Math.PI), .5*Math.PI, TOLERANCE);
 		assertEquals(Angle.normalizePositive(-2*Math.PI), 0.0, TOLERANCE);
 		assertEquals(Angle.normalizePositive(-2.5*Math.PI), 1.5*Math.PI, TOLERANCE);
-		assertEquals(Angle.normalizePositive(-3*Math.PI), Math.PI, TOLERANCE);	
+		assertEquals(Angle.normalizePositive(-3*Math.PI), Math.PI, TOLERANCE);
 		assertEquals(Angle.normalizePositive(-4 * Math.PI), 0.0, TOLERANCE);
-		
+
 		assertEquals(Angle.normalizePositive(0.5*Math.PI), 0.5*Math.PI, TOLERANCE);
 		assertEquals(Angle.normalizePositive(Math.PI), Math.PI, TOLERANCE);
 		assertEquals(Angle.normalizePositive(1.5*Math.PI), 1.5*Math.PI, TOLERANCE);
 		assertEquals(Angle.normalizePositive(2*Math.PI), 0.0, TOLERANCE);
 		assertEquals(Angle.normalizePositive(2.5*Math.PI), 0.5*Math.PI, TOLERANCE);
-		assertEquals(Angle.normalizePositive(3*Math.PI), Math.PI, TOLERANCE);	
+		assertEquals(Angle.normalizePositive(3*Math.PI), Math.PI, TOLERANCE);
 		assertEquals(Angle.normalizePositive(4 * Math.PI), 0.0, TOLERANCE);
   }
 
   public void testNormalize()
   {
 		assertEquals(Angle.normalize(0.0), 0.0, TOLERANCE);
-		
+
 		assertEquals(Angle.normalize(-0.5*Math.PI), -0.5*Math.PI, TOLERANCE);
 		assertEquals(Angle.normalize(-Math.PI), Math.PI, TOLERANCE);
 		assertEquals(Angle.normalize(-1.5*Math.PI), .5*Math.PI, TOLERANCE);
 		assertEquals(Angle.normalize(-2*Math.PI), 0.0, TOLERANCE);
 		assertEquals(Angle.normalize(-2.5*Math.PI), -0.5*Math.PI, TOLERANCE);
-		assertEquals(Angle.normalize(-3*Math.PI), Math.PI, TOLERANCE);	
+		assertEquals(Angle.normalize(-3*Math.PI), Math.PI, TOLERANCE);
 		assertEquals(Angle.normalize(-4 * Math.PI), 0.0, TOLERANCE);
-		
+
 		assertEquals(Angle.normalize(0.5*Math.PI), 0.5*Math.PI, TOLERANCE);
 		assertEquals(Angle.normalize(Math.PI), Math.PI, TOLERANCE);
 		assertEquals(Angle.normalize(1.5*Math.PI), -0.5*Math.PI, TOLERANCE);
 		assertEquals(Angle.normalize(2*Math.PI), 0.0, TOLERANCE);
 		assertEquals(Angle.normalize(2.5*Math.PI), 0.5*Math.PI, TOLERANCE);
-		assertEquals(Angle.normalize(3*Math.PI), Math.PI, TOLERANCE);	
+		assertEquals(Angle.normalize(3*Math.PI), Math.PI, TOLERANCE);
 		assertEquals(Angle.normalize(4 * Math.PI), 0.0, TOLERANCE);
   }
 
@@ -147,17 +147,17 @@ public class AngleTest extends TestCase {
 			);
 		}
   }
-  
+
   public void testAngleBisector() {
     assertEquals(45,    Math.toDegrees( Angle.bisector(p(0,1), p(0,0), p(1,0))), 0.01);
     assertEquals(22.5,  Math.toDegrees( Angle.bisector(p(1,1), p(0,0), p(1,0))), 0.01);
     assertEquals(67.5,    Math.toDegrees( Angle.bisector(p(-1,1), p(0,0), p(1,0))), 0.01);
     assertEquals(-45,   Math.toDegrees( Angle.bisector(p(0,-1), p(0,0), p(1,0))), 0.01);
     assertEquals(180,    Math.toDegrees( Angle.bisector(p(-1,-1), p(0,0), p(-1,1))), 0.01);
-    
+
     assertEquals(45, Math.toDegrees(Angle.bisector(p(13,10), p(10,10), p(10,20))), 0.01);
   }
-  
+
   private static Coordinate p(double x, double y) {
     return new Coordinate(x, y);
   }

@@ -67,10 +67,10 @@ class IndexedNestedPolygonTester
     }
     return locator;
   }
-  
+
   /**
    * Gets a point on a nested polygon, if one exists.
-   * 
+   *
    * @return a point on a nested polygon, or null if none are nested
    */
   public Coordinate getNestedPoint() { return nestedPt; }
@@ -86,17 +86,17 @@ class IndexedNestedPolygonTester
     for (int i = 0; i < multiPoly.getNumGeometries(); i++) {
       Polygon poly = (Polygon) multiPoly.getGeometryN(i);
       LinearRing shell = poly.getExteriorRing();
-      
+
       List<Integer> results = index.query(poly.getEnvelopeInternal());
       for (Integer polyIndex : results) {
         Polygon possibleOuterPoly = (Polygon) multiPoly.getGeometryN(polyIndex);
-        
+
         /**
          * If polygon is not fully covered by candidate polygon it cannot be nested
          */
         if ((poly == possibleOuterPoly) || ! possibleOuterPoly.getEnvelopeInternal().covers( poly.getEnvelopeInternal()) )
           continue;
-        
+
         nestedPt = findNestedPoint(shell, possibleOuterPoly, getLocator(polyIndex));
         if (nestedPt != null)
           return true;
@@ -104,18 +104,18 @@ class IndexedNestedPolygonTester
     }
     return false;
   }
-  
+
   /**
    * Finds an improperly nested point, if one exists.
-   * 
+   *
    * @param shell the test polygon shell
    * @param possibleOuterPoly a polygon which may contain it
    * @param locator the locator for the outer polygon
    * @return a nested point, if one exists, or null
    */
-  private Coordinate findNestedPoint(LinearRing shell, 
-      Polygon possibleOuterPoly, IndexedPointInAreaLocator locator) 
-  {    
+  private Coordinate findNestedPoint(LinearRing shell,
+      Polygon possibleOuterPoly, IndexedPointInAreaLocator locator)
+  {
     /**
      * Try checking two points, since checking point location is fast.
      */
@@ -123,16 +123,16 @@ class IndexedNestedPolygonTester
     int loc0 = locator.locate(shellPt0);
     if (loc0 == Location.EXTERIOR) return null;
     if (loc0 == Location.INTERIOR) {
-      return shellPt0;           
+      return shellPt0;
     }
-    
+
     Coordinate shellPt1 = shell.getCoordinateN(1);
     int loc1 = locator.locate(shellPt1);
     if (loc1 == Location.EXTERIOR) return null;
     if (loc1 == Location.INTERIOR) {
-      return shellPt1;           
+      return shellPt1;
     }
-    
+
     /**
      * The shell points both lie on the boundary of
      * the polygon.
@@ -143,9 +143,9 @@ class IndexedNestedPolygonTester
 
   /**
    * Finds a point of a shell segment which lies inside a polygon, if any.
-   * The shell is assumed to touch the polygon only at shell vertices, 
+   * The shell is assumed to touch the polygon only at shell vertices,
    * and does not cross the polygon.
-   * 
+   *
    * @param shell the shell to test
    * @param poly the polygon to test against
    * @return an interior segment point, or null if the shell is nested correctly
@@ -157,7 +157,7 @@ class IndexedNestedPolygonTester
       return null;
 
     /**
-     * Check if the shell is inside a hole (if there are any). 
+     * Check if the shell is inside a hole (if there are any).
      * If so this is valid.
      */
     for (int i = 0; i < poly.getNumInteriorRing(); i++) {
@@ -167,11 +167,11 @@ class IndexedNestedPolygonTester
         return null;
       }
     }
-    
+
     /**
      * The shell is contained in the polygon, but is not contained in a hole.
      * This is invalid.
      */
     return shell.getCoordinateN(0);
-  } 
+  }
 }

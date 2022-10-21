@@ -23,7 +23,7 @@ import org.locationtech.jts.io.OrdinateFormat;
 
 /**
  * Utility methods for working with {@link String}s.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -86,9 +86,9 @@ public class StringUtil
   /**
    * Returns a string representation of the given number,
    * using a format compatible with WKT.
-   * 
+   *
    * @param d a number
-   * @return a string 
+   * @return a string
    *
    * @deprecated use {@link OrdinateFormat}
    */
@@ -101,7 +101,7 @@ public static String toString(double d) {
   {
     return chars(' ', n);
   }
-  
+
   public static String chars(char c, int n)
   {
     char[] ch = new char[n];

@@ -15,12 +15,12 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.Point;
 
 /**
- * 
- * Creates a point based on the bounding box. 
- * 
+ *
+ * Creates a point based on the bounding box.
+ *
  * This implementation returns the centroid.
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class PointGenerator extends GeometryGenerator {
 
@@ -36,7 +36,7 @@ public class PointGenerator extends GeometryGenerator {
 		if(boundingBox == null || boundingBox.isNull()){
 			throw new NullPointerException("Bounding Box is not declared");
 		}
-		
+
 		Point p = geometryFactory.toGeometry(boundingBox).getCentroid();
 		geometryFactory.getPrecisionModel().makePrecise(p.getCoordinate());
 		return p;

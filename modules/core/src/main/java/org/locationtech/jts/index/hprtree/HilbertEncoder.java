@@ -24,11 +24,11 @@ public class HilbertEncoder {
   public HilbertEncoder(int level, Envelope extent) {
     this.level = level;
     int hside = (int) Math.pow(2, level) - 1;
-    
+
     minx = extent.getMinX();
     double extentX = extent.getWidth();
     strideX = extentX / hside;
-    
+
     miny = extent.getMinX();
     double extentY = extent.getHeight();
     strideY = extentY / hside;
@@ -40,7 +40,7 @@ public class HilbertEncoder {
 
     double midy = env.getHeight()/2 + env.getMinY();
     int y = (int) ((midy - miny) / strideY);
-      
+
     return HilbertCode.encode(level, x, y);
   }
 

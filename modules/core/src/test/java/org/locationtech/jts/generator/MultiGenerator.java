@@ -22,17 +22,17 @@ import org.locationtech.jts.geom.Polygon;
 
 
 /**
- * 
+ *
  * Cascades the effort of creating a set of topologically valid geometries.
  *
- * @author David Zwiers, Vivid Solutions. 
+ * @author David Zwiers, Vivid Solutions.
  */
 public class MultiGenerator extends GeometryGenerator {
 
 	private GeometryGenerator generator = null;
 	private int numberGeometries = 2;
 	private int generationAlgorithm = 0;
-	
+
 	/**
 	 * Grid style blocks
 	 */
@@ -45,7 +45,7 @@ public class MultiGenerator extends GeometryGenerator {
 	 * Horizontal strips
 	 */
 	public static final int HORZ = 2;
-	
+
 	/**
 	 * @param generator
 	 */
@@ -55,14 +55,14 @@ public class MultiGenerator extends GeometryGenerator {
 
 	/**
 	 * Creates a geometry collection representing the set of child geometries created.
-	 * 
+	 *
 	 * @see #setNumberGeometries(int)
 	 * @see org.locationtech.jts.generator.GeometryGenerator#create()
-	 * 
+	 *
 	 * @see #BOX
 	 * @see #VERT
 	 * @see #HORZ
-	 * 
+	 *
 	 * @throws NullPointerException when the generator is missing
 	 * @throws IllegalStateException when the number of child geoms is too small
 	 * @throws IllegalStateException when the selected alg. is invalid
@@ -71,16 +71,16 @@ public class MultiGenerator extends GeometryGenerator {
 	public Geometry create() {
 		if(generator == null)
 			throw new NullPointerException("Missing child generator");
-		
+
 		if(numberGeometries < 1)
 			throw new IllegalStateException("Too few child geoms to create");
-		
+
 		ArrayList geoms = new ArrayList(numberGeometries);
 
 		GridGenerator grid = GeometryGenerator.createGridGenerator();
 		grid.setBoundingBox(boundingBox);
 		grid.setGeometryFactory(geometryFactory);
-		
+
 		switch(generationAlgorithm){
 		case BOX:
 
@@ -88,41 +88,40 @@ public class MultiGenerator extends GeometryGenerator {
 			int ncol = numberGeometries/nrow;
 			grid.setNumberRows(nrow);
 			grid.setNumberColumns(ncol);
-			
+
 			break;
 		case VERT:
 
 			grid.setNumberRows(1);
 			grid.setNumberColumns(numberGeometries);
-			
+
 			break;
 		case HORZ:
 
 			grid.setNumberRows(numberGeometries);
 			grid.setNumberColumns(1);
-			
+
 			break;
 		default:
 			throw new IllegalStateException("Invalid Alg. Specified");
 		}
-		
+
 		while(grid.canCreate()){
 			generator.setBoundingBox(grid.createEnv());
 			geoms.add(generator.create());
 		}
-		
+
 		// yes ... there are better ways
 		if(generator instanceof PointGenerator){
 			return geometryFactory.createMultiPoint((Point[]) geoms.toArray(new Point[numberGeometries]));
 		} else if(generator instanceof LineStringGenerator){
 			return geometryFactory.createMultiLineString((LineString[]) geoms.toArray(new LineString[numberGeometries]));
-		}else{
-		if(generator instanceof PolygonGenerator){
+		} else if(generator instanceof PolygonGenerator){
 			return geometryFactory.createMultiPolygon((Polygon[]) geoms.toArray(new Polygon[numberGeometries]));
 		}else{
 			// same as multi
 			return geometryFactory.createGeometryCollection((Geometry[]) geoms.toArray(new Geometry[numberGeometries]));
-		}}
+		}
 	}
 
 	/**

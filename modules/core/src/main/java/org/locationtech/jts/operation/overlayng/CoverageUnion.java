@@ -19,12 +19,12 @@ import org.locationtech.jts.noding.SegmentExtractingNoder;
 
 /**
  * Unions a valid coverage of polygons or lines
- * in an efficient way.   
+ * in an efficient way.
  * <p>
  * A <b>polygonal coverage</b> is a collection of {@link Polygon}s
  * which satisfy the following conditions:
  * <ol>
- * <li><b>Vector-clean</b> - Line segments within the collection 
+ * <li><b>Vector-clean</b> - Line segments within the collection
  * must either be identical or intersect only at endpoints.
  * <li><b>Non-overlapping</b> - No two polygons
  * may overlap. Equivalently, polygons must be interior-disjoint.
@@ -33,36 +33,36 @@ import org.locationtech.jts.noding.SegmentExtractingNoder;
  * A <b>linear coverage</b> is a collection of {@link LineString}s
  * which satisfies the <b>Vector-clean</b> condition.
  * Note that this does not require the LineStrings to be fully noded
- * - i.e. they may contain coincident linework.  
+ * - i.e. they may contain coincident linework.
  * Coincident line segments are dissolved by the union.
  * Currently linear output is not merged (this may be added in a future release.)
  * <p>
  * No checking is done to determine whether the input is a valid coverage.
  * This is because coverage validation involves segment intersection detection,
  * which is much more expensive than the union phase.
- * If the input is not a valid coverage 
- * then in some cases this will be detected during processing 
+ * If the input is not a valid coverage
+ * then in some cases this will be detected during processing
  * and a {@link org.locationtech.jts.geom.TopologyException} is thrown.
  * Otherwise, the computation will produce output, but it will be invalid.
  * <p>
  * Unioning a valid coverage implies that no new vertices are created.
  * This means that a precision model does not need to be specified.
  * The precision of the vertices in the output geometry is not changed.
- * 
+ *
  * @author Martin Davis
- * 
+ *
  * @see BoundaryChainNoder
  * @see SegmentExtractingNoder
  *
  */
-public class CoverageUnion 
+public class CoverageUnion
 {
   /**
    * Unions a valid polygonal coverage or linear network.
-   * 
+   *
    * @param coverage a coverage of polygons or lines
    * @return the union of the coverage
-   * 
+   *
    * @throws TopologyException in some cases if the coverage is invalid
    */
   public static Geometry union(Geometry coverage) {
@@ -70,12 +70,12 @@ public class CoverageUnion
     //-- these are less performant
     //Noder noder = new SegmentExtractingNoder();
     //Noder noder = new BoundarySegmentNoder();
-    
+
     //-- linear networks require a segment-extracting noder
     if (coverage.getDimension() < 2) {
       noder = new SegmentExtractingNoder();
     }
-    
+
     // a precision model is not needed since no noding is done
     return OverlayNG.union(coverage, null, noder );
   }

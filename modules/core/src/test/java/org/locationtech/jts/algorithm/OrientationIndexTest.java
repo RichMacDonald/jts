@@ -40,7 +40,7 @@ public class OrientationIndexTest
   {
     assertTrue(isAllOrientationsEqual(getCoordinates("LINESTRING ( 0 0, 0 1, 1 1)")));
   }
-  
+
   public void testCCW2() throws Exception
   {
     // experimental case - can't make it fail
@@ -51,20 +51,20 @@ public class OrientationIndexTest
     };
     assertTrue(isAllOrientationsEqual(pts2));
   }
-  
-  public void testOrientationIndexRobust() throws Exception 
-  { 
-    Coordinate p0 = new Coordinate(219.3649559090992, 140.84159161824724); 
-    Coordinate p1 = new Coordinate(168.9018919682399, -5.713787599646864); 
-    Coordinate p = new Coordinate(186.80814046338352, 46.28973405831556); 
-    int orient = Orientation.index(p0, p1, p); 
-    int orientInv = Orientation.index(p1, p0, p); 
-    assert(orient != orientInv); 
-  } 
+
+  public void testOrientationIndexRobust() throws Exception
+  {
+    Coordinate p0 = new Coordinate(219.3649559090992, 140.84159161824724);
+    Coordinate p1 = new Coordinate(168.9018919682399, -5.713787599646864);
+    Coordinate p = new Coordinate(186.80814046338352, 46.28973405831556);
+    int orient = Orientation.index(p0, p1, p);
+    int orientInv = Orientation.index(p1, p0, p);
+    assert(orient != orientInv);
+  }
   /**
    * Tests whether the orientations around a triangle of points
    * are all equal (as is expected if the orientation predicate is correct)
-   * 
+   *
    * @param pts an array of three points
    * @return true if all the orientations around the triangle are equal
    */
@@ -76,7 +76,7 @@ public class OrientationIndexTest
     orient[2] = Orientation.index(pts[2], pts[0], pts[1]);
     return orient[0] == orient[1] && orient[0] == orient[2];
   }
-  
+
   public static boolean isAllOrientationsEqual(
       double p0x, double p0y,
       double p1x, double p1y,
@@ -89,13 +89,13 @@ public class OrientationIndexTest
     };
     return isAllOrientationsEqual(pts);
   }
-  
+
   public static Coordinate[] getCoordinates(String wkt)
       throws ParseException
   {
     Geometry geom = reader.read(wkt);
     return geom.getCoordinates();
   }
-  
+
 
 }

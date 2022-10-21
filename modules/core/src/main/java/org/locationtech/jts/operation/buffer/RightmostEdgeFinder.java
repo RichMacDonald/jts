@@ -42,7 +42,7 @@ class RightmostEdgeFinder {
   public RightmostEdgeFinder()
   {
   }
-  
+
   public DirectedEdge getEdge()  {    return orientedDe;  }
   public Coordinate getCoordinate()  {    return minCoord;  }
 

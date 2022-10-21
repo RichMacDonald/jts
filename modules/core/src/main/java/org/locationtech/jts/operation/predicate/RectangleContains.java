@@ -22,13 +22,13 @@ import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
 /**
- * Optimized implementation of the <tt>contains</tt> spatial predicate 
+ * Optimized implementation of the <tt>contains</tt> spatial predicate
  * for cases where the first {@link Geometry} is a rectangle.
  * This class works for all input geometries, including
  * {@link GeometryCollection}s.
  * <p>
  * As a further optimization,
- * this class can be used to test 
+ * this class can be used to test
  * many geometries against a single
  * rectangle in a slightly more efficient way.
  *
@@ -38,7 +38,7 @@ public class RectangleContains {
 
   /**
    * Tests whether a rectangle contains a given geometry.
-   * 
+   *
    * @param rectangle a rectangular Polygon
    * @param b a Geometry of any type
    * @return true if the geometries intersect
@@ -95,7 +95,7 @@ public class RectangleContains {
 
   /**
    * Tests if a point is contained in the boundary of the target rectangle.
-   * 
+   *
    * @param pt the point to test
    * @return true if the point is contained in the boundary
    */
@@ -103,10 +103,10 @@ public class RectangleContains {
   {
     /**
      * contains = false if the point is properly contained in the rectangle.
-     * 
+     *
      * This code assumes that the point lies in the rectangle envelope
-     */ 
-    return pt.x == rectEnv.getMinX() 
+     */
+    return pt.x == rectEnv.getMinX()
     		|| pt.x == rectEnv.getMaxX()
     		|| pt.y == rectEnv.getMinY()
     		|| pt.y == rectEnv.getMaxY();

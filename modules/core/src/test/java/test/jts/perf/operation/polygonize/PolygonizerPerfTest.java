@@ -17,20 +17,20 @@ import test.jts.perf.PerformanceTestRunner;
 
 /**
  * Test performance of {@link Polygonizer}.
- * Force large number of hole-in-shell tests, 
- * as well as testing against large ring 
+ * Force large number of hole-in-shell tests,
+ * as well as testing against large ring
  * for point-in-polygon computation.
- * 
+ *
  * @author mdavis
  *
  */
 public class PolygonizerPerfTest extends PerformanceTestCase {
 
   private static final int BUFFER_SEGS = 10;
-  
+
   GeometryFactory geomFact = new GeometryFactory();
   private Geometry testCircles;
-  
+
   public static void main(String args[]) {
     PerformanceTestRunner.run(PolygonizerPerfTest.class);
   }
@@ -45,20 +45,20 @@ public class PolygonizerPerfTest extends PerformanceTestCase {
 public void startRun(int num)
   {
     System.out.println("Running with size " + num);
-    
+
     double size = 100;
     List<Polygon> polys = createCircleGrid(num, size, BUFFER_SEGS);
-    
+
     Polygon surround = createAnnulus(size/2, size/2, 2*size, size, 1000 * BUFFER_SEGS);
     polys.add(surround);
     testCircles = geomFact.createMultiPolygon(GeometryFactory.toPolygonArray(polys));
     //System.out.println(testCircles);
   }
-  
+
   private List<Polygon> createCircleGrid(int num, double size, int bufferSegs) {
     List<Polygon> polys = new ArrayList<>();
 
-    int nOnSide = (int) Math.sqrt(num) + 1; 
+    int nOnSide = (int) Math.sqrt(num) + 1;
     double radius = size / nOnSide / 4;
     double gap = 4 * radius;
 
@@ -67,7 +67,7 @@ public void startRun(int num)
       int ix = index % nOnSide;
       double x = ix * gap;
       double y = iy * gap;
-      
+
       Polygon poly = createAnnulus(x, y, radius, radius/2, bufferSegs);
       polys.add( poly );
     }

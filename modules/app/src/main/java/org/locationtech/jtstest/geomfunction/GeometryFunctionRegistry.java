@@ -75,16 +75,16 @@ import org.locationtech.jtstest.function.WriterFunctions;
 
 /**
  * A registry to manage a collection of {@link GeometryFunction}s.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class GeometryFunctionRegistry 
+public class GeometryFunctionRegistry
 {
   public static GeometryFunctionRegistry createTestBuilderRegistry()
   {
     GeometryFunctionRegistry funcRegistry = new GeometryFunctionRegistry();
-    
+
     funcRegistry.add(GeometryFunctions.class);
     funcRegistry.add(BoundaryFunctions.class);
     funcRegistry.add(BufferFunctions.class);
@@ -117,13 +117,13 @@ public class GeometryFunctionRegistry
     funcRegistry.add(OrientationFunctions.class);
     funcRegistry.add(LineSegmentFunctions.class);
     funcRegistry.add(OverlayFunctions.class);
-    
+
     funcRegistry.add(OverlayNGSRFunctions.class);
     funcRegistry.add(OverlayNGFunctions.class);
     funcRegistry.add(OverlayNGRobustFunctions.class);
     funcRegistry.add(OverlayNGSnappingFunctions.class);
     funcRegistry.add(OverlayNGStrictFunctions.class);
-    
+
     funcRegistry.add(OverlayNGTestFunctions.class);
 
     funcRegistry.add(OverlayNGOptFunctions.class);
@@ -141,7 +141,7 @@ public class GeometryFunctionRegistry
     funcRegistry.add(UserDataFunctions.class);
     funcRegistry.add(ValidationFunctions.class);
     funcRegistry.add(WriterFunctions.class);
-    
+
     return funcRegistry;
   }
   public static String functionDescriptionHTML(GeometryFunction func)
@@ -153,22 +153,22 @@ public class GeometryFunctionRegistry
     }
     return "<html>" + txt.append("</html>").toString();
   }
-  
+
 	private List<GeometryFunction> functions = new ArrayList<>();
 	private Map<String, GeometryFunction> sortedFunctions = new TreeMap<>();
 	private DoubleKeyMap categorizedFunctions = new DoubleKeyMap();
 	private DoubleKeyMap categorizedGeometryFunctions = new DoubleKeyMap();
   private DoubleKeyMap categorizedScalarFunctions = new DoubleKeyMap();
-	
+
 	public GeometryFunctionRegistry()
 	{
 	}
-	
+
 	public GeometryFunctionRegistry(Class<?> clz)
 	{
 		add(clz);
 	}
-	  
+
 	public List<GeometryFunction> getFunctions()
 	{
 		return functions;
@@ -184,12 +184,12 @@ public class GeometryFunctionRegistry
 		}
 		return funList;
 	}
-	
+
 	public static boolean hasGeometryResult(GeometryFunction func)
 	{
 		return Geometry.class.isAssignableFrom(func.getReturnType());
 	}
-	
+
 	public List<GeometryFunction> getScalarFunctions()
 	{
 		List<GeometryFunction> scalarFun = new ArrayList<>();
@@ -200,10 +200,10 @@ public class GeometryFunctionRegistry
 		}
 		return scalarFun;
 	}
-	
+
 	/**
 	 * Adds functions for all the static methods in the given class.
-	 * 
+	 *
 	 * @param geomFuncClass
 	 */
 	@SuppressWarnings("unchecked")
@@ -214,10 +214,10 @@ public class GeometryFunctionRegistry
 		Collections.sort(funcs);
 		add(funcs);
 	}
-	
+
 	/**
 	 * Adds functions for all the static methods in the given class.
-	 * 
+	 *
 	 * @param geomFuncClassname the name of the class to load and extract functions from
 	 */
 	public void add(String geomFuncClassname)
@@ -226,7 +226,7 @@ public class GeometryFunctionRegistry
 		Class<?> geomFuncClass = this.getClass().getClassLoader().loadClass(geomFuncClassname);
 		add(geomFuncClass);
 	}
-	
+
 
 	public void add(Collection<StaticMethodGeometryFunction> funcs)
 	{
@@ -235,11 +235,11 @@ public class GeometryFunctionRegistry
 			add(f);
 		}
 	}
-	
+
 	/**
-	 * Create {@link GeometryFunction}s for all the static 
+	 * Create {@link GeometryFunction}s for all the static
 	 * methods in the given class
-	 * 
+	 *
 	 * @param functionClass
 	 * @return a list of the functions created
 	 */
@@ -248,7 +248,7 @@ public class GeometryFunctionRegistry
 		Method[] method = functionClass.getMethods();
 		for (Method element : method) {
 			int mod = element.getModifiers();
-			if (Modifier.isStatic(mod) 
+			if (Modifier.isStatic(mod)
 			    && Modifier.isPublic(mod)
 			    && isGeometryFunction(element)) {
 				funcs.add(StaticMethodGeometryFunction.createFunction(element));
@@ -261,12 +261,12 @@ public class GeometryFunctionRegistry
   {
     return Geometry.class.isAssignableFrom((method.getParameterTypes())[0]);
   }
-	
+
 	/**
 	 * Adds a function if it does not currently
    * exist in the registry, or replaces the existing one
 	 * with the same signature.
-	 * 
+	 *
 	 * @param func a function
 	 */
 	public void add(GeometryFunction func)
@@ -278,30 +278,30 @@ public class GeometryFunctionRegistry
 			categorizedGeometryFunctions.put(func.getCategory(), func.getName(), func);
 		}
 		else {
-      categorizedScalarFunctions.put(func.getCategory(), func.getName(), func);		  
+      categorizedScalarFunctions.put(func.getCategory(), func.getName(), func);
 		}
 	}
-	
+
   public DoubleKeyMap getCategorizedGeometryFunctions()
   {
     return categorizedGeometryFunctions;
   }
-  
+
   public DoubleKeyMap getCategorizedScalarFunctions()
   {
     return categorizedScalarFunctions;
   }
-  
+
 	public Collection<?> getCategories()
 	{
 		return categorizedFunctions.keySet();
 	}
-	
+
 	public Collection<?> getFunctions(String category)
 	{
 		return categorizedFunctions.values(category);
 	}
-	
+
 	/*
 		int index = functions.indexOf(func);
 		if (index == -1) {
@@ -309,14 +309,14 @@ public class GeometryFunctionRegistry
 		}
 		else {
 			functions.set(index, func);
-		}	
+		}
 	}
 	*/
 
-	
+
   /**
    * Finds the first function which matches the given signature.
-   * 
+   *
    * @param name
    * @param paramTypes
    * @return a matching function, or null
@@ -325,10 +325,10 @@ public class GeometryFunctionRegistry
   {
     return null;
   }
-  
+
   /**
    * Finds the first function which matches the given name and argument count.
-   * 
+   *
    * @param name
    * @return a matching function, or null
    */
@@ -337,7 +337,7 @@ public class GeometryFunctionRegistry
     for (GeometryFunction function : functions) {
       GeometryFunction func = function;
       String funcName = func.getName();
-      if (funcName.equalsIgnoreCase(name) 
+      if (funcName.equalsIgnoreCase(name)
       		&& func.getParameterTypes().length == argCount)
         return func;
     }
@@ -345,7 +345,7 @@ public class GeometryFunctionRegistry
   }
   /**
    * Finds the first function which matches the given name.
-   * 
+   *
    * @param name
    * @return a matching function, or null
    */
@@ -361,7 +361,7 @@ public class GeometryFunctionRegistry
   }
   /**
    * Finds the first function which matches the given category and name.
-   * 
+   *
    * @param name
    * @return a matching function, or null
    */

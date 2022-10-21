@@ -21,12 +21,12 @@ import org.locationtech.jts.io.WKTReader;
 import junit.framework.TestCase;
 
 
-public class FixedPrecisionSnappingTest extends TestCase 
+public class FixedPrecisionSnappingTest extends TestCase
 {
 	PrecisionModel pm = new PrecisionModel(1.0);
 	GeometryFactory fact = new GeometryFactory(pm);
 	WKTReader rdr = new WKTReader(fact);
-	
+
 	public FixedPrecisionSnappingTest(String name) {
 		super(name);
 	}

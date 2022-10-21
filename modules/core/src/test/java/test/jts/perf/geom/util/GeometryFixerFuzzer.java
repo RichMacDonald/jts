@@ -28,18 +28,18 @@ public class GeometryFixerFuzzer {
   public static void main(String[] args) {
     GeometryFixerFuzzer.run();
   }
-  
+
   private static void run() {
     GeometryFixerFuzzer fuzzer = new GeometryFixerFuzzer();
     fuzzer.run(NUM_ITER);
   }
 
   public GeometryFactory factory = new GeometryFactory();
-  
+
   public GeometryFixerFuzzer() {
-    
+
   }
-  
+
   private void run(int numIter) {
     System.out.println("GeometryFixer fuzzer: iterations = " + numIter);
     for (int i = 0; i < numIter; i++) {
@@ -90,7 +90,7 @@ public class GeometryFixerFuzzer {
     double ord = GEOM_EXTENT_SIZE * Math.random();
     return ord;
   }
-  
+
   private Geometry createRandomCirclePoly(int numPoints, int numHoles) {
     int numRingPoints = numPoints / (numHoles + 1);
     LinearRing shell = ceateRandomCircleRing(numRingPoints);
@@ -100,11 +100,11 @@ public class GeometryFixerFuzzer {
     }
     return factory.createPolygon(shell, holes);
   }
-  
+
   private LinearRing ceateRandomCircleRing(int numPoints) {
     int numQuadSegs = (numPoints / 4) + 1;
     if (numQuadSegs < 3) numQuadSegs = 3;
-    
+
     Coordinate p = new Coordinate(randOrd(), randOrd());
     Point pt = factory.createPoint( p );
     double radius = GEOM_EXTENT_SIZE * Math.random() / 2;

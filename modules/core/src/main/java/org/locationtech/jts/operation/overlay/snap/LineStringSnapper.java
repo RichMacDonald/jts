@@ -18,7 +18,7 @@ import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 
 /**
- * Snaps the vertices and segments of a {@link LineString} 
+ * Snaps the vertices and segments of a {@link LineString}
  * to a set of target snap vertices.
  * A snap distance tolerance is used to control where snapping is performed.
  * <p>
@@ -39,7 +39,7 @@ public class LineStringSnapper
   /**
    * Creates a new snapper using the points in the given {@link LineString}
    * as source snap points.
-   * 
+   *
    * @param srcLine a LineString to snap (may be empty)
    * @param snapTolerance the snap tolerance to use
    */
@@ -51,8 +51,8 @@ public class LineStringSnapper
   /**
    * Creates a new snapper using the given points
    * as source points to be snapped.
-   * 
-   * @param srcPts the points to snap 
+   *
+   * @param srcPts the points to snap
    * @param snapTolerance the snap tolerance to use
    */
   public LineStringSnapper(Coordinate[] srcPts, double snapTolerance)
@@ -72,9 +72,9 @@ public class LineStringSnapper
     return pts[0].equals2D(pts[pts.length - 1]);
   }
   /**
-   * Snaps the vertices and segments of the source LineString 
+   * Snaps the vertices and segments of the source LineString
    * to the given set of snap vertices.
-   * 
+   *
    * @param snapPts the vertices to snap to
    * @return a list of the snapped points
    */
@@ -91,7 +91,7 @@ public class LineStringSnapper
 
   /**
    * Snap source vertices to vertices in the target.
-   * 
+   *
    * @param srcCoords the points to snap
    * @param snapPts the points to snap to
    */
@@ -128,14 +128,14 @@ public class LineStringSnapper
   /**
    * Snap segments of the source to nearby snap vertices.
    * Source segments are "cracked" at a snap vertex.
-   * A single input segment may be snapped several times 
+   * A single input segment may be snapped several times
    * to different snap vertices.
    * <p>
    * For each distinct snap vertex, at most one source segment
-   * is snapped to.  This prevents "cracking" multiple segments 
-   * at the same point, which would likely cause 
+   * is snapped to.  This prevents "cracking" multiple segments
+   * at the same point, which would likely cause
    * topology collapse when being used on polygonal linework.
-   * 
+   *
    * @param srcCoords the coordinates of the source linestring to be snapped
    * @param snapPts the target snap vertices
    */
@@ -143,10 +143,10 @@ public class LineStringSnapper
   {
     // guard against empty input
     if (snapPts.length == 0) return;
-    
+
     int distinctPtCount = snapPts.length;
 
-    // check for duplicate snap pts when they are sourced from a linear ring.  
+    // check for duplicate snap pts when they are sourced from a linear ring.
     // TODO: Need to do this better - need to check *all* snap points for dups (using a Set?)
     if (snapPts[0].equals2D(snapPts[snapPts.length - 1]))
         distinctPtCount = snapPts.length - 1;
@@ -180,7 +180,7 @@ public class LineStringSnapper
    * <p>
    * Also, if the snap vertex occurs as a vertex in the src coordinate list,
    * no snapping is performed.
-   * 
+   *
    * @param snapPt the point to snap to
    * @param srcCoords the source segment coordinates
    * @return the index of the snapped segment
@@ -196,7 +196,7 @@ public class LineStringSnapper
 
       /**
        * Check if the snap pt is equal to one of the segment endpoints.
-       * 
+       *
        * If the snap pt is already in the src list, don't snap at all.
        */
       if (seg.p0.equals2D(snapPt) || seg.p1.equals2D(snapPt)) {
@@ -205,7 +205,7 @@ public class LineStringSnapper
         else
           return -1;
       }
-      
+
       double dist = seg.distance(snapPt);
       if (dist < snapTolerance && dist < minDist) {
         minDist = dist;

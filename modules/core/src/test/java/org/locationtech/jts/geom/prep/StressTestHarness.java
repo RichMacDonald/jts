@@ -23,7 +23,7 @@ import org.locationtech.jts.io.WKTReader;
 import org.locationtech.jts.io.WKTWriter;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
-public abstract class StressTestHarness 
+public abstract class StressTestHarness
 {
   static final int MAX_ITER = 10000;
 
@@ -41,14 +41,14 @@ public abstract class StressTestHarness
   {
   	numTargetPts =nPts;
   }
-  
+
   public void run(int nIter)
   {
   	//System.out.println("Running " + nIter + " tests");
 //  	Geometry poly = createCircle(new Coordinate(0, 0), 100, nPts);
   	Geometry poly = createSineStar(new Coordinate(0, 0), 100, numTargetPts);
   	//System.out.println(poly);
-  	
+
     //System.out.println();
     //System.out.println("Running with " + nPts + " points");
     run(nIter, poly);
@@ -64,7 +64,7 @@ public abstract class StressTestHarness
 		// Geometry g = gRect.getExteriorRing();
 		return circle;
 	}
-  
+
   Geometry createSineStar(Coordinate origin, double size, int nPts) {
 		SineStarFactory gsf = new SineStarFactory();
 		gsf.setCentre(origin);
@@ -75,7 +75,7 @@ public abstract class StressTestHarness
 		Geometry poly = gsf.createSineStar();
 		return poly;
 	}
-  
+
   Geometry createRandomTestGeometry(Envelope env, double size, int nPts)
   {
   	double width = env.getWidth();
@@ -90,7 +90,7 @@ public abstract class StressTestHarness
     }
     return test;
   }
-  
+
   Geometry createTestCircle(Coordinate base, double size, int nPts)
   {
     GeometricShapeFactory gsf = new GeometricShapeFactory();
@@ -101,13 +101,13 @@ public abstract class StressTestHarness
 //    System.out.println(circle);
     return circle;
   }
-  
+
   public void run(int nIter, Geometry target) {
   	int count = 0;
   	while (count < nIter) {
   		count++;
   		Geometry test = createRandomTestGeometry(target.getEnvelopeInternal(), 10, 20);
-      
+
 //      System.out.println("Test # " + count);
 //  		System.out.println(line);
 //  		System.out.println("Test[" + count + "] " + target.getClass() + "/" + test.getClass());
@@ -117,8 +117,8 @@ public abstract class StressTestHarness
   		}
   	}
 	}
-  
+
   public abstract boolean checkResult(Geometry target, Geometry test);
-	
+
 
 }

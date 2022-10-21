@@ -27,11 +27,11 @@ import test.jts.GeometryTestCase;
  * @version 1.17
  */
 public class SnapRoundingNoderTest  extends GeometryTestCase {
-  
+
   private static Noder getSnapRounder(PrecisionModel pm) {
     return new SnapRoundingNoder(pm);
   }
-  
+
   public static void main(String args[]) {
     TestRunner.run(SnapRoundingNoderTest.class);
   }
@@ -43,7 +43,7 @@ public class SnapRoundingNoderTest  extends GeometryTestCase {
     String expected = "MULTILINESTRING ((1 1, 3 1), (3 1, 9 2), (3 3, 3 1), (3 1, 3 0))";
     checkRounding(wkt, 1, expected);
   }
-  
+
   /**
    * A diagonal line is snapped to a vertex half a grid cell away
    */
@@ -52,7 +52,7 @@ public class SnapRoundingNoderTest  extends GeometryTestCase {
     String expected = "MULTILINESTRING ((2 3, 3 3), (2 3, 3 3), (3 2, 3 3), (3 2, 3 3))";
     checkRounding(wkt, 1.0, expected);
   }
-  
+
   /**
    * Rings with parallel narrow spikes are snapped to a simple ring and lines
    */
@@ -61,7 +61,7 @@ public class SnapRoundingNoderTest  extends GeometryTestCase {
     String expected = "MULTILINESTRING ((1 3, 1 1), (1 1, 2 1), (2 1, 3 1), (3 1, 2 1), (2 1, 1 1), (1 1, 1 0), (1 0, 1 1), (1 1, 1 3), (1 3, 3 3, 3 1), (3 1, 2 1), (2 1, 1 1), (1 1, 1 0), (1 0, 1 1), (1 1, 1 3))";
     checkRounding(wkt, 1.0, expected);
   }
-  
+
   /**
    * This test checks the HotPixel test for overlapping horizontal line
    */
@@ -76,7 +76,7 @@ public class SnapRoundingNoderTest  extends GeometryTestCase {
     String expected = "MULTILINESTRING ((0.156555 49.527741, 0.157928 49.527741), (0.156899 49.528084, 0.157928 49.527741), (0.157928 49.527741, 0.157929 49.527741, 0.159302 49.527741), (0.157928 49.527741, 0.158958 49.527397))";
     checkRounding(wkt, 1_000_000.0, expected);
   }
-  
+
   public void testNearbyCorner() {
 
     String wkt = "MULTILINESTRING ((0.2 1.1, 1.6 1.4, 1.9 2.9), (0.9 0.9, 2.3 1.7))";
@@ -124,7 +124,7 @@ public class SnapRoundingNoderTest  extends GeometryTestCase {
   }
 
   /**
-   * Looks like a very short line is stretched between two grid points, 
+   * Looks like a very short line is stretched between two grid points,
    * and for some reason the node at one end is not inserted in a line snapped to it
    */
   public void testShortLineNodeNotAdded() {
@@ -165,13 +165,13 @@ public class SnapRoundingNoderTest  extends GeometryTestCase {
     String expected = null;
     checkRounding(wkt, 100000, expected);
   }
-  
+
   public void testLoopBackCreatesNode() {
     String wkt = "LINESTRING (2 2, 5 2, 8 4, 5 6, 4.8 2.3, 2 5)";
     String expected = "MULTILINESTRING ((2 2, 5 2), (5 2, 8 4, 5 6, 5 2), (5 2, 2 5))";
     checkRounding(wkt, 1, expected);
   }
-  
+
   /**
    * An A vertex lies very close to a B segment.
    * The vertex is snapped across the segment, but the segment is not noded.
@@ -182,9 +182,9 @@ public class SnapRoundingNoderTest  extends GeometryTestCase {
     String expected = null;
     checkRounding(wkt, 100000000, expected);
   }
-  
+
   /**
-   * A vertex lies near interior of horizontal segment.  
+   * A vertex lies near interior of horizontal segment.
    * Both are moved by rounding, and vertex ends up coincident with segment,
    * but node is not created.
    * This is very subtle, since because the segment is horizontal the vertex lies exactly on it
@@ -198,7 +198,7 @@ public class SnapRoundingNoderTest  extends GeometryTestCase {
     String expected = null;
     checkRounding(wkt, 1000000, expected);
   }
-  
+
   /**
    * Tests that MCIndexNoder tolerance is set correctly.
    * See https://trac.osgeo.org/geos/ticket/1127 and https://github.com/libgeos/geos/pull/504
@@ -208,14 +208,14 @@ public class SnapRoundingNoderTest  extends GeometryTestCase {
     String expected = "MULTILINESTRING ((3670776.0631373483 3397212.0584320477, 3670776.0631373483 3396600.058421521), (3670776.0631373483 3396600.058421521, 3671388.063147875 3396600.058421521), (3671388.063147875 3396600.058421521, 3671388.063147875 3397212.0584320477), (3671388.063147875 3397212.0584320477, 3671388.063147875 3396600.058421521), (3671388.063147875 3396600.058421521, 3671388.063147875 3397212.0584320477), (3671388.063147875 3397212.0584320477, 3671388.063147875 3396600.058421521), (3671388.063147875 3396600.058421521, 3670776.0631373483 3396600.058421521), (3670776.0631373483 3396600.058421521, 3670164.063126822 3396600.058421521, 3670164.063126822 3397824.058442574, 3670776.0631373483 3397212.0584320477))";
     checkRounding(wkt, 0.0016339869, expected);
   }
-  
+
   void checkRounding(String wkt, double scale, String expectedWKT)
   {
     Geometry geom = read(wkt);
     PrecisionModel pm = new PrecisionModel(scale);
     Noder noder = getSnapRounder(pm);
-    Geometry result = NodingTestUtil.nodeValidated(geom, null, noder);  
-    
+    Geometry result = NodingTestUtil.nodeValidated(geom, null, noder);
+
     // only check if expected was provided
     if (expectedWKT == null) return;
     Geometry expected = read(expectedWKT);

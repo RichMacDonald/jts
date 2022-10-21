@@ -17,33 +17,33 @@ import org.locationtech.jts.geom.Location;
 import org.locationtech.jts.io.WKTWriter;
 
 /**
- * Represents the linework for edges in the topology 
+ * Represents the linework for edges in the topology
  * derived from (up to) two parent geometries.
- * An edge may be the result of the merging of 
+ * An edge may be the result of the merging of
  * two or more edges which have the same linework
- * (although possibly different orientations).  
- * In this case the topology information is 
- * derived from the merging of the information in the 
+ * (although possibly different orientations).
+ * In this case the topology information is
+ * derived from the merging of the information in the
  * source edges.
  * Merged edges can occur in the following situations
  * <ul>
- * <li>Due to coincident edges of polygonal or linear geometries. 
+ * <li>Due to coincident edges of polygonal or linear geometries.
  * <li>Due to topology collapse caused by snapping or rounding
- * of polygonal geometries. 
+ * of polygonal geometries.
  * </ul>
  * The source edges may have the same parent geometry,
  * or different ones, or a mix of the two.
- *  
+ *
  * @author mdavis
  *
  */
 class Edge {
-  
+
   /**
    * Tests if the given point sequence
    * is a collapsed line.
    * A collapsed edge has fewer than two distinct points.
-   * 
+   *
    * @param pts the point sequence to check
    * @return true if the points form a collapsed line
    */
@@ -56,13 +56,13 @@ class Edge {
     }
     return false;
   }
-  
+
   private Coordinate[] pts;
-  
+
   private int aDim = OverlayLabel.DIM_UNKNOWN;
   private int aDepthDelta = 0;
   private boolean aIsHole = false;
-  
+
   private int bDim = OverlayLabel.DIM_UNKNOWN;
   private int bDepthDelta = 0;
   private boolean bIsHole = false;
@@ -71,7 +71,7 @@ class Edge {
     this.pts = pts;
     copyInfo(info);
   }
-  
+
   public Coordinate[] getCoordinates() {
     return pts;
   }
@@ -79,11 +79,11 @@ class Edge {
   public Coordinate getCoordinate(int index) {
     return pts[index];
   }
-  
+
   public int size() {
     return pts.length;
   }
-  
+
   public boolean direction() {
     Coordinate[] pts = getCoordinates();
     if (pts.length < 2) {
@@ -91,30 +91,30 @@ class Edge {
     }
     Coordinate p0 = pts[0];
     Coordinate p1 = pts[1];
-    
+
     Coordinate pn0 = pts[pts.length - 1];
     Coordinate pn1 = pts[pts.length - 2];
-    
+
     int cmp = 0;
     int cmp0 = p0.compareTo(pn0);
     if (cmp0 != 0) cmp = cmp0;
-    
+
     if (cmp == 0) {
       int cmp1 = p1.compareTo(pn1);
       if (cmp1 != 0) cmp = cmp1;
     }
-    
+
     if (cmp == 0) {
       throw new IllegalStateException("Edge direction cannot be determined because endpoints are equal");
     }
-    
+
     return cmp == -1;
   }
 
   /**
    * Compares two coincident edges to determine
    * whether they have the same or opposite direction.
-   * 
+   *
    * @param edge1 an edge
    * @param edge2 an edge
    * @return true if the edges have the same direction, false if not
@@ -125,24 +125,24 @@ class Edge {
       return false;
     return true;
   }
-  
+
   public OverlayLabel createLabel() {
     OverlayLabel lbl = new OverlayLabel();
     initLabel(lbl, 0, aDim, aDepthDelta, aIsHole);
     initLabel(lbl, 1, bDim, bDepthDelta, bIsHole);
     return lbl;
   }
-  
+
   /**
    * Populates the label for an edge resulting from an input geometry.
-   * 
+   *
    * <ul>
    * <li>If the edge is not part of the input, the label is left as NOT_PART
    * <li>If input is an Area and the edge is on the boundary
    * (which may include some collapses),
    * edge is marked as an AREA edge and side locations are assigned
    * <li>If input is an Area and the edge is collapsed
-   * (depth delta = 0), 
+   * (depth delta = 0),
    * the label is set to COLLAPSE.
    * The location will be determined later
    * by evaluating the final graph topology.
@@ -150,7 +150,7 @@ class Edge {
    * For line edges the line location is not significant
    * (since there is no parent area for which to determine location).
    * </ul>
-   * 
+   *
    * @param lbl
    * @param geomIndex
    * @param dim
@@ -158,15 +158,15 @@ class Edge {
    */
   private static void initLabel(OverlayLabel lbl, int geomIndex, int dim, int depthDelta, boolean isHole) {
     int dimLabel = labelDim(dim, depthDelta);
-    
+
     switch (dimLabel) {
     case OverlayLabel.DIM_NOT_PART:
       lbl.initNotPart(geomIndex);
       break;
-    case OverlayLabel.DIM_BOUNDARY: 
+    case OverlayLabel.DIM_BOUNDARY:
       lbl.initBoundary(geomIndex, locationLeft(depthDelta), locationRight(depthDelta), isHole);
       break;
-    case OverlayLabel.DIM_COLLAPSE: 
+    case OverlayLabel.DIM_COLLAPSE:
       lbl.initCollapse(geomIndex, isHole);
       break;
     case OverlayLabel.DIM_LINE:
@@ -176,23 +176,23 @@ class Edge {
   }
 
   private static int labelDim(int dim, int depthDelta) {
-    if (dim == Dimension.FALSE) 
+    if (dim == Dimension.FALSE)
       return OverlayLabel.DIM_NOT_PART;
 
-    if (dim == Dimension.L) 
+    if (dim == Dimension.L)
       return OverlayLabel.DIM_LINE;
-    
+
     // assert: dim is A
     boolean isCollapse = depthDelta == 0;
     if (isCollapse) return OverlayLabel.DIM_COLLAPSE;
-        
+
     return OverlayLabel.DIM_BOUNDARY;
   }
-  
+
   /**
    * Tests whether the edge is part of a shell in the given geometry.
    * This is only the case if the edge is a boundary.
-   * 
+   *
    * @param geomIndex the index of the geometry
    * @return true if this edge is a boundary and part of a shell
    */
@@ -202,7 +202,7 @@ class Edge {
     }
     return bDim == OverlayLabel.DIM_BOUNDARY && ! bIsHole;
   }
-  
+
   private static int locationRight(int depthDelta) {
     int delSign = delSign(depthDelta);
     switch (delSign) {
@@ -242,11 +242,11 @@ class Edge {
       bDepthDelta = info.getDepthDelta();
     }
   }
-  
+
   /**
    * Merges an edge into this edge,
    * updating the topology info accordingly.
-   * 
+   *
    * @param edge
    */
   public void merge(Edge edge) {
@@ -260,7 +260,7 @@ class Edge {
 
     if (edge.aDim > aDim) aDim = edge.aDim;
     if (edge.bDim > bDim) bDim = edge.bDim;
-    
+
     boolean relDir = relativeDirection(edge);
     int flipFactor = relDir ? 1 : -1;
     aDepthDelta += flipFactor * edge.aDepthDelta;
@@ -283,16 +283,16 @@ class Edge {
 
   @Override
 public String toString() {
-    
+
     String ptsStr = toStringPts(pts);
-    
+
     String aInfo = infoString(0, aDim, aIsHole, aDepthDelta );
     String bInfo = infoString(1, bDim, bIsHole, bDepthDelta );
 
-    return "Edge( " + ptsStr  + " ) " 
+    return "Edge( " + ptsStr  + " ) "
         + aInfo + "/" + bInfo;
   }
-  
+
   public String toLineString() {
     return WKTWriter.toLineString(pts);
   }
@@ -316,12 +316,12 @@ public String toString() {
         + ringRoleSymbol( dim, isHole )
         + Integer.toString(depthDelta);  // force to string
   }
-  
+
   private static String ringRoleSymbol(int dim, boolean isHole) {
     if (hasAreaParent(dim)) return "" + OverlayLabel.ringRoleSymbol(isHole);
     return "";
   }
-  
+
   private static boolean hasAreaParent(int dim) {
     return dim == OverlayLabel.DIM_BOUNDARY || dim == OverlayLabel.DIM_COLLAPSE;
   }

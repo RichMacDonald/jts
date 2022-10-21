@@ -11,23 +11,23 @@ public class CoordinateListTest extends TestCase {
   public CoordinateListTest(String name) { super(name); }
 
   public void testForward() {
-    checkValue(coordList(0,0,1,1,2,2).toCoordinateArray(true), 
+    checkValue(coordList(0,0,1,1,2,2).toCoordinateArray(true),
         0,0,1,1,2,2);
   }
-  
+
   public void testReverse() {
-    checkValue(coordList(0,0,1,1,2,2).toCoordinateArray(false), 
+    checkValue(coordList(0,0,1,1,2,2).toCoordinateArray(false),
         2,2,1,1,0,0);
   }
-  
+
   public void testReverseEmpty() {
     checkValue(coordList().toCoordinateArray(false) );
   }
 
   private void checkValue(Coordinate[] coordArray, double ... ords) {
-    
+
     assertEquals( coordArray.length * 2, ords.length);
-    
+
     for (int i = 0 ; i < coordArray.length; i += 2) {
       Coordinate pt = coordArray[i];
       assertEquals(pt.getX(), ords[2 * i]);

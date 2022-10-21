@@ -40,21 +40,21 @@ public class AreaPrecisionPerfTest
       }
       // close ring
       coordinates[nrVertices] = coordinates[0];
-      
+
       Geometry g1 = new GeometryFactory().createLinearRing(coordinates);
       LinearRing[] holes = {};
       Polygon polygon = new GeometryFactory().createPolygon(
           (LinearRing) g1, holes);
       System.out.println(polygon);
-      
+
       double area = originalSignedArea(coordinates);
       double area2 = accurateSignedArea(coordinates);
       double exactArea = 0.5 * nrVertices * Math.sin(2 * Math.PI / nrVertices);
-      
+
       double eps = exactArea - area;
       double eps2 = exactArea - area2;
-      
-      System.out.println(nrVertices + "   orig err: " + eps 
+
+      System.out.println(nrVertices + "   orig err: " + eps
           + "    acc err: " + eps2);
     }
     System.out.println("Time: " + (System.currentTimeMillis() - start) / 1000.0);

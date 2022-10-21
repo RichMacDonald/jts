@@ -71,7 +71,7 @@ public class CreateRandomShapeFunctions {
     Coordinate tri0 = gpts[0];
     Coordinate tri1 = gpts[1];
     Coordinate tri2 = gpts[2];
-    
+
     List pts = new ArrayList();
 
     for (int i = 0; i < nPts; i++) {
@@ -91,10 +91,10 @@ public class CreateRandomShapeFunctions {
     double a = 1 - (s + t);
     double b = s;
     double c = t;
-    
-    double rpx = a * p0.x + b * p1.x + c * p2.x; 
-    double rpy = a * p0.y + b * p1.y + c * p2.y; 
-    
+
+    double rpx = a * p0.x + b * p1.x + c * p2.x;
+    double rpy = a * p0.y + b * p1.y + c * p2.y;
+
     return new Coordinate(rpx, rpy);
   }
 
@@ -104,10 +104,10 @@ public class CreateRandomShapeFunctions {
     double xLen = env.getWidth();
     double yLen = env.getHeight();
     double rMax = Math.min(xLen, yLen) / 2.0;
-    
+
     double centreX = env.getMinX() + xLen/2;
     double centreY = env.getMinY() + yLen/2;
-    
+
     List pts = new ArrayList();
 
     for (int i = 0; i < nPts; i++) {
@@ -123,23 +123,23 @@ public class CreateRandomShapeFunctions {
     }
     return geomFact.buildGeometry(pts);
   }
-  
+
   @Metadata(description="Create Halton points using bases 2 and 3")
   public static Geometry haltonPoints(Geometry g, int nPts)
   {
     return haltonPointsWithBases(g, nPts, 2, 3);
   }
-  
+
   @Metadata(description="Create Halton points using bases 5 and 7")
   public static Geometry haltonPoints57(Geometry g, int nPts)
   {
     return haltonPointsWithBases(g, nPts, 5, 7);
   }
-  
+
   @Metadata(description="Create Halton points using provided bases")
-  public static Geometry haltonPointsWithBases(Geometry g, int nPts, 
+  public static Geometry haltonPointsWithBases(Geometry g, int nPts,
       @Metadata(title="Base 1")
-      int basei, 
+      int basei,
       @Metadata(title="Base 2")
       int basej)
   {
@@ -147,7 +147,7 @@ public class CreateRandomShapeFunctions {
     Coordinate[] pts = new Coordinate[nPts];
     double baseX = env.getMinX();
     double baseY = env.getMinY();
-    
+
     int i = 0;
     while (i < nPts) {
       double x = baseX + env.getWidth() * haltonOrdinate(i + 1, basei);
@@ -159,7 +159,7 @@ public class CreateRandomShapeFunctions {
     }
     return FunctionsUtil.getFactoryOrDefault(g).createMultiPoint(pts);
   }
-  
+
   private static double haltonOrdinate(int index, int base)
   {
     double result = 0;
@@ -172,17 +172,17 @@ public class CreateRandomShapeFunctions {
     }
     return result;
   }
-  
+
   static final double PHI2 = 1.32471795724474602596;
-  
+
   /**
    * Creates a set of quasi-random 2D points using the Roberts recurrences.
-   * <a href='http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences'>Roberts recurrences</a> 
+   * <a href='http://extremelearning.com.au/unreasonable-effectiveness-of-quasirandom-sequences'>Roberts recurrences</a>
    * are based on the generalized Golden Ratio (for the 2D case, Phi2).
    * They have excellent low-discrepancy characteristics.
    * This mean they are non-periodic and have less clustering
    * than random points or Halton points.
-   * 
+   *
    * @param geom
    * @param nPts
    * @return
@@ -194,7 +194,7 @@ public class CreateRandomShapeFunctions {
     Coordinate[] pts = new Coordinate[nPts];
     double baseX = env.getMinX();
     double baseY = env.getMinY();
-    
+
     final double A1 = 1.0 / PHI2;
     final double A2 = 1.0/(PHI2 * PHI2);
     double r1 = 0.5;
@@ -218,7 +218,7 @@ public class CreateRandomShapeFunctions {
     if (next < 1) return next;
     return next - Math.floor(next);
   }
-  
+
   public static Geometry randomSegments(Geometry g, int nPts) {
     Envelope env = FunctionsUtil.getEnvelopeOrDefault(g);
     GeometryFactory geomFact = FunctionsUtil.getFactoryOrDefault(g);
@@ -340,18 +340,18 @@ public class CreateRandomShapeFunctions {
 
   private static int randomQuadrant(int exclude)
   {
-    while (true) { 
+    while (true) {
       int quad = (int) (Math.random() * 4);
       if (quad > 3) quad = 3;
       if (quad != exclude) return quad;
     }
   }
-  
+
   private static Coordinate randomPtInRectangleAround(Coordinate centre, double width, double height)
   {
     double x0 = centre.x + width * (Math.random() - 0.5);
     double y0 = centre.y + height * (Math.random() - 0.5);
-    return new Coordinate(x0, y0);    
+    return new Coordinate(x0, y0);
   }
 
 }

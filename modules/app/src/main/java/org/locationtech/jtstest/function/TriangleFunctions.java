@@ -22,10 +22,10 @@ import org.locationtech.jts.geom.util.GeometryMapper.MapOp;
 
 
 public class TriangleFunctions {
-  
+
   public static Geometry centroid(Geometry g)
   {
-    return GeometryMapper.map(g, 
+    return GeometryMapper.map(g,
         (MapOp) g1 -> {
 		    Coordinate[] pts = trianglePts(g1);
 		    Coordinate cc = Triangle.centroid(pts[0], pts[1], pts[2]);
@@ -33,10 +33,10 @@ public class TriangleFunctions {
 		    return geomFact.createPoint(cc);
 		  });
   }
-  
+
   public static Geometry circumcentre(Geometry g)
   {
-    return GeometryMapper.map(g, 
+    return GeometryMapper.map(g,
         (MapOp) g1 -> {
 		    Coordinate[] pts = trianglePts(g1);
 		    Coordinate cc = Triangle.circumcentre(pts[0], pts[1], pts[2]);
@@ -44,10 +44,10 @@ public class TriangleFunctions {
 		    return geomFact.createPoint(cc);
 		  });
   }
-  
+
   public static Geometry circumcentreDD(Geometry g)
   {
-    return GeometryMapper.map(g, 
+    return GeometryMapper.map(g,
         (MapOp) g1 -> {
 		    Coordinate[] pts = trianglePts(g1);
 		    Coordinate cc = Triangle.circumcentreDD(pts[0], pts[1], pts[2]);
@@ -55,7 +55,7 @@ public class TriangleFunctions {
 		    return geomFact.createPoint(cc);
 		  });
   }
-  
+
   public static Geometry perpendicularBisectors(Geometry g)
   {
     Coordinate[] pts = trianglePts(g);
@@ -70,10 +70,10 @@ public class TriangleFunctions {
     line[2] = geomFact.createLineString(new Coordinate[] {p2, cc});
     return geomFact.createMultiLineString(line);
   }
-  
+
   public static Geometry incentre(Geometry g)
   {
-    return GeometryMapper.map(g, 
+    return GeometryMapper.map(g,
         (MapOp) g1 -> {
 		    Coordinate[] pts = trianglePts(g1);
 		    Coordinate cc = Triangle.inCentre(pts[0], pts[1], pts[2]);
@@ -81,7 +81,7 @@ public class TriangleFunctions {
 		    return geomFact.createPoint(cc);
 		  });
   }
-  
+
   public static Geometry angleBisectors(Geometry g)
   {
     Coordinate[] pts = trianglePts(g);
@@ -93,7 +93,7 @@ public class TriangleFunctions {
     line[2] = geomFact.createLineString(new Coordinate[] {pts[2], cc});
     return geomFact.createMultiLineString(line);
   }
-  
+
 
   private static Coordinate[] trianglePts(Geometry g)
   {

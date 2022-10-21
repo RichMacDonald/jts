@@ -22,15 +22,15 @@ import junit.textui.TestRunner;
 import test.jts.GeometryTestCase;
 
 public class CoveragePolygonValidatorTest extends GeometryTestCase {
-  
+
   public static void main(String args[]) {
     TestRunner.run(CoveragePolygonValidatorTest.class);
   }
-  
+
   public CoveragePolygonValidatorTest(String name) {
     super(name);
   }
-  
+
   //========  Invalid cases   =============================
 
   public void testCollinearUnmatchedEdge() {
@@ -115,13 +115,13 @@ public class CoveragePolygonValidatorTest extends GeometryTestCase {
         "POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9), (3 7, 7 7, 7 3, 3 3, 3 7))",
         "LINESTRING (3 7, 6 8, 7 3)");
   }
-  
+
   public void testTargetHoleOverlap() {
     checkInvalid("POLYGON ((1 1, 1 9, 9 9, 9 1, 1 1), (2 2, 8 2, 8 8, 5 4, 3 5, 2 5, 2 2))",
         "POLYGON ((2 2, 2 5, 3 5, 8 6.7, 8 2, 2 2))",
         "LINESTRING (8 2, 8 8, 5 4, 3 5)");
   }
-  
+
   public void testFullyContained() {
     checkInvalid("POLYGON ((3 7, 7 7, 7 3, 3 3, 3 7))",
         "POLYGON ((1 9, 9 9, 9 1, 1 1, 1 9))",
@@ -129,7 +129,7 @@ public class CoveragePolygonValidatorTest extends GeometryTestCase {
   }
 
   //========  Gap cases   =============================
-  
+
   public void testGap() {
     checkInvalidGap("POLYGON ((1 5, 9 5, 9 1, 1 1, 1 5))",
         "POLYGON ((1 9, 5 9, 5 5.1, 1 5, 1 9))",
@@ -138,7 +138,7 @@ public class CoveragePolygonValidatorTest extends GeometryTestCase {
   }
 
   //========  Valid cases   =============================
-  
+
   public void testMatchedEdges() {
     checkValid("POLYGON ((3 7, 7 7, 7 3, 3 3, 3 7))",
         "MULTIPOLYGON (((1 7, 3 7, 3 3, 1 3, 1 7)), ((3 9, 7 9, 7 7, 3 7, 3 9)), ((9 7, 9 3, 7 3, 7 7, 9 7)), ((3 1, 3 3, 7 3, 7 1, 3 1)))");
@@ -148,12 +148,12 @@ public class CoveragePolygonValidatorTest extends GeometryTestCase {
     checkValid("POLYGON ((1 1, 6 5, 4 9, 1 9, 1 1))",
         "POLYGON ((1 1, 9 1, 9 4, 6 5, 1 1))");
   }
-  
+
   public void testTargetCoveredAndMatching() {
     checkValid("POLYGON ((1 7, 5 7, 9 7, 9 3, 5 3, 1 3, 1 7))",
         "MULTIPOLYGON (((5 9, 9 7, 5 7, 1 7, 5 9)), ((1 7, 5 7, 5 3, 1 3, 1 7)), ((9 3, 5 3, 5 7, 9 7, 9 3)), ((1 3, 5 3, 9 3, 5 1, 1 3)))");
   }
-  
+
   //-- confirms zero-length segments are skipped in processing
   public void testRepeatedCommonVertexInTarget() {
     checkValid("POLYGON ((1 1, 1 3, 5 3, 5 3, 9 1, 1 1))",
@@ -167,7 +167,7 @@ public class CoveragePolygonValidatorTest extends GeometryTestCase {
   }
 
   //----------------------------------------------------------------------
-  
+
   private void checkInvalid(String wktTarget, String wktAdj, String wktExpected) {
     Geometry target = read(wktTarget);
     Geometry adj = read(wktAdj);
@@ -177,8 +177,8 @@ public class CoveragePolygonValidatorTest extends GeometryTestCase {
     Geometry expected = read(wktExpected);
     checkEqual(expected, actual);
   }
-  
-  private void checkInvalidGap(String wktTarget, String wktAdj, 
+
+  private void checkInvalidGap(String wktTarget, String wktAdj,
       double gapWidth, String wktExpected) {
     Geometry target = read(wktTarget);
     Geometry adj = read(wktAdj);
@@ -188,7 +188,7 @@ public class CoveragePolygonValidatorTest extends GeometryTestCase {
     Geometry expected = read(wktExpected);
     checkEqual(expected, actual);
   }
-  
+
   private void checkValid(String wktTarget, String wktAdj) {
     Geometry target = read(wktTarget);
     Geometry adj = read(wktAdj);

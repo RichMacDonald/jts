@@ -17,7 +17,7 @@ import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Copies point ordinates with no transformation.
- * 
+ *
  * @author Martin Davis
  *
  */

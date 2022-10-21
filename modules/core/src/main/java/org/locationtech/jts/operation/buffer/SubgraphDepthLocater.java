@@ -121,7 +121,7 @@ class SubgraphDepthLocater
 
       // skip segment if it is left of the stabbing line
       double maxx = Math.max(seg.p0.x, seg.p1.x);
-      
+
 
       // skip horizontal segments (there will be a non-horizontal one carrying the same depth info
       // skip if segment is above or below stabbing line
@@ -160,11 +160,11 @@ class SubgraphDepthLocater
       upwardSeg = new LineSegment(seg);
       this.leftDepth = depth;
     }
-    
+
     public boolean isUpward() {
       return upwardSeg.p0.y <= upwardSeg.p1.y;
     }
-    
+
     /**
      * A comparison operation
      * which orders segments left to right.
@@ -172,10 +172,10 @@ class SubgraphDepthLocater
      * The definition of the ordering is:
      * <ul>
      * <li>-1 : if DS1.seg is left of or below DS2.seg (DS1 < DS2)
-     * <li>1 : if  DS1.seg is right of or above DS2.seg (DS1 > DS2) 
-     * <li>0 : if the segments are identical 
+     * <li>1 : if  DS1.seg is right of or above DS2.seg (DS1 > DS2)
+     * <li>0 : if the segments are identical
      * </ul>
-     * 
+     *
      * @param obj a DepthSegment
      * @return the comparison value
      */
@@ -183,7 +183,7 @@ class SubgraphDepthLocater
 	public int compareTo(Object obj)
     {
       DepthSegment other = (DepthSegment) obj;
-      
+
       /**
        * If segment envelopes do not overlap, then
        * can use standard segment lexicographic ordering.
@@ -194,10 +194,10 @@ class SubgraphDepthLocater
           || upwardSeg.maxY() <= other.upwardSeg.minY()) {
         return upwardSeg.compareTo(other.upwardSeg);
       }
-      
+
       /**
        * Otherwise if envelopes overlap, use relative segment orientation.
-       * 
+       *
        * Collinear segments should be evaluated by previous logic
        */
       int orientIndex = upwardSeg.orientationIndex(other.upwardSeg);
@@ -211,15 +211,15 @@ class SubgraphDepthLocater
       orientIndex = -1 * other.upwardSeg.orientationIndex(upwardSeg);
       return orientIndex;
     }
-    
+
     public int OLDcompareTo(Object obj)
     {
       DepthSegment other = (DepthSegment) obj;
-      
+
       // fast check if segments are trivially ordered along X
       if (upwardSeg.minX() > other.upwardSeg.maxX()) return 1;
       if (upwardSeg.maxX() < other.upwardSeg.minX()) return -1;
-      
+
       /**
        * try and compute a determinate orientation for the segments.
        * Test returns 1 if other is left of this (i.e. this > other)

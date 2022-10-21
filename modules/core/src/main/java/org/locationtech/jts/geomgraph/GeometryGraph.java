@@ -110,7 +110,7 @@ public class GeometryGraph
   private PointOnGeometryLocator areaPtLocator = null;
   // for use if geometry is not Polygonal
   private final PointLocator ptLocator = new PointLocator();
-  
+
   private EdgeSetIntersector createEdgeSetIntersector()
   {
   // various options for computing intersections, from slowest to fastest
@@ -233,11 +233,11 @@ public class GeometryGraph
     Coordinate coord = p.getCoordinate();
     insertPoint(argIndex, coord, Location.INTERIOR);
   }
-  
+
   /**
    * Adds a polygon ring to the graph.
    * Empty rings are ignored.
-   * 
+   *
    * The left and right topological location arguments assume that the ring is oriented CW.
    * If the ring is in the opposite orientation,
    * the left and right locations must be interchanged.
@@ -246,7 +246,7 @@ public class GeometryGraph
   {
   	// don't bother adding empty holes
   	if (lr.isEmpty()) return;
-  	
+
     Coordinate[] coord = CoordinateArrays.removeRepeatedPoints(lr.getCoordinates());
 
     if (coord.length < 4) {
@@ -279,7 +279,7 @@ public class GeometryGraph
 
     for (int i = 0; i < p.getNumInteriorRing(); i++) {
     	LinearRing hole = p.getInteriorRingN(i);
-    	
+
       // Holes are topologically labelled opposite to the shell, since
       // the interior of the polygon lies on their opposite side
       // (on the left, if the hole is oriented CW)
@@ -340,12 +340,12 @@ public class GeometryGraph
   {
     insertPoint(argIndex, pt, Location.INTERIOR);
   }
-  
+
   /**
    * Compute self-nodes, taking advantage of the Geometry type to
    * minimize the number of intersection tests.  (E.g. rings are
    * not tested for self-intersection, since they are assumed to be valid).
-   * 
+   *
    * @param li the LineIntersector to use
    * @param computeRingSelfNodes if <code>false</code>, intersection checks are optimized to not test rings for self-intersection
    * @return the computed SegmentIntersector containing information about the intersections found
@@ -360,7 +360,7 @@ public class GeometryGraph
 			|| parentGeom instanceof MultiPolygon;
     boolean computeAllSegments = computeRingSelfNodes || ! isRings;
     esi.computeIntersections(edges, si, computeAllSegments);
-    
+
     //System.out.println("SegmentIntersector # tests = " + si.numTests);
     addSelfIntersectionNodes(argIndex);
     return si;
@@ -447,7 +447,7 @@ Debug.print(e.getEdgeIntersectionList());
   /**
    * Determines the {@link Location} of the given {@link Coordinate}
    * in this geometry.
-   * 
+   *
    * @param pt the point to test
    * @return the location of the point in the geometry
    */

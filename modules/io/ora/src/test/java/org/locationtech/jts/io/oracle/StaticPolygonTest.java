@@ -19,18 +19,18 @@ import oracle.sql.STRUCT;
 
 
 /**
- * 
- * Does round trip testing by creating the oracle object, then decoding it. 
- * 
- * These tests do not include insert / delete / select operations.
- * 
- * NOTE: This test does require a precision to be used during the comparison, 
- * as points are rounded somewhat when creating the oracle struct. 
- * (One less decimal than a java double).
- * 
- * NOTE: The points may be re-ordered during these tests. 
  *
- * @author David Zwiers, Vivid Solutions. 
+ * Does round trip testing by creating the oracle object, then decoding it.
+ *
+ * These tests do not include insert / delete / select operations.
+ *
+ * NOTE: This test does require a precision to be used during the comparison,
+ * as points are rounded somewhat when creating the oracle struct.
+ * (One less decimal than a java double).
+ *
+ * NOTE: The points may be re-ordered during these tests.
+ *
+ * @author David Zwiers, Vivid Solutions.
  */
 public class StaticPolygonTest extends ConnectedTestCase {
 
@@ -43,7 +43,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single polygon
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSinglePolygonNoHoleRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -53,15 +53,15 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		pg.setGeometryFactory(geometryFactory);
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberPoints(10);
-		
+
 		Polygon pt = (Polygon) pg.create();
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		Polygon pt2 = (Polygon) or.read(st);
-		
+
 //		System.out.println((pt==null?"NULL":pt.toString()));
 //		System.out.println((pt2==null?"NULL":pt2.toString()));
 		assertTrue("The input polygon is not the same as the output polygon",pt.equals(pt2));
@@ -69,7 +69,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 100 non overlapping polygon
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testGridPolygonsNoHoleRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -80,7 +80,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(10);
 		grid.setNumberRows(10);
-		
+
 		Polygon[] pt = new Polygon[100];
 		STRUCT[] st = new STRUCT[100];
 
@@ -88,7 +88,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		pg.setGeometryFactory(geometryFactory);
 		pg.setNumberPoints(10);
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<100){
 			pg.setBoundingBox(grid.createEnv());
@@ -96,7 +96,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 			st[i] = ow.write(pt[i], getConnection());
 			i++;
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<100 && pt[i] != null){
@@ -110,7 +110,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 8 overlapping line polygons (4 distinct polygons)
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testOverlappingPolygonsNoHoleRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -121,7 +121,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(2);
 		grid.setNumberRows(2);
-		
+
 		Polygon[] pt = new Polygon[4];
 		STRUCT[] st = new STRUCT[8];
 
@@ -129,7 +129,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		pg.setGeometryFactory(geometryFactory);
 		pg.setNumberPoints(10);
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<8){
 			pg.setBoundingBox(grid.createEnv());
@@ -141,7 +141,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 			if(pt[j]!=null)
 				st[i++] = ow.write(pt[j], getConnection());
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<8 && pt[i%4] != null){
@@ -155,7 +155,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single polygon with lotsa points
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSinglePolygonManyPointsNoHoleRoundTrip() throws SQLException{
 		if(getConnection()==null){
@@ -166,13 +166,13 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setGenerationAlgorithm(PolygonGenerator.BOX);
 		pg.setNumberPoints(1000);
-		
+
 		Polygon pt = (Polygon) pg.create();
 //		System.out.println((pt==null?"NULL":pt.toString()));
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		Polygon pt2 = (Polygon) or.read(st);
 
@@ -183,7 +183,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single polygon
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSinglePolygonHolesRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -194,15 +194,15 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		pg.setBoundingBox(new Envelope(0,10,0,10));
 		pg.setNumberPoints(10);
 		pg.setNumberHoles(4);
-		
+
 		Polygon pt = (Polygon) pg.create();
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		Polygon pt2 = (Polygon) or.read(st);
-		
+
 //		System.out.println((pt==null?"NULL":pt.toString()));
 //		System.out.println((pt2==null?"NULL":pt2.toString()));
 		assertTrue("The input polygon is not the same as the output polygon",pt.equals(pt2));
@@ -210,7 +210,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 100 non overlapping polygon
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testGridPolygonsHolesRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -221,7 +221,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(10);
 		grid.setNumberRows(10);
-		
+
 		Polygon[] pt = new Polygon[100];
 		STRUCT[] st = new STRUCT[100];
 
@@ -230,7 +230,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		pg.setNumberPoints(10);
 		pg.setNumberHoles(4);
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<100){
 			pg.setBoundingBox(grid.createEnv());
@@ -238,7 +238,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 			st[i] = ow.write(pt[i], getConnection());
 			i++;
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<100 && pt[i] != null){
@@ -252,7 +252,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a 8 overlapping line polygons (4 distinct polygons)
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testOverlappingPolygonsHolesRoundTrip() throws SQLException{
 		if( getConnection() == null) {
@@ -263,7 +263,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		grid.setBoundingBox(new Envelope(0,10,0,10));
 		grid.setNumberColumns(2);
 		grid.setNumberRows(2);
-		
+
 		Polygon[] pt = new Polygon[4];
 		STRUCT[] st = new STRUCT[8];
 
@@ -272,7 +272,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		pg.setNumberPoints(10);
 		pg.setNumberHoles(4);
 		OraWriter ow = new OraWriter();
-		
+
 		int i=0;
 		while(grid.canCreate() && i<8){
 			pg.setBoundingBox(grid.createEnv());
@@ -284,7 +284,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 			if(pt[j]!=null)
 				st[i++] = ow.write(pt[j], getConnection());
 		}
-		
+
 		OraReader or = new OraReader();
 		i=0;
 		while(i<8 && pt[i%4] != null){
@@ -298,7 +298,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single polygon with lotsa points
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSinglePolygonManyPointsHolesRoundTrip() throws SQLException{
 		if( this.getConnection() == null ) return;
@@ -308,13 +308,13 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		pg.setGenerationAlgorithm(PolygonGenerator.BOX);
 		pg.setNumberPoints(1000);
 		pg.setNumberHoles(4);
-		
+
 		Polygon pt = (Polygon) pg.create();
 //		System.out.println((pt==null?"NULL":pt.toString()));
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		Polygon pt2 = (Polygon) or.read(st);
 
@@ -325,7 +325,7 @@ public class StaticPolygonTest extends ConnectedTestCase {
 
 	/**
 	 * Round Trip test for a single polygon with lotsa points
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void testSinglePolygonManyPointsManyHolesRoundTrip() throws SQLException{
 		if(getConnection()==null){
@@ -337,13 +337,13 @@ public class StaticPolygonTest extends ConnectedTestCase {
 		pg.setGenerationAlgorithm(PolygonGenerator.BOX);
 		pg.setNumberPoints(100);
 		pg.setNumberHoles(100);
-		
+
 		Polygon pt = (Polygon) pg.create();
 //		System.out.println((pt==null?"NULL":pt.toString()));
-		
+
 		OraWriter ow = new OraWriter();
 		STRUCT st = ow.write(pt, getConnection());
-		
+
 		OraReader or = new OraReader();
 		Polygon pt2 = (Polygon) or.read(st);
 

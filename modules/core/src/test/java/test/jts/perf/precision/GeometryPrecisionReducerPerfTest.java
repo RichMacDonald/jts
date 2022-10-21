@@ -25,7 +25,7 @@ import test.jts.perf.PerformanceTestRunner;
  * This test revealed a scaling issue with the {@link org.locationtech.jts.noding.snapround.SnapRoundingNoder}:
  * the {@link org.locationtech.jts.noding.snapround.HotPixelIndex} could not handle very large numbers
  * of points due to kdTree becoming unbalanced.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -40,7 +40,7 @@ extends PerformanceTestCase
   static double SIZE = 100;
   static int N_ARMS = 20;
   static double ARM_RATIO = 0.3;
-  
+
   public static void main(String args[]) {
     PerformanceTestRunner.run(GeometryPrecisionReducerPerfTest.class);
   }
@@ -53,7 +53,7 @@ extends PerformanceTestCase
   public GeometryPrecisionReducerPerfTest(String name)
   {
     super(name);
-    setRunSize(new int[] { 100, 200, 400, 1000, 2000, 4000, 8000, 10000, 
+    setRunSize(new int[] { 100, 200, 400, 1000, 2000, 4000, 8000, 10000,
         100_000, 200_000, 400_000
         , 1000_000, 2000_000 });
     setRunIterations(N_ITER);
@@ -65,23 +65,23 @@ public void setUp()
     System.out.println("Geometry Precision Reducer perf test");
     System.out.println("SineStar: origin: ("
         + ORG_X + ", " + ORG_Y + ")  size: " + SIZE
-        + "  # arms: " + N_ARMS + "  arm ratio: " + ARM_RATIO);   
+        + "  # arms: " + N_ARMS + "  arm ratio: " + ARM_RATIO);
     System.out.println("# Iterations: " + N_ITER);
   }
-  
+
   @Override
 public void startRun(int npts)
   {
     int iter = 0;
     sineStar = SineStarFactory.create(new Coordinate(ORG_X, ORG_Y), SIZE, npts, N_ARMS, ARM_RATIO);
-    
+
     double scale = npts / SIZE;
     pm = new PrecisionModel(scale);
     System.out.format("\n# pts = %d, Scale = %f\n", npts, scale);
-    
+
     if (npts <= 1000) System.out.println(sineStar);
   }
-  
+
   public void runReduce()
   {
     Geometry sinePolyCrinkly = GeometryPrecisionReducer.reduce(sineStar, pm);

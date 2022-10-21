@@ -25,17 +25,17 @@ import org.locationtech.jts.math.DD;
  * versions are provided, which are more robust
  * (i.e. they produce correct answers in more cases).
  * These are used in triangulation algorithms.
- * 
+ *
  * @author Martin Davis
  *
  */
-public class TriPredicate 
+public class TriPredicate
 {
   /**
-   * Tests if a point is inside the circle defined by the points a, b, c. 
+   * Tests if a point is inside the circle defined by the points a, b, c.
    * This test uses simple
    * double-precision arithmetic, and thus may not be robust.
-   * 
+   *
    * @param a a vertex of the triangle
    * @param b a vertex of the triangle
    * @param c a vertex of the triangle
@@ -43,34 +43,34 @@ public class TriPredicate
    * @return true if this point is inside the circle defined by the points a, b, c
    */
   public static boolean isInCircle(
-      Coordinate a, Coordinate b, Coordinate c, 
+      Coordinate a, Coordinate b, Coordinate c,
       Coordinate p) {
-    boolean isInCircle = 
+    boolean isInCircle =
               (a.x * a.x + a.y * a.y) * triArea(b, c, p)
             - (b.x * b.x + b.y * b.y) * triArea(a, c, p)
             + (c.x * c.x + c.y * c.y) * triArea(a, b, p)
-            - (p.x * p.x + p.y * p.y) * triArea(a, b, c) 
+            - (p.x * p.x + p.y * p.y) * triArea(a, b, c)
             > 0;
     return isInCircle;
   }
-  
+
   /**
    * Computes twice the area of the oriented triangle (a, b, c), i.e., the area is positive if the
    * triangle is oriented counterclockwise.
-   * 
+   *
    * @param a a vertex of the triangle
    * @param b a vertex of the triangle
    * @param c a vertex of the triangle
    */
   private static double triArea(Coordinate a, Coordinate b, Coordinate c) {
-      return (b.x - a.x) * (c.y - a.y) 
+      return (b.x - a.x) * (c.y - a.y)
            - (b.y - a.y) * (c.x - a.x);
   }
 
   /**
-   * Tests if a point is inside the circle defined by the points a, b, c. 
+   * Tests if a point is inside the circle defined by the points a, b, c.
    * This test uses robust computation.
-   * 
+   *
    * @param a a vertex of the triangle
    * @param b a vertex of the triangle
    * @param c a vertex of the triangle
@@ -78,17 +78,17 @@ public class TriPredicate
    * @return true if this point is inside the circle defined by the points a, b, c
    */
   public static boolean isInCircleRobust(
-      Coordinate a, Coordinate b, Coordinate c, 
-      Coordinate p) 
+      Coordinate a, Coordinate b, Coordinate c,
+      Coordinate p)
   {
     //checkRobustInCircle(a, b, c, p);
-    return isInCircleDD(a, b, c, p);       
+    return isInCircleDD(a, b, c, p);
   }
 
   /**
-   * Tests if a point is inside the circle defined by the points a, b, c. 
+   * Tests if a point is inside the circle defined by the points a, b, c.
    * The computation uses {@link DD} arithmetic for robustness.
-   * 
+   *
    * @param a a vertex of the triangle
    * @param b a vertex of the triangle
    * @param c a vertex of the triangle
@@ -158,7 +158,7 @@ public class TriPredicate
     DD sum = alift.selfMultiply(bcdet)
     .selfAdd(blift.selfMultiply(cadet))
     .selfAdd(clift.selfMultiply(abdet));
-    
+
     boolean isInCircle = sum.doubleValue() > 0;
 
     return isInCircle;
@@ -168,7 +168,7 @@ public class TriPredicate
    * Computes twice the area of the oriented triangle (a, b, c), i.e., the area
    * is positive if the triangle is oriented counterclockwise.
    * The computation uses {@link DD} arithmetic for robustness.
-   * 
+   *
    * @param ax the x ordinate of a vertex of the triangle
    * @param ay the y ordinate of a vertex of the triangle
    * @param bx the x ordinate of a vertex of the triangle
@@ -184,32 +184,32 @@ public class TriPredicate
 
   public static DD triAreaDD2(
       Coordinate a, Coordinate b, Coordinate c) {
-    
+
     DD t1 = DD.valueOf(b.x).selfSubtract(a.x)
           .selfMultiply(
               DD.valueOf(c.y).selfSubtract(a.y));
-    
+
     DD t2 = DD.valueOf(b.y).selfSubtract(a.y)
           .selfMultiply(
               DD.valueOf(c.x).selfSubtract(a.x));
-    
+
     return t1.selfSubtract(t2);
   }
 
   /**
-   * Computes the inCircle test using distance from the circumcentre. 
+   * Computes the inCircle test using distance from the circumcentre.
    * Uses standard double-precision arithmetic.
    * <p>
    * In general this doesn't
    * appear to be any more robust than the standard calculation. However, there
    * is at least one case where the test point is far enough from the
-   * circumcircle that this test gives the correct answer. 
+   * circumcircle that this test gives the correct answer.
    * <pre>
    * LINESTRING
    * (1507029.9878 518325.7547, 1507022.1120341457 518332.8225183258,
    * 1507029.9833 518325.7458, 1507029.9896965567 518325.744909031)
    * </pre>
-   * 
+   *
    * @param a a vertex of the triangle
    * @param b a vertex of the triangle
    * @param c a vertex of the triangle
@@ -223,18 +223,18 @@ public class TriPredicate
     double pRadiusDiff = p.distance(cc) - ccRadius;
     return pRadiusDiff <= 0;
   }
-  
+
   /**
    * Checks if the computed value for isInCircle is correct, using
    * double-double precision arithmetic.
-   * 
+   *
    * @param a a vertex of the triangle
    * @param b a vertex of the triangle
    * @param c a vertex of the triangle
    * @param p the point to test
    */
 private static void checkRobustInCircle(Coordinate a, Coordinate b, Coordinate c,
-    Coordinate p) 
+    Coordinate p)
 {
   boolean nonRobustInCircle = isInCircle(a, b, c, p);
   boolean isInCircleDD = TriPredicate.isInCircleDD(a, b, c, p);
@@ -247,7 +247,7 @@ private static void checkRobustInCircle(Coordinate a, Coordinate b, Coordinate c
 
   if (nonRobustInCircle != isInCircleDD || nonRobustInCircle != isInCircleCC) {
     System.out.println("inCircle robustness failure (double result = "
-        + nonRobustInCircle 
+        + nonRobustInCircle
         + ", DD result = " + isInCircleDD
         + ", CC result = " + isInCircleCC + ")");
     System.out.println(WKTWriter.toLineString(new CoordinateArraySequence(

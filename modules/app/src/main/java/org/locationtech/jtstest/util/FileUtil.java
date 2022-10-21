@@ -29,7 +29,7 @@ import java.util.Vector;
  *
  * @version 1.7
  */
-public class FileUtil 
+public class FileUtil
 {
   public static final String EXTENSION_SEPARATOR = ".";
 
@@ -81,21 +81,21 @@ public class FileUtil
         }
         return contents;
     }
- 
-    public static String readText(String filename) 
-    throws IOException 
+
+    public static String readText(String filename)
+    throws IOException
     {
       return readText(new File(filename));
     }
-    
+
     /**
      * Gets the contents of a text file as a single String
      * @param file
      * @return text file contents
      * @throws IOException
      */
- public static String readText(File file) 
-  	throws IOException 
+ public static String readText(File file)
+  	throws IOException
   	{
 		String thisLine;
 		StringBuilder strb = new StringBuilder("");

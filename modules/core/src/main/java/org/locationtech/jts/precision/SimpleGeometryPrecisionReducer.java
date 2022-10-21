@@ -26,7 +26,7 @@ import org.locationtech.jts.geom.util.GeometryEditor;
  * according to the supplied {@link PrecisionModel}, without
  * attempting to preserve valid topology.
  * <p>
- * In the case of {@link Polygonal} geometries, 
+ * In the case of {@link Polygonal} geometries,
  * the topology of the resulting geometry may be invalid if
  * topological collapse occurs due to coordinates being shifted.
  * It is up to the client to check this and handle it if necessary.
@@ -35,7 +35,7 @@ import org.locationtech.jts.geom.util.GeometryEditor;
  * The buffer algorithm does not depend on the validity of the input geometry.
  *
  * @version 1.7
- * 
+ *
  * @deprecated use GeometryPrecisionReducer
  */
 @Deprecated
@@ -44,7 +44,7 @@ public class SimpleGeometryPrecisionReducer
 	/**
 	 * Convenience method for doing precision reduction on a single geometry,
 	 * with collapses removed and keeping the geometry precision model the same.
-	 * 
+	 *
 	 * @param g
 	 * @param precModel
 	 * @return the reduced geometry
@@ -54,7 +54,7 @@ public class SimpleGeometryPrecisionReducer
 		SimpleGeometryPrecisionReducer reducer = new SimpleGeometryPrecisionReducer(precModel);
 		return reducer.reduce(g);
 	}
-	
+
   private PrecisionModel newPrecisionModel;
   private boolean removeCollapsed = true;
   private boolean changePrecisionModel = false;
@@ -81,7 +81,7 @@ public class SimpleGeometryPrecisionReducer
    * Sets whether the {@link PrecisionModel} of the new reduced Geometry
    * will be changed to be the {@link PrecisionModel} supplied to
    * specify the precision reduction.
-   * <p>  
+   * <p>
    * The default is to <b>not</b> change the precision model
    *
    * @param changePrecisionModel if <code>true</code> the precision model of the created Geometry will be the

@@ -16,7 +16,7 @@ import org.locationtech.jts.geom.Coordinate;
 
 /**
  * Computes the possible intersections between two line segments in {@link NodedSegmentString}s
- * and adds them to each string 
+ * and adds them to each string
  * using {@link NodedSegmentString#addIntersection(LineIntersector, int, int, int)}.
  *
  * @version 1.7
@@ -155,10 +155,10 @@ public void processIntersections(
       }
     }
   }
-  
+
   /**
    * Always process all intersections
-   * 
+   *
    * @return false always
    */
   @Override

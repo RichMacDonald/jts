@@ -19,7 +19,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
-public class JTSTestBuilderMenuBar 
+public class JTSTestBuilderMenuBar
 {
   JMenuBar jMenuBar1 = new JMenuBar();
   JMenu jMenuFile = new JMenu();
@@ -44,8 +44,8 @@ public class JTSTestBuilderMenuBar
   JMenuItem changeToLines = new JMenuItem();
 
   JTSTestBuilderFrame tbFrame;
-  
-  public JTSTestBuilderMenuBar(JTSTestBuilderFrame tbFrame) 
+
+  public JTSTestBuilderMenuBar(JTSTestBuilderFrame tbFrame)
   {
     this.tbFrame = tbFrame;
   }
@@ -116,7 +116,7 @@ public class JTSTestBuilderMenuBar
     jMenuFile.addSeparator();
     jMenuFile.add(jMenuFileExit);
     //==========================
-    
+
     jMenuHelp.setText("Help");
     jMenuHelp.add(jMenuAbout);
     //==========================
@@ -127,8 +127,8 @@ public class JTSTestBuilderMenuBar
     //-----------------------
     jMenuEdit.addSeparator();
     jMenuView.add(menuShowIndicators);
-    
-    //==========================    
+
+    //==========================
     jMenuEdit.setText("Edit");
     jMenuEdit.add(deleteAllTestCasesMenuItem);
     jMenuEdit.add(precisionModelMenuItem);
@@ -136,7 +136,7 @@ public class JTSTestBuilderMenuBar
     jMenuEdit.addSeparator();
     jMenuEdit.add(removeDuplicatePoints);
     jMenuEdit.add(changeToLines);
-    
+
     jMenuBar1.add(jMenuFile);
     jMenuBar1.add(jMenuView);
     jMenuBar1.add(jMenuEdit);
@@ -159,7 +159,7 @@ public class JTSTestBuilderMenuBar
   JMenuItem menuItemRadio(String name, boolean init, ActionListener listener) {
     return createMenuItemSelectable(new JRadioButtonMenuItem(), name, init, listener);
   }
-  
+
   JMenuItem createMenuItemSelectable(JMenuItem item, String name, boolean init, ActionListener listener) {
     item.setText(name);
     item.setSelected(init);

@@ -16,11 +16,11 @@ import org.locationtech.jtstest.testrunner.Result;
 
 
 /**
- * A {@link GeometryOperation} which executes the original operation 
+ * A {@link GeometryOperation} which executes the original operation
  * and returns that result,
  * but also executes a separate operation (which could be multiple operations).
- * The side operations can throw exceptions if they do not compute 
- * correct results.  This relies on the availability of 
+ * The side operations can throw exceptions if they do not compute
+ * correct results.  This relies on the availability of
  * another reliable implementation to provide the expected result.
  * <p>
  * This class can be used via the <tt>-geomop</tt> command-line option
@@ -29,16 +29,16 @@ import org.locationtech.jtstest.testrunner.Result;
  * @author mbdavis
  *
  */
-public abstract class TeeGeometryOperation 
+public abstract class TeeGeometryOperation
 implements GeometryOperation
 {
   private GeometryMethodOperation chainOp = new GeometryMethodOperation();
-  
+
   public TeeGeometryOperation()
   {
-  	
+
   }
-  
+
   @Override
 public Class getReturnType(String opName)
   {
@@ -48,17 +48,17 @@ public Class getReturnType(String opName)
   /**
    * Creates a new operation which chains to the given {@link GeometryMethodOperation}
    * for non-intercepted methods.
-   * 
+   *
    * @param chainOp the operation to chain to
    */
   public TeeGeometryOperation(GeometryMethodOperation chainOp)
   {
   	this.chainOp = chainOp;
   }
-    
+
   /**
    * Invokes the named operation
-   * 
+   *
    * @param opName
    * @param geometry
    * @param args
@@ -69,13 +69,13 @@ public Class getReturnType(String opName)
 	@Override
 	public Result invoke(String opName, Geometry geometry, Object[] args)
 	  throws Exception
-	{	  
-	  runTeeOp(opName, geometry, args);  
-	  
+	{
+	  runTeeOp(opName, geometry, args);
+
 	  return chainOp.invoke(opName, geometry, args);
 	}
 
 	protected abstract void runTeeOp(String opName, Geometry geometry, Object[] args);
 
-	
+
 }

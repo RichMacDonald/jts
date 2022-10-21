@@ -35,11 +35,11 @@ public interface SegmentIntersector
     SegmentString e0,  int segIndex0,
     SegmentString e1,  int segIndex1
      );
-  
+
   /**
    * Reports whether the client of this class
    * needs to continue testing all intersections in an arrangement.
-   * 
+   *
    * @return true if there is no need to continue testing segments
    */
   boolean isDone();

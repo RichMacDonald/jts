@@ -18,31 +18,31 @@ import org.locationtech.jts.geom.Coordinate;
  * Encodes points as the index along the planar Morton (Z-order) curve.
  * <p>
  * The planar Morton (Z-order) curve is a continuous space-filling curve.
- * The Morton curve defines an ordering of the 
+ * The Morton curve defines an ordering of the
  * points in the positive quadrant of the plane.
  * The index of a point along the Morton curve is called the Morton code.
  * <p>
  * A sequence of subsets of the Morton curve can be defined by a level number.
  * Each level subset occupies a square range.
- * The curve at level n M<sub>n</sub> contains 2<sup>n + 1</sup> points. 
- * It fills the range square of side 2<sup>level</sup>. 
+ * The curve at level n M<sub>n</sub> contains 2<sup>n + 1</sup> points.
+ * It fills the range square of side 2<sup>level</sup>.
  * Curve points have ordinates in the range [0, 2<sup>level</sup> - 1].
  * The code for a given point is identical at all levels.
  * The level simply determines the number of points in the curve subset
  * and the size of the range square.
  * <p>
- * This implementation represents codes using 32-bit integers.  
+ * This implementation represents codes using 32-bit integers.
  * This allows levels 0 to 16 to be handled.
  * The class supports encoding points
  * and decoding the point for a given code value.
  * <p>
  * The Morton order has the property that it tends to preserve locality.
  * This means that codes which are near in value will have spatially proximate
- * points.  The converse is not always true - the delta between 
- * codes for nearby points is not always small.  But the average delta 
- * is small enough that the Morton order is an effective way of linearizing space 
- * to support range queries. 
- * 
+ * points.  The converse is not always true - the delta between
+ * codes for nearby points is not always small.  But the average delta
+ * is small enough that the Morton order is an effective way of linearizing space
+ * to support range queries.
+ *
  * @author Martin Davis
  *
  * @see MortonCurveBuilder
@@ -54,11 +54,11 @@ public class MortonCode
    * The maximum curve level that can be represented.
    */
   public static final int MAX_LEVEL = 16;
-  
+
   /**
    * The number of points in the curve for the given level.
    * The number of points is 2<sup>2 * level</sup>.
-   * 
+   *
    * @param level the level of the curve
    * @return the number of points
    */
@@ -66,12 +66,12 @@ public class MortonCode
     checkLevel(level);
     return (int) Math.pow(2, 2 *level);
   }
-  
+
   /**
-   * The maximum ordinate value for points 
+   * The maximum ordinate value for points
    * in the curve for the given level.
    * The maximum ordinate is 2<sup>level</sup> - 1.
-   * 
+   *
    * @param level the level of the curve
    * @return the maximum ordinate value
    */
@@ -79,11 +79,11 @@ public class MortonCode
     checkLevel(level);
     return (int) Math.pow(2, level) - 1;
   }
-  
+
   /**
-   * The level of the finite Morton curve which contains at least 
+   * The level of the finite Morton curve which contains at least
    * the given number of points.
-   * 
+   *
    * @param numPoints the number of points required
    * @return the level of the curve
    */
@@ -94,7 +94,7 @@ public class MortonCode
     if (size < numPoints) level += 1;
     return level;
   }
-  
+
   private static void checkLevel(int level) {
     if (level > MAX_LEVEL) {
       throw new IllegalArgumentException("Level must be in range 0 to " + MAX_LEVEL);
@@ -103,7 +103,7 @@ public class MortonCode
   /**
    * Computes the index of the point (x,y)
    * in the Morton curve ordering.
-   * 
+   *
    * @param x the x ordinate of the point
    * @param y the y ordinate of the point
    * @return the index of the point along the Morton curve
@@ -111,7 +111,7 @@ public class MortonCode
   public static int encode(int x, int y) {
     return (interleave(y) << 1) + interleave(x);
   }
-  
+
   private static int interleave(int x) {
     x &= 0x0000ffff;                  // x = ---- ---- ---- ---- fedc ba98 7654 3210
     x = (x ^ (x << 8)) & 0x00ff00ff; // x = ---- ---- fedc ba98 ---- ---- 7654 3210
@@ -122,9 +122,9 @@ public class MortonCode
   }
 
   /**
-   * Computes the point on the Morton curve 
+   * Computes the point on the Morton curve
    * for a given index.
-   * 
+   *
    * @param index the index of the point on the curve
    * @return the point on the curve
    */

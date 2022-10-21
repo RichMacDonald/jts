@@ -17,7 +17,7 @@ package org.locationtech.jts.geom;
 public class Coordinates {
   /**
    * Factory method providing access to common Coordinate implementations.
-   * 
+   *
    * @param dimension
    * @return created coordinate
    */
@@ -28,7 +28,7 @@ public class Coordinates {
 
   /**
    * Factory method providing access to common Coordinate implementations.
-   * 
+   *
    * @param dimension
    * @param measures
    * @return created coordinate
@@ -45,10 +45,10 @@ public class Coordinates {
     }
     return new Coordinate();
   }
-  
+
   /**
    * Determine dimension based on subclass of {@link Coordinate}.
-   * 
+   *
    * @param coordinate supplied coordinate
    * @return number of ordinates recorded
    */
@@ -58,15 +58,15 @@ public class Coordinates {
       return 2;
     } else if (coordinate instanceof CoordinateXYM) {
     } else if (coordinate instanceof CoordinateXYZM) {
-      return 4;      
+      return 4;
     } else if (coordinate instanceof Coordinate) {
-    } 
+    }
     return 3;
   }
 
   /**
    * Determine number of measures based on subclass of {@link Coordinate}.
-   * 
+   *
    * @param coordinate supplied coordinate
    * @return number of measures recorded
    */
@@ -76,8 +76,8 @@ public class Coordinates {
     } else if ((coordinate instanceof CoordinateXYM) || (coordinate instanceof CoordinateXYZM)) {
       return 1;
     } else if (coordinate instanceof Coordinate) {
-    } 
+    }
     return 0;
   }
-    
+
 }

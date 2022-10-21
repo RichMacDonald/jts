@@ -246,7 +246,7 @@ public class PolygonBuilder {
       // (also guards against testing rings against themselves)
       // hole must be contained in shell
       if (tryShellEnv.equals(testEnv) || ! tryShellEnv.contains(testEnv)) continue;
-      
+
       testPt = CoordinateArrays.ptNotInList(testRing.getCoordinates(), tryShellRing.getCoordinates());
       boolean isContained = false;
       if (PointLocation.isInRing(testPt, tryShellRing.getCoordinates()) )

@@ -24,22 +24,22 @@ import org.locationtech.jts.geom.Puntal;
  * In the future, the factory may accept hints that indicate
  * special optimizations which can be performed.
  * <p>
- * Instances of this class are thread-safe. 
- * 
+ * Instances of this class are thread-safe.
+ *
  * @author Martin Davis
  *
  */
-public class PreparedGeometryFactory 
+public class PreparedGeometryFactory
 {
   /**
    * Creates a new {@link PreparedGeometry} appropriate for the argument {@link Geometry}.
-   * 
+   *
    * @param geom the geometry to prepare
    * @return the prepared geometry
    */
 	public static PreparedGeometry prepare(Geometry geom)
 	{
-		return (new PreparedGeometryFactory()).create(geom); 
+		return (new PreparedGeometryFactory()).create(geom);
 	}
 
   public PreparedGeometryFactory() {
@@ -47,19 +47,19 @@ public class PreparedGeometryFactory
 
   /**
    * Creates a new {@link PreparedGeometry} appropriate for the argument {@link Geometry}.
-   * 
+   *
    * @param geom the geometry to prepare
    * @return the prepared geometry
    */
   public PreparedGeometry create(Geometry geom)
   {
-    if (geom instanceof Polygonal) 
+    if (geom instanceof Polygonal)
       return new PreparedPolygon((Polygonal) geom);
-    if (geom instanceof Lineal) 
+    if (geom instanceof Lineal)
       return new PreparedLineString((Lineal) geom);
-    if (geom instanceof Puntal) 
+    if (geom instanceof Puntal)
       return new PreparedPoint((Puntal) geom);
-    
+
     /**
      * Default representation.
      */

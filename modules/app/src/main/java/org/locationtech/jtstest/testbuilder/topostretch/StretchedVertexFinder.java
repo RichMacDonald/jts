@@ -23,29 +23,29 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 
-class StretchedVertexFinder 
+class StretchedVertexFinder
 {
 	public static List findNear(Collection linestrings, double tolerance, Envelope mask, Coordinate[] pts)
 	{
 		StretchedVertexFinder finder = new StretchedVertexFinder(linestrings, tolerance, mask);
 		return finder.getNearVertices(pts);
 	}
-	
+
 	private Collection linestrings;
 	private double tolerance = 0.0;
 	private Envelope limitEnv = null;
 	private List nearVerts = new ArrayList();
-	
+
 	public StretchedVertexFinder(Collection linestrings, double tolerance)
 	{
 		this.linestrings = linestrings;
 		this.tolerance = tolerance;
 	}
-	
+
 	/**
 	 * Creates a finder for a given set of linework, using the specified tolerance distance
 	 * and within a given limiting envelope.
-	 * 
+	 *
 	 * @param linestrings the linework to stretch away from
 	 * @param tolerance the distance tolerance for points to be stretched
 	 * @param limitEnv the envelope to limit searching to
@@ -55,11 +55,11 @@ class StretchedVertexFinder
 		this(linestrings, tolerance);
 		this.limitEnv = limitEnv;
 	}
-	
+
 	/**
 	 * Determines points that lie close to the test linestrings,
 	 * and computes a {link StretchVertex} for each one.
-	 * 
+	 *
 	 * @param pts the points to test for stretching
 	 * @return a list of StretchedVertexes
 	 */
@@ -68,7 +68,7 @@ class StretchedVertexFinder
 		findNearVertices(pts);
 		return nearVerts;
 	}
-	
+
 	private void findNearVertices()
 	{
 		for (Object linestring : linestrings) {
@@ -76,7 +76,7 @@ class StretchedVertexFinder
 			findNearVertices(line);
 		}
 	}
-	
+
   private static int geomPointsLen(Coordinate[] pts)
   {
     int n = pts.length;
@@ -85,7 +85,7 @@ class StretchedVertexFinder
       n = pts.length - 1;
     return n;
   }
-  
+
 	private void findNearVertices(LineString targetLine)
 	{
 		Coordinate[] pts = targetLine.getCoordinates();
@@ -100,7 +100,7 @@ class StretchedVertexFinder
         findNearVertex(pts[i]);
 		}
   }
-	
+
 	private void findNearVertex(Coordinate linePt)
 	{
 		for (Object linestring : linestrings) {
@@ -111,14 +111,14 @@ class StretchedVertexFinder
 
   /**
    * Finds a single near vertex.
-   * This is simply the first one found, not necessarily 
-   * the nearest.  
-   * This choice may sub-optimal, resulting 
+   * This is simply the first one found, not necessarily
+   * the nearest.
+   * This choice may sub-optimal, resulting
    * in odd result geometry.
    * It's not clear that this can be done better, however.
    * If there are several near points, the stretched
    * geometry is likely to be distorted anyway.
-   * 
+   *
    * @param targetPt
    * @param testLine
    */
@@ -129,9 +129,9 @@ class StretchedVertexFinder
     int n = geomPointsLen(testPts);
 		for (int i = 0; i < n; i++) {
 			Coordinate testPt = testPts[i];
-      
+
 			StretchedVertex stretchVert = null;
-	
+
 			// is near to vertex?
 			double dist = testPt.distance(targetPt);
 			if (dist <= tolerance && dist != 0.0) {
@@ -140,7 +140,7 @@ class StretchedVertexFinder
       // is near segment?
 			else if (i < testPts.length - 1) {
 				Coordinate segEndPt = testPts[i + 1];
-				
+
 				/**
 				 * Check whether pt is near or equal to other segment endpoint.
 				 * If near, it will be handled by the near vertex case code.
@@ -150,7 +150,7 @@ class StretchedVertexFinder
 				if (distToOther <= tolerance)
 					// will be handled as a point-vertex case
 					continue;
-				
+
 				// Here we know point is not near the segment endpoints.
 				// Check if it is near the segment at all.
 				if (isPointNearButNotOnSeg(targetPt, testPt, segEndPt, tolerance)) {
@@ -161,13 +161,13 @@ class StretchedVertexFinder
 				nearVerts.add(stretchVert);
 		}
 	}
-	
+
   private static boolean contains(Envelope env, Coordinate p0, Coordinate p1)
   {
     if (! env.contains(p0) || ! env.contains(p1)) return false;
     return true;
   }
-  
+
 	private static boolean isPointNearButNotOnSeg(Coordinate p, Coordinate p0, Coordinate p1, double distTol)
 	{
 		// don't rely on segment distance algorithm to correctly compute zero distance
@@ -185,17 +185,17 @@ class StretchedVertexFinder
 	}
 
 	private static LineSegment distSeg = new LineSegment();
-	
+
 	private static double distanceToSeg(Coordinate p, Coordinate p0, Coordinate p1)
 	{
 		distSeg.p0 = p0;
 		distSeg.p1 = p1;
 		double segDist = distSeg.distance(p);
-		
+
 		// robust calculation of zero distance
 		if (Orientation.index(p0, p1, p) == Orientation.COLLINEAR)
 			segDist = 0.0;
-		
+
 		return segDist;
 	}
 }

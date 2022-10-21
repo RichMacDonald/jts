@@ -33,7 +33,7 @@ public class WKBDumper
     WKBDumper dumper = new WKBDumper();
     dumper.read(bytes, writer);
   }
-  
+
   public static String dump(byte[] bytes) {
     WKBDumper dumper = new WKBDumper();
     return dumper.readString(bytes);
@@ -44,7 +44,7 @@ public class WKBDumper
   private int inputDimension;
 
   public WKBDumper() {
-    
+
   }
 
   private String readString(byte[] bytes) {
@@ -52,18 +52,18 @@ public class WKBDumper
     read(bytes);
     return writer.toString();
   }
-  
+
   private void read(byte[] bytes, Writer writer) {
     this.writer = writer;
     read(bytes);
   }
-  
+
   /**
    * Reads a single {@link Geometry} in WKB format from a byte array.
    *
    * @param bytes the byte array to read from
    * @return the geometry read
-   * @throws IOException 
+   * @throws IOException
    * @throws ParseException if the WKB is ill-formed
    */
   private void read(byte[] bytes)
@@ -112,7 +112,7 @@ public class WKBDumper
     }
 
     int typeInt = readInt();
-    
+
     // Adds %1000 to make it compatible with OGC 06-103r4
     int geometryType = (typeInt & 0xffff)%1000;
 
@@ -128,15 +128,15 @@ public class WKBDumper
 
     // determine if SRIDs are present
     boolean hasSRID = (typeInt & 0x20000000) != 0;
-    
-    writer.write(geometryTypeName(geometryType) + " ( " + geometryType + " ) "); 
+
+    writer.write(geometryTypeName(geometryType) + " ( " + geometryType + " ) ");
     if (hasZ) writer.write(" Z" );
     if (hasM) writer.write(" M" );
     if (hasSRID) writer.write(" SRID" );
-    
+
     writer.write("\n");
 
-    
+
     if (hasSRID) {
       SRID = readTaggedInt("SRID");
     }
@@ -158,7 +158,7 @@ public class WKBDumper
       case WKBConstants.wkbGeometryCollection :
         readGeometryCollection(SRID);
         break;
-      default: 
+      default:
         //throw new ParseException("Unknown WKB type " + geometryType);
     }
   }
@@ -172,7 +172,7 @@ public class WKBDumper
     case WKBConstants.wkbMultiLineString : return "MULTILINESTRING";
     case WKBConstants.wkbMultiPolygon : return "MULTIPOLYGON";
     case WKBConstants.wkbGeometryCollection : return "GEOMETRYCOLLECTION";
-    default: 
+    default:
       return "Unknown";
     }
   }
@@ -229,7 +229,7 @@ public class WKBDumper
    * Reads a coordinate value with the specified dimensionality.
    * Makes the X and Y ordinates precise according to the precision model
    * in use.
-   * @throws ParseException 
+   * @throws ParseException
    */
   private void readCoordinate(int index) throws IOException, ParseException
   {
@@ -243,17 +243,17 @@ public class WKBDumper
     }
     writer.write(hex.append(" [").append(index).append("] ").append(nums.toString()).append("\n").toString());
   }
-  
+
   private int readTaggedInt(String tag) throws IOException, ParseException {
     int size = readInt();
     writer.write(tag + " = " + size + "\n");
     return size;
   }
-  
+
   private int readInt() throws IOException, ParseException {
     writer.write(dis.getCount() + ": ");
     int i = dis.readInt();
-    
+
     // TODO: write in hex
     writer.write(WKBWriter.toHex(dis.getData()) + " - ");
     return i;

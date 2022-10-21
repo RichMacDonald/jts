@@ -24,7 +24,7 @@ import test.jts.perf.PerformanceTestRunner;
 
 /**
  * An example of the usage of the {@link PerformanceTestRunner}.
- * 
+ *
  * @author Martin Davis
  *
  */
@@ -39,7 +39,7 @@ extends PerformanceTestCase
   static double SIZE = 100;
   static int N_ARMS = 20;
   static double ARM_RATIO = 0.3;
-  
+
   public static void main(String args[]) {
     PerformanceTestRunner.run(InteriorPointAreaPerfTest.class);
   }
@@ -61,25 +61,25 @@ public void setUp()
     System.out.println("Interior Point Area perf test");
     System.out.println("SineStar: origin: ("
         + ORG_X + ", " + ORG_Y + ")  size: " + SIZE
-        + "  # arms: " + N_ARMS + "  arm ratio: " + ARM_RATIO);   
+        + "  # arms: " + N_ARMS + "  arm ratio: " + ARM_RATIO);
     System.out.println("# Iterations: " + N_ITER);
   }
-  
+
   @Override
 public void startRun(int npts)
   {
     int iter = 0;
     sineStar = SineStarFactory.create(new Coordinate(ORG_X, ORG_Y), SIZE, npts, N_ARMS, ARM_RATIO);
-    
+
     double scale = npts / SIZE;
     PrecisionModel pm = new PrecisionModel(scale);
-    
+
     sinePolyCrinkly = GeometryPrecisionReducer.reduce(sineStar, pm);
 
     System.out.println("\nRunning with # pts " + sinePolyCrinkly.getNumPoints() );
     //if (size <= 1000) System.out.println(sineStar);
   }
-  
+
   public void runTest1()
   {
     InteriorPointArea.getInteriorPoint(sinePolyCrinkly);

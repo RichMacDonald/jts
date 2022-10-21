@@ -33,7 +33,7 @@ import org.locationtech.jts.geom.Polygon;
  * If a point is not clearly in the Interior or Exterior,
  * it is considered to be on the Boundary.
  * In other words, if the point is within the tolerance of the Boundary,
- * it is considered to be on the Boundary; otherwise, 
+ * it is considered to be on the Boundary; otherwise,
  * whether it is Interior or Exterior is determined directly.
  *
  * @author Martin Davis
@@ -46,7 +46,7 @@ public class FuzzyPointLocator
   private MultiLineString linework;
   private PointLocator ptLocator = new PointLocator();
   private LineSegment seg = new LineSegment();
-  
+
   public FuzzyPointLocator(Geometry g, double boundaryDistanceTolerance)
   {
     this.g = g;
@@ -65,14 +65,14 @@ public class FuzzyPointLocator
     if (dist < tolerance)
       return Location.BOUNDARY;
      */
-    
+
     // now we know point must be clearly inside or outside geometry, so return actual location value
     return ptLocator.locate(pt, g);
   }
 
   /**
    * Extracts linework for polygonal components.
-   * 
+   *
    * @param g the geometry from which to extract
    * @return a lineal geometry containing the extracted linework
    */
@@ -84,7 +84,7 @@ public class FuzzyPointLocator
   	LineString[] lines = GeometryFactory.toLineStringArray(linework);
   	return g.getFactory().createMultiLineString(lines);
   }
-  
+
   private boolean isWithinToleranceOfBoundary(Coordinate pt)
   {
   	for (int i = 0; i < linework.getNumGeometries(); i++) {
@@ -103,21 +103,21 @@ public class FuzzyPointLocator
 }
 
 /**
- * Extracts the LineStrings in the boundaries 
+ * Extracts the LineStrings in the boundaries
  * of all the polygonal elements in the target {@link Geometry}.
- * 
+ *
  * @author Martin Davis
  */
-class PolygonalLineworkExtracter 
+class PolygonalLineworkExtracter
 	implements GeometryFilter
 {
-	private List linework; 
-	
+	private List linework;
+
 	public PolygonalLineworkExtracter()
 	{
 		linework = new ArrayList();
 	}
-	
+
 	/**
 	 * Filters out all linework for polygonal elements
 	 */
@@ -132,10 +132,10 @@ class PolygonalLineworkExtracter
 			}
 		}
 	}
-	
+
 	/**
 	 * Gets the list of polygonal linework.
-	 * 
+	 *
 	 * @return a List of LineStrings
 	 */
 	public List getLinework() { return linework; }

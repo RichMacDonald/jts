@@ -28,7 +28,7 @@ import org.locationtech.jts.geom.util.GeometryTransformer;
  * Simplifies a geometry and ensures that
  * the result is a valid geometry having the
  * same dimension and number of components as the input,
- * and with the components having the same topological 
+ * and with the components having the same topological
  * relationship.
  * <p>
  * If the input is a polygonal geometry
@@ -37,21 +37,21 @@ import org.locationtech.jts.geom.util.GeometryTransformer;
  * <li>The result has the same number of shells and holes as the input,
  * with the same topological structure
  * <li>The result rings touch at <b>no more</b> than the number of touching points in the input
- * (although they may touch at fewer points).  
- * The key implication of this statement is that if the 
- * input is topologically valid, so is the simplified output. 
+ * (although they may touch at fewer points).
+ * The key implication of this statement is that if the
+ * input is topologically valid, so is the simplified output.
  * </ul>
  * For linear geometries, if the input does not contain
  * any intersecting line segments, this property
  * will be preserved in the output.
  * <p>
- * For all geometry types, the result will contain 
+ * For all geometry types, the result will contain
  * enough vertices to ensure validity.  For polygons
  * and closed linear geometries, the result will have at
  * least 4 vertices; for open linestrings the result
  * will have at least 2 vertices.
  * <p>
- * All geometry types are handled. 
+ * All geometry types are handled.
  * Empty and point geometries are returned unchanged.
  * Empty geometry components are deleted.
  * <p>
@@ -60,7 +60,7 @@ import org.locationtech.jts.geom.util.GeometryTransformer;
  *
  * <h3>KNOWN BUGS</h3>
  * <ul>
- * <li>May create invalid topology if there are components which are 
+ * <li>May create invalid topology if there are components which are
  * small relative to the tolerance value.
  * In particular, if a small hole is very near an edge, it is possible for the edge to be moved by
  * a relatively large tolerance value and end up with the hole outside the result shell
@@ -70,7 +70,7 @@ import org.locationtech.jts.geom.util.GeometryTransformer;
  * A workaround is to test for this situation in post-processing and remove
  * any invalid holes or polygons.
  * </ul>
- * 
+ *
  * @author Martin Davis
  * @see DouglasPeuckerSimplifier
  *
@@ -108,11 +108,11 @@ public class TopologyPreservingSimplifier
     lineSimplifier.setDistanceTolerance(distanceTolerance);
   }
 
-  public Geometry getResultGeometry() 
+  public Geometry getResultGeometry()
   {
     // empty input produces an empty result
     if (inputGeom.isEmpty()) return inputGeom.copy();
-    
+
     linestringMap = new HashMap();
     inputGeom.apply(new LineStringMapBuilderFilter(this));
     lineSimplifier.simplify(linestringMap.values());
@@ -124,11 +124,11 @@ public class TopologyPreservingSimplifier
       extends GeometryTransformer
   {
     private Map linestringMap;
-    
+
     public LineStringTransformer(Map linestringMap) {
       this.linestringMap = linestringMap;
     }
-    
+
     @Override
 	protected CoordinateSequence transformCoordinates(CoordinateSequence coords, Geometry parent)
     {
@@ -144,13 +144,13 @@ public class TopologyPreservingSimplifier
   }
 
   /**
-   * A filter to add linear geometries to the linestring map 
+   * A filter to add linear geometries to the linestring map
    * with the appropriate minimum size constraint.
    * Closed {@link LineString}s (including {@link LinearRing}s
-   * have a minimum output size constraint of 4, 
+   * have a minimum output size constraint of 4,
    * to ensure the output is valid.
    * For all other linestrings, the minimum size is 2 points.
-   * 
+   *
    * @author Martin Davis
    *
    */
@@ -158,15 +158,15 @@ public class TopologyPreservingSimplifier
       implements GeometryComponentFilter
   {
     TopologyPreservingSimplifier tps;
-    
+
     LineStringMapBuilderFilter(TopologyPreservingSimplifier tps) {
       this.tps = tps;
     }
-    
+
     /**
      * Filters linear geometries.
-     * 
-     * geom a geometry of any type 
+     *
+     * geom a geometry of any type
      */
     @Override
 	public void filter(Geometry geom)
@@ -175,7 +175,7 @@ public class TopologyPreservingSimplifier
         LineString line = (LineString) geom;
         // skip empty geometries
         if (line.isEmpty()) return;
-        
+
         int minSize = line.isClosed() ? 4 : 2;
         TaggedLineString taggedLine = new TaggedLineString(line, minSize);
         tps.linestringMap.put(line, taggedLine);

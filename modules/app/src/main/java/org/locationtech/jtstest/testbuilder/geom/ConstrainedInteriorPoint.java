@@ -23,21 +23,21 @@ import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
 
 public class ConstrainedInteriorPoint {
-  
+
   public static Coordinate getCoordinate(Polygon poly) {
     ConstrainedInteriorPoint lbl = new ConstrainedInteriorPoint(poly);
     return lbl.getCoordinate();
   }
-  
+
   public static Coordinate getCoordinate(Polygon poly, Envelope constraint) {
     ConstrainedInteriorPoint lbl = new ConstrainedInteriorPoint(poly, constraint);
     return lbl.getCoordinate();
   }
-  
+
   public static Coordinate getCoordinate(Polygon poly, Geometry constraint) {
     return getCoordinate(poly, constraint.getEnvelopeInternal());
   }
-  
+
   private Polygon poly;
   private double scanY;
   private List<Double> crossings = new ArrayList<>();
@@ -46,12 +46,12 @@ public class ConstrainedInteriorPoint {
   public ConstrainedInteriorPoint(Polygon poly) {
     this.poly = poly;
   }
-  
+
   public ConstrainedInteriorPoint(Polygon poly, Envelope constraint) {
     this.poly = poly;
-    this.constraint = constraint; 
+    this.constraint = constraint;
   }
-  
+
   public Coordinate getCoordinate() {
     // TODO: check if constraint does not overlap poly - return empty if so
     scanY = findScanY(poly, constraint);
@@ -67,7 +67,7 @@ public class ConstrainedInteriorPoint {
       scanRing(poly.getInteriorRingN(i));
     }
   }
-  
+
   private void scanRing(LinearRing ring) {
     CoordinateSequence seq = ring.getCoordinateSequence();
     for (int i = 1; i < seq.size(); i++) {
@@ -76,7 +76,7 @@ public class ConstrainedInteriorPoint {
       scanSegment(ptPrev, pt);
     }
   }
-  
+
   private double findScanY(Polygon poly, Envelope constraint) {
     // TODO: use centroid as better Y?
     Envelope env = poly.getEnvelopeInternal();
@@ -92,14 +92,14 @@ public class ConstrainedInteriorPoint {
 
   private void scanSegment(Coordinate p0, Coordinate p1) {
     // skip non-crossing segments
-    
+
     // skip horizontal lines
     // handle vertices on scan-line
     // downward segment does not include start point
     if (! crosses(p0, p1, scanY) || (p0.getY() ==  p1.getY()) || (p0.y == scanY && p1.y < scanY)) return;
     // upward segment does not include endpoint
     if (p1.y == scanY && p0.y < scanY) return;
-   
+
     // add a crossing
     double xInt = intersection(p0, p1, scanY);
     crossings.add(xInt);
@@ -114,7 +114,7 @@ public class ConstrainedInteriorPoint {
       xCon2 = Math.min(xCon2, constraint.getMaxX());
     }
     /*
-     * Entries in crossings list should occur in pairs 
+     * Entries in crossings list should occur in pairs
      * representing a section of the scan line interior to the polygon
      * (which may be zero-length)
      */
@@ -125,14 +125,14 @@ public class ConstrainedInteriorPoint {
       double x1 = crossings.get(i);
       // TODO: check for i+1 out of range
       double x2 = crossings.get(i + 1);
-      
+
       // skip if outside constraint region
       if ((x2 < xCon1) || (x1 > xCon2)) continue;
 
-      // clip to constraint 
+      // clip to constraint
       double xClip1 = Math.max(x1,  xCon1);
       double xClip2 = Math.min(x2,  xCon2);
-      
+
       double dist = xClip2 - xClip1;
       if (dist > maxDist) {
         xBest1 = xClip1;
@@ -143,12 +143,12 @@ public class ConstrainedInteriorPoint {
     double xMid = (xBest1 + xBest2) / 2;
     return new Coordinate(xMid, scanY);
   }
-  
+
   /**
    * Non-robust intersection of a segment with a horizontal line.
    * Inputs are not expected to have high precision, so
    * this computation should be adequate.
-   * 
+   *
    * @param p0
    * @param p1
    * @param scanY2
@@ -157,7 +157,7 @@ public class ConstrainedInteriorPoint {
   private static double intersection(Coordinate p0, Coordinate p1, double Y) {
     double x0 = p0.getX();
     double x1 = p1.getX();
-  
+
     if (x0 == x1) return x0;
     double m = (p1.getY() - p0.getY()) / (x1 - x0);
     double x = ((Y - p0.getY()) / m) + x0;
@@ -168,7 +168,7 @@ public class ConstrainedInteriorPoint {
     if ((p0.getY() > Y && p1.getY() > Y) || (p0.getY() < Y && p1.getY() < Y)) return false;
     return true;
   }
-  
+
   private static class DoubleComparator implements Comparator<Double> {
     @Override
 	public int compare(Double v1, Double v2) {

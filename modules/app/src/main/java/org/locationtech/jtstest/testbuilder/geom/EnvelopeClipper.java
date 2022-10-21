@@ -16,7 +16,7 @@ import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.LineSegment;
 
 public class EnvelopeClipper {
-  
+
   private Envelope env;
 
   public EnvelopeClipper(Envelope env) {
@@ -25,12 +25,12 @@ public class EnvelopeClipper {
   public LineSegment clip(Coordinate p0, Coordinate p1) {
     Coordinate clip0 = clipEndpoint(env, p0, p1);
     Coordinate clip1 = clipEndpoint(env, p1, p0);
-    
+
     // if clipped segment lies on boundary of envelope
     // return null to indicate this
     if (isOnBoundary(clip0, clip1))
       return null;
-    
+
     return new LineSegment(clip0, clip1);
   }
 
@@ -45,7 +45,7 @@ public class EnvelopeClipper {
     }
     return false;
   }
-  
+
   private Coordinate clipEndpoint(Envelope env, Coordinate p0, Coordinate p1) {
     Coordinate clipPt = new Coordinate(p0);
     if (p0.x < env.getMinX()) {
@@ -66,7 +66,7 @@ public class EnvelopeClipper {
   private double intersectionLineY(Coordinate a, Coordinate b, double y) {
     // short-circuit if segment is parallel to Y axis
     if (b.x == a.x) return a.x;
-    
+
     double m = (b.x - a.x) / (b.y - a.y);
     double intercept = (y - a.y) * m;
     return a.x + intercept;
@@ -75,7 +75,7 @@ public class EnvelopeClipper {
   private double intersectionLineX(Coordinate a, Coordinate b, double x) {
     // short-circuit if segment is parallel to X axis
     if (b.y == a.y) return a.y;
-    
+
     double m = (b.y - a.y) / (b.x - a.x);
     double intercept = (x - a.x) * m;
     return a.y + intercept;

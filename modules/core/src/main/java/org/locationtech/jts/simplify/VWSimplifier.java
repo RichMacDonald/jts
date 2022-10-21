@@ -21,19 +21,19 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.GeometryTransformer;
 
 /**
- * Simplifies a {@link Geometry} using the Visvalingam-Whyatt area-based algorithm. 
+ * Simplifies a {@link Geometry} using the Visvalingam-Whyatt area-based algorithm.
  * Ensures that any polygonal geometries returned are valid. Simple lines are not
  * guaranteed to remain simple after simplification. All geometry types are
  * handled. Empty and point geometries are returned unchanged. Empty geometry
  * components are deleted.
  * <p>
- * The simplification tolerance is specified as a distance. 
+ * The simplification tolerance is specified as a distance.
  * This is converted to an area tolerance by squaring it.
  * <p>
  * Note that in general this algorithm does not preserve topology - e.g. polygons can be split,
  * collapse to lines or disappear holes can be created or disappear, and lines
  * can cross.
- * 
+ *
  * <h3>Known Bugs</h3>
  * <ul>
  * <li>Not yet optimized for performance
@@ -43,7 +43,7 @@ import org.locationtech.jts.geom.util.GeometryTransformer;
  * <ul>
  * <li>Allow specifying desired number of vertices in the output
  * </ul>
- * 
+ *
  * @version 1.7
  */
 public class VWSimplifier
@@ -51,7 +51,7 @@ public class VWSimplifier
 
   /**
    * Simplifies a geometry using a given tolerance.
-   * 
+   *
    * @param geom geometry to simplify
    * @param distanceTolerance the tolerance to use
    * @return a simplified version of the geometry
@@ -69,7 +69,7 @@ public class VWSimplifier
 
   /**
    * Creates a simplifier for a given geometry.
-   * 
+   *
    * @param inputGeom the geometry to simplify
    */
   public VWSimplifier(Geometry inputGeom)
@@ -81,7 +81,7 @@ public class VWSimplifier
    * Sets the distance tolerance for the simplification. All vertices in the
    * simplified geometry will be within this distance of the original geometry.
    * The tolerance value must be non-negative.
-   * 
+   *
    * @param distanceTolerance
    *          the approximation tolerance to use
    */
@@ -101,9 +101,9 @@ public class VWSimplifier
    * <li>in some pathological cases the topology fixing operation may either
    * fail or run for too long
    * </ul>
-   * 
+   *
    * The default is to fix polygon topology.
-   * 
+   *
    * @param isEnsureValidTopology
    */
   public void setEnsureValid(boolean isEnsureValidTopology)
@@ -113,7 +113,7 @@ public class VWSimplifier
 
   /**
    * Gets the simplified geometry.
-   * 
+   *
    * @return the simplified geometry
    */
   public Geometry getResultGeometry()
@@ -170,7 +170,7 @@ public class VWSimplifier
     /**
      * Simplifies a LinearRing. If the simplification results in a degenerate
      * ring, remove the component.
-     * 
+     *
      * @return null if the simplification results in a degenerate ring
      */
     @Override
@@ -180,7 +180,7 @@ public class VWSimplifier
       Geometry simpResult = super.transformLinearRing(geom, parent);
       if (removeDegenerateRings && !(simpResult instanceof LinearRing))
         return null;
-      
+
       return simpResult;
     }
 
@@ -201,7 +201,7 @@ public class VWSimplifier
      * the topology. Note this only works for area geometries, since buffer
      * always returns areas. This also may return empty geometries, if the input
      * has no actual area.
-     * 
+     *
      * @param rawAreaGeom
      *          an area geometry possibly containing self-intersections
      * @return a valid area geometry

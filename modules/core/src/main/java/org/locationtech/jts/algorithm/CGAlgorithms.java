@@ -21,7 +21,7 @@ import org.locationtech.jts.math.MathUtil;
  * Specifies and implements various fundamental Computational Geometric
  * algorithms. The algorithms supplied in this class are robust for
  * double-precision floating point.
- * 
+ *
  * @version 1.7
  * @deprecated See {@link Length}, {@link Area}, {@link Distance},
  *             {@link Orientation}, {@link PointLocation}
@@ -32,7 +32,7 @@ public class CGAlgorithms
 
   /**
    * A value that indicates an orientation of clockwise, or a right turn.
-   * 
+   *
    * @deprecated Use {@link Orientation#CLOCKWISE} instead.
    */
   @Deprecated
@@ -40,7 +40,7 @@ public static final int CLOCKWISE = -1;
 
   /**
    * A value that indicates an orientation of clockwise, or a right turn.
-   * 
+   *
    * @deprecated Use {@link Orientation#RIGHT} instead.
    */
   @Deprecated
@@ -48,7 +48,7 @@ public static final int RIGHT = CLOCKWISE;
 
   /**
    * A value that indicates an orientation of counterclockwise, or a left turn.
-   * 
+   *
    * @deprecated Use {@link Orientation#COUNTERCLOCKWISE} instead.
    */
   @Deprecated
@@ -56,7 +56,7 @@ public static final int COUNTERCLOCKWISE = 1;
 
   /**
    * A value that indicates an orientation of counterclockwise, or a left turn.
-   * 
+   *
    * @deprecated Use {@link Orientation#LEFT} instead.
    */
   @Deprecated
@@ -64,7 +64,7 @@ public static final int LEFT = COUNTERCLOCKWISE;
 
   /**
    * A value that indicates an orientation of collinear, or no turn (straight).
-   * 
+   *
    * @deprecated Use {@link Orientation#COLLINEAR} instead.
    */
   @Deprecated
@@ -72,7 +72,7 @@ public static final int COLLINEAR = 0;
 
   /**
    * A value that indicates an orientation of collinear, or no turn (straight).
-   * 
+   *
    * @deprecated Use {@link Orientation#STRAIGHT} instead.
    */
   @Deprecated
@@ -81,11 +81,11 @@ public static final int STRAIGHT = COLLINEAR;
   /**
    * Returns the index of the direction of the point {@code q} relative to
    * a vector specified by {@code p1-p2}.
-   * 
+   *
    * @param p1 the origin point of the vector
    * @param p2 the final point of the vector
    * @param q the point to compute the direction to
-   * 
+   *
    * @return {@code 1} if q is counter-clockwise (left) from p1-p2
    *        {@code -1} if q is clockwise (right) from p1-p2
    *         {@code 0} if q is collinear with p1-p2
@@ -123,7 +123,7 @@ public static int orientationIndex(Coordinate p1, Coordinate p2, Coordinate q)
     //return ShewchuksDeterminant.orientationIndex(p1, p2, q);
     // previous implementation - not quite fully robust
     //return RobustDeterminant.orientationIndex(p1, p2, q);
-    
+
   }
 
   public CGAlgorithms()
@@ -137,15 +137,15 @@ public static int orientationIndex(Coordinate p1, Coordinate p2, Coordinate q)
    * <p>
    * This method does <i>not</i> first check the point against the envelope of
    * the ring.
-   * 
+   *
    * @param p
    *          point to check for ring inclusion
    * @param ring
    *          an array of coordinates representing the ring (which must have
    *          first point identical to last point)
    * @return true if p is inside ring
-   * 
-   * @see #locatePointInRing(Coordinate, Coordinate[])  
+   *
+   * @see #locatePointInRing(Coordinate, Coordinate[])
    * @deprecated Use {@link PointLocation#isInRing(Coordinate, Coordinate[])}
    *             instead.
    */
@@ -161,7 +161,7 @@ public static boolean isPointInRing(Coordinate p, Coordinate[] ring)
    * <p>
    * This method does <i>not</i> first check the point against the envelope of
    * the ring.
-   * 
+   *
    * @param p
    *          point to check for ring inclusion
    * @param ring
@@ -181,7 +181,7 @@ public static int locatePointInRing(Coordinate p, Coordinate[] ring)
   /**
    * Tests whether a point lies on the line segments defined by a list of
    * coordinates.
-   * 
+   *
    * @return true if the point is a vertex of the line or lies in the interior
    *         of a line segment in the linestring
    * @deprecated Use {@link PointLocation#isOnLine(Coordinate, Coordinate[])}
@@ -212,7 +212,7 @@ public static boolean isOnLine(Coordinate p, Coordinate[] pt)
    * This algorithm is <b>only</b> guaranteed to work with valid rings. If the
    * ring is invalid (e.g. self-crosses or touches), the computed result may not
    * be correct.
-   * 
+   *
    * @param ring
    *          an array of Coordinates forming a ring
    * @return true if the ring is oriented counter-clockwise.
@@ -294,7 +294,7 @@ public static boolean isCCW(Coordinate[] ring)
    * Computes the orientation of a point q to the directed line segment p1-p2.
    * The orientation of a point relative to a directed line segment indicates
    * which way you turn to get to q after travelling from p1 to p2.
-   * 
+   *
    * @param p1 the first vertex of the line segment
    * @param p2 the second vertex of the line segment
    * @param q the point to compute the relative orientation of
@@ -313,9 +313,9 @@ public static int computeOrientation(Coordinate p1, Coordinate p2,
 
   /**
    * Computes the distance from a point p to a line segment AB
-   * 
+   *
    * Note: NON-ROBUST!
-   * 
+   *
    * @param p
    *          the point to compute the distance for
    * @param A
@@ -337,15 +337,15 @@ public static double distancePointLine(Coordinate p, Coordinate A,
 
     // otherwise use comp.graphics.algorithms Frequently Asked Questions method
     /*
-     * (1) r = AC dot AB 
-     *         --------- 
-     *         ||AB||^2 
-     *         
-     * r has the following meaning: 
-     *   r=0 P = A 
-     *   r=1 P = B 
-     *   r<0 P is on the backward extension of AB 
-     *   r>1 P is on the forward extension of AB 
+     * (1) r = AC dot AB
+     *         ---------
+     *         ||AB||^2
+     *
+     * r has the following meaning:
+     *   r=0 P = A
+     *   r=1 P = B
+     *   r<0 P is on the backward extension of AB
+     *   r>1 P is on the forward extension of AB
      *   0<r<1 P is interior to AB
      */
 
@@ -359,12 +359,12 @@ public static double distancePointLine(Coordinate p, Coordinate A,
       return p.distance(B);
 
     /*
-     * (2) s = (Ay-Cy)(Bx-Ax)-(Ax-Cx)(By-Ay) 
-     *         ----------------------------- 
+     * (2) s = (Ay-Cy)(Bx-Ax)-(Ax-Cx)(By-Ay)
+     *         -----------------------------
      *                    L^2
-     * 
+     *
      * Then the distance from C to P = |s|*L.
-     * 
+     *
      * This is the same calculation as {@link #distancePointLinePerpendicular}.
      * Unrolled here for performance.
      */
@@ -376,7 +376,7 @@ public static double distancePointLine(Coordinate p, Coordinate A,
   /**
    * Computes the perpendicular distance from a point p to the (infinite) line
    * containing the points AB
-   * 
+   *
    * @param p
    *          the point to compute the distance for
    * @param A
@@ -394,10 +394,10 @@ public static double distancePointLinePerpendicular(Coordinate p,
   {
     // use comp.graphics.algorithms Frequently Asked Questions method
     /*
-     * (2) s = (Ay-Cy)(Bx-Ax)-(Ax-Cx)(By-Ay) 
-     *         ----------------------------- 
+     * (2) s = (Ay-Cy)(Bx-Ax)-(Ax-Cx)(By-Ay)
+     *         -----------------------------
      *                    L^2
-     * 
+     *
      * Then the distance from C to P = |s|*L.
      */
     double len2 = (B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y);
@@ -409,7 +409,7 @@ public static double distancePointLinePerpendicular(Coordinate p,
 
   /**
    * Computes the distance from a point to a sequence of line segments.
-   * 
+   *
    * @param p
    *          a point
    * @param line
@@ -438,9 +438,9 @@ public static double distancePointLine(Coordinate p, Coordinate[] line)
 
   /**
    * Computes the distance from a line segment AB to a line segment CD
-   * 
+   *
    * Note: NON-ROBUST!
-   * 
+   *
    * @param A
    *          a point of one line
    * @param B
@@ -466,27 +466,27 @@ public static double distanceLineLine(Coordinate A, Coordinate B,
     // AB and CD are line segments
     /*
      * from comp.graphics.algo
-     * 
-     * Solving the above for r and s yields 
-     * 
-     *     (Ay-Cy)(Dx-Cx)-(Ax-Cx)(Dy-Cy) 
-     * r = ----------------------------- (eqn 1) 
+     *
+     * Solving the above for r and s yields
+     *
+     *     (Ay-Cy)(Dx-Cx)-(Ax-Cx)(Dy-Cy)
+     * r = ----------------------------- (eqn 1)
      *     (Bx-Ax)(Dy-Cy)-(By-Ay)(Dx-Cx)
-     * 
-     *     (Ay-Cy)(Bx-Ax)-(Ax-Cx)(By-Ay)  
+     *
+     *     (Ay-Cy)(Bx-Ax)-(Ax-Cx)(By-Ay)
      * s = ----------------------------- (eqn 2)
-     *     (Bx-Ax)(Dy-Cy)-(By-Ay)(Dx-Cx) 
-     *     
+     *     (Bx-Ax)(Dy-Cy)-(By-Ay)(Dx-Cx)
+     *
      * Let P be the position vector of the
-     * intersection point, then 
-     *   P=A+r(B-A) or 
-     *   Px=Ax+r(Bx-Ax) 
-     *   Py=Ay+r(By-Ay) 
+     * intersection point, then
+     *   P=A+r(B-A) or
+     *   Px=Ax+r(Bx-Ax)
+     *   Py=Ay+r(By-Ay)
      * By examining the values of r & s, you can also determine some other limiting
-     * conditions: 
-     *   If 0<=r<=1 & 0<=s<=1, intersection exists 
-     *      r<0 or r>1 or s<0 or s>1 line segments do not intersect 
-     *   If the denominator in eqn 1 is zero, AB & CD are parallel 
+     * conditions:
+     *   If 0<=r<=1 & 0<=s<=1, intersection exists
+     *      r<0 or r>1 or s<0 or s>1 line segments do not intersect
+     *   If the denominator in eqn 1 is zero, AB & CD are parallel
      *   If the numerator in eqn 1 is also zero, AB & CD are collinear.
      */
 
@@ -496,17 +496,17 @@ public static double distanceLineLine(Coordinate A, Coordinate B,
     }
     else {
       double denom = (B.x - A.x) * (D.y - C.y) - (B.y - A.y) * (D.x - C.x);
-      
+
       if (denom == 0) {
         noIntersection = true;
       }
       else {
         double r_num = (A.y - C.y) * (D.x - C.x) - (A.x - C.x) * (D.y - C.y);
         double s_num = (A.y - C.y) * (B.x - A.x) - (A.x - C.x) * (B.y - A.y);
-        
+
         double s = s_num / denom;
         double r = r_num / denom;
-  
+
         if ((r < 0) || (r > 1) || (s < 0) || (s > 1)) {
           noIntersection = true;
         }
@@ -520,14 +520,14 @@ public static double distanceLineLine(Coordinate A, Coordinate B,
             distancePointLine(D, A, B));
     }
     // segments intersect
-    return 0.0; 
+    return 0.0;
   }
 
   /**
    * Computes the signed area for a ring. The signed area is positive if the
    * ring is oriented CW, negative if the ring is oriented CCW, and zero if the
    * ring is degenerate or flat.
-   * 
+   *
    * @param ring
    *          the coordinates forming the ring
    * @return the signed area of the ring
@@ -561,7 +561,7 @@ public static double signedArea(Coordinate[] ring)
    * <li>negative if the ring is oriented CCW
    * <li>zero if the ring is degenerate or flat
    * </ul>
-   * 
+   *
    * @param ring
    *          the coordinates forming the ring
    * @return the signed area of the ring
@@ -599,7 +599,7 @@ public static double signedArea(CoordinateSequence ring)
 
   /**
    * Computes the length of a linestring specified by a sequence of points.
-   * 
+   *
    * @param pts
    *          the points specifying the linestring
    * @return the length of the linestring

@@ -22,7 +22,7 @@ public class DistanceTest extends GeometryTestCase {
   }
 
   public DistanceTest(String name) { super(name); }
-  
+
   public void testDistancePointLinePerpendicular() {
     assertEquals(0.5, Distance.pointToLinePerpendicular(
         new Coordinate(0.5, 0.5), new Coordinate(0,0), new Coordinate(1,0)), 0.000001);
@@ -41,7 +41,7 @@ public class DistanceTest extends GeometryTestCase {
 
   public void testDistanceLineLineDisjointCollinear() {
     assertEquals(1.999699, Distance.segmentToSegment(
-        new Coordinate(0,0), new Coordinate(9.9, 1.4), 
+        new Coordinate(0,0), new Coordinate(9.9, 1.4),
         new Coordinate(11.88, 1.68), new Coordinate(21.78, 3.08)), 0.000001);
   }
 }

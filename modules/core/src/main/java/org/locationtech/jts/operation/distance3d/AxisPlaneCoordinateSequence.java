@@ -17,13 +17,13 @@ import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.Envelope;
 
 /**
- * A CoordinateSequence wrapper which 
+ * A CoordinateSequence wrapper which
  * projects 3D coordinates into one of the
  * three Cartesian axis planes,
  * using the standard orthonormal projection
  * (i.e. simply selecting the appropriate ordinates into the XY ordinates).
  * The projected data is represented as 2D coordinates.
- * 
+ *
  * @author mdavis
  *
  */
@@ -31,7 +31,7 @@ public class AxisPlaneCoordinateSequence implements CoordinateSequence {
 
 	/**
 	 * Creates a wrapper projecting to the XY plane.
-	 * 
+	 *
 	 * @param seq the sequence to be projected
 	 * @return a sequence which projects coordinates
 	 */
@@ -43,10 +43,10 @@ public class AxisPlaneCoordinateSequence implements CoordinateSequence {
 		 */
 		return new AxisPlaneCoordinateSequence(seq, XY_INDEX);
 	}
-	
+
 	/**
 	 * Creates a wrapper projecting to the XZ plane.
-	 * 
+	 *
 	 * @param seq the sequence to be projected
 	 * @return a sequence which projects coordinates
 	 */
@@ -54,10 +54,10 @@ public class AxisPlaneCoordinateSequence implements CoordinateSequence {
 	{
 		return new AxisPlaneCoordinateSequence(seq, XZ_INDEX);
 	}
-	
+
 	/**
 	 * Creates a wrapper projecting to the YZ plane.
-	 * 
+	 *
 	 * @param seq the sequence to be projected
 	 * @return a sequence which projects coordinates
 	 */
@@ -65,14 +65,14 @@ public class AxisPlaneCoordinateSequence implements CoordinateSequence {
 	{
 		return new AxisPlaneCoordinateSequence(seq, YZ_INDEX);
 	}
-	
+
 	private static final int[] XY_INDEX = { 0,1 };
 	private static final int[] XZ_INDEX = { 0,2 };
 	private static final int[] YZ_INDEX = { 1,2 };
-	
+
 	private CoordinateSequence seq;
 	private int[] indexMap;
-	
+
 	private AxisPlaneCoordinateSequence(CoordinateSequence seq, int[] indexMap) {
 		this.seq = seq;
 		this.indexMap = indexMap;
@@ -145,12 +145,12 @@ public class AxisPlaneCoordinateSequence implements CoordinateSequence {
 	@Override
 	public Object clone()
 	{
-		throw new UnsupportedOperationException();		
+		throw new UnsupportedOperationException();
 	}
-	
+
 	@Override
 	public AxisPlaneCoordinateSequence copy()
 	{
-		throw new UnsupportedOperationException();		
+		throw new UnsupportedOperationException();
 	}
 }

@@ -27,11 +27,11 @@ import org.locationtech.jts.geom.CoordinateFilter;
  *
  *@version 1.7
  */
-public class UniqueCoordinateArrayFilter implements CoordinateFilter 
+public class UniqueCoordinateArrayFilter implements CoordinateFilter
 {
   /**
    * Convenience method which allows running the filter over an array of {@link Coordinate}s.
-   * 
+   *
    * @param coords an array of coordinates
    * @return an array of the unique coordinates
    */
@@ -43,7 +43,7 @@ public class UniqueCoordinateArrayFilter implements CoordinateFilter
     }
     return filter.getCoordinates();
   }
-  
+
   private Set<Coordinate> coordSet = new HashSet<>();
   // Use an auxiliary list as well in order to preserve coordinate order
   private List<Coordinate> list = new ArrayList<>();

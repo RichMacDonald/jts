@@ -17,10 +17,10 @@ import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.MultiPoint;
 import org.locationtech.jts.index.strtree.EnvelopeDistance;
 
-public class TestStressEnvelopeMinMaxDistance 
+public class TestStressEnvelopeMinMaxDistance
 {
   static GeometryFactory factory = new GeometryFactory();
-  
+
   public static void main(String[] args) {
     TestStressEnvelopeMinMaxDistance test = new TestStressEnvelopeMinMaxDistance();
     test.test();
@@ -36,11 +36,11 @@ public class TestStressEnvelopeMinMaxDistance
   {
     int sizeX = 6;
     int sizeY = 6;
-    
+
     Coordinate[] pts = createPoints(sizeX, sizeY);
-    
+
     MultiPoint[] boxes = createPointPairs(pts);
-    
+
     run(boxes);
   }
 
@@ -57,7 +57,7 @@ public class TestStressEnvelopeMinMaxDistance
     double distance = a.distance(b);
     double minMaxDistance = EnvelopeDistance.minMaxDistance(
         a.getEnvelopeInternal(), b.getEnvelopeInternal());
-    
+
     System.out.println("distance: " + distance
         + "   minMaxDist: " + minMaxDistance);
 
@@ -70,7 +70,7 @@ public class TestStressEnvelopeMinMaxDistance
   private MultiPoint[] createPointPairs(Coordinate[] pts) {
     int npts = pts.length;
     MultiPoint[] pairs = new MultiPoint[npts * npts];
-    
+
     for (int i = 0; i < npts; i++) {
       for (int j = 0; j < npts; j++) {
         int index = i * npts + j;
@@ -78,7 +78,7 @@ public class TestStressEnvelopeMinMaxDistance
         pairs[index] = pair;
       }
     }
-    
+
     return pairs;
   }
 
@@ -93,8 +93,8 @@ public class TestStressEnvelopeMinMaxDistance
     return pts;
   }
 
-  
+
 
 }
-  
-  
+
+

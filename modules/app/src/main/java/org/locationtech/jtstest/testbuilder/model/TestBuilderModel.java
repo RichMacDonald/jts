@@ -40,16 +40,16 @@ import org.locationtech.jtstest.util.io.IOUtil;
 import org.locationtech.jtstest.util.io.MultiFormatReader;
 
 
-public class TestBuilderModel 
+public class TestBuilderModel
 {
   private PrecisionModel precisionModel = new PrecisionModel();
   private GeometryFactory geometryFactory = null;
 	private GeometryEditModel geomEditModel;
-	
+
   private LayerList layerList = LayerList.createFixed();
   private LayerList layerListTop = new LayerList();
   private LayerList layerListBase = new LayerList();
-  
+
   private WKTWriter writer = new WKTWriter();
   private Object currResult = null;
   private String opName = "";
@@ -60,25 +60,25 @@ public class TestBuilderModel
     initLayers();
     caseList.init();
 	}
-	
+
 	public GeometryEditModel getGeometryEditModel() { return geomEditModel; }
-	
+
 	public PrecisionModel getPrecisionModel() { return precisionModel; }
-	
+
   public void setPrecisionModel(PrecisionModel precisionModel)
   {
     this.precisionModel = precisionModel;
     geometryFactory = null;
   }
-  
+
   public GeometryFactory getGeometryFactory()
   {
     if (geometryFactory == null)
       geometryFactory = new GeometryFactory(getPrecisionModel());
     return geometryFactory;
   }
-  
-  
+
+
 	public String getResultDisplayString(Geometry g)
 	{
 		if (g == null)
@@ -87,14 +87,14 @@ public class TestBuilderModel
       return GeometryEditModel.toStringVeryLarge(g);
 		return writer.writeFormatted(g);
 	}
-	
+
   public LayerList getLayers() { return layerList; }
   public LayerList getLayersAll() { return LayerList.create(layerListTop,layerList,layerListBase) ; }
-  
+
   public LayerList getLayersTop() { return layerListTop; }
   public LayerList getLayersBase() { return layerListBase; }
-  
-  
+
+
   public List<Layer> getLayersLegend() {
     List<Layer> layers = new ArrayList<>();
     addLegendLayers(layerList, layers);
@@ -102,23 +102,23 @@ public class TestBuilderModel
     addLegendLayers(layerListBase, layers);
     return layers;
   }
-  
+
   private void addLegendLayers(LayerList layerList, List<Layer> layers) {
     for (int i = 0; i < layerList.size(); i++) {
-      if (layerList.getLayer(i).hasGeometry() 
+      if (layerList.getLayer(i).hasGeometry()
           && layerList.getLayer(i).isEnabled())
         layers.add(layerList.getLayer(i));
     }
   }
-  
+
   private void initLayers()
-  {  	
+  {
   	GeometryContainer geomCont0 = new IndexedGeometryContainer(geomEditModel, 0);
   	GeometryContainer geomCont1 = new IndexedGeometryContainer(geomEditModel, 1);
-  	
+
     layerList.getLayer(LayerList.LYR_A).setSource(geomCont0);
     layerList.getLayer(LayerList.LYR_B).setSource(geomCont1);
-    
+
     if (geomEditModel != null)
       layerList.getLayer(LayerList.LYR_RESULT).setSource(
           new ResultGeometryContainer(geomEditModel));
@@ -126,11 +126,11 @@ public class TestBuilderModel
     Layer lyrA = layerList.getLayer(LayerList.LYR_A);
     lyrA.setGeometryStyle(new BasicStyle(GeometryDepiction.GEOM_A_LINE_CLR,
         GeometryDepiction.GEOM_A_FILL_CLR));
-    
+
     Layer lyrB = layerList.getLayer(LayerList.LYR_B);
     lyrB.setGeometryStyle(new BasicStyle(GeometryDepiction.GEOM_B_LINE_CLR,
         GeometryDepiction.GEOM_B_FILL_CLR));
-    
+
     Layer lyrR = layerList.getLayer(LayerList.LYR_RESULT);
     lyrR.setGeometryStyle(new BasicStyle(GeometryDepiction.GEOM_RESULT_LINE_CLR,
         GeometryDepiction.GEOM_RESULT_FILL_CLR));
@@ -140,7 +140,7 @@ public class TestBuilderModel
     Geometry g = readGeometryFromClipboard();
     getGeometryEditModel().setGeometry(geomIndex, g);
   }
-  
+
   public Geometry readGeometryFromClipboard() throws Exception {
     Object obj = SwingUtil.getFromClipboard();
     Geometry g = null;
@@ -149,8 +149,8 @@ public class TestBuilderModel
     } else
       return (Geometry) obj;
   }
-    
-  private static Geometry readGeometryText(String geomStr, GeometryFactory geomFact) 
+
+  private static Geometry readGeometryText(String geomStr, GeometryFactory geomFact)
   throws Exception
   {
     Geometry g = null;
@@ -159,15 +159,15 @@ public class TestBuilderModel
         MultiFormatReader reader = new MultiFormatReader(geomFact);
         g = reader.read(geomStr);
       } catch (ParseException ex) {
-        String msg = "Unable to parse data: '" + ExceptionFormatter.condense(geomStr) + "'";  
-        throw new IllegalArgumentException(msg); 
+        String msg = "Unable to parse data: '" + ExceptionFormatter.condense(geomStr) + "'";
+        throw new IllegalArgumentException(msg);
       }
     }
     return g;
     }
-    
+
   public void loadMultipleGeometriesFromFile(int geomIndex, String filename)
-  throws Exception 
+  throws Exception
   {
     Geometry g = IOUtil.readFile(filename, getGeometryFactory());
     TestCaseEdit testCaseEdit = getCurrentCase();
@@ -175,30 +175,30 @@ public class TestBuilderModel
     testCaseEdit.setName(filename);
     getGeometryEditModel().setTestCase(testCaseEdit);
   }
-  
+
   public void loadGeometryText(String wktA, String wktB) throws ParseException, IOException {
     MultiFormatReader reader = new MultiFormatReader(new GeometryFactory(getPrecisionModel(),0));
-    
+
     // read geom A
     Geometry g0 = null;
     if (wktA.length() > 0) {
       g0 = reader.read(wktA);
     }
-    
+
     // read geom B
     Geometry g1 = null;
     if (wktB.length() > 0) {
       g1 = reader.read(wktB);
     }
-    
+
     TestCaseEdit testCaseEdit = getCurrentCase();
     testCaseEdit.setGeometry(0, g0);
     testCaseEdit.setGeometry(1, g1);
     getGeometryEditModel().setTestCase(testCaseEdit);
   }
-  
+
   //=============================================================
-  
+
   private CaseList caseList = new CaseList(() -> new TestCaseEdit(precisionModel));
 
   public CaseList cases() {
@@ -228,8 +228,8 @@ public class TestBuilderModel
     caseList.addCase(tc);
   }
 
-  //================================================================= 
-  
+  //=================================================================
+
   public void openXmlFilesAndDirectories(File[] files) throws Exception {
      TestCaseList testCaseList = createTestCaseList(files);
     PrecisionModel precisionModel = new PrecisionModel();
@@ -297,7 +297,7 @@ public class TestBuilderModel
     return testCaseList;
   }
 
-  private TestCaseList createTestCaseList(File xmlTestFile) 
+  private TestCaseList createTestCaseList(File xmlTestFile)
   {
     TestReader testReader = new TestReader();
     TestRun testRun = testReader.createTestRun(xmlTestFile, 1);
@@ -317,20 +317,20 @@ public class TestBuilderModel
   private List parseErrors = null;
 
   /**
-   * 
+   *
    * @return empy list if no errors
    */
   public List getParsingProblems()
   {
-    return parseErrors; 
+    return parseErrors;
   }
-  
+
   public boolean hasParseErrors()
   {
     if (parseErrors == null) return false;
     return parseErrors.size() > 0;
   }
- 
+
   public void setResult(Object result)
   {
   	currResult = result;
@@ -338,7 +338,7 @@ public class TestBuilderModel
     	getCurrentCase().setResult((Geometry) result);
     }
   }
-  
+
   public Object getResult()
   {
   	return currResult;
@@ -348,16 +348,16 @@ public class TestBuilderModel
     if (opName == null) {
       this.opName = "";
     }
-    else { 
+    else {
       this.opName = StringUtil.capitalize(opName);
     }
   }
-  
+
   public String getOpName()
   {
     return opName;
   }
-  
+
   public void copyResult(boolean isFormatted)
   {
     SwingUtil.copyToClipboard(currResult, isFormatted);
@@ -373,7 +373,7 @@ public class TestBuilderModel
     setPrecisionModel(precisionModel);
     loadWKTAfterPMChange();
   }
-  
+
   private void saveWKTBeforePMChange() {
     wktABeforePMChange.clear();
     wktBBeforePMChange.clear();
@@ -398,12 +398,12 @@ public class TestBuilderModel
   }
 
   /**
-   * Encapsulates test case cursor logic. 
+   * Encapsulates test case cursor logic.
    * @author Martin Davis
    *
    */
   public static class CaseList {
-    
+
     public interface CaseFactory {
       TestCaseEdit create();
     }
@@ -411,7 +411,7 @@ public class TestBuilderModel
     private TestCaseList tcList = new TestCaseList();
     private int tcIndex = -1;
     private CaseFactory caseFactory;
-  
+
     public CaseList(CaseFactory caseFactory) {
       this.caseFactory = caseFactory;
     }
@@ -421,7 +421,7 @@ public class TestBuilderModel
       // ensure that there is always a valid TestCase in the list
       createNew();
     }
-    
+
     public void init(TestCaseList tcl) {
       tcList = tcl;
       if (tcList.size() > 0) {
@@ -431,11 +431,11 @@ public class TestBuilderModel
         createNew();
       }
     }
-  
+
     public List getCases() {
       return Collections.unmodifiableList(tcList.getList());
     }
-  
+
     public void setCurrent(TestCaseEdit testCase) {
       for (int i = 0; i < tcList.size(); i++) {
         if (tcList.get(i) == testCase) {
@@ -444,16 +444,16 @@ public class TestBuilderModel
         }
       }
     }
-    
+
     public TestCaseEdit getCurrentCase()
     {
       return (TestCaseEdit) getCurrentTestable();
     }
-    
+
     public Testable getCurrentTestable() {
       return tcList.get(tcIndex);
     }
-  
+
     public int getCurrentTestIndex()
     {
       return tcIndex;
@@ -465,7 +465,7 @@ public class TestBuilderModel
     {
       return tcList;
     }
-    
+
     public int getSize()
     {
       return tcList.getList().size();
@@ -474,21 +474,21 @@ public class TestBuilderModel
       if (tcIndex > 0)
         tcIndex--;
     }
-  
+
     public void nextCase() {
       if (tcIndex < tcList.size() - 1)
         tcIndex++;
     }
-  
+
     public void copyCase() {
       TestCaseEdit copy = new TestCaseEdit(getCurrentCase());
       addCase(copy);
     }
-    
+
     public void createNew() {
       addCase( caseFactory.create());
     }
-    
+
     private void addCase(TestCaseEdit testcase) {
       if (tcIndex < 0) {
         tcList.add(testcase);
@@ -498,7 +498,7 @@ public class TestBuilderModel
       }
       tcIndex++;
     }
-  
+
     public void deleteCase() {
       tcList.remove(tcIndex);
       if (tcList.size() == 0) {
@@ -506,8 +506,8 @@ public class TestBuilderModel
       }
       if (tcIndex >= tcList.size())
         tcIndex = tcList.size() - 1;
-    }  
-  
+    }
+
   }
 
   public Layer layerCopy(Layer lyr) {
@@ -524,7 +524,7 @@ public class TestBuilderModel
     }
     else if (layerListTop.contains(lyr)) {
       layerListTop.remove(lyr);
-    } 
+    }
   }
 
   public void layerUp(Layer lyr) {
@@ -539,7 +539,7 @@ public class TestBuilderModel
     }
     else if (layerListTop.contains(lyr)) {
       layerListTop.moveUp(lyr);
-    } 
+    }
   }
 
   public void layerDown(Layer lyr) {
@@ -552,8 +552,8 @@ public class TestBuilderModel
         layerListBase.addTop(lyr);
       }
       layerListTop.moveDown(lyr);
-    } 
-    
+    }
+
   }
 
   public boolean isLayerFixed(Layer lyr) {

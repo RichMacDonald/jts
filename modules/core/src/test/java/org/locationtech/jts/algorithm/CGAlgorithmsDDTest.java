@@ -10,7 +10,7 @@ extends TestCase {
   }
 
   public CGAlgorithmsDDTest(String name) { super(name); }
-  
+
   public void testSignOfDet2x2() {
     checkSignOfDet2x2(1, 1, 2, 2, 0);
     checkSignOfDet2x2(1, 1, 2, 3, 1);
@@ -18,6 +18,6 @@ extends TestCase {
   }
 
   private void checkSignOfDet2x2(double x1, double y1, double x2, double y2, int sign) {
-    assertEquals(sign, CGAlgorithmsDD.signOfDet2x2(x1, y1, x2, y2)); 
+    assertEquals(sign, CGAlgorithmsDD.signOfDet2x2(x1, y1, x2, y2));
   }
 }

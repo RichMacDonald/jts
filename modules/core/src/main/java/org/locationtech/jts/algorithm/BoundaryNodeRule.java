@@ -28,20 +28,20 @@ import org.locationtech.jts.operation.relate.RelateOp;
  * However, other kinds of Boundary Node Rules are appropriate
  * in specific situations (for instance, linear network topology
  * usually follows the {@link EndPointBoundaryNodeRule}.)
- * Some JTS operations 
+ * Some JTS operations
  * (such as {@link RelateOp}, {@link BoundaryOp} and {@link IsSimpleOp})
  * allow the BoundaryNodeRule to be specified,
  * and respect the supplied rule when computing the results of the operation.
  * <p>
  * An example use case for a non-SFS-standard Boundary Node Rule is
- * that of checking that a set of {@link LineString}s have 
+ * that of checking that a set of {@link LineString}s have
  * valid linear network topology, when turn-arounds are represented
  * as closed rings.  In this situation, the entry road to the
  * turn-around is only valid when it touches the turn-around ring
- * at the single (common) endpoint.  This is equivalent 
- * to requiring the set of <tt>LineString</tt>s to be 
+ * at the single (common) endpoint.  This is equivalent
+ * to requiring the set of <tt>LineString</tt>s to be
  * <b>simple</b> under the {@link EndPointBoundaryNodeRule}.
- * The SFS-standard {@link Mod2BoundaryNodeRule} is not 
+ * The SFS-standard {@link Mod2BoundaryNodeRule} is not
  * sufficient to perform this test, since it
  * states that closed rings have <b>no</b> boundary points.
  * <p>
@@ -62,7 +62,7 @@ public interface BoundaryNodeRule
 	 * Tests whether a point that lies in <tt>boundaryCount</tt>
 	 * geometry component boundaries is considered to form part of the boundary
 	 * of the parent geometry.
-	 * 
+	 *
 	 * @param boundaryCount the number of component boundaries that this point occurs in
 	 * @return true if points in this number of boundaries lie in the parent boundary
 	 */

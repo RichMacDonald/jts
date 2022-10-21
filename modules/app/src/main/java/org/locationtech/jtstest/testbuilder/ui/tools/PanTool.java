@@ -49,7 +49,7 @@ public Cursor getCursor() {
 public void mousePressed(MouseEvent e) {
     source = toModel(e.getPoint());
   }
-  
+
   @Override
 public void mouseReleased(MouseEvent e) {
     if (source == null)

@@ -63,8 +63,8 @@ import org.locationtech.jts.util.AssertionFailedException;
  * which specifies coordinate dimension Z, M or ZM as modifiers (e.g. POINT Z)
  * or in the name of the geometry type (e.g. LINESTRINGZM).
  * If the coordinate dimension is specified it will be set in the created geometry.
- * If the coordinate dimension is not specified, the default behaviour is to 
- * create XYZ geometry (this is backwards compatible with older JTS versions).  
+ * If the coordinate dimension is not specified, the default behaviour is to
+ * create XYZ geometry (this is backwards compatible with older JTS versions).
  * This can be altered to create XY geometry by
  * calling {@link #setIsOldJtsCoordinateSyntaxAllowed(boolean)}.
  * <p>
@@ -72,7 +72,7 @@ import org.locationtech.jts.util.AssertionFailedException;
  * by calling {@link #setFixStructure(boolean)}.
  * This ensures that geometry can be constructed without errors due to missing coordinates.
  * The created geometry may still be topologically invalid.
- * 
+ *
  * <h3>Notes:</h3>
  * <ul>
  * <li>Keywords are case-insensitive.
@@ -115,7 +115,7 @@ import org.locationtech.jts.util.AssertionFailedException;
  * <i>CoordinateSingletonList:</i>
  *         <b>(</b> <i>CoordinateSingleton {</i> <b>,</b> <i>CoordinateSingleton }</i> <b>)</b>
  *         | <b>EMPTY</b>
- *         
+ *
  * <i>CoordinateSingleton:</i>
  *         <b>(</b> <i>Coordinate</i> <b>)</b>
  *         | <b>EMPTY</b>
@@ -167,8 +167,8 @@ public class WKTReader
    */
   private static final boolean ALLOW_OLD_JTS_MULTIPOINT_SYNTAX = true;
   private boolean isAllowOldJtsMultipointSyntax = ALLOW_OLD_JTS_MULTIPOINT_SYNTAX;
-  
-  
+
+
   private boolean isFixStructure = false;
 
   /**
@@ -213,15 +213,15 @@ public class WKTReader
    * Sets a flag indicating that the structure of input geometry should be fixed
    * so that the geometry can be constructed without error.
    * This involves adding coordinates if the input coordinate sequence is shorter than required.
-   * 
+   *
    * @param isFixStructure true if the input structure should be fixed
-   * 
+   *
    * @see LinearRing#MINIMUM_VALID_SIZE
    */
   public void setFixStructure(boolean isFixStructure) {
     this.isFixStructure = isFixStructure;
   }
-  
+
   /**
    * Reads a Well-Known Text representation of a {@link Geometry}
    * from a {@link String}.
@@ -303,39 +303,39 @@ public class WKTReader
       tokenizer.nextToken();
       opened = true;
     }
-    
+
     // create a sequence for one coordinate
     int offsetM = ordinateFlags.contains(Ordinate.Z) ? 1 : 0;
     Coordinate coord = createCoordinate(ordinateFlags);
     coord.setOrdinate(CoordinateSequence.X, precisionModel.makePrecise(getNextNumber(tokenizer)));
     coord.setOrdinate(CoordinateSequence.Y, precisionModel.makePrecise(getNextNumber(tokenizer)));
-    
+
     // additionally read other vertices
     if (ordinateFlags.contains(Ordinate.Z))
       coord.setOrdinate(CoordinateSequence.Z, getNextNumber(tokenizer));
     if (ordinateFlags.contains(Ordinate.M))
       coord.setOrdinate(CoordinateSequence.Z + offsetM, getNextNumber(tokenizer));
-    
+
     if (ordinateFlags.size() == 2 && this.isAllowOldJtsCoordinateSyntax && isNumberNext(tokenizer)) {
       coord.setOrdinate(CoordinateSequence.Z, getNextNumber(tokenizer));
     }
-    
+
     // read close token if it was opened here
     if (opened) {
       getNextCloser(tokenizer);
     }
-    
+
     return coord;
   }
-  
+
   private Coordinate createCoordinate(EnumSet<Ordinate> ordinateFlags) {
     boolean hasZ = ordinateFlags.contains(Ordinate.Z);
     boolean hasM = ordinateFlags.contains(Ordinate.M);
-    if (hasZ && hasM) 
+    if (hasZ && hasM)
       return new CoordinateXYZM();
     if (hasM)
       return new CoordinateXYM();
-    if (hasZ || this.isAllowOldJtsCoordinateSyntax) 
+    if (hasZ || this.isAllowOldJtsCoordinateSyntax)
       return new Coordinate();
     return new CoordinateXY();
   }
@@ -360,7 +360,7 @@ public class WKTReader
           throws IOException, ParseException {
     if (getNextEmptyOrOpener(tokenizer).equals(WKTConstants.EMPTY))
       return createCoordinateSequenceEmpty(ordinateFlags);
-    
+
     List<Coordinate> coordinates = new ArrayList<>();
     do {
       coordinates.add(getCoordinate(tokenizer, ordinateFlags, false));
@@ -386,10 +386,10 @@ public class WKTReader
 
   private static boolean isClosed(List<Coordinate> coords) {
     if (coords.size() == 0) return true;
-    if (coords.size() == 1 
+    if (coords.size() == 1
         || ! coords.get(0).equals2D(coords.get(coords.size() - 1))) {
       return false;
-    } 
+    }
     return true;
   }
 
@@ -475,7 +475,7 @@ S  */
    * Parses the next number in the stream.
    * Numbers with exponents are handled.
    * <tt>NaN</tt> values are handled correctly, and
-   * the case of the "NaN" symbol is not significant. 
+   * the case of the "NaN" symbol is not significant.
    *
    * @param  tokenizer        tokenizer over a stream of text in Well-known Text
    * @return                  the next number in the stream
@@ -659,7 +659,7 @@ S  */
   {
     return new ParseException(msg + " (line " + tokenizer.lineno() + ")");
   }
-  
+
   /**
    * Gets a description of the current token type
    * @param tokenizer the tokenizer
@@ -755,7 +755,7 @@ S  */
   private boolean isTypeName(StreamTokenizer tokenizer, String type, String typeName) throws ParseException {
     if (! type.startsWith(typeName))
       return false;
-    
+
     String modifiers = type.substring(typeName.length());
     boolean isValidMod = modifiers.length() <= 2 &&
         (modifiers.length() == 0
@@ -765,7 +765,7 @@ S  */
     if (! isValidMod) {
       throw parseErrorWithLine(tokenizer, "Invalid dimension modifiers: " + type);
     }
-    
+
     return true;
   }
 
@@ -832,7 +832,7 @@ S  */
     if (nextToken.equals(WKTConstants.EMPTY)) {
       return geometryFactory.createMultiPoint(new Point[0]);
     }
-    
+
     // check for old-style JTS syntax (no parentheses surrounding Point coordinates) and parse it if present
     // MD 2009-02-21 - this is only provided for backwards compatibility for a few versions
     if (isAllowOldJtsMultipointSyntax) {
@@ -842,7 +842,7 @@ S  */
             getCoordinateSequenceOldMultiPoint(tokenizer, ordinateFlags));
       }
     }
-    
+
     List<Point> points = new ArrayList<>();
     Point point = readPointText(tokenizer, ordinateFlags);
     points.add(point);

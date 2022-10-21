@@ -30,7 +30,7 @@ import org.locationtech.jts.io.WKTWriter;
  * for preserving topological or parentage information.
  * All noded substrings are initialized with the same context object.
  * <p>
- * For read-only applications use {@link BasicSegmentString}, 
+ * For read-only applications use {@link BasicSegmentString},
  * which is (slightly) more lightweight.
  *
  * @version 1.7
@@ -41,7 +41,7 @@ public class NodedSegmentString
 {
 	/**
 	 * Gets the {@link SegmentString}s which result from splitting this string at node points.
-	 * 
+	 *
 	 * @param segStrings a Collection of NodedSegmentStrings
 	 * @return a Collection of NodedSegmentStrings representing the substrings
 	 */
@@ -54,7 +54,7 @@ public class NodedSegmentString
 
 	/**
 	 * Adds the noded {@link SegmentString}s which result from splitting this string at node points.
-	 * 
+	 *
 	 * @param segStrings a Collection of NodedSegmentStrings
 	 * @param resultEdgelist a List which will collect the NodedSegmentStrings representing the substrings
 	 */
@@ -119,13 +119,13 @@ public Coordinate[] getCoordinates() { return pts; }
 
   /**
    * Gets a list of coordinates with all nodes included.
-   * 
+   *
    * @return an array of coordinates include nodes
    */
   public Coordinate[] getNodedCoordinates() {
     return nodeList.getSplitCoordinates();
   }
-  
+
   @Override
 public boolean isClosed()
   {
@@ -151,7 +151,7 @@ public boolean isClosed()
   	if (p0.equals2D(p1)) return 0;
   	return Octant.octant(p0, p1);
   }
-  
+
   /**
    * Adds EdgeIntersections for one or both
    * intersections found for a segment of an edge to the edge intersection list.
@@ -176,7 +176,7 @@ public boolean isClosed()
 
   /**
    * Adds an intersection node for a given point and segment to this segment string.
-   * 
+   *
    * @param intPt the location of the intersection
    * @param segmentIndex the index of the segment containing the intersection
    */
@@ -184,12 +184,12 @@ public boolean isClosed()
 public void  addIntersection(Coordinate intPt, int segmentIndex) {
   	addIntersectionNode(intPt, segmentIndex);
   }
-  	
+
   /**
    * Adds an intersection node for a given point and segment to this segment string.
    * If an intersection already exists for this exact location, the existing
    * node will be returned.
-   * 
+   *
    * @param intPt the location of the intersection
    * @param segmentIndex the index of the segment containing the intersection
    * @return the intersection node for the point
@@ -216,7 +216,7 @@ public void  addIntersection(Coordinate intPt, int segmentIndex) {
 		SegmentNode ei = nodeList.add(intPt, normalizedSegmentIndex);
 		return ei;
 	}
-  
+
   @Override
 public String toString()
   {

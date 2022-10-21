@@ -85,24 +85,24 @@ public class CoordinateArraysTest extends GeometryTestCase {
   public void testReverseEmpty() {
     Coordinate[] pts = {};
     checkReversed(pts);  }
-  
+
   public void testReverseSingleElement() {
     Coordinate[] pts = { new Coordinate(1, 1) };
     checkReversed(pts);
   }
-  
+
   public void testReverse2() {
-    Coordinate[] pts = { 
+    Coordinate[] pts = {
         new Coordinate(1, 1), new Coordinate(2, 2) };
     checkReversed(pts);
   }
-  
+
   public void testReverse3() {
-    Coordinate[] pts = { 
+    Coordinate[] pts = {
         new Coordinate(1, 1), new Coordinate(2, 2), new Coordinate(3 ,3) };
     checkReversed(pts);
   }
-  
+
   private void checkReversed(Coordinate[] pts) {
     Coordinate[] ptsRev = CoordinateArrays.copyDeep(pts);
     CoordinateArrays.reverse(ptsRev);
@@ -112,7 +112,7 @@ public class CoordinateArraysTest extends GeometryTestCase {
       checkEqualXY(pts[i], ptsRev[len - 1 - i]);
     }
   }
-  
+
   public void testScrollRing() {
     // arrange
     Coordinate[] sequence = createCircle(new Coordinate(10, 10), 9d);
@@ -164,7 +164,7 @@ public class CoordinateArraysTest extends GeometryTestCase {
     assertEquals( 1, CoordinateArrays.measures(array));
 
     CoordinateArrays.enforceConsistency(array2);
-    
+
     Coordinate fixed[] = CoordinateArrays.enforceConsistency(array2,2,0);
     assertSame( fixed, array2); // no processing required
 

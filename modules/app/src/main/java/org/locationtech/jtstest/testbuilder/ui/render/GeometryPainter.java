@@ -30,16 +30,16 @@ import org.locationtech.jtstest.testbuilder.ui.style.Style;
 
 
 
-public class GeometryPainter 
+public class GeometryPainter
 {
 	private static BasicStroke GEOMETRY_STROKE = new BasicStroke();
 	private static BasicStroke POINT_STROKE = new BasicStroke(AppConstants.POINT_SIZE);
-	
+
   public static void paint(Graphics2D g, Viewport viewport, Geometry geometry, Style style)
   throws Exception
   {
     // cull non-visible geometries
-    if ((geometry == null) || ! viewport.intersectsInModel(geometry.getEnvelopeInternal())) 
+    if ((geometry == null) || ! viewport.intersectsInModel(geometry.getEnvelopeInternal()))
       return;
 
     if (geometry instanceof GeometryCollection) {
@@ -54,20 +54,20 @@ public class GeometryPainter
       }
       return;
     }
-    
+
     style.paint(geometry, viewport, g);
   }
 
   private static void paintGeometryCollection(
-      ) 
+      )
   throws Exception
   {
   }
 
   static Viewport viewportCache;
   static ShapeWriter converterCache;
-  
-  // TODO: does not work, has a race condition 
+
+  // TODO: does not work, has a race condition
   public static ShapeWriter BADgetConverter(Viewport viewport)
   {
     if (viewportCache != viewport) {
@@ -76,12 +76,12 @@ public class GeometryPainter
     }
     return converterCache;
   }
-  
+
   /**
    * Choose a fairly conservative decimation distance to avoid visual artifacts
    */
   private static final double DECIMATION_DISTANCE = 1.3;
-  
+
   // TODO: is this a performance problem?
   // probably not - only called once for each geom painted
   public static ShapeWriter getConverter(Viewport viewport)
@@ -91,41 +91,41 @@ public class GeometryPainter
     sw.setDecimation(viewport.toModel(DECIMATION_DISTANCE));
     return sw;
   }
-  
+
   /**
    * Paints a geometry onto a graphics context,
    * using a given Viewport.
-   * 
+   *
    * @param geometry shape to paint
    * @param viewport
    * @param g the graphics context
    * @param lineColor line color (null if none)
    * @param fillColor fill color (null if none)
    */
-  public static void paint(Geometry geometry, Viewport viewport, 
+  public static void paint(Geometry geometry, Viewport viewport,
       Graphics2D g,
-      Color lineColor, Color fillColor) 
+      Color lineColor, Color fillColor)
   {
     paint(geometry, viewport, g, lineColor, fillColor, null);
   }
-  
-  public static void paint(Geometry geometry, Viewport viewport, 
+
+  public static void paint(Geometry geometry, Viewport viewport,
       Graphics2D g,
-      Color lineColor, Color fillColor, Stroke stroke) 
+      Color lineColor, Color fillColor, Stroke stroke)
   {
     ShapeWriter converter = getConverter(viewport);
     //ShapeWriter converter = new ShapeWriter(viewport);
     paint(geometry, converter, g, lineColor, fillColor, stroke);
   }
-  
+
   private static void paint(Geometry geometry, ShapeWriter converter, Graphics2D g,
-      Color lineColor, Color fillColor) 
+      Color lineColor, Color fillColor)
   {
     paint(geometry, converter, g, lineColor, fillColor, null);
   }
-  
+
   private static void paint(Geometry geometry, ShapeWriter converter, Graphics2D g,
-      Color lineColor, Color fillColor, Stroke stroke) 
+      Color lineColor, Color fillColor, Stroke stroke)
   {
     if (geometry == null)
 			return;
@@ -144,7 +144,7 @@ public class GeometryPainter
     }
 
 		Shape shape = converter.toShape(geometry);
-    
+
 		// handle points in a special way for appearance and speed
 		if (geometry instanceof Point) {
 		  BasicStroke ptStroke = createPointStroke(stroke);
@@ -158,19 +158,19 @@ public class GeometryPainter
 		  g.setStroke(GEOMETRY_STROKE);
 		else
 		  g.setStroke(stroke);
-		
+
     // Test for a polygonal shape and fill it if required
 		if (geometry instanceof Polygon && fillColor != null) {
 		  // if (!(shape instanceof GeneralPath) && fillColor != null) {
 			g.setPaint(fillColor);
 			g.fill(shape);
 		}
-		
+
 		if (lineColor != null) {
 		  g.setColor(lineColor);
 		  try {
 		    g.draw(shape);
-		    
+
 				// draw polygon boundaries twice, to discriminate them
 		    // MD - this isn't very obvious.  Perhaps a dashed line instead?
 		    /*
@@ -180,7 +180,7 @@ public class GeometryPainter
 					g.draw(polyShell);
 				}
 */
-		  } 
+		  }
 		  catch (Throwable ex) {
 		    System.out.println(ex);
 		    // eat it!
@@ -189,7 +189,7 @@ public class GeometryPainter
 	}
 
   private static BasicStroke createPointStroke(Stroke stroke) {
-    if (stroke == null) 
+    if (stroke == null)
       return POINT_STROKE;
     BasicStroke bs = (BasicStroke) stroke;
     BasicStroke ptStroke = new BasicStroke(AppConstants.POINT_SIZE - 1 + bs.getLineWidth());

@@ -29,7 +29,7 @@ import org.locationtech.jtstest.testbuilder.model.TestBuilderModel;
 
 
 /**
- * A Swing application which supports 
+ * A Swing application which supports
  * creating geometries and running JTS operations.
  * <p>
  * <b>Command Line Options</b>
@@ -39,7 +39,7 @@ import org.locationtech.jtstest.testbuilder.model.TestBuilderModel;
  * <td>Specifies classes whose <tt>public static<tt> methods will be loaded as geometry functions</td>
  * </tr>
  * </table>
- * 
+ *
  * @version 1.7
  */
 public class JTSTestBuilder
@@ -47,7 +47,7 @@ public class JTSTestBuilder
   private static final String PROP_SWING_DEFAULTLAF = "swing.defaultlaf";
 
   private static final JTSTestBuilderController CONTROLLER = new JTSTestBuilderController();
-  
+
   public static JTSTestBuilder instance()
   {
   	return app;
@@ -58,7 +58,7 @@ public class JTSTestBuilder
   public static JTSTestBuilderFrame frame() {
     return JTSTestBuilderFrame.instance();
   }
-  
+
   public static TestBuilderModel model() { return instance().tbModel; }
 
   private static GeometryFunctionRegistry funcRegistry = GeometryFunctionRegistry.createTestBuilderRegistry();
@@ -70,34 +70,34 @@ public class JTSTestBuilder
     return funcRegistry;
   }
 
-  public static PrecisionModel getPrecisionModel() 
-  { 
+  public static PrecisionModel getPrecisionModel()
+  {
     return model().getPrecisionModel();
   }
-  
-  public static GeometryFactory getGeometryFactory() 
-  { 
+
+  public static GeometryFactory getGeometryFactory()
+  {
     /**
      * Allow this to work even if TestBuilder is not initialized
      */
-    if (instance() == null) 
+    if (instance() == null)
       return new GeometryFactory();
     return model().getGeometryFactory();
   }
-  
+
   private TestBuilderModel tbModel = new TestBuilderModel();
-  
+
   boolean packFrame = false;
 
   /**Construct the application*/
   public JTSTestBuilder() {
   }
-  
+
   private void initFrame()
   {
     JTSTestBuilderFrame frame = new JTSTestBuilderFrame();
     frame.setModel(model());
-    
+
     //Validate frames that have preset sizes
     //Pack frames that have useful preferred size info, e.g. from their layout
     if (packFrame) {
@@ -120,7 +120,7 @@ public class JTSTestBuilder
     frame.setVisible(true);
   }
 
-  
+
   /**Main method*/
   public static void main(String[] args)
   {
@@ -129,18 +129,18 @@ public class JTSTestBuilder
     	setLookAndFeel();
       app = new JTSTestBuilder();
       app.initFrame();
-      
+
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
   /**
-   * Sets the look and feel, using user-defined LAF if 
+   * Sets the look and feel, using user-defined LAF if
    * provided as a system property.
-   * 
+   *
    * e.g. Metal: -Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel
-   * 
+   *
    * @throws InterruptedException
    * @throws InvocationTargetException
    */
@@ -168,7 +168,7 @@ public class JTSTestBuilder
     commandLine.addOptionSpec(new OptionSpec(CommandOptions.GEOMFUNC, OptionSpec.NARGS_ONE_OR_MORE));
     return commandLine;
   }
-  
+
   private static void readArgs(String[] args) throws ParseException,
 			ClassNotFoundException {
 		commandLine.parse(args);

@@ -29,16 +29,16 @@ import org.locationtech.jtstest.testrunner.Result;
  * @author mbdavis
  *
  */
-public class PreparedGeometryOperation 
+public class PreparedGeometryOperation
 implements GeometryOperation
 {
   private GeometryMethodOperation chainOp = new GeometryMethodOperation();
-  
+
   public PreparedGeometryOperation()
   {
-  	
+
   }
-  
+
   @Override
 public Class getReturnType(String opName)
   {
@@ -50,23 +50,23 @@ public Class getReturnType(String opName)
   /**
    * Creates a new operation which chains to the given {@link GeometryMethodOperation}
    * for non-intercepted methods.
-   * 
+   *
    * @param chainOp the operation to chain to
    */
   public PreparedGeometryOperation(GeometryMethodOperation chainOp)
   {
   	this.chainOp = chainOp;
   }
-  
+
   private static boolean isPreparedOp(String opName)
   {
   	if (opName.equals("intersects") || opName.equals("contains") || opName.equals("containsProperly") || opName.equals("covers")) return true;
   	return false;
   }
-  
+
   /**
    * Invokes the named operation
-   * 
+   *
    * @param opName
    * @param geometry
    * @param args
@@ -77,11 +77,11 @@ public Class getReturnType(String opName)
 	@Override
 	public Result invoke(String opName, Geometry geometry, Object[] args)
 	  throws Exception
-	{	  
+	{
 	  if (! isPreparedOp(opName)) {
 	    return chainOp.invoke(opName, geometry, args);
-	  } 
-	  return invokePreparedOp(opName, geometry, args);    
+	  }
+	  return invokePreparedOp(opName, geometry, args);
 	}
 
 	private Result invokePreparedOp(String opName, Geometry geometry, Object[] args)
@@ -101,7 +101,7 @@ public Class getReturnType(String opName)
     }
   	return null;
 	}
-	
+
 	static class PreparedGeometryOp
 	{
 		public static boolean intersects(Geometry g1, Geometry g2)

@@ -23,7 +23,7 @@ import junit.framework.TestCase;
 
 /**
  * Basic functionality tests for RobustLineIntersector.
- * 
+ *
  * @version 1.7
  */
 public class RobustLineIntersectorTest extends TestCase {

@@ -22,11 +22,11 @@ import org.locationtech.jts.geom.LineString;
 
 /**
  * Builds an edge graph from geometries containing edges.
- * 
+ *
  * @author mdavis
  *
  */
-public class EdgeGraphBuilder 
+public class EdgeGraphBuilder
 {
   public static EdgeGraph build(Collection geoms) {
     EdgeGraphBuilder builder = new EdgeGraphBuilder();
@@ -38,22 +38,22 @@ public class EdgeGraphBuilder
 
   public EdgeGraphBuilder()
   {
-    
+
   }
-  
+
   public EdgeGraph getGraph()
   {
     return graph;
   }
-  
+
   /**
-   * Adds the edges of a Geometry to the graph. 
+   * Adds the edges of a Geometry to the graph.
    * May be called multiple times.
    * Any dimension of Geometry may be added; the constituent edges are
    * extracted.
-   * 
+   *
    * @param geometry geometry to be added
-   */  
+   */
   public void add(Geometry geometry) {
     geometry.apply((GeometryComponentFilter) component -> {
         if (component instanceof LineString) {
@@ -62,20 +62,20 @@ public class EdgeGraphBuilder
       });
   }
   /**
-   * Adds the edges in a collection of {@link Geometry}s to the graph. 
+   * Adds the edges in a collection of {@link Geometry}s to the graph.
    * May be called multiple times.
    * Any dimension of Geometry may be added.
-   * 
+   *
    * @param geometries the geometries to be added
    */
-  public void add(Collection geometries) 
+  public void add(Collection geometries)
   {
     for (Object element : geometries) {
       Geometry geometry = (Geometry) element;
       add(geometry);
     }
   }
-  
+
   private void add(LineString lineString) {
     CoordinateSequence seq = lineString.getCoordinateSequence();
     for (int i = 1; i < seq.size(); i++) {
@@ -83,5 +83,5 @@ public class EdgeGraphBuilder
     }
   }
 
-  
+
 }

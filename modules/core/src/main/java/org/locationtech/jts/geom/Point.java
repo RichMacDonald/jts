@@ -236,7 +236,7 @@ protected int compareToSameClass(Object other, CoordinateSequenceComparator comp
     Point point = (Point) other;
     return comp.compare(this.coordinates, point.coordinates);
   }
-  
+
   @Override
 protected int getTypeCode() {
     return Geometry.TYPECODE_POINT;

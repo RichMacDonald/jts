@@ -30,10 +30,10 @@ import org.locationtech.jts.geom.util.PolygonExtracter;
 import org.locationtech.jts.noding.MCIndexSegmentSetMutualIntersector;
 
 /**
- * Validates that a polygon forms a valid polygonal coverage 
- * with the set of polygons surrounding it.  
+ * Validates that a polygon forms a valid polygonal coverage
+ * with the set of polygons surrounding it.
  * If the polygon is coverage-valid an empty {@link LineString} is returned.
- * Otherwise, the result is a linear geometry containing 
+ * Otherwise, the result is a linear geometry containing
  * the polygon boundary linework causing the invalidity.
  * <p>
  * A polygon is coverage-valid if:
@@ -49,39 +49,39 @@ import org.locationtech.jts.noding.MCIndexSegmentSetMutualIntersector;
  * <li>a polygon boundary segment is collinear with an adjacent segment but not equal to it
  * <li>a polygon boundary segment touches an adjacent segment at a non-vertex point
  * <li>a polygon boundary segment crosses into an adjacent polygon
- * <li>a polygon boundary segment is in the interior of an adjacent polygon 
+ * <li>a polygon boundary segment is in the interior of an adjacent polygon
  * </ol>
  * <p>
  * If any of these errors is present, the target polygon
  * does not form a valid coverage with the adjacent polygons.
  * <p>
  * The validity rules does not preclude gaps between coverage polygons.
- * However, this class can detect narrow gaps, 
+ * However, this class can detect narrow gaps,
  * by specifying a maximum gap width using {@link #setGapWidth(double)}.
- * Note that this will also identify narrow gaps separating disjoint coverage regions, 
+ * Note that this will also identify narrow gaps separating disjoint coverage regions,
  * and narrow gores.
- * In some situations it may also produce false positives 
+ * In some situations it may also produce false positives
  * (i.e. linework identified as part of a gap which is wider than the given width).
  * <p>
- * A polygon may be coverage-valid with respect to 
+ * A polygon may be coverage-valid with respect to
  * a set of surrounding polygons, but the collection as a whole may not
  * form a clean coverage.  For example, the target polygon boundary may be fully matched
- * by adjacent boundary segments, but the adjacent set contains polygons 
+ * by adjacent boundary segments, but the adjacent set contains polygons
  * which are not coverage-valid relative to other ones in the set.
  * A coverage is valid only if every polygon in the coverage is coverage-valid.
  * Use {@link CoverageValidator} to validate an entire set of polygons.
- * 
+ *
  * @see CoverageValidator
- * 
+ *
  * @author Martin Davis
  *
  */
 public class CoveragePolygonValidator {
-  
+
   /**
    * Validates that a polygon is coverage-valid  against the
    * surrounding polygons in a polygonal coverage.
-   *  
+   *
    * @param targetPolygon the polygon to validate
    * @param adjPolygons the adjacent polygons
    * @return a linear geometry containing the segments causing invalidity (if any)
@@ -90,7 +90,7 @@ public class CoveragePolygonValidator {
     CoveragePolygonValidator v = new CoveragePolygonValidator(targetPolygon, adjPolygons);
     return v.validate();
   }
-  
+
   /**
    * Validates that a polygon is coverage-valid against the
    * surrounding polygons in a polygonal coverage,
@@ -98,18 +98,18 @@ public class CoveragePolygonValidator {
    * <p>
    * The set of surrounding polygons should include all polygons which
    * are within the gap width distance of the target polygon.
-   *  
+   *
    * @param targetPolygon the polygon to validate
    * @param adjPolygons a collection of the adjacent polygons
    * @param gapWidth the maximum width of invalid gaps
    * @return a linear geometry containing the segments causing invalidity (if any)
-   */  
+   */
   public static Geometry validate(Geometry targetPolygon, Geometry[] adjPolygons, double gapWidth) {
     CoveragePolygonValidator v = new CoveragePolygonValidator(targetPolygon, adjPolygons);
     v.setGapWidth(gapWidth);
     return v.validate();
   }
-  
+
   private Geometry targetGeom;
   private double gapWidth = 0.0;
   private GeometryFactory geomFactory;
@@ -119,10 +119,10 @@ public class CoveragePolygonValidator {
   /**
    * Create a new validator.
    * <p>
-   * If the gap width is specified, the set of surrounding polygons 
+   * If the gap width is specified, the set of surrounding polygons
    * should include all polygons which
    * are within the gap width distance of the target polygon.
-   * 
+   *
    * @param geom the geometry to validate
    * @param adjGeoms the adjacent polygons in the polygonal coverage
    */
@@ -131,52 +131,52 @@ public class CoveragePolygonValidator {
     this.adjGeoms = adjGeoms;
     geomFactory = targetGeom.getFactory();
   }
-  
+
   /**
    * Sets the maximum gap width, if narrow gaps are to be detected.
-   * 
+   *
    * @param gapWidth the maximum width of gaps to detect
    */
   public void setGapWidth(double gapWidth) {
     this.gapWidth = gapWidth;
   }
-  
+
   /**
    * Validates the coverage polygon against the set of adjacent polygons
    * in the coverage.
-   * 
+   *
    * @param adjGeoms the surrounding polygons in the coverage
    * @return a linear geometry containing the segments causing invalidity (if any)
    */
   public Geometry validate() {
     List<Polygon> adjPolygons = extractPolygons(adjGeoms);
     adjPolygonLocators = new IndexedPointInAreaLocator[adjPolygons.size()];
-    
+
     if (hasDuplicateGeom(targetGeom, adjPolygons)) {
       //TODO: convert to LineString copies
       return targetGeom.getBoundary();
     }
-    
+
     List<CoverageRing> targetRings = CoverageRing.createRings(targetGeom);
     List<CoverageRing> adjRings = CoverageRing.createRings(adjPolygons);
 
     /**
      * Mark matching segments as valid first.
-     * Valid segments are not considered for further checks. 
+     * Valid segments are not considered for further checks.
      * This improves performance substantially for mostly-valid coverages.
      */
     Envelope targetEnv = targetGeom.getEnvelopeInternal().copy();
     targetEnv.expandBy(gapWidth);
     markMatchedSegments(targetRings, adjRings, targetEnv);
 
-    //-- check if target is fully matched and thus forms a clean coverage 
+    //-- check if target is fully matched and thus forms a clean coverage
     if (CoverageRing.isValid(targetRings))
       return createEmptyResult();
-    
+
     findInvalidInteractingSegments(targetRings, adjRings, gapWidth);
-    
+
     findInteriorSegments(targetRings, adjPolygons);
-    
+
     return createInvalidLines(targetRings);
   }
 
@@ -194,11 +194,11 @@ public class CoveragePolygonValidator {
 
   /**
    * Check if adjacent geoms contains a duplicate of the target.
-   * This situation is not detected by segment alignment checking, 
+   * This situation is not detected by segment alignment checking,
    * since all segments are matches.
 
    * @param geom
-   * @param adjPolygons 
+   * @param adjPolygons
    * @return
    */
   private boolean hasDuplicateGeom(Geometry geom, List<Polygon> adjPolygons) {
@@ -213,15 +213,15 @@ public class CoveragePolygonValidator {
 
   /**
    * Marks matched segments as valid.
-   * This improves the efficiency of validity testing, since in valid coverages 
-   * all segments (except exterior ones) will be matched, 
+   * This improves the efficiency of validity testing, since in valid coverages
+   * all segments (except exterior ones) will be matched,
    * and hence do not need to be tested further.
    * In fact, the entire target polygon may be marked valid,
    * which allows avoiding all further tests.
-   * Segments matched between adjacent polygons are also marked valid, 
+   * Segments matched between adjacent polygons are also marked valid,
    * since this prevents them from being detected as misaligned,
    * if this is being done.
-   * 
+   *
    * @param targetRings the target rings
    * @param adjRngs the adjacent rings
    * @param targetEnv the tolerance envelope of the target
@@ -232,17 +232,17 @@ public class CoveragePolygonValidator {
     markMatchedSegments(targetRings, targetEnv, segmentMap);
     markMatchedSegments(adjRngs, targetEnv, segmentMap);
   }
-  
+
   /**
-   * Adds ring segments to the segment map, 
+   * Adds ring segments to the segment map,
    * and detects if they match an existing segment.
    * Matched segments are marked as coverage-valid.
-   * 
+   *
    * @param rings
    * @param envLimit
    * @param segMap
    */
-  private void markMatchedSegments(List<CoverageRing> rings, Envelope envLimit, 
+  private void markMatchedSegments(List<CoverageRing> rings, Envelope envLimit,
       Map<CoverageRingSegment, CoverageRingSegment> segmentMap) {
     for (CoverageRing ring : rings) {
       for (int i = 0; i < ring.size() - 1; i++) {
@@ -270,7 +270,7 @@ public class CoveragePolygonValidator {
       Coordinate p1 = ring.getCoordinate(index + 1);
       return new CoverageRingSegment(p0, p1, ring, index);
     }
-    
+
     private CoverageRing ring;
     private int index;
 
@@ -280,29 +280,29 @@ public class CoveragePolygonValidator {
       this.ring = ring;
       this.index = index;
     }
-    
+
     public void markValid() {
       ring.markValid(index);
     }
   }
-  
+
   //--------------------------------------------------
-  
-  
+
+
   private void findInvalidInteractingSegments(List<CoverageRing> targetRings, List<CoverageRing> adjRings,
       double distanceTolerance) {
     InvalidSegmentDetector detector = new InvalidSegmentDetector(distanceTolerance);
     MCIndexSegmentSetMutualIntersector segSetMutInt = new MCIndexSegmentSetMutualIntersector(targetRings, distanceTolerance);
     segSetMutInt.process(adjRings, detector);
   }
-  
+
   private void findInteriorSegments(List<CoverageRing> targetRings, List<Polygon> adjPolygons) {
     for (CoverageRing ring : targetRings) {
       for (int i = 0; i < ring.size() - 1; i++) {
-        //-- skip check for segments with known state. 
+        //-- skip check for segments with known state.
         if (ring.isKnown(i))
           continue;
-        
+
         /**
          * Check if vertex is in interior of an adjacent polygon.
          * If so, the segments on either side are in the interior.
@@ -319,18 +319,18 @@ public class CoveragePolygonValidator {
       }
     }
   }
-  
+
   /**
    * Tests if a coordinate is in the interior of some adjacent polygon.
    * Uses the cached Point-In-Polygon indexed locators, for performance.
-   * 
+   *
    * @param p the coordinate to test
    * @param adjPolygons the list of polygons
    * @return true if the point is in the interior
    */
   private boolean isInteriorVertex(Coordinate p, List<Polygon> adjPolygons) {
     /**
-     * There should not be too many adjacent polygons, 
+     * There should not be too many adjacent polygons,
      * and hopefully not too many segments with unknown status
      * so a linear scan should not be too inefficient
      */
@@ -339,7 +339,7 @@ public class CoveragePolygonValidator {
       Polygon adjPoly = adjPolygons.get(i);
       if (! adjPoly.getEnvelopeInternal().intersects(p))
         continue;
-     
+
       if (polygonContainsPoint(i, adjPoly, p))
         return true;
     }
@@ -365,7 +365,7 @@ public class CoveragePolygonValidator {
     for (CoverageRing ring : rings) {
       ring.createInvalidLines(geomFactory, lines);
     }
-    
+
     if (lines.size() == 0) {
       return createEmptyResult();
     }
@@ -373,6 +373,6 @@ public class CoveragePolygonValidator {
       return lines.get(0);
     }
     return geomFactory.createMultiLineString(GeometryFactory.toLineStringArray(lines));
-  }  
-  
+  }
+
 }

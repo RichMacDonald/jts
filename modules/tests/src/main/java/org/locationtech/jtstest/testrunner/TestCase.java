@@ -73,11 +73,11 @@ public class TestCase implements Runnable {
     this.description = description;
   }
 
-  public boolean isRun() 
+  public boolean isRun()
   {
   	return isRun;
   }
-  
+
   public Geometry getGeometryA() {
     return a;
   }

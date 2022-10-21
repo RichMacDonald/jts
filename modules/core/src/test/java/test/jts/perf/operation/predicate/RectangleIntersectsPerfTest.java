@@ -27,14 +27,14 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 import org.locationtech.jts.util.Stopwatch;
 
 
-public class RectangleIntersectsPerfTest 
+public class RectangleIntersectsPerfTest
 {
   static final int MAX_ITER = 10;
-  
+
   static final int NUM_AOI_PTS = 2000;
   static final int NUM_LINES = 5000;
   static final int NUM_LINE_PTS = 1000;
-  
+
   static PrecisionModel pm = new PrecisionModel();
   static GeometryFactory fact = new GeometryFactory(pm, 0);
   static WKTReader wktRdr = new WKTReader(fact);
@@ -68,7 +68,7 @@ public class RectangleIntersectsPerfTest
     test(8000);
     */
   }
-  
+
   void test(int nPts)
   {
     double size = 100;
@@ -79,10 +79,10 @@ public class RectangleIntersectsPerfTest
   	 * This defeats the  MonotoneChain optimization in the full relate
   	 * algorithm, and provides a more realistic test.
   	 */
-  	Geometry sinePolyCrinkly = GeometryPrecisionReducer.reduce(sinePoly, 
+  	Geometry sinePolyCrinkly = GeometryPrecisionReducer.reduce(sinePoly,
   	    new PrecisionModel(size / 10));
   	Geometry target = sinePolyCrinkly;
-  	
+
     Geometry rect = createRectangle(origin, 5);
 //    System.out.println(target);
     //System.out.println("Running with " + nPts + " points");
@@ -94,7 +94,7 @@ public class RectangleIntersectsPerfTest
     Geometry[] rects = createRectangles(target.getEnvelopeInternal(), nRect, rectSize);
     test(rects, target);
   }
-  
+
   void test(Geometry[] rect, Geometry g)
   {
     System.out.println("Target # pts: " + g.getNumPoints()
@@ -115,11 +115,11 @@ public class RectangleIntersectsPerfTest
   }
 
   /**
-   * Creates a set of rectangular Polygons which 
+   * Creates a set of rectangular Polygons which
    * cover the given envelope.
-   * The rectangles   
+   * The rectangles
    * At least nRect rectangles are created.
-   * 
+   *
    * @param env
    * @param nRect
    * @param rectSize
@@ -145,7 +145,7 @@ public class RectangleIntersectsPerfTest
     }
     return GeometryFactory.toGeometryArray(rectList);
   }
-  
+
   Geometry createRectangle(Coordinate origin, double size) {
     GeometricShapeFactory gsf = new GeometricShapeFactory();
     gsf.setCentre(origin);
@@ -156,7 +156,7 @@ public class RectangleIntersectsPerfTest
     // Geometry g = gRect.getExteriorRing();
     return g;
   }
-  
+
   Geometry createSineStar(Coordinate origin, double size, int nPts) {
 		SineStarFactory gsf = new SineStarFactory();
 		gsf.setCentre(origin);
@@ -167,6 +167,6 @@ public class RectangleIntersectsPerfTest
 		Geometry poly = gsf.createSineStar();
 		return poly;
 	}
-  
-  
+
+
 }

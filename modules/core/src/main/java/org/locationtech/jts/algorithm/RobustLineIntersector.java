@@ -83,12 +83,12 @@ protected int computeIntersect(
     if (collinear) {
       return computeCollinearIntersection(p1, p2, q1, q2);
     }
-    
+
     /**
      * At this point we know that there is a single intersection point
      * (since the lines are not collinear).
      */
-    
+
     /**
      *  Check if the intersection is an endpoint. If it is, copy the endpoint as
      *  the intersection point. Copying the point rather than computing it
@@ -101,22 +101,22 @@ protected int computeIntersect(
     double z = Double.NaN;
     if (Pq1 == 0 || Pq2 == 0 || Qp1 == 0 || Qp2 == 0) {
       isProper = false;
-      
+
       /**
-       * Check for two equal endpoints.  
+       * Check for two equal endpoints.
        * This is done explicitly rather than by the orientation tests
        * below in order to improve robustness.
-       * 
+       *
        * [An example where the orientation tests fail to be consistent is
        * the following (where the true intersection is at the shared endpoint
        * POINT (19.850257749638203 46.29709338043669)
-       * 
-       * LINESTRING ( 19.850257749638203 46.29709338043669, 20.31970698357233 46.76654261437082 ) 
-       * and 
+       *
+       * LINESTRING ( 19.850257749638203 46.29709338043669, 20.31970698357233 46.76654261437082 )
+       * and
        * LINESTRING ( -48.51001596420236 -22.063180333403878, 19.850257749638203 46.29709338043669 )
-       * 
+       *
        * which used to produce the INCORRECT result: (20.31970698357233, 46.76654261437082, NaN)
-       * 
+       *
        */
       if (p1.equals2D(q1)) {
         p = p1;
@@ -128,11 +128,11 @@ protected int computeIntersect(
       }
       else if (p2.equals2D(q1)) {
         p = p2;
-        z = zGet(p2, q1);        
+        z = zGet(p2, q1);
       }
       else if (p2.equals2D(q2)) {
         p = p2;
-        z = zGet(p2, q2); 
+        z = zGet(p2, q2);
       }
       /**
        * Now check to see if any endpoint lies on the interior of the other segment.
@@ -216,13 +216,13 @@ protected int computeIntersect(
     if (! Double.isNaN(z)) {
       pCopy.setZ( z );
     }
-    return pCopy;    
+    return pCopy;
   }
-  
+
   private static Coordinate copy(Coordinate p) {
-    return new Coordinate(p);    
+    return new Coordinate(p);
   }
-  
+
   /**
    * This method computes the actual value of the intersection point.
    * To obtain the maximum precision from the intersection calculation,
@@ -235,7 +235,7 @@ protected int computeIntersect(
     Coordinate p1, Coordinate p2, Coordinate q1, Coordinate q2)
   {
     Coordinate intPt = intersectionSafe(p1, p2, q1, q2);
-    
+
     /*
     // TESTING ONLY
     Coordinate intPtDD = CGAlgorithmsDD.intersection(p1, p2, q1, q2);
@@ -243,29 +243,29 @@ protected int computeIntersect(
     System.out.println(intPt + " - " + intPtDD + " dist = " + dist);
     //intPt = intPtDD;
     */
-    
+
     /**
      * Due to rounding it can happen that the computed intersection is
      * outside the envelopes of the input segments.  Clearly this
-     * is inconsistent. 
+     * is inconsistent.
      * This code checks this condition and forces a more reasonable answer
-     * 
+     *
      * MD - May 4 2005 - This is still a problem.  Here is a failure case:
      *
      * LINESTRING (2089426.5233462777 1180182.3877339689, 2085646.6891757075 1195618.7333999649)
      * LINESTRING (1889281.8148903656 1997547.0560044837, 2259977.3672235999 483675.17050843034)
      * int point = (2097408.2633752143,1144595.8008114607)
-     * 
+     *
      * MD - Dec 14 2006 - This does not seem to be a failure case any longer
      */
     if (! isInSegmentEnvelopes(intPt)) {
 //      System.out.println("Intersection outside segment envelopes: " + intPt);
-      
+
       // compute a safer result
       // copy the coordinate, since it may be rounded later
       intPt = copy(nearestEndpoint(p1, p2, q1, q2));
 //    intPt = CentralEndpointIntersector.getIntersection(p1, p2, q1, q2);
-      
+
 //      System.out.println("Segments: " + this);
 //      System.out.println("Snapped to " + intPt);
 //      checkDD(p1, p2, q1, q2, intPt);
@@ -288,13 +288,13 @@ protected int computeIntersect(
     }
   }
   */
-  
+
   /**
    * Computes a segment intersection using homogeneous coordinates.
-   * Round-off error can cause the raw computation to fail, 
+   * Round-off error can cause the raw computation to fail,
    * (usually due to the segments being approximately parallel).
    * If this happens, a reasonable approximation is computed instead.
-   * 
+   *
    * @param p1 a segment endpoint
    * @param p2 a segment endpoint
    * @param q1 a segment endpoint
@@ -327,18 +327,18 @@ protected int computeIntersect(
   }
 
   /**
-   * Finds the endpoint of the segments P and Q which 
+   * Finds the endpoint of the segments P and Q which
    * is closest to the other segment.
-   * This is a reasonable surrogate for the true 
+   * This is a reasonable surrogate for the true
    * intersection points in ill-conditioned cases
    * (e.g. where two segments are nearly coincident,
    * or where the endpoint of one segment lies almost on the other segment).
    * <p>
    * This replaces the older CentralEndpoint heuristic,
    * which chose the wrong endpoint in some cases
-   * where the segments had very distinct slopes 
+   * where the segments had very distinct slopes
    * and one endpoint lay almost on the other segment.
-   * 
+   *
    * @param p1 an endpoint of segment P
    * @param p2 an endpoint of segment P
    * @param q1 an endpoint of segment Q
@@ -350,7 +350,7 @@ protected int computeIntersect(
   {
     Coordinate nearestPt = p1;
     double minDist = Distance.pointToSegment(p1, q1, q2);
-    
+
     double dist = Distance.pointToSegment(p2, q1, q2);
     if (dist < minDist) {
       minDist = dist;
@@ -370,9 +370,9 @@ protected int computeIntersect(
   }
 
   /**
-   * Gets the Z value of the first argument if present, 
+   * Gets the Z value of the first argument if present,
    * otherwise the value of the second argument.
-   * 
+   *
    * @param p a coordinate, possibly with Z
    * @param q a coordinate, possibly with Z
    * @return the Z value if present
@@ -384,32 +384,32 @@ protected int computeIntersect(
     }
     return z;
   }
-  
+
   /**
    * Gets the Z value of a coordinate if present, or
    * interpolates it from the segment it lies on.
    * If the segment Z values are not fully populate
    * NaN is returned.
-   * 
-   * @param p a coordinate, possibly with Z 
+   *
+   * @param p a coordinate, possibly with Z
    * @param p1 a segment endpoint, possibly with Z
    * @param p2 a segment endpoint, possibly with Z
    * @return the extracted or interpolated Z value (may be NaN)
    */
   private static double zGetOrInterpolate(Coordinate p, Coordinate p1, Coordinate p2) {
     double z = p.getZ();
-    if (! Double.isNaN(z)) 
+    if (! Double.isNaN(z))
       return z;
     return zInterpolate(p, p1, p2); // may be NaN
   }
 
   /**
-   * Interpolates a Z value for a point along 
+   * Interpolates a Z value for a point along
    * a line segment between two points.
    * The Z value of the interpolation point (if any) is ignored.
-   * If either segment point is missing Z, 
+   * If either segment point is missing Z,
    * returns NaN.
-   * 
+   *
    * @param p a coordinate
    * @param p1 a segment endpoint, possibly with Z
    * @param p2 a segment endpoint, possibly with Z
@@ -434,8 +434,8 @@ protected int computeIntersect(
     // interpolate Z from distance of p along p1-p2
     double dx = (p2.x - p1.x);
     double dy = (p2.y - p1.y);
-    // seg has non-zero length since p1 < p < p2 
-    double seglen = (dx * dx + dy * dy); 
+    // seg has non-zero length since p1 < p < p2
+    double seglen = (dx * dx + dy * dy);
     double xoff = (p.x - p1.x);
     double yoff = (p.y - p1.y);
     double plen = (xoff * xoff + yoff * yoff);
@@ -446,12 +446,12 @@ protected int computeIntersect(
   }
 
   /**
-   * Interpolates a Z value for a point along 
+   * Interpolates a Z value for a point along
    * two line segments and computes their average.
    * The Z value of the interpolation point (if any) is ignored.
    * If one segment point is missing Z that segment is ignored
    * if both segments are missing Z, returns NaN.
-   * 
+   *
    * @param p a coordinate
    * @param p1 a segment endpoint, possibly with Z
    * @param p2 a segment endpoint, possibly with Z
@@ -471,6 +471,6 @@ protected int computeIntersect(
     // both Zs have values, so average them
     return (zp + zq) / 2.0;
   }
-  
+
 
 }

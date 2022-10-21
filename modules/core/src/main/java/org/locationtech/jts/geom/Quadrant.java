@@ -23,17 +23,17 @@ package org.locationtech.jts.geom;
  *
  * @version 1.7
  */
-public class Quadrant 
+public class Quadrant
 {
 	public static final int NE = 0;
 	public static final int NW = 1;
 	public static final int SW = 2;
 	public static final int SE = 3;
-	
+
   /**
    * Returns the quadrant of a directed line segment (specified as x and y
    * displacements, which cannot both be 0).
-   * 
+   *
    * @throws IllegalArgumentException if the displacements are both 0
    */
   public static int quadrant(double dx, double dy)
@@ -53,14 +53,14 @@ public class Quadrant
 
   /**
    * Returns the quadrant of a directed line segment from p0 to p1.
-   * 
+   *
    * @throws IllegalArgumentException if the points are equal
    */
   public static int quadrant(Coordinate p0, Coordinate p1)
   {
     if (p1.x == p0.x && p1.y == p0.y)
       throw new IllegalArgumentException("Cannot compute the quadrant for two identical points " + p0);
-    
+
     if (p1.x >= p0.x) {
       if (p1.y >= p0.y)
         return NE;
@@ -84,7 +84,7 @@ public class Quadrant
     return false;
   }
 
-  /** 
+  /**
    * Returns the right-hand quadrant of the halfplane defined by the two quadrants,
    * or -1 if the quadrants are opposite, or the quadrant if they are identical.
    */
@@ -116,7 +116,7 @@ public class Quadrant
     }
     return quad == halfPlane || quad == halfPlane + 1;
   }
-    
+
   /**
    * Returns true if the given quadrant is 0 or 1.
    */

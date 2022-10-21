@@ -96,13 +96,13 @@ public class LinearLocation
     this.componentIndex = componentIndex;
     this.segmentIndex = segmentIndex;
     this.segmentFraction = segmentFraction;
-    if (doNormalize) 
+    if (doNormalize)
       normalize();
   }
 
   /**
    * Creates a new location equal to a given one.
-   * 
+   *
    * @param loc a LinearLocation
    */
   public LinearLocation(LinearLocation loc)
@@ -269,7 +269,7 @@ public class LinearLocation
   }
 
   /**
-   * Gets a {@link LineSegment} representing the segment of the 
+   * Gets a {@link LineSegment} representing the segment of the
    * given linear {@link Geometry} which contains this location.
    *
    * @param linearGeom a linear geometry
@@ -389,18 +389,18 @@ public int compareTo(Object o) {
   /**
    * Tests whether two locations
    * are on the same segment in the parent {@link Geometry}.
-   * 
+   *
    * @param loc a location on the same geometry
    * @return true if the locations are on the same segment of the parent geometry
    */
   public boolean isOnSameSegment(LinearLocation loc)
   {
   	if (componentIndex != loc.componentIndex) return false;
-  	if ((segmentIndex == loc.segmentIndex) || (loc.segmentIndex - segmentIndex == 1 
-  			&& loc.segmentFraction == 0.0)) 
+  	if ((segmentIndex == loc.segmentIndex) || (loc.segmentIndex - segmentIndex == 1
+  			&& loc.segmentFraction == 0.0))
   		return true;
-  	if (segmentIndex - loc.segmentIndex == 1 
-  			&& segmentFraction == 0.0) 
+  	if (segmentIndex - loc.segmentIndex == 1
+  			&& segmentFraction == 0.0)
   		return true;
   	return false;
   }
@@ -408,7 +408,7 @@ public int compareTo(Object o) {
   /**
    * Tests whether this location is an endpoint of
    * the linear component it refers to.
-   * 
+   *
    * @param linearGeom the linear geometry referenced by this location
    * @return true if the location is a component endpoint
    */
@@ -431,7 +431,7 @@ public int compareTo(Object o) {
    * <li>if the location point is ambiguous (i.e. an endpoint and a startpoint), the lowest endpoint location is returned
    * </ul>
    * If the location index is already the lowest possible value, the original location is returned.
-   * 
+   *
    * @param linearGeom the linear geometry referenced by this location
    * @return the lowest equivalent location
    */
@@ -444,7 +444,7 @@ public int compareTo(Object o) {
     if (segmentIndex < nseg) return this;
     return new LinearLocation(componentIndex, nseg - 1, 1.0, false);
   }
-  
+
   /**
    * Copies this location
    *
@@ -457,7 +457,7 @@ public Object clone()
   {
     return copy();
   }
-  
+
   /**
    * Copies this location
    *
@@ -466,21 +466,21 @@ public Object clone()
   public LinearLocation copy() {
 	return new LinearLocation(componentIndex, segmentIndex, segmentFraction);
   }
-  
+
   @Override
 public String toString()
   {
-    return "LinearLoc[" 
+    return "LinearLoc["
     + componentIndex + ", "
     + segmentIndex + ", "
     + segmentFraction + "]";
   }
-  
+
   /**
    * Gets the count of the number of line segments
-   * in a {@link LineString}.  This is one less than the 
+   * in a {@link LineString}.  This is one less than the
    * number of coordinates.
-   * 
+   *
    * @param line a LineString
    * @return the number of segments
    */

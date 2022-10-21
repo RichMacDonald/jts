@@ -28,34 +28,34 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.operation.distance.IndexedFacetDistance;
 
 /**
- * Constructs the Maximum Inscribed Circle for a 
+ * Constructs the Maximum Inscribed Circle for a
  * polygonal {@link Geometry}, up to a specified tolerance.
- * The Maximum Inscribed Circle is determined by a point in the interior of the area 
+ * The Maximum Inscribed Circle is determined by a point in the interior of the area
  * which has the farthest distance from the area boundary,
  * along with a boundary point at that distance.
  * <p>
- * In the context of geography the center of the Maximum Inscribed Circle 
+ * In the context of geography the center of the Maximum Inscribed Circle
  * is known as the <b>Pole of Inaccessibility</b>.
- * A cartographic use case is to determine a suitable point 
+ * A cartographic use case is to determine a suitable point
  * to place a map label within a polygon.
  * <p>
- * The radius length of the Maximum Inscribed Circle is a 
- * measure of how "narrow" a polygon is. It is the 
+ * The radius length of the Maximum Inscribed Circle is a
+ * measure of how "narrow" a polygon is. It is the
  * distance at which the negative buffer becomes empty.
  * <p>
  * The class supports polygons with holes and multipolygons.
  * <p>
  * The implementation uses a successive-approximation technique
  * over a grid of square cells covering the area geometry.
- * The grid is refined using a branch-and-bound algorithm. 
+ * The grid is refined using a branch-and-bound algorithm.
  * Point containment and distance are computed in a performant
  * way by using spatial indexes.
- * 
+ *
  * <h3>Future Enhancements</h3>
  * <ul>
  * <li>Support a polygonal constraint on placement of center
  * </ul>
- * 
+ *
  * @author Martin Davis
  * @see LargestEmptyCircle
  * @see InteriorPoint
@@ -67,7 +67,7 @@ public class MaximumInscribedCircle {
   /**
    * Computes the center point of the Maximum Inscribed Circle
    * of a polygonal geometry, up to a given tolerance distance.
-   * 
+   *
    * @param polygonal a polygonal geometry
    * @param tolerance the distance tolerance for computing the center point
    * @return the center point of the maximum inscribed circle
@@ -80,7 +80,7 @@ public class MaximumInscribedCircle {
   /**
    * Computes a radius line of the Maximum Inscribed Circle
    * of a polygonal geometry, up to a given tolerance distance.
-   * 
+   *
    * @param polygonal a polygonal geometry
    * @param tolerance the distance tolerance for computing the center point
    * @return a line from the center to a point on the circle
@@ -89,7 +89,7 @@ public class MaximumInscribedCircle {
     MaximumInscribedCircle mic = new MaximumInscribedCircle(polygonal, tolerance);
     return mic.getRadiusLine();
   }
-  
+
   private Geometry inputGeom;
   private double tolerance;
 
@@ -104,7 +104,7 @@ public class MaximumInscribedCircle {
 
   /**
    * Creates a new instance of a Maximum Inscribed Circle computation.
-   * 
+   *
    * @param polygonal an areal geometry
    * @param tolerance the distance tolerance for computing the centre point (must be positive)
    * @throws IllegalArgumentException if the tolerance is non-positive, or the input geometry is non-polygonal or empty.
@@ -119,7 +119,7 @@ public class MaximumInscribedCircle {
     if (polygonal.isEmpty()) {
       throw new IllegalArgumentException("Empty input geometry is not supported");
     }
-    
+
     this.inputGeom = polygonal;
     this.factory = polygonal.getFactory();
     this.tolerance = tolerance;
@@ -130,32 +130,32 @@ public class MaximumInscribedCircle {
   /**
    * Gets the center point of the maximum inscribed circle
    * (up to the tolerance distance).
-   * 
+   *
    * @return the center point of the maximum inscribed circle
    */
   public Point getCenter() {
     compute();
     return centerPoint;
   }
-  
+
   /**
    * Gets a point defining the radius of the Maximum Inscribed Circle.
-   * This is a point on the boundary which is 
+   * This is a point on the boundary which is
    * nearest to the computed center of the Maximum Inscribed Circle.
    * The line segment from the center to this point
    * is a radius of the constructed circle, and this point
    * lies on the boundary of the circle.
-   * 
+   *
    * @return a point defining the radius of the Maximum Inscribed Circle
    */
   public Point getRadiusPoint() {
     compute();
     return radiusPoint;
   }
-  
+
   /**
    * Gets a line representing a radius of the Largest Empty Circle.
-   * 
+   *
    * @return a line from the center of the circle to a point on the edge
    */
   public LineString getRadiusLine() {
@@ -164,13 +164,13 @@ public class MaximumInscribedCircle {
         new Coordinate[] { centerPt.copy(), radiusPt.copy() });
     return radiusLine;
   }
-  
+
   /**
    * Computes the signed distance from a point to the area boundary.
-   * Points outside the polygon are assigned a negative distance. 
+   * Points outside the polygon are assigned a negative distance.
    * Their containing cells will be last in the priority queue
    * (but may still end up being tested since they may need to be refined).
-   * 
+   *
    * @param p the point to compute the distance for
    * @return the signed distance to the area boundary (negative indicates outside the area)
    */
@@ -186,14 +186,14 @@ public class MaximumInscribedCircle {
     Point pt = factory.createPoint(coord);
     return distanceToBoundary(pt);
   }
-  
+
   private void compute() {
     // check if already computed
     if (centerCell != null) return;
-    
+
     // Priority queue of cells, ordered by maximum distance from boundary
     PriorityQueue<Cell> cellQueue = new PriorityQueue<>();
-    
+
     createInitialGrid(inputGeom.getEnvelopeInternal(), cellQueue);
 
     // use the area centroid as the initial candidate center point
@@ -208,7 +208,7 @@ public class MaximumInscribedCircle {
       // pick the most promising cell from the queue
       Cell cell = cellQueue.remove();
       //System.out.println(factory.toGeometry(cell.getEnvelope()));
-      
+
       // update the center cell if the candidate is further from the boundary
       if (cell.getDistance() > farthestCell.getDistance()) {
         farthestCell = cell;
@@ -242,9 +242,9 @@ public class MaximumInscribedCircle {
   }
 
   /**
-   * Initializes the queue with a grid of cells covering 
+   * Initializes the queue with a grid of cells covering
    * the extent of the area.
-   * 
+   *
    * @param env the area extent to cover
    * @param cellQueue the queue to initialize
    */
@@ -256,11 +256,11 @@ public class MaximumInscribedCircle {
     double width = env.getWidth();
     double height = env.getHeight();
     double cellSize = Math.min(width, height);
-    
+
     // Check for flat collapsed input and if so short-circuit
     // Result will just be centroid
     if (cellSize == 0) return;
-    
+
     double hSide = cellSize / 2.0;
 
     // compute initial grid of cells to cover area
@@ -282,13 +282,13 @@ public class MaximumInscribedCircle {
   }
 
   /**
-   * A square grid cell centered on a given point, 
+   * A square grid cell centered on a given point,
    * with a given half-side size, and having a given distance
    * to the area boundary.
    * The maximum possible distance from any point in the cell to the
    * boundary can be computed, and is used
    * as the ordering and upper-bound function in
-   * the branch-and-bound algorithm. 
+   * the branch-and-bound algorithm.
    *
    */
   private static class Cell implements Comparable<Cell> {
@@ -316,7 +316,7 @@ public class MaximumInscribedCircle {
     public Envelope getEnvelope() {
       return new Envelope(x - hSide, x + hSide, y - hSide, y + hSide);
     }
-    
+
     public double getMaxDistance() {
       return maxDist;
     }
@@ -336,7 +336,7 @@ public class MaximumInscribedCircle {
     public double getY() {
       return y;
     }
-    
+
     /**
      * A cell is greater if its maximum possible distance is larger.
      */
@@ -344,7 +344,7 @@ public class MaximumInscribedCircle {
 	public int compareTo(Cell o) {
       return (int) (o.maxDist - this.maxDist);
     }
-    
+
   }
 
 }

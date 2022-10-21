@@ -32,7 +32,7 @@ import org.locationtech.jts.noding.SegmentString;
  * The intersection points are recorded, so that HotPixels can be created for them.
  * <p>
  * To avoid robustness issues with vertices which lie very close to line segments
- * a heuristic is used: 
+ * a heuristic is used:
  * nodes are created if a vertex lies within a tolerance distance
  * of the interior of a segment.
  * The tolerance distance is chosen to be significantly below the snap-rounding grid size.
@@ -42,7 +42,7 @@ import org.locationtech.jts.noding.SegmentString;
  */
 public class SnapRoundingIntersectionAdder
     implements SegmentIntersector
-{ 
+{
   private final LineIntersector li;
   private final List<Coordinate> intersections;
   private final double nearnessTol;
@@ -57,7 +57,7 @@ public class SnapRoundingIntersectionAdder
   public SnapRoundingIntersectionAdder(double nearnessTol)
   {
     this.nearnessTol =  nearnessTol;
-    
+
     /**
      * Intersections are detected and computed using full precision.
      * They are snapped in a subsequent phase.
@@ -67,9 +67,9 @@ public class SnapRoundingIntersectionAdder
   }
 
   /**
-   * Gets the created intersection nodes, 
+   * Gets the created intersection nodes,
    * so they can be processed as hot pixels.
-   * 
+   *
    * @return a list of the intersection points
    */
   public List<Coordinate> getIntersections()  {    return intersections;  }
@@ -109,11 +109,11 @@ public void processIntersections(
         return;
       }
     }
-    
+
     /**
      * Segments did not actually intersect, within the limits of orientation index robustness.
-     * 
-     * To avoid certain robustness issues in snap-rounding, 
+     *
+     * To avoid certain robustness issues in snap-rounding,
      * also treat very near vertex-segment situations as intersections.
      */
     processNearVertex(p00, e1, segIndex1, p10, p11 );
@@ -121,9 +121,9 @@ public void processIntersections(
     processNearVertex(p10, e0, segIndex0, p00, p01 );
     processNearVertex(p11, e0, segIndex0, p00, p01 );
   }
-  
+
   /**
-   * If an endpoint of one segment is near 
+   * If an endpoint of one segment is near
    * the <i>interior</i> of the other segment, add it as an intersection.
    * EXCEPT if the endpoint is also close to a segment endpoint
    * (since this can introduce "zigs" in the linework).
@@ -131,10 +131,10 @@ public void processIntersections(
    * This resolves situations where
    * a segment A endpoint is extremely close to another segment B,
    * but is not quite crossing.  Due to robustness issues
-   * in orientation detection, this can 
+   * in orientation detection, this can
    * result in the snapped segment A crossing segment B
    * without a node being introduced.
-   * 
+   *
    * @param p
    * @param edge
    * @param segIndex
@@ -142,14 +142,14 @@ public void processIntersections(
    * @param p1
    */
   private void processNearVertex(Coordinate p, SegmentString edge, int segIndex, Coordinate p0, Coordinate p1) {
-    
+
     /**
      * Don't add intersection if candidate vertex is near endpoints of segment.
      * This avoids creating "zig-zag" linework
      * (since the vertex could actually be outside the segment envelope).
      */
     if ((p.distance(p0) < nearnessTol) || (p.distance(p1) < nearnessTol)) return;
-    
+
     double distSeg = Distance.pointToSegment(p, p0, p1);
     if (distSeg < nearnessTol) {
       intersections.add(p);
@@ -159,7 +159,7 @@ public void processIntersections(
 
   /**
    * Always process all intersections
-   * 
+   *
    * @return false always
    */
   @Override

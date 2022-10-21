@@ -50,7 +50,7 @@ public class LineLimiterTest extends GeometryTestCase {
         "LINESTRING (8 14, 12 18, 15 15)"
         );
   }
-  
+
   public void testCrossing() {
     checkLimit(
         "LINESTRING (5 17, 8 14, 12 18, 15 15, 18 18, 22 14, 25 18)",
@@ -58,7 +58,7 @@ public class LineLimiterTest extends GeometryTestCase {
         "LINESTRING (8 14, 12 18, 15 15, 18 18, 22 14)"
         );
   }
-  
+
   public void testCrossesTwice() {
     checkLimit(
         "LINESTRING (7 17, 23 17, 23 13, 7 13)",
@@ -66,7 +66,7 @@ public class LineLimiterTest extends GeometryTestCase {
         "MULTILINESTRING ((7 17, 23 17), (23 13, 7 13))"
         );
   }
-  
+
   public void testDiamond() {
     checkLimit(
         "LINESTRING (8 15, 15 22, 22 15, 15 8, 8 15)",
@@ -74,7 +74,7 @@ public class LineLimiterTest extends GeometryTestCase {
         "LINESTRING (8 15, 15 8, 22 15, 15 22, 8 15)"
         );
   }
-  
+
   public void testOctagon() {
     checkLimit(
         "LINESTRING (9 12, 12 9, 18 9, 21 12, 21 18, 18 21, 12 21, 9 18, 9 13)",
@@ -92,14 +92,14 @@ public class LineLimiterTest extends GeometryTestCase {
   private void checkLimit(String wkt, Envelope clipEnv, String wktExpected) {
     Geometry line = read(wkt);
     Geometry expected = read(wktExpected);
-    
+
     LineLimiter limiter = new LineLimiter(clipEnv);
     List<Coordinate[]> sections = limiter.limit(line.getCoordinates());
-    
+
     Geometry result = toLines(sections, line.getFactory());
     checkEqual(expected, result);
   }
-  
+
   private static Geometry toLines(List<Coordinate[]> sections, GeometryFactory factory) {
     LineString[] lines = new LineString[sections.size()];
     int i = 0;

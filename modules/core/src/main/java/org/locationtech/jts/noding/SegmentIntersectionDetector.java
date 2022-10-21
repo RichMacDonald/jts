@@ -31,11 +31,11 @@ public class SegmentIntersectionDetector
   private LineIntersector li;
   private boolean findProper = false;
   private boolean findAllTypes = false;
-  
+
   private boolean hasIntersection = false;
   private boolean hasProperIntersection = false;
   private boolean hasNonProperIntersection = false;
-  
+
   private Coordinate intPt = null;
   private Coordinate[] intSegments = null;
 
@@ -59,76 +59,76 @@ public class SegmentIntersectionDetector
 
   /**
    * Sets whether processing must continue until a proper intersection is found.
-   * 
+   *
    * @param findProper true if processing should continue until a proper intersection is found
    */
   public void setFindProper(boolean findProper)
   {
     this.findProper = findProper;
   }
-  
+
   /**
    * Sets whether processing can terminate once any intersection is found.
-   * 
+   *
    * @param findAllTypes true if processing can terminate once any intersection is found.
    */
   public void setFindAllIntersectionTypes(boolean findAllTypes)
   {
     this.findAllTypes = findAllTypes;
   }
-  
+
   /**
    * Tests whether an intersection was found.
-   * 
+   *
    * @return true if an intersection was found
    */
-  public boolean hasIntersection() 
-  { 
-  	return hasIntersection; 
+  public boolean hasIntersection()
+  {
+  	return hasIntersection;
   }
-  
+
   /**
    * Tests whether a proper intersection was found.
-   * 
+   *
    * @return true if a proper intersection was found
    */
-  public boolean hasProperIntersection() 
-  { 
-    return hasProperIntersection; 
+  public boolean hasProperIntersection()
+  {
+    return hasProperIntersection;
   }
-  
+
   /**
    * Tests whether a non-proper intersection was found.
-   * 
+   *
    * @return true if a non-proper intersection was found
    */
-  public boolean hasNonProperIntersection() 
-  { 
-    return hasNonProperIntersection; 
+  public boolean hasNonProperIntersection()
+  {
+    return hasNonProperIntersection;
   }
-  
+
   /**
    * Gets the computed location of the intersection.
    * Due to round-off, the location may not be exact.
-   * 
+   *
    * @return the coordinate for the intersection location
    */
-  public Coordinate getIntersection()  
-  {    
-  	return intPt;  
+  public Coordinate getIntersection()
+  {
+  	return intPt;
   }
 
 
   /**
    * Gets the endpoints of the intersecting segments.
-   * 
+   *
    * @return an array of the segment endpoints (p00, p01, p10, p11)
    */
   public Coordinate[] getIntersectionSegments()
   {
   	return intSegments;
   }
-  
+
   /**
    * This method is called by clients
    * of the {@link SegmentIntersector} class to process
@@ -142,30 +142,30 @@ public void processIntersections(
       SegmentString e0,  int segIndex0,
       SegmentString e1,  int segIndex1
       )
-  {  	
+  {
     // don't bother intersecting a segment with itself
     if (e0 == e1 && segIndex0 == segIndex1) return;
-    
+
     Coordinate p00 = e0.getCoordinate(segIndex0);
     Coordinate p01 = e0.getCoordinate(segIndex0 + 1);
     Coordinate p10 = e1.getCoordinate(segIndex1);
     Coordinate p11 = e1.getCoordinate(segIndex1 + 1);
-    
+
     li.computeIntersection(p00, p01, p10, p11);
 //  if (li.hasIntersection() && li.isProper()) Debug.println(li);
 
     if (li.hasIntersection()) {
 			// System.out.println(li);
-    	
+
     	// record intersection info
 			hasIntersection = true;
-			
+
 			boolean isProper = li.isProper();
 			if (isProper)
 				hasProperIntersection = true;
       if (! isProper)
         hasNonProperIntersection = true;
-			
+
 			/**
 			 * If this is the kind of intersection we are searching for
 			 * OR no location has yet been recorded
@@ -173,7 +173,7 @@ public void processIntersections(
 			 */
 			boolean saveLocation = true;
 			if (findProper && ! isProper) saveLocation = false;
-			
+
 			if (intPt == null || saveLocation) {
 
 				// record intersection location (approximate)
@@ -188,17 +188,17 @@ public void processIntersections(
 			}
 		}
   }
-  
+
   /**
    * Tests whether processing can terminate,
    * because all required information has been obtained
    * (e.g. an intersection of the desired type has been detected).
-   * 
+   *
    * @return true if processing can terminate
    */
   @Override
 public boolean isDone()
-  { 
+  {
     /**
      * If finding all types, we can stop
      * when both possible types have been found.
@@ -206,7 +206,7 @@ public boolean isDone()
     if (findAllTypes) {
       return hasProperIntersection && hasNonProperIntersection;
     }
-    
+
   	/**
   	 * If searching for a proper intersection, only stop if one is found
   	 */

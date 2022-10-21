@@ -17,7 +17,7 @@ import org.locationtech.jts.index.kdtree.KdTree;
 
 /**
  * An index providing fast creation and lookup of snap points.
- * 
+ *
  * @author mdavis
  *
  */
@@ -31,22 +31,22 @@ public class SnappingPointIndex {
    * for point equality.
    */
   private KdTree snapPointIndex;
-  
+
   /**
    * Creates a snap point index using a specified distance tolerance.
-   * 
+   *
    * @param snapTolerance points are snapped if within this distance
    */
   public SnappingPointIndex(double snapTolerance) {
     this.snapTolerance = snapTolerance;
     snapPointIndex = new KdTree(snapTolerance);
   }
-  
+
   /**
-   * Snaps a coordinate to an existing snap point, 
+   * Snaps a coordinate to an existing snap point,
    * if it is within the snap tolerance distance.
    * Otherwise adds the coordinate to the snap point index.
-   * 
+   *
    * @param p the point to snap
    * @return the point it snapped to, or the input point
    */
@@ -61,7 +61,7 @@ public class SnappingPointIndex {
 
   /**
    * Gets the snapping tolerance value for the index.
-   * 
+   *
    * @return the snapping tolerance value
    */
   public double getTolerance() {
@@ -70,7 +70,7 @@ public class SnappingPointIndex {
 
   /**
    * Computes the depth of the index tree.
-   * 
+   *
    * @return the depth of the index tree
    */
   public int depth() {

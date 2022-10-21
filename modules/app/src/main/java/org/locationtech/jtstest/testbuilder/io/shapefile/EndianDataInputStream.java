@@ -43,12 +43,12 @@ public class EndianDataInputStream {
     public byte readByteLE() throws IOException {
         return inputStream.readByte();
     }
-    
+
      /** read a byte in LittleEndian - the same as BE because its only 1 byte*/
     public void readByteLEnum(byte[] b) throws IOException {
         inputStream.readFully(b);
     }
-    
+
 
     /** read a byte in BigEndian - the same as LE because its only 1 byte.  returns int as per java.io.DataStream*/
     public int readUnsignedByteBE() throws IOException {

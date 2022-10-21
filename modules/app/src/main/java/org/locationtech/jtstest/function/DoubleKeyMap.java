@@ -18,10 +18,10 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class DoubleKeyMap 
+public class DoubleKeyMap
 {
 	private Map topMap = new TreeMap();
-	
+
 	public void put(Object key1, Object key2, Object value)
 	{
 		Map keyMap = (Map) topMap.get(key1);
@@ -29,21 +29,21 @@ public class DoubleKeyMap
 			keyMap = createKeyMap(key1);
 		keyMap.put(key2, value);
 	}
-	
+
 	private Map createKeyMap(Object key1)
 	{
 		Map map = new TreeMap();
 		topMap.put(key1, map);
 		return map;
 	}
-	
+
 	public Object get(Object key1, Object key2)
 	{
 		Map keyMap = (Map) topMap.get(key1);
 		if (keyMap == null) return null;
 		return keyMap.get(key2);
 	}
-	
+
 	public Set keySet()
 	{
 		return topMap.keySet();
@@ -54,7 +54,7 @@ public class DoubleKeyMap
 		if (keyMap == null) return new TreeSet();
 		return keyMap.keySet();
 	}
-	
+
 	public Collection values(Object key1)
 	{
 		Map keyMap = (Map) topMap.get(key1);
