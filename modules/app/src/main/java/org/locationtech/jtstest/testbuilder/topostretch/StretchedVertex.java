@@ -268,14 +268,11 @@ public class StretchedVertex
   		}
   		else
   			return 3;
-  	}
-  	else {
-  		if (Orientation.index(cornerBase, corner[1], pt) == Orientation.COUNTERCLOCKWISE) {
-  			return 1;
-  		}
-  		else
-  			return 2; 		
-  	}
+  	} else if (Orientation.index(cornerBase, corner[1], pt) == Orientation.COUNTERCLOCKWISE) {
+		return 1;
+	}
+	else
+		return 2;
   }
   
   private static Coordinate rotateToQuadrant(Coordinate v, int quadrant)

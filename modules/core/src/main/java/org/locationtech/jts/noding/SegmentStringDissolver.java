@@ -107,14 +107,11 @@ public class SegmentStringDissolver
     SegmentString existing = findMatching(oca);
     if (existing == null) {
       add(oca, segString);
-    }
-    else {
-      if (merger != null) {
+    } else if (merger != null) {
         boolean isSameOrientation
             = CoordinateArrays.equals(existing.getCoordinates(), segString.getCoordinates());
         merger.merge(existing, segString, isSameOrientation);
       }
-    }
   }
 
   private SegmentString findMatching(OrientedCoordinateArray oca)

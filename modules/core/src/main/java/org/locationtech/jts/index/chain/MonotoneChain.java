@@ -374,9 +374,7 @@ public class MonotoneChain {
     minp = Math.min(p1.y, p2.y);
     maxp = Math.max(p1.y, p2.y);
 
-    if( minp > maxq + overlapTolerance )
-        return false;
-    if( maxp < minq - overlapTolerance )
+    if( (minp > maxq + overlapTolerance) || (maxp < minq - overlapTolerance) )
         return false;
     return true;
   }

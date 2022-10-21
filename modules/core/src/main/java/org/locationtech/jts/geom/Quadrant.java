@@ -45,13 +45,10 @@ public class Quadrant
         return NE;
       else
         return SE;
-    }
-    else {
-    	if (dy >= 0.0)
-    		return NW;
-    	else
-    		return SW;
-    }
+    } else if (dy >= 0.0)
+		return NW;
+	else
+		return SW;
   }
 
   /**
@@ -69,13 +66,10 @@ public class Quadrant
         return NE;
       else
         return SE;
-    }
-    else {
-    	if (p1.y >= p0.y)
-    		return NW;
-    	else
-    		return SW;
-    }
+    } else if (p1.y >= p0.y)
+		return NW;
+	else
+		return SW;
   }
 
   /**

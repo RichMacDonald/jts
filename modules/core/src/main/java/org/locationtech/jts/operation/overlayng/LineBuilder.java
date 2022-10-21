@@ -166,8 +166,6 @@ class LineBuilder {
       /**
        * Omit collapsed edge in other area interior.
        */
-      if (lbl.isCollapseAndNotPartInterior()) return false;
-
       /**
        * If there is a result area, omit line edge inside it.
        * It is sufficient to check against the input area rather 
@@ -175,7 +173,7 @@ class LineBuilder {
        * because if line edges are present then there is only one input area, 
        * and the result area must be the same as the input area. 
        */
-      if (hasResultArea && lbl.isLineInArea(inputAreaIndex)) 
+      if (lbl.isCollapseAndNotPartInterior() || (hasResultArea && lbl.isLineInArea(inputAreaIndex))) 
         return false;
     }
     

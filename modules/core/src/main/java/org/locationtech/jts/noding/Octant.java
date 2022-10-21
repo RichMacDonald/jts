@@ -55,9 +55,7 @@ public class Octant {
         else
           return 6;
       }
-    }
-    else { // dx < 0
-      if (dy >= 0) {
+    } else if (dy >= 0) {
         if (adx >= ady)
           return 3;
         else
@@ -69,7 +67,6 @@ public class Octant {
         else
           return 5;
       }
-    }
   }
 
   /**

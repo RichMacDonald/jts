@@ -142,9 +142,7 @@ public class GeoJsonReader {
     if (type == null) {
       throw new ParseException(
           "Could not parse Geometry from Json string.  No 'type' property found.");
-    } else {
-
-      if (GeoJsonConstants.NAME_POINT.equals(type)) {
+    } else if (GeoJsonConstants.NAME_POINT.equals(type)) {
         result = createPoint(geometryMap, geometryFactory);
 
       } else if (GeoJsonConstants.NAME_LINESTRING.equals(type)) {
@@ -176,7 +174,6 @@ public class GeoJsonReader {
             "Could not parse Geometry from GeoJson string.  Unsupported 'type':"
                 + type);
       }
-    }
 
     return result;
   }

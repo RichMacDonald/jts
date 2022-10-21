@@ -192,8 +192,7 @@ public class IsSimpleOp
   private boolean computeSimple(Geometry geom)
   {
     if (geom.isEmpty() || (geom instanceof Point)) return true;
-    if (geom instanceof LineString) return isSimpleLinearGeometry(geom);
-    if (geom instanceof MultiLineString) return isSimpleLinearGeometry(geom);
+    if ((geom instanceof LineString) || (geom instanceof MultiLineString)) return isSimpleLinearGeometry(geom);
     if (geom instanceof MultiPoint) return isSimpleMultiPoint((MultiPoint) geom);
     if (geom instanceof Polygonal) return isSimplePolygonal(geom);
     if (geom instanceof GeometryCollection) return isSimpleGeometryCollection(geom);

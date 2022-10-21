@@ -232,11 +232,8 @@ public class RelateComputer
         RelateNode n = (RelateNode) nodes.addNode(ei.coord);
         if (eLoc == Location.BOUNDARY)
           n.setLabelBoundary(argIndex);
-        else {
-          if (n.getLabel().isNull(argIndex))
+		else if (n.getLabel().isNull(argIndex))
             n.setLabel(argIndex, Location.INTERIOR);
-        }
-//Debug.println(n);
       }
     }
   }

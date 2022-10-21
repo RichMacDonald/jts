@@ -262,12 +262,8 @@ public class HotPixel
     }
     
     int orientLL = CGAlgorithmsDD.orientationIndex(px, py, qx, qy, minx, miny);
-    if (orientLL == 0) {
-      // segment crossed LL corner, which is the only one in pixel interior
-      return true;
-    }
     //--- check crossing Left side
-    if (orientLL != orientUL) {
+    if ((orientLL == 0) || (orientLL != orientUL)) {
       return true;
     }
     

@@ -49,7 +49,7 @@ public class PrecisionModelDialog extends JDialog {
   void jbInit() throws Exception {
     panel1.setLayout(borderLayout1);
     okButton.setText("OK");
-    okButton.addActionListener(e -> okButton_actionPerformed(e));
+    okButton.addActionListener(this::okButton_actionPerformed);
     getContentPane().add(panel1);
     panel1.add(precisionModelPanel, BorderLayout.CENTER);
     panel1.add(jPanel1, BorderLayout.SOUTH);

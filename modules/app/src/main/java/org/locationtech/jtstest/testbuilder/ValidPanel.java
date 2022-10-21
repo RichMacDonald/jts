@@ -78,10 +78,10 @@ public class ValidPanel extends JPanel {
   void jbInit() throws Exception {
     JButton btnValidate = new JButton();
     btnValidate.setText("Valid?");
-    btnValidate.addActionListener(e -> btnValidate_actionPerformed(e));
+    btnValidate.addActionListener(this::btnValidate_actionPerformed);
     JButton btnSimple = new JButton();
     btnSimple.setText("Simple?");
-    btnSimple.addActionListener(e -> btnSimple_actionPerformed(e));
+    btnSimple.addActionListener(this::btnSimple_actionPerformed);
     
     JButton btnClear = new JButton();
     btnClear.setText("Clear");
@@ -130,7 +130,7 @@ public class ValidPanel extends JPanel {
     
     btnSetMark.setToolTipText("");
     btnSetMark.setText("Set Mark");
-    btnSetMark.addActionListener(e -> btnSetMark_actionPerformed(e));
+    btnSetMark.addActionListener(this::btnSetMark_actionPerformed);
     
     JPanel panelValidSimple = new JPanel();
     panelValidSimple.add(btnValidate);

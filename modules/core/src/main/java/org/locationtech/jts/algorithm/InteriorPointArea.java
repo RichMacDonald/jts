@@ -440,11 +440,9 @@ public class InteriorPointArea {
       if ( y <= centreY ) {
         if ( y > loY )
           loY = y;
-      } else {
-        if ( y < hiY ) {
-          hiY = y;
-        }
-      }
+      } else if ( y < hiY ) {
+	  hiY = y;
+	}
     }
   }
 }

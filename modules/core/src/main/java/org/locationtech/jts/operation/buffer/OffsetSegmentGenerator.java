@@ -593,10 +593,7 @@ class OffsetSegmentGenerator
 
     if (direction == Orientation.CLOCKWISE) {
       if (startAngle <= endAngle) startAngle += 2.0 * Math.PI;
-    }
-    else {    // direction == COUNTERCLOCKWISE
-      if (startAngle >= endAngle) startAngle -= 2.0 * Math.PI;
-    }
+    } else if (startAngle >= endAngle) startAngle -= 2.0 * Math.PI;
     segList.addPt(p0);
     addDirectedFillet(p, startAngle, endAngle, direction, radius);
     segList.addPt(p1);

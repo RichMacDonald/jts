@@ -76,7 +76,7 @@ extends JPanel
     jScrollPane1.setBorder(BorderFactory.createLoweredBevelBorder());
     
     JButton copyButton = SwingUtil.createButton(AppIcons.COPY, "Copy Result (Ctl-click for formatted)", 
-        (ActionListener) e -> rCopyButton_actionPerformed(e));
+        (ActionListener) this::rCopyButton_actionPerformed);
     JButton copyToTestButton = SwingUtil.createButton(AppIcons.COPY_TO_TEST, "Copy Result to new Test",
         (ActionListener) e -> JTSTestBuilderFrame.instance().copyResultToTest());
     JButton btnClearResult = SwingUtil.createButton(AppIcons.CUT, "Clear Result",         

@@ -116,15 +116,12 @@ public class RobustDeterminant {
         else {
           return sign;
         }
-      }
-      else {
-        if (x2 > 0) {
-          return sign;
-        }
-        else {
-          return -sign;
-        }
-      }
+      } else if (x2 > 0) {
+	  return sign;
+	}
+	else {
+	  return -sign;
+	}
     }
     if ((y1 == 0.0) || (x2 == 0.0)) {
       if (y2 > 0) {
@@ -134,15 +131,12 @@ public class RobustDeterminant {
         else {
           return -sign;
         }
-      }
-      else {
-        if (x1 > 0) {
-          return -sign;
-        }
-        else {
-          return sign;
-        }
-      }
+      } else if (x1 > 0) {
+	  return -sign;
+	}
+	else {
+	  return sign;
+	}
     }
 
     /*
@@ -181,9 +175,7 @@ public class RobustDeterminant {
           y2 = swap;
         }
       }
-    }
-    else {
-      if (0.0 < y2) {
+    } else if (0.0 < y2) {
         if (-y1 <= y2) {
           sign = -sign;
           x1 = -x1;
@@ -216,7 +208,6 @@ public class RobustDeterminant {
           y2 = swap;
         }
       }
-    }
 
     /*
      *  making x coordinates positive
@@ -231,9 +222,7 @@ public class RobustDeterminant {
 	else {
 	  return sign;
 	}
-    }
-    else {
-      if ((0.0 < x2) || (x1 < x2)) {
+    } else if ((0.0 < x2) || (x1 < x2)) {
         return -sign;
       } else {
 	  sign = -sign;
@@ -241,7 +230,6 @@ public class RobustDeterminant {
 	  x2 = -x2;
 	  
 	}
-    }
 
     /*
      *  all entries strictly positive   x1 <= x2 and y1 <= y2
@@ -271,17 +259,14 @@ public class RobustDeterminant {
         if (y1 < y2 + y2) {
           return sign;
         }
-      }
-      else {
-        if (y1 > y2 + y2) {
-          return -sign;
-        }
-        else {
-          x2 = x1 - x2;
-          y2 = y1 - y2;
-          sign = -sign;
-        }
-      }
+      } else if (y1 > y2 + y2) {
+	  return -sign;
+	}
+	else {
+	  x2 = x1 - x2;
+	  y2 = y1 - y2;
+	  sign = -sign;
+	}
       if (y2 == 0.0) {
         if (x2 == 0.0) {
           return 0;
@@ -320,17 +305,14 @@ public class RobustDeterminant {
         if (y2 < y1 + y1) {
           return -sign;
         }
-      }
-      else {
-        if (y2 > y1 + y1) {
-          return sign;
-        }
-        else {
-          x1 = x2 - x1;
-          y1 = y2 - y1;
-          sign = -sign;
-        }
-      }
+      } else if (y2 > y1 + y1) {
+	  return sign;
+	}
+	else {
+	  x1 = x2 - x1;
+	  y1 = y2 - y1;
+	  sign = -sign;
+	}
       if (y1 == 0.0) {
         if (x1 == 0.0) {
           return 0;

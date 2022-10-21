@@ -85,9 +85,7 @@ public class PolygonHoleJoiner {
   private static List<Coordinate> ringCoordinates(LinearRing ring) {
     Coordinate[] coords = ring.getCoordinates();
     List<Coordinate> coordList = new ArrayList<>();
-    for (Coordinate p : coords) {
-      coordList.add(p);
-    }
+    Collections.addAll(coordList, coords);
     return coordList;
   }
   

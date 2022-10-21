@@ -146,10 +146,7 @@ public class IntersectionMatrix implements Cloneable {
          == Dimension.TRUE))) {
       return true;
     }
-    if (requiredDimensionSymbol == Dimension.SYM_FALSE && actualDimensionValue == Dimension.FALSE) {
-      return true;
-    }
-    if (requiredDimensionSymbol == Dimension.SYM_P && actualDimensionValue == Dimension.P) {
+    if ((requiredDimensionSymbol == Dimension.SYM_FALSE && actualDimensionValue == Dimension.FALSE) || (requiredDimensionSymbol == Dimension.SYM_P && actualDimensionValue == Dimension.P)) {
       return true;
     }
     if (requiredDimensionSymbol == Dimension.SYM_L && actualDimensionValue == Dimension.L) {

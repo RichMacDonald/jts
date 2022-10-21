@@ -69,7 +69,7 @@ protected void uiInit() {
     this.add(geomTreePanel, BorderLayout.CENTER);
     
     JButton btnZoom = SwingUtil.createButton(AppIcons.ZOOM, "Zoom to component", (ActionListener) e -> btnZoom_actionPerformed());
-    JButton btnCopy = SwingUtil.createButton(AppIcons.COPY, "Copy (Ctl-click to copy formatted", (ActionListener) e -> btnCopy_actionPerformed(e));
+    JButton btnCopy = SwingUtil.createButton(AppIcons.COPY, "Copy (Ctl-click to copy formatted", (ActionListener) this::btnCopy_actionPerformed);
     JButton btnNext = SwingUtil.createButton(AppIcons.DOWN, "Zoom to Next", (ActionListener) e -> btnZoomNext_actionPerformed(1));
     JButton btnPrev = SwingUtil.createButton(AppIcons.UP, "Zoom to Previous", (ActionListener) e -> btnZoomNext_actionPerformed(-1));
     btnDelete = SwingUtil.createButton(AppIcons.DELETE, "Delete", (ActionListener) e -> deleteGeom());    

@@ -180,7 +180,7 @@ public class JTSTestBuilderFrame extends JFrame
     statsPanel.setModel(model);
     
     model.getGeometryEditModel().addGeometryListener(
-        e -> model_geometryChanged(e));
+        this::model_geometryChanged);
     
     testListPanel.populateList();
     //layerListPanel.init(getModel().getLayers());

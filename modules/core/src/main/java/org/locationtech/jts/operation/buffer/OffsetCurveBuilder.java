@@ -75,15 +75,12 @@ public class OffsetCurveBuilder
     OffsetSegmentGenerator segGen = getSegGen(posDistance);
     if (inputPts.length <= 1) {
       computePointCurve(inputPts[0], segGen);
-    }
-    else {
-      if (bufParams.isSingleSided()) {
+    } else if (bufParams.isSingleSided()) {
         boolean isRightSide = distance < 0.0;
         computeSingleSidedBufferCurve(inputPts, isRightSide, segGen);
       }
       else
         computeLineBufferCurve(inputPts, segGen);
-    }
     
     Coordinate[] lineCoord = segGen.getCoordinates();
     return lineCoord;

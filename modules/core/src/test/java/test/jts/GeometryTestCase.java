@@ -369,7 +369,7 @@ public abstract class GeometryTestCase extends TestCase{
    * @return {@code true} if both sequences are equal
    */
   public static boolean isEqual(CoordinateSequence seq1, CoordinateSequence seq2, int dimension, double tolerance) {
-    if ((seq1 != null && seq2 == null) || (seq1 == null && seq2 != null)) return false;
+    if ((seq1 != null) == (seq2 == null)) return false;
 
     if (seq1.size() != seq2.size()) return false;
 

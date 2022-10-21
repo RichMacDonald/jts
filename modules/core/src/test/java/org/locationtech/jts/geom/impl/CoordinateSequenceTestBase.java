@@ -181,8 +181,7 @@ public abstract class CoordinateSequenceTestBase
       }
 
       // Ordinate indexed getters
-      if (!isEqual(coords[i].x,seq.getOrdinate(i, CoordinateSequence.X))) return false;
-      if (!isEqual(coords[i].y,seq.getOrdinate(i, CoordinateSequence.Y))) return false;
+      if (!isEqual(coords[i].x,seq.getOrdinate(i, CoordinateSequence.X)) || !isEqual(coords[i].y,seq.getOrdinate(i, CoordinateSequence.Y))) return false;
       if (seq.getDimension() > 2) {
         if (!isEqual(coords[i].getOrdinate(2),seq.getOrdinate(i, 2))) return false;
       }

@@ -87,9 +87,7 @@ public class Envelope
     minp = Math.min(p1.y, p2.y);
     maxp = Math.max(p1.y, p2.y);
 
-    if( minp > maxq )
-        return false;
-    if( maxp < minq )
+    if( (minp > maxq) || (maxp < minq) )
         return false;
     return true;
   }
@@ -816,10 +814,7 @@ public int compareTo(Object o) {
     if (isNull()) {
       if (env.isNull()) return 0;
       return -1;
-    }
-    else {
-      if (env.isNull()) return 1;
-    }
+    } else if (env.isNull()) return 1;
     // compare based on numerical ordering of ordinates
     if (minx < env.minx) return -1;
     if (minx > env.minx) return 1;

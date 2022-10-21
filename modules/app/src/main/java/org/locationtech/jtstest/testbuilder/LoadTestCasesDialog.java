@@ -66,9 +66,9 @@ public class LoadTestCasesDialog extends JDialog {
     void jbInit() throws Exception {
         panel1.setLayout(borderLayout1);
         btnCancel.setText("Cancel");
-        btnCancel.addActionListener(e -> btnCancel_actionPerformed(e));
+        btnCancel.addActionListener(this::btnCancel_actionPerformed);
         btnOk.setText("Ok");
-        btnOk.addActionListener(e -> btnOk_actionPerformed(e));
+        btnOk.addActionListener(this::btnOk_actionPerformed);
         jPanel2.setLayout(gridBagLayout1);
         jLabel1.setToolTipText("");
         jLabel1.setText("Class name");

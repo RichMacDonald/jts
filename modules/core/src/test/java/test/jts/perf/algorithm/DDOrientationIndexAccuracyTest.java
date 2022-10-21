@@ -78,6 +78,6 @@ public class DDOrientationIndexAccuracyTest extends GeometryTestCase {
 	interface DDConverter {
 		DD convert(double x);
 	}
-	static final DDConverter DD_STD = x -> DD.valueOf(x);
+	static final DDConverter DD_STD = DD::valueOf;
 	static final DDConverter DD_DEC = x -> DD.valueOf(x + "");
 }

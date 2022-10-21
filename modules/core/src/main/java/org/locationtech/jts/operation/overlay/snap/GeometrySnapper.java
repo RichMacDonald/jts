@@ -12,6 +12,7 @@
 
 package org.locationtech.jts.operation.overlay.snap;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -192,9 +193,7 @@ public class GeometrySnapper
     // TODO: should do this more efficiently.  Use CoordSeq filter to get points, KDTree for uniqueness & queries
     Set ptSet = new TreeSet();
     Coordinate[] pts = g.getCoordinates();
-    for (Coordinate pt : pts) {
-      ptSet.add(pt);
-    }
+    ptSet.addAll(Arrays.asList(pts));
     return (Coordinate[]) ptSet.toArray(new Coordinate[0]);
   }
   

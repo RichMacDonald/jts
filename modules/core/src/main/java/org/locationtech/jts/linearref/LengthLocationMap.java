@@ -200,14 +200,10 @@ public class LengthLocationMap
           return totalLength + segLen * loc.getSegmentFraction();
         }
         totalLength += segLen;
-      }
-      else
-      {
-        // At the end of the component
-        if (loc.getComponentIndex() == it.getComponentIndex()) {
-          return totalLength;
-        }
-      }
+      } else // At the end of the component
+	if (loc.getComponentIndex() == it.getComponentIndex()) {
+	  return totalLength;
+	}
       it.next();
     }
     return totalLength;

@@ -78,8 +78,7 @@ class PolygonRing {
     //--- only record touches within a polygon
     if (ring0 == null || ring1 == null || ! ring0.isSamePolygon(ring1)) return false;
     
-    if (! ring0.isOnlyTouch(ring1, pt)) return true;
-    if (! ring1.isOnlyTouch(ring0, pt)) return true;
+    if (! ring0.isOnlyTouch(ring1, pt) || ! ring1.isOnlyTouch(ring0, pt)) return true;
     
     ring0.addTouch(ring1, pt);
     ring1.addTouch(ring0, pt);

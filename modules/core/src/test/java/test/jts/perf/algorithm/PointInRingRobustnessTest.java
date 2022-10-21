@@ -183,12 +183,10 @@ public class PointInRingRobustnessTest extends GeometryTestCase {
           if (Orientation.LEFT == Orientation.index(ring[i], ring[i + 1], p)) 
             winding++; 
         }
-      } else { 
-        // detect a downward crossing
-        if (ring[i + 1].y <= p.y) 
-          if (Orientation.RIGHT == Orientation.index(ring[i], ring[i + 1], p)) 
-            winding--; 
-      }
+      } else // detect a downward crossing
+	if (ring[i + 1].y <= p.y) 
+	  if (Orientation.RIGHT == Orientation.index(ring[i], ring[i + 1], p)) 
+	    winding--;
     }
     return winding != 0;
   }

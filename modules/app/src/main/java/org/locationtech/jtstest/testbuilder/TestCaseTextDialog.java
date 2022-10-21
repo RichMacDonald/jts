@@ -88,36 +88,36 @@ public class TestCaseTextDialog extends JDialog {
         jPanel1.setLayout(borderLayout2);
         btnCopy.setEnabled(true);
         btnCopy.setText("Copy");
-        btnCopy.addActionListener(e -> btnSelect_actionPerformed(e));
+        btnCopy.addActionListener(this::btnSelect_actionPerformed);
         btnOk.setToolTipText("");
         btnOk.setText("Close");
-        btnOk.addActionListener(e -> btnOk_actionPerformed(e));
+        btnOk.addActionListener(this::btnOk_actionPerformed);
         rbXML.setText("Test XML");
         rbXML.setToolTipText("");
-        rbXML.addActionListener(e -> rbXML_actionPerformed(e));
+        rbXML.addActionListener(this::rbXML_actionPerformed);
         rbXMLWKB.setText("Test XML - WKB");
         rbXMLWKB.setToolTipText("");
-        rbXMLWKB.addActionListener(e -> rbXMLWKB_actionPerformed(e));
+        rbXMLWKB.addActionListener(this::rbXMLWKB_actionPerformed);
         rbSVG.setText("SVG");
         rbSVG.setToolTipText("");
-        rbSVG.addActionListener(e -> rbSVG_actionPerformed(e));
+        rbSVG.addActionListener(this::rbSVG_actionPerformed);
         
         rbTestCaseJava.setText("TestCase Java");
         rbTestCaseJava.setToolTipText("");
-        rbTestCaseJava.addActionListener(e -> rbTestCaseJava_actionPerformed(e));
+        rbTestCaseJava.addActionListener(this::rbTestCaseJava_actionPerformed);
         rbJTSJava.setEnabled(false);
         rbJTSJava.setText("JTS Java ");
         
         rbWKT.setText("WKT");
-        rbWKT.addActionListener(e -> rbWKT_actionPerformed(e));
+        rbWKT.addActionListener(this::rbWKT_actionPerformed);
         
         rbWKTFormatted.setText("WKT-Formatted");
-        rbWKTFormatted.addActionListener(e -> rbWKTFormatted_actionPerformed(e));
+        rbWKTFormatted.addActionListener(this::rbWKTFormatted_actionPerformed);
         
         rbWKB.setText("WKB");
-        rbWKB.addActionListener(e -> rbWKB_actionPerformed(e));
+        rbWKB.addActionListener(this::rbWKB_actionPerformed);
         rbGML.setText("GML");
-        rbGML.addActionListener(e -> rbGML_actionPerformed(e));
+        rbGML.addActionListener(this::rbGML_actionPerformed);
         getContentPane().add(dialogPanel);
         dialogPanel.add(jScrollPane1, BorderLayout.CENTER);
         dialogPanel.add(jPanel1, BorderLayout.SOUTH);

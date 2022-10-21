@@ -290,23 +290,23 @@ public class WKTPanel extends JPanel
         this.add(panelButtons, BorderLayout.EAST);
         
         loadButton.addActionListener(
-            e -> loadButton_actionPerformed(e));
+            this::loadButton_actionPerformed);
         inspectButton.addActionListener(
             e -> JTSTestBuilder.controller().inspectGeometry());
         exchangeButton.addActionListener(
             e -> JTSTestBuilder.controller().exchangeGeometry());
        aCopyButton.addActionListener(
-            e -> aCopyButton_actionPerformed(e));
+            this::aCopyButton_actionPerformed);
         aPasteButton.addActionListener(
-            e -> aPasteButton_actionPerformed(e));
+            this::aPasteButton_actionPerformed);
         aCutButton.addActionListener(
-            e -> aCutButton_actionPerformed(e));
+            this::aCutButton_actionPerformed);
         bCopyButton.addActionListener(
-            e -> bCopyButton_actionPerformed(e));
+            this::bCopyButton_actionPerformed);
         bPasteButton.addActionListener(
-            e -> bPasteButton_actionPerformed(e));
+            this::bPasteButton_actionPerformed);
         bCutButton.addActionListener(
-            e -> bCutButton_actionPerformed(e));
+            this::bCutButton_actionPerformed);
         editMode.add(aRB);
         editMode.add(bRB);
     }

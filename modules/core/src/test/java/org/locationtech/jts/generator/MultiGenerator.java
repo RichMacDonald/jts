@@ -114,8 +114,7 @@ public class MultiGenerator extends GeometryGenerator {
 		// yes ... there are better ways
 		if(generator instanceof PointGenerator){
 			return geometryFactory.createMultiPoint((Point[]) geoms.toArray(new Point[numberGeometries]));
-		}else{
-		if(generator instanceof LineStringGenerator){
+		} else if(generator instanceof LineStringGenerator){
 			return geometryFactory.createMultiLineString((LineString[]) geoms.toArray(new LineString[numberGeometries]));
 		}else{
 		if(generator instanceof PolygonGenerator){
@@ -123,7 +122,7 @@ public class MultiGenerator extends GeometryGenerator {
 		}else{
 			// same as multi
 			return geometryFactory.createGeometryCollection((Geometry[]) geoms.toArray(new Geometry[numberGeometries]));
-		}}}
+		}}
 	}
 
 	/**

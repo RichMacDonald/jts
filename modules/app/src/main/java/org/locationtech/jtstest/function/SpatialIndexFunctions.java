@@ -163,15 +163,12 @@ public class SpatialIndexFunctions
       else {
         xMin = splitVal;
       }
-    }
-    else {
-      if (isLeft) {
+    } else if (isLeft) {
         yMax = splitVal;
       }
       else {
         yMin = splitVal;
       }
-    }
     return new Envelope(xMin, xMax, yMin, yMax);
   }
 

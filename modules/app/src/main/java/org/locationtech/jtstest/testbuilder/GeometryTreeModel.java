@@ -277,12 +277,9 @@ abstract class GeometryNode extends GeometricObjectNode
     buf.append(geom.getGeometryType());
     if (geom.isEmpty()) {
       buf.append(" EMPTY");
-    }
-    else {
-      if (size > 0) {
+    } else if (size > 0) {
         buf.append(" " + sizeString(size));
       }
-    }
     String metrics = GeometryUtil.metricsSummary(geom);
     if (metrics.length() > 0) {
       buf.append("  -  ");

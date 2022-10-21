@@ -1,6 +1,7 @@
 package org.locationtech.jts.triangulate.tri;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.locationtech.jts.algorithm.Orientation;
@@ -65,9 +66,7 @@ public class TriTest extends GeometryTestCase {
 
   private static void build(Tri... tri) {
     List<Tri> triList = new ArrayList<>();
-    for (Tri element : tri) {
-      triList.add(element);
-    }
+    Collections.addAll(triList, tri);
     TriangulationBuilder.build(triList);
   }
 }

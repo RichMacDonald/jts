@@ -72,10 +72,7 @@ public class XMLTestWriter
     }
     int nameColonIndex = testCase.getName().indexOf(":");
     int descriptionColonIndex = testCase.getDescription().indexOf(":");
-    if (nameColonIndex == -1 || descriptionColonIndex == -1) {
-      return false;
-    }
-    if (nameColonIndex != descriptionColonIndex) {
+    if (nameColonIndex == -1 || descriptionColonIndex == -1 || (nameColonIndex != descriptionColonIndex)) {
       return false;
     }
     return true;

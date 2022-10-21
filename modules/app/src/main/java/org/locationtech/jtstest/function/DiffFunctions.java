@@ -12,6 +12,7 @@
 package org.locationtech.jtstest.function;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -51,9 +52,7 @@ public class DiffFunctions {
     
     Coordinate[] ptsB = b.getCoordinates();
     Set<Coordinate> pts = new HashSet<>();
-    for (Coordinate element : ptsB) {
-      pts.add(element);
-    }
+    Collections.addAll(pts, ptsB);
 
     CoordinateList diffPts = new CoordinateList();
     Coordinate[] ptsA = a.getCoordinates();

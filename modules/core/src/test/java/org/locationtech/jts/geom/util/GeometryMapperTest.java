@@ -45,7 +45,7 @@ public class GeometryMapperTest extends GeometryTestCase {
       return null;
     };
   
-  static GeometryMapper.MapOp BOUNDARY = geom -> geom.getBoundary();
+  static GeometryMapper.MapOp BOUNDARY = Geometry::getBoundary;
   
   public void testFlatMapInputEmpty() throws ParseException {
     checkFlatMap("GEOMETRYCOLLECTION( POINT EMPTY, LINESTRING EMPTY)",
