@@ -135,7 +135,7 @@ public abstract class LineIntersector
   {
     double dx = p.x - p1.x;
     double dy = p.y - p1.y;
-    double dist = Math.sqrt(dx * dx + dy * dy);   // dummy value
+    double dist = Math.hypot(dx, dy);   // dummy value
     Assert.isTrue(! (dist == 0.0 && ! p.equals(p1)), "Invalid distance calculation");
     return dist;
   }
