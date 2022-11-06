@@ -9,23 +9,22 @@ import org.locationtech.jts.geom.Polygon;
 
 /**
  * Delegate for all distance calculations between lines, points, and Envelopes.
- * DEFAULT is unchanged from original code.
- * Delegation allows substitution of projections where geometry is not Cartesian.
+ * DEFAULT is unchanged from original code. Delegation allows substitution of
+ * projections where geometry is not Cartesian.
  * 
  * @author rjm
  *
  */
 interface DistanceSupport {
-	double distance(Coordinate A, Coordinate B,  Coordinate C, Coordinate D);
+	double distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D);
 	Coordinate[] closestPoints(LineSegment seg0, LineSegment seg1);
 	Coordinate closestPoint(LineSegment seg, Coordinate coord);
 	int locate(Coordinate pt, Polygon poly);
 	double distance(Envelope env0, Envelope env1);
 	double pointToSegment(Coordinate p, Coordinate A, Coordinate B);
 	double distance(Coordinate A, Coordinate B);
-	
-	 
-	 static DistanceSupport DEFAULT = new DistanceSupport() {
+
+	static DistanceSupport DEFAULT = new DistanceSupport() {
 		private final PointLocator ptLocator = new PointLocator();
 
 		@Override
@@ -62,7 +61,6 @@ interface DistanceSupport {
 		public double distance(Coordinate A, Coordinate B) {
 			return A.distance(B);
 		};
-	 };
+	};
 
-	 
 }

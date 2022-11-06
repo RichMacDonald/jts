@@ -13,8 +13,6 @@ package org.locationtech.jts.operation.distance;
 
 import java.util.List;
 
-import org.locationtech.jts.algorithm.Distance;
-import org.locationtech.jts.algorithm.PointLocator;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
