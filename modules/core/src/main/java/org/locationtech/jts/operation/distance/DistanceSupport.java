@@ -15,7 +15,7 @@ import org.locationtech.jts.geom.Polygon;
  * @author rjm
  *
  */
-interface DistanceSupport {
+public interface DistanceSupport {
 	double distance(Coordinate A, Coordinate B);
 	double distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D);
 	Coordinate[] closestPoints(LineSegment seg0, LineSegment seg1);
