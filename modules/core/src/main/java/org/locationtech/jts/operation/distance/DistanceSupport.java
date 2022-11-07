@@ -16,13 +16,16 @@ import org.locationtech.jts.geom.Polygon;
  *
  */
 interface DistanceSupport {
+	double distance(Coordinate A, Coordinate B);
 	double distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D);
 	Coordinate[] closestPoints(LineSegment seg0, LineSegment seg1);
 	Coordinate closestPoint(LineSegment seg, Coordinate coord);
 	int locate(Coordinate pt, Polygon poly);
 	double distance(Envelope env0, Envelope env1);
 	double pointToSegment(Coordinate p, Coordinate A, Coordinate B);
-	double distance(Coordinate A, Coordinate B);
+
+	ClosestPointAndDistance distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D, double minDistance);
+	ClosestPointAndDistance pointToSegment(Coordinate p, Coordinate A, Coordinate B, double minDistance);
 
 	static DistanceSupport DEFAULT = new DistanceSupport() {
 		private final PointLocator ptLocator = new PointLocator();
@@ -53,13 +56,38 @@ interface DistanceSupport {
 		}
 
 		@Override
-		public double pointToSegment(Coordinate p, Coordinate A, Coordinate B) {
+		public final double pointToSegment(Coordinate p, Coordinate A, Coordinate B) {
 			return Distance.pointToSegment(p, A, B);
 		}
 
 		@Override
-		public double distance(Coordinate A, Coordinate B) {
+		public final double distance(Coordinate A, Coordinate B) {
 			return A.distance(B);
+		}
+
+		@Override
+		public final ClosestPointAndDistance pointToSegment(Coordinate p, Coordinate A, Coordinate B, double minDistance) {
+	        double dist = pointToSegment( p, A, B );
+            if (dist < minDistance) {
+              minDistance = dist;
+              LineSegment seg = new LineSegment(A, B);
+              Coordinate segClosestPoint = closestPoint(seg, p);
+              return new ClosestPointAndDistance(dist, segClosestPoint);
+            }
+            return null;
+		}
+
+		@Override
+		public final ClosestPointAndDistance distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D, double minDistance) {
+	        double dist = distance(A, B, C, D);
+	        if (dist < minDistance) {
+	          minDistance = dist;
+	          LineSegment seg0 = new LineSegment(A, B);
+	          LineSegment seg1 = new LineSegment(C, D);
+	          Coordinate[] closestPt = closestPoints(seg0, seg1);
+              return new ClosestPointAndDistance(dist, closestPt[0], closestPt[1]);
+	        }
+	        return null;
 		};
 	};
 
