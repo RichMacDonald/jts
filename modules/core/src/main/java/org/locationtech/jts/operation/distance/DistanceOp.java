@@ -13,8 +13,6 @@ package org.locationtech.jts.operation.distance;
 
 import java.util.List;
 
-import org.locationtech.jts.algorithm.Distance;
-import org.locationtech.jts.algorithm.PointLocator;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
@@ -44,6 +42,8 @@ import org.locationtech.jts.geom.util.PolygonExtracter;
  * The algorithms used are straightforward O(n^2)
  * comparisons.  This worst-case performance could be improved on
  * by using Voronoi techniques or spatial indexes.
+ * 
+ * Externalize point-to-point, point-to-line, and line-to-line operations.
  *
  * @version 1.7
  */
@@ -114,9 +114,9 @@ public class DistanceOp
   private Geometry[] geom;
   private double terminateDistance = 0.0;
   // working
-  private PointLocator ptLocator = new PointLocator();
   private GeometryLocation[] minDistanceLocation;
   private double minDistance = Double.MAX_VALUE;
+  private final DistanceSupport external;
 
   /**
    * Constructs a DistanceOp that computes the distance and nearest points between
@@ -138,10 +138,16 @@ public class DistanceOp
    */
   public DistanceOp(Geometry g0, Geometry g1, double terminateDistance)
   {
+	    this(g0, g1, terminateDistance, DistanceSupport.DEFAULT);
+  }
+  
+  public DistanceOp(Geometry g0, Geometry g1, double terminateDistance, DistanceSupport external)
+  {
     this.geom = new Geometry[2];
     geom[0] = g0;
     geom[1] = g1;
     this.terminateDistance = terminateDistance;
+    this.external = external;
   }
 
   /**
@@ -252,9 +258,9 @@ public class DistanceOp
     if (polyGeom.getDimension() < 2) return;
     
   	int locationsIndex = 1 - polyGeomIndex;
-    List polys = PolygonExtracter.getPolygons(polyGeom);
+  	List<Polygon> polys = PolygonExtracter.getPolygons(polyGeom);
     if (polys.size() > 0) {
-      List insideLocs = ConnectedElementLocationFilter.getLocations(geom[locationsIndex]);
+      List<GeometryLocation> insideLocs = ConnectedElementLocationFilter.getLocations(geom[locationsIndex]);
       computeContainmentDistance(insideLocs, polys, locPtPoly);
       if (minDistance <= terminateDistance) {
       	// this assigment is determined by the order of the args in the computeInside call above
@@ -265,12 +271,12 @@ public class DistanceOp
     }	
   }
   
-  private void computeContainmentDistance(List locs, List polys, GeometryLocation[] locPtPoly)
+  private void computeContainmentDistance(List<GeometryLocation> locs, List<Polygon> polys, GeometryLocation[] locPtPoly)
   {
     for (int i = 0; i < locs.size(); i++) {
-      GeometryLocation loc = (GeometryLocation) locs.get(i);
+      GeometryLocation loc = locs.get(i);
       for (int j = 0; j < polys.size(); j++) {
-      	computeContainmentDistance(loc, (Polygon) polys.get(j), locPtPoly);
+      	computeContainmentDistance(loc, polys.get(j), locPtPoly);
         if (minDistance <= terminateDistance) return;
       }
     }
@@ -282,7 +288,7 @@ public class DistanceOp
   {
     Coordinate pt = ptLoc.getCoordinate();
     // if pt is not in exterior, distance to geom is 0
-    if (Location.EXTERIOR != ptLocator.locate(pt, poly)) {
+    if (Location.EXTERIOR != external.locate(pt, poly)) {
       minDistance = 0.0;
       locPtPoly[0] = ptLoc;
       locPtPoly[1] = new GeometryLocation(poly, pt);;
@@ -295,6 +301,7 @@ public class DistanceOp
    * of input geometries.
    *
    */
+  @SuppressWarnings("unchecked")
   private void computeFacetDistance()
   {
     GeometryLocation[] locGeom = new GeometryLocation[2];
@@ -303,11 +310,11 @@ public class DistanceOp
      * Geometries are not wholely inside, so compute distance from lines and points
      * of one to lines and points of the other
      */
-    List lines0 = LinearComponentExtracter.getLines(geom[0]);
-    List lines1 = LinearComponentExtracter.getLines(geom[1]);
+	List<LineString> lines0 = LinearComponentExtracter.getLines(geom[0]);
+    List<LineString> lines1 = LinearComponentExtracter.getLines(geom[1]);
 
-    List pts0 = PointExtracter.getPoints(geom[0]);
-    List pts1 = PointExtracter.getPoints(geom[1]);
+    List<Point> pts0 = PointExtracter.getPoints(geom[0]);
+    List<Point> pts1 = PointExtracter.getPoints(geom[1]);
 
     // exit whenever minDistance goes LE than terminateDistance
     computeMinDistanceLines(lines0, lines1, locGeom);
@@ -332,25 +339,25 @@ public class DistanceOp
     updateMinDistance(locGeom, false);
   }
 
-  private void computeMinDistanceLines(List lines0, List lines1, GeometryLocation[] locGeom)
+  private void computeMinDistanceLines(List<LineString> lines0, List<LineString> lines1, GeometryLocation[] locGeom)
   {
     for (int i = 0; i < lines0.size(); i++) {
-      LineString line0 = (LineString) lines0.get(i);
+      LineString line0 = lines0.get(i);
       for (int j = 0; j < lines1.size(); j++) {
-        LineString line1 = (LineString) lines1.get(j);
+        LineString line1 = lines1.get(j);
         computeMinDistance(line0, line1, locGeom);
         if (minDistance <= terminateDistance) return;
       }
     }
   }
 
-  private void computeMinDistancePoints(List points0, List points1, GeometryLocation[] locGeom)
+  private void computeMinDistancePoints(List<Point> points0, List<Point> points1, GeometryLocation[] locGeom)
   {
     for (int i = 0; i < points0.size(); i++) {
-      Point pt0 = (Point) points0.get(i);
+      Point pt0 = points0.get(i);
       for (int j = 0; j < points1.size(); j++) {
-        Point pt1 = (Point) points1.get(j);
-        double dist = pt0.getCoordinate().distance(pt1.getCoordinate());
+        Point pt1 = points1.get(j);
+        double dist = external.distance(pt0.getCoordinate(), pt1.getCoordinate());
         if (dist < minDistance) {
           minDistance = dist;
           locGeom[0] = new GeometryLocation(pt0, 0, pt0.getCoordinate());
@@ -361,13 +368,13 @@ public class DistanceOp
     }
   }
 
-  private void computeMinDistanceLinesPoints(List lines, List points,
+  private void computeMinDistanceLinesPoints(List<LineString> lines, List<Point> points,
       GeometryLocation[] locGeom)
   {
     for (int i = 0; i < lines.size(); i++) {
-      LineString line = (LineString) lines.get(i);
+      LineString line = lines.get(i);
       for (int j = 0; j < points.size(); j++) {
-        Point pt = (Point) points.get(j);
+        Point pt = points.get(j);
         computeMinDistance(line, pt, locGeom);
         if (minDistance <= terminateDistance) return;
       }
@@ -377,7 +384,7 @@ public class DistanceOp
   private void computeMinDistance(LineString line0, LineString line1,
                                   GeometryLocation[] locGeom)
   {
-    if (line0.getEnvelopeInternal().distance(line1.getEnvelopeInternal())
+    if (external.distance(line0.getEnvelopeInternal(), line1.getEnvelopeInternal())
         > minDistance)
           return;
     Coordinate[] coord0 = line0.getCoordinates();
@@ -387,28 +394,25 @@ public class DistanceOp
       
       // short-circuit if line segment is far from line
       Envelope segEnv0 = new Envelope(coord0[i], coord0[i + 1]);
-      if (segEnv0.distance(line1.getEnvelopeInternal()) > minDistance)
+      if (external.distance(segEnv0, line1.getEnvelopeInternal()) > minDistance)
         continue;
       
       for (int j = 0; j < coord1.length - 1; j++) {
         
         // short-circuit if line segments are far apart
         Envelope segEnv1 = new Envelope(coord1[j], coord1[j + 1]);
-        if (segEnv0.distance(segEnv1) > minDistance)
+        if (external.distance(segEnv0, segEnv1) > minDistance)
           continue;
-
-        double dist = Distance.segmentToSegment(
-                                        coord0[i], coord0[i + 1],
-                                        coord1[j], coord1[j + 1] );
-        if (dist < minDistance) {
-          minDistance = dist;
-          LineSegment seg0 = new LineSegment(coord0[i], coord0[i + 1]);
-          LineSegment seg1 = new LineSegment(coord1[j], coord1[j + 1]);
-          Coordinate[] closestPt = seg0.closestPoints(seg1);
-          locGeom[0] = new GeometryLocation(line0, i, closestPt[0]);
-          locGeom[1] = new GeometryLocation(line1, j, closestPt[1]);
+        
+        ClosestPointAndDistance distAndCoordinates = external.distance(coord0[i], coord0[i + 1],
+                                   						 coord1[j], coord1[j + 1],
+                                   						 minDistance);
+        if (distAndCoordinates != null) {
+            minDistance = distAndCoordinates.dist;
+            locGeom[0] = new GeometryLocation(line0, i, distAndCoordinates.closestPt0);
+            locGeom[1] = new GeometryLocation(line1, j, distAndCoordinates.closestPt1);
+            if (minDistance <= terminateDistance) return;
         }
-        if (minDistance <= terminateDistance) return;
       }
     }
   }
@@ -416,23 +420,21 @@ public class DistanceOp
   private void computeMinDistance(LineString line, Point pt,
                                   GeometryLocation[] locGeom)
   {
-    if (line.getEnvelopeInternal().distance(pt.getEnvelopeInternal())
+    if (external.distance(line.getEnvelopeInternal(), pt.getEnvelopeInternal())
         > minDistance)
           return;
     Coordinate[] coord0 = line.getCoordinates();
     Coordinate coord = pt.getCoordinate();
       // brute force approach!
     for (int i = 0; i < coord0.length - 1; i++) {
-        double dist = Distance.pointToSegment(
-            coord, coord0[i], coord0[i + 1] );
-        if (dist < minDistance) {
-          minDistance = dist;
-          LineSegment seg = new LineSegment(coord0[i], coord0[i + 1]);
-          Coordinate segClosestPoint = seg.closestPoint(coord, i > 0);
-          locGeom[0] = new GeometryLocation(line, i, segClosestPoint);
-          locGeom[1] = new GeometryLocation(pt, 0, coord);
-        }
-        if (minDistance <= terminateDistance) return;
+    	ClosestPointAndDistance distAndCoordinate = external.pointToSegment(coord, coord0[i], coord0[i + 1], minDistance, i>0);
+    	if (distAndCoordinate != null) {
+            minDistance = distAndCoordinate.dist;
+            LineSegment seg = new LineSegment(coord0[i], coord0[i + 1]);
+            locGeom[0] = new GeometryLocation(line, i, distAndCoordinate.closestPt0);
+            locGeom[1] = new GeometryLocation(pt, 0, coord);
+            if (minDistance <= terminateDistance) return;
+    	}
 
     }
   }
