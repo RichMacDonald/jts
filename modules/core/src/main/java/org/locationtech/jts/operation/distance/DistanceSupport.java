@@ -32,10 +32,10 @@ public interface DistanceSupport {
 //	Coordinate closestPoint(LineSegment seg, Coordinate coord);
 	int locate(Coordinate pt, Polygon poly);
 	double distance(Envelope env0, Envelope env1);
-	double pointToSegment(Coordinate p, Coordinate A, Coordinate B);
+	double orthogonal(Coordinate p, Coordinate A, Coordinate B);
 
 	ClosestPointAndDistance distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D, double minDistance);
-	ClosestPointAndDistance pointToSegment(Coordinate p, Coordinate A, Coordinate B, double minDistance, boolean skipA);
+	ClosestPointAndDistance orthogonal(Coordinate p, Coordinate A, Coordinate B, double minDistance);
 	
 	
 
@@ -50,8 +50,8 @@ public interface DistanceSupport {
 			return seg0.closestPoints(seg1);
 		}
 
-		public final Coordinate closestPoint(LineSegment seg, Coordinate coord, boolean skipA) {
-			return seg.closestPoint(coord, skipA);
+		public final Coordinate closestPoint(LineSegment seg, Coordinate coord) {
+			return seg.orthogonalPoint(coord);
 		}
 
 		@Override
@@ -65,8 +65,8 @@ public interface DistanceSupport {
 		}
 
 		@Override
-		public final double pointToSegment(Coordinate p, Coordinate A, Coordinate B) {
-			return Distance.pointToSegment(p, A, B);
+		public final double orthogonal(Coordinate p, Coordinate A, Coordinate B) {
+			return Distance.pointToSegmentOrthogonal(p, A, B);
 		}
 
 		@Override
@@ -75,12 +75,11 @@ public interface DistanceSupport {
 		}
 
 		@Override
-		public final ClosestPointAndDistance pointToSegment(Coordinate p, Coordinate A, Coordinate B, double minDistance, boolean skipA) {
-	        double dist = pointToSegment( p, A, B );
+		public final ClosestPointAndDistance orthogonal(Coordinate p, Coordinate A, Coordinate B, double minDistance) {
+	        double dist = orthogonal( p, A, B );
             if (dist < minDistance) {
-              minDistance = dist;
               LineSegment seg = new LineSegment(A, B);
-              Coordinate segClosestPoint = closestPoint(seg, p, skipA);
+              Coordinate segClosestPoint = closestPoint(seg, p);
               return new ClosestPointAndDistance(dist, segClosestPoint);
             }
             return null;

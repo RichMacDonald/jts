@@ -426,16 +426,26 @@ public class DistanceOp
     Coordinate[] coord0 = line.getCoordinates();
     Coordinate coord = pt.getCoordinate();
       // brute force approach!
-    for (int i = 0; i < coord0.length - 1; i++) {
-    	ClosestPointAndDistance distAndCoordinate = external.pointToSegment(coord, coord0[i], coord0[i + 1], minDistance, i>0);
-    	if (distAndCoordinate != null) {
-            minDistance = distAndCoordinate.dist;
-            LineSegment seg = new LineSegment(coord0[i], coord0[i + 1]);
-            locGeom[0] = new GeometryLocation(line, i, distAndCoordinate.closestPt0);
-            locGeom[1] = new GeometryLocation(pt, 0, coord);
-            if (minDistance <= terminateDistance) return;
-    	}
-
+    for (int i = 0; i < coord0.length; i++) {
+        double dist = external.distance(coord, coord0[i]);
+        if (dist < minDistance) {
+          minDistance = dist;
+          locGeom[0] = new GeometryLocation(line, i, coord0[i]);
+          locGeom[1] = new GeometryLocation(pt, 0, coord);
+          if (minDistance <= terminateDistance) return;
+        }
+        
+        boolean notLast = i < coord0.length - 1;
+        if (notLast) {        	
+        	ClosestPointAndDistance distAndCoordinate = external.orthogonal(coord, coord0[i], coord0[i + 1], minDistance);
+        	if (distAndCoordinate != null) {
+        		minDistance = distAndCoordinate.dist;
+        		LineSegment seg = new LineSegment(coord0[i], coord0[i + 1]);
+        		locGeom[0] = new GeometryLocation(line, i, distAndCoordinate.closestPt0);
+        		locGeom[1] = new GeometryLocation(pt, 0, coord);
+        		if (minDistance <= terminateDistance) return;
+        	}
+        }
     }
   }
 
