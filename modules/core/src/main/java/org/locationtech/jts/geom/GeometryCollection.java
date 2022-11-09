@@ -265,7 +265,7 @@ public class GeometryCollection extends Geometry {
 
   }
   
-  protected int getTypeCode() {
+  public int getTypeCode() {
     return Geometry.TYPECODE_GEOMETRYCOLLECTION;
   }
 

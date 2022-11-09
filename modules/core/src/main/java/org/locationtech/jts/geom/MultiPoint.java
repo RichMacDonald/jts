@@ -112,7 +112,7 @@ public class MultiPoint
     return new MultiPoint(points, factory);
   }
   
-  protected int getTypeCode() {
+  public int getTypeCode() {
     return Geometry.TYPECODE_MULTIPOINT;
   }
 

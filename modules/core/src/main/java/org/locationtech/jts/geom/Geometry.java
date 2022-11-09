@@ -153,14 +153,14 @@ public abstract class Geometry
 {
   private static final long serialVersionUID = 8763622679187376702L;
     
-  protected static final int TYPECODE_POINT = 0;
-  protected static final int TYPECODE_MULTIPOINT = 1;
-  protected static final int TYPECODE_LINESTRING = 2;
-  protected static final int TYPECODE_LINEARRING = 3;
-  protected static final int TYPECODE_MULTILINESTRING = 4;
-  protected static final int TYPECODE_POLYGON = 5;
-  protected static final int TYPECODE_MULTIPOLYGON = 6;
-  protected static final int TYPECODE_GEOMETRYCOLLECTION = 7;
+  public static final int TYPECODE_POINT = 0;
+  public static final int TYPECODE_MULTIPOINT = 1;
+  public static final int TYPECODE_LINESTRING = 2;
+  public static final int TYPECODE_LINEARRING = 3;
+  public static final int TYPECODE_MULTILINESTRING = 4;
+  public static final int TYPECODE_POLYGON = 5;
+  public static final int TYPECODE_MULTIPOLYGON = 6;
+  public static final int TYPECODE_GEOMETRYCOLLECTION = 7;
   
   public static final String TYPENAME_POINT = "Point";
   public static final String TYPENAME_MULTIPOINT = "MultiPoint";
@@ -1855,7 +1855,7 @@ public abstract class Geometry
     return a.distance(b) <= tolerance;
   }
 
-  abstract protected int getTypeCode();
+  public abstract int getTypeCode();
 
   private Point createPointFromInternalCoord(Coordinate coord, Geometry exemplar)
   {

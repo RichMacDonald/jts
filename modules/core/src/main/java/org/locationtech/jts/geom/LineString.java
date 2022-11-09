@@ -334,7 +334,7 @@ public class LineString
     return comp.compare(this.points, line.points);
   }
   
-  protected int getTypeCode() {
+  public int getTypeCode() {
     return Geometry.TYPECODE_LINESTRING;
   }
 

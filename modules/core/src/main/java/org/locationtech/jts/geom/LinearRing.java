@@ -125,7 +125,7 @@ public class LinearRing extends LineString
     return Geometry.TYPENAME_LINEARRING;
   }
   
-  protected int getTypeCode() {
+  public int getTypeCode() {
     return Geometry.TYPECODE_LINEARRING;
   }
 

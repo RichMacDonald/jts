@@ -410,7 +410,7 @@ public class Polygon
     return 0;
   }
   
-  protected int getTypeCode() {
+  public int getTypeCode() {
     return Geometry.TYPECODE_POLYGON;
   }
 

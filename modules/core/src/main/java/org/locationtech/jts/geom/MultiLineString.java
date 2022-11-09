@@ -130,7 +130,7 @@ public class MultiLineString
     return super.equalsExact(other, tolerance);
   }
 
-  protected int getTypeCode() {
+  public int getTypeCode() {
     return Geometry.TYPECODE_MULTILINESTRING;
   }
 }

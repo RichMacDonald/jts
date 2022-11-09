@@ -138,7 +138,7 @@ public class MultiPolygon
     return new MultiPolygon(polygons, factory);
   }
 
-  protected int getTypeCode() {
+  public int getTypeCode() {
     return Geometry.TYPECODE_MULTIPOLYGON;
   }
 }

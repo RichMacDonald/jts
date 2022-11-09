@@ -213,7 +213,7 @@ public class Point
     return comp.compare(this.coordinates, point.coordinates);
   }
   
-  protected int getTypeCode() {
+  public int getTypeCode() {
     return Geometry.TYPECODE_POINT;
   }
 
