@@ -27,30 +27,30 @@ import org.locationtech.jts.geom.Polygon;
  */
 public interface DistanceSupport {
 	double distance(Coordinate A, Coordinate B);
-//	double distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D);
-//	Coordinate[] closestPoints(LineSegment seg0, LineSegment seg1);
-//	Coordinate closestPoint(LineSegment seg, Coordinate coord);
 	int locate(Coordinate pt, Polygon poly);
 	double distance(Envelope env0, Envelope env1);
-	double orthogonal(Coordinate p, Coordinate A, Coordinate B);
 
 	ClosestPointAndDistance distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D, double minDistance);
 	ClosestPointAndDistance orthogonal(Coordinate p, Coordinate A, Coordinate B, double minDistance);
-	
+
+//	double distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D);
+//	Coordinate[] closestPoints(LineSegment seg0, LineSegment seg1);
+//	Coordinate closestPoint(LineSegment seg, Coordinate coord);
+//	double orthogonal(Coordinate p, Coordinate A, Coordinate B);
 	
 
 	static DistanceSupport DEFAULT = new DistanceSupport() {
 		private final PointLocator ptLocator = new PointLocator();
 
-		public final double distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D) {
+		private double distance(Coordinate A, Coordinate B, Coordinate C, Coordinate D) {
 			return Distance.segmentToSegment(A, B, C, D);
 		}
 
-		public final Coordinate[] closestPoints(LineSegment seg0, LineSegment seg1) {
+		private final Coordinate[] closestPoints(LineSegment seg0, LineSegment seg1) {
 			return seg0.closestPoints(seg1);
 		}
 
-		public final Coordinate closestPoint(LineSegment seg, Coordinate coord) {
+		private final Coordinate closestPoint(LineSegment seg, Coordinate coord) {
 			return seg.orthogonalPoint(coord);
 		}
 
@@ -64,8 +64,7 @@ public interface DistanceSupport {
 			return env0.distance(env1);
 		}
 
-		@Override
-		public final double orthogonal(Coordinate p, Coordinate A, Coordinate B) {
+		private double orthogonal(Coordinate p, Coordinate A, Coordinate B) {
 			return Distance.pointToSegmentOrthogonal(p, A, B);
 		}
 
