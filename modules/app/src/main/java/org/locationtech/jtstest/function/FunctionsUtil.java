@@ -61,15 +61,7 @@ public class FunctionsUtil {
   
   public static void showIndicator(Geometry geom, Color lineClr)
   {
-    if (! isShowingIndicators()) return;
-    
-    GeometryEditPanel panel = JTSTestBuilderFrame
-    .instance().getTestCasePanel()
-    .getGeometryEditPanel();
-    Graphics2D gr = (Graphics2D) panel.getGraphics();
-    GeometryPainter.paint(geom, panel.getViewport(), gr, 
-        lineClr, 
-        AppConstants.INDICATOR_FILL_CLR);
+    JTSTestBuilder.controller().indicatorShow(geom, lineClr);
   }
   
   public static Geometry buildGeometry(List geoms, Geometry parentGeom)
@@ -87,10 +79,7 @@ public class FunctionsUtil {
   
   public static Geometry buildGeometry(Geometry[] geoms)
   {
-    GeometryFactory gf = JTSTestBuilder.getGeometryFactory();
-    if (geoms.length > 0) {
-      gf = getFactoryOrDefault(geoms[0]);
-    }
+    GeometryFactory gf = getFactory(geoms);
     
     List<Geometry> geomList = new ArrayList<Geometry>();
     for (Geometry geom : geoms) {
@@ -101,6 +90,28 @@ public class FunctionsUtil {
       }
     }
     return gf.buildGeometry(geomList);
+  }
+  
+  public static Geometry buildGeometryCollection(Geometry[] geoms, Geometry nullGeom)
+  {
+    GeometryFactory gf = getFactory(geoms);
+    
+    Geometry[] geomArray = new Geometry[geoms.length];
+    for (int i = 0; i < geoms.length; i++) {
+      Geometry srcGeom = geoms[i] == null ? nullGeom : geoms[i];
+      if (srcGeom != null) {
+        geomArray[i] = srcGeom.copy();
+      }
+    }
+    return gf.createGeometryCollection(geomArray);
+  }
+
+  private static GeometryFactory getFactory(Geometry[] geoms) {
+    GeometryFactory gf = JTSTestBuilder.getGeometryFactory();
+    if (geoms.length > 0) {
+      gf = getFactoryOrDefault(geoms[0]);
+    }
+    return gf;
   }
   
   public static Geometry buildGeometry(Geometry a, Geometry b) {

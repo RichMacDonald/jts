@@ -195,6 +195,12 @@ public class GeometryEditPanel extends JPanel
     return tbModel.getLayers();
   }
   
+  public void setShowingGrid(boolean isEnabled)
+  {
+    viewStyle.setGridEnabled(isEnabled);
+    forceRepaint();
+  }
+  
   public void setShowingInput(boolean isEnabled)
   {
     if (tbModel == null) return;
@@ -428,6 +434,11 @@ public class GeometryEditPanel extends JPanel
     g.fill(mask);
   }
 
+  public void draw(Geometry geom, Color lineClr, Color fillClr) {
+    Graphics2D gr = (Graphics2D) getGraphics();
+    GeometryPainter.paint(geom, getViewport(), gr, lineClr, fillClr);
+  }
+  
   public void flash(Geometry g)
   {
     Graphics2D gr = (Graphics2D) getGraphics();

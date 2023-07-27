@@ -90,6 +90,27 @@ public class MaximumInscribedCircle {
     return mic.getRadiusLine();
   }
   
+  /**
+   * Computes the maximum number of iterations allowed.
+   * Uses a heuristic based on the size of the input geometry
+   * and the tolerance distance.
+   * A smaller tolerance distance allows more iterations.
+   * This is a rough heuristic, intended
+   * to prevent huge iterations for very thin geometries.
+   * 
+   * @param geom the input geometry
+   * @param toleranceDist the tolerance distance
+   * @return the maximum number of iterations allowed
+   */
+  static long computeMaximumIterations(Geometry geom, double toleranceDist) {
+    double diam = geom.getEnvelopeInternal().getDiameter();
+    double ncells = diam / toleranceDist;
+    //-- Using log of ncells allows control over number of iterations
+    int factor = (int) Math.log(ncells);
+    if (factor < 1) factor = 1;
+    return 2000 + 2000 * factor;
+  }
+  
   private Geometry inputGeom;
   private double tolerance;
 
@@ -196,20 +217,30 @@ public class MaximumInscribedCircle {
     
     createInitialGrid(inputGeom.getEnvelopeInternal(), cellQueue);
 
-    // use the area centroid as the initial candidate center point
-    Cell farthestCell = createCentroidCell(inputGeom);
+    // initial candidate center point
+    Cell farthestCell = createInterorPointCell(inputGeom);
     //int totalCells = cellQueue.size();
 
     /**
      * Carry out the branch-and-bound search
      * of the cell space
      */
-    while (! cellQueue.isEmpty()) {
+    long maxIter = computeMaximumIterations(inputGeom, tolerance);
+    long iter = 0;
+    while (! cellQueue.isEmpty() && iter < maxIter) {
+      iter++;
       // pick the most promising cell from the queue
       Cell cell = cellQueue.remove();
-      //System.out.println(factory.toGeometry(cell.getEnvelope()));
       
-      // update the center cell if the candidate is further from the boundary
+      //System.out.println(factory.toGeometry(cell.getEnvelope()));
+      //System.out.println(iter + "] Dist: " + cell.getDistance() + " Max D: " + cell.getMaxDistance() + " size: " + cell.getHSide());
+      //TestBuilderProxy.showIndicator(inputGeom.getFactory().toGeometry(cell.getEnvelope()));
+      
+      //-- if cell must be closer than furthest, terminate since all remaining cells in queue are even closer. 
+      if (cell.getMaxDistance() < farthestCell.getDistance())
+        break;
+      
+      // update the circle center cell if the candidate is further from the boundary
       if (cell.getDistance() > farthestCell.getDistance()) {
         farthestCell = cell;
       }
@@ -242,42 +273,31 @@ public class MaximumInscribedCircle {
   }
 
   /**
-   * Initializes the queue with a grid of cells covering 
+   * Initializes the queue with a cell covering 
    * the extent of the area.
    * 
    * @param env the area extent to cover
    * @param cellQueue the queue to initialize
    */
   private void createInitialGrid(Envelope env, PriorityQueue<Cell> cellQueue) {
-    double minX = env.getMinX();
-    double maxX = env.getMaxX();
-    double minY = env.getMinY();
-    double maxY = env.getMaxY();
-    double width = env.getWidth();
-    double height = env.getHeight();
-    double cellSize = Math.min(width, height);
-    
+    double cellSize = Math.max(env.getWidth(), env.getHeight());
+    double hSide = cellSize / 2.0;
+
     // Check for flat collapsed input and if so short-circuit
     // Result will just be centroid
     if (cellSize == 0) return;
     
-    double hSide = cellSize / 2.0;
-
-    // compute initial grid of cells to cover area
-    for (double x = minX; x < maxX; x += cellSize) {
-      for (double y = minY; y < maxY; y += cellSize) {
-        cellQueue.add(createCell(x + hSide, y + hSide, hSide));
-      }
-    }
+    Coordinate centre = env.centre();
+    cellQueue.add(createCell(centre.x, centre.y, hSide)); 
   }
 
   private Cell createCell(double x, double y, double hSide) {
     return new Cell(x, y, hSide, distanceToBoundary(x, y));
   }
 
-  // create a cell centered on area centroid
-  private Cell createCentroidCell(Geometry geom) {
-    Point p = geom.getCentroid();
+  // create a cell at an interior point
+  private Cell createInterorPointCell(Geometry geom) {
+    Point p = geom.getInteriorPoint();
     return new Cell(p.getX(), p.getY(), 0, distanceToBoundary(p));
   }
 
@@ -338,10 +358,11 @@ public class MaximumInscribedCircle {
     }
     
     /**
-     * A cell is greater if its maximum possible distance is larger.
+     * For maximum efficieny sort the PriorityQueue with largest maxDistance at front.
+     * Since Java PQ sorts least-first, need to invert the comparison
      */
     public int compareTo(Cell o) {
-      return (int) (o.maxDist - this.maxDist);
+      return -Double.compare(maxDist, o.maxDist);
     }
     
   }

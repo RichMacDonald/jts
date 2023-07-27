@@ -35,24 +35,33 @@ Distributions for older JTS versions can be obtained at the
 * Improve `TopologyPreservingSimplifier` to prevent edge-disjoint line collapse (#925)
 * Improve `OffsetCurve` to return more linework for some input situations (#956)
 * Reduce buffer curve short fillet segments (#960)
+* Added ability to specify boundary for `LargestEmptyCircle` (#973)
 
 ### Bug Fixes
 * Fix `PreparedGeometry` handling of EMPTY elements (#904)
 * Fix `WKBReader` parsing of WKB containing multiple empty elements (#905)
-* Fix `LineSegment.orientationIndex(LineSegment)` to correct orientation for non-collinear segments on right (#914) 
+* Fix `LineSegment.orientationIndex(LineSegment)` to correct orientation for non-collinear segments on right (#914)
 * Fix `DepthSegment` compareTo method (#920)
 * Ensure `GeometryFixer` does not change coordinate dimension (#922)
 * Improve `ConvexHull` radial sort robustness (#927)
 * Improve robustness of Delaunay Triangulation frame size heuristic (#931)
 * Fix `PreparedLineString.intersects` to handle mixed GCs correctly (#944)
 * Fix `QuadEdgeSubdivision.TriangleEdgesListVisitor` (#945)
-* Fix `PolygonHoleJoiner` to handle all valid inputs 
+* Fix `PolygonHoleJoiner` to handle all valid inputs
   (allows `PolygonTriangulator`, `ConstrainedDelaunayTriangulator`, and `ConcaveHullOfPolygons` to work correctly) (#946)
 * Fix `OffsetCurve` handling of input with repeated points (#956)
+* Fix `OffsetCurve` handling zero offset distance (#971)
+* Fix `MaximumInscribedCircle` and `LargestEmptyCircle` to avoid long looping for thin inputs (#978)
+* Fix `OffsetCurve` to use a minimum QuadrantSegs value (#981)
+* Fix `HilbertEncoder` Y extent handling
+* Fix `Geometry.getCoordinate` to return non-null coordinate for collections with empty first element (#987)
+* Fix `LargestEmptyCircle` to handle polygonal obstacles (#988)
+* Make intersection computation more robust (#989)
 
 ### Performance Improvements
 
 * Improve `Polygonizer` performance in some cases with many islands (#906)
+* Improve Convex Hull performance by avoiding duplicate uniquing (#985)
 
 # Version 1.19
 
@@ -68,6 +77,7 @@ Distributions for older JTS versions can be obtained at the
 * Add `ConcaveHullOfPolygons` class (#870)
 * Add `PolygonHullSimplifier` class (#861, #880)
 * TWKB read and write implementation (#854)
+* Add `CubicBezierCurve` class
 
 ### Functionality Improvements
 
@@ -85,7 +95,7 @@ Distributions for older JTS versions can be obtained at the
 
 ### Performance Improvements
 
-* Improve performance of `CoveageUnion` by using boundary chains (#891)
+* Improve performance of `CoverageUnion` by using boundary chains (#891)
 
 ### Bug Fixes
 

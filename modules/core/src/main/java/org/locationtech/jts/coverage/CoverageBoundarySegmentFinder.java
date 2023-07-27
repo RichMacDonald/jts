@@ -19,7 +19,18 @@ import org.locationtech.jts.geom.CoordinateSequenceFilter;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 
-public class CoverageBoundarySegmentFinder implements CoordinateSequenceFilter {
+/**
+ * Finds coverage segments which occur in only a single coverage element.
+ * In a valid coverage, these are exactly the line segments which lie
+ * on the boundary of the coverage.
+ * <p>
+ * In an invalid coverage, segments might occur in 3 or more elements.
+ * This situation is not detected.
+ * 
+ * @author mdavis
+ *
+ */
+class CoverageBoundarySegmentFinder implements CoordinateSequenceFilter {
   
   public static Set<LineSegment> findBoundarySegments(Geometry[] geoms) {
     Set<LineSegment> segs = new HashSet<LineSegment>();
@@ -30,6 +41,11 @@ public class CoverageBoundarySegmentFinder implements CoordinateSequenceFilter {
     return segs;
   }
 
+  public static boolean isBoundarySegment(Set<LineSegment> boundarySegs, CoordinateSequence seq, int i) {
+    LineSegment seg = createSegment(seq, i);
+    return boundarySegs.contains(seg);
+  }
+  
   private Set<LineSegment> boundarySegs;
 
   public CoverageBoundarySegmentFinder(Set<LineSegment> segs) {
@@ -42,6 +58,11 @@ public class CoverageBoundarySegmentFinder implements CoordinateSequenceFilter {
     if (i >= seq.size() - 1)
       return;
     LineSegment seg = createSegment(seq, i);
+    /**
+     * Records segments with an odd number of occurrences.
+     * In a valid coverage each segment can occur only 1 or 2 times.
+     * This does not detect invalid situations, where a segment might occur 3 or more times.
+     */
     if (boundarySegs.contains(seg)) {
       boundarySegs.remove(seg);
     }
@@ -50,7 +71,7 @@ public class CoverageBoundarySegmentFinder implements CoordinateSequenceFilter {
     }
   }
 
-  public static LineSegment createSegment(CoordinateSequence seq, int i) {
+  private static LineSegment createSegment(CoordinateSequence seq, int i) {
     LineSegment seg = new LineSegment(seq.getCoordinate(i), seq.getCoordinate(i + 1));
     seg.normalize();
     return seg;
