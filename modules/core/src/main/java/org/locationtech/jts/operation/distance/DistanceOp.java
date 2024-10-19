@@ -12,7 +12,7 @@
 package org.locationtech.jts.operation.distance;
 
 import java.util.List;
-
+import org.locationtech.jts.algorithm.PointLocator;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
@@ -42,7 +42,7 @@ import org.locationtech.jts.geom.util.PolygonExtracter;
  * The algorithms used are straightforward O(n^2)
  * comparisons.  This worst-case performance could be improved on
  * by using Voronoi techniques or spatial indexes.
- * 
+ *
  * Externalize point-to-point, point-to-line, and line-to-line operations.
  *
  * @version 1.7
@@ -76,7 +76,7 @@ public class DistanceOp
       return false;
 
     // MD - could improve this further with a positive short-circuit based on envelope MinMaxDist
-    
+
     DistanceOp distOp = new DistanceOp(g0, g1, distance);
     return distOp.distance() <= distance;
   }
@@ -141,7 +141,7 @@ public class DistanceOp
   {
 	    this(g0, g1, terminateDistance, DistanceSupport.DEFAULT);
   }
-  
+
   public DistanceOp(Geometry g0, Geometry g1, double terminateDistance, DistanceSupport external)
   {
     this.geom = new Geometry[2];
@@ -162,14 +162,14 @@ public class DistanceOp
   {
   	if (geom[0] == null || geom[1] == null)
   		throw new IllegalArgumentException("null geometries are not supported");
-  	if (geom[0].isEmpty() || geom[1].isEmpty()) 
+  	if (geom[0].isEmpty() || geom[1].isEmpty())
   		return 0.0;
-  	
+
   	//-- optimization for Point/Point case
   	if (geom[0] instanceof Point && geom[1] instanceof Point) {
   	  return geom[0].getCoordinate().distance(geom[1].getCoordinate());
   	}
-  	
+
     computeMinDistance();
     return minDistance;
   }
@@ -189,9 +189,9 @@ public class DistanceOp
           minDistanceLocation[1].getCoordinate() };
     return nearestPts;
   }
-  
+
   /**
-   * 
+   *
    * @return a pair of {@link Coordinate}s of the nearest points
    * @deprecated renamed to nearestPoints
    */
@@ -213,7 +213,7 @@ public class DistanceOp
   }
 
   /**
-   * 
+   *
    * @return a pair of {@link GeometryLocation}s for the nearest points
    * @deprecated renamed to nearestLocations
    */
@@ -256,13 +256,13 @@ public class DistanceOp
     if (minDistance <= terminateDistance) return;
     computeContainmentDistance(1, locPtPoly);
   }
-  
+
   private void computeContainmentDistance(int polyGeomIndex, GeometryLocation[] locPtPoly)
   {
     Geometry polyGeom = geom[polyGeomIndex];
     // if no polygon then nothing to do
     if (polyGeom.getDimension() < 2) return;
-    
+
   	int locationsIndex = 1 - polyGeomIndex;
   	List<Polygon> polys = PolygonExtracter.getPolygons(polyGeom);
     if (polys.size() > 0) {
@@ -274,9 +274,9 @@ public class DistanceOp
         minDistanceLocation[polyGeomIndex] 	= locPtPoly[1];
         return;
       }
-    }	
+    }
   }
-  
+
   private void computeContainmentDistance(List<GeometryLocation> locs, List<Polygon> polys, GeometryLocation[] locPtPoly)
   {
     for (int i = 0; i < locs.size(); i++) {
@@ -403,19 +403,19 @@ public class DistanceOp
     Coordinate[] coord1 = line1.getCoordinates();
       // brute force approach!
     for (int i = 0; i < coord0.length - 1; i++) {
-      
+
       // short-circuit if line segment is far from line
       Envelope segEnv0 = new Envelope(coord0[i], coord0[i + 1]);
       if (external.distance(segEnv0, line1.getEnvelopeInternal()) > minDistance)
         continue;
-      
+
       for (int j = 0; j < coord1.length - 1; j++) {
-        
+
         // short-circuit if line segments are far apart
         Envelope segEnv1 = new Envelope(coord1[j], coord1[j + 1]);
         if (external.distance(segEnv0, segEnv1) > minDistance)
           continue;
-        
+
         ClosestPointAndDistance distAndCoordinates = external.distance(coord0[i], coord0[i + 1],
                                    						 coord1[j], coord1[j + 1],
                                    						 minDistance);
@@ -446,9 +446,9 @@ public class DistanceOp
           locGeom[1] = new GeometryLocation(pt, 0, coord);
           if (minDistance <= terminateDistance) return;
         }
-        
+
         boolean notLast = i < coord0.length - 1;
-        if (notLast) {        	
+        if (notLast) {
         	ClosestPointAndDistance distAndCoordinate = external.orthogonal(coord, coord0[i], coord0[i + 1], minDistance);
         	if (distAndCoordinate != null) {
         		minDistance = distAndCoordinate.dist;
