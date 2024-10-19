@@ -17,9 +17,23 @@ Distributions for older JTS versions can be obtained at the
 
 <!-- ================================================================ -->
 
+Version 1.x
+
+Release Date: TBD
+
 # Version 1.x
 
-*Release Date: TBD*
+### New Features
+
+### Functionality Improvements
+
+### Bug Fixes
+
+### Performance Improvements
+
+# Version 1.20.0
+
+*Release Date: 09/18/2024*
 
 ### New Features
 * Add `CoverageValidator` `CoveragePolygonValidator` (#900)
@@ -30,14 +44,22 @@ Distributions for older JTS versions can be obtained at the
 * Add `Geometry.hasDimension(int dim)` method {#944}
 * Add `ConcaveHull.alphaShape` function (#952)
 * Add `OffsetCurve` Joined mode (#956)
+* Add `PointLocation.isOnSegment` function (#1048)
+* Add `RelateNG` API for improved topological relationship functionality and performance (#1052, #1055)
+* Add system property `jts.relate=ng` to enable use of RelateNG in `Geometry` methods (#1073)
 
 ### Functionality Improvements
 * Improve `TopologyPreservingSimplifier` to prevent edge-disjoint line collapse (#925)
 * Improve `OffsetCurve` to return more linework for some input situations (#956)
 * Reduce buffer curve short fillet segments (#960)
 * Added ability to specify boundary for `LargestEmptyCircle` (#973)
+* Improve `DouglaPeuckerSimplifier` and `TopologyPreservingSimplifier` to handle ring endpoints (#1013)
+* Add `Angle` functions `sinSnap` and `cosSnap` to avoid small errors, e.g. with buffer operations (#1016)
+* Improve Buffer input simplification for rings (#1022)
+* Improve CoverageSimplifier with ring removal, smoothing, inner/outer and per-feature tolerances (#1060)
 
 ### Bug Fixes
+* Fix `WKBReader` and `WKBWriter` handling of M measures when writing to WKB and reading from WKB (#734)
 * Fix `PreparedGeometry` handling of EMPTY elements (#904)
 * Fix `WKBReader` parsing of WKB containing multiple empty elements (#905)
 * Fix `LineSegment.orientationIndex(LineSegment)` to correct orientation for non-collinear segments on right (#914)
@@ -57,11 +79,28 @@ Distributions for older JTS versions can be obtained at the
 * Fix `Geometry.getCoordinate` to return non-null coordinate for collections with empty first element (#987)
 * Fix `LargestEmptyCircle` to handle polygonal obstacles (#988)
 * Make intersection computation more robust (#989)
+* Fix `VariableBuffer` to handle zero vertex buffer distances correctly (#997)
+* Fix `IncrementalDelaunayTriangulator` to ensure triangulation boundary is convex (#1004)
+* Fix OverlayNG Area Check heuristic for difference (#1005)
+* Fix `InteriorPointPoint` to handle empty elements
+* Fix `DistanceOp` for empty elements (#1010)
+* Fix predicates for MultiPoint with EMPTY (#1015)
+* Fix `InteriorPoint` for MultiLineString with EMPTY (#1023)
+* Fix TopologyPreservingSimplifier to prevent incorrect topology from jumping components (#1024)
+* Fix OffsetCurve to ensure end segments are included (#1029)
+* Fix `PointLocator` to respect `BoundaryNodeRule` for single lines (#1031)
+* Fix `BufferOp` Inverted Ring Removal check (#1038)
+* Improve `VariableBuffer` segment buffer cap generation (#1041)
+* Fix `TopologyPreservingSimplifier` ring endpoint removal indexing (#1059)
 
 ### Performance Improvements
 
 * Improve `Polygonizer` performance in some cases with many islands (#906)
 * Improve Convex Hull performance by avoiding duplicate uniquing (#985)
+* Improve `HPRtree` performance (#1012)
+* Improve performance of noding and overlay via `HPRtree` (#1012) 
+* Improve `DistanceOp` performance for Point-Point (#1049)
+* Improve `CoveragePolygonValidator` via section performance optimization (#1053)
 
 # Version 1.19
 

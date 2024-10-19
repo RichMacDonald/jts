@@ -114,6 +114,7 @@ public class DistanceOp
   private Geometry[] geom;
   private double terminateDistance = 0.0;
   // working
+  private PointLocator ptLocator = new PointLocator();
   private GeometryLocation[] minDistanceLocation;
   private double minDistance = Double.MAX_VALUE;
   private final DistanceSupport external;
@@ -163,6 +164,11 @@ public class DistanceOp
   		throw new IllegalArgumentException("null geometries are not supported");
   	if (geom[0].isEmpty() || geom[1].isEmpty()) 
   		return 0.0;
+  	
+  	//-- optimization for Point/Point case
+  	if (geom[0] instanceof Point && geom[1] instanceof Point) {
+  	  return geom[0].getCoordinate().distance(geom[1].getCoordinate());
+  	}
   	
     computeMinDistance();
     return minDistance;
@@ -355,8 +361,12 @@ public class DistanceOp
   {
     for (int i = 0; i < points0.size(); i++) {
       Point pt0 = points0.get(i);
+      if (pt0.isEmpty())
+        continue;
       for (int j = 0; j < points1.size(); j++) {
         Point pt1 = points1.get(j);
+        if (pt1.isEmpty())
+          continue;
         double dist = external.distance(pt0.getCoordinate(), pt1.getCoordinate());
         if (dist < minDistance) {
           minDistance = dist;
@@ -375,6 +385,8 @@ public class DistanceOp
       LineString line = lines.get(i);
       for (int j = 0; j < points.size(); j++) {
         Point pt = points.get(j);
+        if (pt.isEmpty())
+          continue;
         computeMinDistance(line, pt, locGeom);
         if (minDistance <= terminateDistance) return;
       }
